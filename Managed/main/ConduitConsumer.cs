@@ -180,8 +180,9 @@ public class ConduitConsumer : KMonoBehaviour, IConduitConsumer
 	{
 		get
 		{
-			int inputCell = GetInputCell();
-			return GetConduitManager().GetContents(inputCell).mass;
+			ConduitFlow conduitManager = GetConduitManager();
+			int inputCell = GetInputCell(conduitManager.conduitType);
+			return conduitManager.GetContents(inputCell).mass;
 		}
 	}
 
@@ -200,12 +201,21 @@ public class ConduitConsumer : KMonoBehaviour, IConduitConsumer
 		};
 	}
 
-	private int GetInputCell()
+	private int GetInputCell(ConduitType inputConduitType)
 	{
 		if (useSecondaryInput)
 		{
-			ISecondaryInput component = GetComponent<ISecondaryInput>();
-			return Grid.OffsetCell(building.NaturalBuildingCell(), component.GetSecondaryConduitOffset(conduitType));
+			ISecondaryInput[] components = GetComponents<ISecondaryInput>();
+			ISecondaryInput[] array = components;
+			foreach (ISecondaryInput secondaryInput in array)
+			{
+				if (secondaryInput.HasSecondaryConduitType(inputConduitType))
+				{
+					return Grid.OffsetCell(building.NaturalBuildingCell(), secondaryInput.GetSecondaryConduitOffset(inputConduitType));
+				}
+			}
+			Debug.LogWarning("No secondaryInput of type was found");
+			return Grid.OffsetCell(building.NaturalBuildingCell(), components[0].GetSecondaryConduitOffset(inputConduitType));
 		}
 		return building.GetUtilityInputCell();
 	}
@@ -217,7 +227,8 @@ public class ConduitConsumer : KMonoBehaviour, IConduitConsumer
 		{
 			Tutorial.Instance.TutorialMessage(Tutorial.TutorialMessages.TM_Plumbing);
 		});
-		utilityCell = GetInputCell();
+		ConduitFlow conduitManager = GetConduitManager();
+		utilityCell = GetInputCell(conduitManager.conduitType);
 		ScenePartitionerLayer layer = GameScenePartitioner.Instance.objectLayers[(conduitType == ConduitType.Gas) ? 12 : 16];
 		partitionerEntry = GameScenePartitioner.Instance.Add("ConduitConsumer.OnSpawn", base.gameObject, utilityCell, layer, OnConduitConnectionChanged);
 		GetConduitManager().AddConduitUpdater(ConduitUpdate);
@@ -256,7 +267,7 @@ public class ConduitConsumer : KMonoBehaviour, IConduitConsumer
 		consumedLastTick = true;
 		if (building.Def.CanMove)
 		{
-			utilityCell = GetInputCell();
+			utilityCell = GetInputCell(conduit_mgr.conduitType);
 		}
 		if (!IsConnected)
 		{

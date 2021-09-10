@@ -142,6 +142,12 @@ public class GameplayEventInfoScreen : KModalScreen
 		}
 	}
 
+	public override void Deactivate()
+	{
+		AudioMixer.instance.Stop(AudioMixerSnapshots.Get().EventPopupSnapshot);
+		base.Deactivate();
+	}
+
 	private void CreateOptionIcon(GameObject option, GameplayEventPopupData.PopupOptionIcon optionIcon)
 	{
 		GameObject obj = Util.KInstantiateUI(optionIconPrefab, option);

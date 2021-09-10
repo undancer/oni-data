@@ -8,6 +8,8 @@ public class RocketUsageRestriction : GameStateMachine<RocketUsageRestriction, R
 	{
 		public bool initialControlledStateWhenBuilt = true;
 
+		public bool restrictOperational = true;
+
 		public override void Configure(GameObject prefab)
 		{
 			RocketControlStation.CONTROLLED_BUILDINGS.Add(prefab.PrefabID());
@@ -139,7 +141,7 @@ public class RocketUsageRestriction : GameStateMachine<RocketUsageRestriction, R
 			return;
 		}
 		smi.isRestrictionApplied = restrict;
-		smi.operational.SetFlag(rocketUsageAllowed, !restrict);
+		smi.operational.SetFlag(rocketUsageAllowed, !smi.def.restrictOperational || !restrict);
 		smi.master.GetComponent<KSelectable>().ToggleStatusItem(Db.Get().BuildingStatusItems.RocketRestrictionActive, restrict);
 		Storage[] components = smi.master.gameObject.GetComponents<Storage>();
 		if (components == null || components.Length == 0)

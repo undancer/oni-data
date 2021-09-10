@@ -548,7 +548,7 @@ msgstr ""
 #. STRINGS.BUILDING.STATUSITEMS.CONVEYOR_CONTENTS.EMPTY
 msgctxt "STRINGS.BUILDING.STATUSITEMS.CONVEYOR_CONTENTS.EMPTY"
 msgid "Empty"
-msgstr "비우기"
+msgstr "비어있음"
 
 #. STRINGS.BUILDING.STATUSITEMS.COOLING.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.COOLING.NAME"
@@ -949,7 +949,7 @@ msgstr "<style=\"produced\">{FlowRate}</style>의 속도로 <link=\"OXYGEN\">산
 #. STRINGS.BUILDING.STATUSITEMS.EMPTYPUMPINGSTATION.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.EMPTYPUMPINGSTATION.NAME"
 msgid "Empty"
-msgstr "비우기"
+msgstr "비어있음"
 
 #. STRINGS.BUILDING.STATUSITEMS.EMPTYPUMPINGSTATION.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.EMPTYPUMPINGSTATION.TOOLTIP"
@@ -1213,7 +1213,7 @@ msgstr "퇴피"
 #. STRINGS.BUILDING.STATUSITEMS.GASPIPEEMPTY.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.GASPIPEEMPTY.NAME"
 msgid "Empty Pipe"
-msgstr "파이프 비우기"
+msgstr "Empty Pipe"
 
 #. STRINGS.BUILDING.STATUSITEMS.GASPIPEEMPTY.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.GASPIPEEMPTY.TOOLTIP"
@@ -1297,7 +1297,7 @@ msgstr "{Epitaph}"
 #. STRINGS.BUILDING.STATUSITEMS.GRAVEEMPTY.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.GRAVEEMPTY.NAME"
 msgid "Empty"
-msgstr "비우기"
+msgstr "비어있음"
 
 #. STRINGS.BUILDING.STATUSITEMS.GRAVEEMPTY.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.GRAVEEMPTY.TOOLTIP"
@@ -1636,7 +1636,7 @@ msgstr "더 이상 질량을 전송할 수 없습니다."
 #. STRINGS.BUILDING.STATUSITEMS.LIQUIDPIPEEMPTY.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.LIQUIDPIPEEMPTY.NAME"
 msgid "Empty Pipe"
-msgstr "파이프 비우기"
+msgstr "Empty Pipe"
 
 #. STRINGS.BUILDING.STATUSITEMS.LIQUIDPIPEEMPTY.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.LIQUIDPIPEEMPTY.TOOLTIP"
@@ -2389,6 +2389,16 @@ msgctxt "STRINGS.BUILDING.STATUSITEMS.NORMAL.TOOLTIP"
 msgid "Nothing out of the ordinary here"
 msgstr "정상입니다."
 
+#. STRINGS.BUILDING.STATUSITEMS.NOROCKETRESTRICTION.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.NOROCKETRESTRICTION.NAME"
+msgid "Not Controlled"
+msgstr "제어되지 않음"
+
+#. STRINGS.BUILDING.STATUSITEMS.NOROCKETRESTRICTION.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.NOROCKETRESTRICTION.TOOLTIP"
+msgid "This building is not controlled by a <link=\"ROCKETCONTROLSTATION\">Rocket Control Station</link>"
+msgstr "이 건조물은 <link=\"ROCKETCONTROLSTATION\">로켓 제어 스테이션</link>이 제어하지 않습니다."
+
 #. STRINGS.BUILDING.STATUSITEMS.NOSTORAGEFILTERSET.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.NOSTORAGEFILTERSET.NAME"
 msgid "Filters Not Designated"
@@ -2775,7 +2785,7 @@ msgstr ""
 #. STRINGS.BUILDING.STATUSITEMS.PIPECONTENTS.EMPTY
 msgctxt "STRINGS.BUILDING.STATUSITEMS.PIPECONTENTS.EMPTY"
 msgid "Empty"
-msgstr "비우기"
+msgstr "비어있음"
 
 #. STRINGS.BUILDING.STATUSITEMS.PIPEMAYMELT.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.PIPEMAYMELT.NAME"
@@ -3095,33 +3105,35 @@ msgstr "높은 로켓은 이 <style=\"KKeyword\">로켓 플랫폼</style>에 착
 
 #. STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONACTIVE.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONACTIVE.NAME"
-msgid "Restricted Access"
-msgstr "제한된 액세스"
+msgid "Access: Restricted"
+msgstr "접근: 제한됨"
 
 #. STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONACTIVE.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONACTIVE.TOOLTIP"
-msgid "This building cannot be operated and storage cannot be withdrawn from."
-msgstr "이 건조물은 작동할 수 없으며 저장고에서 회수할 수 없습니다."
+msgid ""
+"This building cannot be operated while restricted, though it can be filled\n"
+"\n"
+"Controlled by a <link=\"ROCKETCONTROLSTATION\">Rocket Control Station</link>"
+msgstr ""
+"이 건조물은 제한된 상태에서 작동할 수 없지만 채울 수 있습니다.\n"
+"\n"
+"<link=\"ROCKETCONTROLSTATION\">로켓 제어 스테이션</link>으로 제어됩니다."
 
-#. STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONCONTROLLED.NAME
-msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONCONTROLLED.NAME"
-msgid "Controlled Building"
-msgstr "제어된 건조물"
+#. STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONINACTIVE.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONINACTIVE.NAME"
+msgid "Access: Not Restricted"
+msgstr "접근: 제한되지 않음"
 
-#. STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONCONTROLLED.TOOLTIP
-msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONCONTROLLED.TOOLTIP"
-msgid "This building is controlled by the <link=\"ROCKETCONTROLSTATION\">Rocket Control Station</link>."
-msgstr "이 건조물은 <link=\"ROCKETCONTROLSTATION\">로켓 제어 스테이션</link>이 제어합니다."
-
-#. STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONUNCONTROLLED.NAME
-msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONUNCONTROLLED.NAME"
-msgid "Uncontrolled Building"
-msgstr "제어되지 않은 건조물"
-
-#. STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONUNCONTROLLED.TOOLTIP
-msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONUNCONTROLLED.TOOLTIP"
-msgid "This building is not controlled by the <link=\"ROCKETCONTROLSTATION\">Rocket Control Station</link>."
-msgstr "이 건조물은 <link=\"ROCKETCONTROLSTATION\">로켓 제어 스테이션</link>이 제어하지 않습니다."
+#. STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONINACTIVE.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONINACTIVE.TOOLTIP"
+msgid ""
+"This building's operation is not restricted\n"
+"\n"
+"Controlled by a <link=\"ROCKETCONTROLSTATION\">Rocket Control Station</link>"
+msgstr ""
+"이 건조물의 작동은 제한되지 않습니다.\n"
+"\n"
+"<link=\"ROCKETCONTROLSTATION\">로켓 제어 스테이션</link>으로 제어됩니다."
 
 #. STRINGS.BUILDING.STATUSITEMS.ROCKETSTRANDED.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETSTRANDED.NAME"
@@ -3484,8 +3496,8 @@ msgstr "프린팅 팟이 너무 적음 {progress}"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_INSUFFICIENT_COLONIES.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_INSUFFICIENT_COLONIES.TOOLTIP"
-msgid "This device relies on a network of activated Printing Pods {progress}"
-msgstr "이 장치는 활성화된 프린팅 팟의 네트워크에 의존함 {progress}"
+msgid "To open the Temporal Tear, this device relies on a network of activated Printing Pods {progress}"
+msgstr "시간의 찢어짐을 열기 위해 이 장치는 활성화된 프린팅 팟 네트워크에 의존합니다 {progress}"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_LOS.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_LOS.NAME"
@@ -3514,8 +3526,14 @@ msgstr "충전 진행률: {progress}"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_PROGRESS.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_PROGRESS.TOOLTIP"
-msgid "This device must be charged with a high number of Radbolts. Operation can commence once this device is fully charged"
-msgstr "이 장치는 다량의 래드볼트로 충전되어야 합니다. 이 장치가 완전히 충전되면 작동을 시작할 수 있습니다."
+msgid ""
+"This device must be charged with a high number of Radbolts\n"
+"\n"
+"Operation can commence once this device is fully charged"
+msgstr ""
+"이 장치는 많은 수의 래드볼트로 충전되어야 합니다.\n"
+"\n"
+"이 장치가 완전히 충전되면 작동을 시작할 수 있습니다."
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_READY.NOTIFICATION
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_READY.NOTIFICATION"
@@ -4150,7 +4168,7 @@ msgstr "이 소독 취소"
 #. STRINGS.BUILDINGS.DISINFECTABLE.ENABLE_DISINFECT.NAME
 msgctxt "STRINGS.BUILDINGS.DISINFECTABLE.ENABLE_DISINFECT.NAME"
 msgid "Disinfect"
-msgstr "소독"
+msgstr "Disinfect"
 
 #. STRINGS.BUILDINGS.DISINFECTABLE.ENABLE_DISINFECT.TOOLTIP
 msgctxt "STRINGS.BUILDINGS.DISINFECTABLE.ENABLE_DISINFECT.TOOLTIP"
@@ -8395,6 +8413,21 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICALARM.NAME"
 msgid "<link=\"LOGICALARM\">Automated Notifier</link>"
 msgstr "<link=\"LOGICALARM\">자동 알림</link>"
 
+#. STRINGS.BUILDINGS.PREFABS.LOGICCLUSTERLOCATIONSENSOR.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICCLUSTERLOCATIONSENSOR.DESC"
+msgid "Starmap Location sensors can signal when a spacecraft is at a certain location"
+msgstr "우주선이 특정 위치에 있을 때 스타맵 위치 센서가 신호를 보낼 수 있습니다."
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICCLUSTERLOCATIONSENSOR.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICCLUSTERLOCATIONSENSOR.EFFECT"
+msgid "Send <b><style=\"logic_on\">Green Signals</style></b> at the chosen starmap locations and <b><style=\"logic_off\">Red Signals</style></b> everywhere else."
+msgstr "선택한 스타맵 위치에서 <b><style=\"logic_on\">녹색 신호</style></b>를 보내고 그 밖의 모든 위치에 <b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICCLUSTERLOCATIONSENSOR.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICCLUSTERLOCATIONSENSOR.NAME"
+msgid "<link=\"LOGICCLUSTERLOCATIONSENSOR\">Starmap Location Sensor</link>"
+msgstr "<link=\"LOGICCLUSTERLOCATIONSENSOR\">스타맵 위치 센서</link>"
+
 #. STRINGS.BUILDINGS.PREFABS.LOGICCOUNTER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICCOUNTER.DESC"
 msgid "For numbers higher than ten connect multiple counters together."
@@ -11882,13 +11915,13 @@ msgstr "스크린세이버가 켜지면 누군가 근처에서 컨트롤을 흔�
 #. STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.EFFECT"
 msgid ""
-"Allows Duplicants to use pilot-operated rockets.\n"
+"Allows Duplicants to use pilot-operated rockets and control access to interior buildings.\n"
 "\n"
 "Assigned Duplicants must have the <link=\"PILOT\">Rocket Piloting</link> skill."
 msgstr ""
-"복제체가 조종사가 작동하는 로켓을 사용할 수 있도록 합니다.\n"
+"복제체가 파일럿 작동 로켓을 사용하고 내부 건물에 대한 액세스를 제어할 수 있습니다.\n"
 "\n"
-"할당된 복제체 는<link=\"PILOT\">로켓 조종</link> 기술이 있어야 합니다."
+"할당된 복제체는 <link=\"PILOT\">로켓 조종</link> 기술이 있어야 합니다."
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT"
@@ -11897,13 +11930,13 @@ msgstr "건조물 사용 제한"
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT_ACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT_ACTIVE"
-msgid "<b><style=\"logic_on\">Green Signal</style></b>: Restrict buildings."
-msgstr "<b><style=\"logic_on\">녹색 신호</style></b>: 건조물 제한."
+msgid "<b><style=\"logic_on\">Green Signal</style></b>: Restrict access to interior buildings"
+msgstr "<b><style=\"logic_on\">녹색 신호</style></b>: 내부 건조물에 대한 액세스 제한"
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT_INACTIVE"
-msgid "<b><style=\"logic_off\">Red Signal</style></b>: Unrestrict buildings."
-msgstr "<b><style=\"logic_off\">적색 신호</style></b>: 건조물 제한 해제."
+msgid "<b><style=\"logic_off\">Red Signal</style></b>: Unrestrict access to interior buildings"
+msgstr "<b><style=\"logic_off\">적색 신호</style></b>: 내부 건조물에 대한 액세스 제한 해제"
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.NAME"
@@ -28248,7 +28281,7 @@ msgstr "새로운 건조물을 짓습니다."
 #. STRINGS.DUPLICANTS.CHOREGROUPS.BUILD.NAME
 msgctxt "STRINGS.DUPLICANTS.CHOREGROUPS.BUILD.NAME"
 msgid "Building"
-msgstr "만들기"
+msgstr "건조물"
 
 #. STRINGS.DUPLICANTS.CHOREGROUPS.COMBAT.ARCHETYPE_NAME
 msgctxt "STRINGS.DUPLICANTS.CHOREGROUPS.COMBAT.ARCHETYPE_NAME"
@@ -29315,7 +29348,7 @@ msgstr "이 복제체는 치료를 받기 위해 의사에게 방문 중입니�
 #. STRINGS.DUPLICANTS.CHORES.HARVEST.NAME
 msgctxt "STRINGS.DUPLICANTS.CHORES.HARVEST.NAME"
 msgid "Harvest"
-msgstr "수확"
+msgstr "Harvest"
 
 #. STRINGS.DUPLICANTS.CHORES.HARVEST.STATUS
 msgctxt "STRINGS.DUPLICANTS.CHORES.HARVEST.STATUS"
@@ -29495,7 +29528,7 @@ msgstr "이 복제체는 친구를 잃어 애도하고 있습니다."
 #. STRINGS.DUPLICANTS.CHORES.MOVETO.NAME
 msgctxt "STRINGS.DUPLICANTS.CHORES.MOVETO.NAME"
 msgid "Move to"
-msgstr "위치로 이동:"
+msgstr "이동 위치:"
 
 #. STRINGS.DUPLICANTS.CHORES.MOVETO.STATUS
 msgctxt "STRINGS.DUPLICANTS.CHORES.MOVETO.STATUS"
@@ -36736,7 +36769,7 @@ msgstr "썩었음"
 #. STRINGS.DUPLICANTS.STATUSITEMS.ROTTEN.TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.ROTTEN.TOOLTIP"
 msgid "Gross!"
-msgstr "징그럽잖아!"
+msgstr "우웩!"
 
 #. STRINGS.DUPLICANTS.STATUSITEMS.SEVEREWOUNDS.NAME
 msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.SEVEREWOUNDS.NAME"
@@ -43169,7 +43202,7 @@ msgstr "Dig"
 #. STRINGS.INPUT_BINDINGS.ROOT.DISINFECT
 msgctxt "STRINGS.INPUT_BINDINGS.ROOT.DISINFECT"
 msgid "Disinfect"
-msgstr "Disinfect"
+msgstr "소독"
 
 #. STRINGS.INPUT_BINDINGS.ROOT.EMPTYPIPE
 msgctxt "STRINGS.INPUT_BINDINGS.ROOT.EMPTYPIPE"
@@ -43184,7 +43217,7 @@ msgstr "Harvest"
 #. STRINGS.INPUT_BINDINGS.ROOT.MOP
 msgctxt "STRINGS.INPUT_BINDINGS.ROOT.MOP"
 msgid "Mop"
-msgstr "걸레질"
+msgstr "Mop"
 
 #. STRINGS.INPUT_BINDINGS.ROOT.NAME
 msgctxt "STRINGS.INPUT_BINDINGS.ROOT.NAME"
@@ -54167,6 +54200,16 @@ msgctxt "STRINGS.UI.BUILDINGEFFECTS.RESEARCH_MATERIALS"
 msgid "{0}: {1} per <link=\"RESEARCH\">Research</link> point"
 msgstr "{0}: <link=\"RESEARCH\">연구</link> 점수당 {1}"
 
+#. STRINGS.UI.BUILDINGEFFECTS.ROCKETRESTRICTION_BUILDINGS
+msgctxt "STRINGS.UI.BUILDINGEFFECTS.ROCKETRESTRICTION_BUILDINGS"
+msgid "    • Buildings: {buildinglist}"
+msgstr "    • 건조물: {buildinglist}"
+
+#. STRINGS.UI.BUILDINGEFFECTS.ROCKETRESTRICTION_HEADER
+msgctxt "STRINGS.UI.BUILDINGEFFECTS.ROCKETRESTRICTION_HEADER"
+msgid "Restriction Control:"
+msgstr "제한 통제:"
+
 #. STRINGS.UI.BUILDINGEFFECTS.SCALE_GROWTH
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.SCALE_GROWTH"
 msgid "Shearable {Item}: {Amount} per {Time}"
@@ -54802,6 +54845,22 @@ msgctxt "STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.RESEARCH_MATERIALS"
 msgid "This research station consumes <style=\"consumed\">{1}</style> of <style=\"KKeyword\">{0}</style> for each <style=\"KKeyword\">Research Point</style> produced"
 msgstr "이 연구 스테이션은 생성되는 각 <style=\"KKeyword\">연구 포인트</style>에 대하여 <style=\"consumed\">{1}</style> <style=\"KKeyword\">{0}</style>을(를) 소비합니다."
 
+#. STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.ROCKETRESTRICTION_BUILDINGS
+msgctxt "STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.ROCKETRESTRICTION_BUILDINGS"
+msgid ""
+"This station controls the operational status of the following buildings:\n"
+"\n"
+"{buildinglist}"
+msgstr ""
+"이 스테이션은 다음 건조물의 작동 상태를 제어함:\n"
+"\n"
+"{buildinglist}"
+
+#. STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.ROCKETRESTRICTION_HEADER
+msgctxt "STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.ROCKETRESTRICTION_HEADER"
+msgid "Controls whether a building is operational within a rocket interior"
+msgstr "로켓 내부에서 건조물이 작동하는지 여부를 제어합니다."
+
 #. STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.SCALE_GROWTH
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.SCALE_GROWTH"
 msgid "This critter can be sheared every <b>{Time}</b> to produce <b>{Amount}</b> of <style=\"KKeyword\">{Item}</style>"
@@ -55047,7 +55106,7 @@ msgstr "관심지점"
 #. STRINGS.UI.CLUSTERMAP.ROCKETS.ARTIFACT_MODULE.EMPTY
 msgctxt "STRINGS.UI.CLUSTERMAP.ROCKETS.ARTIFACT_MODULE.EMPTY"
 msgid "Empty"
-msgstr "비우기"
+msgstr "비어있음"
 
 #. STRINGS.UI.CLUSTERMAP.ROCKETS.BURDEN_MODULE.NAME
 msgctxt "STRINGS.UI.CLUSTERMAP.ROCKETS.BURDEN_MODULE.NAME"
@@ -60970,8 +61029,8 @@ msgstr "Steam 창작마당"
 
 #. STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER
 msgctxt "STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER"
-msgid "A BREATH OF FRESH AIR"
-msgstr "A BREATH OF FRESH AIR"
+msgid "SOLAR SWAMPED UPDATE"
+msgstr "SOLAR SWAMPED 업데이트"
 
 #. STRINGS.UI.FRONTEND.MOTD.NEWS_BODY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.NEWS_BODY"
@@ -60986,23 +61045,27 @@ msgstr "토론에 참여하기"
 #. STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY"
 msgid ""
-"Welcome to the newest update <b>A BREATH OF FRESH AIR</b>:\n"
+"Welcome to the <b>SOLAR SWAMPED UPDATE</b>:\n"
 "\n"
-"•<indent=20px>Several buildings and items have been added to the Base Game, including Oxygen Masks, and Meter Valves.</indent>\n"
-"•<indent=20px>Base Game now has all <i>Spaced Out!</i> bug fixes and quality-of-life improvements.</indent>\n"
-"•<indent=20px>Updates to <i>Spaced Out!</i> Colony Imperatives</indent>\n"
-"•<indent=20px>Significant updates to the Modding system, modders please see the forum for upgrade instructions.</indent>\n"
-"•<indent=20px>Toggle between <i>Spaced Out!</i> and Base Game in the main menu without re-downloading the game.</indent>\n"
+"<b><i>Spaced Out!</i></b>\n"
+"•<indent=20px>Added a third Classic Cluster: play on the Swamp Start to try the new biomes in a larger world</indent>\n"
+"•<indent=20px>Variable sunlight intensity per-world, changing the progression of solar panels</indent>\n"
+"•<indent=20px>New Location Sensor and usage restrictions on the Rocket Control Station to keep rockets prepped for their mission</indent>\n"
+"<b>Base Game</b>\n"
+"•<indent=20px>Numerous worldgen fixes to bugs introduced in the last update (Only affects newly generated worlds)</indent>\n"
+"•<indent=20px>Other bug fixes, including resolving several issues with Space Scanners</indent>\n"
 "\n"
 "   Check out the full patch notes for more details!"
 msgstr ""
-"최신 업데이트 <b>A BREATH OF FRESH AIR</b>를 이용해 주셔서 감사합니다.\n"
+"<b>SOLAR SWAMPED 업데이트</b>를 이용해주셔서 감사합니다.\n"
 "\n"
-"•<indent=20px>산소 마스크, 미터 밸브를 비롯한 여러 건물과 아이템이 기본 게임에 추가되었습니다.</indent>\n"
-"•<indent=20px>기본 게임에 이제 모든 <i>Spaced Out!</i> 버그 수정 및 삶의 질 향상이 있습니다.</indent>\n"
-"•<indent=20px><i>Spaced Out!</i> 콜로니 명령</indent> 업데이트\n"
-"•<indent=20px>모드 시스템에 대한 중요한 업데이트, 모더는 포럼에서 업그레이드 지침을 참조하세요.</indent>\n"
-"•<indent=20px>게임을 다시 다운로드하지 않고도 기본 메뉴에서 <i>Spaced Out!</i>과 기본 게임 사이를 전환합니다.</indent>\n"
+"<b><i>Spaced Out!</i></b>\n"
+"•<indent=20px>세 번째 클래식 클러스터 추가: 시작 늪지에서 플레이하여 더 넓은 세계의 새로운 생물군계를 체험해 보세요.</indent>\n"
+"•<indent=20px>세계별 다양한 태양광 강도, 태양 전지판의 진행도 변경</indent>\n"
+"•<indent=20px>로켓이 임무를 수행할 수 있도록 로켓 제어 스테이션의 새로운 위치 센서 및 사용 제한</indent>\n"
+"<b>기본 게임</b>\n"
+"•<indent=20px>마지막 업데이트에서 도입된 버그에 대한 수많은 세계 생성 수정 사항(새로 생성된 세계에만 영향을 줌)</indent>\n"
+"•<indent=20px>우주 스캐너의 여러 문제 해결을 포함한 기타 버그 수정</indent>\n"
 "\n"
 "    자세한 내용은 패치 전문을 확인하세요!"
 
@@ -67511,7 +67574,13 @@ msgstr "이상한 브릭"
 #. STRINGS.UI.SPACEARTIFACTS.DNAMODEL.ARTIFACT
 msgctxt "STRINGS.UI.SPACEARTIFACTS.DNAMODEL.ARTIFACT"
 msgid ""
+"A physical representation of the building blocks of life.\n"
+"\n"
+"This one contains trace amounts of a Genetic Ooze prototype that was once used by Gravitas."
 msgstr ""
+"생명의 구성 요소를 물리적으로 표현한 것입니다.\n"
+"\n"
+"이것은 한 때 그라비타스에서 사용했던 유전자 점액 프로토타입을 미량 포함합니다."
 
 #. STRINGS.UI.SPACEARTIFACTS.DNAMODEL.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.DNAMODEL.DESCRIPTION"
@@ -67868,7 +67937,13 @@ msgstr "루빅스 큐브"
 #. STRINGS.UI.SPACEARTIFACTS.SANDSTONE.ARTIFACT
 msgctxt "STRINGS.UI.SPACEARTIFACTS.SANDSTONE.ARTIFACT"
 msgid ""
+"This sample of sandstone appears to have been processed by the Gravitas Mining Gun that was made available to the general public.\n"
+"\n"
+"Note: Gravitas public Mining Gun model is different than ones used by Duplicants in its larger size, and extra precautionary features added in order to be compliant with national safety standards."
 msgstr ""
+"이 사암 샘플은 일반 대중에게 제공되었던 그라비타스 채굴 총으로 처리된 것으로 보입니다.\n"
+"\n"
+"참고: 그라비타스의 공개 채굴 총 모델은 복제체가 사용하는 모델보다 크기가 더 크며 국가 안전 표준을 준수하기 위해 추가 예방 기능이 추가되었습니다."
 
 #. STRINGS.UI.SPACEARTIFACTS.SANDSTONE.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.SANDSTONE.DESCRIPTION"
@@ -70417,7 +70492,7 @@ msgstr "소독 도구"
 #. STRINGS.UI.TOOLS.EMPTY_PIPE.NAME
 msgctxt "STRINGS.UI.TOOLS.EMPTY_PIPE.NAME"
 msgid "Empty Pipe"
-msgstr "파이프 비우기"
+msgstr "Empty Pipe"
 
 #. STRINGS.UI.TOOLS.EMPTY_PIPE.TOOLACTION
 msgctxt "STRINGS.UI.TOOLS.EMPTY_PIPE.TOOLACTION"
@@ -70652,7 +70727,7 @@ msgstr "알 수 없음"
 #. STRINGS.UI.TOOLS.HARVEST.NAME
 msgctxt "STRINGS.UI.TOOLS.HARVEST.NAME"
 msgid "Harvest"
-msgstr "수확"
+msgstr "Harvest"
 
 #. STRINGS.UI.TOOLS.HARVEST.TOOLACTION
 msgctxt "STRINGS.UI.TOOLS.HARVEST.TOOLACTION"
@@ -71805,8 +71880,8 @@ msgstr "분석된 가공물 없음"
 
 #. STRINGS.UI.UISIDESCREENS.ARTIFACTANALYSISSIDESCREEN.NO_ARTIFACTS_DISCOVERED_TOOLTIP
 msgctxt "STRINGS.UI.UISIDESCREENS.ARTIFACTANALYSISSIDESCREEN.NO_ARTIFACTS_DISCOVERED_TOOLTIP"
-msgid "A skilled artist can analyze artifacts"
-msgstr "숙련된 예술가는 가공물을 분석할 수 있습니다."
+msgid "Analyzing artifacts requires a skilled artist"
+msgstr "가공물을 분석하려면 숙련된 예술가가 필요합니다."
 
 #. STRINGS.UI.UISIDESCREENS.ASSIGNABLESIDESCREEN.ASSIGN_TO_TOOLTIP
 msgctxt "STRINGS.UI.UISIDESCREENS.ASSIGNABLESIDESCREEN.ASSIGN_TO_TOOLTIP"
@@ -72109,6 +72184,21 @@ msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.TITLE"
 msgid "Destination"
 msgstr "목적지점"
 
+#. STRINGS.UI.UISIDESCREENS.CLUSTERLOCATIONFILTERSIDESCREEN.EMPTY_SPACE_ROW
+msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERLOCATIONFILTERSIDESCREEN.EMPTY_SPACE_ROW"
+msgid "In Space"
+msgstr "우주에 있음"
+
+#. STRINGS.UI.UISIDESCREENS.CLUSTERLOCATIONFILTERSIDESCREEN.HEADER
+msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERLOCATIONFILTERSIDESCREEN.HEADER"
+msgid "Send Green signal at locations"
+msgstr "위치에 녹색 신호 전송"
+
+#. STRINGS.UI.UISIDESCREENS.CLUSTERLOCATIONFILTERSIDESCREEN.TITLE
+msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERLOCATIONFILTERSIDESCREEN.TITLE"
+msgid "Location Filter"
+msgstr "위치 필터"
+
 #. STRINGS.UI.UISIDESCREENS.CLUSTERWORLDSIDESCREEN.TITLE
 msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERWORLDSIDESCREEN.TITLE"
 msgid "Planetoid"
@@ -72222,7 +72312,7 @@ msgstr "{0} % "
 #. STRINGS.UI.UISIDESCREENS.COUNTER_SIDE_SCREEN.CURRENT_COUNT_SIMPLE
 msgctxt "STRINGS.UI.UISIDESCREENS.COUNTER_SIDE_SCREEN.CURRENT_COUNT_SIMPLE"
 msgid "{0} of "
-msgstr "{0} / "
+msgstr "{0} /"
 
 #. STRINGS.UI.UISIDESCREENS.COUNTER_SIDE_SCREEN.DECREMENT_MODE
 msgctxt "STRINGS.UI.UISIDESCREENS.COUNTER_SIDE_SCREEN.DECREMENT_MODE"
@@ -74159,18 +74249,34 @@ msgstr "로켓 모듈"
 
 #. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.AUTOMATION
 msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.AUTOMATION"
-msgid "Automation controlled"
+msgid "Automation Controlled"
 msgstr "자동화 제어됨"
 
 #. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.AUTOMATION_TOOLTIP
 msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.AUTOMATION_TOOLTIP"
-msgid "This setting is managed by automation"
-msgstr "이 설정은 자동화로 관리됩니다."
+msgid ""
+"Building restrictions are managed by automation\n"
+"\n"
+"Buildings with their access restricted cannot be operated, though they can still be filled"
+msgstr ""
+"건조물 제한은 자동화로 관리됩니다.\n"
+"\n"
+"접근이 제한된 건조물은 여전히 채워질 수 있지만 작동할 수 없습니다."
 
 #. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.BUILDING_RESTRICTIONS_LABEL
 msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.BUILDING_RESTRICTIONS_LABEL"
-msgid "Building Usage Restrictions"
-msgstr "건조물 사용 제한"
+msgid "Interior Building Restrictions"
+msgstr "내부 건조물 제한"
+
+#. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.GROUNDED_RESTRICTION_BUTTON
+msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.GROUNDED_RESTRICTION_BUTTON"
+msgid "Grounded"
+msgstr "착륙함"
+
+#. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.GROUNDED_RESTRICTION_BUTTON_TOOLTIP
+msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.GROUNDED_RESTRICTION_BUTTON_TOOLTIP"
+msgid "Buildings with their access restricted cannot be operated while grounded, though they can still be filled"
+msgstr "접근이 제한된 건조물은 건조물을 채울 수 있지만 지면에 있는 동안에는 작동할 수 없습니다."
 
 #. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.NONE_RESTRICTION_BUTTON
 msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.NONE_RESTRICTION_BUTTON"
@@ -74179,23 +74285,8 @@ msgstr "없음"
 
 #. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.NONE_RESTRICTION_BUTTON_TOOLTIP
 msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.NONE_RESTRICTION_BUTTON_TOOLTIP"
-msgid "Buildings are not restricted."
-msgstr "건조물은 제한되지 않습니다."
-
-#. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.SPACE_RESTRICTION_BUTTON
-msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.SPACE_RESTRICTION_BUTTON"
-msgid "Space Use Only"
-msgstr "우주 사용 전용"
-
-#. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.SPACE_RESTRICTION_BUTTON_TOOLTIP
-msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.SPACE_RESTRICTION_BUTTON_TOOLTIP"
-msgid "While not in space operation and storage withdrawal of certain buildings are restricted."
-msgstr "우주가 아닌 동안 특정 건조물의 작동 및 저장소 물품 회수가 제한됩니다."
-
-#. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.TITLE
-msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.TITLE"
-msgid "Building Usage Restrictions"
-msgstr "건조물 사용 제한"
+msgid "There are no restrictions on buildings inside this rocket"
+msgstr "이 로켓 내부의 건조물에는 제한이 없습니다."
 
 #. STRINGS.UI.UISIDESCREENS.ROLESTATION.OPENROLESBUTTON
 msgctxt "STRINGS.UI.UISIDESCREENS.ROLESTATION.OPENROLESBUTTON"
@@ -75509,7 +75600,7 @@ msgstr "이 복제체의 도달 범위 안에 있는 영역을 숨깁니다."
 #. STRINGS.UI.USERMENUACTIONS.DUMP.NAME
 msgctxt "STRINGS.UI.USERMENUACTIONS.DUMP.NAME"
 msgid "Empty"
-msgstr "비우기"
+msgstr "비어있음"
 
 #. STRINGS.UI.USERMENUACTIONS.DUMP.NAME_OFF
 msgctxt "STRINGS.UI.USERMENUACTIONS.DUMP.NAME_OFF"
@@ -75605,7 +75696,7 @@ msgstr "이 복제체를 카메라로 추적합니다."
 #. STRINGS.UI.USERMENUACTIONS.HARVEST.NAME
 msgctxt "STRINGS.UI.USERMENUACTIONS.HARVEST.NAME"
 msgid "Harvest"
-msgstr "수확"
+msgstr "Harvest"
 
 #. STRINGS.UI.USERMENUACTIONS.HARVEST.TOOLTIP
 msgctxt "STRINGS.UI.USERMENUACTIONS.HARVEST.TOOLTIP"
@@ -76219,13 +76310,13 @@ msgstr "제어되지 않음"
 
 #. STRINGS.UI.USERMENUACTIONS.ROCKETUSAGERESTRICTION.TOOLTIP_CONTROLLED
 msgctxt "STRINGS.UI.USERMENUACTIONS.ROCKETUSAGERESTRICTION.TOOLTIP_CONTROLLED"
-msgid "This building's operation and storage is controlled by the <link=\"ROCKETCONTROLSTATION\">Rocket Control Station</link>."
-msgstr "이 건조물의 작동과 저장소는 <link=\"ROCKETCONTROLSTATION\">로켓 제어 스테이션</link>이 제어합니다."
+msgid "Allow this building's operation to be controlled by a <link=\"ROCKETCONTROLSTATION\">Rocket Control Station</link>"
+msgstr "<link=\"ROCKETCONTROLSTATION\">로켓 제어 스테이션</link>에서 이 건조물의 작동을 제어하도록 허용"
 
 #. STRINGS.UI.USERMENUACTIONS.ROCKETUSAGERESTRICTION.TOOLTIP_UNCONTROLLED
 msgctxt "STRINGS.UI.USERMENUACTIONS.ROCKETUSAGERESTRICTION.TOOLTIP_UNCONTROLLED"
-msgid "This building is not controlled by the <link=\"ROCKETCONTROLSTATION\">Rocket Control Station</link>."
-msgstr "이 건조물은 <link=\"ROCKETCONTROLSTATION\">로켓 제어 스테이션</link>이 제어하지 않습니다."
+msgid "Do not allow this building to be controlled by a <link=\"ROCKETCONTROLSTATION\">Rocket Control Station</link>"
+msgstr "이 건조물이 <link=\"ROCKETCONTROLSTATION\">로켓 제어 스테이션</link>에서 제어되는 것을 허용하지 않음"
 
 #. STRINGS.UI.USERMENUACTIONS.SELECTRESEARCH.NAME
 msgctxt "STRINGS.UI.USERMENUACTIONS.SELECTRESEARCH.NAME"
@@ -77512,11 +77603,11 @@ msgstr "습지 소행성"
 #. STRINGS.WORLDS.MEDIUMFORESTYRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION
 msgctxt "STRINGS.WORLDS.MEDIUMFORESTYRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION"
 msgid ""
-"A large-ish partially with a frozen radioactive core.\n"
+"A large-ish forested asteroid with a frozen radioactive core.\n"
 "\n"
 "<smallcaps>While Radioactive Forest Asteroid are largely foresty, they also contain a great deal of rust and ocean.</smallcaps>"
 msgstr ""
-"부분적으로 얼어붙은 큰 덩어리로 방사성 핵이 있습니다.\n"
+"큰 숲 소행성으로 언 방사성 핵이 있습니다.\n"
 "\n"
 "<smallcaps>방사성 숲 소행성은 대부분 숲이지만 녹과 바다도 많이 포함하고 있습니다.</smallcaps>"
 
@@ -77544,11 +77635,11 @@ msgstr "방사성 늪 소행성"
 #. STRINGS.WORLDS.MEDIUMSANDYRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION
 msgctxt "STRINGS.WORLDS.MEDIUMSANDYRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION"
 msgid ""
-"A large-ish world with a radioactive core.\n"
+"A large-ish terra world with a radioactive core.\n"
 "\n"
 "<smallcaps>The Radioactive Terra Asteroid is fairly dry and sandy, but does contain areas of jungle.</smallcaps>"
 msgstr ""
-"방사성 핵을 가진 약간 큰 세계.\n"
+"방사성 핵을 가진 약간 큰 땅 세계.\n"
 "\n"
 "<smallcaps>방사성 테라 소행성은 대체로 건조하고 모래가 많지만 정글 구역이 포함되어 있습니다.</smallcaps>"
 

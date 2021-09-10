@@ -167,6 +167,16 @@ public class KCrashReporter : MonoBehaviour
 		{
 			return;
 		}
+		if (msg != null && msg.StartsWith("Failed to load cursor"))
+		{
+			ReportErrorDevNotification("Cursor load failed", Environment.StackTrace, $"LogType: '{type}' message='{msg}'");
+			return;
+		}
+		if (msg != null && msg.StartsWith("Failed to save a temporary cursor"))
+		{
+			ReportErrorDevNotification("Cursor save failed", Environment.StackTrace, $"LogType: '{type}' message='{msg}'");
+			return;
+		}
 		if (type == LogType.Exception)
 		{
 			RestartWarning.ShouldWarn = true;
@@ -335,13 +345,14 @@ public class KCrashReporter : MonoBehaviour
 		return "";
 	}
 
-	public static void ReportErrorDevNotification(string notification_name, string stack_trace, string details)
+	public static void ReportErrorDevNotification(string notification_name, string stack_trace, string details = "")
 	{
 		if (previouslyReportedDevNotifications == null)
 		{
 			previouslyReportedDevNotifications = new HashSet<int>();
 		}
 		details = "DevNotification: " + notification_name + " - " + details;
+		Debug.Log(details);
 		int hashValue = new HashedString(notification_name).HashValue;
 		bool num = hasReportedError;
 		if (!previouslyReportedDevNotifications.Contains(hashValue))
@@ -430,7 +441,7 @@ public class KCrashReporter : MonoBehaviour
 					list.Add(text2);
 				}
 			}
-			if (userMessage == UI.CRASHSCREEN.BODY.text)
+			if (userMessage == UI.CRASHSCREEN.BODY.text || userMessage.IsNullOrWhiteSpace())
 			{
 				userMessage = "";
 			}
@@ -450,7 +461,7 @@ public class KCrashReporter : MonoBehaviour
 				error.callstack = error.callstack + "\n" + Guid.NewGuid().ToString();
 			}
 			error.fullstack = $"{msg}\n\n{stack_trace}";
-			error.build = 474321;
+			error.build = 477203;
 			error.log = GetLogContents();
 			error.summaryline = string.Join("\n", list.ToArray());
 			error.user_message = userMessage;

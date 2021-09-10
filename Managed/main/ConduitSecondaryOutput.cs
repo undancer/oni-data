@@ -13,6 +13,10 @@ public class ConduitSecondaryOutput : KMonoBehaviour, ISecondaryOutput
 
 	public CellOffset GetSecondaryConduitOffset(ConduitType type)
 	{
-		return portInfo.offset;
+		if (type == portInfo.conduitType)
+		{
+			return portInfo.offset;
+		}
+		return CellOffset.none;
 	}
 }

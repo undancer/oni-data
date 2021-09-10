@@ -22,7 +22,7 @@ public class RailGunPayloadConfig : IEntityConfig
 			GameTags.IgnoreMaterialCategory,
 			GameTags.Experimental
 		});
-		gameObject.AddOrGetDef<RailGunPayload.Def>();
+		gameObject.AddOrGetDef<RailGunPayload.Def>().attractToBeacons = true;
 		gameObject.AddComponent<LoopingSounds>();
 		Storage storage = BuildingTemplates.CreateDefaultStorage(gameObject);
 		storage.showInUI = true;
@@ -33,13 +33,16 @@ public class RailGunPayloadConfig : IEntityConfig
 		DropAllWorkable dropAllWorkable = gameObject.AddOrGet<DropAllWorkable>();
 		dropAllWorkable.dropWorkTime = 30f;
 		dropAllWorkable.choreTypeID = Db.Get().ChoreTypes.Fetch.Id;
+		dropAllWorkable.ConfigureMultitoolContext("build", EffectConfigs.BuildSplashId);
 		ClusterDestinationSelector clusterDestinationSelector = gameObject.AddOrGet<ClusterDestinationSelector>();
 		clusterDestinationSelector.assignable = false;
 		clusterDestinationSelector.shouldPointTowardsPath = true;
 		clusterDestinationSelector.requireAsteroidDestination = true;
-		RailgunPayloadClusterGridEntity railgunPayloadClusterGridEntity = gameObject.AddOrGet<RailgunPayloadClusterGridEntity>();
-		railgunPayloadClusterGridEntity.isWorldEntity = true;
-		railgunPayloadClusterGridEntity.NoWaitInOrbit = true;
+		BallisticClusterGridEntity ballisticClusterGridEntity = gameObject.AddOrGet<BallisticClusterGridEntity>();
+		ballisticClusterGridEntity.clusterAnimName = "payload01_kanim";
+		ballisticClusterGridEntity.isWorldEntity = true;
+		ballisticClusterGridEntity.NoWaitInOrbit = true;
+		ballisticClusterGridEntity.nameKey = new StringKey("STRINGS.ITEMS.RAILGUNPAYLOAD.NAME");
 		gameObject.AddOrGet<ClusterTraveler>();
 		return gameObject;
 	}

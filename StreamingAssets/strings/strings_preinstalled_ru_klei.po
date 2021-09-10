@@ -2114,6 +2114,16 @@ msgctxt "STRINGS.BUILDING.STATUSITEMS.NORMAL.TOOLTIP"
 msgid "Nothing out of the ordinary here"
 msgstr "Ничего странного не происходит"
 
+#. STRINGS.BUILDING.STATUSITEMS.NOROCKETRESTRICTION.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.NOROCKETRESTRICTION.NAME"
+msgid "Not Controlled"
+msgstr "Не контролируется"
+
+#. STRINGS.BUILDING.STATUSITEMS.NOROCKETRESTRICTION.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.NOROCKETRESTRICTION.TOOLTIP"
+msgid "This building is not controlled by a <link=\"ROCKETCONTROLSTATION\">Rocket Control Station</link>"
+msgstr "Это строение не контролируется <link=\"ROCKETCONTROLSTATION\">станцией управления ракетой</link>."
+
 #. STRINGS.BUILDING.STATUSITEMS.NOSTORAGEFILTERSET.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.NOSTORAGEFILTERSET.NAME"
 msgid "Filters Not Designated"
@@ -2721,33 +2731,23 @@ msgstr "Возможно, длинные ракеты не смогут приз
 
 #. STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONACTIVE.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONACTIVE.NAME"
-msgid "Restricted Access"
-msgstr "Ограниченный доступ"
+msgid "Access: Restricted"
+msgstr "Доступ: ограничен"
 
 #. STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONACTIVE.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONACTIVE.TOOLTIP"
-msgid "This building cannot be operated and storage cannot be withdrawn from."
-msgstr "Постройка недоступна для использования. Из хранилища невозможно извлечь содержимое."
+msgid "This building cannot be operated while restricted, though it can be filled\n\nControlled by a <link=\"ROCKETCONTROLSTATION\">Rocket Control Station</link>"
+msgstr "Пока доступ ограничен, строение недоступно для использования, но его можно заполнять\n\nКонтролируется <link=\"ROCKETCONTROLSTATION\">станцией управления ракетой</link>"
 
-#. STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONCONTROLLED.NAME
-msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONCONTROLLED.NAME"
-msgid "Controlled Building"
-msgstr "Строение контролируется"
+#. STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONINACTIVE.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONINACTIVE.NAME"
+msgid "Access: Not Restricted"
+msgstr "Доступ: не ограничен"
 
-#. STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONCONTROLLED.TOOLTIP
-msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONCONTROLLED.TOOLTIP"
-msgid "This building is controlled by the <link=\"ROCKETCONTROLSTATION\">Rocket Control Station</link>."
-msgstr "Это строение контролируется <link=\"ROCKETCONTROLSTATION\">станцией управления ракетой</link>."
-
-#. STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONUNCONTROLLED.NAME
-msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONUNCONTROLLED.NAME"
-msgid "Uncontrolled Building"
-msgstr "Строение не контролируется"
-
-#. STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONUNCONTROLLED.TOOLTIP
-msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONUNCONTROLLED.TOOLTIP"
-msgid "This building is not controlled by the <link=\"ROCKETCONTROLSTATION\">Rocket Control Station</link>."
-msgstr "Это строение не контролируется <link=\"ROCKETCONTROLSTATION\">станцией управления ракетой</link>."
+#. STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONINACTIVE.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETRESTRICTIONINACTIVE.TOOLTIP"
+msgid "This building's operation is not restricted\n\nControlled by a <link=\"ROCKETCONTROLSTATION\">Rocket Control Station</link>"
+msgstr "Использование строения не ограничено\n\nЭто строение не контролируется <link=\"ROCKETCONTROLSTATION\">станцией управления ракетой</link>"
 
 #. STRINGS.BUILDING.STATUSITEMS.ROCKETSTRANDED.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.ROCKETSTRANDED.NAME"
@@ -3066,8 +3066,8 @@ msgstr "Недостаточно печатных станков {progress}"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_INSUFFICIENT_COLONIES.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_INSUFFICIENT_COLONIES.TOOLTIP"
-msgid "This device relies on a network of activated Printing Pods {progress}"
-msgstr "Это устройство работает благодаря сети активированных печатных станков {progress}"
+msgid "To open the Temporal Tear, this device relies on a network of activated Printing Pods {progress}"
+msgstr "Это устройство открывает временной разлом благодаря сети активированных печатных станков {progress}"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_LOS.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_NO_LOS.NAME"
@@ -3096,8 +3096,8 @@ msgstr "Прогресс зарядки: {progress}"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_PROGRESS.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_PROGRESS.TOOLTIP"
-msgid "This device must be charged with a high number of Radbolts. Operation can commence once this device is fully charged"
-msgstr "Устройство должно быть заряжено большим количеством радболтов. Действие начнется, как только это устройство будет полностью заряжено"
+msgid "This device must be charged with a high number of Radbolts\n\nOperation can commence once this device is fully charged"
+msgstr "Устройство должно быть заряжено большим количеством радболтов\n\nДействие начнется, как только это устройство будет полностью заряжено"
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_READY.NOTIFICATION
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_READY.NOTIFICATION"
@@ -7034,6 +7034,21 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICALARM.NAME"
 msgid "<link=\"LOGICALARM\">Automated Notifier</link>"
 msgstr "<link=\"LOGICALARM\">Автоматизированный уведомитель</link>"
 
+#. STRINGS.BUILDINGS.PREFABS.LOGICCLUSTERLOCATIONSENSOR.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICCLUSTERLOCATIONSENSOR.DESC"
+msgid "Starmap Location sensors can signal when a spacecraft is at a certain location"
+msgstr "Сенсор положения на звездной карте оповестит вас, что космический корабль прибыл в место назначения"
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICCLUSTERLOCATIONSENSOR.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICCLUSTERLOCATIONSENSOR.EFFECT"
+msgid "Send <b><style=\"logic_on\">Green Signals</style></b> at the chosen starmap locations and <b><style=\"logic_off\">Red Signals</style></b> everywhere else."
+msgstr "Посылает <b><style=\"logic_on\">зеленые сигналы</style></b> в выбранное место на звездной карте и <b><style=\"logic_off\">красные сигналы</style></b> в другие места."
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICCLUSTERLOCATIONSENSOR.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICCLUSTERLOCATIONSENSOR.NAME"
+msgid "<link=\"LOGICCLUSTERLOCATIONSENSOR\">Starmap Location Sensor</link>"
+msgstr "<link=\"LOGICCLUSTERLOCATIONSENSOR\">Сенсор положения на звездной карте</link>"
+
 #. STRINGS.BUILDINGS.PREFABS.LOGICCOUNTER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICCOUNTER.DESC"
 msgid "For numbers higher than ten connect multiple counters together."
@@ -9846,8 +9861,8 @@ msgstr "Кто-то должен щелкать по кнопкам управл
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.EFFECT"
-msgid "Allows Duplicants to use pilot-operated rockets.\n\nAssigned Duplicants must have the <link=\"PILOT\">Rocket Piloting</link> skill."
-msgstr "Позволяет дубликантам использовать ракеты с пилотным управлением.\n\nНазначенные дубликанты должны обладать навыком \"<link=\"PILOT\">пилотирование ракеты</link>\"."
+msgid "Allows Duplicants to use pilot-operated rockets and control access to interior buildings.\n\nAssigned Duplicants must have the <link=\"PILOT\">Rocket Piloting</link> skill."
+msgstr "Позволяет дубликантам использовать ракеты с пилотным управлением и регулировать доступ во внутренние строения.\n\nНазначенные дубликанты должны обладать навыком \"<link=\"PILOT\">пилотирование ракеты</link>\"."
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT"
@@ -9856,13 +9871,13 @@ msgstr "Ограничение использования строений"
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT_ACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT_ACTIVE"
-msgid "<b><style=\"logic_on\">Green Signal</style></b>: Restrict buildings."
-msgstr "<b><style=\"logic_on\">Зеленый сигнал</style></b>: ограничить использование строений."
+msgid "<b><style=\"logic_on\">Green Signal</style></b>: Restrict access to interior buildings"
+msgstr "<b><style=\"logic_on\">Зеленый сигнал</style></b>: ограничить доступ во внутренние строения"
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT_INACTIVE"
-msgid "<b><style=\"logic_off\">Red Signal</style></b>: Unrestrict buildings."
-msgstr "<b><style=\"logic_off\">Красный сигнал</style></b>: не ограничивать использование строений."
+msgid "<b><style=\"logic_off\">Red Signal</style></b>: Unrestrict access to interior buildings"
+msgstr "<b><style=\"logic_off\">Красный сигнал</style></b>: не ограничивать доступ во внутренние строения"
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.NAME"
@@ -44349,6 +44364,16 @@ msgctxt "STRINGS.UI.BUILDINGEFFECTS.RESEARCH_MATERIALS"
 msgid "{0}: {1} per <link=\"RESEARCH\">Research</link> point"
 msgstr "{0}: {1} за каждое очко <link=\"RESEARCH\">исследования</link>"
 
+#. STRINGS.UI.BUILDINGEFFECTS.ROCKETRESTRICTION_BUILDINGS
+msgctxt "STRINGS.UI.BUILDINGEFFECTS.ROCKETRESTRICTION_BUILDINGS"
+msgid "    • Buildings: {buildinglist}"
+msgstr "    • Строения: {buildinglist}"
+
+#. STRINGS.UI.BUILDINGEFFECTS.ROCKETRESTRICTION_HEADER
+msgctxt "STRINGS.UI.BUILDINGEFFECTS.ROCKETRESTRICTION_HEADER"
+msgid "Restriction Control:"
+msgstr "Ограниченный доступ:"
+
 #. STRINGS.UI.BUILDINGEFFECTS.SCALE_GROWTH
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.SCALE_GROWTH"
 msgid "Shearable {Item}: {Amount} per {Time}"
@@ -44833,6 +44858,16 @@ msgstr "Нужно <style=\"KKeyword\">семя</style> для посадки"
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.RESEARCH_MATERIALS"
 msgid "This research station consumes <style=\"consumed\">{1}</style> of <style=\"KKeyword\">{0}</style> for each <style=\"KKeyword\">Research Point</style> produced"
 msgstr "Эта исследовательская станция расходует <style=\"consumed\">{1}</style> (<style=\"KKeyword\">{0}</style>) за каждое <style=\"KKeyword\">очко исследования</style>"
+
+#. STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.ROCKETRESTRICTION_BUILDINGS
+msgctxt "STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.ROCKETRESTRICTION_BUILDINGS"
+msgid "This station controls the operational status of the following buildings:\n\n{buildinglist}"
+msgstr "Станция контролирует использование следующих строений:\n\n{buildinglist}"
+
+#. STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.ROCKETRESTRICTION_HEADER
+msgctxt "STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.ROCKETRESTRICTION_HEADER"
+msgid "Controls whether a building is operational within a rocket interior"
+msgstr "Регулирует использование внутренних строений ракеты"
 
 #. STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.SCALE_GROWTH
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.SCALE_GROWTH"
@@ -50471,8 +50506,8 @@ msgstr "МАСТЕРСКАЯ STEAM"
 
 #. STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER
 msgctxt "STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER"
-msgid "A BREATH OF FRESH AIR"
-msgstr "ГЛОТОК ВОЗДУХА"
+msgid "SOLAR SWAMPED UPDATE"
+msgstr "ОБНОВЛЕНИЕ \"СОЛНЕЧНОЕ БОЛОТО\""
 
 #. STRINGS.UI.FRONTEND.MOTD.NEWS_BODY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.NEWS_BODY"
@@ -50486,8 +50521,8 @@ msgstr "ПРИСОЕДИНИТЬСЯ К ОБСУЖДЕНИЮ"
 
 #. STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY"
-msgid "Welcome to the newest update <b>A BREATH OF FRESH AIR</b>:\n\n•<indent=20px>Several buildings and items have been added to the Base Game, including Oxygen Masks, and Meter Valves.</indent>\n•<indent=20px>Base Game now has all <i>Spaced Out!</i> bug fixes and quality-of-life improvements.</indent>\n•<indent=20px>Updates to <i>Spaced Out!</i> Colony Imperatives</indent>\n•<indent=20px>Significant updates to the Modding system, modders please see the forum for upgrade instructions.</indent>\n•<indent=20px>Toggle between <i>Spaced Out!</i> and Base Game in the main menu without re-downloading the game.</indent>\n\n   Check out the full patch notes for more details!"
-msgstr "Добро пожаловать в обновление <b>ГЛОТОК ВОЗДУХА</b>!\n\n•<indent=20px>В основную игру добавлены несколько построек и предметов, в том числе кислородные маски и дозирующие клапаны.</indent>\n•<indent=20px>В основной игре теперь исправлены все ошибки, от которых мы избавились в <i>Spaced Out!</i>, и внесены различные полезные изменения.</indent>\n•<indent=20px>Обновления первостепенных задач колонизации в <i>Spaced Out!</i></indent>\n•<indent=20px>Значительно обновлена система модов: посмотрите изменения на форуме.</indent>\n•<indent=20px>Переключаться между <i>Spaced Out!</i> и основной игрой теперь можно без перезагрузки.</indent>\n\n   Прочитайте полный список обновлений, чтобы узнать больше!"
+msgid "Welcome to the <b>SOLAR SWAMPED UPDATE</b>:\n\n<b><i>Spaced Out!</i></b>\n•<indent=20px>Added a third Classic Cluster: play on the Swamp Start to try the new biomes in a larger world</indent>\n•<indent=20px>Variable sunlight intensity per-world, changing the progression of solar panels</indent>\n•<indent=20px>New Location Sensor and usage restrictions on the Rocket Control Station to keep rockets prepped for their mission</indent>\n<b>Base Game</b>\n•<indent=20px>Numerous worldgen fixes to bugs introduced in the last update (Only affects newly generated worlds)</indent>\n•<indent=20px>Other bug fixes, including resolving several issues with Space Scanners</indent>\n\n   Check out the full patch notes for more details!"
+msgstr "Добро пожаловать в обновление <b>СОЛНЕЧНОЕ БОЛОТО</b>:\n\n<b><i>Spaced Out!</i></b>\n•<indent=20px>Добавлено третье классическое скопление — болотистое. Начните с него и исследуйте новые биомы в расширенном мире.</indent>\n•<indent=20px>Разная яркость солнечного света в каждом мире теперь влияет на прогресс солнечных панелей.</indent>\n•<indent=20px>Новые сенсоры положения и ограничения доступа на станции управления ракетой помогут подготовить ракеты к миссиям.</indent>\n<b>Основная игра</b>\n•<indent=20px>Многочисленные исправления ошибок генерации мира из последнего обновления (влияют только на новые миры).</indent>\n•<indent=20px>Другие исправления, в том числе проблем с космическими сканерами.</indent>\n\nПрочитайте полный список обновлений, чтобы узнать больше!"
 
 #. STRINGS.UI.FRONTEND.MOTD.UPDATE_TEXT
 msgctxt "STRINGS.UI.FRONTEND.MOTD.UPDATE_TEXT"
@@ -56211,8 +56246,8 @@ msgstr "Странный кирпич"
 
 #. STRINGS.UI.SPACEARTIFACTS.DNAMODEL.ARTIFACT
 msgctxt "STRINGS.UI.SPACEARTIFACTS.DNAMODEL.ARTIFACT"
-msgid ""
-msgstr ""
+msgid "A physical representation of the building blocks of life.\n\nThis one contains trace amounts of a Genetic Ooze prototype that was once used by Gravitas."
+msgstr "Физическая модель строительных блоков жизни.\n\nНа ней присутствуют следы прототипа генной слизи, когда-то используемой в Gravitas."
 
 #. STRINGS.UI.SPACEARTIFACTS.DNAMODEL.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.DNAMODEL.DESCRIPTION"
@@ -56526,8 +56561,8 @@ msgstr "Кубик Рубика"
 
 #. STRINGS.UI.SPACEARTIFACTS.SANDSTONE.ARTIFACT
 msgctxt "STRINGS.UI.SPACEARTIFACTS.SANDSTONE.ARTIFACT"
-msgid ""
-msgstr ""
+msgid "This sample of sandstone appears to have been processed by the Gravitas Mining Gun that was made available to the general public.\n\nNote: Gravitas public Mining Gun model is different than ones used by Duplicants in its larger size, and extra precautionary features added in order to be compliant with national safety standards."
+msgstr "Судя по всему, этот образец песчаника прошел обработку шахтерской пушкой Gravitas, которая стала доступна для массового использования.\n\nПримечание: \"народная\" модель шахтерской пушки Gravitas отличается от той, что применяют дубликанты: она больше по размеру и оснащена дополнительными элементами безопасности, чтобы соответствовать госстандартам безопасности."
 
 #. STRINGS.UI.SPACEARTIFACTS.SANDSTONE.DESCRIPTION
 msgctxt "STRINGS.UI.SPACEARTIFACTS.SANDSTONE.DESCRIPTION"
@@ -60026,8 +60061,8 @@ msgstr "Нет изученных артефактов"
 
 #. STRINGS.UI.UISIDESCREENS.ARTIFACTANALYSISSIDESCREEN.NO_ARTIFACTS_DISCOVERED_TOOLTIP
 msgctxt "STRINGS.UI.UISIDESCREENS.ARTIFACTANALYSISSIDESCREEN.NO_ARTIFACTS_DISCOVERED_TOOLTIP"
-msgid "A skilled artist can analyze artifacts"
-msgstr "Артефакты может проанализировать умелый художник"
+msgid "Analyzing artifacts requires a skilled artist"
+msgstr "Для анализа артефактов нужен умелый художник"
 
 #. STRINGS.UI.UISIDESCREENS.ASSIGNABLESIDESCREEN.ASSIGN_TO_TOOLTIP
 msgctxt "STRINGS.UI.UISIDESCREENS.ASSIGNABLESIDESCREEN.ASSIGN_TO_TOOLTIP"
@@ -60323,6 +60358,21 @@ msgstr "Приземление невозможно"
 msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.TITLE"
 msgid "Destination"
 msgstr "Место назначения"
+
+#. STRINGS.UI.UISIDESCREENS.CLUSTERLOCATIONFILTERSIDESCREEN.EMPTY_SPACE_ROW
+msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERLOCATIONFILTERSIDESCREEN.EMPTY_SPACE_ROW"
+msgid "In Space"
+msgstr "В космосе"
+
+#. STRINGS.UI.UISIDESCREENS.CLUSTERLOCATIONFILTERSIDESCREEN.HEADER
+msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERLOCATIONFILTERSIDESCREEN.HEADER"
+msgid "Send Green signal at locations"
+msgstr "Послать зеленый сигнал в локации"
+
+#. STRINGS.UI.UISIDESCREENS.CLUSTERLOCATIONFILTERSIDESCREEN.TITLE
+msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERLOCATIONFILTERSIDESCREEN.TITLE"
+msgid "Location Filter"
+msgstr "Фильтр локаций"
 
 #. STRINGS.UI.UISIDESCREENS.CLUSTERWORLDSIDESCREEN.TITLE
 msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERWORLDSIDESCREEN.TITLE"
@@ -62206,43 +62256,38 @@ msgstr "Ракетный модуль"
 
 #. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.AUTOMATION
 msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.AUTOMATION"
-msgid "Automation controlled"
+msgid "Automation Controlled"
 msgstr "Автоматическое управление"
 
 #. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.AUTOMATION_TOOLTIP
 msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.AUTOMATION_TOOLTIP"
-msgid "This setting is managed by automation"
-msgstr "Эта настройка регулируется автоматически"
+msgid "Building restrictions are managed by automation\n\nBuildings with their access restricted cannot be operated, though they can still be filled"
+msgstr "Ограничения использования строений контролируются автоматически\n\nПока доступ ограничен, строение недоступно для использования, но его можно заполнять"
 
 #. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.BUILDING_RESTRICTIONS_LABEL
 msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.BUILDING_RESTRICTIONS_LABEL"
-msgid "Building Usage Restrictions"
-msgstr "Ограничения использования строений"
+msgid "Interior Building Restrictions"
+msgstr "Ограничения для внутренних строений"
+
+#. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.GROUNDED_RESTRICTION_BUTTON
+msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.GROUNDED_RESTRICTION_BUTTON"
+msgid "Grounded"
+msgstr "На земле"
+
+#. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.GROUNDED_RESTRICTION_BUTTON_TOOLTIP
+msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.GROUNDED_RESTRICTION_BUTTON_TOOLTIP"
+msgid "Buildings with their access restricted cannot be operated while grounded, though they can still be filled"
+msgstr "Пока доступ ограничен, строение недоступно для использования на земле, но его можно заполнять"
 
 #. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.NONE_RESTRICTION_BUTTON
 msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.NONE_RESTRICTION_BUTTON"
 msgid "None"
-msgstr "Без опыта"
+msgstr "Нет"
 
 #. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.NONE_RESTRICTION_BUTTON_TOOLTIP
 msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.NONE_RESTRICTION_BUTTON_TOOLTIP"
-msgid "Buildings are not restricted."
-msgstr "У строений нет ограничений."
-
-#. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.SPACE_RESTRICTION_BUTTON
-msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.SPACE_RESTRICTION_BUTTON"
-msgid "Space Use Only"
-msgstr "Только для космического использования"
-
-#. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.SPACE_RESTRICTION_BUTTON_TOOLTIP
-msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.SPACE_RESTRICTION_BUTTON_TOOLTIP"
-msgid "While not in space operation and storage withdrawal of certain buildings are restricted."
-msgstr "Вне космических миссий использование некоторых зданий и извлечение припасов из некоторых хранилищ ограничено."
-
-#. STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.TITLE
-msgctxt "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN.TITLE"
-msgid "Building Usage Restrictions"
-msgstr "Ограничения использования строений"
+msgid "There are no restrictions on buildings inside this rocket"
+msgstr "Использование строений внутри этой ракеты не ограничено"
 
 #. STRINGS.UI.UISIDESCREENS.ROLESTATION.OPENROLESBUTTON
 msgctxt "STRINGS.UI.UISIDESCREENS.ROLESTATION.OPENROLESBUTTON"
@@ -64016,13 +64061,13 @@ msgstr "Неограниченно"
 
 #. STRINGS.UI.USERMENUACTIONS.ROCKETUSAGERESTRICTION.TOOLTIP_CONTROLLED
 msgctxt "STRINGS.UI.USERMENUACTIONS.ROCKETUSAGERESTRICTION.TOOLTIP_CONTROLLED"
-msgid "This building's operation and storage is controlled by the <link=\"ROCKETCONTROLSTATION\">Rocket Control Station</link>."
-msgstr "Управление этим зданием и его хранилищем контролируется <link=\"ROCKETCONTROLSTATION\">станцией управления ракетой</link>."
+msgid "Allow this building's operation to be controlled by a <link=\"ROCKETCONTROLSTATION\">Rocket Control Station</link>"
+msgstr "Разрешить <link=\"ROCKETCONTROLSTATION\">станции управления ракетой</link> контролировать использование этого строения"
 
 #. STRINGS.UI.USERMENUACTIONS.ROCKETUSAGERESTRICTION.TOOLTIP_UNCONTROLLED
 msgctxt "STRINGS.UI.USERMENUACTIONS.ROCKETUSAGERESTRICTION.TOOLTIP_UNCONTROLLED"
-msgid "This building is not controlled by the <link=\"ROCKETCONTROLSTATION\">Rocket Control Station</link>."
-msgstr "Это строение не контролируется <link=\"ROCKETCONTROLSTATION\">станцией управления ракетой</link>."
+msgid "Do not allow this building to be controlled by a <link=\"ROCKETCONTROLSTATION\">Rocket Control Station</link>"
+msgstr "Запретить <link=\"ROCKETCONTROLSTATION\">станции управления ракетой</link> контролировать использование этого строения"
 
 #. STRINGS.UI.USERMENUACTIONS.SELECTRESEARCH.NAME
 msgctxt "STRINGS.UI.USERMENUACTIONS.SELECTRESEARCH.NAME"
@@ -65206,8 +65251,8 @@ msgstr "Астероид с топью"
 
 #. STRINGS.WORLDS.MEDIUMFORESTYRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION
 msgctxt "STRINGS.WORLDS.MEDIUMFORESTYRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION"
-msgid "A large-ish partially with a frozen radioactive core.\n\n<smallcaps>While Radioactive Forest Asteroid are largely foresty, they also contain a great deal of rust and ocean.</smallcaps>"
-msgstr "Довольно большой частично замерзший астероид с радиоактивным ядром.\n\n<smallcaps>Помимо огромного количества лесов, на таких астероидах еще очень много ржавчины и океанов.</smallcaps>"
+msgid "A large-ish forested asteroid with a frozen radioactive core.\n\n<smallcaps>While Radioactive Forest Asteroid are largely foresty, they also contain a great deal of rust and ocean.</smallcaps>"
+msgstr "Довольно большой лесистый астероид с замерзшим радиоактивным ядром.\n\n<smallcaps>Помимо огромного количества лесов, на таких астероидах еще очень много ржавчины и океанов.</smallcaps>"
 
 #. STRINGS.WORLDS.MEDIUMFORESTYRADIOACTIVEVANILLAWARPPLANET.NAME
 msgctxt "STRINGS.WORLDS.MEDIUMFORESTYRADIOACTIVEVANILLAWARPPLANET.NAME"
@@ -65226,8 +65271,8 @@ msgstr "Астероид с радиоактивными болотами"
 
 #. STRINGS.WORLDS.MEDIUMSANDYRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION
 msgctxt "STRINGS.WORLDS.MEDIUMSANDYRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION"
-msgid "A large-ish world with a radioactive core.\n\n<smallcaps>The Radioactive Terra Asteroid is fairly dry and sandy, but does contain areas of jungle.</smallcaps>"
-msgstr "Сравнительно большое тело с радиоактивным ядром.\n\n<smallcaps>Радиоактивный астероид Терра</smallcaps> довольно засушлив и пустынен, но местами покрыт джунглями."
+msgid "A large-ish terra world with a radioactive core.\n\n<smallcaps>The Radioactive Terra Asteroid is fairly dry and sandy, but does contain areas of jungle.</smallcaps>"
+msgstr "Сравнительно большое тело с радиоактивным ядром.\n\n<smallcaps>Радиоактивный астероид Терра довольно засушлив и пустынен, но местами покрыт джунглями.</smallcaps>"
 
 #. STRINGS.WORLDS.MEDIUMSANDYRADIOACTIVEVANILLAWARPPLANET.NAME
 msgctxt "STRINGS.WORLDS.MEDIUMSANDYRADIOACTIVEVANILLAWARPPLANET.NAME"

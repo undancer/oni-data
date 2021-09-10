@@ -86,6 +86,8 @@ public class Clustercraft : ClusterGridEntity
 
 	public override string Name => m_name;
 
+	public bool Exploding { get; protected set; }
+
 	public override EntityLayer Layer => EntityLayer.Craft;
 
 	public override List<AnimConfig> AnimConfigs => new List<AnimConfig>
@@ -97,7 +99,7 @@ public class Clustercraft : ClusterGridEntity
 		}
 	};
 
-	public override bool IsVisible => true;
+	public override bool IsVisible => !Exploding;
 
 	public override ClusterRevealLevel IsVisibleInFOW => ClusterRevealLevel.Visible;
 
@@ -176,6 +178,11 @@ public class Clustercraft : ClusterGridEntity
 	{
 		status = craft_status;
 		UpdateGroundTags();
+	}
+
+	public void SetExploding()
+	{
+		Exploding = true;
 	}
 
 	protected override void OnPrefabInit()
@@ -672,12 +679,14 @@ public class Clustercraft : ClusterGridEntity
 				}
 			}
 		}
+		bool set = false;
 		if (visibleEntityOfLayerAtCell != null)
 		{
 			mainStatusHandle = component.SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().BuildingStatusItems.InFlight, m_clusterTraveler);
 		}
 		else if (!HasResourcesToMove() && !flag)
 		{
+			set = true;
 			mainStatusHandle = component.SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().BuildingStatusItems.RocketStranded, orbitAsteroid);
 		}
 		else if (!m_moduleInterface.GetClusterDestinationSelector().IsAtDestination() && !CheckDesinationInRange())
@@ -696,6 +705,7 @@ public class Clustercraft : ClusterGridEntity
 		{
 			mainStatusHandle = component.SetStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().BuildingStatusItems.Normal);
 		}
+		GetComponent<KPrefabID>().SetTag(GameTags.RocketStranded, set);
 		float num = 0f;
 		float num2 = 0f;
 		foreach (CargoBayCluster allCargoBay in GetAllCargoBays())
@@ -769,13 +779,18 @@ public class Clustercraft : ClusterGridEntity
 		return status != CraftStatus.Grounded;
 	}
 
-	public override bool ShowProgressBar()
+	public bool IsTravellingAndFueled()
 	{
 		if (HasResourcesToMove())
 		{
 			return m_clusterTraveler.IsTraveling();
 		}
 		return false;
+	}
+
+	public override bool ShowProgressBar()
+	{
+		return IsTravellingAndFueled();
 	}
 
 	public override float GetProgress()

@@ -10,13 +10,21 @@ public abstract class ClusterGridEntity : KMonoBehaviour
 		public KAnimFile animFile;
 
 		public string initialAnim;
+
+		public KAnim.PlayMode playMode;
+
+		public string symbolSwapTarget;
+
+		public string symbolSwapSymbol;
+
+		public Vector3 animOffset;
 	}
 
 	[Serialize]
 	protected AxialI m_location;
 
 	[MyCmpGet]
-	private KSelectable m_selectable;
+	protected KSelectable m_selectable;
 
 	[MyCmpReq]
 	private Transform m_transform;
@@ -86,6 +94,10 @@ public abstract class ClusterGridEntity : KMonoBehaviour
 		{
 			m_transform.SetLocalPosition(new Vector3(-1f, 0f, 0f));
 		}
+		if (ClusterMapScreen.Instance != null)
+		{
+			ClusterMapScreen.Instance.Trigger(1980521255);
+		}
 	}
 
 	protected override void OnCleanUp()
@@ -128,7 +140,7 @@ public abstract class ClusterGridEntity : KMonoBehaviour
 		ClusterLocationChangedEvent clusterLocationChangedEvent2 = clusterLocationChangedEvent;
 		Trigger(-1298331547, clusterLocationChangedEvent2);
 		Game.Instance.Trigger(-1298331547, clusterLocationChangedEvent2);
-		if (GetComponent<KSelectable>().IsSelected)
+		if (m_selectable != null && m_selectable.IsSelected)
 		{
 			DetailsScreen.Instance.Refresh(base.gameObject);
 		}

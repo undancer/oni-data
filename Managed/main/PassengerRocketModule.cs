@@ -9,6 +9,8 @@ public class PassengerRocketModule : KMonoBehaviour
 		Request
 	}
 
+	public string interiorReverbSnapshot;
+
 	[Serialize]
 	private RequestCrewState passengersRequested;
 

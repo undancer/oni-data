@@ -11,11 +11,13 @@ namespace Klei.AI
 	public class Effects : KMonoBehaviour, ISaveLoadable, ISim1000ms
 	{
 		[Serializable]
-		private struct SaveLoadEffect
+		public struct SaveLoadEffect
 		{
 			public string id;
 
 			public float timeRemaining;
+
+			public bool saved;
 		}
 
 		[Serialize]
@@ -231,11 +233,27 @@ namespace Klei.AI
 					SaveLoadEffect saveLoadEffect = default(SaveLoadEffect);
 					saveLoadEffect.id = effect.effect.Id;
 					saveLoadEffect.timeRemaining = effect.timeRemaining;
+					saveLoadEffect.saved = true;
 					SaveLoadEffect item = saveLoadEffect;
 					list.Add(item);
 				}
 			}
 			saveLoadEffects = list.ToArray();
+		}
+
+		public List<SaveLoadEffect> GetAllEffectsForSerialization()
+		{
+			List<SaveLoadEffect> list = new List<SaveLoadEffect>();
+			foreach (EffectInstance effect in effects)
+			{
+				SaveLoadEffect saveLoadEffect = default(SaveLoadEffect);
+				saveLoadEffect.id = effect.effect.Id;
+				saveLoadEffect.timeRemaining = effect.timeRemaining;
+				saveLoadEffect.saved = effect.shouldSave;
+				SaveLoadEffect item = saveLoadEffect;
+				list.Add(item);
+			}
+			return list;
 		}
 
 		public List<EffectInstance> GetTimeLimitedEffects()

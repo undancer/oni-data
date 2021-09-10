@@ -4,11 +4,11 @@ public static class SymbolOverrideControllerUtil
 {
 	public static SymbolOverrideController AddToPrefab(GameObject prefab)
 	{
-		SymbolOverrideController symbolOverrideController = prefab.AddComponent<SymbolOverrideController>();
+		SymbolOverrideController result = prefab.AddComponent<SymbolOverrideController>();
 		KBatchedAnimController component = prefab.GetComponent<KBatchedAnimController>();
-		DebugUtil.Assert(symbolOverrideController != null, "SymbolOverrideController must be added after a KBatchedAnimController component.");
+		DebugUtil.Assert(component != null, "SymbolOverrideController must be added after a KBatchedAnimController component.");
 		component.usingNewSymbolOverrideSystem = true;
-		return symbolOverrideController;
+		return result;
 	}
 
 	public static void AddBuildOverride(this SymbolOverrideController symbol_override_controller, KAnimFileData anim_file_data, int priority = 0)

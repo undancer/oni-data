@@ -131,7 +131,7 @@ public class MeterScreen : KScreen, IRender1000ms
 
 	private void Refresh()
 	{
-		worldLiveMinionIdentities = Components.LiveMinionIdentities.GetWorldItems(ClusterManager.Instance.activeWorldId);
+		RefreshWorldMinionIdentities();
 		RefreshMinions();
 		RefreshRations();
 		RefreshStress();
@@ -139,10 +139,24 @@ public class MeterScreen : KScreen, IRender1000ms
 		RefreshRedAlertButtonState();
 	}
 
+	private void RefreshWorldMinionIdentities()
+	{
+		worldLiveMinionIdentities = Components.LiveMinionIdentities.GetWorldItems(ClusterManager.Instance.activeWorldId);
+	}
+
+	private List<MinionIdentity> GetWorldMinionIdentities()
+	{
+		if (worldLiveMinionIdentities == null)
+		{
+			RefreshWorldMinionIdentities();
+		}
+		return worldLiveMinionIdentities;
+	}
+
 	private void RefreshMinions()
 	{
 		int count = Components.LiveMinionIdentities.Count;
-		int count2 = worldLiveMinionIdentities.Count;
+		int count2 = GetWorldMinionIdentities().Count;
 		if (count2 != cachedMinionCount)
 		{
 			cachedMinionCount = count2;
@@ -187,7 +201,7 @@ public class MeterScreen : KScreen, IRender1000ms
 	private IList<MinionIdentity> GetStressedMinions()
 	{
 		Amount stress_amount = Db.Get().Amounts.Stress;
-		return new List<MinionIdentity>(worldLiveMinionIdentities).OrderByDescending((MinionIdentity x) => stress_amount.Lookup(x).value).ToList();
+		return new List<MinionIdentity>(GetWorldMinionIdentities()).OrderByDescending((MinionIdentity x) => stress_amount.Lookup(x).value).ToList();
 	}
 
 	private string OnStressTooltip()
@@ -209,11 +223,12 @@ public class MeterScreen : KScreen, IRender1000ms
 	private string OnSickTooltip()
 	{
 		int num = CountSickDupes();
+		List<MinionIdentity> worldMinionIdentities = GetWorldMinionIdentities();
 		SickTooltip.ClearMultiStringTooltip();
 		SickTooltip.AddMultiStringTooltip(string.Format(UI.TOOLTIPS.METERSCREEN_SICK_DUPES, num.ToString()), ToolTipStyle_Header);
-		for (int i = 0; i < worldLiveMinionIdentities.Count; i++)
+		for (int i = 0; i < worldMinionIdentities.Count; i++)
 		{
-			MinionIdentity minionIdentity = worldLiveMinionIdentities[i];
+			MinionIdentity minionIdentity = worldMinionIdentities[i];
 			string text = minionIdentity.GetComponent<KSelectable>().GetName();
 			Sicknesses sicknesses = minionIdentity.GetComponent<MinionModifiers>().sicknesses;
 			if (sicknesses.IsInfected())
@@ -236,9 +251,9 @@ public class MeterScreen : KScreen, IRender1000ms
 	private int CountSickDupes()
 	{
 		int num = 0;
-		foreach (MinionIdentity worldLiveMinionIdentity in worldLiveMinionIdentities)
+		foreach (MinionIdentity worldMinionIdentity in GetWorldMinionIdentities())
 		{
-			if (worldLiveMinionIdentity.GetComponent<MinionModifiers>().sicknesses.IsInfected())
+			if (worldMinionIdentity.GetComponent<MinionModifiers>().sicknesses.IsInfected())
 			{
 				num++;
 			}
@@ -311,7 +326,7 @@ public class MeterScreen : KScreen, IRender1000ms
 
 	private IList<MinionIdentity> GetSickMinions()
 	{
-		return worldLiveMinionIdentities;
+		return GetWorldMinionIdentities();
 	}
 
 	public void OnClickImmunity(BaseEventData base_ev_data)
@@ -329,16 +344,17 @@ public class MeterScreen : KScreen, IRender1000ms
 		{
 			return;
 		}
+		List<MinionIdentity> worldMinionIdentities = GetWorldMinionIdentities();
 		switch (pointerEventData.button)
 		{
 		case PointerEventData.InputButton.Left:
-			if (worldLiveMinionIdentities.Count < display_info.selectedIndex)
+			if (worldMinionIdentities.Count < display_info.selectedIndex)
 			{
 				display_info.selectedIndex = -1;
 			}
-			if (worldLiveMinionIdentities.Count > 0)
+			if (worldMinionIdentities.Count > 0)
 			{
-				display_info.selectedIndex = (display_info.selectedIndex + 1) % worldLiveMinionIdentities.Count;
+				display_info.selectedIndex = (display_info.selectedIndex + 1) % worldMinionIdentities.Count;
 				MinionIdentity minionIdentity = minions[display_info.selectedIndex];
 				SelectTool.Instance.SelectAndFocus(minionIdentity.transform.GetPosition(), minionIdentity.GetComponent<KSelectable>(), new Vector3(5f, 0f, 0f));
 			}

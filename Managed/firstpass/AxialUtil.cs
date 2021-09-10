@@ -63,4 +63,20 @@ public static class AxialUtil
 	{
 		return new Vector3(Mathf.Sqrt(3f) * r + Mathf.Sqrt(3f) / 2f * q, -1.5f * q, 0f);
 	}
+
+	public static IEnumerable<AxialI> SpiralOut(AxialI startLocation, int maximumRings)
+	{
+		for (int ring = 0; ring < maximumRings; ring++)
+		{
+			for (int i = 0; i < AxialI.DIRECTIONS.Count; i++)
+			{
+				AxialI vertex = startLocation + AxialI.DIRECTIONS[i] * ring;
+				AxialI increment = AxialI.CLOCKWISE[i];
+				for (int j = 0; j < ring; j++)
+				{
+					yield return vertex + increment * j;
+				}
+			}
+		}
+	}
 }

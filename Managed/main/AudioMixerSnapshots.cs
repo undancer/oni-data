@@ -107,6 +107,15 @@ public class AudioMixerSnapshots : ScriptableObject
 	[EventRef]
 	public string ActiveBaseChangeSnapshot;
 
+	[EventRef]
+	public string EventPopupSnapshot;
+
+	[EventRef]
+	public string SmallRocketInteriorReverbSnapshot;
+
+	[EventRef]
+	public string MediumRocketInteriorReverbSnapshot;
+
 	[SerializeField]
 	[EventRef]
 	private string[] snapshots;

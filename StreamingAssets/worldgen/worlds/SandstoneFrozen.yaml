@@ -23,7 +23,6 @@ subworldFiles:
   - name: subworlds/jungle/JungleFrozen
     minCount: 5
   - name: subworlds/frozen/CO2Lakes
-    minCount: 1
   - name: subworlds/magma/Bottom
   - name: subworlds/magma/VolcanoHole
   - name: subworlds/magma/SolidMagma

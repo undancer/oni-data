@@ -98,6 +98,8 @@ public class ChorePreconditions
 
 	public Chore.Precondition NotCurrentlyPeeing;
 
+	public Chore.Precondition IsRocketTravelling;
+
 	public static ChorePreconditions instance
 	{
 		get
@@ -174,8 +176,8 @@ public class ChorePreconditions
 			fn = delegate(ref Chore.Precondition.Context context, object data)
 			{
 				Assignable assignable2 = (Assignable)data;
-				IAssignableIdentity component = context.consumerState.gameObject.GetComponent<IAssignableIdentity>();
-				return component != null && assignable2.IsAssignedTo(component);
+				IAssignableIdentity component2 = context.consumerState.gameObject.GetComponent<IAssignableIdentity>();
+				return component2 != null && assignable2.IsAssignedTo(component2);
 			}
 		});
 		isPreemptable = (IsInMyWorld = new Chore.Precondition
@@ -803,6 +805,16 @@ public class ChorePreconditions
 					result = id != Db.Get().ChoreTypes.BreakPee.Id && id != Db.Get().ChoreTypes.Pee.Id;
 				}
 				return result;
+			}
+		});
+		isPreemptable = (IsRocketTravelling = new Chore.Precondition
+		{
+			id = "IsRocketTravelling",
+			description = DUPLICANTS.CHORES.PRECONDITIONS.IS_ROCKET_TRAVELLING,
+			fn = delegate(ref Chore.Precondition.Context context, object data)
+			{
+				Clustercraft component = ClusterManager.Instance.GetWorld(context.chore.gameObject.GetMyWorldId()).GetComponent<Clustercraft>();
+				return !(component == null) && component.IsTravellingAndFueled();
 			}
 		});
 		base._002Ector();

@@ -44,6 +44,16 @@ public class TemporalTearOpener : GameStateMachine<TemporalTearOpener, TemporalT
 			: base(master, def)
 		{
 			m_meter = new MeterController(base.gameObject.GetComponent<KBatchedAnimController>(), "meter_target", "meter", Meter.Offset.Infront, Grid.SceneLayer.NoLayer);
+			EnterTemporalTearSequence.tearOpenerGameObject = base.gameObject;
+		}
+
+		protected override void OnCleanUp()
+		{
+			if (EnterTemporalTearSequence.tearOpenerGameObject == base.gameObject)
+			{
+				EnterTemporalTearSequence.tearOpenerGameObject = null;
+			}
+			base.OnCleanUp();
 		}
 
 		public bool HasLineOfSight()
@@ -206,20 +216,23 @@ public class TemporalTearOpener : GameStateMachine<TemporalTearOpener, TemporalT
 			{
 				smi.GoTo(check_requirements);
 			}
-		});
-		check_requirements.PlayAnim("off").DefaultState(check_requirements.has_target).Enter(delegate(Instance smi)
+		}).PlayAnim("off");
+		check_requirements.DefaultState(check_requirements.has_target).Enter(delegate(Instance smi)
 		{
 			smi.GetComponent<HighEnergyParticleStorage>().receiverOpen = false;
+			smi.GetComponent<KBatchedAnimController>().Play("port_close");
+			smi.GetComponent<KBatchedAnimController>().Queue("off", KAnim.PlayMode.Loop);
 		});
 		check_requirements.has_target.ToggleStatusItem(s_noTargetStatus).UpdateTransition(check_requirements.has_los, (Instance smi, float dt) => ClusterManager.Instance.GetClusterPOIManager().IsTemporalTearRevealed());
 		check_requirements.has_los.ToggleStatusItem(s_noLosStatus).UpdateTransition(check_requirements.enough_colonies, (Instance smi, float dt) => smi.HasLineOfSight());
 		check_requirements.enough_colonies.ToggleStatusItem(s_insufficient_colonies).UpdateTransition(charging, (Instance smi, float dt) => smi.HasSufficientColonies());
-		charging.DefaultState(charging.idle).PlayAnim("on").ToggleStatusItem(s_progressStatus, (Instance smi) => smi)
-			.UpdateTransition(check_requirements.has_los, (Instance smi, float dt) => !smi.HasLineOfSight())
+		charging.DefaultState(charging.idle).ToggleStatusItem(s_progressStatus, (Instance smi) => smi).UpdateTransition(check_requirements.has_los, (Instance smi, float dt) => !smi.HasLineOfSight())
 			.UpdateTransition(check_requirements.enough_colonies, (Instance smi, float dt) => !smi.HasSufficientColonies())
 			.Enter(delegate(Instance smi)
 			{
 				smi.GetComponent<HighEnergyParticleStorage>().receiverOpen = true;
+				smi.GetComponent<KBatchedAnimController>().Play("port_open");
+				smi.GetComponent<KBatchedAnimController>().Queue("on", KAnim.PlayMode.Loop);
 			});
 		charging.idle.EventTransition(GameHashes.OnParticleStorageChanged, charging.consuming, (Instance smi) => !smi.GetComponent<HighEnergyParticleStorage>().IsEmpty());
 		charging.consuming.EventTransition(GameHashes.OnParticleStorageChanged, charging.idle, (Instance smi) => smi.GetComponent<HighEnergyParticleStorage>().IsEmpty()).UpdateTransition(ready, (Instance smi, float dt) => smi.ConsumeParticlesAndCheckComplete(dt));

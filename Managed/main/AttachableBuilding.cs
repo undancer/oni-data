@@ -7,7 +7,7 @@ public class AttachableBuilding : KMonoBehaviour
 {
 	public Tag attachableToTag;
 
-	public Action<AttachableBuilding> onAttachmentNetworkChanged;
+	public Action<object> onAttachmentNetworkChanged;
 
 	protected override void OnPrefabInit()
 	{
@@ -82,6 +82,23 @@ public class AttachableBuilding : KMonoBehaviour
 		}
 	}
 
+	public static int CountAttachedBelow(AttachableBuilding searchStart)
+	{
+		int num = 0;
+		AttachableBuilding attachableBuilding = searchStart;
+		while (attachableBuilding != null)
+		{
+			BuildingAttachPoint attachedTo = attachableBuilding.GetAttachedTo();
+			attachableBuilding = null;
+			if (attachedTo != null)
+			{
+				num++;
+				attachableBuilding = attachedTo.GetComponent<AttachableBuilding>();
+			}
+		}
+		return num;
+	}
+
 	public static void GetAttachedAbove(AttachableBuilding searchStart, ref List<GameObject> buildings)
 	{
 		BuildingAttachPoint buildingAttachPoint = searchStart.GetComponent<BuildingAttachPoint>();
@@ -117,6 +134,18 @@ public class AttachableBuilding : KMonoBehaviour
 		}
 	}
 
+	public static void NotifyBuildingsNetworkChanged(List<GameObject> buildings, AttachableBuilding attachable = null)
+	{
+		foreach (GameObject building in buildings)
+		{
+			AttachableBuilding component = building.GetComponent<AttachableBuilding>();
+			if (component != null && component.onAttachmentNetworkChanged != null)
+			{
+				component.onAttachmentNetworkChanged(attachable);
+			}
+		}
+	}
+
 	public static List<GameObject> GetAttachedNetwork(AttachableBuilding searchStart)
 	{
 		List<GameObject> buildings = new List<GameObject>();
@@ -144,14 +173,7 @@ public class AttachableBuilding : KMonoBehaviour
 	protected override void OnCleanUp()
 	{
 		base.OnCleanUp();
-		foreach (GameObject item in GetAttachedNetwork(this))
-		{
-			AttachableBuilding component = item.GetComponent<AttachableBuilding>();
-			if (component != null && component.onAttachmentNetworkChanged != null)
-			{
-				component.onAttachmentNetworkChanged(this);
-			}
-		}
+		NotifyBuildingsNetworkChanged(GetAttachedNetwork(this), this);
 		RegisterWithAttachPoint(register: false);
 		Components.AttachableBuildings.Remove(this);
 	}

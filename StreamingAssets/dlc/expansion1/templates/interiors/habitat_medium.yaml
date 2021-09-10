@@ -1,4 +1,3 @@
-name: habitat_medium
 info:
   size:
     X: 12
@@ -442,7 +441,7 @@ buildings:
   element: Steel
   temperature: 293.149994
 - id: RocketWallTile
-  location_x: 5
+  location_x: -4
   location_y: -4
   element: Steel
   temperature: 293.149994
@@ -471,16 +470,115 @@ buildings:
   element: Steel
   temperature: 293.149994
 - id: RocketWallTile
+  location_x: 5
+  location_y: 5
+  element: Steel
+  temperature: 293.149994
+- id: RocketEnvelopeWindowTile
+  location_x: -5
+  location_y: 1
+  element: Diamond
+  temperature: 293.149994
+- id: RocketWallTile
+  location_x: -5
+  element: Steel
+  temperature: 293.149994
+- id: RocketWallTile
+  location_x: -4
+  location_y: 5
+  element: Steel
+  temperature: 293.149994
+- id: RocketWallTile
+  location_x: 6
+  location_y: 4
+  element: Steel
+  temperature: 293.149994
+- id: RocketEnvelopeWindowTile
+  location_x: 6
+  location_y: 3
+  element: Diamond
+  temperature: 293.149994
+- id: RocketWallTile
+  location_x: -5
+  location_y: 5
+  element: Steel
+  temperature: 293.149994
+- id: RocketEnvelopeWindowTile
+  location_x: 6
+  location_y: 2
+  element: Diamond
+  temperature: 293.149994
+- id: RocketWallTile
   location_x: -2
+  location_y: 5
+  element: Steel
+  temperature: 293.149994
+- id: RocketWallTile
+  location_x: 3
+  location_y: 5
+  element: Steel
+  temperature: 293.149994
+- id: RocketWallTile
+  location_x: 6
+  location_y: -3
+  element: Steel
+  temperature: 293.149994
+- id: RocketEnvelopeWindowTile
+  location_x: 6
+  location_y: 1
+  element: Diamond
+  temperature: 293.149994
+- id: RocketWallTile
+  location_x: 6
+  location_y: -2
+  element: Steel
+  temperature: 293.149994
+- id: RocketEnvelopeWindowTile
+  location_x: -5
+  location_y: 3
+  element: Diamond
+  temperature: 293.149994
+- id: RocketWallTile
+  location_x: -5
   location_y: -4
   element: Steel
   temperature: 293.149994
 - id: RocketWallTile
-  location_y: -4
+  location_x: -5
+  location_y: 4
   element: Steel
   temperature: 293.149994
 - id: RocketWallTile
-  location_x: -3
+  location_x: -5
+  location_y: -3
+  element: Steel
+  temperature: 293.149994
+- id: RocketEnvelopeWindowTile
+  location_x: -5
+  location_y: 2
+  element: Diamond
+  temperature: 293.149994
+- id: RocketWallTile
+  location_x: -5
+  location_y: -2
+  element: Steel
+  temperature: 293.149994
+- id: RocketWallTile
+  location_x: 6
+  location_y: -1
+  element: Steel
+  temperature: 293.149994
+- id: RocketWallTile
+  location_x: 6
+  element: Steel
+  temperature: 293.149994
+- id: RocketWallTile
+  location_x: -5
+  location_y: -1
+  element: Steel
+  temperature: 293.149994
+- id: RocketWallTile
+  location_x: -2
   location_y: -4
   element: Steel
   temperature: 293.149994
@@ -490,57 +588,11 @@ buildings:
   element: Steel
   temperature: 293.149994
 - id: RocketWallTile
-  location_x: 6
-  location_y: 4
-  element: Steel
-  temperature: 293.149994
-- id: RocketWallTile
-  location_x: 5
-  location_y: 5
-  element: Steel
-  temperature: 293.149994
-- id: RocketWallTile
-  location_x: -5
-  location_y: 5
-  element: Steel
-  temperature: 293.149994
-- id: RocketWallTile
-  location_x: -4
-  location_y: 5
-  element: Steel
-  temperature: 293.149994
-- id: RocketWallTile
-  location_x: -3
-  location_y: 5
-  element: Steel
-  temperature: 293.149994
-- id: RocketWallTile
-  location_x: -2
-  location_y: 5
-  element: Steel
-  temperature: 293.149994
-- id: RocketWallTile
-  location_x: 3
-  location_y: 5
-  element: Steel
-  temperature: 293.149994
-- id: RocketWallTile
-  location_x: 4
-  location_y: 5
-  element: Steel
-  temperature: 293.149994
-- id: RocketWallTile
-  location_x: 6
-  location_y: -3
-  element: Steel
-  temperature: 293.149994
-- id: RocketWallTile
-  location_x: -4
   location_y: -4
   element: Steel
   temperature: 293.149994
 - id: RocketWallTile
-  location_x: 3
+  location_x: 1
   location_y: -4
   element: Steel
   temperature: 293.149994
@@ -550,91 +602,38 @@ buildings:
   element: Steel
   temperature: 293.149994
 - id: RocketWallTile
-  location_x: -5
+  location_x: 3
   location_y: -4
   element: Steel
   temperature: 293.149994
 - id: RocketWallTile
-  location_x: -5
-  location_y: 4
-  element: Steel
-  temperature: 293.149994
-- id: RocketWallTile
-  location_x: -5
-  location_y: -3
-  element: Steel
-  temperature: 293.149994
-- id: RocketWallTile
-  location_x: 1
+  location_x: 5
   location_y: -4
   element: Steel
-  temperature: 293.149994
-- id: RocketWallTile
-  location_x: 4
-  location_y: -4
-  element: Steel
-  temperature: 293.149994
-- id: RocketWallTile
-  location_x: 6
-  location_y: -1
-  element: Steel
-  temperature: 293.149994
-- id: RocketWallTile
-  location_x: 6
-  element: Steel
-  temperature: 293.149994
-- id: RocketWallTile
-  location_x: -5
-  location_y: -1
-  element: Steel
-  temperature: 293.149994
-- id: RocketWallTile
-  location_x: -5
-  element: Steel
-  temperature: 293.149994
-- id: RocketWallTile
-  location_x: -5
-  location_y: -2
-  element: Steel
-  temperature: 293.149994
-- id: RocketWallTile
-  location_x: 6
-  location_y: -2
-  element: Steel
-  temperature: 293.149994
-- id: RocketEnvelopeWindowTile
-  location_x: -5
-  location_y: 3
-  element: Diamond
-  temperature: 293.149994
-- id: RocketEnvelopeWindowTile
-  location_x: -5
-  location_y: 2
-  element: Diamond
-  temperature: 293.149994
-- id: RocketEnvelopeWindowTile
-  location_x: -5
-  location_y: 1
-  element: Diamond
-  temperature: 293.149994
-- id: RocketEnvelopeWindowTile
-  location_x: 6
-  location_y: 3
-  element: Diamond
-  temperature: 293.149994
-- id: RocketEnvelopeWindowTile
-  location_x: 6
-  location_y: 2
-  element: Diamond
-  temperature: 293.149994
-- id: RocketEnvelopeWindowTile
-  location_x: 6
-  location_y: 1
-  element: Diamond
   temperature: 293.149994
 - id: RocketControlStation
   location_y: -3
   element: Cuprite
+  temperature: 293.149994
+- id: RocketInteriorLiquidOutputPort
+  location_x: -3
+  location_y: 5
+  element: Steel
+  temperature: 293.149994
+- id: RocketInteriorLiquidInputPort
+  location_x: 4
+  location_y: 5
+  element: Steel
+  temperature: 293.149994
+- id: RocketInteriorGasOutputPort
+  location_x: -3
+  location_y: -4
+  element: Steel
+  temperature: 293.149994
+- id: RocketInteriorGasInputPort
+  location_x: 4
+  location_y: -4
+  element: Steel
   temperature: 293.149994
 otherEntities:
 - id: ClustercraftInteriorDoor

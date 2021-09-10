@@ -210,7 +210,7 @@ namespace Database
 				"MeshTile"
 			}, this);
 			new Tech("FlowRedirection", new List<string> { "MechanicalSurfboard", "ModularLaunchpadPortLiquid", "ModularLaunchpadPortLiquidUnloader", "LiquidCargoBaySmall" }, this);
-			new Tech("LiquidDistribution", new List<string> { "RocketInteriorLiquidInput", "RocketInteriorLiquidOutput" }, this);
+			new Tech("LiquidDistribution", new List<string> { "RocketInteriorLiquidInput", "RocketInteriorLiquidOutput", "WallToilet" }, this);
 			new Tech("AdvancedSanitation", new List<string> { "DecontaminationShower" }, this);
 			new Tech("AdvancedFiltration", new List<string> { "GasFilter", "LiquidFilter", "SludgePress" }, this);
 			new Tech("Distillation", new List<string> { "AlgaeDistillery", "EthanolDistillery", "WaterPurifier" }, this);
@@ -279,9 +279,14 @@ namespace Database
 			}, this);
 			new Tech("ArtificialFriends", new List<string> { "SweepBotStation", "ScoutModule" }, this);
 			new Tech("BasicRefinement", new List<string> { "RockCrusher", "Kiln" }, this);
-			new Tech("RefinedObjects", new List<string> { "FirePole", "ThermalBlock" }, this);
+			new Tech("RefinedObjects", new List<string>
+			{
+				"FirePole",
+				"ThermalBlock",
+				LadderBedConfig.ID
+			}, this);
 			new Tech("Smelting", new List<string> { "MetalRefinery", "MetalTile" }, this);
-			new Tech("HighTempForging", new List<string> { "GlassForge", "BunkerTile", "BunkerDoor", "Gantry" }, this);
+			new Tech("HighTempForging", new List<string> { "GlassForge", "BunkerTile", "BunkerDoor" }, this);
 			new Tech("HighPressureForging", new List<string> { "DiamondPress" }, this);
 			new Tech("RadiationProtection", new List<string> { "LeadSuit", "LeadSuitMarker", "LeadSuitLocker" }, this);
 			new Tech("TemperatureModulation", new List<string> { "LiquidCooledFan", "IceCooledFan", "IceMachine", "InsulationTile", "SpaceHeater" }, this);
@@ -377,6 +382,7 @@ namespace Database
 		{
 			if (DlcManager.IsExpansion1Active())
 			{
+				Get("HighTempForging").AddUnlockedItemIDs("Gantry");
 				new Tech("Bioengineering", new List<string> { "GeneticAnalysisStation" }, this);
 				new Tech("SpaceCombustion", new List<string> { "SugarEngine", "SmallOxidizerTank" }, this);
 				new Tech("HighVelocityDestruction", new List<string> { "NoseconeHarvest" }, this);

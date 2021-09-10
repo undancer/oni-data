@@ -502,7 +502,7 @@ namespace STRINGS
 
 				public static LocString NORMAL_FLIGHT = "    • This rocket is in flight towards its destination";
 
-				public static LocString NORMAL_UTILITY = "    • This rocket is performing a utility at its destination";
+				public static LocString NORMAL_UTILITY = "    • This rocket is performing a task at its destination";
 
 				public static LocString NORMAL_LANDED = "    • This rocket is currently landed on a " + PRE_KEYWORD + "Rocket Platform" + PST_KEYWORD;
 
@@ -1078,7 +1078,7 @@ namespace STRINGS
 				public static LocString TIER5 = "Rarity 5";
 			}
 
-			public class PERCOLATOR
+			public class PACUPERCOLATOR
 			{
 				public static LocString NAME = "Percolator";
 
@@ -1111,7 +1111,7 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "I don't get it.";
 
-				public static LocString ARTIFACT = "A sculpture of the Neoplastism movement of Modern Art.\n\nGravitas records show that this piece was once used in a presentation called 'Form and Function and the Corporate Aesthetic'.";
+				public static LocString ARTIFACT = "A sculpture of the Neoplastism movement of Modern Art.\n\nGravitas records show that this piece was once used in a presentation called 'Form and Function in Corporate Aesthetic'.";
 			}
 
 			public class EGGROCK
@@ -1138,7 +1138,7 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "Ew, weird. It has five fingers!";
 
-				public static LocString ARTIFACT = "The description on this X-ray indicates that it was taken in the Gravitas Medical Facility.\n\nMost likely this X-ray was performed to investigate an injury that occurred within the facility.";
+				public static LocString ARTIFACT = "The description on this X-ray indicates that it was taken in the Gravitas Medical Facility.\n\nMost likely this X-ray was performed while investigating an injury that occurred within the facility.";
 			}
 
 			public class SHIELDGENERATOR
@@ -1147,7 +1147,7 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "A mechanical prototype capable of producing a small section of shielding.";
 
-				public static LocString ARTIFACT = "The energy field produced by this shield generator completely ignores those light behaviors which are wave-like and focuses instead on its particle behaviors.\n\nThis appears to be possible when light is slowed down until it stops.";
+				public static LocString ARTIFACT = "The energy field produced by this shield generator completely ignores those light behaviors which are wave-like and focuses instead on its particle behaviors.\n\nThis seemingly paradoxical state is possible when light is slowed down to the point at which it stops entirely.";
 			}
 
 			public class TEAPOT
@@ -1156,7 +1156,7 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "A teapot from the depths of space, coated in a thick layer of Neutronium.";
 
-				public static LocString ARTIFACT = "";
+				public static LocString ARTIFACT = "The amount of Neutronium present in this teapot suggests that it has crossed the threshold of the spacetime continuum on countless occasions, floating through many multiple universes over a plethora of times and spaces.\n\nThough there are, theoretically, an infinite amount of outcomes to any one event over many multi-verses, the homogeneity of the still relatively young multiverse suggests that this is then not the only teapot which has crossed into multiple universes. Despite the infinite possible outcomes of infinite multiverses it appears one high probability constant is that there is, or once was, a teapot floating somewhere in space within every universe.";
 			}
 
 			public class DNAMODEL
@@ -1174,7 +1174,7 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "A beautiful rock composed of multiple layers of sediment.";
 
-				public static LocString ARTIFACT = "This sample of sandstone appears to have been processed by the Gravitas Mining Gun that was made available to the general public.\n\nNote: Gravitas public Mining Gun model is different than ones used by Duplicants in its larger size, and extra precautionary features added in order to be compliant with national safety standards.";
+				public static LocString ARTIFACT = "This sample of sandstone appears to have been processed by the Gravitas Mining Gun that was made available to the general public.\n\nNote: The Gravitas public Mining Gun model is different than ones used by Duplicants in its larger size, and extra precautionary features added in order to be compliant with national safety standards.";
 			}
 
 			public class MAGMALAMP
@@ -1183,7 +1183,7 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "The sequel to \"Lava Lamp\".";
 
-				public static LocString ARTIFACT = "";
+				public static LocString ARTIFACT = "Molten lava and obsidian combined in a way that allows the lava to maintain just enough heat to remain in liquid form.\n\nPlans of this lamp found in the Gravitas archives have been attributed to one Robin Nisbet, PhD.";
 			}
 
 			public class OBELISK
@@ -1192,7 +1192,7 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "A rectangular stone piece.\n\nIts function is unclear.";
 
-				public static LocString ARTIFACT = "";
+				public static LocString ARTIFACT = "On close inspection this rectangle is actually a stone box built with a covert, almost seamless, lid, housing a tiny key.\n\nIt is still unclear what the key unlocks.";
 			}
 
 			public class RUBIKSCUBE
@@ -1201,7 +1201,7 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "This mystery of the universe has already been solved.";
 
-				public static LocString ARTIFACT = "";
+				public static LocString ARTIFACT = "A well-used, competition-compliant version of the popular puzzle cube.\n\nIt's worth noting that Dr. Dylan 'Nails' Winslow was once a regional Rubik's Cube champion.";
 			}
 
 			public class OFFICEMUG
@@ -1210,7 +1210,7 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "An intermediary place to store espresso before you move it to your mouth.";
 
-				public static LocString ARTIFACT = "";
+				public static LocString ARTIFACT = "An office mug with the Gravitas logo on it. Though their office mugs were all emblazoned with the same logo, Gravitas colored their mugs differently to distinguish between their various departments.\n\nThis one is from the AI department.";
 			}
 
 			public class AMELIASWATCH
@@ -1219,7 +1219,7 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "It was discovered in a package labeled \"To be entrusted to Dr. Walker\".";
 
-				public static LocString ARTIFACT = "";
+				public static LocString ARTIFACT = "This watch once belonged to pioneering aviator Amelia Earhart and travelled to space via astronaut Dr. Shannon Walker.\n\nHow it came to be floating in space is a matter of speculation, but perhaps the adventurous spirit of its original stewards became infused within the fabric of this timepiece and compelled the universe to launch it into the great unknown.";
 			}
 
 			public class MOONMOONMOON
@@ -1228,16 +1228,16 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "A moon's moon's moon. It's very small.";
 
-				public static LocString ARTIFACT = "";
+				public static LocString ARTIFACT = "In contrast to most moons, this object's glowing properties do not come from reflecting an external source of light, but rather from an internal glow of mysterious origin.\n\nThe glow of this object also grants an extraordinary amount of Decor bonus to nearby Duplicants, almost as if it was designed that way.";
 			}
 
-			public class BIOLUMROCK
+			public class BIOLUMINESCENTROCK
 			{
 				public static LocString NAME = "Bioluminescent Rock";
 
 				public static LocString DESCRIPTION = "A thriving colony of tiny, microscopic organisms is responsible for giving it its bluish glow.";
 
-				public static LocString ARTIFACT = "";
+				public static LocString ARTIFACT = "The microscopic organisms within this rock are of a unique variety whose genetic code shows many tell-tale signs of being genetically engineered within a lab.\n\nFurther analysis reveals they share 99.999% of their genetic code with Shine Bugs.";
 			}
 
 			public class PLASMALAMP
@@ -1246,7 +1246,7 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "No space colony is complete without one.";
 
-				public static LocString ARTIFACT = "";
+				public static LocString ARTIFACT = "The bottom of this lamp contains the words 'Property of the Atmospheric Sciences Department'.\n\nIt's worth noting that the Gravitas Atmospheric Sciences Department once simulated an experiment testing the feasability of survival in an environment filled with noble gasses, similar to the ones contained within this device.";
 			}
 
 			public class MOLDAVITE
@@ -1255,7 +1255,7 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "A unique green stone formed from the impact of a meteorite.";
 
-				public static LocString ARTIFACT = "";
+				public static LocString ARTIFACT = "This extremely rare, museum grade moldavite once sat on the desk of Dr. Ren Sato, but it was stolen by some unknown person.\n\nDr. Sato suspected the perpetrator was none other than Director Stern, but was never able to confirm this theory.";
 			}
 
 			public class BRICKPHONE
@@ -1264,7 +1264,7 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "It still works.";
 
-				public static LocString ARTIFACT = "";
+				public static LocString ARTIFACT = "This cordless phone once held a direct line to an unknown location in which strange distant voices can be heard but not understood, nor interacted with.\n\nThough Gravitas spent a lot of money and years of study dedicated to discovering its secret, the mystery was never solved.";
 			}
 
 			public class SOLARSYSTEM
@@ -1273,7 +1273,7 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "A marvel of the cosmos, inside this display is an entirely self-contained solar system.";
 
-				public static LocString ARTIFACT = "";
+				public static LocString ARTIFACT = "This marvel of a device was built using parts from an old Tornado-in-a-Box science fair project.\n\nVery faint, faded letters are still visible on the display bottom that read 'Camille P. Grade 5'.";
 			}
 
 			public class SINK
@@ -1282,7 +1282,7 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "No collection is complete without it.";
 
-				public static LocString ARTIFACT = "";
+				public static LocString ARTIFACT = "A small trace of encrusted soap on this sink strongly suggests it was installed in a personal bathroom, rather than a public one which would have used a soap dispenser.\n\nThe soap sliver is light blue and contains a manufactured blueberry fragrance.";
 			}
 
 			public class ROCKTORNADO
@@ -1291,7 +1291,7 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "It's unclear how it formed, although I'm glad it did.";
 
-				public static LocString ARTIFACT = "";
+				public static LocString ARTIFACT = "Speculations about the origin of this rock include a paper written by one Harold P. Moreson, Ph.D. in which he theorized it could be a rare form of hollow geode which failed to form any crystals inside.\n\nThis paper appears in the Gravitas archives, and in all probability, was one of the factors in the hiring of Moreson into the Geology department of the company.";
 			}
 
 			public class BLENDER
@@ -1300,7 +1300,7 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "Equipment used to conduct experiments answering the age-old question, \"Could that blend\"?";
 
-				public static LocString ARTIFACT = "";
+				public static LocString ARTIFACT = "Trace amounts of edible foodstuffs present in this blender indicate that it was probably used to emulsify the ingredients of a mush bar.\n\nIt is also very likely that it was employed at least once in the production of a peanut butter and banana smoothie.";
 			}
 
 			public class SAXOPHONE
@@ -1309,7 +1309,7 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "The name \"Pesquet\" is barely legible on the inside.";
 
-				public static LocString ARTIFACT = "";
+				public static LocString ARTIFACT = "Though it is often remarked that \"in space, no one can hear you scream\", Thomas Pesquet proved the same cannot be said for the smooth jazzy sounds of a saxophone.\n\nAlthough this instrument once belonged to the eminent French Astronaut its current bumped and bent shape suggests it has seen many adventures beyond that of just being used to perform an out-of-this-world saxophone solo.";
 			}
 
 			public class STETHOSCOPE
@@ -1318,7 +1318,7 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "Listens to Duplicant heartbeats, or gurgly tummies.";
 
-				public static LocString ARTIFACT = "";
+				public static LocString ARTIFACT = "The size and shape of this stethescope suggests it was not intended to be used by neither a human-sized nor a Duplicant-sized person but something half-way in between the two beings.";
 			}
 
 			public class VHS
@@ -1327,25 +1327,25 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "Be kind when you handle it. It's very fragile.";
 
-				public static LocString ARTIFACT = "";
+				public static LocString ARTIFACT = "The label on this VHS tape reads \"Jackie and Olivia's House Warming Party\".\n\nUnfortunately, a device with which to play this recording no longer exists in this universe.";
 			}
 
-			public class REACTOR_MODEL
+			public class REACTORMODEL
 			{
 				public static LocString NAME = "Model Nuclear Power Plant";
 
 				public static LocString DESCRIPTION = "It's pronounced nu-clear.";
 
-				public static LocString ARTIFACT = "";
+				public static LocString ARTIFACT = "Though this Nuclear Power Plant was never built, this model exists as an artifact to a time early in the life of Gravitas when it was researching all alternatives to solving the global energy problem.\n\nUltimately, the idea of building a Nuclear Power Plant was abandoned in favor of the \"much safer\" alternative of developing the Temporal Bow.";
 			}
 
-			public class MOOD_RING
+			public class MOODRING
 			{
 				public static LocString NAME = "Radiation Mood Ring";
 
 				public static LocString DESCRIPTION = "How radioactive are you feeling?";
 
-				public static LocString ARTIFACT = "";
+				public static LocString ARTIFACT = "A wholly unique ring not found anywhere outside of the Gravitas Laboratory.\n\nThough it can't be determined for sure who worked on this extraordinary curiousity it's worth noting that, for his Ph.D. thesis, Dr. Travaldo Jones wrote a paper entitled \"Novelty Uses for Radiochromatic Dyes\".";
 			}
 
 			public class ORACLE
@@ -1354,25 +1354,25 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "What does it do?";
 
-				public static LocString ARTIFACT = "";
+				public static LocString ARTIFACT = "The pieces for this contraption are all recycled from projects abandoned by the Robotics department.\n\nThe design is very close to one published in an amateur DIY magazine that once sat in the lobby of the 'Employees Only' area of Gravitas' facilities.";
 			}
 
-			public class GRUB_STATUE
+			public class GRUBSTATUE
 			{
 				public static LocString NAME = "Grubgrub Statue";
 
-				public static LocString DESCRIPTION = "Grub Grub";
+				public static LocString DESCRIPTION = "A moving tribute to a tiny plant hugger.";
 
-				public static LocString ARTIFACT = "";
+				public static LocString ARTIFACT = "It's very likely this statue was placed in a hidden, secluded place in the Gravitas laboratory since the creation of Grubgrubs was a closely held secret that the general public was not privy to.\n\nThis is a shame since the artistic quality of this statue is really quite accomplished.";
 			}
 
-			public class HONEY_JAR
+			public class HONEYJAR
 			{
 				public static LocString NAME = "Honey Jar";
 
-				public static LocString DESCRIPTION = "This doesn't taste like uranium";
+				public static LocString DESCRIPTION = "Sweet golden liquid with just a touch of uranium.";
 
-				public static LocString ARTIFACT = "";
+				public static LocString ARTIFACT = "Records from the Genetics and Biology Lab of the Gravitas facility show that several early iterations of a radioactive Bee would continue to produce honey and that this honey was once accidentally stored in the employee kitchen which resulted in several incidents of minor radiation poisoning when it was erroneously labled as a sweetener for tea.\n\nEmployees who used this product reported that it was the \"sweetest honey they'd ever tasted\" and expressed no regret at the mix-up.";
 			}
 		}
 
@@ -2283,13 +2283,13 @@ namespace STRINGS
 
 			public class MOTD
 			{
-				public static LocString IMAGE_HEADER = "SOLAR SWAMPED UPDATE";
+				public static LocString IMAGE_HEADER = "ROCKETRY RENOVATION";
 
 				public static LocString NEWS_HEADER = "JOIN THE DISCUSSION";
 
 				public static LocString NEWS_BODY = "Stay up to date by joining our mailing list, or head on over to the forums and join the discussion.";
 
-				public static LocString PATCH_NOTES_SUMMARY = "Welcome to the <b>SOLAR SWAMPED UPDATE</b>:\n\n<b><i>Spaced Out!</i></b>\n•<indent=20px>Added a third Classic Cluster: play on the Swamp Start to try the new biomes in a larger world</indent>\n•<indent=20px>Variable sunlight intensity per-world, changing the progression of solar panels</indent>\n•<indent=20px>New Location Sensor and usage restrictions on the Rocket Control Station to keep rockets prepped for their mission</indent>\n<b>Base Game</b>\n•<indent=20px>Numerous worldgen fixes to bugs introduced in the last update (Only affects newly generated worlds)</indent>\n•<indent=20px>Other bug fixes, including resolving several issues with Space Scanners</indent>\n\n   Check out the full patch notes for more details!";
+				public static LocString PATCH_NOTES_SUMMARY = "Welcome to the <b>ROCKETRY RENOVATION UPDATE</b>\n\n<b><i>Spaced Out!</i></b>\n•<indent=20px>Duplicants can escape stranded rockets in an escape pod via the \"Abandon Ship\" button.</indent>\n•<indent=20px>Added liquid and gas ports to Spacefarer Modules to allow for easier fluid supplying and venting.</indent>\n•<indent=20px>New buildings, including a Wall Toilet that vents waste directly into the world behind it.</indent>\n•<indent=20px>Bug fixes and QOL improvements.</indent>\n\n   Check out the full patch notes for more details!";
 
 				public static LocString UPDATE_TEXT = "LAUNCHED!";
 
@@ -4162,6 +4162,8 @@ namespace STRINGS
 
 			public static LocString HELP_BUILDLOCATION_CORNER = "Must be built in a corner";
 
+			public static LocString HELP_BUILDLOCATION_CORNER_FLOOR = "Must be built in a corner on the ground";
+
 			public static LocString HELP_BUILDLOCATION_BELOWROCKETCEILING = "Must be placed further from the edge of space";
 
 			public static LocString HELP_BUILDLOCATION_ONROCKETENVELOPE = "Must be built on the floor of a rocket interior";
@@ -4487,6 +4489,12 @@ namespace STRINGS
 			public static LocString TOOLTIP_INVALID_DESTINATION_NO_LAUNCH_PAD = string.Concat("There is no ", BUILDINGS.PREFABS.LAUNCHPAD.NAME, " on this ", PLANETOID_KEYWORD, " for a rocket to land on\n\nUse a ", BUILDINGS.PREFABS.PIONEERMODULE.NAME, " or ", BUILDINGS.PREFABS.SCOUTMODULE.NAME, " to deploy a scout and make first contact");
 
 			public static LocString TOOLTIP_INVALID_DESTINATION_REQUIRE_ASTEROID = string.Concat("Must select a ", PLANETOID_KEYWORD, " destination");
+
+			public static LocString TOOLTIP_HIDDEN_HEX = "???";
+
+			public static LocString TOOLTIP_PEEKED_HEX_WITH_OBJECT = "UNKNOWN OBJECT DETECTED!";
+
+			public static LocString TOOLTIP_EMPTY_HEX = "EMPTY SPACE";
 		}
 
 		public class STARMAP
@@ -6987,7 +6995,7 @@ namespace STRINGS
 					{
 						public static LocString COMPLETE = "";
 
-						public static LocString FAILED = "    • Engine's height limit reached";
+						public static LocString FAILED = "    • Engine's height limit reached or exceeded";
 					}
 				}
 
@@ -7072,7 +7080,7 @@ namespace STRINGS
 
 				public static LocString NORECIPEDISCOVERED = "No discovered recipes";
 
-				public static LocString NORECIPEDISCOVERED_BODY = "Discover new ingredients in the world to unlock some recipes.";
+				public static LocString NORECIPEDISCOVERED_BODY = "Discover new ingredients or research new technology to unlock some recipes.";
 
 				public static LocString NORECIPESELECTED = "No recipe selected";
 
@@ -7183,6 +7191,21 @@ namespace STRINGS
 				public static LocString LAUNCH_AUTOMATION_CONTROLLED = "AUTOMATION CONTROLLED";
 
 				public static LocString LAUNCH_AUTOMATION_CONTROLLED_TOOLTIP = string.Concat("This ", BUILDINGS.PREFABS.LAUNCHPAD.NAME, "'s launch operation is controlled by automation signals");
+			}
+
+			public class SELFDESTRUCTSIDESCREEN
+			{
+				public static LocString TITLE = "Self Destruct";
+
+				public static LocString MESSAGE_TEXT = "EMERGENCY PROCEDURES";
+
+				public static LocString BUTTON_TEXT = "ABANDON SHIP!";
+
+				public static LocString BUTTON_TEXT_CONFIRM = "CONFIRM ABANDON SHIP";
+
+				public static LocString BUTTON_TOOLTIP = "This rocket is equipped with an emergency escape system.\n\nThe rocket's self-destruct sequence can be triggered to destroy it and propel fragments of the ship towards the nearest planetoid.\n\nAny Duplicants on board will be safely delivered in escape pods.";
+
+				public static LocString BUTTON_TOOLTIP_CONFIRM = "<b>This will eject any passengers and destroy the rocket.<b>\n\nThe rocket's self-destruct sequence can be triggered to destroy it and propel fragments of the ship towards the nearest planetoid.\n\nAny Duplicants on board will be safely delivered in escape pods.";
 			}
 
 			public class GENESHUFFLERSIDESREEN

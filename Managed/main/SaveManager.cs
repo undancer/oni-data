@@ -55,7 +55,9 @@ public class SaveManager : KMonoBehaviour
 
 	public const int SAVE_MINOR_VERSION_BASE_GAME_MERGEDOWN = 25;
 
-	public const int SAVE_MINOR_VERSION = 25;
+	public const int SAVE_MINOR_VERSION_FALLING_WATER_WORLDIDX_SERIALIZATION = 26;
+
+	public const int SAVE_MINOR_VERSION = 26;
 
 	private Dictionary<Tag, GameObject> prefabMap = new Dictionary<Tag, GameObject>();
 
@@ -149,7 +151,7 @@ public class SaveManager : KMonoBehaviour
 	{
 		writer.Write(SAVE_HEADER);
 		writer.Write(7);
-		writer.Write(25);
+		writer.Write(26);
 		int num = 0;
 		foreach (KeyValuePair<Tag, List<SaveLoadRoot>> sceneObject in sceneObjects)
 		{
@@ -241,9 +243,9 @@ public class SaveManager : KMonoBehaviour
 		}
 		int num = reader.ReadInt32();
 		int num2 = reader.ReadInt32();
-		if (num != 7 || num2 > 25)
+		if (num != 7 || num2 > 26)
 		{
-			DebugUtil.LogWarningArgs($"SAVE FILE VERSION MISMATCH! Expected {7}.{25} but got {num}.{num2}");
+			DebugUtil.LogWarningArgs($"SAVE FILE VERSION MISMATCH! Expected {7}.{26} but got {num}.{num2}");
 			return false;
 		}
 		ClearScene();

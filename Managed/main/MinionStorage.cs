@@ -93,14 +93,16 @@ public class MinionStorage : KMonoBehaviour
 		AttributeLevels component6 = src_id.GetComponent<AttributeLevels>();
 		component6.OnSerializing();
 		dest_id.attributeLevels = new List<AttributeLevels.LevelSaveLoad>(component6.SaveLoadLevels);
+		Effects component7 = src_id.GetComponent<Effects>();
+		dest_id.saveLoadEffects = component7.GetAllEffectsForSerialization();
 		StoreModifiers(src_id, dest_id);
-		Schedulable component7 = src_id.GetComponent<Schedulable>();
-		Schedule schedule = component7.GetSchedule();
+		Schedulable component8 = src_id.GetComponent<Schedulable>();
+		Schedule schedule = component8.GetSchedule();
 		if (schedule != null)
 		{
-			schedule.Unassign(component7);
-			Schedulable component8 = dest_id.GetComponent<Schedulable>();
-			schedule.Assign(component8);
+			schedule.Unassign(component8);
+			Schedulable component9 = dest_id.GetComponent<Schedulable>();
+			schedule.Assign(component9);
 		}
 	}
 
@@ -157,6 +159,22 @@ public class MinionStorage : KMonoBehaviour
 			component3.SaveLoadLevels = src_id.attributeLevels.ToArray();
 			component3.OnDeserialized();
 		}
+		Effects component4 = dest_id.GetComponent<Effects>();
+		if (src_id.saveLoadEffects != null)
+		{
+			foreach (Effects.SaveLoadEffect saveLoadEffect in src_id.saveLoadEffects)
+			{
+				if (Db.Get().effects.Exists(saveLoadEffect.id))
+				{
+					Effect effect = Db.Get().effects.Get(saveLoadEffect.id);
+					EffectInstance effectInstance = component4.Add(effect, saveLoadEffect.saved);
+					if (effectInstance != null)
+					{
+						effectInstance.timeRemaining = saveLoadEffect.timeRemaining;
+					}
+				}
+			}
+		}
 		dest_id.GetComponent<Accessorizer>().ApplyAccessories();
 		dest_id.assignableProxy = new Ref<MinionAssignablesProxy>();
 		dest_id.assignableProxy.Set(src_id.assignableProxy.Get());
@@ -170,13 +188,13 @@ public class MinionStorage : KMonoBehaviour
 				equipment.Equip(equippable);
 			}
 		}
-		Schedulable component4 = src_id.GetComponent<Schedulable>();
-		Schedule schedule = component4.GetSchedule();
+		Schedulable component5 = src_id.GetComponent<Schedulable>();
+		Schedule schedule = component5.GetSchedule();
 		if (schedule != null)
 		{
-			schedule.Unassign(component4);
-			Schedulable component5 = dest_id.GetComponent<Schedulable>();
-			schedule.Assign(component5);
+			schedule.Unassign(component5);
+			Schedulable component6 = dest_id.GetComponent<Schedulable>();
+			schedule.Assign(component6);
 		}
 	}
 

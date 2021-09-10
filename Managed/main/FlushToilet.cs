@@ -22,7 +22,11 @@ public class FlushToilet : StateMachineComponent<FlushToilet.SMInstance>, IUsabl
 		{
 			if (Game.Instance.liquidConduitFlow.HasConduit(base.master.inputCell))
 			{
-				return Game.Instance.liquidConduitFlow.HasConduit(base.master.outputCell);
+				if (base.master.requireOutput)
+				{
+					return Game.Instance.liquidConduitFlow.HasConduit(base.master.outputCell);
+				}
+				return true;
 			}
 			return false;
 		}
@@ -199,6 +203,8 @@ public class FlushToilet : StateMachineComponent<FlushToilet.SMInstance>, IUsabl
 
 	private MeterController contaminationMeter;
 
+	public Meter.Offset meterOffset = Meter.Offset.Behind;
+
 	[SerializeField]
 	public float massConsumedPerUse = 5f;
 
@@ -216,6 +222,9 @@ public class FlushToilet : StateMachineComponent<FlushToilet.SMInstance>, IUsabl
 
 	[SerializeField]
 	public int diseaseOnDupePerFlush;
+
+	[SerializeField]
+	public bool requireOutput = true;
 
 	[MyCmpGet]
 	private ConduitConsumer conduitConsumer;
@@ -239,8 +248,8 @@ public class FlushToilet : StateMachineComponent<FlushToilet.SMInstance>, IUsabl
 		liquidConduitFlow.onConduitsRebuilt += OnConduitsRebuilt;
 		liquidConduitFlow.AddConduitUpdater(OnConduitUpdate);
 		KBatchedAnimController component2 = GetComponent<KBatchedAnimController>();
-		fillMeter = new MeterController(component2, "meter_target", "meter", Meter.Offset.Behind, Grid.SceneLayer.NoLayer, new Vector3(0.4f, 3.2f, 0.1f));
-		contaminationMeter = new MeterController(component2, "meter_target", "meter_dirty", Meter.Offset.Behind, Grid.SceneLayer.NoLayer, new Vector3(0.4f, 3.2f, 0.1f));
+		fillMeter = new MeterController(component2, "meter_target", "meter", meterOffset, Grid.SceneLayer.NoLayer, new Vector3(0.4f, 3.2f, 0.1f));
+		contaminationMeter = new MeterController(component2, "meter_target", "meter_dirty", meterOffset, Grid.SceneLayer.NoLayer, new Vector3(0.4f, 3.2f, 0.1f));
 		Components.Toilets.Add(this);
 		Components.BasicBuildings.Add(this);
 		base.smi.StartSM();
@@ -328,7 +337,8 @@ public class FlushToilet : StateMachineComponent<FlushToilet.SMInstance>, IUsabl
 	{
 		if (GetSMI() != null)
 		{
-			bool value = Game.Instance.liquidConduitFlow.GetContents(outputCell).mass > 0f && base.smi.HasContaminatedMass();
+			ConduitFlow liquidConduitFlow = Game.Instance.liquidConduitFlow;
+			bool value = base.smi.master.requireOutput && liquidConduitFlow.GetContents(outputCell).mass > 0f && base.smi.HasContaminatedMass();
 			base.smi.sm.outputBlocked.Set(value, base.smi);
 		}
 	}

@@ -275,6 +275,11 @@ public abstract class KAnimControllerBase : MonoBehaviour
 		set
 		{
 			flipX = value;
+			if (layering != null)
+			{
+				layering.Dirty();
+			}
+			SetDirty();
 		}
 	}
 
@@ -287,6 +292,11 @@ public abstract class KAnimControllerBase : MonoBehaviour
 		set
 		{
 			flipY = value;
+			if (layering != null)
+			{
+				layering.Dirty();
+			}
+			SetDirty();
 		}
 	}
 

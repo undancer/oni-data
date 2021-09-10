@@ -662,6 +662,13 @@ namespace STRINGS
 			public static LocString DESC = string.Concat("Contains resources packed for interstellar shipping.\n\nCan be launched by a ", BUILDINGS.PREFABS.RAILGUN.NAME, " or unpacked with a ", BUILDINGS.PREFABS.RAILGUNPAYLOADOPENER.NAME, ".");
 		}
 
+		public class DEBRISPAYLOAD
+		{
+			public static LocString NAME = "Rocket Debris";
+
+			public static LocString DESC = "Whatever is left over from a Rocket Self-Destruct can be recovered once it has crash-landed.";
+		}
+
 		public class RADIATION
 		{
 			public class HIGHENERGYPARITCLE

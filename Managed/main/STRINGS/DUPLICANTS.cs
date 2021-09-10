@@ -1397,6 +1397,8 @@ namespace STRINGS
 				public static LocString HAS_BALLOON_STALL_CELL = "Has a location for a Balloon Stall";
 
 				public static LocString IS_MINION = "Must be a Duplicant";
+
+				public static LocString IS_ROCKET_TRAVELLING = "Rocket must be travelling";
 			}
 
 			public static LocString NOT_EXISTING_TASK = "Not Existing";
@@ -1716,6 +1718,13 @@ namespace STRINGS
 				public static LocString NAME = "Interrupted Sleep: Afraid of Dark";
 
 				public static LocString TOOLTIP = "This Duplicant is having trouble sleeping because of their fear of the dark";
+			}
+
+			public class SLEEPINGINTERRUPTEDBYMOVEMENT
+			{
+				public static LocString NAME = "Interrupted Sleep: Movement";
+
+				public static LocString TOOLTIP = "This Duplicant is having trouble sleeping because their bed moved";
 			}
 
 			public class REDALERT
@@ -3689,6 +3698,13 @@ namespace STRINGS
 				public static LocString NAME = "Unrested: Afraid of Dark";
 
 				public static LocString TOOLTIP = "This Duplicant didn't get much sleep because they were too anxious about the lack of " + UI.PRE_KEYWORD + "Light" + UI.PST_KEYWORD + " to relax";
+			}
+
+			public class BADSLEEPMOVEMENT
+			{
+				public static LocString NAME = "Unrested: Movement";
+
+				public static LocString TOOLTIP = "This Duplicant didn't get much sleep because they were interrupted by movement";
 			}
 
 			public class TERRIBLESLEEP

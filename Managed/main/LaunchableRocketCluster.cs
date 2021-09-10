@@ -316,7 +316,8 @@ public class LaunchableRocketCluster : StateMachineComponent<LaunchableRocketClu
 			{
 				smi.LaunchLoop(dt);
 			}, UpdateRate.SIM_EVERY_TICK)
-				.ParamTransition(distanceAboveGround, not_grounded.space, (StatesInstance smi, float p) => p >= distanceToSpace.Get(smi));
+				.ParamTransition(distanceAboveGround, not_grounded.space, (StatesInstance smi, float p) => p >= distanceToSpace.Get(smi))
+				.TriggerOnEnter(GameHashes.StartRocketLaunch);
 			not_grounded.space.EnterTransition(not_grounded.landing_setup, (StatesInstance smi) => smi.IsNotSpaceBound()).EventTransition(GameHashes.DoReturnRocket, not_grounded.landing_setup).Enter(delegate(StatesInstance smi)
 			{
 				smi.FinalizeLaunch();
@@ -334,7 +335,7 @@ public class LaunchableRocketCluster : StateMachineComponent<LaunchableRocketClu
 				smi.LandingLoop(dt);
 			}, UpdateRate.SIM_EVERY_TICK).ParamTransition(distanceAboveGround, not_grounded.land, IsFullyLanded)
 				.ParamTransition(warmupTimeRemaining, not_grounded.land, IsFullyLanded);
-			not_grounded.land.Enter(delegate(StatesInstance smi)
+			not_grounded.land.TriggerOnEnter(GameHashes.RocketTouchDown).Enter(delegate(StatesInstance smi)
 			{
 				foreach (Ref<RocketModuleCluster> part in smi.master.parts)
 				{
@@ -389,7 +390,7 @@ public class LaunchableRocketCluster : StateMachineComponent<LaunchableRocketClu
 						continue;
 					}
 					GameObject gameObject = Grid.Objects[num, 39];
-					if (gameObject != null)
+					if (gameObject != null && gameObject.HasTag(GameTags.GantryExtended))
 					{
 						BuildingHP component2 = gameObject.GetComponent<BuildingHP>();
 						if (component2 != null)

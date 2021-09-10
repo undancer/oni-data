@@ -14,25 +14,25 @@ public class ClusterMapScreen : KScreen
 
 	public static ClusterMapScreen Instance;
 
-	public ClusterMapVisualizer cellVisPrefab;
-
 	public GameObject cellVisContainer;
-
-	public ClusterMapVisualizer terrainVisPrefab;
 
 	public GameObject terrainVisContainer;
 
-	public ClusterMapVisualizer mobileVisPrefab;
-
 	public GameObject mobileVisContainer;
-
-	public ClusterMapVisualizer telescopeVisPrefab;
 
 	public GameObject telescopeVisContainer;
 
-	public ClusterMapVisualizer POIVisPrefab;
-
 	public GameObject POIVisContainer;
+
+	public GameObject FXVisContainer;
+
+	public ClusterMapVisualizer cellVisPrefab;
+
+	public ClusterMapVisualizer terrainVisPrefab;
+
+	public ClusterMapVisualizer mobileVisPrefab;
+
+	public ClusterMapVisualizer staticVisPrefab;
 
 	public Color rocketPathColor;
 
@@ -142,12 +142,14 @@ public class ClusterMapScreen : KScreen
 		Debug.Assert(cellVisPrefab.rectTransform().sizeDelta == new Vector2(2f, 2f), "The radius of the cellVisPrefab hex must be 1");
 		Debug.Assert(terrainVisPrefab.rectTransform().sizeDelta == new Vector2(2f, 2f), "The radius of the terrainVisPrefab hex must be 1");
 		Debug.Assert(mobileVisPrefab.rectTransform().sizeDelta == new Vector2(2f, 2f), "The radius of the mobileVisPrefab hex must be 1");
+		Debug.Assert(staticVisPrefab.rectTransform().sizeDelta == new Vector2(2f, 2f), "The radius of the staticVisPrefab hex must be 1");
 		GenerateGridVis(out var _, out var maxR, out var _, out var maxQ);
 		Show(show: false);
 		mapScrollRect.content.sizeDelta = new Vector2(maxR * 4, maxQ * 4);
 		mapScrollRect.content.localScale = new Vector3(m_currentZoomScale, m_currentZoomScale, 1f);
 		m_onDestinationChangedDelegate = OnDestinationChanged;
 		m_onSelectObjectDelegate = OnSelectObject;
+		Subscribe(1980521255, UpdateVis);
 	}
 
 	protected void MoveToNISPosition()
@@ -443,7 +445,8 @@ public class ClusterMapScreen : KScreen
 			{
 				ClusterGrid.Instance.GetCellRevealLevel(cellContent.Key);
 				_ = item.IsVisibleInFOW;
-				if (GetRevealLevel(item) != 0 && !m_gridEntityVis.ContainsKey(item))
+				ClusterRevealLevel revealLevel = GetRevealLevel(item);
+				if (item.IsVisible && revealLevel != 0 && !m_gridEntityVis.ContainsKey(item))
 				{
 					ClusterMapVisualizer original = null;
 					GameObject gameObject = null;
@@ -458,16 +461,20 @@ public class ClusterMapScreen : KScreen
 						gameObject = mobileVisContainer;
 						break;
 					case EntityLayer.POI:
-						original = POIVisPrefab;
+						original = staticVisPrefab;
 						gameObject = POIVisContainer;
 						break;
 					case EntityLayer.Telescope:
-						original = telescopeVisPrefab;
+						original = staticVisPrefab;
 						gameObject = telescopeVisContainer;
 						break;
 					case EntityLayer.Payload:
 						original = mobileVisPrefab;
 						gameObject = mobileVisContainer;
+						break;
+					case EntityLayer.FX:
+						original = staticVisPrefab;
+						gameObject = FXVisContainer;
 						break;
 					}
 					ClusterNameDisplayScreen.Instance.AddNewEntry(item);
@@ -521,19 +528,18 @@ public class ClusterMapScreen : KScreen
 		return ClusterRevealLevel.Hidden;
 	}
 
-	private void UpdateVis()
+	private void UpdateVis(object data = null)
 	{
 		SetupVisGameObjects();
 		UpdatePaths();
 		foreach (KeyValuePair<ClusterGridEntity, ClusterMapVisualizer> gridEntityAnim in m_gridEntityAnims)
 		{
-			gridEntityAnim.Key.GetComponent<ClusterTraveler>();
 			ClusterRevealLevel revealLevel = GetRevealLevel(gridEntityAnim.Key);
 			gridEntityAnim.Value.Show(revealLevel);
 			bool selected = m_selectedEntity == gridEntityAnim.Key;
 			gridEntityAnim.Value.Select(selected);
 		}
-		if (m_selectedEntity != null)
+		if (m_selectedEntity != null && m_gridEntityVis.ContainsKey(m_selectedEntity))
 		{
 			ClusterMapVisualizer clusterMapVisualizer = m_gridEntityVis[m_selectedEntity];
 			m_selectMarker.SetTargetTransform(clusterMapVisualizer.transform);

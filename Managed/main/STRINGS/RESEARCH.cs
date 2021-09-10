@@ -332,7 +332,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = UI.FormatAsLink("Liquid-Based Refinement Processes", "LIQUIDFILTERING");
 
-				public static LocString DESC = "Use pumped liquids to remove " + UI.FormatAsLink("Salt", "SALT") + " from " + UI.FormatAsLink("Brine", "BRINE") + " or pull " + UI.FormatAsLink("Carbon Dioxide", "CARBONDIOXIDE") + " from the air.";
+				public static LocString DESC = "Use pumped liquids to remove " + UI.FormatAsLink("Salt", "SALT") + " from " + UI.FormatAsLink("Brine", "BRINE") + ".";
 			}
 
 			public class LIQUIDPIPING

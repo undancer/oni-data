@@ -38,6 +38,9 @@ public class ConduitDispenser : KMonoBehaviour, ISaveLoadable, IConduitDispenser
 	[MyCmpReq]
 	public Storage storage;
 
+	[MyCmpReq]
+	private Building building;
+
 	private HandleVector<int>.Handle partitionerEntry;
 
 	private int utilityCell = -1;
@@ -92,7 +95,8 @@ public class ConduitDispenser : KMonoBehaviour, ISaveLoadable, IConduitDispenser
 		{
 			Tutorial.Instance.TutorialMessage(Tutorial.TutorialMessages.TM_Plumbing);
 		});
-		utilityCell = GetOutputCell();
+		ConduitFlow conduitManager = GetConduitManager();
+		utilityCell = GetOutputCell(conduitManager.conduitType);
 		ScenePartitionerLayer layer = GameScenePartitioner.Instance.objectLayers[(conduitType == ConduitType.Gas) ? 12 : 16];
 		partitionerEntry = GameScenePartitioner.Instance.Add("ConduitConsumer.OnSpawn", base.gameObject, utilityCell, layer, OnConduitConnectionChanged);
 		GetConduitManager().AddConduitUpdater(ConduitUpdate, ConduitFlowPriority.Dispense);
@@ -126,6 +130,10 @@ public class ConduitDispenser : KMonoBehaviour, ISaveLoadable, IConduitDispenser
 		if (!operational.IsOperational && !alwaysDispense)
 		{
 			return;
+		}
+		if (building.Def.CanMove)
+		{
+			utilityCell = GetOutputCell(GetConduitManager().conduitType);
 		}
 		PrimaryElement primaryElement = FindSuitableElement();
 		if (primaryElement != null)
@@ -179,13 +187,21 @@ public class ConduitDispenser : KMonoBehaviour, ISaveLoadable, IConduitDispenser
 		return false;
 	}
 
-	private int GetOutputCell()
+	private int GetOutputCell(ConduitType outputConduitType)
 	{
 		Building component = GetComponent<Building>();
 		if (useSecondaryOutput)
 		{
-			ISecondaryOutput component2 = GetComponent<ISecondaryOutput>();
-			return Grid.OffsetCell(component.NaturalBuildingCell(), component2.GetSecondaryConduitOffset(conduitType));
+			ISecondaryOutput[] components = GetComponents<ISecondaryOutput>();
+			ISecondaryOutput[] array = components;
+			foreach (ISecondaryOutput secondaryOutput in array)
+			{
+				if (secondaryOutput.HasSecondaryConduitType(outputConduitType))
+				{
+					return Grid.OffsetCell(component.NaturalBuildingCell(), secondaryOutput.GetSecondaryConduitOffset(outputConduitType));
+				}
+			}
+			return Grid.OffsetCell(component.NaturalBuildingCell(), components[0].GetSecondaryConduitOffset(outputConduitType));
 		}
 		return component.GetUtilityOutputCell();
 	}

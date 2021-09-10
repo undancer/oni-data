@@ -8,7 +8,7 @@ public class SimTemperatureTransfer : KMonoBehaviour
 {
 	private const float SIM_FREEZE_SPAWN_ORE_PERCENT = 0.8f;
 
-	private const float MIN_MASS_FOR_TEMPERATURE_TRANSFER = 0.01f;
+	public const float MIN_MASS_FOR_TEMPERATURE_TRANSFER = 0.01f;
 
 	public float deltaKJ;
 

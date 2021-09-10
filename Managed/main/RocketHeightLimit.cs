@@ -19,9 +19,20 @@ public class RocketHeightLimit : SelectModuleCondition
 		{
 			return true;
 		}
-		if (component.CraftInterface.MaxHeight != -1)
+		int num2 = component.CraftInterface.MaxHeight;
+		RocketEngineCluster component2 = existingModule.GetComponent<RocketEngineCluster>();
+		RocketEngineCluster component3 = selectedPart.BuildingComplete.GetComponent<RocketEngineCluster>();
+		if (selectionContext == SelectionContext.ReplaceModule && component2 != null)
 		{
-			return component.CraftInterface.RocketHeight + num <= component.CraftInterface.MaxHeight;
+			num2 = ((!(component3 != null)) ? (-1) : component3.maxHeight);
+		}
+		if (component3 != null && selectionContext == SelectionContext.AddModuleBelow)
+		{
+			num2 = component3.maxHeight;
+		}
+		if (num2 != -1)
+		{
+			return component.CraftInterface.RocketHeight + num <= num2;
 		}
 		return true;
 	}

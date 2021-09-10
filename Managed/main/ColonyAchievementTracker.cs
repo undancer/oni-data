@@ -331,7 +331,7 @@ public class ColonyAchievementTracker : KMonoBehaviour, ISaveLoadableDetails, IR
 			if ((bool)equippable)
 			{
 				KPrefabID component = equippable.GetComponent<KPrefabID>();
-				if (component.HasTag(GameTags.AtmoSuit) || component.HasTag(GameTags.JetSuit))
+				if (component.HasTag(GameTags.AtmoSuit) || component.HasTag(GameTags.JetSuit) || component.HasTag(GameTags.LeadSuit))
 				{
 					flag = true;
 					break;

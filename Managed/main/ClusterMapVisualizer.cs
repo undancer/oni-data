@@ -213,9 +213,16 @@ public class ClusterMapVisualizer : KMonoBehaviour
 		{
 			new ClusterMapTravelAnimator.StatesInstance(this, entity).StartSM();
 		}
-		if (entity is Clustercraft)
+		if (entity != null)
 		{
-			new ClusterMapRocketAnimator.StatesInstance(this, entity).StartSM();
+			if (entity is Clustercraft)
+			{
+				new ClusterMapRocketAnimator.StatesInstance(this, entity).StartSM();
+			}
+			else if (entity.Layer == EntityLayer.FX)
+			{
+				new ClusterMapFXAnimator.StatesInstance(this, entity).StartSM();
+			}
 		}
 	}
 
@@ -289,9 +296,14 @@ public class ClusterMapVisualizer : KMonoBehaviour
 				{
 					KBatchedAnimController kBatchedAnimController = Object.Instantiate(animControllerPrefab, animContainer);
 					kBatchedAnimController.AnimFiles = new KAnimFile[1] { animConfig.animFile };
-					kBatchedAnimController.initialMode = KAnim.PlayMode.Loop;
+					kBatchedAnimController.initialMode = animConfig.playMode;
 					kBatchedAnimController.initialAnim = animConfig.initialAnim;
+					kBatchedAnimController.Offset = animConfig.animOffset;
 					kBatchedAnimController.gameObject.AddComponent<LoopingSounds>();
+					if (!string.IsNullOrEmpty(animConfig.symbolSwapTarget) && !string.IsNullOrEmpty(animConfig.symbolSwapSymbol))
+					{
+						kBatchedAnimController.GetComponent<SymbolOverrideController>().AddSymbolOverride(source_symbol: kBatchedAnimController.AnimFiles[0].GetData().build.GetSymbol(animConfig.symbolSwapSymbol), target_symbol: animConfig.symbolSwapTarget);
+					}
 					kBatchedAnimController.gameObject.SetActive(value: true);
 					animControllers.Add(kBatchedAnimController);
 				}

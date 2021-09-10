@@ -98,6 +98,7 @@ public class Bee : KMonoBehaviour
 			num *= radiationModifier.Value;
 		}
 		RadiationEmitter component = GetComponent<RadiationEmitter>();
+		component.SetEmitting(emitting: true);
 		component.emitRads = num;
 		component.Refresh();
 	}

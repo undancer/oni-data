@@ -71,6 +71,12 @@ public class MainMenu : KScreen
 	private EventInstance ambientLoop;
 
 	[SerializeField]
+	private GameObject MOTDContainer;
+
+	[SerializeField]
+	private GameObject buttonContainer;
+
+	[SerializeField]
 	private LocText motdImageHeader;
 
 	[SerializeField]
@@ -152,23 +158,16 @@ public class MainMenu : KScreen
 		}
 		CheckDoubleBoundKeys();
 		topLeftAlphaMessage.gameObject.SetActive(value: false);
-		nextUpdateTimer.gameObject.SetActive(value: false);
-		bool ownsExpansion1 = DistributionPlatform.Inst.IsDLCPurchased("EXPANSION1_ID");
-		expansion1Toggle.gameObject.SetActive(ownsExpansion1);
+		MOTDContainer.SetActive(value: false);
+		buttonContainer.SetActive(value: false);
+		bool active = DistributionPlatform.Inst.IsDLCPurchased("EXPANSION1_ID");
+		nextUpdateTimer.gameObject.SetActive(active);
+		expansion1Toggle.gameObject.SetActive(active);
 		m_motdServerClient = new MotdServerClient();
 		m_motdServerClient.GetMotd(delegate(MotdServerClient.MotdResponse response, string error)
 		{
 			if (error == null)
 			{
-				topLeftAlphaMessage.gameObject.SetActive(value: true);
-				if (ownsExpansion1)
-				{
-					nextUpdateTimer.gameObject.SetActive(value: true);
-				}
-				motdImageHeader.text = response.image_header_text;
-				motdNewsHeader.text = response.news_header_text;
-				motdNewsBody.text = response.news_body_text;
-				PatchNotesScreen.UpdatePatchNotes(response.patch_notes_summary, response.patch_notes_link_url);
 				if (DlcManager.IsExpansion1Active())
 				{
 					nextUpdateTimer.UpdateReleaseTimes(response.expansion1_update_data.last_update_time, response.expansion1_update_data.next_update_time, response.expansion1_update_data.update_text_override);
@@ -177,6 +176,13 @@ public class MainMenu : KScreen
 				{
 					nextUpdateTimer.UpdateReleaseTimes(response.vanilla_update_data.last_update_time, response.vanilla_update_data.next_update_time, response.vanilla_update_data.update_text_override);
 				}
+				topLeftAlphaMessage.gameObject.SetActive(value: true);
+				MOTDContainer.SetActive(value: true);
+				buttonContainer.SetActive(value: true);
+				motdImageHeader.text = response.image_header_text;
+				motdNewsHeader.text = response.news_header_text;
+				motdNewsBody.text = response.news_body_text;
+				PatchNotesScreen.UpdatePatchNotes(response.patch_notes_summary, response.patch_notes_link_url);
 				if (response.image_texture != null)
 				{
 					motdImage.sprite = Sprite.Create(response.image_texture, new Rect(0f, 0f, response.image_texture.width, response.image_texture.height), Vector2.zero);
@@ -462,7 +468,7 @@ public class MainMenu : KScreen
 					header = value.header;
 					gameInfo = value.headerData;
 				}
-				if (header.buildVersion > 474321 || gameInfo.saveMajorVersion != 7 || gameInfo.saveMinorVersion > 25)
+				if (header.buildVersion > 477203 || gameInfo.saveMajorVersion != 7 || gameInfo.saveMinorVersion > 26)
 				{
 					flag = false;
 				}

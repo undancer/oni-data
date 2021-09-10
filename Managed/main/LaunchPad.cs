@@ -207,7 +207,7 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 		if (lastBaseAttachable != null)
 		{
 			AttachableBuilding attachableBuilding = lastBaseAttachable;
-			attachableBuilding.onAttachmentNetworkChanged = (Action<AttachableBuilding>)Delegate.Remove(attachableBuilding.onAttachmentNetworkChanged, new Action<AttachableBuilding>(OnRocketLayoutChanged));
+			attachableBuilding.onAttachmentNetworkChanged = (Action<object>)Delegate.Remove(attachableBuilding.onAttachmentNetworkChanged, new Action<object>(OnRocketLayoutChanged));
 			lastBaseAttachable = null;
 		}
 		base.OnCleanUp();
@@ -306,18 +306,18 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 			{
 				Trigger(-1277991738, landedRocket);
 				AttachableBuilding component = landedRocket.CraftInterface.ClusterModules[0].Get().GetComponent<AttachableBuilding>();
-				component.onAttachmentNetworkChanged = (Action<AttachableBuilding>)Delegate.Remove(component.onAttachmentNetworkChanged, new Action<AttachableBuilding>(OnRocketLayoutChanged));
+				component.onAttachmentNetworkChanged = (Action<object>)Delegate.Remove(component.onAttachmentNetworkChanged, new Action<object>(OnRocketLayoutChanged));
 			}
 		}
 		OnRocketLayoutChanged(null);
 	}
 
-	private void OnRocketLayoutChanged(AttachableBuilding data)
+	private void OnRocketLayoutChanged(object data)
 	{
 		if (lastBaseAttachable != null)
 		{
 			AttachableBuilding attachableBuilding = lastBaseAttachable;
-			attachableBuilding.onAttachmentNetworkChanged = (Action<AttachableBuilding>)Delegate.Remove(attachableBuilding.onAttachmentNetworkChanged, new Action<AttachableBuilding>(OnRocketLayoutChanged));
+			attachableBuilding.onAttachmentNetworkChanged = (Action<object>)Delegate.Remove(attachableBuilding.onAttachmentNetworkChanged, new Action<object>(OnRocketLayoutChanged));
 			lastBaseAttachable = null;
 		}
 		GameObject rocketBaseModule = GetRocketBaseModule();
@@ -325,7 +325,7 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 		{
 			lastBaseAttachable = rocketBaseModule.GetComponent<AttachableBuilding>();
 			AttachableBuilding attachableBuilding2 = lastBaseAttachable;
-			attachableBuilding2.onAttachmentNetworkChanged = (Action<AttachableBuilding>)Delegate.Combine(attachableBuilding2.onAttachmentNetworkChanged, new Action<AttachableBuilding>(OnRocketLayoutChanged));
+			attachableBuilding2.onAttachmentNetworkChanged = (Action<object>)Delegate.Combine(attachableBuilding2.onAttachmentNetworkChanged, new Action<object>(OnRocketLayoutChanged));
 		}
 		DirtyTowerHeight();
 	}

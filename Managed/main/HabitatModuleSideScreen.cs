@@ -60,6 +60,7 @@ public class HabitatModuleSideScreen : SideScreenContent
 		reference.ClearOnClick();
 		reference.onClick += delegate
 		{
+			AudioMixer.instance.Start(module.interiorReverbSnapshot);
 			ClusterManager.Instance.SetActiveWorld(module.GetComponent<ClustercraftExteriorDoor>().GetTargetWorld().id);
 			ManagementMenu.Instance.CloseAll();
 		};

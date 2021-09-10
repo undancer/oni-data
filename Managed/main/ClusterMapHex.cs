@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using STRINGS;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,10 +21,16 @@ public class ClusterMapHex : MultiToggle, ICanvasRaycastFilter
 
 	public Image fogOfWar;
 
+	public Image peekedTile;
+
 	public TextStyleSetting invalidDestinationTooltipStyle;
+
+	public TextStyleSetting informationTooltipStyle;
 
 	[MyCmpGet]
 	private ToolTip m_tooltip;
+
+	private ClusterRevealLevel _revealLevel;
 
 	public AxialI location { get; private set; }
 
@@ -44,18 +51,20 @@ public class ClusterMapHex : MultiToggle, ICanvasRaycastFilter
 
 	public void SetRevealed(ClusterRevealLevel level)
 	{
+		_revealLevel = level;
 		switch (level)
 		{
 		case ClusterRevealLevel.Hidden:
-			fogOfWar.color = new Color(0f, 0f, 0f, 0.86f);
 			fogOfWar.gameObject.SetActive(value: true);
+			peekedTile.gameObject.SetActive(value: false);
 			break;
 		case ClusterRevealLevel.Peeked:
-			fogOfWar.color = new Color(0f, 0f, 0f, 0.56f);
-			fogOfWar.gameObject.SetActive(value: true);
+			fogOfWar.gameObject.SetActive(value: false);
+			peekedTile.gameObject.SetActive(value: true);
 			break;
 		case ClusterRevealLevel.Visible:
 			fogOfWar.gameObject.SetActive(value: false);
+			peekedTile.gameObject.SetActive(value: false);
 			break;
 		}
 	}
@@ -114,6 +123,26 @@ public class ClusterMapHex : MultiToggle, ICanvasRaycastFilter
 	private void OnHover()
 	{
 		m_tooltip.ClearMultiStringTooltip();
+		string text = "";
+		switch (_revealLevel)
+		{
+		case ClusterRevealLevel.Hidden:
+			text = UI.CLUSTERMAP.TOOLTIP_HIDDEN_HEX;
+			break;
+		case ClusterRevealLevel.Peeked:
+			text = ((ClusterGrid.Instance.GetEntitiesOnCell(location).Count > 0) ? UI.CLUSTERMAP.TOOLTIP_PEEKED_HEX_WITH_OBJECT : UI.CLUSTERMAP.TOOLTIP_HIDDEN_HEX);
+			break;
+		case ClusterRevealLevel.Visible:
+			if (ClusterGrid.Instance.GetEntitiesOnCell(location).Count == 0)
+			{
+				text = UI.CLUSTERMAP.TOOLTIP_EMPTY_HEX;
+			}
+			break;
+		}
+		if (!text.IsNullOrWhiteSpace())
+		{
+			m_tooltip.AddMultiStringTooltip(text, informationTooltipStyle);
+		}
 		UpdateHoverColors(validDestination: true);
 		ClusterMapScreen.Instance.OnHoverHex(this);
 	}

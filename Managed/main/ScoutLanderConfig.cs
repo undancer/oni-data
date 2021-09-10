@@ -20,6 +20,7 @@ public class ScoutLanderConfig : IEntityConfig
 	{
 		GameObject obj = EntityTemplates.CreatePlacedEntity("ScoutLander", STRINGS.BUILDINGS.PREFABS.SCOUTLANDER.NAME, STRINGS.BUILDINGS.PREFABS.SCOUTLANDER.DESC, 400f, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER0, noise: NOISE_POLLUTION.NOISY.TIER0, anim: Assets.GetAnim("rocket_scout_cargo_lander_kanim"), initialAnim: "grounded", sceneLayer: Grid.SceneLayer.Building, width: 3, height: 3);
 		obj.AddOrGetDef<CargoLander.Def>().previewTag = "ScoutLander_Preview".ToTag();
+		obj.AddOrGetDef<CargoDropperStorage.Def>();
 		obj.AddOrGet<Prioritizable>();
 		Prioritizable.AddRef(obj);
 		obj.AddOrGet<Operational>();

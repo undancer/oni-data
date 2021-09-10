@@ -43,6 +43,10 @@ public class BaseBeeHiveConfig : IEntityConfig
 			radiationEmitter.emitRads = 0f;
 			radiationEmitter.emitType = RadiationEmitter.RadiationEmitterType.Pulsing;
 			radiationEmitter.emissionOffset = new Vector3(0.5f, 1f, 0f);
+			kPrefabID.prefabSpawnFn += delegate(GameObject inst)
+			{
+				inst.GetComponent<RadiationEmitter>().SetEmitting(emitting: true);
+			};
 			gameObject.AddOrGet<Traits>();
 			gameObject.AddOrGet<Health>();
 			gameObject.AddOrGet<CharacterOverlay>();

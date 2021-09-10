@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using KSerialization;
 using UnityEngine;
 
@@ -6,6 +7,15 @@ public class RailGunPayload : GameStateMachine<RailGunPayload, RailGunPayload.St
 {
 	public class Def : BaseDef
 	{
+		public bool attractToBeacons;
+
+		public string clusterAnimSymbolSwapTarget;
+
+		public List<string> randomClusterSymbolSwaps;
+
+		public string worldAnimSymbolSwapTarget;
+
+		public List<string> randomWorldSymbolSwaps;
 	}
 
 	public class TakeoffStates : State
@@ -41,25 +51,41 @@ public class RailGunPayload : GameStateMachine<RailGunPayload, RailGunPayload.St
 		[Serialize]
 		public float takeoffVelocity;
 
-		public KAnimControllerBase animController;
+		[Serialize]
+		private int randomSymbolSwapIndex = -1;
+
+		public KBatchedAnimController animController;
 
 		public StatesInstance(IStateMachineTarget master, Def def)
 			: base(master, def)
 		{
-			animController = GetComponent<KAnimControllerBase>();
+			animController = GetComponent<KBatchedAnimController>();
+			DebugUtil.Assert(def.clusterAnimSymbolSwapTarget == null == (def.worldAnimSymbolSwapTarget == null), "Must specify both or neither symbol swap targets!");
+			DebugUtil.Assert((def.randomClusterSymbolSwaps == null && def.randomWorldSymbolSwaps == null) || def.randomClusterSymbolSwaps.Count == def.randomWorldSymbolSwaps.Count, "Must specify the same number of swaps for both world and cluster!");
+			if (def.clusterAnimSymbolSwapTarget != null && def.worldAnimSymbolSwapTarget != null)
+			{
+				if (randomSymbolSwapIndex == -1)
+				{
+					randomSymbolSwapIndex = Random.Range(0, def.randomClusterSymbolSwaps.Count);
+					Debug.Log($"Rolling a random symbol: {randomSymbolSwapIndex}", base.gameObject);
+				}
+				GetComponent<BallisticClusterGridEntity>().SwapSymbolFromSameAnim(def.clusterAnimSymbolSwapTarget, def.randomClusterSymbolSwaps[randomSymbolSwapIndex]);
+				KAnim.Build.Symbol symbol = animController.AnimFiles[0].GetData().build.GetSymbol(def.randomWorldSymbolSwaps[randomSymbolSwapIndex]);
+				animController.GetComponent<SymbolOverrideController>().AddSymbolOverride(def.worldAnimSymbolSwapTarget, symbol);
+			}
 		}
 
 		public void Launch(AxialI source, AxialI destination)
 		{
-			GetComponent<RailgunPayloadClusterGridEntity>().Configure(source, destination);
+			GetComponent<BallisticClusterGridEntity>().Configure(source, destination);
 			int asteroidWorldIdAtLocation = ClusterUtil.GetAsteroidWorldIdAtLocation(destination);
 			base.sm.destinationWorld.Set(asteroidWorldIdAtLocation, this);
 			GoTo(base.sm.takeoff);
 		}
 
-		public void Land(AxialI source, AxialI destination)
+		public void Travel(AxialI source, AxialI destination)
 		{
-			GetComponent<RailgunPayloadClusterGridEntity>().Configure(source, destination);
+			GetComponent<BallisticClusterGridEntity>().Configure(source, destination);
 			int asteroidWorldIdAtLocation = ClusterUtil.GetAsteroidWorldIdAtLocation(destination);
 			base.sm.destinationWorld.Set(asteroidWorldIdAtLocation, this);
 			GoTo(base.sm.travel);
@@ -77,10 +103,14 @@ public class RailGunPayload : GameStateMachine<RailGunPayload, RailGunPayload.St
 		{
 			WorldContainer world = ClusterManager.Instance.GetWorld(base.sm.destinationWorld.Get(this));
 			int num = 0;
-			int landingBeaconLocation = ClusterManager.Instance.GetLandingBeaconLocation(world.id);
-			Grid.CellToXY(landingBeaconLocation, out var x, out var _);
-			if (landingBeaconLocation != Grid.InvalidCell)
+			int num2 = Grid.InvalidCell;
+			if (base.def.attractToBeacons)
 			{
+				num2 = ClusterManager.Instance.GetLandingBeaconLocation(world.id);
+			}
+			if (num2 != Grid.InvalidCell)
+			{
+				Grid.CellToXY(num2, out var x, out var _);
 				int minInclusive = Mathf.Max(x - 3, (int)world.minimumBounds.x);
 				int maxExclusive = Mathf.Min(x + 3, (int)world.maximumBounds.x);
 				num = Mathf.RoundToInt(Random.Range(minInclusive, maxExclusive));
@@ -104,15 +134,17 @@ public class RailGunPayload : GameStateMachine<RailGunPayload, RailGunPayload.St
 			{
 				Vector3 position = base.transform.GetPosition() + new Vector3(0f, takeoffVelocity * dt, 0f);
 				base.transform.SetPosition(position);
+				return;
 			}
-			else
+			base.sm.beginTravelling.Trigger(this);
+			ClusterGridEntity component = GetComponent<ClusterGridEntity>();
+			if (ClusterGrid.Instance.GetAsteroidAtCell(component.Location) != null)
 			{
-				base.sm.beginTravelling.Trigger(this);
 				GetComponent<ClusterTraveler>().AdvancePathOneStep();
 			}
 		}
 
-		public void UpdateLanding(float dt)
+		public bool UpdateLanding(float dt)
 		{
 			if (base.gameObject.GetMyWorld() != null)
 			{
@@ -121,9 +153,10 @@ public class RailGunPayload : GameStateMachine<RailGunPayload, RailGunPayload.St
 				int cell = Grid.PosToCell(position);
 				if (Grid.IsWorldValidCell(cell) && Grid.IsSolidCell(cell))
 				{
-					base.sm.onSurface.Set(value: true, this);
+					return true;
 				}
 			}
+			return false;
 		}
 
 		public void OnDroppedAll()
@@ -138,12 +171,21 @@ public class RailGunPayload : GameStateMachine<RailGunPayload, RailGunPayload.St
 
 		public void MoveToSpace()
 		{
+			Pickupable component = GetComponent<Pickupable>();
+			if (component != null)
+			{
+				component.deleteOffGrid = false;
+			}
 			base.gameObject.transform.SetPosition(new Vector3(-1f, -1f, 0f));
 		}
 
 		public void MoveToWorld()
 		{
-			GetComponent<Pickupable>().deleteOffGrid = true;
+			Pickupable component = GetComponent<Pickupable>();
+			if (component != null)
+			{
+				component.deleteOffGrid = true;
+			}
 		}
 	}
 
@@ -190,11 +232,7 @@ public class RailGunPayload : GameStateMachine<RailGunPayload, RailGunPayload.St
 		{
 			onSurface.Set(value: false, smi);
 		}).PlayAnim("launching")
-			.OnSignal(beginTravelling, travel)
-			.Enter(delegate(StatesInstance smi)
-			{
-				smi.GetComponent<Pickupable>().deleteOffGrid = false;
-			});
+			.OnSignal(beginTravelling, travel);
 		takeoff.launch.Enter(delegate(StatesInstance smi)
 		{
 			smi.StartTakeoff();
@@ -206,22 +244,24 @@ public class RailGunPayload : GameStateMachine<RailGunPayload, RailGunPayload.St
 		travel.DefaultState(travel.travelling).Enter(delegate(StatesInstance smi)
 		{
 			onSurface.Set(value: false, smi);
-		}).PlayAnim("idle")
-			.ToggleTag(GameTags.EntityInSpace)
-			.ToggleMainStatusItem(Db.Get().BuildingStatusItems.InFlight, (StatesInstance smi) => smi.GetComponent<ClusterTraveler>());
-		travel.travelling.EventTransition(GameHashes.ClusterDestinationReached, travel.transferWorlds).Enter(delegate(StatesInstance smi)
+		}).Enter(delegate(StatesInstance smi)
 		{
 			smi.MoveToSpace();
-		});
+		})
+			.PlayAnim("idle")
+			.ToggleTag(GameTags.EntityInSpace)
+			.ToggleMainStatusItem(Db.Get().BuildingStatusItems.InFlight, (StatesInstance smi) => smi.GetComponent<ClusterTraveler>());
+		travel.travelling.EventTransition(GameHashes.ClusterDestinationReached, travel.transferWorlds);
 		travel.transferWorlds.Enter(delegate(StatesInstance smi)
 		{
 			smi.StartLand();
 		}).GoTo(landing.landing);
-		landing.DefaultState(landing.landing).ParamTransition(onSurface, grounded.crater, GameStateMachine<RailGunPayload, StatesInstance, IStateMachineTarget, Def>.IsTrue).ParamTransition(destinationWorld, takeoff, (StatesInstance smi, int p) => p != -1);
-		landing.landing.PlayAnim("falling", KAnim.PlayMode.Loop).Update("Landing", delegate(StatesInstance smi, float dt)
-		{
-			smi.UpdateLanding(dt);
-		}).ToggleGravity(landing.impact);
-		landing.impact.PlayAnim("land").OnAnimQueueComplete(grounded.crater);
+		landing.DefaultState(landing.landing).ParamTransition(onSurface, grounded.crater, GameStateMachine<RailGunPayload, StatesInstance, IStateMachineTarget, Def>.IsTrue).ParamTransition(destinationWorld, takeoff, (StatesInstance smi, int p) => p != -1)
+			.Enter(delegate(StatesInstance smi)
+			{
+				smi.MoveToWorld();
+			});
+		landing.landing.PlayAnim("falling", KAnim.PlayMode.Loop).UpdateTransition(landing.impact, (StatesInstance smi, float dt) => smi.UpdateLanding(dt)).ToggleGravity(landing.impact);
+		landing.impact.PlayAnim("land").TriggerOnEnter(GameHashes.JettisonCargo).OnAnimQueueComplete(grounded.crater);
 	}
 }

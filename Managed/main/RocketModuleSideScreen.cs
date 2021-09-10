@@ -168,16 +168,22 @@ public class RocketModuleSideScreen : SideScreenContent
 
 	private void ClickViewInterior()
 	{
-		if (ClusterManager.Instance.activeWorld == reorderable.GetComponent<ClustercraftExteriorDoor>().GetTargetWorld())
+		ClustercraftExteriorDoor component = reorderable.GetComponent<ClustercraftExteriorDoor>();
+		PassengerRocketModule component2 = reorderable.GetComponent<PassengerRocketModule>();
+		WorldContainer targetWorld = component.GetTargetWorld();
+		WorldContainer myWorld = component.GetMyWorld();
+		if (ClusterManager.Instance.activeWorld == targetWorld)
 		{
-			if (reorderable.GetComponent<ClustercraftExteriorDoor>().GetMyWorld().id != ClusterManager.INVALID_WORLD_IDX)
+			if (myWorld.id != ClusterManager.INVALID_WORLD_IDX)
 			{
-				ClusterManager.Instance.SetActiveWorld(reorderable.GetComponent<ClustercraftExteriorDoor>().GetMyWorld().id);
+				AudioMixer.instance.Stop(component2.interiorReverbSnapshot);
+				ClusterManager.Instance.SetActiveWorld(myWorld.id);
 			}
 		}
 		else
 		{
-			ClusterManager.Instance.SetActiveWorld(reorderable.GetComponent<ClustercraftExteriorDoor>().GetTargetWorld().id);
+			AudioMixer.instance.Start(component2.interiorReverbSnapshot);
+			ClusterManager.Instance.SetActiveWorld(targetWorld.id);
 		}
 		UpdateButtonStates();
 	}

@@ -156,8 +156,15 @@ public class SolidConduitDispenser : KMonoBehaviour, ISaveLoadable, IConduitDisp
 		Building component = GetComponent<Building>();
 		if (useSecondaryOutput)
 		{
-			ISecondaryOutput component2 = GetComponent<ISecondaryOutput>();
-			return Grid.OffsetCell(component.NaturalBuildingCell(), component2.GetSecondaryConduitOffset(ConduitType.Solid));
+			ISecondaryOutput[] components = GetComponents<ISecondaryOutput>();
+			foreach (ISecondaryOutput secondaryOutput in components)
+			{
+				if (secondaryOutput.HasSecondaryConduitType(ConduitType.Solid))
+				{
+					return Grid.OffsetCell(component.NaturalBuildingCell(), secondaryOutput.GetSecondaryConduitOffset(ConduitType.Solid));
+				}
+			}
+			return Grid.OffsetCell(component.NaturalBuildingCell(), CellOffset.none);
 		}
 		return component.GetUtilityOutputCell();
 	}

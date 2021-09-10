@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class KAnimLink
 {
+	public bool syncTint = true;
+
 	private KAnimControllerBase master;
 
 	private KAnimControllerBase slave;
@@ -50,7 +52,7 @@ public class KAnimLink
 
 	private void OnTintColourChanged(Color c)
 	{
-		if (slave != null)
+		if (syncTint && slave != null)
 		{
 			slave.TintColour = c;
 		}

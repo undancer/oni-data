@@ -167,7 +167,7 @@ public class WarpConduitReceiver : StateMachineComponent<WarpConduitReceiver.Sta
 		{
 			result = true;
 		}
-		if ((base.smi.master.senderLiquidStorage.MassStored() > 0f || base.smi.master.senderLiquidStorage.items.Count > 0) && base.smi.master.gasPort.dispenser.GetConduitManager().GetPermittedFlow(base.smi.master.liquidPort.outputCell) != 0)
+		if ((base.smi.master.senderLiquidStorage.MassStored() > 0f || base.smi.master.senderLiquidStorage.items.Count > 0) && base.smi.master.liquidPort.dispenser.GetConduitManager().GetPermittedFlow(base.smi.master.liquidPort.outputCell) != 0)
 		{
 			result = true;
 		}

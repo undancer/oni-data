@@ -35,16 +35,20 @@ public class ChoreType : Resource
 		tags.Add(TagManager.Create(id));
 		interruptExclusion = new HashSet<Tag>(interrupt_exclusion);
 		Db.Get().DuplicantStatusItems.Add(statusItem);
-		groups = new ChoreGroup[chore_groups.Length];
-		for (int i = 0; i < groups.Length; i++)
+		List<ChoreGroup> list = new List<ChoreGroup>();
+		for (int i = 0; i < chore_groups.Length; i++)
 		{
-			ChoreGroup choreGroup = Db.Get().ChoreGroups.Get(chore_groups[i]);
-			if (!choreGroup.choreTypes.Contains(this))
+			ChoreGroup choreGroup = Db.Get().ChoreGroups.TryGet(chore_groups[i]);
+			if (choreGroup != null)
 			{
-				choreGroup.choreTypes.Add(this);
+				if (!choreGroup.choreTypes.Contains(this))
+				{
+					choreGroup.choreTypes.Add(this);
+				}
+				list.Add(choreGroup);
 			}
-			groups[i] = choreGroup;
 		}
+		groups = list.ToArray();
 		if (!string.IsNullOrEmpty(urge))
 		{
 			this.urge = Db.Get().Urges.Get(urge);

@@ -136,6 +136,10 @@ public class SleepChore : Chore<SleepChore.StatesInstance>
 			public State interrupt_scared;
 
 			public State interrupt_scared_transition;
+
+			public State interrupt_movement;
+
+			public State interrupt_movement_transition;
 		}
 
 		public TargetParameter sleeper;
@@ -147,6 +151,8 @@ public class SleepChore : Chore<SleepChore.StatesInstance>
 		public BoolParameter isDisturbedByNoise;
 
 		public BoolParameter isDisturbedByLight;
+
+		public BoolParameter isDisturbedByMovement;
 
 		public BoolParameter isScaredOfDark;
 
@@ -181,15 +187,16 @@ public class SleepChore : Chore<SleepChore.StatesInstance>
 				{
 					isDisturbedByNoise.Set(value: true, smi);
 				})
-				.EventHandler(GameHashes.SleepDisturbedByFearOfDark, delegate(StatesInstance smi)
+				.EventHandler(GameHashes.SleepDisturbedByMovement, delegate(StatesInstance smi)
 				{
-					isScaredOfDark.Set(value: true, smi);
+					isDisturbedByMovement.Set(value: true, smi);
 				});
 			sleep.uninterruptable.DoNothing();
 			sleep.normal.ParamTransition(isInterruptable, sleep.uninterruptable, GameStateMachine<States, StatesInstance, SleepChore, object>.IsFalse).ToggleCategoryStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().DuplicantStatusItems.Sleeping).QueueAnim("working_loop", loop: true)
 				.ParamTransition(isDisturbedByNoise, sleep.interrupt_noise, GameStateMachine<States, StatesInstance, SleepChore, object>.IsTrue)
 				.ParamTransition(isDisturbedByLight, sleep.interrupt_light, GameStateMachine<States, StatesInstance, SleepChore, object>.IsTrue)
 				.ParamTransition(isScaredOfDark, sleep.interrupt_scared, GameStateMachine<States, StatesInstance, SleepChore, object>.IsTrue)
+				.ParamTransition(isDisturbedByMovement, sleep.interrupt_movement, GameStateMachine<States, StatesInstance, SleepChore, object>.IsTrue)
 				.Update(delegate(StatesInstance smi, float dt)
 				{
 					smi.CheckLightLevel();
@@ -201,8 +208,27 @@ public class SleepChore : Chore<SleepChore.StatesInstance>
 				{
 					smi.master.GetComponent<Effects>().Add(Db.Get().effects.Get("BadSleepAfraidOfDark"), should_save: true);
 				}
-				State state3 = (smi.master.GetComponent<Schedulable>().IsAllowed(Db.Get().ScheduleBlockTypes.Sleep) ? sleep.normal : success);
+				State state4 = (smi.master.GetComponent<Schedulable>().IsAllowed(Db.Get().ScheduleBlockTypes.Sleep) ? sleep.normal : success);
 				isScaredOfDark.Set(value: false, smi);
+				smi.GoTo(state4);
+			});
+			sleep.interrupt_movement.ToggleCategoryStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().DuplicantStatusItems.SleepingInterruptedByMovement).QueueAnim("interrupt_light").OnAnimQueueComplete(sleep.interrupt_movement_transition)
+				.Enter(delegate(StatesInstance smi)
+				{
+					GameObject gameObject = smi.sm.bed.Get(smi);
+					if (gameObject != null)
+					{
+						gameObject.GetComponent<KAnimControllerBase>().Play("interrupt_light");
+					}
+				});
+			sleep.interrupt_movement_transition.Enter(delegate(StatesInstance smi)
+			{
+				if (!smi.master.GetComponent<Effects>().HasEffect(Db.Get().effects.Get("TerribleSleep")))
+				{
+					smi.master.GetComponent<Effects>().Add(Db.Get().effects.Get("BadSleepMovement"), should_save: true);
+				}
+				State state3 = (smi.master.GetComponent<Schedulable>().IsAllowed(Db.Get().ScheduleBlockTypes.Sleep) ? sleep.normal : success);
+				isDisturbedByMovement.Set(value: false, smi);
 				smi.GoTo(state3);
 			});
 			sleep.interrupt_noise.ToggleCategoryStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().DuplicantStatusItems.SleepingInterruptedByNoise).QueueAnim("interrupt_light").OnAnimQueueComplete(sleep.interrupt_noise_transition);

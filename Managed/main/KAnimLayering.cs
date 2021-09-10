@@ -39,6 +39,11 @@ public class KAnimLayering
 		return isForeground;
 	}
 
+	public KAnimLink GetLink()
+	{
+		return link;
+	}
+
 	private static bool IsAnimLayered(KAnimFile[] anims)
 	{
 		foreach (KAnimFile kAnimFile in anims)

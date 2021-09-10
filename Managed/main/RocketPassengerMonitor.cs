@@ -1,8 +1,14 @@
+using System;
+
 public class RocketPassengerMonitor : GameStateMachine<RocketPassengerMonitor, RocketPassengerMonitor.Instance>
 {
 	public new class Instance : GameInstance
 	{
 		public int lastWorldID;
+
+		public Action<Chore> moduleDeployCompleteCallback;
+
+		public int moduleDeployTaskTargetMoveCell;
 
 		public Instance(IStateMachineTarget master)
 			: base(master)
@@ -32,6 +38,21 @@ public class RocketPassengerMonitor : GameStateMachine<RocketPassengerMonitor, R
 			}
 		}
 
+		public void SetModuleDeployChore(int cell, Action<Chore> OnChoreCompleteCallback)
+		{
+			moduleDeployCompleteCallback = OnChoreCompleteCallback;
+			moduleDeployTaskTargetMoveCell = cell;
+			GoTo(base.sm.movingToModuleDeployPre);
+			base.sm.targetCell.Set(cell, this);
+		}
+
+		public void CancelModuleDeployChore()
+		{
+			moduleDeployCompleteCallback = null;
+			moduleDeployTaskTargetMoveCell = Grid.InvalidCell;
+			base.sm.targetCell.Set(Grid.InvalidCell, base.smi);
+		}
+
 		public void ClearMoveTarget(int testCell)
 		{
 			int num = base.sm.targetCell.Get(this);
@@ -52,6 +73,12 @@ public class RocketPassengerMonitor : GameStateMachine<RocketPassengerMonitor, R
 
 	public State moving;
 
+	public State movingToModuleDeployPre;
+
+	public State movingToModuleDeploy;
+
+	public State moduleDeploy;
+
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = satisfied;
@@ -60,6 +87,19 @@ public class RocketPassengerMonitor : GameStateMachine<RocketPassengerMonitor, R
 		moving.ParamTransition(targetCell, satisfied, (Instance smi, int p) => p == Grid.InvalidCell).ToggleChore((Instance smi) => CreateChore(smi), satisfied).Exit(delegate(Instance smi)
 		{
 			targetCell.Set(Grid.InvalidCell, smi);
+		});
+		movingToModuleDeployPre.Enter(delegate(Instance smi)
+		{
+			targetCell.Set(smi.moduleDeployTaskTargetMoveCell, smi);
+			smi.GoTo(movingToModuleDeploy);
+		});
+		movingToModuleDeploy.ParamTransition(targetCell, satisfied, (Instance smi, int p) => p == Grid.InvalidCell).ToggleChore((Instance smi) => CreateChore(smi), moduleDeploy);
+		moduleDeploy.Enter(delegate(Instance smi)
+		{
+			smi.moduleDeployCompleteCallback(null);
+			targetCell.Set(Grid.InvalidCell, smi);
+			smi.moduleDeployCompleteCallback = null;
+			smi.GoTo(smi.sm.satisfied);
 		});
 	}
 

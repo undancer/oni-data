@@ -1,20 +1,27 @@
 using System.Collections.Generic;
-using STRINGS;
+using UnityEngine;
 
-public class RailgunPayloadClusterGridEntity : ClusterGridEntity
+public class BallisticClusterGridEntity : ClusterGridEntity
 {
 	[MyCmpReq]
 	private ClusterDestinationSelector m_destionationSelector;
 
 	[MyCmpReq]
-	private KSelectable m_selectable;
-
-	[MyCmpReq]
 	private ClusterTraveler m_clusterTraveler;
+
+	[SerializeField]
+	public string clusterAnimName;
+
+	[SerializeField]
+	public StringKey nameKey;
+
+	private string clusterAnimSymbolSwapTarget;
+
+	private string clusterAnimSymbolSwapSymbol;
 
 	public bool NoWaitInOrbit;
 
-	public override string Name => ITEMS.RAILGUNPAYLOAD.NAME;
+	public override string Name => Strings.Get(nameKey);
 
 	public override EntityLayer Layer => EntityLayer.Payload;
 
@@ -22,14 +29,16 @@ public class RailgunPayloadClusterGridEntity : ClusterGridEntity
 	{
 		new AnimConfig
 		{
-			animFile = Assets.GetAnim("payload01_kanim"),
-			initialAnim = "idle_loop"
+			animFile = Assets.GetAnim(clusterAnimName),
+			initialAnim = "idle_loop",
+			symbolSwapTarget = clusterAnimSymbolSwapTarget,
+			symbolSwapSymbol = clusterAnimSymbolSwapSymbol
 		}
 	};
 
 	public override bool IsVisible => m_clusterTraveler.IsTraveling();
 
-	public override ClusterRevealLevel IsVisibleInFOW => ClusterRevealLevel.Hidden;
+	public override ClusterRevealLevel IsVisibleInFOW => ClusterRevealLevel.Visible;
 
 	public override bool SpaceOutInSameHex()
 	{
@@ -77,5 +86,11 @@ public class RailgunPayloadClusterGridEntity : ClusterGridEntity
 	public override float GetProgress()
 	{
 		return m_clusterTraveler.GetMoveProgress();
+	}
+
+	public void SwapSymbolFromSameAnim(string targetSymbolName, string swappedSymbolName)
+	{
+		clusterAnimSymbolSwapTarget = targetSymbolName;
+		clusterAnimSymbolSwapSymbol = swappedSymbolName;
 	}
 }

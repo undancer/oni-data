@@ -9,6 +9,15 @@ public class DevRadiationEmitter : KMonoBehaviour, ISingleSliderControl, ISlider
 
 	public string SliderUnits => UI.UNITSUFFIXES.RADIATION.RADS;
 
+	protected override void OnSpawn()
+	{
+		base.OnSpawn();
+		if (radiationEmitter != null)
+		{
+			radiationEmitter.SetEmitting(emitting: true);
+		}
+	}
+
 	public float GetSliderMax(int index)
 	{
 		return 5000f;

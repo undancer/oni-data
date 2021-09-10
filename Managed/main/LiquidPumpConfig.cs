@@ -31,6 +31,7 @@ public class LiquidPumpConfig : IBuildingConfig
 		go.AddOrGet<EnergyConsumer>();
 		go.AddOrGet<Pump>();
 		go.AddOrGet<Storage>().capacityKg = 20f;
+		go.AddTag(GameTags.CorrosionProof);
 		ElementConsumer elementConsumer = go.AddOrGet<ElementConsumer>();
 		elementConsumer.configuration = ElementConsumer.Configuration.AllLiquid;
 		elementConsumer.consumptionRate = 10f;

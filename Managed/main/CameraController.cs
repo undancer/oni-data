@@ -386,6 +386,7 @@ public class CameraController : KMonoBehaviour, IInputHandler
 	private IEnumerator SwapToWorldFade(int worldId, bool useForcePosition, Vector3 forcePosition, float forceOrthgraphicSize, System.Action newWorldCallback)
 	{
 		AudioMixer.instance.Start(AudioMixerSnapshots.Get().ActiveBaseChangeSnapshot);
+		ClusterManager.Instance.UpdateWorldReverbSnapshot(worldId);
 		yield return StartCoroutine(FadeWithBlack(fadeUI: false, 0f, 1f, 3f));
 		ClusterManager.Instance.SetActiveWorld(worldId);
 		if (useForcePosition)

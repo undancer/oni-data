@@ -45,7 +45,7 @@ public class RefrigeratorConfig : IBuildingConfig
 		def.steadyHeatKW = 0f;
 		go.AddOrGet<UserNameable>();
 		go.AddOrGet<DropAllWorkable>();
-		go.AddOrGetDef<RocketUsageRestriction.Def>();
+		go.AddOrGetDef<RocketUsageRestriction.Def>().restrictOperational = false;
 		go.AddOrGetDef<StorageController.Def>();
 	}
 }

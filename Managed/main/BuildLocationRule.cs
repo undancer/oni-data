@@ -16,5 +16,6 @@ public enum BuildLocationRule
 	OnFloorOrBuildingAttachPoint,
 	OnFoundationRotatable,
 	BelowRocketCeiling,
-	OnRocketEnvelope
+	OnRocketEnvelope,
+	InCornerFloor
 }

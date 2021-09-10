@@ -26,6 +26,7 @@ public class VendingMachineConfig : IEntityConfig
 		gameObject.AddOrGet<LoreBearer>();
 		gameObject.AddOrGet<LoopingSounds>();
 		gameObject.AddOrGet<OccupyArea>().objectLayers = new ObjectLayer[1] { ObjectLayer.Building };
+		gameObject.AddOrGet<Demolishable>();
 		return gameObject;
 	}
 

@@ -453,6 +453,8 @@ public class GameTags
 
 	public static readonly Tag StorageLocker = TagManager.Create("StorageLocker");
 
+	public static readonly Tag LadderBed = TagManager.Create("LadderBed");
+
 	public static readonly Tag FloorTiles = TagManager.Create("FloorTiles");
 
 	public static readonly Tag Carpeted = TagManager.Create("Carpeted");
@@ -605,6 +607,8 @@ public class GameTags
 
 	public static readonly Tag RocketInSpace = TagManager.Create("RocketInSpace");
 
+	public static readonly Tag RocketStranded = TagManager.Create("RocketStranded");
+
 	public static readonly Tag RailGunPayloadEmptyable = TagManager.Create("RailGunPayloadEmptyable");
 
 	public static readonly Tag TransferringCargoComplete = TagManager.Create("TransferringCargoComplete");
@@ -624,6 +628,8 @@ public class GameTags
 	public static readonly Tag NoRocketRefund = TagManager.Create("NoRocketRefund");
 
 	public static readonly Tag RocketModule = TagManager.Create("RocketModule");
+
+	public static readonly Tag GantryExtended = TagManager.Create("GantryExtended");
 
 	public static readonly Tag EntityInSpace = TagManager.Create("EntityInSpace");
 

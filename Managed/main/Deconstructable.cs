@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using KSerialization;
 using STRINGS;
 using TUNING;
@@ -160,14 +161,25 @@ public class Deconstructable : Workable
 		Trigger(-702296337, this);
 	}
 
-	private void TriggerDestroy(float temperature, byte disease_idx, int disease_count)
+	public List<GameObject> ForceDestroyAndGetMaterials()
 	{
-		if (!(this == null) && !destroyed)
+		PrimaryElement component = GetComponent<PrimaryElement>();
+		float temperature = component.Temperature;
+		byte diseaseIdx = component.DiseaseIdx;
+		int diseaseCount = component.DiseaseCount;
+		return TriggerDestroy(temperature, diseaseIdx, diseaseCount);
+	}
+
+	private List<GameObject> TriggerDestroy(float temperature, byte disease_idx, int disease_count)
+	{
+		if (this == null || destroyed)
 		{
-			SpawnItemsFromConstruction(temperature, disease_idx, disease_count);
-			destroyed = true;
-			base.gameObject.DeleteObject();
+			return null;
 		}
+		List<GameObject> result = SpawnItemsFromConstruction(temperature, disease_idx, disease_count);
+		destroyed = true;
+		base.gameObject.DeleteObject();
+		return result;
 	}
 
 	private void QueueDeconstruction()
@@ -234,8 +246,9 @@ public class Deconstructable : Workable
 		SpawnItemsFromConstruction(temperature, diseaseIdx, diseaseCount);
 	}
 
-	private void SpawnItemsFromConstruction(float temperature, byte disease_idx, int disease_count)
+	private List<GameObject> SpawnItemsFromConstruction(float temperature, byte disease_idx, int disease_count)
 	{
+		List<GameObject> list = new List<GameObject>();
 		Building component = GetComponent<Building>();
 		float[] array = ((!(component != null)) ? new float[1] { GetComponent<PrimaryElement>().Mass } : component.Def.Mass);
 		for (int i = 0; i < constructionElements.Length && array.Length > i; i++)
@@ -249,7 +262,9 @@ public class Deconstructable : Workable
 				GameComps.Fallers.Remove(gameObject);
 			}
 			GameComps.Fallers.Add(gameObject, initial_velocity);
+			list.Add(gameObject);
 		}
+		return list;
 	}
 
 	public GameObject SpawnItem(Vector3 position, Tag src_element, float src_mass, float src_temperature, byte disease_idx, int disease_count)

@@ -151,6 +151,7 @@ public class ResourceHarvestModule : GameStateMachine<ResourceHarvestModule, Res
 				return false;
 			}
 			ClusterGridEntity pOIAtCurrentLocation = component.GetPOIAtCurrentLocation();
+			bool flag = false;
 			if (pOIAtCurrentLocation != null && (bool)pOIAtCurrentLocation.GetComponent<HarvestablePOIClusterGridEntity>())
 			{
 				HarvestablePOIStates.Instance sMI = pOIAtCurrentLocation.GetSMI<HarvestablePOIStates.Instance>();
@@ -166,21 +167,23 @@ public class ResourceHarvestModule : GameStateMachine<ResourceHarvestModule, Res
 					List<CargoBayCluster> cargoBaysOfType = component.GetCargoBaysOfType(cargoType);
 					if (cargoBaysOfType == null || cargoBaysOfType.Count <= 0)
 					{
-						base.sm.canHarvest.Set(value: false, this);
-						return false;
+						continue;
 					}
 					foreach (CargoBayCluster item in cargoBaysOfType)
 					{
 						if (item.storage.RemainingCapacity() > 0f)
 						{
-							base.sm.canHarvest.Set(value: true, this);
-							return true;
+							flag = true;
 						}
+					}
+					if (flag)
+					{
+						break;
 					}
 				}
 			}
-			base.sm.canHarvest.Set(value: false, this);
-			return false;
+			base.sm.canHarvest.Set(flag, this);
+			return flag;
 		}
 
 		public static void AddHarvestStatusItems(GameObject statusTarget, float harvestRate)

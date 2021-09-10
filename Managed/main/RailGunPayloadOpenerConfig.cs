@@ -52,7 +52,6 @@ public class RailGunPayloadOpenerConfig : IBuildingConfig
 		first = first.Concat(STORAGEFILTERS.LIQUIDS).ToList();
 		railGunPayloadOpener.resourceStorage.storageFilters = first;
 		railGunPayloadOpener.resourceStorage.capacityKg = 20000f;
-		go.AddComponent<ConduitSecondaryOutput>();
 		ManualDeliveryKG manualDeliveryKG = go.AddComponent<ManualDeliveryKG>();
 		manualDeliveryKG.SetStorage(railGunPayloadOpener.payloadStorage);
 		manualDeliveryKG.requestedItemTag = GameTags.RailGunPayloadEmptyable;
@@ -70,14 +69,14 @@ public class RailGunPayloadOpenerConfig : IBuildingConfig
 	public override void DoPostConfigurePreview(BuildingDef def, GameObject go)
 	{
 		base.DoPostConfigurePreview(def, go);
-		go.AddOrGet<BuildingCellVisualizer>();
 		AttachPorts(go);
+		go.AddOrGet<BuildingCellVisualizer>();
 	}
 
 	public override void DoPostConfigureUnderConstruction(GameObject go)
 	{
 		base.DoPostConfigureUnderConstruction(go);
-		go.AddOrGet<BuildingCellVisualizer>();
 		AttachPorts(go);
+		go.AddOrGet<BuildingCellVisualizer>();
 	}
 }

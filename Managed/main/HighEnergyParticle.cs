@@ -293,17 +293,22 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 		int y = 0;
 		Grid.CellToXY(cell, out x, out y);
 		ListPool<ScenePartitionerEntry, HighEnergyParticle>.PooledList pooledList = ListPool<ScenePartitionerEntry, HighEnergyParticle>.Allocate();
-		GameScenePartitioner.Instance.GatherEntries(x - 1, y - 1, x + 1, y + 1, GameScenePartitioner.Instance.collisionLayer, pooledList);
+		GameScenePartitioner.Instance.GatherEntries(x - 1, y - 1, 2, 2, GameScenePartitioner.Instance.collisionLayer, pooledList);
 		foreach (ScenePartitionerEntry item in pooledList)
 		{
 			KCollider2D kCollider2D = item.obj as KCollider2D;
 			HighEnergyParticle component3 = kCollider2D.gameObject.GetComponent<HighEnergyParticle>();
-			if (component3 != null && component2.Intersects(component3.transform.position) && kCollider2D.Intersects(base.transform.position) && !(component3 == this) && component3.isCollideable)
+			if (!(component3 == null) && !(component3 == this) && component3.isCollideable)
 			{
-				payload += component3.payload;
-				component3.DestroyNow();
-				Collide(CollisionType.HighEnergyParticle);
-				return;
+				bool num = component2.Intersects(component3.transform.position);
+				bool flag = kCollider2D.Intersects(base.transform.position);
+				if (num && flag)
+				{
+					payload += component3.payload;
+					component3.DestroyNow();
+					Collide(CollisionType.HighEnergyParticle);
+					return;
+				}
 			}
 		}
 		pooledList.Recycle();

@@ -60,6 +60,7 @@ public enum GameHashes
 	SleepDisturbedByNoise = 1621815900,
 	SleepDisturbedByLight = -1063113160,
 	SleepDisturbedByFearOfDark = -1307593733,
+	SleepDisturbedByMovement = -717201811,
 	SleepFinished = -2090444759,
 	EatStart = 1356255274,
 	EatFail = 1723868278,
@@ -325,6 +326,8 @@ public enum GameHashes
 	RocketRequestLaunch = 191901966,
 	RocketReadyToLaunch = -849456099,
 	UpdateRocketStatus = -688990705,
+	StartRocketLaunch = 546421097,
+	RocketTouchDown = -735346771,
 	RocketRestrictionChanged = 1861523068,
 	StoragePriorityChanged = -1626373771,
 	StorageCapacityChanged = -945020481,
@@ -383,7 +386,7 @@ public enum GameHashes
 	EnterHome = -2099923209,
 	ExitHome = -1220248099,
 	JettisonedLander = 1792516731,
-	JettisonedCargo = -602000519,
+	JettisonCargo = 218291192,
 	AssignmentGroupChanged = -1123234494,
 	SuitTankDelta = 608245985,
 	ChainedNetworkChanged = -1009905786,
@@ -393,5 +396,9 @@ public enum GameHashes
 	LimitValveAmountChanged = -1722241721,
 	LockerDroppedContents = -372600542,
 	Happy = 1890751808,
-	Unhappy = -647798969
+	Unhappy = -647798969,
+	DoorsLinked = -1118736034,
+	RocketSelfDestructRequested = -1061799784,
+	RocketExploded = -1311384361,
+	ModuleLanderLanded = 1591811118
 }

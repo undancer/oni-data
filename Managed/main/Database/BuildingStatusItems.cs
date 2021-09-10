@@ -169,6 +169,8 @@ namespace Database
 
 		public StatusItem ConduitBlocked;
 
+		public StatusItem OutputTileBlocked;
+
 		public StatusItem OutputPipeFull;
 
 		public StatusItem ConduitBlockedMultiples;
@@ -527,6 +529,7 @@ namespace Database
 			ClinicOutsideHospital = CreateStatusItem("ClinicOutsideHospital", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID, showWorldIcon: false);
 			ConduitBlocked = CreateStatusItem("ConduitBlocked", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			OutputPipeFull = CreateStatusItem("OutputPipeFull", "BUILDING", "status_item_no_liquid_to_pump", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			OutputTileBlocked = CreateStatusItem("OutputTileBlocked", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			ConstructionUnreachable = CreateStatusItem("ConstructionUnreachable", "BUILDING", "", StatusItem.IconType.Exclamation, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			ConduitBlockedMultiples = CreateStatusItem("ConduitBlockedMultiples", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: true, OverlayModes.None.ID);
 			SolidConduitBlockedMultiples = CreateStatusItem("SolidConduitBlockedMultiples", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: true, OverlayModes.None.ID);
@@ -766,10 +769,10 @@ namespace Database
 			StoredCharge = CreateStatusItem("StoredCharge", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			StoredCharge.resolveStringCallback = delegate(string str, object data)
 			{
-				TravelTubeEntrance.SMInstance sMInstance = (TravelTubeEntrance.SMInstance)data;
-				if (sMInstance != null)
+				TravelTubeEntrance.SMInstance sMInstance3 = (TravelTubeEntrance.SMInstance)data;
+				if (sMInstance3 != null)
 				{
-					str = string.Format(str, GameUtil.GetFormattedRoundedJoules(sMInstance.master.AvailableJoules), GameUtil.GetFormattedRoundedJoules(sMInstance.master.TotalCapacity), GameUtil.GetFormattedRoundedJoules(sMInstance.master.UsageJoules));
+					str = string.Format(str, GameUtil.GetFormattedRoundedJoules(sMInstance3.master.AvailableJoules), GameUtil.GetFormattedRoundedJoules(sMInstance3.master.TotalCapacity), GameUtil.GetFormattedRoundedJoules(sMInstance3.master.UsageJoules));
 				}
 				return str;
 			};
@@ -1117,7 +1120,19 @@ namespace Database
 				return str;
 			};
 			FlushToilet = CreateStatusItem("FlushToilet", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			FlushToilet.resolveStringCallback = delegate(string str, object data)
+			{
+				FlushToilet.SMInstance sMInstance2 = (FlushToilet.SMInstance)data;
+				return BUILDING.STATUSITEMS.FLUSHTOILET.NAME.Replace("{toilet}", sMInstance2.master.GetProperName());
+			};
+			FlushToilet.resolveTooltipCallback = (string str, object Database) => BUILDING.STATUSITEMS.FLUSHTOILET.TOOLTIP;
 			FlushToiletInUse = CreateStatusItem("FlushToiletInUse", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			FlushToiletInUse.resolveStringCallback = delegate(string str, object data)
+			{
+				FlushToilet.SMInstance sMInstance = (FlushToilet.SMInstance)data;
+				return BUILDING.STATUSITEMS.FLUSHTOILETINUSE.NAME.Replace("{toilet}", sMInstance.master.GetProperName());
+			};
+			FlushToiletInUse.resolveTooltipCallback = (string str, object Database) => BUILDING.STATUSITEMS.FLUSHTOILETINUSE.TOOLTIP;
 			WireNominal = CreateStatusItem("WireNominal", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.Power.ID);
 			WireConnected = CreateStatusItem("WireConnected", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.Power.ID);
 			WireDisconnected = CreateStatusItem("WireDisconnected", "BUILDING", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.Power.ID);

@@ -19,6 +19,7 @@ public class TemporalTearOpenerConfig : IBuildingConfig
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef obj = BuildingTemplates.CreateBuildingDef("TemporalTearOpener", 5, 4, "temporal_tear_opener_kanim", 100, 120f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.RAW_METALS, 2400f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER6, decor: BUILDINGS.DECOR.BONUS.TIER2);
+		obj.DefaultAnimState = "off";
 		obj.Entombable = false;
 		obj.Invincible = true;
 		obj.UseHighEnergyParticleInputPort = true;

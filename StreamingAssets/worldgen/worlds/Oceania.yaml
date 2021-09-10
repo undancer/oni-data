@@ -18,7 +18,6 @@ subworldFiles:
   - name: subworlds/sandstone/SandstoneMiniAlgae
     minCount: 2
   - name: subworlds/sandstone/Sandstone
-    minCount: 2
   - name: subworlds/marsh/HotMarsh
     minCount: 5
   - name: subworlds/jungle/Jungle

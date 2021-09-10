@@ -60,6 +60,11 @@ public class PropSurfaceSatellite3Config : IEntityConfig
 		{
 			OnLockerLooted(inst);
 		});
+		RadiationEmitter component = inst.GetComponent<RadiationEmitter>();
+		if (component != null)
+		{
+			component.SetEmitting(emitting: true);
+		}
 	}
 
 	private void OnLockerLooted(GameObject inst)

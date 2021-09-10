@@ -138,6 +138,8 @@ namespace TUNING
 
 		public static float MASS_PENALTY_DIVISOR = 300f;
 
+		public const float SELF_DESTRUCT_REFUND_FACTOR = 0.5f;
+
 		public static float CARGO_CAPACITY_SCALE = 10f;
 
 		public static float LIQUID_CARGO_BAY_CLUSTER_CAPACITY = 2700f;

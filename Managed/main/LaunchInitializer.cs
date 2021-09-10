@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class LaunchInitializer : MonoBehaviour
 {
-	private const string BASE_BUILD_PREFIX = "U33";
+	private const string BASE_BUILD_PREFIX = "U34";
 
-	private const string EXPANSION1_BUILD_PREFIX = "U33";
+	private const string EXPANSION1_BUILD_PREFIX = "U34";
 
 	public GameObject[] SpawnPrefabs;
 
@@ -18,9 +18,9 @@ public class LaunchInitializer : MonoBehaviour
 	{
 		if (!DlcManager.IsExpansion1Active())
 		{
-			return "U33";
+			return "U34";
 		}
-		return "U33";
+		return "U34";
 	}
 
 	private void Update()

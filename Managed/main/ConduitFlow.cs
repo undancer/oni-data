@@ -784,7 +784,6 @@ public class ConduitFlow : IConduitFlow
 		public float GetEffectiveCapacity(float maximum_capacity)
 		{
 			float num = mass;
-			DebugUtil.DevAssert(num <= maximum_capacity, $"Effective mass cannot be greater than capacity! mass={num}, capcity={maximum_capacity}");
 			return Mathf.Max(0f, maximum_capacity - num);
 		}
 
@@ -1733,7 +1732,7 @@ public class ConduitFlow : IConduitFlow
 
 	public const float MAX_GAS_MASS = 1f;
 
-	private ConduitType conduitType;
+	public ConduitType conduitType;
 
 	private float MaxMass = 10f;
 

@@ -23,11 +23,6 @@ public class HandSanitizer : StateMachineComponent<HandSanitizer.SMInstance>, IG
 				{
 					return false;
 				}
-				bool flag = new_reactor.GetComponent<MinionIdentity>().GetEquipment().IsSlotOccupied(Db.Get().AssignableSlots.Suit);
-				if (!component.canSanitizeSuit && flag)
-				{
-					return false;
-				}
 				if (component.alwaysUse)
 				{
 					return true;

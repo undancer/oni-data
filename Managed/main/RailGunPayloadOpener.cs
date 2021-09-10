@@ -143,7 +143,7 @@ public class RailGunPayloadOpener : StateMachineComponent<RailGunPayloadOpener.S
 		}
 	}
 
-	public bool HasSecondaryConduitType(ConduitType type)
+	bool ISecondaryOutput.HasSecondaryConduitType(ConduitType type)
 	{
 		if (type != gasPortInfo.conduitType && type != liquidPortInfo.conduitType)
 		{
@@ -152,7 +152,7 @@ public class RailGunPayloadOpener : StateMachineComponent<RailGunPayloadOpener.S
 		return true;
 	}
 
-	public CellOffset GetSecondaryConduitOffset(ConduitType type)
+	CellOffset ISecondaryOutput.GetSecondaryConduitOffset(ConduitType type)
 	{
 		if (type == gasPortInfo.conduitType)
 		{
@@ -162,10 +162,10 @@ public class RailGunPayloadOpener : StateMachineComponent<RailGunPayloadOpener.S
 		{
 			return liquidPortInfo.offset;
 		}
-		if (type == solidPortInfo.conduitType)
+		if (type != solidPortInfo.conduitType)
 		{
-			return solidPortInfo.offset;
+			return CellOffset.none;
 		}
-		return CellOffset.none;
+		return solidPortInfo.offset;
 	}
 }

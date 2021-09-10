@@ -142,6 +142,7 @@ public class ClusterManager : KMonoBehaviour, ISaveLoadable
 		{
 			m_grid = new ClusterGrid(m_numRings);
 		}
+		UpdateWorldReverbSnapshot(activeWorldId);
 		base.OnSpawn();
 	}
 
@@ -518,36 +519,75 @@ public class ClusterManager : KMonoBehaviour, ISaveLoadable
 			Debug.LogError($"Attempting to destroy world id {world_id}. The world is not a valid rocket interior");
 			return;
 		}
-		GameObject craft_go = door.GetComponent<RocketModuleCluster>().CraftInterface.gameObject;
+		GameObject gameObject = door.GetComponent<RocketModuleCluster>().CraftInterface.gameObject;
 		if (activeWorldId == world_id)
 		{
-			if (craft_go.GetComponent<WorldContainer>().ParentWorldId == world_id)
+			if (gameObject.GetComponent<WorldContainer>().ParentWorldId == world_id)
 			{
 				SetActiveWorld(Instance.GetStartWorld().id);
 			}
 			else
 			{
-				SetActiveWorld(craft_go.GetComponent<WorldContainer>().ParentWorldId);
+				SetActiveWorld(gameObject.GetComponent<WorldContainer>().ParentWorldId);
 			}
 		}
-		OrbitalMechanics component = craft_go.GetComponent<OrbitalMechanics>();
+		OrbitalMechanics component = gameObject.GetComponent<OrbitalMechanics>();
 		if (!component.IsNullOrDestroyed())
 		{
 			UnityEngine.Object.Destroy(component);
 		}
-		Vector3 spawn_pos = door.transform.position;
-		world.EjectAllDupes(spawn_pos);
-		world.CancelChores();
-		world.DestroyWorldBuildings(spawn_pos, out var noRefundTiles);
-		GameScheduler.Instance.ScheduleNextFrame("ClusterManager.DeleteWorldObjects", delegate
+		bool num = gameObject.GetComponent<Clustercraft>().Status == Clustercraft.CraftStatus.InFlight;
+		PrimaryElement moduleElemet = door.GetComponent<PrimaryElement>();
+		AxialI clusterLocation = world.GetComponent<ClusterGridEntity>().Location;
+		Vector3 rocketModuleWorldPos = door.transform.position;
+		if (!num)
 		{
-			DeleteWorldObjects(world, craft_go, spawn_pos, noRefundTiles);
-		});
+			world.EjectAllDupes(rocketModuleWorldPos);
+		}
+		else
+		{
+			world.SpacePodAllDupes(clusterLocation, moduleElemet.ElementID);
+		}
+		world.CancelChores();
+		world.DestroyWorldBuildings(out var noRefundTiles);
+		if (!num)
+		{
+			GameScheduler.Instance.ScheduleNextFrame("ClusterManager.world.TransferResourcesToParentWorld", delegate
+			{
+				world.TransferResourcesToParentWorld(rocketModuleWorldPos + new Vector3(0f, 0.5f, 0f), noRefundTiles);
+			});
+			GameScheduler.Instance.ScheduleNextFrame("ClusterManager.DeleteWorldObjects", delegate
+			{
+				DeleteWorldObjects(world);
+			});
+		}
+		else
+		{
+			GameScheduler.Instance.ScheduleNextFrame("ClusterManager.world.TransferResourcesToDebris", delegate
+			{
+				world.TransferResourcesToDebris(clusterLocation, noRefundTiles, moduleElemet.ElementID);
+			});
+			GameScheduler.Instance.ScheduleNextFrame("ClusterManager.DeleteWorldObjects", delegate
+			{
+				DeleteWorldObjects(world);
+			});
+		}
 	}
 
-	private void DeleteWorldObjects(WorldContainer world, GameObject craft_go, Vector3 spawn_pos, HashSet<int> noRefundTiles)
+	public void UpdateWorldReverbSnapshot(int worldId)
 	{
-		world.TransferResourcesToParentWorld(spawn_pos, noRefundTiles);
+		AudioMixer.instance.Stop(AudioMixerSnapshots.Get().SmallRocketInteriorReverbSnapshot);
+		AudioMixer.instance.Stop(AudioMixerSnapshots.Get().MediumRocketInteriorReverbSnapshot);
+		WorldContainer world = GetWorld(worldId);
+		if (world.IsModuleInterior)
+		{
+			PassengerRocketModule passengerModule = world.GetComponent<Clustercraft>().ModuleInterface.GetPassengerModule();
+			AudioMixer.instance.Start(passengerModule.interiorReverbSnapshot);
+		}
+	}
+
+	private void DeleteWorldObjects(WorldContainer world)
+	{
 		Grid.FreeGridSpace(world.WorldSize, world.WorldOffset);
 		WorldInventory worldInventory = null;
 		if (world != null)

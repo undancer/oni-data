@@ -32,7 +32,7 @@ public class KAnimBatch
 
 		public int Add(Texture2D atlas)
 		{
-			DebugUtil.Assert(atlas != null);
+			DebugUtil.Assert(atlas != null, "KAnimBatch Atlas is null");
 			DebugUtil.Assert(atlases.Count < KAnimBatchManager.instance.atlasNames.Length);
 			int num = atlases.IndexOf(atlas);
 			if (num == -1)

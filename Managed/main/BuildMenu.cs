@@ -227,6 +227,7 @@ public class BuildMenu : KScreen
 			{
 				new BuildingInfo(BedConfig.ID, Action.BuildMenuKeyC),
 				new BuildingInfo(LuxuryBedConfig.ID, Action.BuildMenuKeyX),
+				new BuildingInfo(LadderBedConfig.ID, Action.BuildMenuKeyL),
 				new BuildingInfo("DiningTable", Action.BuildMenuKeyD),
 				new BuildingInfo("FloorLamp", Action.BuildMenuKeyF),
 				new BuildingInfo("CeilingLight", Action.BuildMenuKeyT),

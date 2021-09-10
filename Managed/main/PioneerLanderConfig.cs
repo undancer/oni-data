@@ -20,6 +20,9 @@ public class PioneerLanderConfig : IEntityConfig
 	{
 		GameObject obj = EntityTemplates.CreatePlacedEntity("PioneerLander", STRINGS.BUILDINGS.PREFABS.PIONEERLANDER.NAME, STRINGS.BUILDINGS.PREFABS.PIONEERLANDER.DESC, 400f, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER0, noise: NOISE_POLLUTION.NOISY.TIER0, anim: Assets.GetAnim("rocket_pioneer_cargo_lander_kanim"), initialAnim: "grounded", sceneLayer: Grid.SceneLayer.Building, width: 3, height: 3);
 		obj.AddOrGetDef<CargoLander.Def>().previewTag = "PioneerLander_Preview".ToTag();
+		CargoDropperMinion.Def def = obj.AddOrGetDef<CargoDropperMinion.Def>();
+		def.kAnimName = "anim_interacts_pioneer_cargo_lander_kanim";
+		def.animName = "enter";
 		obj.AddOrGet<MinionStorage>();
 		obj.AddOrGet<Prioritizable>();
 		Prioritizable.AddRef(obj);

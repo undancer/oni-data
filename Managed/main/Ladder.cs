@@ -12,12 +12,24 @@ public class Ladder : KMonoBehaviour, IGameObjectEffectDescriptor
 
 	public bool isPole;
 
+	public CellOffset[] offsets = new CellOffset[1] { CellOffset.none };
+
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
-		int i = Grid.PosToCell(this);
-		Grid.HasPole[i] = isPole;
-		Grid.HasLadder[i] = !isPole;
+		Rotatable component = GetComponent<Rotatable>();
+		CellOffset[] array = offsets;
+		foreach (CellOffset cellOffset in array)
+		{
+			CellOffset offset = cellOffset;
+			if (component != null)
+			{
+				offset = component.GetRotatedCellOffset(cellOffset);
+			}
+			int i2 = Grid.OffsetCell(Grid.PosToCell(this), offset);
+			Grid.HasPole[i2] = isPole;
+			Grid.HasLadder[i2] = !isPole;
+		}
 		GetComponent<KPrefabID>().AddTag(GameTags.Ladders);
 		Components.Ladders.Add(this);
 	}
@@ -31,11 +43,21 @@ public class Ladder : KMonoBehaviour, IGameObjectEffectDescriptor
 	protected override void OnCleanUp()
 	{
 		base.OnCleanUp();
-		int num = Grid.PosToCell(this);
-		if (Grid.Objects[num, 24] == null)
+		Rotatable component = GetComponent<Rotatable>();
+		CellOffset[] array = offsets;
+		foreach (CellOffset cellOffset in array)
 		{
-			Grid.HasPole[num] = false;
-			Grid.HasLadder[num] = false;
+			CellOffset offset = cellOffset;
+			if (component != null)
+			{
+				offset = component.GetRotatedCellOffset(cellOffset);
+			}
+			int num = Grid.OffsetCell(Grid.PosToCell(this), offset);
+			if (Grid.Objects[num, 24] == null)
+			{
+				Grid.HasPole[num] = false;
+				Grid.HasLadder[num] = false;
+			}
 		}
 		Components.Ladders.Remove(this);
 	}

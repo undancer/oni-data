@@ -946,6 +946,15 @@ namespace STRINGS
 				public static LocString EFFECT = "Provides a sleeping area for one Duplicant and restores additional " + UI.FormatAsLink("Stamina", "STAMINA") + ".\n\nDuplicants will automatically sleep in their assigned beds at night.";
 			}
 
+			public class LADDERBED
+			{
+				public static LocString NAME = UI.FormatAsLink("Ladder Bed", "LADDERBED");
+
+				public static LocString DESC = "Duplicants can be interrupted if another duplicant uses the ladder while sleeping.";
+
+				public static LocString EFFECT = "Provides a sleeping area for one Duplicant and also functions as a ladder.\n\nDuplicants will automatically sleep in their assigned beds at night.";
+			}
+
 			public class MEDICALCOT
 			{
 				public static LocString NAME = UI.FormatAsLink("Triage Cot", "MEDICALCOT");
@@ -2592,6 +2601,15 @@ namespace STRINGS
 				public static LocString EFFECT = "Used to build the walls and floors of rooms.\n\nIncreases Duplicant runspeed.";
 			}
 
+			public class WALLTOILET
+			{
+				public static LocString NAME = UI.FormatAsLink("Wall Toilet", "WALLTOILET");
+
+				public static LocString DESC = "Wall Toilets transmit fewer germs to Duplicants' skin and require no emptying.";
+
+				public static LocString EFFECT = "Gives Duplicants a place to relieve themselves. Empties directly on the other side of the wall.\n\nSpreads very few " + UI.FormatAsLink("Germs", "DISEASE") + ".";
+			}
+
 			public class WATERPURIFIER
 			{
 				public static LocString NAME = UI.FormatAsLink("Water Sieve", "WATERPURIFIER");
@@ -4048,6 +4066,49 @@ namespace STRINGS
 				public static LocString EFFECT = "Uses " + UI.FormatAsLink("Power", "POWER") + " and " + UI.FormatAsLink("Radbolts", "HEP") + " to crush " + UI.FormatAsLink("Refined Carbon", "REFINEDCARBON") + " into " + UI.FormatAsLink("Diamond", "DIAMOND") + ".\n\nDuplicants will not fabricate items unless recipes are queued and " + UI.FormatAsLink("Refined Carbon", "REFINEDCARBON") + " has been discovered.";
 
 				public static LocString REFINED_CARBON_RECIPE_DESCRIPTION = "Converts {1} to {0}";
+			}
+
+			public class ESCAPEPOD
+			{
+				public static LocString NAME = "Escape Pod";
+
+				public static LocString DESC = "Delivers a Duplicant from a stranded rocket to the nearest asteroid.";
+			}
+
+			public class ROCKETINTERIORLIQUIDOUTPUTPORT
+			{
+				public static LocString NAME = UI.FormatAsLink("Liquid Output Port", "ROCKETINTERIORLIQUIDOUTPUTPORT");
+
+				public static LocString DESC = "A direct attachment to the input port on the exterior of the rocket.";
+
+				public static LocString EFFECT = "Allows a direct conduit connection into the habitat module of the rocket.";
+			}
+
+			public class ROCKETINTERIORLIQUIDINPUTPORT
+			{
+				public static LocString NAME = UI.FormatAsLink("Liquid Input Port", "ROCKETINTERIORLIQUIDINPUTPORT");
+
+				public static LocString DESC = "A direct attachment to the output port on the exterior of the rocket.";
+
+				public static LocString EFFECT = "Allows a direct conduit connection out of the habitat module of the rocket.\nCan be used to vent Liquids to space during flight.";
+			}
+
+			public class ROCKETINTERIORGASOUTPUTPORT
+			{
+				public static LocString NAME = UI.FormatAsLink("Gas Output Port", "ROCKETINTERIORGASOUTPUTPORT");
+
+				public static LocString DESC = "A direct attachment to the input port on the exterior of the rocket.";
+
+				public static LocString EFFECT = "Allows a direct conduit connection into the habitat module of the rocket.";
+			}
+
+			public class ROCKETINTERIORGASINPUTPORT
+			{
+				public static LocString NAME = UI.FormatAsLink("Gas Input Port", "ROCKETINTERIORGASINPUTPORT");
+
+				public static LocString DESC = "A direct attachment to the output port on the exterior of the rocket.";
+
+				public static LocString EFFECT = "Allows a direct conduit connection out of the habitat module of the rocket.\nCan be used to vent Gasses to space during flight.";
 			}
 
 			public class MASSIVEHEATSINK

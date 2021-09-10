@@ -47,13 +47,16 @@ public class FallingWater : KMonoBehaviour, ISim200ms
 
 		public Color32 colour;
 
-		public ParticlePhysics(Vector2 position, Vector2 velocity, int frame, byte elementIdx)
+		public int worldIdx;
+
+		public ParticlePhysics(Vector2 position, Vector2 velocity, int frame, byte elementIdx, int worldIdx)
 		{
 			this.position = position;
 			this.velocity = velocity;
 			this.frame = frame;
 			colour = ElementLoader.elements[elementIdx].substance.colour;
 			colour.a = 191;
+			this.worldIdx = worldIdx;
 		}
 	}
 
@@ -328,7 +331,7 @@ public class FallingWater : KMonoBehaviour, ISim200ms
 			{
 				vector3.y = Mathf.Floor(vector3.y + 1f);
 			}
-			physics.Add(new ParticlePhysics(vector3, Vector2.zero, frame, elementIdx));
+			physics.Add(new ParticlePhysics(vector3, Vector2.zero, frame, elementIdx, Grid.WorldIdx[num]));
 			particleProperties.Add(new ParticleProperties(elementIdx, num4, temperature, disease_idx, b, debug_track));
 		}
 	}
@@ -400,6 +403,11 @@ public class FallingWater : KMonoBehaviour, ISim200ms
 			{
 				int num4 = num3 * Grid.WidthInCells + x;
 				int cell = (num3 + 1) * Grid.WidthInCells + x;
+				if (Grid.IsValidCell(num4) && Grid.WorldIdx[num4] != value.worldIdx)
+				{
+					RemoveParticle(i, ref num_particles);
+					break;
+				}
 				if (Grid.IsValidCell(num4))
 				{
 					Element element = Grid.Element[num4];
@@ -754,6 +762,19 @@ public class FallingWater : KMonoBehaviour, ISim200ms
 	[OnDeserialized]
 	private void OnDeserialized()
 	{
+		if (!SaveLoader.Instance.GameInfo.IsVersionOlderThan(7, 26))
+		{
+			for (int i = 0; i < physics.Count; i++)
+			{
+				int num = Grid.PosToCell(physics[i].position);
+				if (Grid.IsValidCell(num))
+				{
+					ParticlePhysics value = physics[i];
+					value.worldIdx = Grid.WorldIdx[num];
+					physics[i] = value;
+				}
+			}
+		}
 		if (serializedParticleProperties != null)
 		{
 			Diseases diseases = Db.Get().Diseases;

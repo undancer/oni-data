@@ -1,0 +1,19 @@
+id: "MyLog33"
+title: STRINGS.CODEX.MYLOG.BODY.TEMPORALOPENER.TITLE
+dlcIds:
+  - "EXPANSION1_ID"
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: #//--TODO
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.TEMPORALOPENER.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.BODY.TEMPORALOPENER.BODY
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYLOG.DIVIDER
+          style: Body
+#-----------------------------

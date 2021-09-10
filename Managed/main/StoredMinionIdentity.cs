@@ -45,6 +45,9 @@ public class StoredMinionIdentity : KMonoBehaviour, ISaveLoadable, IAssignableId
 	public Ref<MinionAssignablesProxy> assignableProxy;
 
 	[Serialize]
+	public List<Effects.SaveLoadEffect> saveLoadEffects;
+
+	[Serialize]
 	public Dictionary<string, bool> MasteryByRoleID = new Dictionary<string, bool>();
 
 	[Serialize]

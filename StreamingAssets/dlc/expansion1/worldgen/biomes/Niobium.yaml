@@ -11,4 +11,4 @@ TerrainBiomeLookupTable:
     - content: Obsidian
       bandSize: 0.2
       overrides:
-        massMultiplier: 30
+        massMultiplier: 3

@@ -1395,6 +1395,13 @@ namespace STRINGS
 
 				public static LocString TOOLTIP = string.Concat("A new mutant variety of the {Plant} has been found. Analyze it at the ", BUILDINGS.PREFABS.GENETICANALYSISSTATION.NAME, " to learn more!");
 			}
+
+			public class DUPLICANT_CRASH_LANDED
+			{
+				public static LocString NAME = "Duplicant Crash Landed!";
+
+				public static LocString TOOLTIP = "A Duplicant in an escape pod has made it to the surface of the nearest asteroid.";
+			}
 		}
 
 		public class TUTORIAL

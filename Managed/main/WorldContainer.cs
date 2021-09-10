@@ -639,9 +639,23 @@ public class WorldContainer : KMonoBehaviour
 		}
 	}
 
-	public void DestroyWorldBuildings(Vector3 spawn_pos, out HashSet<int> noRefundTiles)
+	public void SpacePodAllDupes(AxialI sourceLocation, SimHashes podElement)
 	{
-		TransferBuildingMaterials(spawn_pos, out noRefundTiles);
+		foreach (MinionIdentity worldItem in Components.MinionIdentities.GetWorldItems(id))
+		{
+			GameObject obj = Util.KInstantiate(position: new Vector3(-1f, -1f, 0f), original: Assets.GetPrefab("EscapePod"));
+			obj.GetComponent<PrimaryElement>().SetElement(podElement);
+			obj.SetActive(value: true);
+			obj.GetComponent<MinionStorage>().SerializeMinion(worldItem.gameObject);
+			TravellingCargoLander.StatesInstance sMI = obj.GetSMI<TravellingCargoLander.StatesInstance>();
+			sMI.StartSM();
+			sMI.Travel(sourceLocation, ClusterUtil.ClosestVisibleAsteroidToLocation(sourceLocation).Location);
+		}
+	}
+
+	public void DestroyWorldBuildings(out HashSet<int> noRefundTiles)
+	{
+		TransferBuildingMaterials(out noRefundTiles);
 		foreach (ClustercraftInteriorDoor worldItem in Components.ClusterCraftInteriorDoors.GetWorldItems(id))
 		{
 			worldItem.DeleteObject();
@@ -655,7 +669,20 @@ public class WorldContainer : KMonoBehaviour
 		TransferLiquidsSolidsAndGases(spawn_pos, noRefundTiles);
 	}
 
-	private void TransferBuildingMaterials(Vector3 pos, out HashSet<int> noRefundTiles)
+	public void TransferResourcesToDebris(AxialI sourceLocation, HashSet<int> noRefundTiles, SimHashes debrisContainerElement)
+	{
+		List<Storage> debrisObjects = new List<Storage>();
+		TransferPickupablesToDebris(ref debrisObjects, debrisContainerElement);
+		TransferLiquidsSolidsAndGasesToDebris(ref debrisObjects, noRefundTiles, debrisContainerElement);
+		foreach (Storage item in debrisObjects)
+		{
+			RailGunPayload.StatesInstance sMI = item.GetSMI<RailGunPayload.StatesInstance>();
+			sMI.StartSM();
+			sMI.Travel(sourceLocation, ClusterUtil.ClosestVisibleAsteroidToLocation(sourceLocation).Location);
+		}
+	}
+
+	private void TransferBuildingMaterials(out HashSet<int> noRefundTiles)
 	{
 		HashSet<int> retTemplateFoundationCells = new HashSet<int>();
 		ListPool<ScenePartitionerEntry, ClusterManager>.PooledList pooledList = ListPool<ScenePartitionerEntry, ClusterManager>.Allocate();
@@ -679,13 +706,13 @@ public class WorldContainer : KMonoBehaviour
 					Element element = ElementLoader.GetElement(component.constructionElements[i]);
 					if (element != null)
 					{
-						element.substance.SpawnResource(pos + Vector3.up * 0.5f, buildingComplete.Def.Mass[i], temperature, diseaseIdx, diseaseCount);
+						element.substance.SpawnResource(buildingComplete.transform.GetPosition(), buildingComplete.Def.Mass[i], temperature, diseaseIdx, diseaseCount);
 						continue;
 					}
 					GameObject prefab = Assets.GetPrefab(component.constructionElements[i]);
 					for (int j = 0; (float)j < buildingComplete.Def.Mass[i]; j++)
 					{
-						GameUtil.KInstantiate(prefab, pos + Vector3.up * 0.5f, Grid.SceneLayer.Ore).SetActive(value: true);
+						GameUtil.KInstantiate(prefab, buildingComplete.transform.GetPosition(), Grid.SceneLayer.Ore).SetActive(value: true);
 					}
 				}
 			}
@@ -700,7 +727,7 @@ public class WorldContainer : KMonoBehaviour
 			Storage component4 = buildingComplete.GetComponent<Storage>();
 			if (component4 != null)
 			{
-				component4.DropAll(pos);
+				component4.DropAll();
 			}
 			PlantablePlot component5 = buildingComplete.GetComponent<PlantablePlot>();
 			if (component5 != null)
@@ -749,6 +776,79 @@ public class WorldContainer : KMonoBehaviour
 					if (element != null && !element.IsVacuum)
 					{
 						element.substance.SpawnResource(pos, Grid.Mass[num], Grid.Temperature[num], Grid.DiseaseIdx[num], Grid.DiseaseCount[num]);
+					}
+				}
+			}
+		}
+	}
+
+	private void TransferPickupablesToDebris(ref List<Storage> debrisObjects, SimHashes debrisContainerElement)
+	{
+		ListPool<ScenePartitionerEntry, ClusterManager>.PooledList pooledList = ListPool<ScenePartitionerEntry, ClusterManager>.Allocate();
+		GameScenePartitioner.Instance.GatherEntries((int)minimumBounds.x, (int)minimumBounds.y, Width, Height, GameScenePartitioner.Instance.pickupablesLayer, pooledList);
+		foreach (ScenePartitionerEntry item in pooledList)
+		{
+			if (item.obj == null)
+			{
+				continue;
+			}
+			Pickupable pickupable = item.obj as Pickupable;
+			if (pickupable != null)
+			{
+				pickupable.PrimaryElement.Units = Mathf.Max(1, Mathf.RoundToInt(pickupable.PrimaryElement.Units * 0.5f));
+				if ((debrisObjects.Count == 0 || debrisObjects[debrisObjects.Count - 1].RemainingCapacity() == 0f) && pickupable.PrimaryElement.Mass > 0f)
+				{
+					debrisObjects.Add(CraftModuleInterface.SpawnRocketDebris(" from World Objects", debrisContainerElement));
+				}
+				Storage storage = debrisObjects[debrisObjects.Count - 1];
+				while (pickupable.PrimaryElement.Mass > storage.RemainingCapacity())
+				{
+					Pickupable pickupable2 = pickupable.Take(storage.RemainingCapacity());
+					storage.Store(pickupable2.gameObject);
+					storage = CraftModuleInterface.SpawnRocketDebris(" from World Objects", debrisContainerElement);
+					debrisObjects.Add(storage);
+				}
+				if (pickupable.PrimaryElement.Mass > 0f)
+				{
+					storage.Store(pickupable.gameObject);
+				}
+			}
+		}
+		pooledList.Recycle();
+	}
+
+	private void TransferLiquidsSolidsAndGasesToDebris(ref List<Storage> debrisObjects, HashSet<int> noRefundTiles, SimHashes debrisContainerElement)
+	{
+		for (int i = (int)minimumBounds.x; (float)i <= maximumBounds.x; i++)
+		{
+			for (int j = (int)minimumBounds.y; (float)j <= maximumBounds.y; j++)
+			{
+				int num = Grid.XYToCell(i, j);
+				if (noRefundTiles.Contains(num))
+				{
+					continue;
+				}
+				Element element = Grid.Element[num];
+				if (element == null || element.IsVacuum)
+				{
+					continue;
+				}
+				float num2 = Grid.Mass[num];
+				num2 *= 0.5f;
+				if ((debrisObjects.Count == 0 || debrisObjects[debrisObjects.Count - 1].RemainingCapacity() == 0f) && num2 > 0f)
+				{
+					debrisObjects.Add(CraftModuleInterface.SpawnRocketDebris(" from World Tiles", debrisContainerElement));
+				}
+				Storage storage = debrisObjects[debrisObjects.Count - 1];
+				while (num2 > 0f)
+				{
+					float num3 = Mathf.Min(num2, storage.RemainingCapacity());
+					num2 -= num3;
+					storage.AddOre(element.id, num3, Grid.Temperature[num], Grid.DiseaseIdx[num], Grid.DiseaseCount[num]);
+					if (num2 > 0f)
+					{
+						storage = CraftModuleInterface.SpawnRocketDebris(" from World Tiles", debrisContainerElement);
+						debrisObjects.Add(storage);
 					}
 				}
 			}
