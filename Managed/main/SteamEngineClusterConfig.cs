@@ -56,7 +56,7 @@ public class SteamEngineClusterConfig : IBuildingConfig
 	{
 		RocketEngineCluster rocketEngineCluster = go.AddOrGet<RocketEngineCluster>();
 		rocketEngineCluster.maxModules = 6;
-		rocketEngineCluster.maxHeight = 20;
+		rocketEngineCluster.maxHeight = ROCKETRY.ROCKET_HEIGHT.TALL;
 		rocketEngineCluster.fuelTag = ElementLoader.FindElementByHash(SimHashes.Steam).tag;
 		rocketEngineCluster.efficiency = ROCKETRY.ENGINE_EFFICIENCY.WEAK;
 		rocketEngineCluster.explosionEffectHash = SpawnFXHashes.MeteorImpactDust;
@@ -86,7 +86,7 @@ public class SteamEngineClusterConfig : IBuildingConfig
 		conduitConsumer.capacityKG = storage.capacityKg;
 		conduitConsumer.forceAlwaysSatisfied = true;
 		conduitConsumer.wrongElementResult = ConduitConsumer.WrongElementResult.Dump;
-		BuildingTemplates.ExtendBuildingToRocketModuleCluster(go, null, ROCKETRY.BURDEN.MODERATE, ROCKETRY.ENGINE_POWER.MID_WEAK, ROCKETRY.FUEL_COST_PER_DISTANCE.GAS_HIGH);
+		BuildingTemplates.ExtendBuildingToRocketModuleCluster(go, null, ROCKETRY.BURDEN.MONUMENTAL, ROCKETRY.ENGINE_POWER.MID_WEAK, ROCKETRY.FUEL_COST_PER_DISTANCE.GAS_VERY_LOW);
 		go.GetComponent<KPrefabID>().prefabInitFn += delegate
 		{
 		};

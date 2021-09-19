@@ -392,7 +392,7 @@ namespace STRINGS
 
 				public static LocString NAME = UI.FormatAsLink("Drecko", "DRECKO");
 
-				public static LocString DESC = "Dreckos are nonhostile critters that graze only on live " + UI.FormatAsLink("Mealwood Plants", "BASICSINGLEHARVESTPLANT") + ".\n\nTheir backsides are covered in thick woolly fibers that only grow in " + UI.FormatAsLink("Hydrogen", "HYDROGEN") + " climates.";
+				public static LocString DESC = "Dreckos are nonhostile critters that graze on " + UI.FormatAsLink("Pincha Pepperplants", "SPICE_VINE") + ", " + UI.FormatAsLink("Balm Lily", "SWAMPLILY") + " or " + UI.FormatAsLink("Mealwood Plants", "BASICSINGLEHARVESTPLANT") + ".\n\nTheir backsides are covered in thick woolly fibers that only grow in " + UI.FormatAsLink("Hydrogen", "HYDROGEN") + " climates.";
 
 				public static LocString EGG_NAME = UI.FormatAsLink("Drecklet Egg", "DRECKO");
 			}

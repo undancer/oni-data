@@ -268,6 +268,10 @@ public class Components
 
 	public static Cmps<RocketConduitSender> RocketConduitSenders = new Cmps<RocketConduitSender>();
 
+	public static Cmps<LogicBroadcaster> LogicBroadcasters = new Cmps<LogicBroadcaster>();
+
+	public static Cmps<Telephone> Telephones = new Cmps<Telephone>();
+
 	public static Cmps<IncubationMonitor.Instance> IncubationMonitors = new Cmps<IncubationMonitor.Instance>();
 
 	public static Cmps<FixedCapturableMonitor.Instance> FixedCapturableMonitors = new Cmps<FixedCapturableMonitor.Instance>();

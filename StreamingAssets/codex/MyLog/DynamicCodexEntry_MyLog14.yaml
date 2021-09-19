@@ -1,6 +1,7 @@
 id: "MyLog14"
 title: STRINGS.CODEX.MYLOG.BODY.CALCULATIONCOMPLETE.TITLE
-
+forbiddenDLCIds:
+  - "EXPANSION1_ID"
 contentContainers:
 #-----------------------------
   - contentLayout: Vertical

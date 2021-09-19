@@ -43,5 +43,6 @@ public class TemporalTearOpenerConfig : IBuildingConfig
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
+		go.GetComponent<Deconstructable>().allowDeconstruction = false;
 	}
 }

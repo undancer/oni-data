@@ -30,6 +30,8 @@ public class SubEntry
 
 	public string[] dlcIds { get; set; }
 
+	public string[] forbiddenDLCIds { get; set; }
+
 	public string sortString { get; set; }
 
 	public bool showBeforeGeneratedCategoryLinks { get; set; }
@@ -67,5 +69,10 @@ public class SubEntry
 	public string[] GetDlcIds()
 	{
 		return dlcIds;
+	}
+
+	public string[] GetForbiddenDlCIds()
+	{
+		return forbiddenDLCIds;
 	}
 }

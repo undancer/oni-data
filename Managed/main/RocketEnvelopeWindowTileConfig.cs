@@ -23,7 +23,6 @@ public class RocketEnvelopeWindowTileConfig : IBuildingConfig
 		obj.BaseTimeUntilRepair = -1f;
 		obj.SceneLayer = Grid.SceneLayer.GlassTile;
 		obj.isKAnimTile = true;
-		obj.isSolidTile = true;
 		obj.BlockTileIsTransparent = true;
 		obj.BlockTileAtlas = Assets.GetTextureAtlas("tiles_glass");
 		obj.BlockTilePlaceAtlas = Assets.GetTextureAtlas("tiles_glass_place");

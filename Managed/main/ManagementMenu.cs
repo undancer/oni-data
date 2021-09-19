@@ -658,6 +658,14 @@ public class ManagementMenu : KIconToggleMenu
 		}
 	}
 
+	public void CloseClusterMap()
+	{
+		if (activeScreen == ScreenInfoMatch[Instance.clusterMapInfo])
+		{
+			ToggleScreen(ScreenInfoMatch[Instance.clusterMapInfo]);
+		}
+	}
+
 	public void OpenSkills(MinionIdentity minionIdentity)
 	{
 		skillsScreen.CurrentlySelectedMinion = minionIdentity;

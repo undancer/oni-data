@@ -16,7 +16,7 @@ public class NoFreeRocketInterior : SelectModuleCondition
 		return num < ClusterManager.MAX_ROCKET_INTERIOR_COUNT;
 	}
 
-	public override string GetStatusTooltip(bool ready, BuildingDef selectedPart)
+	public override string GetStatusTooltip(bool ready, GameObject moduleBase, BuildingDef selectedPart)
 	{
 		if (ready)
 		{

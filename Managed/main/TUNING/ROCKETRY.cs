@@ -52,6 +52,21 @@ namespace TUNING
 			public static float BOOSTER = 30f;
 		}
 
+		public class ROCKET_HEIGHT
+		{
+			public static int VERY_SHORT = 10;
+
+			public static int SHORT = 16;
+
+			public static int MEDIUM = 20;
+
+			public static int TALL = 25;
+
+			public static int VERY_TALL = 35;
+
+			public static int MAX_MODULE_STACK_HEIGHT = VERY_TALL - 5;
+		}
+
 		public class OXIDIZER_EFFICIENCY
 		{
 			public static float VERY_LOW = 0.334f;
@@ -94,36 +109,40 @@ namespace TUNING
 			public static int MAJOR_PLUS = 7;
 
 			public static int MEGA = 9;
+
+			public static int MONUMENTAL = 15;
 		}
 
 		public class ENGINE_POWER
 		{
-			public static int EARLY_WEAK = 12;
+			public static int EARLY_WEAK = 16;
 
-			public static int EARLY_STRONG = 20;
+			public static int EARLY_STRONG = 23;
 
-			public static int MID_VERY_STRONG = 42;
+			public static int MID_VERY_STRONG = 48;
 
-			public static int MID_STRONG = 27;
+			public static int MID_STRONG = 31;
 
-			public static int MID_WEAK = 6;
+			public static int MID_WEAK = 27;
 
-			public static int LATE_STRONG = 30;
+			public static int LATE_STRONG = 34;
 
-			public static int LATE_VERY_STRONG = 48;
+			public static int LATE_VERY_STRONG = 55;
 		}
 
 		public class FUEL_COST_PER_DISTANCE
 		{
-			public static float VERY_LOW = 0.055555556f;
+			public static float VERY_LOW = 71f / (678f * (float)Math.PI);
 
-			public static float LOW = 0.0625f;
+			public static float LOW = 0.0375f;
 
-			public static float MEDIUM = 0.125f;
+			public static float MEDIUM = 0.075f;
 
-			public static float HIGH = 355f / (678f * (float)Math.PI);
+			public static float HIGH = 3f / 32f;
 
-			public static float VERY_HIGH = 0.25f;
+			public static float VERY_HIGH = 0.15f;
+
+			public static float GAS_VERY_LOW = 0.025f;
 
 			public static float GAS_LOW = 0.027777778f;
 

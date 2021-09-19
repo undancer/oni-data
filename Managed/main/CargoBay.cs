@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using KSerialization;
 using STRINGS;
 using UnityEngine;
 
@@ -16,6 +17,9 @@ public class CargoBay : KMonoBehaviour
 	public Storage storage;
 
 	private MeterController meter;
+
+	[Serialize]
+	public float reservedResources;
 
 	public CargoType storageType;
 
@@ -95,7 +99,7 @@ public class CargoBay : KMonoBehaviour
 		}
 		SpaceDestination spacecraftDestination = SpacecraftManager.instance.GetSpacecraftDestination(SpacecraftManager.instance.GetSpacecraftID(component));
 		int rootCell = Grid.PosToCell(base.gameObject);
-		foreach (KeyValuePair<SimHashes, float> item in spacecraftDestination.GetMissionResourceResult(storage.RemainingCapacity(), storageType == CargoType.Solids, storageType == CargoType.Liquids, storageType == CargoType.Gasses))
+		foreach (KeyValuePair<SimHashes, float> item in spacecraftDestination.GetMissionResourceResult(storage.RemainingCapacity(), reservedResources, storageType == CargoType.Solids, storageType == CargoType.Liquids, storageType == CargoType.Gasses))
 		{
 			Element element = ElementLoader.FindElementByHash(item.Key);
 			if (storageType == CargoType.Solids && element.IsSolid)
@@ -159,7 +163,8 @@ public class CargoBay : KMonoBehaviour
 			if (component.registerType != LaunchableRocketRegisterType.Clustercraft)
 			{
 				int spacecraftID = SpacecraftManager.instance.GetSpacecraftID(component);
-				SpacecraftManager.instance.GetSpacecraftDestination(spacecraftID).UpdateRemainingResources(this);
+				SpaceDestination spacecraftDestination = SpacecraftManager.instance.GetSpacecraftDestination(spacecraftID);
+				reservedResources = spacecraftDestination.ReserveResources(this);
 			}
 		}
 	}

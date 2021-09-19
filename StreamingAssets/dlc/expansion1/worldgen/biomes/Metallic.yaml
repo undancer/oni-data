@@ -23,7 +23,7 @@ TerrainBiomeLookupTable:
     - content: Carbon
       bandSize: 0.05
     - content: Oxygen
-      bandSize: 0.2	
+      bandSize: 0.2
     - content: Cuprite
       bandSize: 0.1
     - content: SaltWater

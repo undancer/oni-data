@@ -18,7 +18,6 @@ public class HydroponicFarmConfig : IBuildingConfig
 		obj.BaseTimeUntilRepair = -1f;
 		obj.SceneLayer = Grid.SceneLayer.TileMain;
 		obj.ConstructionOffsetFilter = BuildingDef.ConstructionOffsetFilter_OneDown;
-		obj.isSolidTile = true;
 		obj.PermittedRotations = PermittedRotations.FlipV;
 		obj.InputConduitType = ConduitType.Liquid;
 		obj.UtilityInputOffset = new CellOffset(0, 0);

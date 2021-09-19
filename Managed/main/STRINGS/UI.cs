@@ -1354,7 +1354,7 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "What does it do?";
 
-				public static LocString ARTIFACT = "The pieces for this contraption are all recycled from projects abandoned by the Robotics department.\n\nThe design is very close to one published in an amateur DIY magazine that once sat in the lobby of the 'Employees Only' area of Gravitas' facilities.";
+				public static LocString ARTIFACT = "All of the parts for this contraption are recycled from projects abandoned by the Robotics department.\n\nThe design is very close to one published in an amateur DIY magazine that once sat in the lobby of the 'Employees Only' area of Gravitas' facilities.";
 			}
 
 			public class GRUBSTATUE
@@ -2283,13 +2283,13 @@ namespace STRINGS
 
 			public class MOTD
 			{
-				public static LocString IMAGE_HEADER = "ROCKETRY RENOVATION";
+				public static LocString IMAGE_HEADER = "COSMIC CALLING";
 
 				public static LocString NEWS_HEADER = "JOIN THE DISCUSSION";
 
 				public static LocString NEWS_BODY = "Stay up to date by joining our mailing list, or head on over to the forums and join the discussion.";
 
-				public static LocString PATCH_NOTES_SUMMARY = "Welcome to the <b>ROCKETRY RENOVATION UPDATE</b>\n\n<b><i>Spaced Out!</i></b>\n•<indent=20px>Duplicants can escape stranded rockets in an escape pod via the \"Abandon Ship\" button.</indent>\n•<indent=20px>Added liquid and gas ports to Spacefarer Modules to allow for easier fluid supplying and venting.</indent>\n•<indent=20px>New buildings, including a Wall Toilet that vents waste directly into the world behind it.</indent>\n•<indent=20px>Bug fixes and QOL improvements.</indent>\n\n   Check out the full patch notes for more details!";
+				public static LocString PATCH_NOTES_SUMMARY = "Welcome to the <b>COSMIC CALLING UPDATE</b>\n\n<b><i>Spaced Out!</i></b>\n•<indent=20px>New buildings allow automation signals to be broadcast between asteroids.</indent>\n•<indent=20px>Duplicants can boost their morale by having a chat on the new Party Line Phone.</indent>\n•<indent=20px>Radbolts can pass through a new special type of wall tile.</indent>\n•<indent=20px>Rocket engine speeds and ranges have been rebalanced.</indent>\n\n   Check out the full patch notes for more details!";
 
 				public static LocString UPDATE_TEXT = "LAUNCHED!";
 
@@ -4490,11 +4490,17 @@ namespace STRINGS
 
 			public static LocString TOOLTIP_INVALID_DESTINATION_REQUIRE_ASTEROID = string.Concat("Must select a ", PLANETOID_KEYWORD, " destination");
 
+			public static LocString TOOLTIP_INVALID_DESTINATION_OUT_OF_RANGE = "This destination is further away than the rocket's maximum range of {0}.";
+
 			public static LocString TOOLTIP_HIDDEN_HEX = "???";
 
 			public static LocString TOOLTIP_PEEKED_HEX_WITH_OBJECT = "UNKNOWN OBJECT DETECTED!";
 
 			public static LocString TOOLTIP_EMPTY_HEX = "EMPTY SPACE";
+
+			public static LocString TOOLTIP_PATH_LENGTH = "Trip Distance: {0}/{1}";
+
+			public static LocString TOOLTIP_PATH_LENGTH_RETURN = "Trip Distance: {0}/{1} (Return Trip)";
 		}
 
 		public class STARMAP
@@ -6710,7 +6716,7 @@ namespace STRINGS
 			{
 				public static LocString NO_ARTIFACTS_DISCOVERED = "No artifacts analyzed";
 
-				public static LocString NO_ARTIFACTS_DISCOVERED_TOOLTIP = "Analyzing artifacts requires a skilled artist";
+				public static LocString NO_ARTIFACTS_DISCOVERED_TOOLTIP = "Analyzing artifacts requires a Duplicant with the Masterworks skill";
 			}
 
 			public class BUTTONMENUSIDESCREEN
@@ -6996,6 +7002,8 @@ namespace STRINGS
 						public static LocString COMPLETE = "";
 
 						public static LocString FAILED = "    • Engine's height limit reached or exceeded";
+
+						public static LocString FAILED_NO_ENGINE = "    • Rocket requires space for an engine";
 					}
 				}
 
@@ -7037,6 +7045,17 @@ namespace STRINGS
 				public static LocString OUTPUTGREEN = "Output Green";
 
 				public static LocString NOELEMENTSELECTED = "No element selected";
+			}
+
+			public class LOGICBROADCASTCHANNELSIDESCREEN
+			{
+				public static LocString TITLE = "Channel Selector";
+
+				public static LocString HEADER = "Channel Selector";
+
+				public static LocString IN_RANGE = "In Range";
+
+				public static LocString OUT_OF_RANGE = "Out of Range";
 			}
 
 			public class CONDITIONLISTSIDESCREEN
@@ -9862,7 +9881,7 @@ namespace STRINGS
 						{
 							public static LocString TITLE = "    • <b>Dying off: {0}</b>";
 
-							public static LocString TOOLTIP = string.Concat("Low germ count in this area is causing germs to die rapidly\n\nFewer than {0} germs are on this {1} of material.\n({2} germs/", UNITSUFFIXES.MASS.KILOGRAM, ")");
+							public static LocString TOOLTIP = string.Concat("Low germ count in this area is causing germs to die rapidly\n\nFewer than {0} are on this {1} of material.\n({2} germs/", UNITSUFFIXES.MASS.KILOGRAM, ")");
 						}
 
 						public class OVERPOPULATED

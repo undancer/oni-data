@@ -287,7 +287,26 @@ public class CodexScreen : KScreen
 		input = input.ToLower();
 		foreach (KeyValuePair<string, CodexEntry> entry in CodexCache.entries)
 		{
-			if (!DlcManager.IsDlcListValidForCurrentContent(entry.Value.GetDlcIds()))
+			bool flag = false;
+			string[] dlcIds = entry.Value.GetDlcIds();
+			for (int i = 0; i < dlcIds.Length; i++)
+			{
+				if (DlcManager.IsContentActive(dlcIds[i]))
+				{
+					flag = true;
+					break;
+				}
+			}
+			string[] forbiddenDLCs = entry.Value.GetForbiddenDLCs();
+			for (int j = 0; j < forbiddenDLCs.Length; j++)
+			{
+				if (DlcManager.IsContentActive(forbiddenDLCs[j]))
+				{
+					flag = false;
+					break;
+				}
+			}
+			if (!flag)
 			{
 				continue;
 			}

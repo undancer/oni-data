@@ -135,7 +135,7 @@ public class EatChore : Chore<EatChore.StatesInstance>
 				smi.UpdateMessStation();
 			});
 			fetch.InitializeStates(eater, ediblesource, ediblechunk, requestedfoodunits, actualfoodunits, eatatmessstation);
-			eatatmessstation.DefaultState(eatatmessstation.moveto).ParamTransition(messstation, eatonfloorstate, (StatesInstance smi, GameObject p) => p == null);
+			eatatmessstation.DefaultState(eatatmessstation.moveto).ParamTransition(messstation, eatonfloorstate, (StatesInstance smi, GameObject p) => p == null).ParamTransition(messstation, eatonfloorstate, (StatesInstance smi, GameObject p) => p != null && !p.GetComponent<Operational>().IsOperational);
 			eatatmessstation.moveto.InitializeStates(eater, messstation, eatatmessstation.eat, eatonfloorstate);
 			eatatmessstation.eat.ToggleAnims("anim_eat_table_kanim").DoEat(ediblechunk, actualfoodunits, null, null).Enter(delegate(StatesInstance smi)
 			{

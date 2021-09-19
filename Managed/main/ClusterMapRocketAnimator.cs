@@ -97,18 +97,17 @@ public class ClusterMapRocketAnimator : GameStateMachine<ClusterMapRocketAnimato
 	public override void InitializeStates(out BaseState defaultState)
 	{
 		defaultState = idle;
-		root.OnTargetLost(entityTarget, null);
+		root.OnTargetLost(entityTarget, null).Target(entityTarget).EventHandlerTransition(GameHashes.RocketSelfDestructRequested, exploding, (StatesInstance smi, object data) => true)
+			.EventHandlerTransition(GameHashes.StartMining, utility.mining, (StatesInstance smi, object data) => true)
+			.EventHandlerTransition(GameHashes.RocketLaunched, moving.takeoff, (StatesInstance smi, object data) => true);
 		idle.Target(masterTarget).Enter(delegate(StatesInstance smi)
 		{
 			smi.PlayVisAnim("idle_loop", KAnim.PlayMode.Loop);
 		}).Target(entityTarget)
-			.EventTransition(GameHashes.ClusterDestinationChanged, moving.traveling, IsTraveling)
-			.EventTransition(GameHashes.StartMining, utility.mining)
-			.EventTransition(GameHashes.RocketLaunched, moving.takeoff)
-			.EventTransition(GameHashes.RocketSelfDestructRequested, exploding)
 			.Transition(moving.traveling, IsTraveling)
 			.Transition(grounded, IsGrounded)
-			.Transition(moving.landing, IsLanding);
+			.Transition(moving.landing, IsLanding)
+			.Transition(utility.mining, IsMining);
 		grounded.Enter(delegate(StatesInstance smi)
 		{
 			ToggleSelectable(isSelectable: false, smi);
@@ -140,7 +139,7 @@ public class ClusterMapRocketAnimator : GameStateMachine<ClusterMapRocketAnimato
 			{
 				smi.PlayVisAnim("inflight_loop", KAnim.PlayMode.Loop);
 			});
-		utility.Target(masterTarget).EventHandlerTransition(GameHashes.ClusterLocationChanged, (StatesInstance smi) => Game.Instance, idle, ClusterChangedAtMyLocation).EventTransition(GameHashes.ClusterDestinationChanged, idle, IsTraveling);
+		utility.Target(masterTarget).EventTransition(GameHashes.ClusterDestinationChanged, idle, IsTraveling);
 		utility.mining.DefaultState(utility.mining.pre).Target(entityTarget).EventTransition(GameHashes.StopMining, utility.mining.pst);
 		utility.mining.pre.Enter(delegate(StatesInstance smi)
 		{
@@ -205,6 +204,11 @@ public class ClusterMapRocketAnimator : GameStateMachine<ClusterMapRocketAnimato
 	private bool IsLanding(StatesInstance smi)
 	{
 		return ((Clustercraft)smi.entity).Status == Clustercraft.CraftStatus.Landing;
+	}
+
+	private bool IsMining(StatesInstance smi)
+	{
+		return ((Clustercraft)smi.entity).HasTag(GameTags.POIHarvesting);
 	}
 
 	private bool IsSurfaceTransitioning(StatesInstance smi)

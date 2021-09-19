@@ -1400,7 +1400,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Duplicant Crash Landed!";
 
-				public static LocString TOOLTIP = "A Duplicant in an escape pod has made it to the surface of the nearest asteroid.";
+				public static LocString TOOLTIP = "A Duplicant has successfully crashed an Escape Pod onto the surface of a nearby Planetoid.";
 			}
 		}
 

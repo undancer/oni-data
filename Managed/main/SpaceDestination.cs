@@ -229,7 +229,7 @@ public class SpaceDestination
 		return 0f;
 	}
 
-	public Dictionary<SimHashes, float> GetMissionResourceResult(float totalCargoSpace, bool solids = true, bool liquids = true, bool gasses = true)
+	public Dictionary<SimHashes, float> GetMissionResourceResult(float totalCargoSpace, float reservedMass, bool solids = true, bool liquids = true, bool gasses = true)
 	{
 		Dictionary<SimHashes, float> dictionary = new Dictionary<SimHashes, float>();
 		float num = 0f;
@@ -240,7 +240,7 @@ public class SpaceDestination
 				num += GetResourceValue(recoverableElement.Key, recoverableElement.Value);
 			}
 		}
-		float num2 = Mathf.Min(CurrentMass - (float)GetDestinationType().minimumMass, totalCargoSpace);
+		float num2 = Mathf.Min(CurrentMass + reservedMass - (float)GetDestinationType().minimumMass, totalCargoSpace);
 		foreach (KeyValuePair<SimHashes, float> recoverableElement2 in recoverableElements)
 		{
 			if ((ElementLoader.FindElementByHash(recoverableElement2.Key).IsSolid && solids) || (ElementLoader.FindElementByHash(recoverableElement2.Key).IsLiquid && liquids) || (ElementLoader.FindElementByHash(recoverableElement2.Key).IsGas && gasses))
@@ -272,22 +272,27 @@ public class SpaceDestination
 		return GetRecoverableEntities();
 	}
 
-	public void UpdateRemainingResources(CargoBay bay)
+	public float ReserveResources(CargoBay bay)
 	{
-		if (!(bay != null))
+		float num = 0f;
+		if (bay != null)
 		{
-			return;
-		}
-		foreach (KeyValuePair<SimHashes, float> recoverableElement in recoverableElements)
-		{
-			_ = recoverableElement;
-			if (HasElementType(bay.storageType))
+			Storage component = bay.GetComponent<Storage>();
 			{
-				Storage component = bay.GetComponent<Storage>();
-				availableMass = Mathf.Max(0f, availableMass - component.capacityKg);
-				break;
+				foreach (KeyValuePair<SimHashes, float> recoverableElement in recoverableElements)
+				{
+					_ = recoverableElement;
+					if (HasElementType(bay.storageType))
+					{
+						num += component.capacityKg;
+						availableMass = Mathf.Max(0f, availableMass - component.capacityKg);
+						return num;
+					}
+				}
+				return num;
 			}
 		}
+		return num;
 	}
 
 	public bool HasElementType(CargoBay.CargoType type)

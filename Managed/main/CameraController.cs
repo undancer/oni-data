@@ -580,8 +580,12 @@ public class CameraController : KMonoBehaviour, IInputHandler
 		}
 	}
 
-	private bool ChangeWorldInput(KButtonEvent e)
+	public bool ChangeWorldInput(KButtonEvent e)
 	{
+		if (e.Consumed)
+		{
+			return true;
+		}
 		int num = -1;
 		if (e.TryConsume(Action.SwitchActiveWorld1))
 		{
@@ -632,6 +636,7 @@ public class CameraController : KMonoBehaviour, IInputHandler
 				WorldContainer world = ClusterManager.Instance.GetWorld(num);
 				if (world != null && world.IsDiscovered && ClusterManager.Instance.activeWorldId != world.id)
 				{
+					ManagementMenu.Instance.CloseClusterMap();
 					ActiveWorldStarWipe(world.id);
 				}
 			}

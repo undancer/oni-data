@@ -27,7 +27,6 @@ public class MouldingTileConfig : IBuildingConfig
 		obj.SceneLayer = Grid.SceneLayer.TileMain;
 		obj.ConstructionOffsetFilter = BuildingDef.ConstructionOffsetFilter_OneDown;
 		obj.isKAnimTile = true;
-		obj.isSolidTile = true;
 		obj.BlockTileAtlas = Assets.GetTextureAtlas("tiles_moulding");
 		obj.BlockTilePlaceAtlas = Assets.GetTextureAtlas("tiles_moulding_place");
 		obj.BlockTileMaterial = Assets.GetMaterial("tiles_solid");

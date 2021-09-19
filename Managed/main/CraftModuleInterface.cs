@@ -299,6 +299,7 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 				rocketModuleCluster.Trigger(1512695988, newModule);
 			}
 		}
+		newModule.Trigger(1512695988, newModule);
 		SetBottomModule();
 	}
 
@@ -313,9 +314,9 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 			}
 		}
 		Trigger(1512695988);
-		foreach (Ref<RocketModule> module2 in modules)
+		foreach (Ref<RocketModuleCluster> clusterModule in clusterModules)
 		{
-			module2.Get().Trigger(1512695988);
+			clusterModule.Get().Trigger(1512695988);
 		}
 		SetBottomModule();
 		if (clusterModules.Count == 0)
@@ -349,6 +350,21 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 		{
 			bottomModule = null;
 		}
+	}
+
+	public int GetHeightOfModuleTop(GameObject module)
+	{
+		int num = 0;
+		for (int i = 0; i < ClusterModules.Count; i++)
+		{
+			num += clusterModules[i].Get().GetComponent<Building>().Def.HeightInCells;
+			if (clusterModules[i].Get().gameObject == module)
+			{
+				return num;
+			}
+		}
+		Debug.LogError("Could not find module " + module.GetProperName() + " in CraftModuleInterface craft " + m_clustercraft.Name);
+		return 0;
 	}
 
 	public int GetModuleRelativeVerticalPosition(GameObject module)

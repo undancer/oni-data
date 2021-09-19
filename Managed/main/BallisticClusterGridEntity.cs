@@ -19,8 +19,6 @@ public class BallisticClusterGridEntity : ClusterGridEntity
 
 	private string clusterAnimSymbolSwapSymbol;
 
-	public bool NoWaitInOrbit;
-
 	public override string Name => Strings.Get(nameKey);
 
 	public override EntityLayer Layer => EntityLayer.Payload;
@@ -36,7 +34,7 @@ public class BallisticClusterGridEntity : ClusterGridEntity
 		}
 	};
 
-	public override bool IsVisible => m_clusterTraveler.IsTraveling();
+	public override bool IsVisible => !base.gameObject.HasTag(GameTags.ClusterEntityGrounded);
 
 	public override ClusterRevealLevel IsVisibleInFOW => ClusterRevealLevel.Visible;
 

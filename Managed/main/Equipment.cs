@@ -205,12 +205,12 @@ public class Equipment : Assignables
 			if (!slot.IsUnassigning())
 			{
 				PrimaryElement component5 = equippable.GetComponent<PrimaryElement>();
-				if (component5 != null)
+				PrimaryElement component6 = targetGameObject.GetComponent<PrimaryElement>();
+				if (component5 != null && component6 != null)
 				{
 					SimUtil.DiseaseInfo invalid = SimUtil.DiseaseInfo.Invalid;
 					invalid.idx = component5.DiseaseIdx;
 					invalid.count = (int)((float)component5.DiseaseCount * 0.33f);
-					PrimaryElement component6 = targetGameObject.GetComponent<PrimaryElement>();
 					SimUtil.DiseaseInfo invalid2 = SimUtil.DiseaseInfo.Invalid;
 					invalid2.idx = component6.DiseaseIdx;
 					invalid2.count = (int)((float)component6.DiseaseCount * 0.33f);

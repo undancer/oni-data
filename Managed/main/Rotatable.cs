@@ -30,6 +30,8 @@ public class Rotatable : KMonoBehaviour, ISaveLoadable
 	[SerializeField]
 	private int height;
 
+	public Orientation Orientation => orientation;
+
 	public bool IsRotated => orientation != Orientation.Neutral;
 
 	protected override void OnSpawn()

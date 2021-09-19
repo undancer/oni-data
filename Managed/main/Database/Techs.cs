@@ -275,7 +275,8 @@ namespace Database
 			new Tech("NotificationSystems", new List<string>
 			{
 				LogicHammerConfig.ID,
-				LogicAlarmConfig.ID
+				LogicAlarmConfig.ID,
+				"Telephone"
 			}, this);
 			new Tech("ArtificialFriends", new List<string> { "SweepBotStation", "ScoutModule" }, this);
 			new Tech("BasicRefinement", new List<string> { "RockCrusher", "Kiln" }, this);
@@ -288,7 +289,7 @@ namespace Database
 			new Tech("Smelting", new List<string> { "MetalRefinery", "MetalTile" }, this);
 			new Tech("HighTempForging", new List<string> { "GlassForge", "BunkerTile", "BunkerDoor" }, this);
 			new Tech("HighPressureForging", new List<string> { "DiamondPress" }, this);
-			new Tech("RadiationProtection", new List<string> { "LeadSuit", "LeadSuitMarker", "LeadSuitLocker" }, this);
+			new Tech("RadiationProtection", new List<string> { "HEPBridgeTile", "LeadSuit", "LeadSuitMarker", "LeadSuitLocker" }, this);
 			new Tech("TemperatureModulation", new List<string> { "LiquidCooledFan", "IceCooledFan", "IceMachine", "InsulationTile", "SpaceHeater" }, this);
 			new Tech("HVAC", new List<string>
 			{
@@ -387,7 +388,7 @@ namespace Database
 				new Tech("SpaceCombustion", new List<string> { "SugarEngine", "SmallOxidizerTank" }, this);
 				new Tech("HighVelocityDestruction", new List<string> { "NoseconeHarvest" }, this);
 				new Tech("GasDistribution", new List<string> { "RocketInteriorGasInput", "RocketInteriorGasOutput", "OxidizerTankCluster" }, this);
-				new Tech("AdvancedScanners", new List<string> { "ScannerModule" }, this);
+				new Tech("AdvancedScanners", new List<string> { "ScannerModule", "LogicInterasteroidSender", "LogicInterasteroidReceiver" }, this);
 			}
 		}
 

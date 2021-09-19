@@ -20,7 +20,6 @@ public class TileConfig : IBuildingConfig
 		obj.BaseTimeUntilRepair = -1f;
 		obj.SceneLayer = Grid.SceneLayer.TileMain;
 		obj.isKAnimTile = true;
-		obj.isSolidTile = true;
 		obj.BlockTileAtlas = Assets.GetTextureAtlas("tiles_solid");
 		obj.BlockTilePlaceAtlas = Assets.GetTextureAtlas("tiles_solid_place");
 		obj.BlockTileMaterial = Assets.GetMaterial("tiles_solid");

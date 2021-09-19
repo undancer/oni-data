@@ -865,7 +865,7 @@ public class LoadScreen : KModalScreen
 		{
 			if (display != null)
 			{
-				display.text = string.Format(UI.FRONTEND.LOADSCREEN.SAVE_TOO_NEW, save.FileName, save.FileHeader.buildVersion, save.FileInfo.saveMinorVersion, 477203u, 26);
+				display.text = string.Format(UI.FRONTEND.LOADSCREEN.SAVE_TOO_NEW, save.FileName, save.FileHeader.buildVersion, save.FileInfo.saveMinorVersion, 479045u, 27);
 			}
 			return false;
 		}
@@ -873,7 +873,7 @@ public class LoadScreen : KModalScreen
 		{
 			if (display != null)
 			{
-				display.text = string.Format(UI.FRONTEND.LOADSCREEN.UNSUPPORTED_SAVE_VERSION, save.FileName, save.FileInfo.saveMajorVersion, save.FileInfo.saveMinorVersion, 7, 26);
+				display.text = string.Format(UI.FRONTEND.LOADSCREEN.UNSUPPORTED_SAVE_VERSION, save.FileName, save.FileInfo.saveMajorVersion, save.FileInfo.saveMinorVersion, 7, 27);
 			}
 			return false;
 		}
@@ -1140,11 +1140,11 @@ public class LoadScreen : KModalScreen
 
 	private static bool IsSaveFileFromUnsupportedFutureBuild(SaveGame.Header header, SaveGame.GameInfo gameInfo)
 	{
-		if (gameInfo.saveMajorVersion > 7 || (gameInfo.saveMajorVersion == 7 && gameInfo.saveMinorVersion > 26))
+		if (gameInfo.saveMajorVersion > 7 || (gameInfo.saveMajorVersion == 7 && gameInfo.saveMinorVersion > 27))
 		{
 			return true;
 		}
-		return header.buildVersion > 477203;
+		return header.buildVersion > 479045;
 	}
 
 	private static bool IsSaveFromCurrentDLC(SaveGame.GameInfo gameInfo, out string saveDlcName)
@@ -1224,15 +1224,15 @@ public class LoadScreen : KModalScreen
 		SaveGame.GameInfo gameInfo = SaveLoader.LoadHeader(filename, out header);
 		string arg = null;
 		string arg2 = null;
-		if (header.buildVersion > 477203)
+		if (header.buildVersion > 479045)
 		{
 			arg = header.buildVersion.ToString();
-			arg2 = 477203u.ToString();
+			arg2 = 479045u.ToString();
 		}
 		else if (gameInfo.saveMajorVersion < 7)
 		{
 			arg = $"v{gameInfo.saveMajorVersion}.{gameInfo.saveMinorVersion}";
-			arg2 = $"v{7}.{26}";
+			arg2 = $"v{7}.{27}";
 		}
 		if (1 == 0)
 		{

@@ -110,7 +110,7 @@ public class SleepChoreMonitor : GameStateMachine<SleepChoreMonitor, SleepChoreM
 			}
 		});
 		passingout.ToggleChore(CreatePassingOutChore, satisfied, satisfied);
-		sleeponfloor.EventTransition(GameHashes.AssignablesChanged, checkforbed).EventTransition(GameHashes.AssignableReachabilityChanged, checkforbed, (Instance smi) => smi.IsBedReachable()).ToggleChore(CreateSleepOnFloorChore, satisfied, satisfied);
+		sleeponfloor.EventTransition(GameHashes.AssignablesChanged, checkforbed).EventHandlerTransition(GameHashes.AssignableReachabilityChanged, checkforbed, (Instance smi, object data) => smi.IsBedReachable()).ToggleChore(CreateSleepOnFloorChore, satisfied, satisfied);
 		bedassigned.ParamTransition(bed, checkforbed, (Instance smi, GameObject p) => p == null).EventTransition(GameHashes.AssignablesChanged, checkforbed).EventTransition(GameHashes.AssignableReachabilityChanged, checkforbed, (Instance smi) => !smi.IsBedReachable())
 			.ToggleChore(CreateSleepChore, satisfied, satisfied);
 	}

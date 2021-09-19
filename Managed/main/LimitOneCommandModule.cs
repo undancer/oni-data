@@ -26,7 +26,7 @@ public class LimitOneCommandModule : SelectModuleCondition
 		return true;
 	}
 
-	public override string GetStatusTooltip(bool ready, BuildingDef selectedPart)
+	public override string GetStatusTooltip(bool ready, GameObject moduleBase, BuildingDef selectedPart)
 	{
 		if (ready)
 		{

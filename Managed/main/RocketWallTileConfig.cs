@@ -28,7 +28,6 @@ public class RocketWallTileConfig : IBuildingConfig
 		obj.BaseTimeUntilRepair = -1f;
 		obj.SceneLayer = Grid.SceneLayer.TileMain;
 		obj.isKAnimTile = true;
-		obj.isSolidTile = true;
 		obj.BlockTileAtlas = Assets.GetTextureAtlas("tiles_rocket_wall_int");
 		obj.BlockTilePlaceAtlas = Assets.GetTextureAtlas("tiles_rocket_wall_int_place");
 		obj.BlockTileMaterial = Assets.GetMaterial("tiles_solid");

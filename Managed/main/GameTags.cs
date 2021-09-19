@@ -599,6 +599,12 @@ public class GameTags
 
 	public static readonly Tag WarpTech = TagManager.Create("WarpTech");
 
+	public static readonly Tag HEPPassThrough = TagManager.Create("HEPPassThrough");
+
+	public static readonly Tag TelephoneRinging = TagManager.Create("TelephoneRinging");
+
+	public static readonly Tag LongDistanceCall = TagManager.Create("LongDistanceCall");
+
 	public static readonly Tag Rocket = TagManager.Create("Rocket");
 
 	public static readonly Tag RocketOnGround = TagManager.Create("RocketOnGround");
@@ -630,6 +636,16 @@ public class GameTags
 	public static readonly Tag RocketModule = TagManager.Create("RocketModule");
 
 	public static readonly Tag GantryExtended = TagManager.Create("GantryExtended");
+
+	public static readonly Tag POIHarvesting = TagManager.Create("POIHarvesting");
+
+	public static readonly Tag BallisticEntityLanding = TagManager.Create("BallisticEntityLanding");
+
+	public static readonly Tag BallisticEntityLaunching = TagManager.Create("BallisticEntityLaunching");
+
+	public static readonly Tag BallisticEntityMoving = TagManager.Create("BallisticEntityMoving");
+
+	public static readonly Tag ClusterEntityGrounded = TagManager.Create("ClusterEntityGrounded ");
 
 	public static readonly Tag EntityInSpace = TagManager.Create("EntityInSpace");
 

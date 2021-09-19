@@ -415,6 +415,10 @@ public class LogicPorts : KMonoBehaviour, IGameObjectEffectDescriptor, IRenderEv
 	{
 		for (int i = 0; i < inputPortInfo.Length; i++)
 		{
+			if (inputPorts == null)
+			{
+				break;
+			}
 			if (inputPortInfo[i].id == port_id)
 			{
 				return (inputPorts[i] as LogicEventHandler)?.Value ?? 0;

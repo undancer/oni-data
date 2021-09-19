@@ -52,7 +52,7 @@ public class KeroseneEngineClusterSmallConfig : IBuildingConfig
 	{
 		RocketEngineCluster rocketEngineCluster = go.AddOrGet<RocketEngineCluster>();
 		rocketEngineCluster.maxModules = 4;
-		rocketEngineCluster.maxHeight = 20;
+		rocketEngineCluster.maxHeight = ROCKETRY.ROCKET_HEIGHT.MEDIUM;
 		rocketEngineCluster.fuelTag = SimHashes.Petroleum.CreateTag();
 		rocketEngineCluster.efficiency = ROCKETRY.ENGINE_EFFICIENCY.MEDIUM;
 		rocketEngineCluster.requireOxidizer = true;

@@ -53,7 +53,7 @@ public class HydrogenEngineClusterConfig : IBuildingConfig
 	{
 		RocketEngineCluster rocketEngineCluster = go.AddOrGet<RocketEngineCluster>();
 		rocketEngineCluster.maxModules = 7;
-		rocketEngineCluster.maxHeight = 35;
+		rocketEngineCluster.maxHeight = ROCKETRY.ROCKET_HEIGHT.VERY_TALL;
 		rocketEngineCluster.fuelTag = ElementLoader.FindElementByHash(SimHashes.LiquidHydrogen).tag;
 		rocketEngineCluster.efficiency = ROCKETRY.ENGINE_EFFICIENCY.STRONG;
 		rocketEngineCluster.explosionEffectHash = SpawnFXHashes.MeteorImpactDust;

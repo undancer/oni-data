@@ -21,7 +21,6 @@ public class CarpetTileConfig : IBuildingConfig
 		obj.SceneLayer = Grid.SceneLayer.TileMain;
 		obj.ConstructionOffsetFilter = BuildingDef.ConstructionOffsetFilter_OneDown;
 		obj.isKAnimTile = true;
-		obj.isSolidTile = true;
 		obj.BlockTileAtlas = Assets.GetTextureAtlas("tiles_carpet");
 		obj.BlockTilePlaceAtlas = Assets.GetTextureAtlas("tiles_carpet_place");
 		obj.BlockTileMaterial = Assets.GetMaterial("tiles_solid");

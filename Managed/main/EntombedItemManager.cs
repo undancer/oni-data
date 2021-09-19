@@ -45,7 +45,7 @@ public class EntombedItemManager : KMonoBehaviour, ISim33ms
 	private void OnDeserialized()
 	{
 		SpawnUncoveredObjects();
-		AddMassToWorlIfPossible();
+		AddMassToWorldIfPossible();
 		PopulateEntombedItemVisualizers();
 	}
 
@@ -168,7 +168,7 @@ public class EntombedItemManager : KMonoBehaviour, ISim33ms
 		pooledList.Recycle();
 	}
 
-	private void AddMassToWorlIfPossible()
+	private void AddMassToWorldIfPossible()
 	{
 		ListPool<int, EntombedItemManager>.PooledList pooledList = ListPool<int, EntombedItemManager>.Allocate();
 		for (int i = 0; i < cells.Count; i++)
@@ -187,7 +187,7 @@ public class EntombedItemManager : KMonoBehaviour, ISim33ms
 			RemoveItem(item2);
 			if (item.mass > float.Epsilon)
 			{
-				SimMessages.AddRemoveSubstance(item.cell, ElementLoader.FindElementByHash((SimHashes)item.elementId).idx, CellEventLogger.Instance.ElementConsumerSimUpdate, item.mass, item.temperature, item.diseaseIdx, item.diseaseCount);
+				SimMessages.AddRemoveSubstance(item.cell, ElementLoader.FindElementByHash((SimHashes)item.elementId).idx, CellEventLogger.Instance.ElementConsumerSimUpdate, item.mass, item.temperature, item.diseaseIdx, item.diseaseCount, do_vertical_solid_displacement: false);
 			}
 		}
 		pooledList.Recycle();

@@ -212,13 +212,13 @@ public class SleepChore : Chore<SleepChore.StatesInstance>
 				isScaredOfDark.Set(value: false, smi);
 				smi.GoTo(state4);
 			});
-			sleep.interrupt_movement.ToggleCategoryStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().DuplicantStatusItems.SleepingInterruptedByMovement).QueueAnim("interrupt_light").OnAnimQueueComplete(sleep.interrupt_movement_transition)
+			sleep.interrupt_movement.ToggleCategoryStatusItem(Db.Get().StatusItemCategories.Main, Db.Get().DuplicantStatusItems.SleepingInterruptedByMovement).PlayAnim("interrupt_light").OnAnimQueueComplete(sleep.interrupt_movement_transition)
 				.Enter(delegate(StatesInstance smi)
 				{
 					GameObject gameObject = smi.sm.bed.Get(smi);
 					if (gameObject != null)
 					{
-						gameObject.GetComponent<KAnimControllerBase>().Play("interrupt_light");
+						gameObject.Trigger(-717201811);
 					}
 				});
 			sleep.interrupt_movement_transition.Enter(delegate(StatesInstance smi)

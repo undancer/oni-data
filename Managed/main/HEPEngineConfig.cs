@@ -5,9 +5,9 @@ public class HEPEngineConfig : IBuildingConfig
 {
 	private const int PARTICLES_PER_HEX = 200;
 
-	private const int RANGE = 24;
+	private const int RANGE = 20;
 
-	private const int PARTICLE_STORAGE_CAPACITY = 4800;
+	private const int PARTICLE_STORAGE_CAPACITY = 4000;
 
 	private const int PORT_OFFSET_Y = 3;
 
@@ -66,12 +66,12 @@ public class HEPEngineConfig : IBuildingConfig
 		radiationEmitter.emitRads = 840f / ((float)radiationEmitter.emitRadiusX / 6f);
 		radiationEmitter.emissionOffset = new Vector3(0f, 3f, 0f);
 		HighEnergyParticleStorage highEnergyParticleStorage = go.AddOrGet<HighEnergyParticleStorage>();
-		highEnergyParticleStorage.capacity = 4800f;
+		highEnergyParticleStorage.capacity = 4000f;
 		highEnergyParticleStorage.autoStore = true;
-		go.AddOrGet<HEPFuelTank>().physicalFuelCapacity = 4800f;
+		go.AddOrGet<HEPFuelTank>().physicalFuelCapacity = 4000f;
 		RocketEngineCluster rocketEngineCluster = go.AddOrGet<RocketEngineCluster>();
 		rocketEngineCluster.maxModules = 4;
-		rocketEngineCluster.maxHeight = 20;
+		rocketEngineCluster.maxHeight = ROCKETRY.ROCKET_HEIGHT.MEDIUM;
 		rocketEngineCluster.efficiency = ROCKETRY.ENGINE_EFFICIENCY.STRONG;
 		rocketEngineCluster.explosionEffectHash = SpawnFXHashes.MeteorImpactDust;
 		rocketEngineCluster.requireOxidizer = false;

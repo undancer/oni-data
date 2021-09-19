@@ -140,7 +140,7 @@ public class HighEnergyParticleStorage : KMonoBehaviour, IStorage
 
 	public float RemainingCapacity()
 	{
-		return capacity - Particles;
+		return Mathf.Max(capacity - Particles, 0f);
 	}
 
 	public bool ShouldShowInUI()

@@ -238,9 +238,15 @@ public class ResourceHarvestModule : GameStateMachine<ResourceHarvestModule, Res
 			StatesInstance.RemoveHarvestStatusItems(smi.master.gameObject.GetComponent<RocketModuleCluster>().CraftInterface.gameObject);
 		}).Enter(delegate(StatesInstance smi)
 		{
-			smi.master.gameObject.GetComponent<RocketModuleCluster>().CraftInterface.GetComponent<Clustercraft>().Trigger(-1762453998);
+			Clustercraft component = smi.master.gameObject.GetComponent<RocketModuleCluster>().CraftInterface.GetComponent<Clustercraft>();
+			component.AddTag(GameTags.POIHarvesting);
+			component.Trigger(-1762453998);
 			StatesInstance.AddHarvestStatusItems(smi.master.gameObject.GetComponent<RocketModuleCluster>().CraftInterface.gameObject, smi.def.harvestSpeed);
 		})
+			.Exit(delegate(StatesInstance smi)
+			{
+				smi.master.gameObject.GetComponent<RocketModuleCluster>().CraftInterface.GetComponent<Clustercraft>().RemoveTag(GameTags.POIHarvesting);
+			})
 			.Update(delegate(StatesInstance smi, float dt)
 			{
 				smi.HarvestFromPOI(dt);

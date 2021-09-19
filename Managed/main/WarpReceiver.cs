@@ -57,7 +57,7 @@ public class WarpReceiver : Workable
 		chore = new WorkChore<Workable>(migrate, this, dupe.GetComponent<ChoreProvider>(), run_until_complete: true, delegate
 		{
 			CompleteChore();
-		}, null, null, allow_in_red_alert: true, null, ignore_schedule_block: false, only_when_operational: true, override_anims, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: false, PriorityScreen.PriorityClass.high);
+		}, null, null, allow_in_red_alert: true, null, ignore_schedule_block: true, only_when_operational: true, override_anims, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: false, PriorityScreen.PriorityClass.compulsory);
 		Workable component = GetComponent<Workable>();
 		component.workLayer = Grid.SceneLayer.Building;
 		component.workAnims = new HashedString[2] { "printing_pre", "printing_loop" };

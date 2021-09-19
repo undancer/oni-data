@@ -99,11 +99,14 @@ public class SapTree : GameStateMachine<SapTree, SapTree.StatesInstance, IStateM
 		public void EatFoodItem(float dt)
 		{
 			Pickupable pickupable = base.sm.foodItem.Get(this).GetComponent<Pickupable>().Take(base.def.massEatRate * dt);
-			float mass = pickupable.GetComponent<Edible>().Calories * 0.001f * base.def.kcalorieToKGConversionRatio;
-			Util.KDestroyGameObject(pickupable.gameObject);
-			PrimaryElement component = GetComponent<PrimaryElement>();
-			storage.AddLiquid(SimHashes.Resin, mass, component.Temperature, byte.MaxValue, 0, keep_zero_mass: true, do_disease_transfer: false);
-			base.sm.storedSap.Set(storage.GetMassAvailable(SimHashes.Resin.CreateTag()), this);
+			if (pickupable != null)
+			{
+				float mass = pickupable.GetComponent<Edible>().Calories * 0.001f * base.def.kcalorieToKGConversionRatio;
+				Util.KDestroyGameObject(pickupable.gameObject);
+				PrimaryElement component = GetComponent<PrimaryElement>();
+				storage.AddLiquid(SimHashes.Resin, mass, component.Temperature, byte.MaxValue, 0, keep_zero_mass: true, do_disease_transfer: false);
+				base.sm.storedSap.Set(storage.GetMassAvailable(SimHashes.Resin.CreateTag()), this);
+			}
 		}
 
 		public void Ooze(float dt)

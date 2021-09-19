@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Application: Oxygen Not IncludedPOT Version: 2.0\n"
-"X-Generator: Poedit 2.4\n"
+"X-Generator: Poedit 3.0\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. STRINGS.BUILDING.DETAILS.USE_COUNT
@@ -264,6 +264,17 @@ msgid ""
 msgstr ""
 "复制人不可专门从<link=\"LIQUIDPUMPINGSTATION\">手压泵</link>中获取<style="
 "\"KKeyword\">液体</style>并运送到此处"
+
+#. STRINGS.BUILDING.STATUSITEMS.BROADCASTEROUTOFRANGE.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.BROADCASTEROUTOFRANGE.NAME"
+msgid "Broadcaster Out of Range"
+msgstr "播报器超出范围"
+
+#. STRINGS.BUILDING.STATUSITEMS.BROADCASTEROUTOFRANGE.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.BROADCASTEROUTOFRANGE.TOOLTIP"
+msgid ""
+"This receiver is too far from the selected broadcaster to get signal updates"
+msgstr "这个接收器离选择的播报器太远，无法更新信号"
 
 #. STRINGS.BUILDING.STATUSITEMS.BROKEN.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.BROKEN.NAME"
@@ -1273,13 +1284,13 @@ msgstr ""
 "康复中的复制人必须要在<b>{0}</b>格内有可获取的<style=\"KKeyword\">食物</"
 "style>"
 
-#. STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.NAME
-msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.NAME"
+#. STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLINGn.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLINGn.NAME"
 msgid "Cooling Contents: {UsedPower}"
 msgstr "冷却内容物：{UsedPower}"
 
-#. STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.TOOLTIP
-msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.TOOLTIP"
+#. STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLINGn.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLINGn.TOOLTIP"
 msgid ""
 "{UsedPower} of {MaxPower} are being used to cool the contents of this food "
 "storage"
@@ -1300,7 +1311,7 @@ msgid ""
 msgstr ""
 "在此储存的食物已处于冷藏温度\n"
 "\n"
-"节能模式已自动激活，只使用{{MaxPower}中的{UsedPower}电力。"
+"节能模式已自动激活，只使用{MaxPower}中的{UsedPower}电力。"
 
 #. STRINGS.BUILDING.STATUSITEMS.GANTRY.AUTOMATION_CONTROL
 msgctxt "STRINGS.BUILDING.STATUSITEMS.GANTRY.AUTOMATION_CONTROL"
@@ -2936,8 +2947,8 @@ msgstr "输出口堵塞"
 
 #. STRINGS.BUILDING.STATUSITEMS.OUTPUTTILEBLOCKED.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.OUTPUTTILEBLOCKED.TOOLTIP"
-msgid "Output is blocked"
-msgstr "输出口被堵住了"
+msgid "Output <style=\"KKeyword\">Pipe</style> is blocked"
+msgstr "输出<style=\"KKeyword\">管道</style>受阻"
 
 #. STRINGS.BUILDING.STATUSITEMS.OVERHEATED.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.OVERHEATED.NAME"
@@ -6474,13 +6485,13 @@ msgstr "<link=\"ELECTROLYZER\">电解器</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.ESCAPEPOD.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.ESCAPEPOD.DESC"
-msgid "Delivers a Duplicant from a stranded rocket to the nearest asteroid."
+msgid "Delivers a Duplicant from a stranded rocket to the nearest Planetoid."
 msgstr "将一名复制人从标准火箭送到最近的小行星上。"
 
 #. STRINGS.BUILDINGS.PREFABS.ESCAPEPOD.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.ESCAPEPOD.NAME"
-msgid "Escape Pod"
-msgstr "逃生舱"
+msgid "<link=\"ESCAPEPOD\">Escape Pod</link>"
+msgstr "<link=\"ESCAPEPOD\">逃生舱</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.ESPRESSOMACHINE.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.ESPRESSOMACHINE.DESC"
@@ -7784,11 +7795,6 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.GRAVITASDOOR.DESC"
 msgid "An office door to an office that no longer exists."
 msgstr "一扇门，通往已经不存在的办公室。"
 
-#. STRINGS.BUILDINGS.PREFABS.GRAVITASDOOR.EFFECT
-msgctxt "STRINGS.BUILDINGS.PREFABS.GRAVITASDOOR.EFFECT"
-msgid ""
-msgstr ""
-
 #. STRINGS.BUILDINGS.PREFABS.GRAVITASDOOR.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.GRAVITASDOOR.NAME"
 msgid "Gravitas Door"
@@ -7956,6 +7962,26 @@ msgstr ""
 msgctxt "STRINGS.BUILDINGS.PREFABS.HEATCOMPRESSOR.NAME"
 msgid "<link=\"HEATCOMPRESSOR\">Liquid Heatquilizer</link>"
 msgstr "<link=\"HEATCOMPRESSOR\">液体均热器</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.HEPBRIDGETILE.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.HEPBRIDGETILE.DESC"
+msgid "Allows Radbolts to pass through walls."
+msgstr "允许辐射粒子穿墙而过。"
+
+#. STRINGS.BUILDINGS.PREFABS.HEPBRIDGETILE.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.HEPBRIDGETILE.EFFECT"
+msgid ""
+"Receives <link=\"HEP\">Radbolts</link> from <link=\"HIGHENERGYPARTICLESPAWNER"
+"\">Radbolt Generators</link> and directs them through walls. All other "
+"materials and elements will be blocked from passage."
+msgstr ""
+"接收来自<link=\"HIGHENERGYPARTICLESPAWNER\">辐射粒子发生器</link>的<link="
+"\"HEP\">辐射粒子</link>并使其穿墙而过。其他材料和元素会被挡住。"
+
+#. STRINGS.BUILDINGS.PREFABS.HEPBRIDGETILE.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.HEPBRIDGETILE.NAME"
+msgid "<link=\"HEPBRIDGETILE\">Radbolt Joint Plate</link>"
+msgstr "<link=\"HEPBRIDGETILE\">辐射粒子接合板</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.HEPENGINE.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.HEPENGINE.DESC"
@@ -8646,8 +8672,7 @@ msgstr "<link=\"LADDER\">梯子</link>"
 #. STRINGS.BUILDINGS.PREFABS.LADDERBED.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.LADDERBED.DESC"
 msgid ""
-"Duplicants can be interrupted if another duplicant uses the ladder while "
-"sleeping."
+"Duplicant's sleep will be interrupted if another Duplicant uses the ladder."
 msgstr "复制人在睡觉时，如果有另一个复制人使用梯子则睡眠会被打断。"
 
 #. STRINGS.BUILDINGS.PREFABS.LADDERBED.EFFECT
@@ -10314,6 +10339,96 @@ msgstr "使建筑发出响声"
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICHAMMER.NAME"
 msgid "<link=\"LOGICHAMMER\">Hammer</link>"
 msgstr "<link=\"LOGICHAMMER\">敲击器</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDRECEIVER.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDRECEIVER.DESC"
+msgid "Receives automation signals from space."
+msgstr "接收来自太空的自动化信号。"
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDRECEIVER.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDRECEIVER.EFFECT"
+msgid ""
+"Receives a <b><style=\"logic_on\">Green Signal</style></b> or a <b><style="
+"\"logic_off\">Red Signal</style></b> from an <link=\"LOGICINTERASTEROIDSENDER"
+"\">Automation Broadcaster</link> over vast distances in space.\n"
+"\n"
+"Both the Automation Receiver and the Automation Broadcaster must be exposed "
+"to space to function."
+msgstr ""
+"在太空远距离接收来自<link=\"LOGICINTERASTEROIDSENDER\">信号播报器</link>的"
+"<b><style=\"logic_on\">绿色信号</style></b>或<b><style=\"logic_off\">红色信号"
+"</style></b>。\n"
+"\n"
+"信号接收器和信号播报器必须暴露在太空中才能工作。"
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDRECEIVER.LOGIC_PORT
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDRECEIVER.LOGIC_PORT"
+msgid "Receiving Signal"
+msgstr "接收信号"
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDRECEIVER.LOGIC_PORT_ACTIVE
+msgctxt ""
+"STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDRECEIVER.LOGIC_PORT_ACTIVE"
+msgid "Receiving: <b><style=\"logic_on\">Green Signal</style></b>"
+msgstr "接收：<b><style=\"logic_on\">绿色信号</style></b>"
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDRECEIVER.LOGIC_PORT_INACTIVE
+msgctxt ""
+"STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDRECEIVER.LOGIC_PORT_INACTIVE"
+msgid "Receiving: <b><style=\"logic_off\">Red Signal</style></b>"
+msgstr "接收：<b><style=\"logic_off\">红色信号</style></b>"
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDRECEIVER.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDRECEIVER.NAME"
+msgid "<link=\"LOGICINTERASTEROIDRECEIVER\">Automation Receiver</link>"
+msgstr "<link=\"LOGICINTERASTEROIDRECEIVER\">信号接收器</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDSENDER.DEFAULTNAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDSENDER.DEFAULTNAME"
+msgid "Unnamed Broadcaster"
+msgstr "未命名播报器"
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDSENDER.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDSENDER.DESC"
+msgid "Sends automation signals into space."
+msgstr "将自动化信号发送到太空。"
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDSENDER.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDSENDER.EFFECT"
+msgid ""
+"Sends a <b><style=\"logic_on\">Green Signal</style></b> or a <b><style="
+"\"logic_off\">Red Signal</style></b> to an <link=\"LOGICINTERASTEROIDRECEIVER"
+"\">Automation Receiver</link> over vast distances in space.\n"
+"\n"
+"Both the Automation Broadcaster and the Automation Receiver must be exposed "
+"to space to function."
+msgstr ""
+"在太空远距离发送<b><style=\"logic_on\">绿色信号</style></b>或<b><style="
+"\"logic_off\">红色信号</style></b>到<link=\"LOGICINTERASTEROIDRECEIVER\">信号"
+"接收器</link>。\n"
+"\n"
+"信号接收器和信号播报器必须暴露在太空中才能工作。"
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDSENDER.LOGIC_PORT
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDSENDER.LOGIC_PORT"
+msgid "Broadcasting Signal"
+msgstr "播报信号"
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDSENDER.LOGIC_PORT_ACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDSENDER.LOGIC_PORT_ACTIVE"
+msgid "Broadcasting: <b><style=\"logic_on\">Green Signal</style></b>"
+msgstr "播报：<b><style=\"logic_on\">绿色信号</style></b>"
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDSENDER.LOGIC_PORT_INACTIVE
+msgctxt ""
+"STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDSENDER.LOGIC_PORT_INACTIVE"
+msgid "Broadcasting: <b><style=\"logic_off\">Red Signal</style></b>"
+msgstr "播报：<b><style=\"logic_off\">红色信号</style></b>"
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDSENDER.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDSENDER.NAME"
+msgid "<link=\"LOGICINTERASTEROIDSENDER\">Automation Broadcaster</link>"
+msgstr "<link=\"LOGICINTERASTEROIDSENDER\">信号播报器</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.LOGICMEMORY.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICMEMORY.DESC"
@@ -12691,15 +12806,15 @@ msgid ""
 msgstr ""
 "限制流过转变器的<link=\"POWER\">电力</link>为4千瓦。\n"
 "\n"
-"在大的一端接上<link=\"BATTERY\">电池</link>后大功率转变器可以作为一种调节阀，"
-"并防止<link=\"WIRE\">电线</link>获取电力超过4千瓦。\n"
+"在大的一端接上<link=\"BATTERY\">电池</link>后大型功率转变器可以作为一种调节"
+"阀，并防止<link=\"WIRE\">电线</link>获取电力超过4千瓦。\n"
 "\n"
 "建造前可旋转。"
 
 #. STRINGS.BUILDINGS.PREFABS.POWERTRANSFORMER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.POWERTRANSFORMER.NAME"
 msgid "<link=\"POWERTRANSFORMER\">Large Power Transformer</link>"
-msgstr "<link=\"POWERTRANSFORMER\">大功率转变器</link>"
+msgstr "<link=\"POWERTRANSFORMER\">大型功率转变器</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.POWERTRANSFORMERSMALL.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.POWERTRANSFORMERSMALL.DESC"
@@ -13171,11 +13286,6 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASLABWALL.DESC"
 msgid "A regular wall that once existed in a working lab."
 msgstr "曾经存在于实验室的一面普通的墙。"
 
-#. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASLABWALL.EFFECT
-msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASLABWALL.EFFECT"
-msgid ""
-msgstr ""
-
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASLABWALL.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASLABWALL.NAME"
 msgid "Lab Wall"
@@ -13185,11 +13295,6 @@ msgstr "实验室墙"
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASLABWINDOW.DESC"
 msgid "A lab window. Formerly a portal to the outside world."
 msgstr "一扇实验室窗户。以前是作为通往外部世界的通道。"
-
-#. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASLABWINDOW.EFFECT
-msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASLABWINDOW.EFFECT"
-msgid ""
-msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASLABWINDOW.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASLABWINDOW.NAME"
@@ -13206,11 +13311,6 @@ msgstr ""
 "一扇实验室窗户。\n"
 "\n"
 "有人曾盯着它，苦思实验结果。"
-
-#. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASLABWINDOWHORIZONTAL.EFFECT
-msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASLABWINDOWHORIZONTAL.EFFECT"
-msgid ""
-msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASLABWINDOWHORIZONTAL.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASLABWINDOWHORIZONTAL.NAME"
@@ -13244,11 +13344,6 @@ msgstr "架子"
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASWALL.DESC"
 msgid "The granite wall of a once great scientific facility."
 msgstr "大理石墙，属于曾经伟大的科研机构。"
-
-#. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASWALL.EFFECT
-msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASWALL.EFFECT"
-msgid ""
-msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.PROPGRAVITASWALL.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.PROPGRAVITASWALL.NAME"
@@ -13786,22 +13881,25 @@ msgstr "<link=\"ROCKETINTERIORGASINPUT\">气体输入配件</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORGASINPUTPORT.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORGASINPUTPORT.DESC"
-msgid "A direct attachment to the output port on the exterior of the rocket."
+msgid ""
+"A direct attachment leading to the output port on the exterior of the rocket."
 msgstr "直接连接到火箭外的输出端口。"
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORGASINPUTPORT.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORGASINPUTPORT.EFFECT"
 msgid ""
-"Allows a direct conduit connection out of the habitat module of the rocket.\n"
-"Can be used to vent Gasses to space during flight."
+"Allows a direct conduit connection out of the <link=\"HABITATMODULEMEDIUM"
+"\">Spacefarer Module</link> of the rocket.\n"
+"Can be used to vent <link=\"ELEMENTSGAS\">Gasses</link> to space during "
+"flight."
 msgstr ""
-"允许火箭生活舱直接与外部管道相连。\n"
-"在飞行时可以将气体排向太空。"
+"允许管道直接连出火箭的<link=\"HABITATMODULEMEDIUM\">太空员舱</link>。\n"
+"飞行时可以将<link=\"ELEMENTSGAS\">气体</link>排入太空。"
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORGASINPUTPORT.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORGASINPUTPORT.NAME"
-msgid "<link=\"ROCKETINTERIORGASINPUTPORT\">Gas Input Port</link>"
-msgstr "<link=\"ROCKETINTERIORGASINPUTPORT\">气体输入端口</link>"
+msgid "<link=\"ROCKETINTERIORGASINPUTPORT\">Gas Spacefarer Input Port</link>"
+msgstr "<link=\"ROCKETINTERIORGASINPUTPORT\">太空员舱气体输入端口</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORGASOUTPUT.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORGASOUTPUT.DESC"
@@ -13832,19 +13930,20 @@ msgstr "<link=\"ROCKETINTERIORGASOUTPUT\">气体输出配件</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORGASOUTPUTPORT.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORGASOUTPUTPORT.DESC"
-msgid "A direct attachment to the input port on the exterior of the rocket."
+msgid "A direct attachment to the input port on the exterior of a rocket."
 msgstr "直接连接到火箭外的输入端口。"
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORGASOUTPUTPORT.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORGASOUTPUTPORT.EFFECT"
 msgid ""
-"Allows a direct conduit connection into the habitat module of the rocket."
-msgstr "允许火箭生活舱直接与外部管道相连。"
+"Allows a direct conduit connection into the <link=\"HABITATMODULEMEDIUM"
+"\">Spacefarer Module</link> of a rocket."
+msgstr "允许管道直接连入火箭的<link=\"HABITATMODULEMEDIUM\">太空员舱</link>。"
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORGASOUTPUTPORT.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORGASOUTPUTPORT.NAME"
-msgid "<link=\"ROCKETINTERIORGASOUTPUTPORT\">Gas Output Port</link>"
-msgstr "<link=\"ROCKETINTERIORGASOUTPUTPORT\">气体输出端口</link>"
+msgid "<link=\"ROCKETINTERIORGASOUTPUTPORT\">Gas Spacefarer Output Port</link>"
+msgstr "<link=\"ROCKETINTERIORGASOUTPUTPORT\">太空员舱气体输出端口</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORLIQUIDINPUT.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORLIQUIDINPUT.DESC"
@@ -13875,22 +13974,25 @@ msgstr "<link=\"ROCKETINTERIORLIQUIDINPUT\">液体输入配件</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORLIQUIDINPUTPORT.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORLIQUIDINPUTPORT.DESC"
-msgid "A direct attachment to the output port on the exterior of the rocket."
+msgid "A direct attachment to the output port on the exterior of a rocket."
 msgstr "直接连接到火箭外的输出端口。"
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORLIQUIDINPUTPORT.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORLIQUIDINPUTPORT.EFFECT"
 msgid ""
-"Allows a direct conduit connection out of the habitat module of the rocket.\n"
-"Can be used to vent Liquids to space during flight."
+"Allows a direct conduit connection out of the <link=\"HABITATMODULEMEDIUM"
+"\">Spacefarer Module</link> of a rocket.\n"
+"Can be used to vent <link=\"ELEMENTSLIQUID\">Liquids</link> to space during "
+"flight."
 msgstr ""
-"允许火箭生活舱直接与外部管道相连。\n"
-"在飞行时可以将液体排向太空。"
+"允许管道直接连出火箭的<link=\"HABITATMODULEMEDIUM\">太空员舱</link>。\n"
+"飞行时可以将<link=\"ELEMENTSLIQUID\">液体</link>排入太空。"
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORLIQUIDINPUTPORT.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORLIQUIDINPUTPORT.NAME"
-msgid "<link=\"ROCKETINTERIORLIQUIDINPUTPORT\">Liquid Input Port</link>"
-msgstr "<link=\"ROCKETINTERIORLIQUIDINPUTPORT\">液体输入端口</link>"
+msgid ""
+"<link=\"ROCKETINTERIORLIQUIDINPUTPORT\">Liquid Spacefarer Input Port</link>"
+msgstr "<link=\"ROCKETINTERIORLIQUIDINPUTPORT\">太空员舱液体输入端口</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORLIQUIDOUTPUT.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORLIQUIDOUTPUT.DESC"
@@ -13921,19 +14023,21 @@ msgstr "<link=\"ROCKETINTERIORLIQUIDOUTPUT\">液体输出配件</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORLIQUIDOUTPUTPORT.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORLIQUIDOUTPUTPORT.DESC"
-msgid "A direct attachment to the input port on the exterior of the rocket."
+msgid "A direct attachment to the input port on the exterior of a rocket."
 msgstr "直接连接到火箭外的输入端口。"
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORLIQUIDOUTPUTPORT.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORLIQUIDOUTPUTPORT.EFFECT"
 msgid ""
-"Allows a direct conduit connection into the habitat module of the rocket."
-msgstr "允许火箭生活舱直接与外部管道相连。"
+"Allows a direct conduit connection into the <link=\"HABITATMODULEMEDIUM"
+"\">Spacefarer Module</link> of a rocket."
+msgstr "允许管道直接连入火箭的<link=\"HABITATMODULEMEDIUM\">太空员舱</link>。"
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORLIQUIDOUTPUTPORT.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORLIQUIDOUTPUTPORT.NAME"
-msgid "<link=\"ROCKETINTERIORLIQUIDOUTPUTPORT\">Liquid Output Port</link>"
-msgstr "<link=\"ROCKETINTERIORLIQUIDOUTPUTPORT\">液体输出端口</link>"
+msgid ""
+"<link=\"ROCKETINTERIORLIQUIDOUTPUTPORT\">Liquid Spacefarer Output Port</link>"
+msgstr "<link=\"ROCKETINTERIORLIQUIDOUTPUTPORT\">太空员舱液体输出端口</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORPOWERPLUG.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETINTERIORPOWERPLUG.DESC"
@@ -14221,7 +14325,7 @@ msgstr ""
 #. STRINGS.BUILDINGS.PREFABS.SCULPTURE.EXCELLENTQUALITYNAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.SCULPTURE.EXCELLENTQUALITYNAME"
 msgid "Genius Sculpture"
-msgstr "天才雕像"
+msgstr "天才雕塑"
 
 #. STRINGS.BUILDINGS.PREFABS.SCULPTURE.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.SCULPTURE.NAME"
@@ -14367,7 +14471,7 @@ msgstr ""
 #. STRINGS.BUILDINGS.PREFABS.SMALLSCULPTURE.EXCELLENTQUALITYNAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.SMALLSCULPTURE.EXCELLENTQUALITYNAME"
 msgid "Genius Sculpture"
-msgstr "天才雕像"
+msgstr "天才雕塑"
 
 #. STRINGS.BUILDINGS.PREFABS.SMALLSCULPTURE.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.SMALLSCULPTURE.NAME"
@@ -15516,6 +15620,63 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.SWITCH.TURN_ON_TOOLTIP"
 msgid "Turn On {Hotkey}"
 msgstr "开启 {Hotkey}"
 
+#. STRINGS.BUILDINGS.PREFABS.TELEPHONE.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.DESC"
+msgid "You never know who you'll meet on the other line."
+msgstr "你永远不会知道对面会是谁来接电话。"
+
+#. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT"
+msgid ""
+"Provides a way for Duplicants to chat with their friends in different "
+"locations.\n"
+"\n"
+"Chatting increases Duplicant <link=\"MORALE\">Morale</link>."
+msgstr ""
+"提供一种让复制人与不同地点的朋友聊天的方式。\n"
+"\n"
+"聊天可以提升复制人的<link=\"MORALE\">士气</link>。"
+
+#. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_BABBLE
+msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_BABBLE"
+msgid "{attrib}: {amount} (No One)"
+msgstr "{attrib}：{amount}（无人）"
+
+#. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_BABBLE_TOOLTIP
+msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_BABBLE_TOOLTIP"
+msgid "Duplicants will gain {amount} {attrib} if they chat to no one."
+msgstr "如果复制人没人聊天，复制人会获得{amount}{attrib}。"
+
+#. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_CHAT
+msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_CHAT"
+msgid "{attrib}: {amount} (At least one duplicant)"
+msgstr "{attrib}：{amount}（至少一名复制人）"
+
+#. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_CHAT_TOOLTIP
+msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_CHAT_TOOLTIP"
+msgid ""
+"Duplicants will gain {amount} {attrib} if they chat to at least one other "
+"duplicant."
+msgstr "如果复制人至少和一名其他复制人聊天，复制人会获得{amount}{attrib}。"
+
+#. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_LONG_DISTANCE
+msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_LONG_DISTANCE"
+msgid "{attrib}: {amount} (At least one duplicant across space)"
+msgstr "{attrib}：{amount}（至少一名隔着太空的复制人）"
+
+#. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_LONG_DISTANCE_TOOLTIP
+msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_LONG_DISTANCE_TOOLTIP"
+msgid ""
+"Duplicants will gain {amount} {attrib} if they chat to at least one other "
+"duplicant across space."
+msgstr ""
+"如果复制人至少和其他一名复制人隔着太空聊天，复制人会获得{amount}{attrib}。"
+
+#. STRINGS.BUILDINGS.PREFABS.TELEPHONE.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.NAME"
+msgid "<link=\"TELEPHONE\">Party Line Phone</link>"
+msgstr "<link=\"TELEPHONE\">共线电话</link>"
+
 #. STRINGS.BUILDINGS.PREFABS.TELEPORTALPAD.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPORTALPAD.DESC"
 msgid "Duplicants are just atoms as far as the pad's concerned."
@@ -15902,9 +16063,8 @@ msgstr "<link=\"VERTICALWINDTUNNEL\">垂直风洞</link>"
 #. STRINGS.BUILDINGS.PREFABS.WALLTOILET.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.WALLTOILET.DESC"
 msgid ""
-"Wall Toilets transmit fewer germs to Duplicants' skin and require no "
-"emptying."
-msgstr "墙壁马桶可以减少复制人通过皮肤接触到的病菌量，而且不用手动清空。"
+"Wall Toilets transmit fewer germs to Duplicants and require no emptying."
+msgstr "墙壁马桶可以减少复制人接触到的病菌量，而且不用手动清空。"
 
 #. STRINGS.BUILDINGS.PREFABS.WALLTOILET.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.WALLTOILET.EFFECT"
@@ -17618,9 +17778,10 @@ msgstr ""
 "淋浴洗了两次澡了。\n"
 "\n"
 "确切地说，我们确实是按时工作的，但出于某种原因斯特恩主管一直盯着我看，想让我"
-"把这些新产品推向市场。\n"
+"把这些新产品尽快推向市场。\n"
 "\n"
-"虽然通常我会对这种额外的压力感到生气，但主管的话让我明白了耐心是要点。\n"
+"虽然通常我会对这种额外施加的工作压力感到气愤，但主管字里行间里听起来确实是很"
+"在意时间问题。\n"
 "------------------\n"
 
 #. STRINGS.CODEX.A3_B556.BODY.CONTAINER2
@@ -22191,7 +22352,7 @@ msgstr "植物？"
 #. STRINGS.CODEX.EXPERIMENT52B.TITLE
 msgctxt "STRINGS.CODEX.EXPERIMENT52B.TITLE"
 msgid "Experiment 52B"
-msgstr "试验体 52B"
+msgstr "试验体52B"
 
 #. STRINGS.CODEX.GASGRASS.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.GASGRASS.BODY.CONTAINER1"
@@ -25929,7 +26090,7 @@ msgctxt ""
 msgid ""
 "Have a Duplicant with the Masterworks skill paint a Masterpiece quality "
 "painting."
-msgstr "让一名有着大师作品技能的复制人绘出一幅杰作品质的绘画。"
+msgstr "让一名具有大师作品技能的复制人绘出一幅杰作品质的绘画。"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.NO_PLANTERBOX
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.NO_PLANTERBOX"
@@ -27773,14 +27934,16 @@ msgstr "<link=\"DRECKO\">小毛鳞壁虎</link>"
 #. STRINGS.CREATURES.SPECIES.DRECKO.DESC
 msgctxt "STRINGS.CREATURES.SPECIES.DRECKO.DESC"
 msgid ""
-"Dreckos are nonhostile critters that graze only on live <link="
+"Dreckos are nonhostile critters that graze on <link=\"SPICEVINE\">Pincha "
+"Pepperplants</link>, <link=\"SWAMPLILY\">Balm Lily</link> or <link="
 "\"BASICSINGLEHARVESTPLANT\">Mealwood Plants</link>.\n"
 "\n"
 "Their backsides are covered in thick woolly fibers that only grow in <link="
 "\"HYDROGEN\">Hydrogen</link> climates."
 msgstr ""
-"毛鳞壁虎是没有敌意的小动物，只吃活的<link=\"BASICSINGLEHARVESTPLANT\">米虱木"
-"</link>。\n"
+"毛鳞壁虎是没有敌意的小动物，吃活的<link=\"SPICEVINE\">火椒藤</link>，<link="
+"\"SWAMPLILY\">芳香百合</link>或<link=\"BASICSINGLEHARVESTPLANT\">米虱木</"
+"link>。\n"
 "\n"
 "其背部覆盖厚厚的纤毛，只有在<link=\"HYDROGEN\">氢气</link>环境中才能生长。"
 
@@ -29391,7 +29554,7 @@ msgstr ""
 #. STRINGS.CREATURES.SPECIES.SAPTREE.NAME
 msgctxt "STRINGS.CREATURES.SPECIES.SAPTREE.NAME"
 msgid "<link=\"SAPTREE\">Experiment 52B</link>"
-msgstr "<link=\"SAPTREE\">试验体 52B</link>"
+msgstr "<link=\"SAPTREE\">试验体52B</link>"
 
 #. STRINGS.CREATURES.SPECIES.SEALETTUCE.DESC
 msgctxt "STRINGS.CREATURES.SPECIES.SEALETTUCE.DESC"
@@ -36559,15 +36722,13 @@ msgstr ""
 
 #. STRINGS.DUPLICANTS.MODIFIERS.BADSLEEPMOVEMENT.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.BADSLEEPMOVEMENT.NAME"
-msgid "Unrested: Movement"
+msgid "Unrested: Bed Jostling"
 msgstr "没休息好：晃动"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.BADSLEEPMOVEMENT.TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.BADSLEEPMOVEMENT.TOOLTIP"
-msgid ""
-"This Duplicant didn't get much sleep because they were interrupted by "
-"movement"
-msgstr "这名复制人没睡多久，因为被晃动打断了"
+msgid "This Duplicant was woken up when a friend climbed on their ladder bed"
+msgstr "这名复制人因有人爬过他的梯床而被吵醒了"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.BARRACKSSTAMINA.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.BARRACKSSTAMINA.NAME"
@@ -38874,6 +39035,56 @@ msgid ""
 "The strong natural <style=\"KKeyword\">Light</style> is making this "
 "Duplicant feel light on their feet"
 msgstr "强烈的自然<style=\"KKeyword\">光</style>使这名复制人感觉身轻如燕"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.TELEPHONEBABBLE.NAME
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.TELEPHONEBABBLE.NAME"
+msgid "Less Anxious"
+msgstr "安心"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.TELEPHONEBABBLE.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.TELEPHONEBABBLE.TOOLTIP"
+msgid ""
+"This Duplicant got some things off their chest by talking to themselves on "
+"the phone\n"
+"\n"
+"Leisure activities increase Duplicants' <style=\"KKeyword\">Morale</style>"
+msgstr ""
+"这名复制人通过电话对自己说了一些真心话\n"
+"\n"
+"休闲活动可提升复制人的<style=\"KKeyword\">士气</style>"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.TELEPHONECHAT.NAME
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.TELEPHONECHAT.NAME"
+msgid "Full of Gossip"
+msgstr "闲谈"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.TELEPHONECHAT.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.TELEPHONECHAT.TOOLTIP"
+msgid ""
+"This Duplicant chatted on the phone with at least one other Duplicant\n"
+"\n"
+"Leisure activities increase Duplicants' <style=\"KKeyword\">Morale</style>"
+msgstr ""
+"这名复制人用电话和其他复制人聊天了\n"
+"\n"
+"休闲活动可提升复制人的<style=\"KKeyword\">士气</style>"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.TELEPHONELONGDISTANCE.NAME
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.TELEPHONELONGDISTANCE.NAME"
+msgid "Long Distance"
+msgstr "长途"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.TELEPHONELONGDISTANCE.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.TELEPHONELONGDISTANCE.TOOLTIP"
+msgid ""
+"This Duplicant chatted on the phone with at least one other Duplicant across "
+"space\n"
+"\n"
+"Leisure activities increase Duplicants' <style=\"KKeyword\">Morale</style>"
+msgstr ""
+"这名复制人用电话和其他复制人隔着太空聊天了\n"
+"\n"
+"休闲活动可提升复制人的<style=\"KKeyword\">士气</style>"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.TEMPEXCHANGE.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.TEMPEXCHANGE.NAME"
@@ -42200,13 +42411,13 @@ msgstr "因为<style=\"KKeyword\">灯</style>还开着，这名复制人睡不�
 
 #. STRINGS.DUPLICANTS.STATUSITEMS.SLEEPINGINTERRUPTEDBYMOVEMENT.NAME
 msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.SLEEPINGINTERRUPTEDBYMOVEMENT.NAME"
-msgid "Interrupted Sleep: Movement"
+msgid "Interrupted Sleep: Bed Jostling"
 msgstr "睡眠中断：晃动"
 
 #. STRINGS.DUPLICANTS.STATUSITEMS.SLEEPINGINTERRUPTEDBYMOVEMENT.TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.SLEEPINGINTERRUPTEDBYMOVEMENT.TOOLTIP"
-msgid "This Duplicant is having trouble sleeping because their bed moved"
-msgstr "这名复制人由于床动了而睡不着觉"
+msgid "This Duplicant was woken up because their bed was moved"
+msgstr "这名复制人由于床动了而被吵醒"
 
 #. STRINGS.DUPLICANTS.STATUSITEMS.SLEEPINGINTERRUPTEDBYNOISE.NAME
 msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.SLEEPINGINTERRUPTEDBYNOISE.NAME"
@@ -45240,14 +45451,14 @@ msgid ""
 "\n"
 "It is suitable for building <link=\"POWER\">Power</link> systems."
 msgstr ""
-"金银矿是一种由金和银组成的导电<link=\"RAWMETAL\">金属</link>合金。\n"
+"银金矿是一种由金和银组成的导电<link=\"RAWMETAL\">金属</link>合金。\n"
 "\n"
 "它适用于建造<link=\"POWER\">电力</link>系统。"
 
 #. STRINGS.ELEMENTS.ELECTRUM.NAME
 msgctxt "STRINGS.ELEMENTS.ELECTRUM.NAME"
 msgid "<link=\"ELECTRUM\">Electrum</link>"
-msgstr "<link=\"ELECTRUM\">金银矿</link>"
+msgstr "<link=\"ELECTRUM\">银金矿</link>"
 
 #. STRINGS.ELEMENTS.ELEMENTDESCGAS
 msgctxt "STRINGS.ELEMENTS.ELEMENTDESCGAS"
@@ -48914,6 +49125,11 @@ msgctxt "STRINGS.INPUT_BINDINGS.CINEMATICCAMERA.CINEMATOGGLELOCK"
 msgid "Cinema Toggle Lock"
 msgstr "电影镜头切换锁定"
 
+#. STRINGS.INPUT_BINDINGS.CINEMATICCAMERA.CINEMAUNPAUSEONMOVE
+msgctxt "STRINGS.INPUT_BINDINGS.CINEMATICCAMERA.CINEMAUNPAUSEONMOVE"
+msgid "Cinema Unpause On Move"
+msgstr "电影镜头移动时解除暂停"
+
 #. STRINGS.INPUT_BINDINGS.CINEMATICCAMERA.CINEMAZOOMIN
 msgctxt "STRINGS.INPUT_BINDINGS.CINEMATICCAMERA.CINEMAZOOMIN"
 msgid "Cinema Zoom In"
@@ -49103,6 +49319,11 @@ msgstr "调试砖块测试"
 msgctxt "STRINGS.INPUT_BINDINGS.DEBUG.DEBUGTOGGLE"
 msgid "Debug Toggle"
 msgstr "调试切换"
+
+#. STRINGS.INPUT_BINDINGS.DEBUG.DEBUGTOGGLECLUSTERFX
+msgctxt "STRINGS.INPUT_BINDINGS.DEBUG.DEBUGTOGGLECLUSTERFX"
+msgid "Debug Cluster FX"
+msgstr "调试星群特效"
 
 #. STRINGS.INPUT_BINDINGS.DEBUG.DEBUGTOGGLEFASTWORKERS
 msgctxt "STRINGS.INPUT_BINDINGS.DEBUG.DEBUGTOGGLEFASTWORKERS"
@@ -49624,8 +49845,13 @@ msgctxt "STRINGS.INPUT_BINDINGS.SANDBOX.SANDBOXCLEARFLOOR"
 msgid "Sandbox Clear Floor"
 msgstr "沙盒清理地面"
 
-#. STRINGS.INPUT_BINDINGS.SANDBOX.SANDBOXCRITTER
-msgctxt "STRINGS.INPUT_BINDINGS.SANDBOX.SANDBOXCRITTER"
+#. STRINGS.INPUT_BINDINGS.SANDBOX.SANDBOXCOPYELEMENT
+msgctxt "STRINGS.INPUT_BINDINGS.SANDBOX.SANDBOXCOPYELEMENT"
+msgid "Sandbox Copy Element"
+msgstr "沙盒复制元素"
+
+#. STRINGS.INPUT_BINDINGS.SANDBOX.SANDBOXCRITTERTOOL
+msgctxt "STRINGS.INPUT_BINDINGS.SANDBOX.SANDBOXCRITTERTOOL"
 msgid "Sandbox Remove Critters"
 msgstr "沙盒移除小动物"
 
@@ -49643,6 +49869,11 @@ msgstr "沙盒填充"
 msgctxt "STRINGS.INPUT_BINDINGS.SANDBOX.SANDBOXHEATGUN"
 msgid "Sandbox Heat Gun"
 msgstr "沙盒热枪"
+
+#. STRINGS.INPUT_BINDINGS.SANDBOX.SANDBOXRADSTOOL
+msgctxt "STRINGS.INPUT_BINDINGS.SANDBOX.SANDBOXRADSTOOL"
+msgid "Sandbox Radiation Tool"
+msgstr "沙盒辐射工具"
 
 #. STRINGS.INPUT_BINDINGS.SANDBOX.SANDBOXREVEAL
 msgctxt "STRINGS.INPUT_BINDINGS.SANDBOX.SANDBOXREVEAL"
@@ -49668,6 +49899,61 @@ msgstr "沙盒喷枪"
 msgctxt "STRINGS.INPUT_BINDINGS.SANDBOX.TOGGLESANDBOXTOOLS"
 msgid "Toggle Sandbox Tools"
 msgstr "切换沙盒模式工具"
+
+#. STRINGS.INPUT_BINDINGS.SWITCHACTIVEWORLD.NAME
+msgctxt "STRINGS.INPUT_BINDINGS.SWITCHACTIVEWORLD.NAME"
+msgid "Switch Planetoids"
+msgstr "切换小行星"
+
+#. STRINGS.INPUT_BINDINGS.SWITCHACTIVEWORLD.SWITCHACTIVEWORLD1
+msgctxt "STRINGS.INPUT_BINDINGS.SWITCHACTIVEWORLD.SWITCHACTIVEWORLD1"
+msgid "Planetoid 1"
+msgstr "小行星1"
+
+#. STRINGS.INPUT_BINDINGS.SWITCHACTIVEWORLD.SWITCHACTIVEWORLD10
+msgctxt "STRINGS.INPUT_BINDINGS.SWITCHACTIVEWORLD.SWITCHACTIVEWORLD10"
+msgid "Planetoid 10"
+msgstr "小行星10"
+
+#. STRINGS.INPUT_BINDINGS.SWITCHACTIVEWORLD.SWITCHACTIVEWORLD2
+msgctxt "STRINGS.INPUT_BINDINGS.SWITCHACTIVEWORLD.SWITCHACTIVEWORLD2"
+msgid "Planetoid 2"
+msgstr "小行星2"
+
+#. STRINGS.INPUT_BINDINGS.SWITCHACTIVEWORLD.SWITCHACTIVEWORLD3
+msgctxt "STRINGS.INPUT_BINDINGS.SWITCHACTIVEWORLD.SWITCHACTIVEWORLD3"
+msgid "Planetoid 3"
+msgstr "小行星3"
+
+#. STRINGS.INPUT_BINDINGS.SWITCHACTIVEWORLD.SWITCHACTIVEWORLD4
+msgctxt "STRINGS.INPUT_BINDINGS.SWITCHACTIVEWORLD.SWITCHACTIVEWORLD4"
+msgid "Planetoid 4"
+msgstr "小行星4"
+
+#. STRINGS.INPUT_BINDINGS.SWITCHACTIVEWORLD.SWITCHACTIVEWORLD5
+msgctxt "STRINGS.INPUT_BINDINGS.SWITCHACTIVEWORLD.SWITCHACTIVEWORLD5"
+msgid "Planetoid 5"
+msgstr "小行星5"
+
+#. STRINGS.INPUT_BINDINGS.SWITCHACTIVEWORLD.SWITCHACTIVEWORLD6
+msgctxt "STRINGS.INPUT_BINDINGS.SWITCHACTIVEWORLD.SWITCHACTIVEWORLD6"
+msgid "Planetoid 6"
+msgstr "小行星6"
+
+#. STRINGS.INPUT_BINDINGS.SWITCHACTIVEWORLD.SWITCHACTIVEWORLD7
+msgctxt "STRINGS.INPUT_BINDINGS.SWITCHACTIVEWORLD.SWITCHACTIVEWORLD7"
+msgid "Planetoid 7"
+msgstr "小行星7"
+
+#. STRINGS.INPUT_BINDINGS.SWITCHACTIVEWORLD.SWITCHACTIVEWORLD8
+msgctxt "STRINGS.INPUT_BINDINGS.SWITCHACTIVEWORLD.SWITCHACTIVEWORLD8"
+msgid "Planetoid 8"
+msgstr "小行星8"
+
+#. STRINGS.INPUT_BINDINGS.SWITCHACTIVEWORLD.SWITCHACTIVEWORLD9
+msgctxt "STRINGS.INPUT_BINDINGS.SWITCHACTIVEWORLD.SWITCHACTIVEWORLD9"
+msgid "Planetoid 9"
+msgstr "小行星9"
 
 #. STRINGS.INPUT_BINDINGS.TOOL.DRAGSTRAIGHT
 msgctxt "STRINGS.INPUT_BINDINGS.TOOL.DRAGSTRAIGHT"
@@ -51899,9 +52185,9 @@ msgstr "复制人已坠落！"
 #. STRINGS.MISC.NOTIFICATIONS.DUPLICANT_CRASH_LANDED.TOOLTIP
 msgctxt "STRINGS.MISC.NOTIFICATIONS.DUPLICANT_CRASH_LANDED.TOOLTIP"
 msgid ""
-"A Duplicant in an escape pod has made it to the surface of the nearest "
-"asteroid."
-msgstr "逃生舱里的复制人已到达最近的小行星表面。"
+"A Duplicant has successfully crashed an Escape Pod onto the surface of a "
+"nearby Planetoid."
+msgstr "逃生舱里的复制人已坠落到最近的小行星表面。"
 
 #. STRINGS.MISC.NOTIFICATIONS.DUPLICANTABSORBED.MESSAGEBODY
 msgctxt "STRINGS.MISC.NOTIFICATIONS.DUPLICANTABSORBED.MESSAGEBODY"
@@ -58053,8 +58339,8 @@ msgstr "<link=\"HVAC\">暖通空调</link>"
 
 #. STRINGS.RESEARCH.TECHS.HYDROCARBONPROPULSION.DESC
 msgctxt "STRINGS.RESEARCH.TECHS.HYDROCARBONPROPULSION.DESC"
-msgid "Mid-range rocket engines with lots of smoke."
-msgstr "烟雾弥漫的大型火箭引擎。"
+msgid "Low-range rocket engines with lots of smoke."
+msgstr "烟雾弥漫的小范围火箭引擎。"
 
 #. STRINGS.RESEARCH.TECHS.HYDROCARBONPROPULSION.NAME
 msgctxt "STRINGS.RESEARCH.TECHS.HYDROCARBONPROPULSION.NAME"
@@ -58169,10 +58455,9 @@ msgstr "<link=\"LIQUIDDISTRIBUTION\">液体分配</link>"
 #. STRINGS.RESEARCH.TECHS.LIQUIDFILTERING.DESC
 msgctxt "STRINGS.RESEARCH.TECHS.LIQUIDFILTERING.DESC"
 msgid ""
-"Use pumped liquids to remove <link=\"SALT\">Salt</link> from <link=\"BRINE"
-"\">Brine</link>."
-msgstr ""
-"泵入液体以便移出<link=\"BRINE\">浓盐水</link>中的<link=\"SALT\">盐</link>。"
+"Use pumped <link=\"ELEMENTSLIQUID\">Liquids</link> to filter out unwanted "
+"elements."
+msgstr "从泵入管道的<link=\"ELEMENTSLIQUID\">液体</link>中过滤出不想要的元素。"
 
 #. STRINGS.RESEARCH.TECHS.LIQUIDFILTERING.NAME
 msgctxt "STRINGS.RESEARCH.TECHS.LIQUIDFILTERING.NAME"
@@ -59185,7 +59470,7 @@ msgstr "缺少{0}"
 #. STRINGS.ROOMS.CRITERIA.DECORATIVE_ITEM.DESCRIPTION
 msgctxt "STRINGS.ROOMS.CRITERIA.DECORATIVE_ITEM.DESCRIPTION"
 msgid "Requires one or more Paintings, Sculptures, or Vases"
-msgstr "需要至少一个画作、雕像或花盆"
+msgstr "需要至少一个画作、雕塑或花盆"
 
 #. STRINGS.ROOMS.CRITERIA.DECORATIVE_ITEM.NAME
 msgctxt "STRINGS.ROOMS.CRITERIA.DECORATIVE_ITEM.NAME"
@@ -62748,10 +63033,26 @@ msgstr ""
 "可以使用<link=\"TELESCOPE\">望远镜</link>或者<link=\"SCANNERMODULE\">制图舱</"
 "link>分析太空，从而可以排查路线"
 
+#. STRINGS.UI.CLUSTERMAP.TOOLTIP_INVALID_DESTINATION_OUT_OF_RANGE
+msgctxt "STRINGS.UI.CLUSTERMAP.TOOLTIP_INVALID_DESTINATION_OUT_OF_RANGE"
+msgid ""
+"This destination is further away than the rocket's maximum range of {0}."
+msgstr "这个目的地远于火箭的最大射程{0}。"
+
 #. STRINGS.UI.CLUSTERMAP.TOOLTIP_INVALID_DESTINATION_REQUIRE_ASTEROID
 msgctxt "STRINGS.UI.CLUSTERMAP.TOOLTIP_INVALID_DESTINATION_REQUIRE_ASTEROID"
 msgid "Must select a Planetoid destination"
 msgstr "必须选择一个小行星目的地"
+
+#. STRINGS.UI.CLUSTERMAP.TOOLTIP_PATH_LENGTH
+msgctxt "STRINGS.UI.CLUSTERMAP.TOOLTIP_PATH_LENGTH"
+msgid "Trip Distance: {0}/{1}"
+msgstr "行程：{0}/{1}"
+
+#. STRINGS.UI.CLUSTERMAP.TOOLTIP_PATH_LENGTH_RETURN
+msgctxt "STRINGS.UI.CLUSTERMAP.TOOLTIP_PATH_LENGTH_RETURN"
+msgid "Trip Distance: {0}/{1} (Return Trip)"
+msgstr "行程：{0}/{1}（往返）"
 
 #. STRINGS.UI.CLUSTERMAP.TOOLTIP_PEEKED_HEX_WITH_OBJECT
 msgctxt "STRINGS.UI.CLUSTERMAP.TOOLTIP_PEEKED_HEX_WITH_OBJECT"
@@ -64531,7 +64832,7 @@ msgctxt ""
 msgid ""
 "Low germ count in this area is causing germs to die rapidly\n"
 "\n"
-"Fewer than {0} germs are on this {1} of material.\n"
+"Fewer than {0} are on this {1} of material.\n"
 "({2} germs/ kg)"
 msgstr ""
 "这片区域病菌量少，导致病菌快速死亡\n"
@@ -69040,8 +69341,8 @@ msgstr "Steam创意工坊"
 
 #. STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER
 msgctxt "STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER"
-msgid "ROCKETRY RENOVATION"
-msgstr "再筑陈舱"
+msgid "COSMIC CALLING"
+msgstr "天外来电"
 
 #. STRINGS.UI.FRONTEND.MOTD.NEWS_BODY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.NEWS_BODY"
@@ -69059,28 +69360,27 @@ msgstr "加入讨论"
 #. STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY"
 msgid ""
-"Welcome to the <b>ROCKETRY RENOVATION UPDATE</b>\n"
+"Welcome to the <b>COSMIC CALLING UPDATE</b>\n"
 "\n"
 "<b><i>Spaced Out!</i></b>\n"
-"•<indent=20px>Duplicants can escape stranded rockets in an escape pod via "
-"the \"Abandon Ship\" button.</indent>\n"
-"•<indent=20px>Added liquid and gas ports to Spacefarer Modules to allow for "
-"easier fluid supplying and venting.</indent>\n"
-"•<indent=20px>New buildings, including a Wall Toilet that vents waste "
-"directly into the world behind it.</indent>\n"
-"•<indent=20px>Bug fixes and QOL improvements.</indent>\n"
+"•<indent=20px>New buildings allow automation signals to be broadcast between "
+"asteroids.</indent>\n"
+"•<indent=20px>Duplicants can boost their morale by having a chat on the new "
+"Party Line Phone.</indent>\n"
+"•<indent=20px>Radbolts can pass through a new special type of wall tile.</"
+"indent>\n"
+"•<indent=20px>Rocket engine speeds and ranges have been rebalanced.</"
+"indent>\n"
 "\n"
 "   Check out the full patch notes for more details!"
 msgstr ""
-"欢迎来到<b>再筑陈舱更新</b>\n"
+"欢迎来到<b>天外来电更新</b>\n"
 "\n"
 "<b><I>《眼冒金星！》</i></b>\n"
-"•<indent=20px>通过\"弃船\"按钮，复制人可以乘逃生舱逃离太空中的火箭。</"
-"indent>\n"
-"•<indent=20px>为太空员舱添加了液体和气体端口，可以更简单地供应液体和气体。</"
-"indent>\n"
-"•<indent=20px>新建筑，包括墙壁厕所，可以将废物直接排到世界中。</indent>\n"
-"•<indent=20px>漏洞修复和生活质量改进。</indent>\n"
+"•<indent=20px>新的建筑，能够使自动化信号在不同小行星间播报。</indent>\n"
+"•<indent=20px>复制人能够用新的共线电话聊天来增强士气。</indent>\n"
+"•<indent=20px>辐射粒子可以通过新的特殊墙砖。</indent>\n"
+"•<indent=20px>火箭引擎速度和范围重新平衡。</indent>\n"
 "\n"
 "   请查看完整的更新日志了解详情！"
 
@@ -76269,13 +76569,13 @@ msgstr "老旧的X光照片"
 #. STRINGS.UI.SPACEARTIFACTS.ORACLE.ARTIFACT
 msgctxt "STRINGS.UI.SPACEARTIFACTS.ORACLE.ARTIFACT"
 msgid ""
-"The pieces for this contraption are all recycled from projects abandoned by "
-"the Robotics department.\n"
+"All of the parts for this contraption are recycled from projects abandoned "
+"by the Robotics department.\n"
 "\n"
 "The design is very close to one published in an amateur DIY magazine that "
 "once sat in the lobby of the 'Employees Only' area of Gravitas' facilities."
 msgstr ""
-"这台装置的各个部件都是从机械部的废弃项目中回收而来的。\n"
+"这台装置的所有部件都是从机械部的废弃项目中回收而来的。\n"
 "\n"
 "其设计非常接近在业余DIY杂志上发表的装置，而这本杂志曾放在庄严科技\"仅限员工"
 "\"区域的大厅中。"
@@ -80732,8 +81032,8 @@ msgstr "未分析工艺品"
 msgctxt ""
 "STRINGS.UI.UISIDESCREENS.ARTIFACTANALYSISSIDESCREEN."
 "NO_ARTIFACTS_DISCOVERED_TOOLTIP"
-msgid "Analyzing artifacts requires a skilled artist"
-msgstr "需要一名熟练的艺术家分析工艺品"
+msgid "Analyzing artifacts requires a Duplicant with the Masterworks skill"
+msgstr "分析工艺品需要一名具有大师作品技能的艺术家"
 
 #. STRINGS.UI.UISIDESCREENS.ASSIGNABLESIDESCREEN.ASSIGN_TO_TOOLTIP
 msgctxt "STRINGS.UI.UISIDESCREENS.ASSIGNABLESIDESCREEN.ASSIGN_TO_TOOLTIP"
@@ -82296,6 +82596,26 @@ msgctxt "STRINGS.UI.UISIDESCREENS.LOGICBITSELECTORSIDESCREEN.STATE_INACTIVE"
 msgid "Red"
 msgstr "红色"
 
+#. STRINGS.UI.UISIDESCREENS.LOGICBROADCASTCHANNELSIDESCREEN.HEADER
+msgctxt "STRINGS.UI.UISIDESCREENS.LOGICBROADCASTCHANNELSIDESCREEN.HEADER"
+msgid "Channel Selector"
+msgstr "频道选择"
+
+#. STRINGS.UI.UISIDESCREENS.LOGICBROADCASTCHANNELSIDESCREEN.IN_RANGE
+msgctxt "STRINGS.UI.UISIDESCREENS.LOGICBROADCASTCHANNELSIDESCREEN.IN_RANGE"
+msgid "In Range"
+msgstr "范围内"
+
+#. STRINGS.UI.UISIDESCREENS.LOGICBROADCASTCHANNELSIDESCREEN.OUT_OF_RANGE
+msgctxt "STRINGS.UI.UISIDESCREENS.LOGICBROADCASTCHANNELSIDESCREEN.OUT_OF_RANGE"
+msgid "Out of Range"
+msgstr "超出范围"
+
+#. STRINGS.UI.UISIDESCREENS.LOGICBROADCASTCHANNELSIDESCREEN.TITLE
+msgctxt "STRINGS.UI.UISIDESCREENS.LOGICBROADCASTCHANNELSIDESCREEN.TITLE"
+msgid "Channel Selector"
+msgstr "频道选择"
+
 #. STRINGS.UI.UISIDESCREENS.LURE.ATTRACTS
 msgctxt "STRINGS.UI.UISIDESCREENS.LURE.ATTRACTS"
 msgid "Attract {1}s"
@@ -83450,6 +83770,13 @@ msgctxt ""
 "STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.MAX_HEIGHT.FAILED"
 msgid "    • Engine's height limit reached or exceeded"
 msgstr "    • 已达到或超出引擎的高度限制"
+
+#. STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.MAX_HEIGHT.FAILED_NO_ENGINE
+msgctxt ""
+"STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.MAX_HEIGHT."
+"FAILED_NO_ENGINE"
+msgid "    • Rocket requires space for an engine"
+msgstr "    • 火箭需要引擎的空间"
 
 #. STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.MAX_MODULES.COMPLETE
 msgctxt ""
@@ -87646,9 +87973,43 @@ msgctxt "STRINGS.WORLDS.WATERMOONLET.NAME"
 msgid "Water Asteroid"
 msgstr "水域小行星"
 
+#~ msgctxt "STRINGS.UI.UISIDESCREENS.LOGICBROADCASTCHANNELSIDESCREEN.IN_RANGE"
+#~ msgid "Range OK"
+#~ msgstr "范围正常"
+
+#~ msgctxt "STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER"
+#~ msgid "ROCKETRY RENOVATION"
+#~ msgstr "再筑陈舱"
+
+#~ msgctxt "STRINGS.BUILDING.STATUSITEMS.OUTPUTTILEBLOCKED.TOOLTIP"
+#~ msgid "Output is blocked"
+#~ msgstr "输出口被堵住了"
+
 #~ msgctxt "STRINGS.BUILDINGS.PREFABS.ESCAPEPOD.NAME"
-#~ msgid "<link=\"ESCAPEPOD\">Escape Pod</link>"
-#~ msgstr "<link=\"ESCAPEPOD\">逃生舱</link>"
+#~ msgid "Escape Pod"
+#~ msgstr "逃生舱"
+
+#~ msgctxt "STRINGS.DUPLICANTS.MODIFIERS.BADSLEEPMOVEMENT.NAME"
+#~ msgid "Unrested: Movement"
+#~ msgstr "没休息好：晃动"
+
+#~ msgctxt "STRINGS.DUPLICANTS.MODIFIERS.BADSLEEPMOVEMENT.TOOLTIP"
+#~ msgid ""
+#~ "This Duplicant didn't get much sleep because they were interrupted by "
+#~ "movement"
+#~ msgstr "这名复制人没睡多久，因为被晃动打断了"
+
+#~ msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.SLEEPINGINTERRUPTEDBYMOVEMENT.NAME"
+#~ msgid "Interrupted Sleep: Movement"
+#~ msgstr "睡眠中断：晃动"
+
+#~ msgctxt "STRINGS.RESEARCH.TECHS.LIQUIDFILTERING.DESC"
+#~ msgid ""
+#~ "Use pumped liquids to remove <link=\"SALT\">Salt</link> from <link=\"BRINE"
+#~ "\">Brine</link>."
+#~ msgstr ""
+#~ "泵入液体以便移出<link=\"BRINE\">浓盐水</link>中的<link=\"SALT\">盐</"
+#~ "link>。"
 
 #~ msgctxt "STRINGS.CODEX.DASHASALTVINE.TITLE"
 #~ msgid "Balm Lily"
@@ -89706,11 +90067,6 @@ msgstr "水域小行星"
 #~ msgstr "    • 当前有足够的装饰水平"
 
 #~ msgctxt ""
-#~ "STRINGS.UI.COLONY_DIAGNOSTICS.FLOATINGROCKETDIAGNOSTIC.NORMAL_LANDED"
-#~ msgid "    • Rocket is landed"
-#~ msgstr "    • 火箭已着陆"
-
-#~ msgctxt ""
 #~ "STRINGS.UI.COLONY_DIAGNOSTICS.FLOATINGROCKETDIAGNOSTIC.WARNING_NO_SPEED"
 #~ msgid "    • Rocket not progressing towards destination"
 #~ msgstr "    • 火箭没有向目的地前进"
@@ -91290,10 +91646,6 @@ msgstr "水域小行星"
 #~ "STRINGS.BUILDING.STATUSITEMS.SPACECRAFTREADYTOLAND.NOTIFICATION_TOOLTIP"
 #~ msgid "A spacecraft is ready to land"
 #~ msgstr "飞船已准备好着陆"
-
-#~ msgctxt "STRINGS.BUILDINGS.PREFABS.BEACHCHAIR.LIGHTEFFECT_LOW"
-#~ msgid "{attrib}: {amount} (Low Lux)"
-#~ msgstr "{attrib}：{amount}（低勒克斯）"
 
 #~ msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.GAMING.NAME"
 #~ msgid "Playing a Game"
@@ -94922,10 +95274,6 @@ msgstr "水域小行星"
 #~ msgid "Awake"
 #~ msgstr "醒着"
 
-#~ msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.SLEEPINGINTERRUPTED.TOOLTIP"
-#~ msgid "This Duplicant was rudely awoken while they slept"
-#~ msgstr "这名复制人被粗暴地弄醒"
-
 #~ msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.SLEEPINGINTERRUPTEDLIGHT.GENERIC"
 #~ msgid "Something"
 #~ msgstr "有点事"
@@ -96567,10 +96915,6 @@ msgstr "水域小行星"
 #~ msgctxt "STRINGS.DUPLICANTS.MODIFIERS.REJUVENATOR.NAME"
 #~ msgid "Pharma Chamber Recovery"
 #~ msgstr "医药室恢复"
-
-#~ msgctxt "STRINGS.DUPLICANTS.MODIFIERS.REJUVENATORDOCTORED.NAME"
-#~ msgid "Receiving care"
-#~ msgstr "正在接受护理"
 
 #~ msgctxt "STRINGS.DUPLICANTS.MODIFIERS.REJUVENATORDOCTORED.TOOLTIP"
 #~ msgid ""

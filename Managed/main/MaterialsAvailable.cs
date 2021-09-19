@@ -17,7 +17,7 @@ public class MaterialsAvailable : SelectModuleCondition
 		return ProductInfoScreen.MaterialsMet(selectedPart.CraftRecipe);
 	}
 
-	public override string GetStatusTooltip(bool ready, BuildingDef selectedPart)
+	public override string GetStatusTooltip(bool ready, GameObject moduleBase, BuildingDef selectedPart)
 	{
 		if (ready)
 		{

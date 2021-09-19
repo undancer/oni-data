@@ -48,6 +48,7 @@ public class ClusterTraveler : KMonoBehaviour, ISim200ms
 	protected override void OnSpawn()
 	{
 		Subscribe(543433792, ClusterDestinationChangedHandler);
+		UpdateAnimationTags();
 	}
 
 	private void OnClusterDestinationChanged(object data)
@@ -154,7 +155,39 @@ public class ClusterTraveler : KMonoBehaviour, ISim200ms
 		AxialI location = CurrentPath[0];
 		CurrentPath.RemoveAt(0);
 		m_clusterGridEntity.Location = location;
+		UpdateAnimationTags();
 		return true;
+	}
+
+	private void UpdateAnimationTags()
+	{
+		if (CurrentPath == null)
+		{
+			m_clusterGridEntity.RemoveTag(GameTags.BallisticEntityLaunching);
+			m_clusterGridEntity.RemoveTag(GameTags.BallisticEntityLanding);
+			m_clusterGridEntity.RemoveTag(GameTags.BallisticEntityMoving);
+		}
+		else if (ClusterGrid.Instance.GetAsteroidAtCell(m_clusterGridEntity.Location) != null)
+		{
+			if (CurrentPath.Count == 0 || m_clusterGridEntity.Location == CurrentPath[CurrentPath.Count - 1])
+			{
+				m_clusterGridEntity.AddTag(GameTags.BallisticEntityLanding);
+				m_clusterGridEntity.RemoveTag(GameTags.BallisticEntityLaunching);
+				m_clusterGridEntity.RemoveTag(GameTags.BallisticEntityMoving);
+			}
+			else
+			{
+				m_clusterGridEntity.AddTag(GameTags.BallisticEntityLaunching);
+				m_clusterGridEntity.RemoveTag(GameTags.BallisticEntityLanding);
+				m_clusterGridEntity.RemoveTag(GameTags.BallisticEntityMoving);
+			}
+		}
+		else
+		{
+			m_clusterGridEntity.AddTag(GameTags.BallisticEntityMoving);
+			m_clusterGridEntity.RemoveTag(GameTags.BallisticEntityLanding);
+			m_clusterGridEntity.RemoveTag(GameTags.BallisticEntityLaunching);
+		}
 	}
 
 	private void RevalidatePath()

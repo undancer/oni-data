@@ -400,5 +400,6 @@ public enum GameHashes
 	DoorsLinked = -1118736034,
 	RocketSelfDestructRequested = -1061799784,
 	RocketExploded = -1311384361,
-	ModuleLanderLanded = 1591811118
+	ModuleLanderLanded = 1591811118,
+	PartyLineJoined = 564760259
 }

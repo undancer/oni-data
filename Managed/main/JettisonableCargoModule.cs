@@ -143,8 +143,7 @@ public class JettisonableCargoModule : GameStateMachine<JettisonableCargoModule,
 			Vector3 position = Grid.CellToPosCBC(landerPlacementCell, Grid.SceneLayer.Building);
 			component.transform.SetPosition(position);
 			component.gameObject.SetActive(value: true);
-			Clustercraft component5 = base.master.GetComponent<RocketModuleCluster>().CraftInterface.GetComponent<Clustercraft>();
-			component5.gameObject.Trigger(1792516731, component);
+			base.master.GetComponent<RocketModuleCluster>().CraftInterface.GetComponent<Clustercraft>().gameObject.Trigger(1792516731, component);
 			component.Trigger(1792516731, base.gameObject);
 			GameObject gameObject = Assets.TryGetPrefab(base.smi.def.clusterMapFXPrefabID);
 			if (!(gameObject != null))
@@ -153,10 +152,7 @@ public class JettisonableCargoModule : GameStateMachine<JettisonableCargoModule,
 			}
 			clusterMapFX = GameUtil.KInstantiate(gameObject, Grid.SceneLayer.Background);
 			clusterMapFX.SetActive(value: true);
-			ClusterFXEntity component6 = clusterMapFX.GetComponent<ClusterFXEntity>();
-			AxialI location = component5.Location;
-			AxialI myWorldLocation = component.GetMyWorldLocation();
-			component6.Init(animOffset: Vector3.Normalize(AxialUtil.AxialToWorld(myWorldLocation.r, myWorldLocation.q) - AxialUtil.AxialToWorld(location.r, location.q)) * 100f, location: component5.Location);
+			clusterMapFX.GetComponent<ClusterFXEntity>().Init(component.GetMyWorldLocation(), Vector3.zero);
 			component.Subscribe(1969584890, delegate
 			{
 				if (!clusterMapFX.IsNullOrDestroyed())

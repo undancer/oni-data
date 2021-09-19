@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using STRINGS;
 using UnityEngine;
 
 public class ClusterMapScreen : KScreen
@@ -202,6 +203,7 @@ public class ClusterMapScreen : KScreen
 			float num = Input.mouseScrollDelta.y * 25f;
 			m_targetZoomScale = Mathf.Clamp(m_targetZoomScale + num, 50f, 150f);
 		}
+		CameraController.Instance.ChangeWorldInput(e);
 		base.OnKeyDown(e);
 	}
 
@@ -671,10 +673,7 @@ public class ClusterMapScreen : KScreen
 
 	private void UpdatePaths()
 	{
-		if (m_selectedEntity != null)
-		{
-			m_selectedEntity.GetComponent<ClusterDestinationSelector>();
-		}
+		ClusterDestinationSelector clusterDestinationSelector = ((m_selectedEntity != null) ? m_selectedEntity.GetComponent<ClusterDestinationSelector>() : null);
 		if (m_mode == Mode.SelectDestination && m_hoveredHex != null)
 		{
 			Debug.Assert(m_destinationSelector != null, "In SelectDestination mode without a destination selector");
@@ -696,7 +695,21 @@ public class ClusterMapScreen : KScreen
 				Util.KDestroyGameObject(m_previewMapPath);
 				m_previewMapPath = null;
 			}
-			m_hoveredHex.SetDestinationStatus(fail_reason);
+			int num = path?.Count ?? (-1);
+			if (m_selectedEntity != null)
+			{
+				float range = m_selectedEntity.GetComponent<IClusterRange>().GetRange();
+				if ((float)num > range / 600f && string.IsNullOrEmpty(fail_reason))
+				{
+					fail_reason = string.Format(UI.CLUSTERMAP.TOOLTIP_INVALID_DESTINATION_OUT_OF_RANGE, range / 600f);
+				}
+				bool repeat = clusterDestinationSelector.GetComponent<RocketClusterDestinationSelector>().Repeat;
+				m_hoveredHex.SetDestinationStatus(fail_reason, num, (int)range, repeat);
+			}
+			else
+			{
+				m_hoveredHex.SetDestinationStatus(fail_reason);
+			}
 		}
 		else if (m_previewMapPath != null)
 		{

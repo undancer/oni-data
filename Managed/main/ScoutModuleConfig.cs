@@ -45,6 +45,7 @@ public class ScoutModuleConfig : IBuildingConfig
 		JettisonableCargoModule.Def def2 = go.AddOrGetDef<JettisonableCargoModule.Def>();
 		def2.landerPrefabID = "ScoutLander".ToTag();
 		def2.landerContainer = storage;
+		def2.clusterMapFXPrefabID = "DeployingScoutLanderFXConfig";
 		go.AddOrGet<BuildingAttachPoint>().points = new BuildingAttachPoint.HardPoint[1]
 		{
 			new BuildingAttachPoint.HardPoint(new CellOffset(0, 3), GameTags.Rocket, null)

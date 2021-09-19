@@ -217,6 +217,8 @@ namespace STRINGS
 			public static LocString CINEMATOGGLELOCK = "Cinema Toggle Lock";
 
 			public static LocString CINEMATOGGLEEASING = "Cinema Toggle Easing";
+
+			public static LocString CINEMAUNPAUSEONMOVE = "Cinema Unpause On Move";
 		}
 
 		public class BUILDING
@@ -331,6 +333,8 @@ namespace STRINGS
 			public static LocString DEBUGTOGGLEPERSONALPRIORITYCOMPARISON = "Debug Toggle Personal Priority Comparison";
 
 			public static LocString DEBUGREPORTBUG = "Debug Report Bug";
+
+			public static LocString DEBUGTOGGLECLUSTERFX = "Debug Cluster FX";
 		}
 
 		public class SANDBOX
@@ -357,7 +361,36 @@ namespace STRINGS
 
 			public static LocString SANDBOXREVEAL = "Sandbox Reveal";
 
-			public static LocString SANDBOXCRITTER = "Sandbox Remove Critters";
+			public static LocString SANDBOXCRITTERTOOL = "Sandbox Remove Critters";
+
+			public static LocString SANDBOXRADSTOOL = "Sandbox Radiation Tool";
+
+			public static LocString SANDBOXCOPYELEMENT = "Sandbox Copy Element";
+		}
+
+		public class SWITCHACTIVEWORLD
+		{
+			public static LocString NAME = "Switch Planetoids";
+
+			public static LocString SWITCHACTIVEWORLD1 = "Planetoid 1";
+
+			public static LocString SWITCHACTIVEWORLD2 = "Planetoid 2";
+
+			public static LocString SWITCHACTIVEWORLD3 = "Planetoid 3";
+
+			public static LocString SWITCHACTIVEWORLD4 = "Planetoid 4";
+
+			public static LocString SWITCHACTIVEWORLD5 = "Planetoid 5";
+
+			public static LocString SWITCHACTIVEWORLD6 = "Planetoid 6";
+
+			public static LocString SWITCHACTIVEWORLD7 = "Planetoid 7";
+
+			public static LocString SWITCHACTIVEWORLD8 = "Planetoid 8";
+
+			public static LocString SWITCHACTIVEWORLD9 = "Planetoid 9";
+
+			public static LocString SWITCHACTIVEWORLD10 = "Planetoid 10";
 		}
 	}
 }

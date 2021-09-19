@@ -696,6 +696,7 @@ namespace TUNING
 				"BeachChair",
 				"VerticalWindTunnel",
 				PixelPackConfig.ID,
+				"Telephone",
 				"FlowerVase",
 				"FlowerVaseWall",
 				"FlowerVaseHanging",
@@ -749,6 +750,8 @@ namespace TUNING
 				LogicCounterConfig.ID,
 				LogicAlarmConfig.ID,
 				LogicHammerConfig.ID,
+				"LogicInterasteroidSender",
+				"LogicInterasteroidReceiver",
 				LogicRibbonReaderConfig.ID,
 				LogicRibbonWriterConfig.ID,
 				"FloorSwitch",
@@ -814,7 +817,7 @@ namespace TUNING
 				"RailGunPayloadOpener",
 				"LandingBeacon"
 			}),
-			new PlanScreen.PlanInfo(new HashedString("HEP"), hideIfNotResearched: true, new List<string> { "NuclearReactor", "UraniumCentrifuge", "HighEnergyParticleSpawner", "HighEnergyParticleRedirector", "DevRadiationGenerator" }, "EXPANSION1_ID")
+			new PlanScreen.PlanInfo(new HashedString("HEP"), hideIfNotResearched: true, new List<string> { "NuclearReactor", "UraniumCentrifuge", "HighEnergyParticleSpawner", "HighEnergyParticleRedirector", "HEPBridgeTile", "DevRadiationGenerator" }, "EXPANSION1_ID")
 		};
 
 		public static List<Type> COMPONENT_DESCRIPTION_ORDER = new List<Type>

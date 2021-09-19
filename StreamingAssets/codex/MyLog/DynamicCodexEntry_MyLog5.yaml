@@ -1,6 +1,7 @@
 id: "MyLog5"
 title: STRINGS.CODEX.MYLOG.BODY.OUTSIDESTARTINGBIOME.TITLE
-
+forbiddenDLCIds:
+  - "EXPANSION1_ID"
 contentContainers:
 #-----------------------------
   - contentLayout: Vertical

@@ -1722,9 +1722,9 @@ namespace STRINGS
 
 			public class SLEEPINGINTERRUPTEDBYMOVEMENT
 			{
-				public static LocString NAME = "Interrupted Sleep: Movement";
+				public static LocString NAME = "Interrupted Sleep: Bed Jostling";
 
-				public static LocString TOOLTIP = "This Duplicant is having trouble sleeping because their bed moved";
+				public static LocString TOOLTIP = "This Duplicant was woken up because their bed was moved";
 			}
 
 			public class REDALERT
@@ -3702,9 +3702,9 @@ namespace STRINGS
 
 			public class BADSLEEPMOVEMENT
 			{
-				public static LocString NAME = "Unrested: Movement";
+				public static LocString NAME = "Unrested: Bed Jostling";
 
-				public static LocString TOOLTIP = "This Duplicant didn't get much sleep because they were interrupted by movement";
+				public static LocString TOOLTIP = "This Duplicant was woken up when a friend climbed on their ladder bed";
 			}
 
 			public class TERRIBLESLEEP
@@ -4238,6 +4238,27 @@ namespace STRINGS
 				public static LocString NAME = "Passably Relaxed";
 
 				public static LocString TOOLTIP = "This Duplicant just had a mediocre beach experience\n\nLeisure activities increase Duplicants' " + UI.PRE_KEYWORD + "Morale" + UI.PST_KEYWORD;
+			}
+
+			public class TELEPHONECHAT
+			{
+				public static LocString NAME = "Full of Gossip";
+
+				public static LocString TOOLTIP = "This Duplicant chatted on the phone with at least one other Duplicant\n\nLeisure activities increase Duplicants' " + UI.PRE_KEYWORD + "Morale" + UI.PST_KEYWORD;
+			}
+
+			public class TELEPHONEBABBLE
+			{
+				public static LocString NAME = "Less Anxious";
+
+				public static LocString TOOLTIP = "This Duplicant got some things off their chest by talking to themselves on the phone\n\nLeisure activities increase Duplicants' " + UI.PRE_KEYWORD + "Morale" + UI.PST_KEYWORD;
+			}
+
+			public class TELEPHONELONGDISTANCE
+			{
+				public static LocString NAME = "Sociable";
+
+				public static LocString TOOLTIP = "This Duplicant chatted on the phone with at least one other Duplicant across space\n\nLeisure activities increase Duplicants' " + UI.PRE_KEYWORD + "Morale" + UI.PST_KEYWORD;
 			}
 
 			public class EDIBLEMINUS3

@@ -262,10 +262,12 @@ public class DlcManager
 			KPlayerPrefs.SetInt(dlcId + ".ENABLED", enabled ? 1 : 0);
 			if (enabled && !CheckPlatformSubscription(dlcId))
 			{
+				Debug.Log("ToggleDLCSubscription");
 				DistributionPlatform.Inst.ToggleDLCSubscription(dlcId);
 			}
 			else if ((bool)App.instance)
 			{
+				Debug.Log("Restart");
 				App.instance.Restart();
 			}
 		}

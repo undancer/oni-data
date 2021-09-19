@@ -44,7 +44,7 @@ public class IdleStates : GameStateMachine<IdleStates, IdleStates.Instance, ISta
 			if (value != null)
 			{
 				BuildingUnderConstruction component = value.GetComponent<BuildingUnderConstruction>();
-				if (component != null && component.Def.isSolidTile)
+				if (component != null && component.Def.IsFoundation)
 				{
 					return false;
 				}

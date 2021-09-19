@@ -624,6 +624,27 @@ namespace STRINGS
 				public static LocString EFFECT = "Provides refreshment for Duplicants on their breaks.\n\nIncreases Duplicant " + UI.FormatAsLink("Morale", "MORALE") + ".";
 			}
 
+			public class TELEPHONE
+			{
+				public static LocString NAME = UI.FormatAsLink("Party Line Phone", "TELEPHONE");
+
+				public static LocString DESC = "You never know who you'll meet on the other line.";
+
+				public static LocString EFFECT = "Can be used by one Duplicant to chat with themselves or with other Duplicants in different locations.\n\nChatting increases Duplicant " + UI.FormatAsLink("Morale", "MORALE") + ".";
+
+				public static LocString EFFECT_BABBLE = "{attrib}: {amount} (No One)";
+
+				public static LocString EFFECT_BABBLE_TOOLTIP = "Duplicants will gain {amount} {attrib} if they chat only with themselves.";
+
+				public static LocString EFFECT_CHAT = "{attrib}: {amount} (At least one duplicant)";
+
+				public static LocString EFFECT_CHAT_TOOLTIP = "Duplicants will gain {amount} {attrib} if they chat with at least one other Duplicant.";
+
+				public static LocString EFFECT_LONG_DISTANCE = "{attrib}: {amount} (At least one duplicant across space)";
+
+				public static LocString EFFECT_LONG_DISTANCE_TOOLTIP = "Duplicants will gain {amount} {attrib} if they chat with at least one other Duplicant across space.";
+			}
+
 			public class MODULARLIQUIDINPUT
 			{
 				public static LocString NAME = UI.FormatAsLink("Liquid Input Hub", "MODULARLIQUIDINPUT");
@@ -950,7 +971,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = UI.FormatAsLink("Ladder Bed", "LADDERBED");
 
-				public static LocString DESC = "Duplicants can be interrupted if another duplicant uses the ladder while sleeping.";
+				public static LocString DESC = "Duplicant's sleep will be interrupted if another Duplicant uses the ladder.";
 
 				public static LocString EFFECT = "Provides a sleeping area for one Duplicant and also functions as a ladder.\n\nDuplicants will automatically sleep in their assigned beds at night.";
 			}
@@ -2565,6 +2586,38 @@ namespace STRINGS
 				public static LocString LOGIC_PORT_INACTIVE = UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + ": Prevent " + UI.PRE_KEYWORD + "Power" + UI.PST_KEYWORD + " from flowing through connected circuits";
 			}
 
+			public class LOGICINTERASTEROIDSENDER
+			{
+				public static LocString NAME = UI.FormatAsLink("Automation Broadcaster", "LOGICINTERASTEROIDSENDER");
+
+				public static LocString DESC = "Sends automation signals into space.";
+
+				public static LocString EFFECT = "Sends a " + UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + " or a " + UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + " to an " + UI.FormatAsLink("Automation Receiver", "LOGICINTERASTEROIDRECEIVER") + " over vast distances in space.\n\nBoth the Automation Broadcaster and the Automation Receiver must be exposed to space to function.";
+
+				public static LocString DEFAULTNAME = "Unnamed Broadcaster";
+
+				public static LocString LOGIC_PORT = "Broadcasting Signal";
+
+				public static LocString LOGIC_PORT_ACTIVE = "Broadcasting: " + UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active);
+
+				public static LocString LOGIC_PORT_INACTIVE = "Broadcasting: " + UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby);
+			}
+
+			public class LOGICINTERASTEROIDRECEIVER
+			{
+				public static LocString NAME = UI.FormatAsLink("Automation Receiver", "LOGICINTERASTEROIDRECEIVER");
+
+				public static LocString DESC = "Receives automation signals from space.";
+
+				public static LocString EFFECT = "Receives a " + UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + " or a " + UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + " from an " + UI.FormatAsLink("Automation Broadcaster", "LOGICINTERASTEROIDSENDER") + " over vast distances in space.\n\nBoth the Automation Receiver and the Automation Broadcaster must be exposed to space to function.";
+
+				public static LocString LOGIC_PORT = "Receiving Signal";
+
+				public static LocString LOGIC_PORT_ACTIVE = "Receiving: " + UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active);
+
+				public static LocString LOGIC_PORT_INACTIVE = "Receiving: " + UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby);
+			}
+
 			public class TEMPERATURECONTROLLEDSWITCH
 			{
 				public static LocString NAME = UI.FormatAsLink("Thermo Switch", "TEMPERATURECONTROLLEDSWITCH");
@@ -2605,7 +2658,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = UI.FormatAsLink("Wall Toilet", "WALLTOILET");
 
-				public static LocString DESC = "Wall Toilets transmit fewer germs to Duplicants' skin and require no emptying.";
+				public static LocString DESC = "Wall Toilets transmit fewer germs to Duplicants and require no emptying.";
 
 				public static LocString EFFECT = "Gives Duplicants a place to relieve themselves. Empties directly on the other side of the wall.\n\nSpreads very few " + UI.FormatAsLink("Germs", "DISEASE") + ".";
 			}
@@ -3892,6 +3945,15 @@ namespace STRINGS
 				public static LocString LOGIC_PORT_INACTIVE = UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + ": Do not emit Radbolts";
 			}
 
+			public class HEPBRIDGETILE
+			{
+				public static LocString NAME = UI.FormatAsLink("Radbolt Joint Plate", "HEPBRIDGETILE");
+
+				public static LocString DESC = "Allows Radbolts to pass through walls.";
+
+				public static LocString EFFECT = "Receives " + UI.FormatAsLink("Radbolts", "HEP") + " from " + UI.FormatAsLink("Radbolt Generators", "HIGHENERGYPARTICLESPAWNER") + " and directs them through walls. All other materials and elements will be blocked from passage.";
+			}
+
 			public class ASTRONAUTTRAININGCENTER
 			{
 				public static LocString NAME = UI.FormatAsLink("Space Cadet Centrifuge", "ASTRONAUTTRAININGCENTER");
@@ -4070,45 +4132,45 @@ namespace STRINGS
 
 			public class ESCAPEPOD
 			{
-				public static LocString NAME = "Escape Pod";
+				public static LocString NAME = UI.FormatAsLink("Escape Pod", "ESCAPEPOD");
 
-				public static LocString DESC = "Delivers a Duplicant from a stranded rocket to the nearest asteroid.";
+				public static LocString DESC = "Delivers a Duplicant from a stranded rocket to the nearest Planetoid.";
 			}
 
 			public class ROCKETINTERIORLIQUIDOUTPUTPORT
 			{
-				public static LocString NAME = UI.FormatAsLink("Liquid Output Port", "ROCKETINTERIORLIQUIDOUTPUTPORT");
+				public static LocString NAME = UI.FormatAsLink("Liquid Spacefarer Output Port", "ROCKETINTERIORLIQUIDOUTPUTPORT");
 
-				public static LocString DESC = "A direct attachment to the input port on the exterior of the rocket.";
+				public static LocString DESC = "A direct attachment to the input port on the exterior of a rocket.";
 
-				public static LocString EFFECT = "Allows a direct conduit connection into the habitat module of the rocket.";
+				public static LocString EFFECT = "Allows a direct conduit connection into the " + UI.FormatAsLink("Spacefarer Module", "HABITATMODULEMEDIUM") + " of a rocket.";
 			}
 
 			public class ROCKETINTERIORLIQUIDINPUTPORT
 			{
-				public static LocString NAME = UI.FormatAsLink("Liquid Input Port", "ROCKETINTERIORLIQUIDINPUTPORT");
+				public static LocString NAME = UI.FormatAsLink("Liquid Spacefarer Input Port", "ROCKETINTERIORLIQUIDINPUTPORT");
 
-				public static LocString DESC = "A direct attachment to the output port on the exterior of the rocket.";
+				public static LocString DESC = "A direct attachment to the output port on the exterior of a rocket.";
 
-				public static LocString EFFECT = "Allows a direct conduit connection out of the habitat module of the rocket.\nCan be used to vent Liquids to space during flight.";
+				public static LocString EFFECT = "Allows a direct conduit connection out of the " + UI.FormatAsLink("Spacefarer Module", "HABITATMODULEMEDIUM") + " of a rocket.\nCan be used to vent " + UI.FormatAsLink("Liquids", "ELEMENTS_LIQUID") + " to space during flight.";
 			}
 
 			public class ROCKETINTERIORGASOUTPUTPORT
 			{
-				public static LocString NAME = UI.FormatAsLink("Gas Output Port", "ROCKETINTERIORGASOUTPUTPORT");
+				public static LocString NAME = UI.FormatAsLink("Gas Spacefarer Output Port", "ROCKETINTERIORGASOUTPUTPORT");
 
-				public static LocString DESC = "A direct attachment to the input port on the exterior of the rocket.";
+				public static LocString DESC = "A direct attachment to the input port on the exterior of a rocket.";
 
-				public static LocString EFFECT = "Allows a direct conduit connection into the habitat module of the rocket.";
+				public static LocString EFFECT = "Allows a direct conduit connection into the " + UI.FormatAsLink("Spacefarer Module", "HABITATMODULEMEDIUM") + " of a rocket.";
 			}
 
 			public class ROCKETINTERIORGASINPUTPORT
 			{
-				public static LocString NAME = UI.FormatAsLink("Gas Input Port", "ROCKETINTERIORGASINPUTPORT");
+				public static LocString NAME = UI.FormatAsLink("Gas Spacefarer Input Port", "ROCKETINTERIORGASINPUTPORT");
 
-				public static LocString DESC = "A direct attachment to the output port on the exterior of the rocket.";
+				public static LocString DESC = "A direct attachment leading to the output port on the exterior of the rocket.";
 
-				public static LocString EFFECT = "Allows a direct conduit connection out of the habitat module of the rocket.\nCan be used to vent Gasses to space during flight.";
+				public static LocString EFFECT = "Allows a direct conduit connection out of the " + UI.FormatAsLink("Spacefarer Module", "HABITATMODULEMEDIUM") + " of the rocket.\nCan be used to vent " + UI.FormatAsLink("Gasses", "ELEMENTS_GAS") + " to space during flight.";
 			}
 
 			public class MASSIVEHEATSINK
@@ -4371,8 +4433,6 @@ namespace STRINGS
 				public static LocString NAME = "Lab Window";
 
 				public static LocString DESC = "A lab window. Formerly a portal to the outside world.";
-
-				public static LocString EFFECT = "";
 			}
 
 			public class PROPGRAVITASLABWINDOWHORIZONTAL
@@ -4380,8 +4440,6 @@ namespace STRINGS
 				public static LocString NAME = "Lab Window";
 
 				public static LocString DESC = "A lab window.\n\nSomeone once stared out this contemplating the results of an experiment.";
-
-				public static LocString EFFECT = "";
 			}
 
 			public class PROPGRAVITASLABWALL
@@ -4389,8 +4447,6 @@ namespace STRINGS
 				public static LocString NAME = "Lab Wall";
 
 				public static LocString DESC = "A regular wall that once existed in a working lab.";
-
-				public static LocString EFFECT = "";
 			}
 
 			public class GRAVITASDOOR
@@ -4398,8 +4454,6 @@ namespace STRINGS
 				public static LocString NAME = "Gravitas Door";
 
 				public static LocString DESC = "An office door to an office that no longer exists.";
-
-				public static LocString EFFECT = "";
 			}
 
 			public class PROPGRAVITASWALL
@@ -4407,8 +4461,6 @@ namespace STRINGS
 				public static LocString NAME = "Wall";
 
 				public static LocString DESC = "The granite wall of a once great scientific facility.";
-
-				public static LocString EFFECT = "";
 			}
 
 			public class PROPGRAVITASDISPLAY4

@@ -1,6 +1,7 @@
 id: "MyLog13"
 title: STRINGS.CODEX.MYLOG.BODY.SURFACEBREACH.TITLE
-
+forbiddenDLCIds:
+  - "EXPANSION1_ID"
 contentContainers:
 #-----------------------------
   - contentLayout: Vertical

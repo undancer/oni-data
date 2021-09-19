@@ -17,5 +17,5 @@ public enum BuildLocationRule
 	OnFoundationRotatable,
 	BelowRocketCeiling,
 	OnRocketEnvelope,
-	InCornerFloor
+	WallFloor
 }

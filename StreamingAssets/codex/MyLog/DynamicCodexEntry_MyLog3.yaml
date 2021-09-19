@@ -1,6 +1,7 @@
 id: "MyLog3"
 title: STRINGS.CODEX.MYLOG.BODY.PRINTINGPOD.TITLE
-
+forbiddenDLCIds:
+  - "EXPANSION1_ID"
 contentContainers:
 #-----------------------------
   - contentLayout: Vertical

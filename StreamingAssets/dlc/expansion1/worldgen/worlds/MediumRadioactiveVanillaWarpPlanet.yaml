@@ -159,7 +159,7 @@ worldTemplateRules:
     listRule: GuaranteeAll
     priority: 100
     allowedCellsFilter:
-	  - command: Replace
+      - command: Replace
         zoneTypes: [FrozenWastes]
       - command: IntersectWith
         subworldNames:
