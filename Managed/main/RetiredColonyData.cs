@@ -134,7 +134,7 @@ public class RetiredColonyData
 
 	public RetiredColonyStatistic[] Stats { get; set; }
 
-	public Dictionary<string, string> worldIdentities { get; set; }
+	public List<Tuple<string, string>> worldIdentities { get; set; }
 
 	public string startWorld { get; set; }
 
@@ -142,7 +142,7 @@ public class RetiredColonyData
 	{
 	}
 
-	public RetiredColonyData(string colonyName, int cycleCount, string date, string[] achievements, MinionAssignablesProxy[] minions, BuildingComplete[] buildingCompletes, string startWorld, Dictionary<string, string> worldIdentities)
+	public RetiredColonyData(string colonyName, int cycleCount, string date, string[] achievements, MinionAssignablesProxy[] minions, BuildingComplete[] buildingCompletes, string startWorld, List<Tuple<string, string>> worldIdentities)
 	{
 		this.colonyName = colonyName;
 		this.cycleCount = cycleCount;

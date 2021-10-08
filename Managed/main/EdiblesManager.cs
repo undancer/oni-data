@@ -56,6 +56,7 @@ public class EdiblesManager : KMonoBehaviour
 			Description = Strings.Get("STRINGS.ITEMS.FOOD." + id.ToUpper() + ".DESC");
 			Effects = new List<string>();
 			s_allFoodTypes.Add(this);
+			s_allFoodMap[Id] = this;
 		}
 
 		public FoodInfo AddEffects(List<string> effects, string[] dlcIds)
@@ -70,6 +71,8 @@ public class EdiblesManager : KMonoBehaviour
 
 	private static List<FoodInfo> s_allFoodTypes = new List<FoodInfo>();
 
+	private static Dictionary<string, FoodInfo> s_allFoodMap = new Dictionary<string, FoodInfo>();
+
 	public static List<FoodInfo> GetAllFoodTypes()
 	{
 		return s_allFoodTypes.Where((FoodInfo x) => DlcManager.IsContentActive(x.DlcId)).ToList();
@@ -77,14 +80,9 @@ public class EdiblesManager : KMonoBehaviour
 
 	public static FoodInfo GetFoodInfo(string foodID)
 	{
-		string text = foodID.Replace("Compost", "");
-		foreach (FoodInfo s_allFoodType in s_allFoodTypes)
-		{
-			if (s_allFoodType.Id == text)
-			{
-				return s_allFoodType;
-			}
-		}
-		return null;
+		string key = foodID.Replace("Compost", "");
+		FoodInfo value = null;
+		s_allFoodMap.TryGetValue(key, out value);
+		return value;
 	}
 }

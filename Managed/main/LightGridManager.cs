@@ -59,9 +59,12 @@ public static class LightGridManager
 			}
 			foreach (int litCell in litCells)
 			{
-				int num = Mathf.Max(0, Grid.LightCount[litCell] + ComputeLux(litCell));
-				Grid.LightCount[litCell] = num;
-				previewLux[litCell] = num;
+				if (Grid.IsValidCell(litCell))
+				{
+					int num = Mathf.Max(0, Grid.LightCount[litCell] + ComputeLux(litCell));
+					Grid.LightCount[litCell] = num;
+					previewLux[litCell] = num;
+				}
 			}
 		}
 
@@ -69,8 +72,11 @@ public static class LightGridManager
 		{
 			foreach (int litCell in litCells)
 			{
-				Grid.LightCount[litCell] = Mathf.Max(0, Grid.LightCount[litCell] - ComputeLux(litCell));
-				previewLux[litCell] = 0;
+				if (Grid.IsValidCell(litCell))
+				{
+					Grid.LightCount[litCell] = Mathf.Max(0, Grid.LightCount[litCell] - ComputeLux(litCell));
+					previewLux[litCell] = 0;
+				}
 			}
 			litCells.Clear();
 		}

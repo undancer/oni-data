@@ -24,6 +24,24 @@ public class ColonyAchievementTracker : KMonoBehaviour, ISaveLoadableDetails, IR
 	[Serialize]
 	public HashSet<Tag> tamedCritterTypes = new HashSet<Tag>();
 
+	[Serialize]
+	public bool defrostedDuplicant;
+
+	[Serialize]
+	public HashSet<Tag> analyzedSeeds = new HashSet<Tag>();
+
+	[Serialize]
+	public float totalMaterialsHarvestFromPOI;
+
+	[Serialize]
+	public float radBoltTravelDistance;
+
+	[Serialize]
+	public bool harvestAHiveWithoutGettingStung;
+
+	[Serialize]
+	public Dictionary<int, int> cyclesRocketDupeMoraleAboveRequirement = new Dictionary<int, int>();
+
 	private SchedulerHandle checkAchievementsHandle;
 
 	private int forceCheckAchievementHandle = -1;
@@ -353,6 +371,11 @@ public class ColonyAchievementTracker : KMonoBehaviour, ISaveLoadableDetails, IR
 		}
 	}
 
+	public void LogAnalyzedSeed(Tag seed)
+	{
+		analyzedSeeds.Add(seed);
+	}
+
 	public void OnNewDay(object data)
 	{
 		foreach (MinionStorage item in Components.MinionStorages.Items)
@@ -378,6 +401,45 @@ public class ColonyAchievementTracker : KMonoBehaviour, ISaveLoadableDetails, IR
 				{
 					dupesCompleteChoresInSuits[cycle].Add(kPrefabID.InstanceID);
 				}
+			}
+		}
+		if (!DlcManager.IsExpansion1Active())
+		{
+			return;
+		}
+		SurviveARocketWithMinimumMorale surviveARocketWithMinimumMorale = Db.Get().ColonyAchievements.SurviveInARocket.requirementChecklist[0] as SurviveARocketWithMinimumMorale;
+		if (surviveARocketWithMinimumMorale == null)
+		{
+			return;
+		}
+		float minimumMorale = surviveARocketWithMinimumMorale.minimumMorale;
+		int numberOfCycles = surviveARocketWithMinimumMorale.numberOfCycles;
+		foreach (WorldContainer worldContainer in ClusterManager.Instance.WorldContainers)
+		{
+			if (!worldContainer.IsModuleInterior)
+			{
+				continue;
+			}
+			if (!cyclesRocketDupeMoraleAboveRequirement.ContainsKey(worldContainer.id))
+			{
+				cyclesRocketDupeMoraleAboveRequirement.Add(worldContainer.id, 0);
+			}
+			if (worldContainer.GetComponent<Clustercraft>().Status != 0)
+			{
+				bool flag = true;
+				foreach (MinionIdentity worldItem in Components.MinionIdentities.GetWorldItems(worldContainer.id))
+				{
+					if (Db.Get().Attributes.QualityOfLife.Lookup(worldItem).GetTotalValue() < minimumMorale)
+					{
+						flag = false;
+						break;
+					}
+				}
+				cyclesRocketDupeMoraleAboveRequirement[worldContainer.id] = (flag ? (cyclesRocketDupeMoraleAboveRequirement[worldContainer.id] + 1) : 0);
+			}
+			else if (cyclesRocketDupeMoraleAboveRequirement[worldContainer.id] < numberOfCycles)
+			{
+				cyclesRocketDupeMoraleAboveRequirement[worldContainer.id] = 0;
 			}
 		}
 	}

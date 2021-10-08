@@ -327,6 +327,8 @@ namespace TUNING
 			public List<string> mutuallyExclusiveTraits;
 
 			public List<HashedString> mutuallyExclusiveAptitudes;
+
+			public bool doNotGenerateTrait;
 		}
 
 		public class ATTRIBUTE_LEVELING
@@ -542,6 +544,8 @@ namespace TUNING
 
 		public static readonly List<TraitVal> CONGENITALTRAITS;
 
+		public static readonly TraitVal INVALID_TRAIT_VAL;
+
 		public static readonly List<TraitVal> BADTRAITS;
 
 		public static readonly List<TraitVal> STRESSTRAITS;
@@ -550,46 +554,87 @@ namespace TUNING
 
 		public static readonly List<TraitVal> GENESHUFFLERTRAITS;
 
+		public static readonly List<TraitVal> SPECIALTRAITS;
+
 		public static readonly List<TraitVal> GOODTRAITS;
 
 		public static readonly List<TraitVal> NEEDTRAITS;
 
+		public static TraitVal GetTraitVal(string id)
+		{
+			foreach (TraitVal sPECIALTRAIT in SPECIALTRAITS)
+			{
+				if (id == sPECIALTRAIT.id)
+				{
+					return sPECIALTRAIT;
+				}
+			}
+			foreach (TraitVal gOODTRAIT in GOODTRAITS)
+			{
+				if (id == gOODTRAIT.id)
+				{
+					return gOODTRAIT;
+				}
+			}
+			foreach (TraitVal bADTRAIT in BADTRAITS)
+			{
+				if (id == bADTRAIT.id)
+				{
+					return bADTRAIT;
+				}
+			}
+			foreach (TraitVal cONGENITALTRAIT in CONGENITALTRAITS)
+			{
+				if (id == cONGENITALTRAIT.id)
+				{
+					return cONGENITALTRAIT;
+				}
+			}
+			DebugUtil.Assert(test: true, "Could not find TraitVal with ID: " + id);
+			return INVALID_TRAIT_VAL;
+		}
+
 		static DUPLICANTSTATS()
 		{
 			List<TraitVal> list = new List<TraitVal>();
-			TraitVal item = new TraitVal
+			TraitVal traitVal = new TraitVal
 			{
 				id = "None"
 			};
-			list.Add(item);
-			item = new TraitVal
+			list.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "Joshua",
 				mutuallyExclusiveTraits = new List<string> { "ScaredyCat", "Aggressive" }
 			};
-			list.Add(item);
-			item = new TraitVal
+			list.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "Ellie",
 				statBonus = TINY_STATPOINT_BONUS,
 				mutuallyExclusiveTraits = new List<string> { "InteriorDecorator", "MouthBreather", "Uncultured" }
 			};
-			list.Add(item);
-			item = new TraitVal
+			list.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "Stinky",
 				mutuallyExclusiveTraits = new List<string> { "Flatulence", "InteriorDecorator" }
 			};
-			list.Add(item);
-			item = new TraitVal
+			list.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "Liam",
 				mutuallyExclusiveTraits = new List<string> { "Flatulence", "InteriorDecorator" }
 			};
-			list.Add(item);
+			list.Add(traitVal);
 			CONGENITALTRAITS = list;
+			traitVal = new TraitVal
+			{
+				id = "INVALID"
+			};
+			INVALID_TRAIT_VAL = traitVal;
 			List<TraitVal> list2 = new List<TraitVal>();
-			item = new TraitVal
+			traitVal = new TraitVal
 			{
 				id = "CantResearch",
 				statBonus = NO_STATPOINT_BONUS,
@@ -597,8 +642,8 @@ namespace TUNING
 				dlcId = "",
 				mutuallyExclusiveAptitudes = new List<HashedString> { "Research" }
 			};
-			list2.Add(item);
-			item = new TraitVal
+			list2.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "CantDig",
 				statBonus = LARGE_STATPOINT_BONUS,
@@ -606,8 +651,8 @@ namespace TUNING
 				dlcId = "",
 				mutuallyExclusiveAptitudes = new List<HashedString> { "Mining" }
 			};
-			list2.Add(item);
-			item = new TraitVal
+			list2.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "CantCook",
 				statBonus = NO_STATPOINT_BONUS,
@@ -615,8 +660,8 @@ namespace TUNING
 				dlcId = "",
 				mutuallyExclusiveAptitudes = new List<HashedString> { "Cooking" }
 			};
-			list2.Add(item);
-			item = new TraitVal
+			list2.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "CantBuild",
 				statBonus = LARGE_STATPOINT_BONUS,
@@ -625,8 +670,8 @@ namespace TUNING
 				mutuallyExclusiveAptitudes = new List<HashedString> { "Building" },
 				mutuallyExclusiveTraits = new List<string> { "GrantSkill_Engineering1" }
 			};
-			list2.Add(item);
-			item = new TraitVal
+			list2.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "Hemophobia",
 				statBonus = NO_STATPOINT_BONUS,
@@ -634,8 +679,8 @@ namespace TUNING
 				dlcId = "",
 				mutuallyExclusiveAptitudes = new List<HashedString> { "MedicalAid" }
 			};
-			list2.Add(item);
-			item = new TraitVal
+			list2.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "ScaredyCat",
 				statBonus = NO_STATPOINT_BONUS,
@@ -643,8 +688,8 @@ namespace TUNING
 				dlcId = "",
 				mutuallyExclusiveAptitudes = new List<HashedString> { "Mining" }
 			};
-			list2.Add(item);
-			item = new TraitVal
+			list2.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "ConstructionDown",
 				statBonus = MEDIUM_STATPOINT_BONUS,
@@ -652,8 +697,8 @@ namespace TUNING
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "ConstructionUp", "CantBuild" }
 			};
-			list2.Add(item);
-			item = new TraitVal
+			list2.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "RanchingDown",
 				statBonus = SMALL_STATPOINT_BONUS,
@@ -661,8 +706,8 @@ namespace TUNING
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "RanchingUp" }
 			};
-			list2.Add(item);
-			item = new TraitVal
+			list2.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "CaringDown",
 				statBonus = SMALL_STATPOINT_BONUS,
@@ -670,24 +715,24 @@ namespace TUNING
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "Hemophobia" }
 			};
-			list2.Add(item);
-			item = new TraitVal
+			list2.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "BotanistDown",
 				statBonus = SMALL_STATPOINT_BONUS,
 				rarity = RARITY_COMMON,
 				dlcId = ""
 			};
-			list2.Add(item);
-			item = new TraitVal
+			list2.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "ArtDown",
 				statBonus = SMALL_STATPOINT_BONUS,
 				rarity = RARITY_COMMON,
 				dlcId = ""
 			};
-			list2.Add(item);
-			item = new TraitVal
+			list2.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "CookingDown",
 				statBonus = SMALL_STATPOINT_BONUS,
@@ -695,16 +740,16 @@ namespace TUNING
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "Foodie", "CantCook" }
 			};
-			list2.Add(item);
-			item = new TraitVal
+			list2.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "MachineryDown",
 				statBonus = SMALL_STATPOINT_BONUS,
 				rarity = RARITY_COMMON,
 				dlcId = ""
 			};
-			list2.Add(item);
-			item = new TraitVal
+			list2.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "DiggingDown",
 				statBonus = MEDIUM_STATPOINT_BONUS,
@@ -712,8 +757,8 @@ namespace TUNING
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "MoleHands", "CantDig" }
 			};
-			list2.Add(item);
-			item = new TraitVal
+			list2.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "SlowLearner",
 				statBonus = MEDIUM_STATPOINT_BONUS,
@@ -721,279 +766,294 @@ namespace TUNING
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "FastLearner", "CantResearch" }
 			};
-			list2.Add(item);
-			item = new TraitVal
+			list2.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "NoodleArms",
 				statBonus = MEDIUM_STATPOINT_BONUS,
 				rarity = RARITY_RARE,
 				dlcId = ""
 			};
-			list2.Add(item);
-			item = new TraitVal
+			list2.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "DecorDown",
 				statBonus = TINY_STATPOINT_BONUS,
 				rarity = RARITY_COMMON,
 				dlcId = ""
 			};
-			list2.Add(item);
-			item = new TraitVal
+			list2.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "Anemic",
 				statBonus = HUGE_STATPOINT_BONUS,
 				rarity = RARITY_LEGENDARY,
 				dlcId = ""
 			};
-			list2.Add(item);
-			item = new TraitVal
+			list2.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "Flatulence",
 				statBonus = MEDIUM_STATPOINT_BONUS,
 				rarity = RARITY_RARE,
 				dlcId = ""
 			};
-			list2.Add(item);
-			item = new TraitVal
+			list2.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "IrritableBowel",
 				statBonus = TINY_STATPOINT_BONUS,
 				rarity = RARITY_UNCOMMON,
 				dlcId = ""
 			};
-			list2.Add(item);
-			item = new TraitVal
+			list2.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "Snorer",
 				statBonus = TINY_STATPOINT_BONUS,
 				rarity = RARITY_RARE,
 				dlcId = ""
 			};
-			list2.Add(item);
-			item = new TraitVal
+			list2.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "MouthBreather",
 				statBonus = HUGE_STATPOINT_BONUS,
 				rarity = RARITY_LEGENDARY,
 				dlcId = ""
 			};
-			list2.Add(item);
-			item = new TraitVal
+			list2.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "SmallBladder",
 				statBonus = TINY_STATPOINT_BONUS,
 				rarity = RARITY_UNCOMMON,
 				dlcId = ""
 			};
-			list2.Add(item);
-			item = new TraitVal
+			list2.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "CalorieBurner",
 				statBonus = LARGE_STATPOINT_BONUS,
 				rarity = RARITY_EPIC,
 				dlcId = ""
 			};
-			list2.Add(item);
-			item = new TraitVal
+			list2.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "WeakImmuneSystem",
 				statBonus = SMALL_STATPOINT_BONUS,
 				rarity = RARITY_UNCOMMON,
 				dlcId = ""
 			};
-			list2.Add(item);
-			item = new TraitVal
+			list2.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "Allergies",
 				statBonus = SMALL_STATPOINT_BONUS,
 				rarity = RARITY_RARE,
 				dlcId = ""
 			};
-			list2.Add(item);
-			item = new TraitVal
+			list2.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "NightLight",
 				statBonus = SMALL_STATPOINT_BONUS,
 				rarity = RARITY_RARE,
 				dlcId = ""
 			};
-			list2.Add(item);
-			item = new TraitVal
+			list2.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "Narcolepsy",
 				statBonus = HUGE_STATPOINT_BONUS,
 				rarity = RARITY_RARE,
 				dlcId = ""
 			};
-			list2.Add(item);
+			list2.Add(traitVal);
 			BADTRAITS = list2;
 			List<TraitVal> list3 = new List<TraitVal>();
-			item = new TraitVal
+			traitVal = new TraitVal
 			{
 				id = "Aggressive",
 				dlcId = ""
 			};
-			list3.Add(item);
-			item = new TraitVal
+			list3.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "StressVomiter",
 				dlcId = ""
 			};
-			list3.Add(item);
-			item = new TraitVal
+			list3.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "UglyCrier",
 				dlcId = ""
 			};
-			list3.Add(item);
-			item = new TraitVal
+			list3.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "BingeEater",
 				dlcId = ""
 			};
-			list3.Add(item);
+			list3.Add(traitVal);
 			STRESSTRAITS = list3;
 			List<TraitVal> list4 = new List<TraitVal>();
-			item = new TraitVal
+			traitVal = new TraitVal
 			{
 				id = "BalloonArtist",
 				dlcId = ""
 			};
-			list4.Add(item);
-			item = new TraitVal
+			list4.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "SparkleStreaker",
 				dlcId = ""
 			};
-			list4.Add(item);
-			item = new TraitVal
+			list4.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "StickerBomber",
 				dlcId = ""
 			};
-			list4.Add(item);
-			item = new TraitVal
+			list4.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "SuperProductive",
 				dlcId = ""
 			};
-			list4.Add(item);
+			list4.Add(traitVal);
 			JOYTRAITS = list4;
 			List<TraitVal> list5 = new List<TraitVal>();
-			item = new TraitVal
+			traitVal = new TraitVal
 			{
 				id = "Regeneration",
 				dlcId = ""
 			};
-			list5.Add(item);
-			item = new TraitVal
+			list5.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "DeeperDiversLungs",
 				dlcId = ""
 			};
-			list5.Add(item);
-			item = new TraitVal
+			list5.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "SunnyDisposition",
 				dlcId = ""
 			};
-			list5.Add(item);
-			item = new TraitVal
+			list5.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "RockCrusher",
 				dlcId = ""
 			};
-			list5.Add(item);
+			list5.Add(traitVal);
 			GENESHUFFLERTRAITS = list5;
 			List<TraitVal> list6 = new List<TraitVal>();
-			item = new TraitVal
+			traitVal = new TraitVal
+			{
+				id = "AncientKnowledge",
+				rarity = RARITY_LEGENDARY,
+				dlcId = "EXPANSION1_ID",
+				doNotGenerateTrait = true,
+				mutuallyExclusiveTraits = new List<string>
+				{
+					"CantResearch", "CantBuild", "CantCook", "CantDig", "Hemophobia", "ScaredyCat", "Anemic", "SlowLearner", "NoodleArms", "ConstructionDown",
+					"RanchingDown", "DiggingDown", "MachineryDown", "CookingDown", "ArtDown", "CaringDown", "BotanistDown"
+				}
+			};
+			list6.Add(traitVal);
+			SPECIALTRAITS = list6;
+			List<TraitVal> list7 = new List<TraitVal>();
+			traitVal = new TraitVal
 			{
 				id = "Twinkletoes",
 				rarity = RARITY_EPIC,
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "Anemic" }
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "StrongArm",
 				rarity = RARITY_RARE,
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "NoodleArms" }
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "Greasemonkey",
 				rarity = RARITY_UNCOMMON,
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "MachineryDown" }
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "DiversLung",
 				rarity = RARITY_EPIC,
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "MouthBreather" }
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "IronGut",
 				rarity = RARITY_COMMON,
 				dlcId = ""
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "StrongImmuneSystem",
 				rarity = RARITY_COMMON,
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "WeakImmuneSystem" }
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "EarlyBird",
 				rarity = RARITY_RARE,
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "NightOwl" }
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "NightOwl",
 				rarity = RARITY_RARE,
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "EarlyBird" }
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "MoleHands",
 				rarity = RARITY_RARE,
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "CantDig", "DiggingDown" }
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "FastLearner",
 				rarity = RARITY_RARE,
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "SlowLearner", "CantResearch" }
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "InteriorDecorator",
 				rarity = RARITY_COMMON,
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "Uncultured", "ArtDown" }
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "Uncultured",
 				rarity = RARITY_COMMON,
@@ -1001,16 +1061,16 @@ namespace TUNING
 				mutuallyExclusiveTraits = new List<string> { "InteriorDecorator" },
 				mutuallyExclusiveAptitudes = new List<HashedString> { "Art" }
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "SimpleTastes",
 				rarity = RARITY_UNCOMMON,
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "Foodie" }
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "Foodie",
 				rarity = RARITY_COMMON,
@@ -1018,55 +1078,83 @@ namespace TUNING
 				mutuallyExclusiveTraits = new List<string> { "SimpleTastes", "CantCook", "CookingDown" },
 				mutuallyExclusiveAptitudes = new List<HashedString> { "Cooking" }
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "BedsideManner",
 				rarity = RARITY_COMMON,
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "Hemophobia", "CaringDown" }
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "DecorUp",
 				rarity = RARITY_UNCOMMON,
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "DecorDown" }
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "Thriver",
 				rarity = RARITY_EPIC,
 				dlcId = ""
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "GreenThumb",
 				rarity = RARITY_COMMON,
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "BotanistDown" }
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "ConstructionUp",
 				rarity = RARITY_UNCOMMON,
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "ConstructionDown" }
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "RanchingUp",
 				rarity = RARITY_UNCOMMON,
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "RanchingDown" }
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
+			{
+				id = "Loner",
+				rarity = RARITY_EPIC,
+				dlcId = "EXPANSION1_ID"
+			};
+			list7.Add(traitVal);
+			traitVal = new TraitVal
+			{
+				id = "StarryEyed",
+				rarity = RARITY_RARE,
+				dlcId = "EXPANSION1_ID"
+			};
+			list7.Add(traitVal);
+			traitVal = new TraitVal
+			{
+				id = "GlowStick",
+				rarity = RARITY_EPIC,
+				dlcId = "EXPANSION1_ID"
+			};
+			list7.Add(traitVal);
+			traitVal = new TraitVal
+			{
+				id = "RadiationEater",
+				rarity = RARITY_EPIC,
+				dlcId = "EXPANSION1_ID"
+			};
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "GrantSkill_Mining1",
 				statBonus = -LARGE_STATPOINT_BONUS,
@@ -1074,8 +1162,8 @@ namespace TUNING
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "CantDig" }
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "GrantSkill_Mining2",
 				statBonus = -LARGE_STATPOINT_BONUS,
@@ -1083,8 +1171,8 @@ namespace TUNING
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "CantDig" }
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "GrantSkill_Mining3",
 				statBonus = -LARGE_STATPOINT_BONUS,
@@ -1092,24 +1180,24 @@ namespace TUNING
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "CantDig" }
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "GrantSkill_Farming2",
 				statBonus = -LARGE_STATPOINT_BONUS,
 				rarity = RARITY_EPIC,
 				dlcId = ""
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "GrantSkill_Ranching1",
 				statBonus = -LARGE_STATPOINT_BONUS,
 				rarity = RARITY_EPIC,
 				dlcId = ""
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "GrantSkill_Cooking1",
 				statBonus = -LARGE_STATPOINT_BONUS,
@@ -1117,8 +1205,8 @@ namespace TUNING
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "CantCook" }
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "GrantSkill_Arting1",
 				statBonus = -LARGE_STATPOINT_BONUS,
@@ -1126,8 +1214,8 @@ namespace TUNING
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "Uncultured" }
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "GrantSkill_Arting2",
 				statBonus = -LARGE_STATPOINT_BONUS,
@@ -1135,8 +1223,8 @@ namespace TUNING
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "Uncultured" }
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "GrantSkill_Arting3",
 				statBonus = -LARGE_STATPOINT_BONUS,
@@ -1144,32 +1232,32 @@ namespace TUNING
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "Uncultured" }
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "GrantSkill_Suits1",
 				statBonus = -LARGE_STATPOINT_BONUS,
 				rarity = RARITY_EPIC,
 				dlcId = ""
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "GrantSkill_Technicals2",
 				statBonus = -LARGE_STATPOINT_BONUS,
 				rarity = RARITY_EPIC,
 				dlcId = ""
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "GrantSkill_Engineering1",
 				statBonus = -LARGE_STATPOINT_BONUS,
 				rarity = RARITY_EPIC,
 				dlcId = ""
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "GrantSkill_Basekeeping2",
 				statBonus = -LARGE_STATPOINT_BONUS,
@@ -1177,8 +1265,8 @@ namespace TUNING
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "Anemic" }
 			};
-			list6.Add(item);
-			item = new TraitVal
+			list7.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "GrantSkill_Medicine2",
 				statBonus = -LARGE_STATPOINT_BONUS,
@@ -1186,61 +1274,61 @@ namespace TUNING
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "Hemophobia" }
 			};
-			list6.Add(item);
-			GOODTRAITS = list6;
-			List<TraitVal> list7 = new List<TraitVal>();
-			item = new TraitVal
+			list7.Add(traitVal);
+			GOODTRAITS = list7;
+			List<TraitVal> list8 = new List<TraitVal>();
+			traitVal = new TraitVal
 			{
 				id = "Claustrophobic",
 				rarity = RARITY_COMMON,
 				dlcId = ""
 			};
-			list7.Add(item);
-			item = new TraitVal
+			list8.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "PrefersWarmer",
 				rarity = RARITY_COMMON,
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "PrefersColder" }
 			};
-			list7.Add(item);
-			item = new TraitVal
+			list8.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "PrefersColder",
 				rarity = RARITY_COMMON,
 				dlcId = "",
 				mutuallyExclusiveTraits = new List<string> { "PrefersWarmer" }
 			};
-			list7.Add(item);
-			item = new TraitVal
+			list8.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "SensitiveFeet",
 				rarity = RARITY_COMMON,
 				dlcId = ""
 			};
-			list7.Add(item);
-			item = new TraitVal
+			list8.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "Fashionable",
 				rarity = RARITY_COMMON,
 				dlcId = ""
 			};
-			list7.Add(item);
-			item = new TraitVal
+			list8.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "Climacophobic",
 				rarity = RARITY_COMMON,
 				dlcId = ""
 			};
-			list7.Add(item);
-			item = new TraitVal
+			list8.Add(traitVal);
+			traitVal = new TraitVal
 			{
 				id = "SolitarySleeper",
 				rarity = RARITY_COMMON,
 				dlcId = ""
 			};
-			list7.Add(item);
-			NEEDTRAITS = list7;
+			list8.Add(traitVal);
+			NEEDTRAITS = list8;
 		}
 	}
 }

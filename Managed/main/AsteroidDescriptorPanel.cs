@@ -34,6 +34,7 @@ public class AsteroidDescriptorPanel : KMonoBehaviour
 			HierarchyReferences component = gameObject.GetComponent<HierarchyReferences>();
 			component.GetReference<LocText>("Label").text = descriptors[i].text;
 			component.GetReference<ToolTip>("ToolTip").toolTip = descriptors[i].tooltip;
+			component.GetReference<ToolTip>("ToolTip").enabled = descriptors[i].tooltip != null;
 			if (descriptors[i].bands != null)
 			{
 				Transform reference = component.GetReference<Transform>("BandContainer");

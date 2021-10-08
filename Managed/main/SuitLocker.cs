@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using STRINGS;
 using TUNING;
 using UnityEngine;
@@ -127,9 +128,27 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 					{
 						return false;
 					}
-					bool num = slot.assignable.GetComponent<JetSuitTank>() != null;
-					bool flag = suitLocker.GetComponent<JetSuitLocker>() != null;
-					return num == flag;
+					bool num = slot.assignable.GetComponent<AtmoSuit>() != null;
+					bool flag = suitLocker.OutfitTags.Contains(GameTags.AtmoSuit);
+					if (num && flag)
+					{
+						return true;
+					}
+					bool num2 = slot.assignable.GetComponent<JetSuitTank>() != null;
+					bool flag2 = suitLocker.GetComponent<JetSuitLocker>() != null;
+					if (num2 && flag2)
+					{
+						return true;
+					}
+					bool num3 = slot.assignable.GetComponent<LeadSuitTank>() != null;
+					bool flag3 = suitLocker.GetComponent<LeadSuitLocker>() != null;
+					if (num3 && flag3)
+					{
+						return true;
+					}
+					bool num4 = slot.assignable.GetComponent<OxygenMask>() != null;
+					bool flag4 = suitLocker.OutfitTags.Contains(GameTags.OxygenMask);
+					return (num4 && flag4) ? true : false;
 				}
 			});
 			base._002Ector();

@@ -2397,7 +2397,7 @@ namespace STRINGS
 				public static LocString TOOLTIP = "This building automatically performs routine maintenance every {x} launches";
 			}
 
-			public class FRIDGECOOLINGn
+			public class FRIDGECOOLING
 			{
 				public static LocString NAME = "Cooling Contents: {UsedPower}";
 
@@ -2409,6 +2409,23 @@ namespace STRINGS
 				public static LocString NAME = "Energy Saver: {UsedPower}";
 
 				public static LocString TOOLTIP = "The contents of this food storage are at refrigeration temperatures\n\nEnergy Saver mode has been automatically activated using only {UsedPower} of {MaxPower}";
+			}
+
+			public class TELEPHONE
+			{
+				public class BABBLE
+				{
+					public static LocString NAME = "Babbling to no one.";
+
+					public static LocString TOOLTIP = "{Duplicant} just needed to vent to no one.";
+				}
+
+				public class CONVERSATION
+				{
+					public static LocString TALKING_TO = "Talking to {Duplicant} on {Asteroid}";
+
+					public static LocString TALKING_TO_NUM = "Talking to {0} friends.";
+				}
 			}
 		}
 

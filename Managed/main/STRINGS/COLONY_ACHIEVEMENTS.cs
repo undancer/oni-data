@@ -105,6 +105,30 @@ namespace STRINGS
 				public static LocString ESTABLISH_COLONIES = "Establish colonies on {goalBaseCount} asteroids by building and activating Mini-Pods.\nColonies established: {baseCount} / {neededCount}.";
 
 				public static LocString OPEN_TEMPORAL_TEAR = "Open the Temporal Tear by finding and activating the Temporal Tear Opener";
+
+				public static LocString TELEPORT_DUPLICANT = "Teleport a Duplicant to another world";
+
+				public static LocString DEFROST_DUPLICANT = "Defrost a Duplicant";
+
+				public static LocString BUILD_A_LAUNCHPAD = "Build a launchpad on a new world without a teleporter";
+
+				public static LocString LAND_DUPES_ON_ALL_WORLDS = "Duplicants or rovers landed on {0} of {1} planetoids";
+
+				public static LocString RUN_A_REACTOR = "Reactor running for cycles: {0} / {1}";
+
+				public static LocString ANALYZE_SEED = "Analyze {0} mutant";
+
+				public static LocString GET_URANIUM_WITHOUT_STING = "Got uranium out of a beeta hive without getting stung";
+
+				public static LocString RADBOLT_TRAVEL = "Radbolts travelled: {0:n} m / {1:n} m";
+
+				public static LocString MINE_SPACE_POI = "Mined: {0:n} / {1:n} kg";
+
+				public static LocString SURVIVE_SPACE = "Duplicants in {3} have ended each cycle in space with at least {0} morale for: {1} / {2} cycles";
+
+				public static LocString SURVIVE_SPACE_COMPLETE = "Duplicants survived in space with at least {0} morale for {1} cycles.";
+
+				public static LocString HARVEST_HIVE = "Uranium extracted from a Beeta hive without getting stung";
 			}
 
 			public static LocString WINCONDITION_LEAVE = "The Great Escape";
@@ -246,6 +270,42 @@ namespace STRINGS
 			public static LocString MASTERPIECE_PAINTING = "Art Underground";
 
 			public static LocString MASTERPIECE_PAINTING_DESCRIPTION = "Have a Duplicant with the Masterworks skill paint a Masterpiece quality painting.";
+
+			public static LocString FIRST_TELEPORT = "First Teleport of Call";
+
+			public static LocString FIRST_TELEPORT_DESCRIPTION = "Teleport a Duplicant and defrost a Friend on another world.";
+
+			public static LocString SOFT_LAUNCH = "Soft Launch";
+
+			public static LocString SOFT_LAUNCH_DESCRIPTION = "Build a launchpad on a world without a teleporter.";
+
+			public static LocString LAND_ON_ALL_WORLDS = "Cluster Conquest";
+
+			public static LocString LAND_ON_ALL_WORLDS_DESCRIPTION = "Land dupes or rovers on all worlds in the cluster.";
+
+			public static LocString REACTOR_USAGE = "That's Rad!";
+
+			public static LocString REACTOR_USAGE_DESCRIPTION = "Run a Research Reactor at full capacity for {0} cycles.";
+
+			public static LocString GMO_OK = "GMO A-OK";
+
+			public static LocString GMO_OK_DESCRIPTION = "Successfully analyze at least one seed of all mutatable plants.";
+
+			public static LocString SWEETER_THAN_HONEY = "Sweeter Than Honey";
+
+			public static LocString SWEETER_THAN_HONEY_DESCRIPTION = "Extract Uranium from a Beeta hive without getting stung.";
+
+			public static LocString RADICAL_TRIP = "Radical Trip";
+
+			public static LocString RADICAL_TRIP_DESCRIPTION = "Have radbolts travel a cumulative {0}km.";
+
+			public static LocString MINE_THE_GAP = "Mine the Gap";
+
+			public static LocString MINE_THE_GAP_DESCRIPTION = "Mine 1,000,000kg from space POIs.";
+
+			public static LocString SURVIVE_IN_A_ROCKET = "Morale High Ground";
+
+			public static LocString SURVIVE_IN_A_ROCKET_DESCRIPTION = "Have all Duplicants in a rocket survive in space for {0} cycles in a row with a morale of {1} or higher.";
 		}
 
 		public class THRIVING

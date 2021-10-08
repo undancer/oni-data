@@ -6,6 +6,7 @@ using System.Threading;
 using Klei;
 using KMod;
 using KSerialization;
+using Newtonsoft.Json;
 using STRINGS;
 using UnityEngine;
 using UnityEngine.U2D;
@@ -340,6 +341,7 @@ public class Global : MonoBehaviour
 		modManager.distribution_platforms.Add(new Local("Local", Label.DistributionPlatform.Local, isDevFolder: false));
 		modManager.distribution_platforms.Add(new Local("Dev", Label.DistributionPlatform.Dev, isDevFolder: true));
 		mainThread = Thread.CurrentThread;
+		KCrashReporter.onCrashReported += OnCrashReported;
 		KProfiler.main_thread = Thread.CurrentThread;
 		RestoreLegacyMetricsSetting();
 		TestDataLocations();
@@ -477,7 +479,7 @@ public class Global : MonoBehaviour
 	private void SetONIStaticSessionVariables()
 	{
 		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable("Branch", "release");
-		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable("Build", 479045u);
+		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable("Build", 481350u);
 		if (KPlayerPrefs.HasKey(UnitConfigurationScreen.MassUnitKey))
 		{
 			ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable(UnitConfigurationScreen.MassUnitKey, ((GameUtil.MassUnit)KPlayerPrefs.GetInt(UnitConfigurationScreen.MassUnitKey)).ToString());
@@ -527,6 +529,22 @@ public class Global : MonoBehaviour
 	{
 		KGlobalAnimParser.DestroyInstance();
 		ThreadedHttps<KleiMetrics>.Instance.EndSession();
+	}
+
+	private void OnCrashReported(string json_response)
+	{
+		if (Thread.CurrentThread == mainThread)
+		{
+			if (!string.IsNullOrEmpty(json_response))
+			{
+				Dictionary<string, string> dictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(json_response);
+				Debug.Log("devhash: " + dictionary["CrashHash"]);
+			}
+			else
+			{
+				Debug.Log("Empty json response");
+			}
+		}
 	}
 
 	private void OutputSystemInfo()

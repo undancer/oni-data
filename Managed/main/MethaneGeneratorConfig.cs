@@ -53,7 +53,7 @@ public class MethaneGeneratorConfig : IBuildingConfig
 		EnergyGenerator.Formula formula = default(EnergyGenerator.Formula);
 		formula.inputs = new EnergyGenerator.InputItem[1]
 		{
-			new EnergyGenerator.InputItem(GameTags.CombustibleGas, 0.09f, 0.90000004f)
+			new EnergyGenerator.InputItem(GameTags.Methane, 0.09f, 0.90000004f)
 		};
 		formula.outputs = new EnergyGenerator.OutputItem[2]
 		{

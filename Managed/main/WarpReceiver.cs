@@ -34,6 +34,9 @@ public class WarpReceiver : Workable
 
 	private Chore chore;
 
+	[Serialize]
+	public bool Used;
+
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
@@ -75,6 +78,7 @@ public class WarpReceiver : Workable
 			}
 		}
 		component.SetWorkTime(num);
+		Used = true;
 	}
 
 	private void CompleteChore()

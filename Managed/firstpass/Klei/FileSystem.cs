@@ -118,6 +118,18 @@ namespace Klei
 			}
 		}
 
+		public static bool IsModdedFile(string filename)
+		{
+			foreach (IFileDirectory file_source in file_sources)
+			{
+				if (file_source.FileExists(filename))
+				{
+					return file_source.IsModded();
+				}
+			}
+			return false;
+		}
+
 		public static string ConvertToText(byte[] bytes)
 		{
 			return Encoding.UTF8.GetString(bytes);

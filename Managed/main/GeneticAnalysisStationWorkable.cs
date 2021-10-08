@@ -49,6 +49,7 @@ public class GeneticAnalysisStationWorkable : Workable
 			MutantPlant component2 = pickupable.GetComponent<MutantPlant>();
 			PlantSubSpeciesCatalog.Instance.IdentifySubSpecies(component2.SubSpeciesID);
 			component2.Analyze();
+			SaveGame.Instance.GetComponent<ColonyAchievementTracker>().LogAnalyzedSeed(component2.SpeciesID);
 		}
 	}
 }

@@ -108,54 +108,59 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 				smi.master.operational.SetActive(value: true);
 				smi.master.SetEmitRads(105f);
 				smi.master.radEmitter.SetEmitting(emitting: true);
+			}).EventHandler(GameHashes.NewDay, (StatesInstance smi) => GameClock.Instance, delegate(StatesInstance smi)
+			{
+				smi.master.numCyclesRunning++;
 			}).Exit(delegate(StatesInstance smi)
 			{
 				smi.sm.reactionUnderway.Set(value: false, smi);
-			}).Update(delegate(StatesInstance smi, float dt)
-			{
-				smi.master.TransferFuel();
-				smi.master.TransferCoolant();
-				smi.master.React(dt);
-				smi.master.UpdateCoolantStatus();
-				smi.master.UpdateVentStatus();
-				smi.master.DumpSpentFuel();
-				if (!smi.master.fuelDeliveryEnabled)
+				smi.master.numCyclesRunning = 0;
+			})
+				.Update(delegate(StatesInstance smi, float dt)
 				{
-					smi.master.refuelStausHandle = smi.master.gameObject.GetComponent<KSelectable>().AddStatusItem(Db.Get().BuildingStatusItems.ReactorRefuelDisabled);
-				}
-				else
-				{
-					smi.master.gameObject.GetComponent<KSelectable>().RemoveStatusItem(Db.Get().BuildingStatusItems.ReactorRefuelDisabled);
-					smi.master.refuelStausHandle = Guid.Empty;
-				}
-				if (smi.master.GetActiveCoolant() != null)
-				{
-					smi.master.Cool(dt);
-				}
-				PrimaryElement activeFuel = smi.master.GetActiveFuel();
-				if (activeFuel != null)
-				{
-					smi.master.temperatureMeter.SetPositionPercent(Mathf.Clamp01(activeFuel.Temperature / 3000f) / meterFrameScaleHack);
-					if (activeFuel.Temperature >= 3000f)
+					smi.master.TransferFuel();
+					smi.master.TransferCoolant();
+					smi.master.React(dt);
+					smi.master.UpdateCoolantStatus();
+					smi.master.UpdateVentStatus();
+					smi.master.DumpSpentFuel();
+					if (!smi.master.fuelDeliveryEnabled)
 					{
-						smi.sm.meltdownMassRemaining.Set(10f + smi.master.supplyStorage.MassStored() + smi.master.reactionStorage.MassStored() + smi.master.wasteStorage.MassStored(), smi);
-						smi.master.supplyStorage.ConsumeAllIgnoringDisease();
-						smi.master.reactionStorage.ConsumeAllIgnoringDisease();
-						smi.master.wasteStorage.ConsumeAllIgnoringDisease();
-						smi.GoTo(meltdown.pre);
+						smi.master.refuelStausHandle = smi.master.gameObject.GetComponent<KSelectable>().AddStatusItem(Db.Get().BuildingStatusItems.ReactorRefuelDisabled);
 					}
-					else if (activeFuel.Mass <= 0.25f)
+					else
+					{
+						smi.master.gameObject.GetComponent<KSelectable>().RemoveStatusItem(Db.Get().BuildingStatusItems.ReactorRefuelDisabled);
+						smi.master.refuelStausHandle = Guid.Empty;
+					}
+					if (smi.master.GetActiveCoolant() != null)
+					{
+						smi.master.Cool(dt);
+					}
+					PrimaryElement activeFuel = smi.master.GetActiveFuel();
+					if (activeFuel != null)
+					{
+						smi.master.temperatureMeter.SetPositionPercent(Mathf.Clamp01(activeFuel.Temperature / 3000f) / meterFrameScaleHack);
+						if (activeFuel.Temperature >= 3000f)
+						{
+							smi.sm.meltdownMassRemaining.Set(10f + smi.master.supplyStorage.MassStored() + smi.master.reactionStorage.MassStored() + smi.master.wasteStorage.MassStored(), smi);
+							smi.master.supplyStorage.ConsumeAllIgnoringDisease();
+							smi.master.reactionStorage.ConsumeAllIgnoringDisease();
+							smi.master.wasteStorage.ConsumeAllIgnoringDisease();
+							smi.GoTo(meltdown.pre);
+						}
+						else if (activeFuel.Mass <= 0.25f)
+						{
+							smi.GoTo(off_pre);
+							smi.master.temperatureMeter.SetPositionPercent(0f);
+						}
+					}
+					else
 					{
 						smi.GoTo(off_pre);
 						smi.master.temperatureMeter.SetPositionPercent(0f);
 					}
-				}
-				else
-				{
-					smi.GoTo(off_pre);
-					smi.master.temperatureMeter.SetPositionPercent(0f);
-				}
-			})
+				})
 				.DefaultState(on.pre);
 			on.pre.PlayAnim("working_pre", KAnim.PlayMode.Once).OnAnimQueueComplete(on.reacting).OnSignal(doVent, on.venting);
 			on.reacting.PlayAnim("working_loop", KAnim.PlayMode.Loop).OnSignal(doVent, on.venting);
@@ -299,6 +304,9 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 	private bool fuelDeliveryEnabled = true;
 
 	public Guid refuelStausHandle;
+
+	[Serialize]
+	public int numCyclesRunning;
 
 	private float reactionMassTarget = 60f;
 

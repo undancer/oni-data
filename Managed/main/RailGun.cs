@@ -405,16 +405,17 @@ public class RailGun : StateMachineComponent<RailGun.StatesInstance>, ISim200ms,
 		int num = Grid.XYToCell(x, y);
 		int num2 = Grid.XYToCell(x2, y);
 		bool flag = true;
+		int num3 = (int)myWorld.maximumBounds.y;
 		for (int i = num; i <= num2; i++)
 		{
-			int num3 = i;
-			while (Grid.CellRow(num3) < myWorld.Height)
+			int num4 = i;
+			while (Grid.CellRow(num4) <= num3)
 			{
-				if (!Grid.IsValidCell(num3) || Grid.Solid[num3])
+				if (!Grid.IsValidCell(num4) || Grid.Solid[num4])
 				{
 					flag = false;
 				}
-				num3 = Grid.CellAbove(num3);
+				num4 = Grid.CellAbove(num4);
 			}
 		}
 		operational.SetFlag(noSurfaceSight, flag);

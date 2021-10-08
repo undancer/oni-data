@@ -510,7 +510,6 @@ namespace ProcGenGame
 			}
 			}
 			WeightedSimHash oneWeightedSimHash2 = feature.GetOneWeightedSimHash(group, rnd);
-			DebugUtil.LogArgs("Picked one: ", oneWeightedSimHash2.element);
 			for (int l = 0; l < cells.Count; l++)
 			{
 				int num6 = Grid.XYToCell(cells[l].x, cells[l].y);

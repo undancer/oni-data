@@ -64,5 +64,12 @@ namespace STRINGS
 
 			public static LocString DESCRIPTION = "A cluster of planets with a larger swampy planetoid to start on.";
 		}
+
+		public static class VANILLA_SANDSTONE_FROZEN_CLUSTER
+		{
+			public static LocString NAME = "Rime Cluster";
+
+			public static LocString DESCRIPTION = "A cluster of planets with a frozen planetoid to start on.";
+		}
 	}
 }

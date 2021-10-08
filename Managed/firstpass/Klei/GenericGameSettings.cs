@@ -17,6 +17,8 @@ namespace Klei
 
 		private static GenericGameSettings _instance;
 
+		public bool devAutoWorldGenActive;
+
 		public static GenericGameSettings instance
 		{
 			get
@@ -68,6 +70,14 @@ namespace Klei
 		public bool takeSaveScreenshots { get; private set; }
 
 		public bool disableAutosave { get; private set; }
+
+		public bool devAutoWorldGen { get; set; }
+
+		public int devWorldGenSeed { get; set; }
+
+		public string devWorldGenCluster { get; set; }
+
+		public string[] devWorldGenSkip { get; set; }
 
 		public PerformanceCapture performanceCapture { get; set; }
 

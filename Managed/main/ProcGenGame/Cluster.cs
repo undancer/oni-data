@@ -86,7 +86,8 @@ namespace ProcGenGame
 				List<string> chosenTraits = new List<string>();
 				if (seed > 0)
 				{
-					chosenTraits = SettingsCache.GetRandomTraits(seed);
+					ProcGen.World worldData2 = SettingsCache.worlds.GetWorldData(worldPlacement.world);
+					chosenTraits = SettingsCache.GetRandomTraits(seed, worldData2);
 					seed++;
 				}
 				WorldGen worldGen = new WorldGen(worldPlacement.world, chosenTraits, assertMissingTraits);
@@ -133,6 +134,7 @@ namespace ProcGenGame
 		{
 			Sim.Cell[] array = null;
 			Sim.DiseaseCell[] array2 = null;
+			int num = 0;
 			for (int i = 0; i < worlds.Count; i++)
 			{
 				WorldGen worldGen = worlds[i];
@@ -150,7 +152,7 @@ namespace ProcGenGame
 				worldGen.FinalizeStartLocation();
 				array = null;
 				array2 = null;
-				if (!worldGen.RenderOffline(doSimSettle, ref array, ref array2, i, worldGen.isStartingWorld))
+				if (!worldGen.RenderOffline(doSimSettle, ref array, ref array2, num, worldGen.isStartingWorld))
 				{
 					thread = null;
 					return;
@@ -159,6 +161,7 @@ namespace ProcGenGame
 				{
 					PerWorldGenCompleteCallback(i, worldGen, array, array2);
 				}
+				num++;
 			}
 			AssignClusterLocations();
 			Save();
@@ -307,17 +310,20 @@ namespace ProcGenGame
 						for (int i = 0; i != worlds.Count; i++)
 						{
 							WorldGen worldGen = worlds[i];
-							clusterLayoutSave.worlds.Add(new ClusterLayoutSave.World
+							if (ShouldSkipWorldCallback == null || !ShouldSkipWorldCallback(i, worldGen))
 							{
-								data = worldGen.data,
-								stats = worldGen.stats,
-								name = worldGen.Settings.world.filePath,
-								isDiscovered = worldGen.isStartingWorld,
-								traits = worldGen.Settings.GetTraitIDs().ToList()
-							});
-							if (worldGen == currentWorld)
-							{
-								clusterLayoutSave.currentWorldIdx = i;
+								clusterLayoutSave.worlds.Add(new ClusterLayoutSave.World
+								{
+									data = worldGen.data,
+									stats = worldGen.stats,
+									name = worldGen.Settings.world.filePath,
+									isDiscovered = worldGen.isStartingWorld,
+									traits = worldGen.Settings.GetTraitIDs().ToList()
+								});
+								if (worldGen == currentWorld)
+								{
+									clusterLayoutSave.currentWorldIdx = i;
+								}
 							}
 						}
 						Serializer.Serialize(clusterLayoutSave, writer);
@@ -402,12 +408,18 @@ namespace ProcGenGame
 				}
 				catch (Exception ex)
 				{
-					DebugUtil.LogErrorArgs("LoadSim Error!\n", ex.Message, ex.StackTrace);
-					return;
+					if (!GenericGameSettings.instance.devAutoWorldGenActive)
+					{
+						DebugUtil.LogErrorArgs("LoadSim Error!\n", ex.Message, ex.StackTrace);
+						return;
+					}
 				}
 				if (simSaveFileStructure.worldDetail == null)
 				{
-					Debug.LogError("Detail is null for world " + i);
+					if (!GenericGameSettings.instance.devAutoWorldGenActive)
+					{
+						Debug.LogError("Detail is null for world " + i);
+					}
 				}
 				else
 				{

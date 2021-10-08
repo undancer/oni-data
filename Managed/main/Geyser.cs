@@ -224,7 +224,7 @@ public class Geyser : StateMachineComponent<Geyser.StatesInstance>, IGameObjectE
 	{
 		List<Descriptor> list = new List<Descriptor>();
 		string arg = ElementLoader.FindElementByHash(configuration.GetElement()).tag.ProperName();
-		list.Add(new Descriptor(string.Format(UI.BUILDINGEFFECTS.GEYSER_PRODUCTION, arg, GameUtil.GetFormattedMass(configuration.GetEmitRate(), GameUtil.TimeSlice.PerSecond), GameUtil.GetFormattedTemperature(configuration.GetTemperature())), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.GEYSER_PRODUCTION, configuration.GetElement().ToString(), GameUtil.GetFormattedMass(configuration.GetEmitRate(), GameUtil.TimeSlice.PerSecond), GameUtil.GetFormattedTemperature(configuration.GetTemperature()))));
+		list.Add(new Descriptor(string.Format(UI.BUILDINGEFFECTS.GEYSER_PRODUCTION, arg, GameUtil.GetFormattedMass(configuration.GetEmitRate(), GameUtil.TimeSlice.PerSecond), GameUtil.GetFormattedTemperature(configuration.GetTemperature())), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.GEYSER_PRODUCTION, ElementLoader.FindElementByHash(configuration.GetElement()).name, GameUtil.GetFormattedMass(configuration.GetEmitRate(), GameUtil.TimeSlice.PerSecond), GameUtil.GetFormattedTemperature(configuration.GetTemperature()))));
 		if (configuration.GetDiseaseIdx() != byte.MaxValue)
 		{
 			list.Add(new Descriptor(string.Format(UI.BUILDINGEFFECTS.GEYSER_DISEASE, GameUtil.GetFormattedDiseaseName(configuration.GetDiseaseIdx())), string.Format(UI.BUILDINGEFFECTS.TOOLTIPS.GEYSER_DISEASE, GameUtil.GetFormattedDiseaseName(configuration.GetDiseaseIdx()))));

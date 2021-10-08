@@ -8,6 +8,8 @@ public class HiveWorkableEmpty : Workable
 
 	private static readonly HashedString PST_ANIM = new HashedString("working_pst");
 
+	public bool wasStung;
+
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
@@ -19,5 +21,14 @@ public class HiveWorkableEmpty : Workable
 		workAnims = WORK_ANIMS;
 		workingPstComplete = new HashedString[1] { PST_ANIM };
 		workingPstFailed = new HashedString[1] { PST_ANIM };
+	}
+
+	protected override void OnCompleteWork(Worker worker)
+	{
+		base.OnCompleteWork(worker);
+		if (!wasStung)
+		{
+			SaveGame.Instance.GetComponent<ColonyAchievementTracker>().harvestAHiveWithoutGettingStung = true;
+		}
 	}
 }

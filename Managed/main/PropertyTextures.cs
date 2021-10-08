@@ -22,6 +22,7 @@ public class PropertyTextures : KMonoBehaviour, ISim200ms
 		Temperature,
 		ExposedToSunlight,
 		FallingSolid,
+		Radiation,
 		Num
 	}
 
@@ -188,11 +189,11 @@ public class PropertyTextures : KMonoBehaviour, ISim200ms
 
 	public void OnReset(object data = null)
 	{
-		lerpers = new TextureLerper[13];
+		lerpers = new TextureLerper[14];
 		texturePagePool = new TexturePagePool();
-		textureBuffers = new TextureBuffer[13];
-		externallyUpdatedTextures = new Texture2D[13];
-		for (int i = 0; i < 13; i++)
+		textureBuffers = new TextureBuffer[14];
+		externallyUpdatedTextures = new Texture2D[14];
+		for (int i = 0; i < 14; i++)
 		{
 			TextureProperties textureProperties = default(TextureProperties);
 			textureProperties.textureFormat = TextureFormat.Alpha8;
@@ -244,7 +245,7 @@ public class PropertyTextures : KMonoBehaviour, ISim200ms
 
 	private void OnShadersReloaded()
 	{
-		for (int i = 0; i < 13; i++)
+		for (int i = 0; i < 14; i++)
 		{
 			TextureLerper textureLerper = lerpers[i];
 			if (textureLerper != null)
@@ -319,6 +320,9 @@ public class PropertyTextures : KMonoBehaviour, ISim200ms
 			case Property.FallingSolid:
 				UpdateTextureThreaded(texture_region, x0, y0, x1, y1, UpdateFallingSolidChange);
 				break;
+			case Property.Radiation:
+				UpdateTextureThreaded(texture_region, x0, y0, x1, y1, UpdateRadiation);
+				break;
 			}
 			texture_region.Unlock();
 		}
@@ -378,7 +382,7 @@ public class PropertyTextures : KMonoBehaviour, ISim200ms
 				UpdateProperty(ref p, x, y, x2, y2);
 			}
 		}
-		for (int j = 0; j < 13; j++)
+		for (int j = 0; j < 14; j++)
 		{
 			TextureLerper textureLerper = lerpers[j];
 			if (textureLerper != null)
@@ -765,9 +769,29 @@ public class PropertyTextures : KMonoBehaviour, ISim200ms
 		}
 	}
 
+	private static void UpdateRadiation(TextureRegion region, int x0, int y0, int x1, int y1)
+	{
+		_ = instance.coldRange;
+		_ = instance.hotRange;
+		for (int i = y0; i <= y1; i++)
+		{
+			for (int j = x0; j <= x1; j++)
+			{
+				int num = Grid.XYToCell(j, i);
+				if (!Grid.IsActiveWorld(num))
+				{
+					region.SetBytes(j, i, 0, 0, 0);
+					continue;
+				}
+				float v = Grid.Radiation[num];
+				region.SetBytes(j, i, v);
+			}
+		}
+	}
+
 	public PropertyTextures()
 	{
-		TextureProperties[] array = new TextureProperties[13];
+		TextureProperties[] array = new TextureProperties[14];
 		TextureProperties textureProperties = new TextureProperties
 		{
 			simProperty = Property.Flow,
@@ -911,6 +935,17 @@ public class PropertyTextures : KMonoBehaviour, ISim200ms
 			blendSpeed = 0f
 		};
 		array[12] = textureProperties;
+		textureProperties = new TextureProperties
+		{
+			simProperty = Property.Radiation,
+			textureFormat = TextureFormat.RFloat,
+			filterMode = FilterMode.Bilinear,
+			updateEveryFrame = false,
+			updatedExternally = false,
+			blend = false,
+			blendSpeed = 0f
+		};
+		array[13] = textureProperties;
 		this.textureProperties = array;
 		allTextureProperties = new List<TextureProperties>();
 		workItems = new WorkItemCollection<WorkItem, object>();

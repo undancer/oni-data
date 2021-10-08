@@ -52,6 +52,7 @@ public class Exhaust : KMonoBehaviour, ISim200ms
 		Subscribe(-592767678, OnConduitStateChangedDelegate);
 		Subscribe(-111137758, OnConduitStateChangedDelegate);
 		GetComponent<RequireInputs>().visualizeRequirements = false;
+		simRenderLoadBalance = true;
 	}
 
 	protected override void OnSpawn()

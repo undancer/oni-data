@@ -6,6 +6,8 @@ namespace STRINGS
 		{
 			public static LocString NAME = "<i>This world is stable and has no unusual features.</i>";
 
+			public static LocString NAME_SHORTHAND = "No unusual features";
+
 			public static LocString DESCRIPTION = "This world exists in a particularly stable configuration each time it is encountered";
 		}
 
@@ -133,6 +135,41 @@ namespace STRINGS
 			public static LocString NAME = "Volcanic Activity";
 
 			public static LocString DESCRIPTION = "Several active " + UI.PRE_KEYWORD + "Volcanoes" + UI.PST_KEYWORD + " have been detected in this world";
+		}
+
+		public static class RADIOACTIVE_CRUST
+		{
+			public static LocString NAME = "Radioactive Crust";
+
+			public static LocString DESCRIPTION = string.Concat("Deposits of ", ELEMENTS.URANIUMORE.NAME, " are found in this world's crust");
+		}
+
+		public static class LUSH_CORE
+		{
+			public static LocString NAME = "Lush Core";
+
+			public static LocString DESCRIPTION = "This world has a lush forest core";
+		}
+
+		public static class METAL_CAVES
+		{
+			public static LocString NAME = "Metallic Caves";
+
+			public static LocString DESCRIPTION = "This world has caves of metal ore";
+		}
+
+		public static class DISTRESS_SIGNAL
+		{
+			public static LocString NAME = "Frozen Friend";
+
+			public static LocString DESCRIPTION = "This world contains a frozen friend from a long time ago";
+		}
+
+		public static class CRASHED_SATELLITES
+		{
+			public static LocString NAME = "Crashed Satellites";
+
+			public static LocString DESCRIPTION = "This world contains crashed radioactive satellites";
 		}
 
 		public static LocString MISSING_TRAIT = "<missing trait>";

@@ -43,6 +43,8 @@ namespace ProcGen
 
 		public string borderOverride { get; protected set; }
 
+		public int borderOverridePriority { get; protected set; }
+
 		public MinMax borderSizeOverride { get; protected set; }
 
 		[StringEnumConverter]
@@ -57,6 +59,8 @@ namespace ProcGen
 		public List<string> tags { get; protected set; }
 
 		public int minChildCount { get; protected set; }
+
+		public bool singleChildCount { get; protected set; }
 
 		public int extraBiomeChildren { get; protected set; }
 

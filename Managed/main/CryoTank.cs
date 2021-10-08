@@ -116,8 +116,14 @@ public class CryoTank : StateMachineComponent<CryoTank.StatesInstance>, ISidescr
 		Vector3 position = Grid.CellToPosCBC(Grid.PosToCell(base.gameObject), Grid.SceneLayer.Move);
 		gameObject.transform.SetLocalPosition(position);
 		gameObject.SetActive(value: true);
-		new MinionStartingStats(is_starter_minion: false).Apply(gameObject);
+		new MinionStartingStats(is_starter_minion: false, null, "AncientKnowledge").Apply(gameObject);
 		gameObject.GetComponent<MinionIdentity>().arrivalTime = Random.Range(-2000, -1000);
+		MinionResume component = gameObject.GetComponent<MinionResume>();
+		int num = 3;
+		for (int i = 0; i < num; i++)
+		{
+			component.ForceAddSkillPoint();
+		}
 		if (opener != null)
 		{
 			opener.GetComponent<Effects>().Add(Db.Get().effects.Get("CryoFriend"), should_save: true);
@@ -128,6 +134,7 @@ public class CryoTank : StateMachineComponent<CryoTank.StatesInstance>, ISidescr
 			statesInstance.SetTextParameter("friend", gameObject.GetProperName());
 			statesInstance.ShowEventPopup();
 		}
+		SaveGame.Instance.GetComponent<ColonyAchievementTracker>().defrostedDuplicant = true;
 	}
 
 	private void OnClickOpen()

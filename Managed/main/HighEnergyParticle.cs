@@ -370,6 +370,7 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 		int num = Grid.PosToCell(position);
 		Vector3 vector = position + EightDirectionUtil.GetNormal(direction) * speed * dt;
 		int num2 = Grid.PosToCell(vector);
+		SaveGame.Instance.GetComponent<ColonyAchievementTracker>().radBoltTravelDistance += speed * dt;
 		loopingSounds.UpdateVelocity(flyingSound, vector - position);
 		if (!Grid.IsValidCell(num2))
 		{

@@ -32,6 +32,7 @@ public class BeachChairConfig : IBuildingConfig
 		roomTracker.requiredRoomType = Db.Get().RoomTypes.RecRoom.Id;
 		roomTracker.requirement = RoomTracker.Requirement.Recommended;
 		go.AddOrGet<AnimTileable>();
+		go.AddOrGetDef<RocketUsageRestriction.Def>();
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

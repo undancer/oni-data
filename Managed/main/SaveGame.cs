@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
+using Klei.CustomSettings;
 using KSerialization;
 using Newtonsoft.Json;
 using ProcGen;
@@ -189,7 +190,7 @@ public class SaveGame : KMonoBehaviour, ISaveLoadable
 		text = JsonConvert.SerializeObject(new GameInfo(GameClock.Instance.GetCycle(), Components.LiveMinionIdentities.Count, baseName, isAutoSave, originalSaveFileName, SaveLoader.Instance.GameInfo.clusterId, SaveLoader.Instance.GameInfo.worldTraits, SaveLoader.Instance.GameInfo.colonyGuid, DlcManager.GetHighestActiveDlcId(), sandboxEnabled));
 		byte[] bytes = Encoding.UTF8.GetBytes(text);
 		header = default(Header);
-		header.buildVersion = 479045u;
+		header.buildVersion = 481350u;
 		header.headerSize = bytes.Length;
 		header.headerVersion = 1u;
 		header.compression = (isCompressed ? 1 : 0);
@@ -282,7 +283,14 @@ public class SaveGame : KMonoBehaviour, ISaveLoadable
 	public List<Tuple<string, TextStyleSetting>> GetColonyToolTip()
 	{
 		List<Tuple<string, TextStyleSetting>> list = new List<Tuple<string, TextStyleSetting>>();
+		SettingLevel currentQualitySetting = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.ClusterLayout);
+		SettingsCache.clusterLayouts.clusterCache.TryGetValue(currentQualitySetting.id, out var value);
 		list.Add(new Tuple<string, TextStyleSetting>(baseName, ToolTipScreen.Instance.defaultTooltipHeaderStyle));
+		if (DlcManager.IsExpansion1Active())
+		{
+			StringEntry stringEntry = Strings.Get(value.name);
+			list.Add(new Tuple<string, TextStyleSetting>(stringEntry, ToolTipScreen.Instance.defaultTooltipBodyStyle));
+		}
 		if (GameClock.Instance != null)
 		{
 			list.Add(new Tuple<string, TextStyleSetting>(" ", null));
@@ -292,8 +300,16 @@ public class SaveGame : KMonoBehaviour, ISaveLoadable
 		int cameraActiveCluster = CameraController.Instance.cameraActiveCluster;
 		WorldContainer world = ClusterManager.Instance.GetWorld(cameraActiveCluster);
 		list.Add(new Tuple<string, TextStyleSetting>(" ", null));
-		list.Add(new Tuple<string, TextStyleSetting>(world.GetComponent<ClusterGridEntity>().Name, ToolTipScreen.Instance.defaultTooltipHeaderStyle));
-		if (SaveLoader.Instance.GameInfo.worldTraits != null)
+		if (DlcManager.IsExpansion1Active())
+		{
+			list.Add(new Tuple<string, TextStyleSetting>(world.GetComponent<ClusterGridEntity>().Name, ToolTipScreen.Instance.defaultTooltipHeaderStyle));
+		}
+		else
+		{
+			StringEntry stringEntry2 = Strings.Get(value.name);
+			list.Add(new Tuple<string, TextStyleSetting>(stringEntry2, ToolTipScreen.Instance.defaultTooltipHeaderStyle));
+		}
+		if (SaveLoader.Instance.GameInfo.worldTraits != null && SaveLoader.Instance.GameInfo.worldTraits.Length != 0)
 		{
 			string[] worldTraits = SaveLoader.Instance.GameInfo.worldTraits;
 			for (int i = 0; i < worldTraits.Length; i++)
@@ -307,6 +323,25 @@ public class SaveGame : KMonoBehaviour, ISaveLoadable
 				{
 					list.Add(new Tuple<string, TextStyleSetting>(WORLD_TRAITS.MISSING_TRAIT, ToolTipScreen.Instance.defaultTooltipBodyStyle));
 				}
+			}
+		}
+		else if (world.WorldTraitIds != null)
+		{
+			foreach (string worldTraitId in world.WorldTraitIds)
+			{
+				WorldTrait cachedTrait2 = SettingsCache.GetCachedTrait(worldTraitId, assertMissingTrait: false);
+				if (cachedTrait2 != null)
+				{
+					list.Add(new Tuple<string, TextStyleSetting>(Strings.Get(cachedTrait2.name), ToolTipScreen.Instance.defaultTooltipBodyStyle));
+				}
+				else
+				{
+					list.Add(new Tuple<string, TextStyleSetting>(WORLD_TRAITS.MISSING_TRAIT, ToolTipScreen.Instance.defaultTooltipBodyStyle));
+				}
+			}
+			if (world.WorldTraitIds.Count == 0)
+			{
+				list.Add(new Tuple<string, TextStyleSetting>(WORLD_TRAITS.NO_TRAITS.NAME_SHORTHAND, ToolTipScreen.Instance.defaultTooltipBodyStyle));
 			}
 		}
 		return list;

@@ -1,9 +1,13 @@
+using System.Collections.Generic;
+using STRINGS;
 using TUNING;
 using UnityEngine;
 
 public class TemporalTearOpenerConfig : IBuildingConfig
 {
 	public const string ID = "TemporalTearOpener";
+
+	public const string PORT_ID = "HEP_STORAGE";
 
 	public const float PARTICLES_CAPACITY = 1000f;
 
@@ -18,12 +22,13 @@ public class TemporalTearOpenerConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("TemporalTearOpener", 5, 4, "temporal_tear_opener_kanim", 100, 120f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.RAW_METALS, 2400f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER6, decor: BUILDINGS.DECOR.BONUS.TIER2);
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("TemporalTearOpener", 5, 4, "temporal_tear_opener_kanim", 100, 120f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.RAW_METALS, 2400f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER6, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER2);
 		obj.DefaultAnimState = "off";
 		obj.Entombable = false;
 		obj.Invincible = true;
 		obj.UseHighEnergyParticleInputPort = true;
 		obj.HighEnergyParticleInputOffset = new CellOffset(0, 2);
+		obj.LogicOutputPorts = new List<LogicPorts.Port> { LogicPorts.Port.OutputPort("HEP_STORAGE", new CellOffset(0, 0), STRINGS.BUILDINGS.PREFABS.HEPENGINE.LOGIC_PORT_STORAGE, STRINGS.BUILDINGS.PREFABS.HEPENGINE.LOGIC_PORT_STORAGE_ACTIVE, STRINGS.BUILDINGS.PREFABS.HEPENGINE.LOGIC_PORT_STORAGE_INACTIVE) };
 		return obj;
 	}
 
@@ -36,6 +41,7 @@ public class TemporalTearOpenerConfig : IBuildingConfig
 		HighEnergyParticleStorage highEnergyParticleStorage = go.AddOrGet<HighEnergyParticleStorage>();
 		highEnergyParticleStorage.autoStore = true;
 		highEnergyParticleStorage.capacity = 1000f;
+		highEnergyParticleStorage.PORT_ID = "HEP_STORAGE";
 		TemporalTearOpener.Def def = go.AddOrGetDef<TemporalTearOpener.Def>();
 		def.numParticlesToOpen = 10000f;
 		def.consumeRate = 5f;

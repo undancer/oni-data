@@ -20,7 +20,7 @@ namespace KMod
 		{
 			this.filename = filename;
 			zipfile = Ionic.Zip.ZipFile.Read(filename);
-			file_system = new ZipFileDirectory(zipfile.Name, zipfile, Application.streamingAssetsPath);
+			file_system = new ZipFileDirectory(zipfile.Name, zipfile, Application.streamingAssetsPath, isModded: true);
 		}
 
 		public string GetRoot()

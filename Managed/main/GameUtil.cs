@@ -500,7 +500,12 @@ public static class GameUtil
 		{
 			return range.ToString("N1") + (displaySuffix ? (" " + UI.CLUSTERMAP.TILES_PER_CYCLE) : "");
 		}
-		return Mathf.Floor(range / 600f) + (displaySuffix ? (" " + UI.CLUSTERMAP.TILES) : "");
+		float num = range / 600f;
+		if (Mathf.Approximately(num, Mathf.Round(num)))
+		{
+			num = Mathf.Round(num);
+		}
+		return Mathf.Floor(num) + (displaySuffix ? (" " + UI.CLUSTERMAP.TILES) : "");
 	}
 
 	public static string ApplyBoldString(string source)
@@ -599,11 +604,11 @@ public static class GameUtil
 		return AddTimeSliceText(GetStandardFloat(rads) + UI.UNITSUFFIXES.RADIATION.RADS, timeSlice);
 	}
 
-	public static string GetFormattedHighEnergyParticles(float units, TimeSlice timeSlice = TimeSlice.None)
+	public static string GetFormattedHighEnergyParticles(float units, TimeSlice timeSlice = TimeSlice.None, bool displayUnits = true)
 	{
 		string text = ((units == 1f) ? UI.UNITSUFFIXES.HIGHENERGYPARTICLES.PARTRICLE : UI.UNITSUFFIXES.HIGHENERGYPARTICLES.PARTRICLES);
 		units = ApplyTimeSlice(units, timeSlice);
-		return AddTimeSliceText(GetStandardFloat(units) + text, timeSlice);
+		return AddTimeSliceText(displayUnits ? (GetStandardFloat(units) + text) : GetStandardFloat(units), timeSlice);
 	}
 
 	public static string GetFormattedWattage(float watts, WattageFormatterUnit unit = WattageFormatterUnit.Automatic, bool displayUnits = true)

@@ -147,6 +147,7 @@ public class MinionIdentity : KMonoBehaviour, ISaveLoadable, IAssignableIdentity
 			if (!base.gameObject.HasTag(GameTags.Dead))
 			{
 				Components.LiveMinionIdentities.Add(this);
+				Game.Instance.Trigger(2144209314, this);
 			}
 		}
 		SymbolOverrideController component2 = GetComponent<SymbolOverrideController>();
@@ -274,6 +275,7 @@ public class MinionIdentity : KMonoBehaviour, ISaveLoadable, IAssignableIdentity
 		}
 		Components.MinionIdentities.Remove(this);
 		Components.LiveMinionIdentities.Remove(this);
+		Game.Instance.Trigger(2144209314, this);
 	}
 
 	private void OnUpdateBounds(Bounds bounds)
@@ -288,6 +290,7 @@ public class MinionIdentity : KMonoBehaviour, ISaveLoadable, IAssignableIdentity
 		GetSoleOwner().UnassignAll();
 		GetEquipment().UnequipAll();
 		Components.LiveMinionIdentities.Remove(this);
+		Game.Instance.Trigger(2144209314, this);
 	}
 
 	public List<Ownables> GetOwners()

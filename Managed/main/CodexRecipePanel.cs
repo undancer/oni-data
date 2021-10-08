@@ -114,7 +114,7 @@ public class CodexRecipePanel : CodexWidget<CodexRecipePanel>
 			component.GetReference<ToolTip>("Tooltip").toolTip = text;
 			component.GetReference<KButton>("Button").onClick += delegate
 			{
-				ManagementMenu.Instance.codexScreen.ChangeArticle(CodexCache.FormatLinkID(ing.material.ToString()));
+				ManagementMenu.Instance.codexScreen.ChangeArticle(UI.ExtractLinkID(Assets.GetPrefab(ing.material).GetProperName()));
 			};
 		}
 		ingredients = complexRecipe.results;
@@ -135,21 +135,21 @@ public class CodexRecipePanel : CodexWidget<CodexRecipePanel>
 			component2.GetReference<ToolTip>("Tooltip").toolTip = text2;
 			component2.GetReference<KButton>("Button").onClick += delegate
 			{
-				ManagementMenu.Instance.codexScreen.ChangeArticle(CodexCache.FormatLinkID(res.material.ToString()));
+				ManagementMenu.Instance.codexScreen.ChangeArticle(UI.ExtractLinkID(Assets.GetPrefab(res.material).GetProperName()));
 			};
 		}
-		string fabricatorId = complexRecipe.id.Substring(0, complexRecipe.id.IndexOf('_'));
+		string text3 = complexRecipe.id.Substring(0, complexRecipe.id.IndexOf('_'));
 		HierarchyReferences component3 = Util.KInstantiateUI(fabricatorPrefab, fabricatorContainer, force_active: true).GetComponent<HierarchyReferences>();
-		Tuple<Sprite, Color> uISprite3 = Def.GetUISprite(fabricatorId);
+		Tuple<Sprite, Color> uISprite3 = Def.GetUISprite(text3);
 		component3.GetReference<Image>("Icon").sprite = uISprite3.first;
 		component3.GetReference<Image>("Icon").color = uISprite3.second;
 		component3.GetReference<LocText>("Time").text = GameUtil.GetFormattedTime(complexRecipe.time);
 		component3.GetReference<LocText>("Time").color = Color.black;
-		GameObject prefab3 = Assets.GetPrefab(fabricatorId.ToTag());
-		component3.GetReference<ToolTip>("Tooltip").toolTip = prefab3.GetProperName();
+		GameObject fabricator = Assets.GetPrefab(text3.ToTag());
+		component3.GetReference<ToolTip>("Tooltip").toolTip = fabricator.GetProperName();
 		component3.GetReference<KButton>("Button").onClick += delegate
 		{
-			ManagementMenu.Instance.codexScreen.ChangeArticle(CodexCache.FormatLinkID(fabricatorId));
+			ManagementMenu.Instance.codexScreen.ChangeArticle(UI.ExtractLinkID(fabricator.GetProperName()));
 		};
 	}
 

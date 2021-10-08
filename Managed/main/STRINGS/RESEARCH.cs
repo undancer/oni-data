@@ -30,7 +30,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Novice Research";
 
-				public static LocString DESC = string.Concat(UI.FormatAsLink("Novice Research", "RESEARCH"), " is required to unlock basic technologies.\nIt can be conducted at a ", BUILDINGS.PREFABS.RESEARCHCENTER.NAME, ".");
+				public static LocString DESC = UI.FormatAsLink("Novice Research", "RESEARCH") + " is required to unlock basic technologies.\nIt can be conducted at a " + UI.FormatAsLink("Research Station", "RESEARCHCENTER") + ".";
 
 				public static LocString RECIPEDESC = "Unlocks rudimentary technologies.";
 			}
@@ -39,7 +39,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Advanced Research";
 
-				public static LocString DESC = string.Concat(UI.FormatAsLink("Advanced Research", "RESEARCH"), " is required to unlock improved technologies.\nIt can be conducted at a ", BUILDINGS.PREFABS.ADVANCEDRESEARCHCENTER.NAME, ".");
+				public static LocString DESC = UI.FormatAsLink("Advanced Research", "RESEARCH") + " is required to unlock improved technologies.\nIt can be conducted at a " + UI.FormatAsLink("Super Computer", "ADVANCEDRESEARCHCENTER") + ".";
 
 				public static LocString RECIPEDESC = "Unlocks improved technologies.";
 			}
@@ -48,16 +48,16 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Interstellar Research";
 
-				public static LocString DESC = string.Concat(UI.FormatAsLink("Interstellar Research", "RESEARCH"), " is required to unlock space technologies.\nIt can be conducted at a ", BUILDINGS.PREFABS.COSMICRESEARCHCENTER.NAME, ".");
+				public static LocString DESC = UI.FormatAsLink("Interstellar Research", "RESEARCH") + " is required to unlock space technologies.\nIt can be conducted at a " + UI.FormatAsLink("Virtual Planetarium", "COSMICRESEARCHCENTER") + ".";
 
 				public static LocString RECIPEDESC = "Unlocks cutting-edge technologies.";
 			}
 
 			public class DELTA
 			{
-				public static LocString NAME = "Materials Science Research";
+				public static LocString NAME = "Applied Sciences Research";
 
-				public static LocString DESC = string.Concat(UI.FormatAsLink("Materials Science Research", "RESEARCH"), " is required to unlock materials science technologies.\nIt can be conducted at a ", BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.NAME, ".");
+				public static LocString DESC = UI.FormatAsLink("Applied Sciences Research", "RESEARCH") + " is required to unlock materials science technologies.\nIt can be conducted at a " + UI.FormatAsLink("Materials Study Terminal", "NUCLEARRESEARCHCENTER") + ".";
 
 				public static LocString RECIPEDESC = "Unlocks next wave technologies.";
 			}
@@ -66,7 +66,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Orbital Research";
 
-				public static LocString DESC = string.Concat(UI.FormatAsLink("Orbital Research", "RESEARCH"), " is required to unlock orbital technologies.\nIt can be conducted at a ", BUILDINGS.PREFABS.ORBITALRESEARCHCENTER.NAME, ".");
+				public static LocString DESC = UI.FormatAsLink("Orbital Research", "RESEARCH") + " is required to unlock orbital technologies.\nIt can be conducted at a " + UI.FormatAsLink("Orbital Microlab", "ORBITALRESEARCHCENTER") + ".";
 
 				public static LocString RECIPEDESC = "Unlocks out-of-this-world technologies.";
 			}

@@ -31,6 +31,7 @@ public class WaterCoolerConfig : IBuildingConfig
 		RoomTracker roomTracker = go.AddOrGet<RoomTracker>();
 		roomTracker.requiredRoomType = Db.Get().RoomTypes.RecRoom.Id;
 		roomTracker.requirement = RoomTracker.Requirement.Recommended;
+		go.AddOrGetDef<RocketUsageRestriction.Def>();
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

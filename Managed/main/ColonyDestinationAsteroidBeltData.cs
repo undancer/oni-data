@@ -153,15 +153,32 @@ public class ColonyDestinationAsteroidBeltData
 	private List<AsteroidDescriptor> GenerateTraitDescriptors()
 	{
 		List<AsteroidDescriptor> list = new List<AsteroidDescriptor>();
-		if (startWorld.disableWorldTraits)
+		List<ProcGen.World> list2 = new List<ProcGen.World>();
+		list2.Add(startWorld);
+		list2.AddRange(worlds);
+		int num = seed;
+		for (int i = 0; i < list2.Count; i++)
 		{
-			list.Add(new AsteroidDescriptor(WORLD_TRAITS.NO_TRAITS.NAME, WORLD_TRAITS.NO_TRAITS.DESCRIPTION));
-			return list;
-		}
-		foreach (string randomTrait in SettingsCache.GetRandomTraits(seed))
-		{
-			WorldTrait cachedTrait = SettingsCache.GetCachedTrait(randomTrait, assertMissingTrait: true);
-			list.Add(new AsteroidDescriptor(string.Format("<color=#{1}>{0}</color>", Strings.Get(cachedTrait.name), cachedTrait.colorHex), Strings.Get(cachedTrait.description)));
+			ProcGen.World world = list2[i];
+			List<string> randomTraits = SettingsCache.GetRandomTraits(num, world);
+			if (DlcManager.IsExpansion1Active())
+			{
+				list.Add(new AsteroidDescriptor("", null));
+				list.Add(new AsteroidDescriptor($"<b>{Strings.Get(world.name)}</b>", null));
+			}
+			foreach (string item in randomTraits)
+			{
+				WorldTrait cachedTrait = SettingsCache.GetCachedTrait(item, assertMissingTrait: true);
+				list.Add(new AsteroidDescriptor(string.Format("<color=#{1}>{0}</color>", Strings.Get(cachedTrait.name), cachedTrait.colorHex), Strings.Get(cachedTrait.description)));
+			}
+			if (randomTraits.Count == 0)
+			{
+				list.Add(new AsteroidDescriptor(WORLD_TRAITS.NO_TRAITS.NAME, WORLD_TRAITS.NO_TRAITS.DESCRIPTION));
+			}
+			if (num > 0)
+			{
+				num++;
+			}
 		}
 		return list;
 	}

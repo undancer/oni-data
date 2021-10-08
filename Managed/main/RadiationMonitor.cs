@@ -144,7 +144,9 @@ public class RadiationMonitor : GameStateMachine<RadiationMonitor, RadiationMoni
 
 	private static void RadiationRecovery(Instance smi, float dt)
 	{
-		smi.master.gameObject.GetAmounts().Get(Db.Get().Amounts.RadiationBalance).ApplyDelta(Db.Get().Attributes.RadiationRecovery.Lookup(smi.gameObject).GetTotalValue() * dt);
+		float num = Db.Get().Attributes.RadiationRecovery.Lookup(smi.gameObject).GetTotalValue() * dt;
+		smi.master.gameObject.GetAmounts().Get(Db.Get().Amounts.RadiationBalance).ApplyDelta(num);
+		smi.master.Trigger(1556680150, num);
 	}
 
 	private static void CheckRadiationLevel(Instance smi, float dt)

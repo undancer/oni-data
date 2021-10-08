@@ -50,6 +50,9 @@ public class WorldContainer : KMonoBehaviour
 	private float discoveryTimestamp;
 
 	[Serialize]
+	private bool isRoverVisited;
+
+	[Serialize]
 	public string worldName;
 
 	[Serialize]
@@ -180,6 +183,9 @@ public class WorldContainer : KMonoBehaviour
 	[Serialize]
 	private List<string> m_subworldNames;
 
+	[Serialize]
+	private List<string> m_worldTraitIds;
+
 	[MySmiReq]
 	private AlertStateManager.Instance m_alertManager;
 
@@ -212,7 +218,11 @@ public class WorldContainer : KMonoBehaviour
 
 	public float DiscoveryTimestamp => discoveryTimestamp;
 
+	public bool IsRoverVisted => isRoverVisited;
+
 	public List<string> Biomes => m_subworldNames;
+
+	public List<string> WorldTraitIds => m_worldTraitIds;
 
 	public AlertStateManager.Instance AlertManager
 	{
@@ -399,6 +409,11 @@ public class WorldContainer : KMonoBehaviour
 		Game.Instance.Trigger(-434755240, this);
 	}
 
+	public void SetRoverLanded()
+	{
+		isRoverVisited = true;
+	}
+
 	public void SetRocketInteriorWorldDetails(int world_id, Vector2I size, Vector2I offset)
 	{
 		SetID(world_id);
@@ -556,6 +571,8 @@ public class WorldContainer : KMonoBehaviour
 				text = text.Substring(text.LastIndexOf('/') + 1, text.Length - (text.LastIndexOf('/') + 1));
 				m_subworldNames.Add(text);
 			}
+			m_worldTraitIds = new List<string>();
+			m_worldTraitIds.AddRange(world.Settings.GetTraitIDs());
 		}
 		else
 		{
@@ -643,13 +660,16 @@ public class WorldContainer : KMonoBehaviour
 	{
 		foreach (MinionIdentity worldItem in Components.MinionIdentities.GetWorldItems(id))
 		{
-			GameObject obj = Util.KInstantiate(position: new Vector3(-1f, -1f, 0f), original: Assets.GetPrefab("EscapePod"));
-			obj.GetComponent<PrimaryElement>().SetElement(podElement);
-			obj.SetActive(value: true);
-			obj.GetComponent<MinionStorage>().SerializeMinion(worldItem.gameObject);
-			TravellingCargoLander.StatesInstance sMI = obj.GetSMI<TravellingCargoLander.StatesInstance>();
-			sMI.StartSM();
-			sMI.Travel(sourceLocation, ClusterUtil.ClosestVisibleAsteroidToLocation(sourceLocation).Location);
+			if (!worldItem.HasTag(GameTags.Dead))
+			{
+				GameObject obj = Util.KInstantiate(position: new Vector3(-1f, -1f, 0f), original: Assets.GetPrefab("EscapePod"));
+				obj.GetComponent<PrimaryElement>().SetElement(podElement);
+				obj.SetActive(value: true);
+				obj.GetComponent<MinionStorage>().SerializeMinion(worldItem.gameObject);
+				TravellingCargoLander.StatesInstance sMI = obj.GetSMI<TravellingCargoLander.StatesInstance>();
+				sMI.StartSM();
+				sMI.Travel(sourceLocation, ClusterUtil.ClosestVisibleAsteroidToLocation(sourceLocation).Location);
+			}
 		}
 	}
 
@@ -793,25 +813,31 @@ public class WorldContainer : KMonoBehaviour
 				continue;
 			}
 			Pickupable pickupable = item.obj as Pickupable;
-			if (pickupable != null)
+			if (!(pickupable != null))
 			{
-				pickupable.PrimaryElement.Units = Mathf.Max(1, Mathf.RoundToInt(pickupable.PrimaryElement.Units * 0.5f));
-				if ((debrisObjects.Count == 0 || debrisObjects[debrisObjects.Count - 1].RemainingCapacity() == 0f) && pickupable.PrimaryElement.Mass > 0f)
-				{
-					debrisObjects.Add(CraftModuleInterface.SpawnRocketDebris(" from World Objects", debrisContainerElement));
-				}
-				Storage storage = debrisObjects[debrisObjects.Count - 1];
-				while (pickupable.PrimaryElement.Mass > storage.RemainingCapacity())
-				{
-					Pickupable pickupable2 = pickupable.Take(storage.RemainingCapacity());
-					storage.Store(pickupable2.gameObject);
-					storage = CraftModuleInterface.SpawnRocketDebris(" from World Objects", debrisContainerElement);
-					debrisObjects.Add(storage);
-				}
-				if (pickupable.PrimaryElement.Mass > 0f)
-				{
-					storage.Store(pickupable.gameObject);
-				}
+				continue;
+			}
+			if (pickupable.HasTag(GameTags.Minion))
+			{
+				Util.KDestroyGameObject(pickupable.gameObject);
+				continue;
+			}
+			pickupable.PrimaryElement.Units = Mathf.Max(1, Mathf.RoundToInt(pickupable.PrimaryElement.Units * 0.5f));
+			if ((debrisObjects.Count == 0 || debrisObjects[debrisObjects.Count - 1].RemainingCapacity() == 0f) && pickupable.PrimaryElement.Mass > 0f)
+			{
+				debrisObjects.Add(CraftModuleInterface.SpawnRocketDebris(" from World Objects", debrisContainerElement));
+			}
+			Storage storage = debrisObjects[debrisObjects.Count - 1];
+			while (pickupable.PrimaryElement.Mass > storage.RemainingCapacity())
+			{
+				Pickupable pickupable2 = pickupable.Take(storage.RemainingCapacity());
+				storage.Store(pickupable2.gameObject);
+				storage = CraftModuleInterface.SpawnRocketDebris(" from World Objects", debrisContainerElement);
+				debrisObjects.Add(storage);
+			}
+			if (pickupable.PrimaryElement.Mass > 0f)
+			{
+				storage.Store(pickupable.gameObject);
 			}
 		}
 		pooledList.Recycle();

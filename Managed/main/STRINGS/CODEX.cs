@@ -50,11 +50,17 @@ namespace STRINGS
 
 			public static LocString BUILDINGREQUIREMENTS = "Requirements";
 
+			public static LocString BUILDINGTYPE = "Room Requirements Class";
+
 			public static LocString SUBENTRIES = "Entries ({0}/{1})";
 
 			public static LocString COMFORTRANGE = "Ideal Temperatures";
 
 			public static LocString ELEMENTTRANSITIONS = "Additional States";
+
+			public static LocString ELEMENTCONSUMEDBY = "Consumed By";
+
+			public static LocString ELEMENTPRODUCEDBY = "Produced By";
 
 			public static LocString SECTION_UNLOCKABLES = "Undiscovered Data";
 
@@ -97,6 +103,11 @@ namespace STRINGS
 			public static LocString SUBTITLE = "This database entry is under construction or unavailable";
 
 			public static LocString BODY = "";
+		}
+
+		public class BUILDING_TYPE
+		{
+			public static LocString INDUSTRIAL_MACHINERY = "Industrial Machinery";
 		}
 
 		public class BEETA
@@ -2507,7 +2518,24 @@ namespace STRINGS
 
 			public static LocString HEADER_3 = "Research Types";
 
-			public static LocString PARAGRAPH_3 = string.Concat("Advanced research tasks require special research stations to generate the proper kind of research points. These research stations often consume more advanced resources.\n\nUsing higher level research stations also requires Duplicants to have learned higher level research ", UI.FormatAsLink("skills", "ROLES"), ".\n\n", STRINGS.RESEARCH.TYPES.ALPHA.NAME, " is performed at the ", BUILDINGS.PREFABS.RESEARCHCENTER.NAME, "\n", STRINGS.RESEARCH.TYPES.BETA.NAME, " is performed at the ", BUILDINGS.PREFABS.ADVANCEDRESEARCHCENTER.NAME, "\n", STRINGS.RESEARCH.TYPES.GAMMA.NAME, " is performed at the ", BUILDINGS.PREFABS.COSMICRESEARCHCENTER.NAME, "\n", STRINGS.RESEARCH.TYPES.DELTA.NAME, " is performed at the ", BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.NAME, "\n\n");
+			public static LocString PARAGRAPH_3 = string.Concat("Advanced research tasks require special research stations to generate the proper kind of research points. These research stations often consume more advanced resources.\n\nUsing higher level research stations also requires Duplicants to have learned higher level research ", UI.FormatAsLink("skills", "ROLES"), ".\n\n", STRINGS.RESEARCH.TYPES.ALPHA.NAME, " is performed at the ", BUILDINGS.PREFABS.RESEARCHCENTER.NAME, "\n", STRINGS.RESEARCH.TYPES.BETA.NAME, " is performed at the ", BUILDINGS.PREFABS.ADVANCEDRESEARCHCENTER.NAME, "\n", STRINGS.RESEARCH.TYPES.GAMMA.NAME, " is performed at the ", BUILDINGS.PREFABS.COSMICRESEARCHCENTER.NAME, "\n\n");
+		}
+
+		public class RESEARCHDLC1
+		{
+			public static LocString TITLE = UI.FormatAsLink("Research", "RESEARCHDLC1");
+
+			public static LocString HEADER_1 = "Research";
+
+			public static LocString PARAGRAPH_1 = string.Concat("Doing research unlocks new types of buildings for the colony. Duplicants can perform research at the ", BUILDINGS.PREFABS.RESEARCHCENTER.NAME, ".\n\n");
+
+			public static LocString HEADER_2 = "Research Tasks";
+
+			public static LocString PARAGRAPH_2 = "A selected research task is completed once enough research points have been generated at the colonies research stations. Duplicants with high 'Science' attribute scores will generate research points faster than Duplicants with lower scores.\n\n";
+
+			public static LocString HEADER_3 = "Research Types";
+
+			public static LocString PARAGRAPH_3 = string.Concat("Advanced research tasks require special research stations to generate the proper kind of research points. These research stations often consume more advanced resources.\n\nUsing higher level research stations also requires Duplicants to have learned higher level research ", UI.FormatAsLink("skills", "ROLES"), ".\n\n", STRINGS.RESEARCH.TYPES.ALPHA.NAME, " is performed at the ", BUILDINGS.PREFABS.RESEARCHCENTER.NAME, "\n", STRINGS.RESEARCH.TYPES.BETA.NAME, " is performed at the ", BUILDINGS.PREFABS.ADVANCEDRESEARCHCENTER.NAME, "\n", STRINGS.RESEARCH.TYPES.GAMMA.NAME, " is performed at the ", BUILDINGS.PREFABS.ORBITALRESEARCHCENTER.NAME, "\n", STRINGS.RESEARCH.TYPES.DELTA.NAME, " is performed at the ", BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.NAME, "\n\n");
 		}
 
 		public class STRESS

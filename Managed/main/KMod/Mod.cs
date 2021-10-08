@@ -331,7 +331,7 @@ namespace KMod
 			list2 = list2.Where((ArchivedVersion v) => DoesModSupportCurrentContent(v.info)).ToList();
 			list2 = list2.Where((ArchivedVersion v) => v.info.APIVersion == 2 || v.info.APIVersion == 0).ToList();
 			ArchivedVersion archivedVersion2 = (from v in list2
-				where (long)v.info.minimumSupportedBuild <= 479045L
+				where (long)v.info.minimumSupportedBuild <= 481350L
 				orderby v.info.minimumSupportedBuild descending
 				select v).FirstOrDefault();
 			if (archivedVersion2 == null)

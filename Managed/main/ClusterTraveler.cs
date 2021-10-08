@@ -76,16 +76,8 @@ public class ClusterTraveler : KMonoBehaviour, ISim200ms
 
 	public int RemainingTravelNodes()
 	{
-		int num = CurrentPath.Count;
-		if (ClusterGrid.Instance.HasVisibleAsteroidAtCell(m_clusterGridEntity.Location))
-		{
-			num--;
-		}
-		if (m_destinationSelector.HasAsteroidDestination())
-		{
-			num--;
-		}
-		return Mathf.Max(0, num);
+		int count = CurrentPath.Count;
+		return Mathf.Max(0, count);
 	}
 
 	public float GetMoveProgress()

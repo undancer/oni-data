@@ -112,7 +112,7 @@ public class CritterTrapPlant : StateMachineComponent<CritterTrapPlant.StatesIns
 			trap.digesting.idle.PlayAnim("digesting_loop", KAnim.PlayMode.Loop).Update(delegate(StatesInstance smi, float dt)
 			{
 				smi.AddGas(dt);
-			}, UpdateRate.SIM_4000ms).OnSignal(ventGas, trap.digesting.vent);
+			}, UpdateRate.SIM_4000ms).OnSignal(ventGas, trap.digesting.vent_pre);
 			trap.digesting.vent_pre.PlayAnim("vent_pre").Exit(delegate(StatesInstance smi)
 			{
 				smi.VentGas();

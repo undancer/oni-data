@@ -74,7 +74,8 @@ public class LandingBeacon : GameStateMachine<LandingBeacon, LandingBeacon.Insta
 		WorldContainer myWorld = smi.GetMyWorld();
 		bool flag = true;
 		int num = Grid.PosToCell(smi);
-		while (Grid.CellRow(num) < myWorld.Height)
+		int num2 = (int)myWorld.maximumBounds.y;
+		while (Grid.CellRow(num) <= num2)
 		{
 			if (!Grid.IsValidCell(num) || Grid.Solid[num])
 			{

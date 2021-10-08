@@ -36,9 +36,10 @@ public class BestFit
 	{
 		List<Rect> list = new List<Rect>();
 		Vector2I result = default(Vector2I);
-		worldsToArrange.Sort((WorldPlacement a, WorldPlacement b) => b.height.CompareTo(a.height));
-		int height = worldsToArrange[0].height;
-		foreach (WorldPlacement item in worldsToArrange)
+		List<WorldPlacement> list2 = new List<WorldPlacement>(worldsToArrange);
+		list2.Sort((WorldPlacement a, WorldPlacement b) => b.height.CompareTo(a.height));
+		int height = list2[0].height;
+		foreach (WorldPlacement item in list2)
 		{
 			Vector2I position = default(Vector2I);
 			while (!UnoccupiedSpace(new Rect(position.x, position.y, item.width, item.height), list))

@@ -57,6 +57,7 @@ public class ConversationManager : KMonoBehaviour, ISim200ms
 	{
 		activeSetups = new List<Conversation>();
 		lastConvoTimeByMinion = new Dictionary<MinionIdentity, float>();
+		simRenderLoadBalance = true;
 	}
 
 	public void Sim200ms(float dt)

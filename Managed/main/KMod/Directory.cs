@@ -16,7 +16,7 @@ namespace KMod
 		public Directory(string root)
 		{
 			this.root = root;
-			file_system = new AliasDirectory(root, root, Application.streamingAssetsPath);
+			file_system = new AliasDirectory(root, root, Application.streamingAssetsPath, isModded: true);
 		}
 
 		public string GetRoot()

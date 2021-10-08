@@ -309,6 +309,13 @@ public class MainMenu : KScreen
 			HasAutoresumedOnce = true;
 			ResumeGame();
 		}
+		if (GenericGameSettings.instance.devAutoWorldGen && !KCrashReporter.hasCrash)
+		{
+			GenericGameSettings.instance.devAutoWorldGen = false;
+			GenericGameSettings.instance.devAutoWorldGenActive = true;
+			GenericGameSettings.instance.SaveSettings();
+			Util.KInstantiateUI(ScreenPrefabs.Instance.WorldGenScreen.gameObject, base.gameObject, force_active: true);
+		}
 	}
 
 	private void UnregisterMotdRequest()
@@ -468,7 +475,7 @@ public class MainMenu : KScreen
 					header = value.header;
 					gameInfo = value.headerData;
 				}
-				if (header.buildVersion > 479045 || gameInfo.saveMajorVersion != 7 || gameInfo.saveMinorVersion > 27)
+				if (header.buildVersion > 481350 || gameInfo.saveMajorVersion != 7 || gameInfo.saveMinorVersion > 27)
 				{
 					flag = false;
 				}

@@ -247,7 +247,7 @@ namespace STRINGS
 
 				public static LocString DESC = "At least one astronaut must be assigned to the command module to pilot a rocket.";
 
-				public static LocString EFFECT = "Contains passenger seating for Duplicant " + UI.FormatAsLink("Astronauts", "ASTRONAUT") + ".\n\nA Command Capsule must be the last module installed at the top of a rocket.";
+				public static LocString EFFECT = "Contains passenger seating for Duplicant " + UI.FormatAsLink("Astronauts", "ASTRONAUTING1") + ".\n\nA Command Capsule must be the last module installed at the top of a rocket.";
 
 				public static LocString LOGIC_PORT_READY = "Rocket Checklist";
 
@@ -298,7 +298,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Someone needs to be around to jiggle the controls when the screensaver comes on.";
 
-				public static LocString EFFECT = "Allows Duplicants to use pilot-operated rockets and control access to interior buildings.\n\nAssigned Duplicants must have the " + UI.FormatAsLink("Rocket Piloting", "PILOT") + " skill.";
+				public static LocString EFFECT = "Allows Duplicants to use pilot-operated rockets and control access to interior buildings.\n\nAssigned Duplicants must have the " + UI.FormatAsLink("Rocket Piloting", "ROCKETPILOTING1") + " skill.";
 
 				public static LocString LOGIC_PORT = "Restrict Building Usage";
 
@@ -440,6 +440,12 @@ namespace STRINGS
 				public static LocString DESC = "Radbolt-fueled rockets support few modules, but travel exceptionally far.";
 
 				public static LocString EFFECT = "Injects " + UI.FormatAsLink("Radbolts", "HEP") + " into a reaction chamber to propel rockets for long-range space exploration.\n\nRadbolt Engines are faster than " + UI.FormatAsLink("Hydrogen Engines", "HYDROGENENGINE") + " but with a more restrictive height allowance.\n\nThe engine of a rocket must be built first before more rocket modules can be added.";
+
+				public static LocString LOGIC_PORT_STORAGE = "Radbolt Storage";
+
+				public static LocString LOGIC_PORT_STORAGE_ACTIVE = "Sends a " + UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + " when its Radbolt Storage is full";
+
+				public static LocString LOGIC_PORT_STORAGE_INACTIVE = "Otherwise, sends a " + UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby);
 			}
 
 			public class ORBITALCARGOMODULE
@@ -1792,7 +1798,7 @@ namespace STRINGS
 
 				public static LocString DESC = "A Duplicant can work an Ice-E fan to temporarily cool small areas as needed.";
 
-				public static LocString EFFECT = "Uses " + UI.FormatAsLink("Ice", "ICE") + " to dissipate a small amount of the " + UI.FormatAsLink("Heat", "HEAT") + ".";
+				public static LocString EFFECT = "Uses " + UI.FormatAsLink("Ice", "ICEORE") + " to dissipate a small amount of the " + UI.FormatAsLink("Heat", "HEAT") + ".";
 			}
 
 			public class ICEMACHINE
@@ -2194,16 +2200,16 @@ namespace STRINGS
 
 				public static LocString DESC = "Super computers unlock higher technology tiers than research stations alone.";
 
-				public static LocString EFFECT = "Conducts " + UI.FormatAsLink("Advanced Research", "RESEARCH") + " to unlock new technologies.\n\nConsumes " + UI.FormatAsLink("Water", "WATER") + ".\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Advanced Research", "JUNIOR_RESEARCHER") + " skill.";
+				public static LocString EFFECT = "Conducts " + UI.FormatAsLink("Advanced Research", "RESEARCH") + " to unlock new technologies.\n\nConsumes " + UI.FormatAsLink("Water", "WATER") + ".\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Advanced Research", "RESEARCHING1") + " skill.";
 			}
 
 			public class NUCLEARRESEARCHCENTER
 			{
-				public static LocString NAME = UI.FormatAsLink("Materials Study Terminal", "NUCLEARLABORATORY");
+				public static LocString NAME = UI.FormatAsLink("Materials Study Terminal", "NUCLEARRESEARCHCENTER");
 
 				public static LocString DESC = "Comes with a few ions thrown in, free of charge.";
 
-				public static LocString EFFECT = "Conducts " + UI.FormatAsLink("Materials Science Research", "RESEARCH") + " to unlock new technologies.\n\nConsumes Radbolts.\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Materials Science Research", "ATOMIC_RESEARCHER") + " skill.";
+				public static LocString EFFECT = "Conducts " + UI.FormatAsLink("Materials Science Research", "RESEARCHDLC1") + " to unlock new technologies.\n\nConsumes Radbolts.\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Applied Sciences Research", "ATOMICRESEARCH") + " skill.";
 			}
 
 			public class ORBITALRESEARCHCENTER
@@ -2212,7 +2218,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Orbital Microlabs perform research from the orbit around a Planetoid.";
 
-				public static LocString EFFECT = "Conducts " + UI.FormatAsLink("Interstellar Research", "RESEARCH") + " to unlock new technologies.\n\nConsumes " + UI.FormatAsLink("Plastic", "POLYPROPYLENE") + " and " + UI.FormatAsLink("Power", "POWER") + ".\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Orbital Researcher", "COSMIC_RESEARCHER") + " skill.";
+				public static LocString EFFECT = "Conducts " + UI.FormatAsLink("Interstellar Research", "RESEARCHDLC1") + " to unlock new technologies.\n\nConsumes " + UI.FormatAsLink("Plastic", "POLYPROPYLENE") + " and " + UI.FormatAsLink("Power", "POWER") + ".\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Orbital Researcher", "SPACERESEARCH") + " skill.";
 			}
 
 			public class COSMICRESEARCHCENTER
@@ -2221,7 +2227,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Planetariums allow the simulated exploration of locations discovered with a telescope.";
 
-				public static LocString EFFECT = "Conducts " + UI.FormatAsLink("Interstellar Research", "RESEARCH") + " to unlock new technologies.\n\nConsumes data from " + UI.FormatAsLink("Telescopes", "TELESCOPE") + " and " + UI.FormatAsLink("Research Modules", "RESEARCHMODULE") + ".\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Astronomy", "SENIOR_RESEARCHER") + " skill.";
+				public static LocString EFFECT = "Conducts " + UI.FormatAsLink("Interstellar Research", "RESEARCH") + " to unlock new technologies.\n\nConsumes data from " + UI.FormatAsLink("Telescopes", "TELESCOPE") + " and " + UI.FormatAsLink("Research Modules", "RESEARCHMODULE") + ".\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Astronomy", "ASTRONOMY") + " skill.";
 			}
 
 			public class TELESCOPE
@@ -2230,7 +2236,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Telescopes are necessary for learning starmaps and conducting rocket missions.";
 
-				public static LocString EFFECT = "Maps Starmap destinations.\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Field Research", "RESEARCHER") + " skill.\n\nBuilding must be exposed to space to function.";
+				public static LocString EFFECT = "Maps Starmap destinations.\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Field Research", "RESEARCHING2") + " skill.\n\nBuilding must be exposed to space to function.";
 
 				public static LocString REQUIREMENT_TOOLTIP = "A steady {0} supply is required to sustain working Duplicants.";
 			}
@@ -2241,7 +2247,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Telescopes are necessary for studying space, allowing rocket travel to other worlds.";
 
-				public static LocString EFFECT = "Reveals visitable Planetoids in space.\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Astronomy", "SENIOR_RESEARCHER") + " skill.\n\nBuilding must be exposed to space to function.";
+				public static LocString EFFECT = "Reveals visitable Planetoids in space.\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Astronomy", "ASTRONOMY") + " skill.\n\nBuilding must be exposed to space to function.";
 
 				public static LocString REQUIREMENT_TOOLTIP = "A steady {0} supply is required to sustain working Duplicants.";
 			}
@@ -2976,7 +2982,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Only one Duplicant may be assigned to a station at a time.";
 
-				public static LocString EFFECT = "Produces " + UI.FormatAsLink("Microchip", "POWER_STATION_TOOLS") + " to increase the " + UI.FormatAsLink("Power", "POWER") + " output of generators.\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Tune Up", "POWER_TECHNICIAN") + " trait.\n\nThis building is a necessary component of the Power Plant room.";
+				public static LocString EFFECT = "Produces " + UI.FormatAsLink("Microchip", "POWER_STATION_TOOLS") + " to increase the " + UI.FormatAsLink("Power", "POWER") + " output of generators.\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Tune Up", "TECHNICALS2") + " trait.\n\nThis building is a necessary component of the Power Plant room.";
 			}
 
 			public class FARMSTATION
@@ -2985,7 +2991,7 @@ namespace STRINGS
 
 				public static LocString DESC = "This station only has an effect on crops grown within the same room.";
 
-				public static LocString EFFECT = "Produces " + UI.FormatAsLink("Micronutrient Fertilizer", "FARM_STATION_TOOLS") + " to increase " + UI.FormatAsLink("Plant", "PLANTS") + " growth rates.\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Crop Tending", "FARMER") + " trait.\n\nThis building is a necessary component of the Greenhouse room.";
+				public static LocString EFFECT = "Produces " + UI.FormatAsLink("Micronutrient Fertilizer", "FARM_STATION_TOOLS") + " to increase " + UI.FormatAsLink("Plant", "PLANTS") + " growth rates.\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Crop Tending", "FARMING2") + " trait.\n\nThis building is a necessary component of the Greenhouse room.";
 			}
 
 			public class FISHDELIVERYPOINT
@@ -3021,7 +3027,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Grooming critters make them look nice, smell pretty, feel happy, and produce more.";
 
-				public static LocString EFFECT = "Allows the assigned " + UI.FormatAsLink("Rancher", "RANCHER") + " to care for " + UI.FormatAsLink("Critters", "CRITTERS") + ".\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Critter Wrangling", "RANCHER") + " trait.\n\nThis building is a necessary component of the Stable room.";
+				public static LocString EFFECT = "Allows the assigned " + UI.FormatAsLink("Rancher", "RANCHER") + " to care for " + UI.FormatAsLink("Critters", "CRITTERS") + ".\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Critter Ranching", "RANCHING1") + " skill.\n\nThis building is a necessary component of the Stable room.";
 			}
 
 			public class MACHINESHOP
@@ -3303,6 +3309,21 @@ namespace STRINGS
 				public static LocString LOGIC_PORT = "Consumed " + UI.FormatAsLink("Wattage", "POWER");
 
 				public static LocString LOGIC_PORT_ACTIVE = "Sends a " + UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + " if current " + UI.FormatAsLink("Wattage", "POWER") + " is within the selected range";
+
+				public static LocString LOGIC_PORT_INACTIVE = "Otherwise, sends a " + UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby);
+			}
+
+			public class LOGICHEPSENSOR
+			{
+				public static LocString NAME = UI.FormatAsLink("Radbolt Sensor", "LOGICHEPSENSOR");
+
+				public static LocString DESC = "Radbolt sensors can send a signal when a Radbolt passes over them.";
+
+				public static LocString EFFECT = "Sends a " + UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + " or a " + UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby) + " when Radbolts detected enters the chosen range.";
+
+				public static LocString LOGIC_PORT = "Detected Radbolts";
+
+				public static LocString LOGIC_PORT_ACTIVE = "Sends a " + UI.FormatAsAutomationState("Green Signal", UI.AutomationState.Active) + " if detected Radbolts are within the selected range";
 
 				public static LocString LOGIC_PORT_INACTIVE = "Otherwise, sends a " + UI.FormatAsAutomationState("Red Signal", UI.AutomationState.Standby);
 			}
@@ -3888,7 +3909,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Incubators can maintain the ideal internal conditions for several species of critter egg.";
 
-				public static LocString EFFECT = "Incubates " + UI.FormatAsLink("Critter", "CRITTERS") + " eggs until ready to hatch.\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Critter Wrangling", "RANCHER") + " trait.";
+				public static LocString EFFECT = "Incubates " + UI.FormatAsLink("Critter", "CRITTERS") + " eggs until ready to hatch.\n\nAssigned Duplicants must possess the " + UI.FormatAsLink("Critter Ranching", "RANCHING1") + " .";
 			}
 
 			public class EGGCRACKER
@@ -3960,7 +3981,7 @@ namespace STRINGS
 
 				public static LocString DESC = "Duplicants must complete astronaut training in order to pilot space rockets.";
 
-				public static LocString EFFECT = "Trains Duplicants to become " + UI.FormatAsLink("Astronauts", "ASTRONAUT") + ".\n\nDuplicants must possess the " + UI.FormatAsLink("Astronaut-in-Training", "ASTRONAUTTRAINEE") + " trait to receive training.";
+				public static LocString EFFECT = "Trains Duplicants to become " + UI.FormatAsLink("Astronaut", "ROCKETPILOTING1") + ".\n\nDuplicants must possess the " + UI.FormatAsLink("Astronaut", "ROCKETPILOTING1") + " trait to receive training.";
 			}
 
 			public class HOTTUB
@@ -4532,7 +4553,7 @@ namespace STRINGS
 
 				public static LocString DESC = "The tubes at the back disappear into nowhere.";
 
-				public static LocString EFFECT = "A machine capable of teleporting " + UI.FormatAsLink("Liquid", "ELEMENTS_LIQUID") + ", " + UI.FormatAsLink("Solid", "ELEMENTS_SOLID") + ", and " + UI.FormatAsLink("Gas", "ELEMENTS_GAS") + " resources to another asteroid.\n\nIt can be activated by a Duplicant with the " + UI.FormatAsLink("Field Research", "RESEARCHER") + " skill.\n\nThis is the receiving side.";
+				public static LocString EFFECT = "A machine capable of teleporting " + UI.FormatAsLink("Liquid", "ELEMENTS_LIQUID") + ", " + UI.FormatAsLink("Solid", "ELEMENTS_SOLID") + ", and " + UI.FormatAsLink("Gas", "ELEMENTS_GAS") + " resources to another asteroid.\n\nIt can be activated by a Duplicant with the " + UI.FormatAsLink("Field Research", "RESEARCHING2") + " skill.\n\nThis is the receiving side.";
 			}
 
 			public class WARPCONDUITSENDER
@@ -4541,7 +4562,7 @@ namespace STRINGS
 
 				public static LocString DESC = "The tubes at the back disappear into nowhere.";
 
-				public static LocString EFFECT = "A machine capable of teleporting " + UI.FormatAsLink("Liquid", "ELEMENTS_LIQUID") + ", " + UI.FormatAsLink("Solid", "ELEMENTS_SOLID") + ", and " + UI.FormatAsLink("Gas", "ELEMENTS_GAS") + " resources to another asteroid.\n\nIt can be activated by a Duplicant with the " + UI.FormatAsLink("Field Research", "RESEARCHER") + " skill.\n\nThis is the transmitting side.";
+				public static LocString EFFECT = "A machine capable of teleporting " + UI.FormatAsLink("Liquid", "ELEMENTS_LIQUID") + ", " + UI.FormatAsLink("Solid", "ELEMENTS_SOLID") + ", and " + UI.FormatAsLink("Gas", "ELEMENTS_GAS") + " resources to another asteroid.\n\nIt can be activated by a Duplicant with the " + UI.FormatAsLink("Field Research", "RESEARCHING2") + " skill.\n\nThis is the transmitting side.";
 			}
 
 			public class WARPPORTAL

@@ -339,8 +339,9 @@ public class Diggable : Workable
 		{
 			return cell;
 		}
+		byte b = Grid.WorldIdx[cell];
 		int num = Grid.CellAbove(cell);
-		while (Grid.IsValidCell(num))
+		while (Grid.IsValidCell(num) && Grid.WorldIdx[num] == b)
 		{
 			if (Grid.Foundation[num])
 			{

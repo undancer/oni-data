@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Klei.AI;
+using ProcGen;
 using STRINGS;
 using UnityEngine;
 using UnityEngine.UI;
@@ -230,6 +231,8 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 
 	private CollapsibleDetailContentPanel spacePOIPanel;
 
+	private CollapsibleDetailContentPanel worldTraitsPanel;
+
 	[SerializeField]
 	public GameObject iconLabelRow;
 
@@ -241,6 +244,8 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 	private Dictionary<Tag, GameObject> biomeRows = new Dictionary<Tag, GameObject>();
 
 	private Dictionary<Tag, GameObject> geyserRows = new Dictionary<Tag, GameObject>();
+
+	private List<GameObject> worldTraitRows = new List<GameObject>();
 
 	[SerializeField]
 	public GameObject spacerRow;
@@ -332,6 +337,8 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 		descriptionContainer = Util.KInstantiateUI<DescriptionContainer>(DescriptionContainerTemplate, parent);
 		worldLifePanel = Util.KInstantiateUI<CollapsibleDetailContentPanel>(ScreenPrefabs.Instance.CollapsableContentPanel, base.gameObject);
 		worldLifePanel.SetTitle(UI.DETAILTABS.SIMPLEINFO.GROUPNAME_LIFE);
+		worldTraitsPanel = Util.KInstantiateUI<CollapsibleDetailContentPanel>(ScreenPrefabs.Instance.CollapsableContentPanel, base.gameObject);
+		worldTraitsPanel.GetComponent<CollapsibleDetailContentPanel>().HeaderLabel.text = UI.DETAILTABS.SIMPLEINFO.GROUPNAME_WORLDTRAITS;
 		worldElementsPanel = Util.KInstantiateUI<CollapsibleDetailContentPanel>(ScreenPrefabs.Instance.CollapsableContentPanel, base.gameObject);
 		worldElementsPanel.SetTitle(UI.DETAILTABS.SIMPLEINFO.GROUPNAME_ELEMENTS);
 		worldGeysersPanel = Util.KInstantiateUI<CollapsibleDetailContentPanel>(ScreenPrefabs.Instance.CollapsableContentPanel, base.gameObject);
@@ -762,6 +769,15 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 		}
 	}
 
+	private void CreateWorldTraitRow()
+	{
+		GameObject gameObject = Util.KInstantiateUI(iconLabelRow, worldTraitsPanel.Content.gameObject, force_active: true);
+		worldTraitRows.Add(gameObject);
+		HierarchyReferences component = gameObject.GetComponent<HierarchyReferences>();
+		component.GetReference<Image>("Icon").gameObject.SetActive(value: false);
+		component.GetReference<LocText>("ValueLabel").gameObject.SetActive(value: false);
+	}
+
 	private void RefreshWorld()
 	{
 		WorldContainer worldContainer = ((selectedTarget == null) ? null : selectedTarget.GetComponent<WorldContainer>());
@@ -769,6 +785,7 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 		bool flag = worldContainer != null && asteroidGridEntity != null;
 		worldBiomesPanel.gameObject.SetActive(flag);
 		worldGeysersPanel.gameObject.SetActive(flag);
+		worldTraitsPanel.gameObject.SetActive(flag);
 		if (!flag)
 		{
 			return;
@@ -836,6 +853,43 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 			component3.GetReference<LocText>("ValueLabel").gameObject.SetActive(value: false);
 		}
 		geyserRows[key].gameObject.SetActive(list.Count == 0);
+		List<string> worldTraitIds = worldContainer.WorldTraitIds;
+		if (worldTraitIds == null)
+		{
+			return;
+		}
+		for (int j = 0; j < worldTraitIds.Count; j++)
+		{
+			if (j > worldTraitRows.Count - 1)
+			{
+				CreateWorldTraitRow();
+			}
+			WorldTrait cachedTrait = SettingsCache.GetCachedTrait(worldTraitIds[j], assertMissingTrait: false);
+			if (cachedTrait != null)
+			{
+				worldTraitRows[j].GetComponent<HierarchyReferences>().GetReference<LocText>("NameLabel").SetText(Strings.Get(cachedTrait.name));
+				worldTraitRows[j].AddOrGet<ToolTip>().SetSimpleTooltip(Strings.Get(cachedTrait.description));
+			}
+			else
+			{
+				worldTraitRows[j].GetComponent<HierarchyReferences>().GetReference<LocText>("NameLabel").SetText(WORLD_TRAITS.MISSING_TRAIT);
+				worldTraitRows[j].AddOrGet<ToolTip>().SetSimpleTooltip("");
+			}
+		}
+		for (int k = 0; k < worldTraitRows.Count; k++)
+		{
+			worldTraitRows[k].SetActive(k < worldTraitIds.Count);
+		}
+		if (worldTraitIds.Count == 0)
+		{
+			if (worldTraitRows.Count < 1)
+			{
+				CreateWorldTraitRow();
+			}
+			worldTraitRows[0].GetComponent<HierarchyReferences>().GetReference<LocText>("NameLabel").SetText(WORLD_TRAITS.NO_TRAITS.NAME_SHORTHAND);
+			worldTraitRows[0].AddOrGet<ToolTip>().SetSimpleTooltip(WORLD_TRAITS.NO_TRAITS.DESCRIPTION);
+			worldTraitRows[0].SetActive(value: true);
+		}
 	}
 
 	private void RefreshProcessConditions()

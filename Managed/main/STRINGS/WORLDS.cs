@@ -202,6 +202,13 @@ namespace STRINGS
 			public static LocString DESCRIPTION = "A large-ish terra world with a radioactive core.\n\n<smallcaps>The Radioactive Terra Asteroid is fairly dry and sandy, but does contain areas of jungle.</smallcaps>";
 		}
 
+		public class MEDIUMSWAMPY
+		{
+			public static LocString NAME = "Mid-Sized Swampy Asteroid";
+
+			public static LocString DESCRIPTION = "A large-ish, polluted swamp world.\n\n<smallcaps>Mid-sized Swampy Asteroids are full of swampy and marshy areas, but also contain a variety of other biomes diverse enough to keep a determined colony supplied with essentials.</smallcaps>";
+		}
+
 		public class STRANGERICHSANDSTONE
 		{
 			public static LocString NAME = "Rocky Asteroid";

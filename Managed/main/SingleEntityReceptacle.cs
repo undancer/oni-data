@@ -156,14 +156,15 @@ public class SingleEntityReceptacle : Workable, IRender1000ms
 		else if (fetchChore != null)
 		{
 			bool flag = fetchChore.fetcher != null;
-			if (!flag)
+			WorldContainer myWorld = this.GetMyWorld();
+			if (!flag && myWorld != null)
 			{
 				Tag[] tags = fetchChore.tags;
 				foreach (Tag tag in tags)
 				{
-					if (this.GetMyWorld().worldInventory.GetTotalAmount(tag, includeRelatedWorlds: true) > 0f)
+					if (myWorld.worldInventory.GetTotalAmount(tag, includeRelatedWorlds: true) > 0f)
 					{
-						if (this.GetMyWorld().worldInventory.GetTotalAmount(requestedEntityAdditionalFilterTag, includeRelatedWorlds: true) > 0f || requestedEntityAdditionalFilterTag == Tag.Invalid)
+						if (myWorld.worldInventory.GetTotalAmount(requestedEntityAdditionalFilterTag, includeRelatedWorlds: true) > 0f || requestedEntityAdditionalFilterTag == Tag.Invalid)
 						{
 							flag = true;
 						}

@@ -69,7 +69,10 @@ public class RocketConduitSender : StateMachineComponent<RocketConduitSender.Sta
 				return (bool)myWorld2 && myWorld2.IsModuleInterior && !myWorld2.GetComponent<Clustercraft>().ModuleInterface.GetPassengerModule().HasTag(GameTags.RocketNotOnGround);
 			}).Exit(delegate(StatesInstance smi)
 			{
-				smi.gameObject.GetSMI<AutoStorageDropper.Instance>().SetInvertElementFilter(value: false);
+				if (smi.gameObject != null)
+				{
+					smi.gameObject.GetSMI<AutoStorageDropper.Instance>()?.SetInvertElementFilter(value: false);
+				}
 			});
 			on.working.ground.Enter(delegate(StatesInstance smi)
 			{

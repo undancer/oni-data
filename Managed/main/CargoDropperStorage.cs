@@ -39,6 +39,7 @@ public class CargoDropperStorage : GameStateMachine<CargoDropperStorage, CargoDr
 					}
 					new EmoteChore(component2, Db.Get().ChoreTypes.EmoteHighPriority, null, new HashedString[1] { "enter" }, KAnim.PlayMode.Once);
 				}
+				gameObject.GetMyWorld().SetRoverLanded();
 			}
 			component.DropAll(position);
 		}

@@ -37,7 +37,7 @@ public class MinionStartingStats : ITelepadDeliverable
 
 	public Dictionary<SkillGroup, float> skillAptitudes = new Dictionary<SkillGroup, float>();
 
-	public MinionStartingStats(bool is_starter_minion, string guaranteedAptitudeID = null)
+	public MinionStartingStats(bool is_starter_minion, string guaranteedAptitudeID = null, string guaranteedTraitID = null)
 	{
 		if (is_starter_minion)
 		{
@@ -56,7 +56,7 @@ public class MinionStartingStats : ITelepadDeliverable
 		Traits.Add(Db.Get().traits.Get(MinionConfig.MINION_BASE_TRAIT_ID));
 		List<ChoreGroup> disabled_chore_groups = new List<ChoreGroup>();
 		GenerateAptitudes(guaranteedAptitudeID);
-		int pointsDelta = GenerateTraits(is_starter_minion, disabled_chore_groups, guaranteedAptitudeID);
+		int pointsDelta = GenerateTraits(is_starter_minion, disabled_chore_groups, guaranteedAptitudeID, guaranteedTraitID);
 		GenerateAttributes(pointsDelta, disabled_chore_groups);
 		KCompBuilder.BodyData bodyData = CreateBodyData(personality);
 		foreach (AccessorySlot resource in Db.Get().AccessorySlots.resources)
@@ -122,7 +122,7 @@ public class MinionStartingStats : ITelepadDeliverable
 		}
 	}
 
-	private int GenerateTraits(bool is_starter_minion, List<ChoreGroup> disabled_chore_groups, string guaranteedAptitudeID = null)
+	private int GenerateTraits(bool is_starter_minion, List<ChoreGroup> disabled_chore_groups, string guaranteedAptitudeID = null, string guaranteedTraitID = null)
 	{
 		int statDelta = 0;
 		List<string> selectedTraits = new List<string>();
@@ -206,13 +206,17 @@ public class MinionStartingStats : ITelepadDeliverable
 				}
 				else
 				{
-					Trait trait4 = Db.Get().traits.TryGet(item.id);
-					if (trait4 == null)
+					Trait trait5 = Db.Get().traits.TryGet(item.id);
+					if (trait5 == null)
 					{
 						Debug.LogWarning("Trying to add nonexistent trait: " + item.id);
 						num6--;
 					}
-					else if (is_starter_minion && !trait4.ValidStarterTrait)
+					else if (is_starter_minion && !trait5.ValidStarterTrait)
+					{
+						num6--;
+					}
+					else if (item.doNotGenerateTrait)
 					{
 						num6--;
 					}
@@ -231,12 +235,12 @@ public class MinionStartingStats : ITelepadDeliverable
 							selectedTraits.Add(item.id);
 							statDelta += item.statBonus;
 							rarityBalance += (positiveTrait ? (-item.rarity) : item.rarity);
-							Traits.Add(trait4);
-							if (trait4.disabledChoreGroups != null)
+							Traits.Add(trait5);
+							if (trait5.disabledChoreGroups != null)
 							{
-								for (int i = 0; i < trait4.disabledChoreGroups.Length; i++)
+								for (int j = 0; j < trait5.disabledChoreGroups.Length; j++)
 								{
-									disabled_chore_groups.Add(trait4.disabledChoreGroups[i]);
+									disabled_chore_groups.Add(trait5.disabledChoreGroups[j]);
 								}
 							}
 							return true;
@@ -271,6 +275,34 @@ public class MinionStartingStats : ITelepadDeliverable
 		int num3 = 0;
 		int num4 = 0;
 		int num5 = (num2 + num) * 4;
+		if (!string.IsNullOrEmpty(guaranteedTraitID))
+		{
+			DUPLICANTSTATS.TraitVal traitVal = DUPLICANTSTATS.GetTraitVal(guaranteedTraitID);
+			if (traitVal.id == guaranteedTraitID)
+			{
+				Trait trait4 = Db.Get().traits.TryGet(traitVal.id);
+				bool positiveTrait2 = trait4.PositiveTrait;
+				selectedTraits.Add(traitVal.id);
+				statDelta += traitVal.statBonus;
+				rarityBalance += (positiveTrait2 ? (-traitVal.rarity) : traitVal.rarity);
+				Traits.Add(trait4);
+				if (trait4.disabledChoreGroups != null)
+				{
+					for (int i = 0; i < trait4.disabledChoreGroups.Length; i++)
+					{
+						disabled_chore_groups.Add(trait4.disabledChoreGroups[i]);
+					}
+				}
+				if (positiveTrait2)
+				{
+					num3++;
+				}
+				else
+				{
+					num4++;
+				}
+			}
+		}
 		while (num5 > 0 && (num4 < num2 || num3 < num))
 		{
 			if (num4 < num2 && func(DUPLICANTSTATS.BADTRAITS, arg2: false))
@@ -528,6 +560,13 @@ public class MinionStartingStats : ITelepadDeliverable
 			foreach (DUPLICANTSTATS.TraitVal cONGENITALTRAIT in DUPLICANTSTATS.CONGENITALTRAITS)
 			{
 				if (selectedTrait == cONGENITALTRAIT.id && cONGENITALTRAIT.mutuallyExclusiveTraits != null && cONGENITALTRAIT.mutuallyExclusiveTraits.Contains(traitVal.id))
+				{
+					return true;
+				}
+			}
+			foreach (DUPLICANTSTATS.TraitVal sPECIALTRAIT in DUPLICANTSTATS.SPECIALTRAITS)
+			{
+				if (selectedTrait == sPECIALTRAIT.id && sPECIALTRAIT.mutuallyExclusiveTraits != null && sPECIALTRAIT.mutuallyExclusiveTraits.Contains(traitVal.id))
 				{
 					return true;
 				}

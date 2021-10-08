@@ -330,10 +330,13 @@ public class OfflineWorldGen : KMonoBehaviour
 
 	private void DoWorldGenInitialize()
 	{
+		string text = "";
+		Func<int, WorldGen, bool> shouldSkipWorldCallback = null;
 		SettingLevel currentQualitySetting = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.WorldgenSeed);
 		seed = int.Parse(currentQualitySetting.id);
-		SettingLevel currentQualitySetting2 = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.ClusterLayout);
-		clusterLayout = new Cluster(currentQualitySetting2.id, seed, assertMissingTraits: true);
+		text = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.ClusterLayout).id;
+		clusterLayout = new Cluster(text, seed, assertMissingTraits: true);
+		clusterLayout.ShouldSkipWorldCallback = shouldSkipWorldCallback;
 		clusterLayout.Generate(UpdateProgress, OnError, seed, seed, seed, seed);
 	}
 

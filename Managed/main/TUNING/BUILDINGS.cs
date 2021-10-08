@@ -747,6 +747,7 @@ namespace TUNING
 				LogicElementSensorLiquidConfig.ID,
 				LogicCritterCountSensorConfig.ID,
 				LogicRadiationSensorConfig.ID,
+				LogicHEPSensorConfig.ID,
 				LogicCounterConfig.ID,
 				LogicAlarmConfig.ID,
 				LogicHammerConfig.ID,

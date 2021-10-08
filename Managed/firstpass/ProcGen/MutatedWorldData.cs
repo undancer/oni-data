@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using ObjectCloner;
+using UnityEngine;
 
 namespace ProcGen
 {
@@ -61,7 +62,8 @@ namespace ProcGen
 				{
 					world.globalFeatures[globalFeatureMod.Key] = 0;
 				}
-				world.globalFeatures[globalFeatureMod.Key] += globalFeatureMod.Value;
+				int num = Mathf.FloorToInt(world.worldTraitScale * (float)globalFeatureMod.Value);
+				world.globalFeatures[globalFeatureMod.Key] += num;
 			}
 			foreach (string rule in trait.removeWorldTemplateRulesById)
 			{

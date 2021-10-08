@@ -12,6 +12,32 @@ using UnityEngine;
 
 public static class CodexEntryGenerator
 {
+	private class ConversionEntry
+	{
+		public string title;
+
+		public GameObject prefab;
+
+		public HashSet<ElementUsage> inSet = new HashSet<ElementUsage>();
+
+		public HashSet<ElementUsage> outSet = new HashSet<ElementUsage>();
+	}
+
+	private class CodexElementMap
+	{
+		public Dictionary<Tag, List<ConversionEntry>> map = new Dictionary<Tag, List<ConversionEntry>>();
+
+		public void Add(Tag t, ConversionEntry ce)
+		{
+			if (map.TryGetValue(t, out var value))
+			{
+				value.Add(ce);
+				return;
+			}
+			map[t] = new List<ConversionEntry> { ce };
+		}
+	}
+
 	public static Dictionary<string, CodexEntry> GenerateBuildingEntries()
 	{
 		string text = "BUILD_CATEGORY_";
@@ -219,19 +245,22 @@ public static class CodexEntryGenerator
 		Dictionary<string, CodexEntry> dictionary = new Dictionary<string, CodexEntry>();
 		foreach (Skill resource in Db.Get().Skills.resources)
 		{
-			List<ContentContainer> list = new List<ContentContainer>();
-			Sprite sprite = null;
-			sprite = Assets.GetSprite(resource.hat);
-			GenerateTitleContainers(resource.Name, list);
-			GenerateImageContainers(sprite, list);
-			GenerateGenericDescriptionContainers(resource.description, list);
-			GenerateSkillRequirementsAndPerksContainers(resource, list);
-			GenerateRelatedSkillContainers(resource, list);
-			CodexEntry codexEntry = new CodexEntry("ROLES", list, resource.Name);
-			codexEntry.parentId = "ROLES";
-			codexEntry.icon = sprite;
-			CodexCache.AddEntry(resource.Id, codexEntry);
-			dictionary.Add(resource.Id, codexEntry);
+			if (!resource.deprecated)
+			{
+				List<ContentContainer> list = new List<ContentContainer>();
+				Sprite sprite = null;
+				sprite = Assets.GetSprite(resource.hat);
+				GenerateTitleContainers(resource.Name, list);
+				GenerateImageContainers(sprite, list);
+				GenerateGenericDescriptionContainers(resource.description, list);
+				GenerateSkillRequirementsAndPerksContainers(resource, list);
+				GenerateRelatedSkillContainers(resource, list);
+				CodexEntry codexEntry = new CodexEntry("ROLES", list, resource.Name);
+				codexEntry.parentId = "ROLES";
+				codexEntry.icon = sprite;
+				CodexCache.AddEntry(resource.Id, codexEntry);
+				dictionary.Add(resource.Id, codexEntry);
+			}
 		}
 		return dictionary;
 	}
@@ -590,7 +619,172 @@ public static class CodexEntryGenerator
 		string text3 = CodexCache.FormatLinkID("ELEMENTS_LIQUID");
 		string text4 = CodexCache.FormatLinkID("ELEMENTS_GAS");
 		string text5 = CodexCache.FormatLinkID("ELEMENTS_OTHER");
-		Action<Element, List<ContentContainer>> action = delegate(Element element, List<ContentContainer> containers)
+		string text6 = CodexCache.FormatLinkID("ELEMENTS_CLASSES");
+		CodexElementMap usedMap2 = new CodexElementMap();
+		CodexElementMap madeMap = new CodexElementMap();
+		Tag waterTag = ElementLoader.FindElementByHash(SimHashes.Water).tag;
+		Tag dirtyWaterTag = ElementLoader.FindElementByHash(SimHashes.DirtyWater).tag;
+		Action<GameObject, CodexElementMap, CodexElementMap> action = delegate(GameObject prefab, CodexElementMap usedMap, CodexElementMap made)
+		{
+			HashSet<ElementUsage> hashSet2 = new HashSet<ElementUsage>();
+			HashSet<ElementUsage> hashSet3 = new HashSet<ElementUsage>();
+			EnergyGenerator component = prefab.GetComponent<EnergyGenerator>();
+			if ((bool)component)
+			{
+				IEnumerable<EnergyGenerator.InputItem> inputs = component.formula.inputs;
+				foreach (EnergyGenerator.InputItem item in inputs ?? Enumerable.Empty<EnergyGenerator.InputItem>())
+				{
+					hashSet2.Add(new ElementUsage(item.tag, item.consumptionRate, continuous: true));
+				}
+				IEnumerable<EnergyGenerator.OutputItem> outputs = component.formula.outputs;
+				foreach (EnergyGenerator.OutputItem item2 in outputs ?? Enumerable.Empty<EnergyGenerator.OutputItem>())
+				{
+					Tag tag = ElementLoader.FindElementByHash(item2.element).tag;
+					hashSet3.Add(new ElementUsage(tag, item2.creationRate, continuous: true));
+				}
+			}
+			IEnumerable<ElementConverter> components = prefab.GetComponents<ElementConverter>();
+			foreach (ElementConverter item3 in components ?? Enumerable.Empty<ElementConverter>())
+			{
+				IEnumerable<ElementConverter.ConsumedElement> consumedElements = item3.consumedElements;
+				foreach (ElementConverter.ConsumedElement item4 in consumedElements ?? Enumerable.Empty<ElementConverter.ConsumedElement>())
+				{
+					hashSet2.Add(new ElementUsage(item4.tag, item4.massConsumptionRate, continuous: true));
+				}
+				IEnumerable<ElementConverter.OutputElement> outputElements = item3.outputElements;
+				foreach (ElementConverter.OutputElement item5 in outputElements ?? Enumerable.Empty<ElementConverter.OutputElement>())
+				{
+					Tag tag2 = ElementLoader.FindElementByHash(item5.elementHash).tag;
+					hashSet3.Add(new ElementUsage(tag2, item5.massGenerationRate, continuous: true));
+				}
+			}
+			IEnumerable<ElementConsumer> components2 = prefab.GetComponents<ElementConsumer>();
+			foreach (ElementConsumer item6 in components2 ?? Enumerable.Empty<ElementConsumer>())
+			{
+				if (!item6.storeOnConsume)
+				{
+					Tag tag3 = ElementLoader.FindElementByHash(item6.elementToConsume).tag;
+					hashSet2.Add(new ElementUsage(tag3, item6.consumptionRate, continuous: true));
+				}
+			}
+			IrrigationMonitor.Def def = prefab.GetDef<IrrigationMonitor.Def>();
+			if (def != null)
+			{
+				PlantElementAbsorber.ConsumeInfo[] consumedElements2 = def.consumedElements;
+				for (int l = 0; l < consumedElements2.Length; l++)
+				{
+					PlantElementAbsorber.ConsumeInfo consumeInfo = consumedElements2[l];
+					hashSet2.Add(new ElementUsage(consumeInfo.tag, consumeInfo.massConsumptionRate, continuous: true));
+				}
+			}
+			FertilizationMonitor.Def def2 = prefab.GetDef<FertilizationMonitor.Def>();
+			if (def2 != null)
+			{
+				PlantElementAbsorber.ConsumeInfo[] consumedElements2 = def2.consumedElements;
+				for (int l = 0; l < consumedElements2.Length; l++)
+				{
+					PlantElementAbsorber.ConsumeInfo consumeInfo2 = consumedElements2[l];
+					hashSet2.Add(new ElementUsage(consumeInfo2.tag, consumeInfo2.massConsumptionRate, continuous: true));
+				}
+			}
+			FlushToilet component2 = prefab.GetComponent<FlushToilet>();
+			if ((bool)component2)
+			{
+				hashSet2.Add(new ElementUsage(waterTag, component2.massConsumedPerUse, continuous: false));
+				hashSet3.Add(new ElementUsage(dirtyWaterTag, component2.massEmittedPerUse, continuous: false));
+			}
+			HandSanitizer component3 = prefab.GetComponent<HandSanitizer>();
+			if ((bool)component3)
+			{
+				Tag tag4 = ElementLoader.FindElementByHash(component3.consumedElement).tag;
+				hashSet2.Add(new ElementUsage(tag4, component3.massConsumedPerUse, continuous: false));
+				if (component3.outputElement != SimHashes.Vacuum)
+				{
+					Tag tag5 = ElementLoader.FindElementByHash(component3.outputElement).tag;
+					hashSet3.Add(new ElementUsage(tag5, component3.massConsumedPerUse, continuous: false));
+				}
+			}
+			ConversionEntry ce = new ConversionEntry
+			{
+				title = prefab.GetProperName(),
+				prefab = prefab,
+				inSet = hashSet2,
+				outSet = hashSet3
+			};
+			foreach (ElementUsage item7 in hashSet2)
+			{
+				usedMap.Add(item7.tag, ce);
+			}
+			foreach (ElementUsage item8 in hashSet3)
+			{
+				madeMap.Add(item8.tag, ce);
+			}
+		};
+		foreach (PlanScreen.PlanInfo item9 in TUNING.BUILDINGS.PLANORDER)
+		{
+			foreach (string datum in item9.data)
+			{
+				BuildingDef buildingDef = Assets.GetBuildingDef(datum);
+				if (!buildingDef.Deprecated)
+				{
+					action(buildingDef.BuildingComplete, usedMap2, madeMap);
+				}
+			}
+		}
+		HashSet<GameObject> hashSet = new HashSet<GameObject>(Assets.GetPrefabsWithComponent<Harvestable>());
+		foreach (GameObject item10 in Assets.GetPrefabsWithComponent<WiltCondition>())
+		{
+			hashSet.Add(item10);
+		}
+		foreach (GameObject item11 in hashSet)
+		{
+			if (!(item11.GetComponent<BudUprootedMonitor>() != null))
+			{
+				action(item11, usedMap2, madeMap);
+			}
+		}
+		foreach (GameObject item12 in Assets.GetPrefabsWithComponent<CreatureBrain>())
+		{
+			if (item12.GetDef<BabyMonitor.Def>() == null)
+			{
+				action(item12, usedMap2, madeMap);
+			}
+		}
+		foreach (KeyValuePair<Tag, Diet> item13 in DietManager.CollectDiets(null))
+		{
+			GameObject gameObject = Assets.GetPrefab(item13.Key).gameObject;
+			if (gameObject.GetDef<BabyMonitor.Def>() != null)
+			{
+				continue;
+			}
+			float num = 0f;
+			foreach (AttributeModifier selfModifier in Db.Get().traits.Get(gameObject.GetComponent<Modifiers>().initialTraits[0]).SelfModifiers)
+			{
+				if (selfModifier.AttributeId == Db.Get().Amounts.Calories.deltaAttribute.Id)
+				{
+					num = selfModifier.Value;
+				}
+			}
+			Diet.Info[] infos = item13.Value.infos;
+			foreach (Diet.Info info in infos)
+			{
+				float num2 = (0f - num) / info.caloriesPerKg;
+				float amount = num2 * info.producedConversionRate;
+				foreach (Tag consumedTag in info.consumedTags)
+				{
+					ConversionEntry conversionEntry = new ConversionEntry();
+					conversionEntry.title = gameObject.GetProperName();
+					conversionEntry.prefab = gameObject;
+					conversionEntry.inSet = new HashSet<ElementUsage>();
+					conversionEntry.inSet.Add(new ElementUsage(consumedTag, num2, continuous: true));
+					conversionEntry.outSet = new HashSet<ElementUsage>();
+					conversionEntry.outSet.Add(new ElementUsage(info.producedElement, amount, continuous: true));
+					usedMap2.Add(consumedTag, conversionEntry);
+					madeMap.Add(info.producedElement, conversionEntry);
+				}
+			}
+		}
+		Action<Element, List<ContentContainer>> action2 = delegate(Element element, List<ContentContainer> containers)
 		{
 			if (element.highTempTransition != null || element.lowTempTransition != null)
 			{
@@ -616,6 +810,53 @@ public static class CodexEntryGenerator
 					new CodexText((element.lowTempTransition != null) ? (element.lowTempTransition.name + " (" + element.lowTempTransition.GetStateString() + ")  (" + GameUtil.GetFormattedTemperature(element.lowTemp) + ")") : "")
 				}, ContentContainer.ContentLayout.Horizontal));
 			}
+			List<ICodexWidget> list4 = new List<ICodexWidget>();
+			List<ICodexWidget> list5 = new List<ICodexWidget>();
+			foreach (ComplexRecipe recipe in ComplexRecipeManager.Get().recipes)
+			{
+				if (recipe.ingredients.Any((ComplexRecipe.RecipeElement i) => i.material == element.tag))
+				{
+					list4.Add(new CodexRecipePanel(recipe));
+				}
+				if (recipe.results.Any((ComplexRecipe.RecipeElement i) => i.material == element.tag))
+				{
+					list5.Add(new CodexRecipePanel(recipe));
+				}
+			}
+			if (usedMap2.map.TryGetValue(element.tag, out var value))
+			{
+				foreach (ConversionEntry item14 in value)
+				{
+					list4.Add(new CodexConversionPanel(item14.title, item14.inSet.ToArray(), item14.outSet.ToArray(), item14.prefab));
+				}
+			}
+			if (madeMap.map.TryGetValue(element.tag, out var value2))
+			{
+				foreach (ConversionEntry item15 in value2)
+				{
+					list5.Add(new CodexConversionPanel(item15.title, item15.inSet.ToArray(), item15.outSet.ToArray(), item15.prefab));
+				}
+			}
+			ContentContainer contentContainer = new ContentContainer(list4, ContentContainer.ContentLayout.Vertical);
+			ContentContainer contentContainer2 = new ContentContainer(list5, ContentContainer.ContentLayout.Vertical);
+			if (list4.Count > 0)
+			{
+				containers.Add(new ContentContainer(new List<ICodexWidget>
+				{
+					new CodexSpacer(),
+					new CodexCollapsibleHeader(CODEX.HEADERS.ELEMENTCONSUMEDBY, contentContainer)
+				}, ContentContainer.ContentLayout.Vertical));
+				containers.Add(contentContainer);
+			}
+			if (list5.Count > 0)
+			{
+				containers.Add(new ContentContainer(new List<ICodexWidget>
+				{
+					new CodexSpacer(),
+					new CodexCollapsibleHeader(CODEX.HEADERS.ELEMENTPRODUCEDBY, contentContainer2)
+				}, ContentContainer.ContentLayout.Vertical));
+				containers.Add(contentContainer2);
+			}
 			containers.Add(new ContentContainer(new List<ICodexWidget>
 			{
 				new CodexSpacer(),
@@ -623,7 +864,7 @@ public static class CodexEntryGenerator
 				new CodexSpacer()
 			}, ContentContainer.ContentLayout.Vertical));
 		};
-		string text6;
+		string text7;
 		foreach (Element element in ElementLoader.elements)
 		{
 			if (element.disabled)
@@ -648,54 +889,143 @@ public static class CodexEntryGenerator
 			}
 			GenerateTitleContainers(name, list);
 			GenerateImageContainers(new Tuple<Sprite, Color>[1] { tuple }, list, ContentContainer.ContentLayout.Horizontal);
-			action(element, list);
-			text6 = element.id.ToString();
-			string text7;
+			action2(element, list);
+			text7 = element.id.ToString();
+			string text8;
 			Dictionary<string, CodexEntry> dictionary6;
 			if (element.IsSolid)
 			{
-				text7 = text2;
+				text8 = text2;
 				dictionary6 = dictionary2;
 			}
 			else if (element.IsLiquid)
 			{
-				text7 = text3;
+				text8 = text3;
 				dictionary6 = dictionary3;
 			}
 			else if (element.IsGas)
 			{
-				text7 = text4;
+				text8 = text4;
 				dictionary6 = dictionary4;
 			}
 			else
 			{
-				text7 = text5;
+				text8 = text5;
 				dictionary6 = dictionary5;
 			}
-			CodexEntry codexEntry = new CodexEntry(text7, list, name);
-			codexEntry.parentId = text7;
+			CodexEntry codexEntry = new CodexEntry(text8, list, name);
+			codexEntry.parentId = text8;
 			codexEntry.icon = tuple.first;
 			codexEntry.iconColor = tuple.second;
-			CodexCache.AddEntry(text6, codexEntry);
-			dictionary6.Add(text6, codexEntry);
+			CodexCache.AddEntry(text7, codexEntry);
+			dictionary6.Add(text7, codexEntry);
 		}
-		text6 = text2;
-		CodexEntry codexEntry2 = GenerateCategoryEntry(text6, UI.CODEX.CATEGORYNAMES.ELEMENTSSOLID, dictionary2, Assets.GetSprite("ui_elements-solid"));
+		text7 = text2;
+		CodexEntry codexEntry2 = GenerateCategoryEntry(text7, UI.CODEX.CATEGORYNAMES.ELEMENTSSOLID, dictionary2, Assets.GetSprite("ui_elements-solid"));
 		codexEntry2.parentId = text;
 		codexEntry2.category = text;
-		dictionary.Add(text6, codexEntry2);
-		text6 = text3;
-		codexEntry2 = GenerateCategoryEntry(text6, UI.CODEX.CATEGORYNAMES.ELEMENTSLIQUID, dictionary3, Assets.GetSprite("ui_elements-liquids"));
+		dictionary.Add(text7, codexEntry2);
+		text7 = text3;
+		codexEntry2 = GenerateCategoryEntry(text7, UI.CODEX.CATEGORYNAMES.ELEMENTSLIQUID, dictionary3, Assets.GetSprite("ui_elements-liquids"));
 		codexEntry2.parentId = text;
 		codexEntry2.category = text;
-		dictionary.Add(text6, codexEntry2);
-		text6 = text4;
-		codexEntry2 = GenerateCategoryEntry(text6, UI.CODEX.CATEGORYNAMES.ELEMENTSGAS, dictionary4, Assets.GetSprite("ui_elements-gases"));
+		dictionary.Add(text7, codexEntry2);
+		text7 = text4;
+		codexEntry2 = GenerateCategoryEntry(text7, UI.CODEX.CATEGORYNAMES.ELEMENTSGAS, dictionary4, Assets.GetSprite("ui_elements-gases"));
 		codexEntry2.parentId = text;
 		codexEntry2.category = text;
-		dictionary.Add(text6, codexEntry2);
-		text6 = text5;
-		codexEntry2 = GenerateCategoryEntry(text6, UI.CODEX.CATEGORYNAMES.ELEMENTSOTHER, dictionary5, Assets.GetSprite("ui_elements-other"));
+		dictionary.Add(text7, codexEntry2);
+		text7 = text5;
+		codexEntry2 = GenerateCategoryEntry(text7, UI.CODEX.CATEGORYNAMES.ELEMENTSOTHER, dictionary5, Assets.GetSprite("ui_elements-other"));
+		codexEntry2.parentId = text;
+		codexEntry2.category = text;
+		dictionary.Add(text7, codexEntry2);
+		Tuple<Sprite, Color> uISprite = Def.GetUISprite("ui_elements-other");
+		var obj = new[]
+		{
+			new
+			{
+				tag = GameTags.IceOre,
+				checkPrefabs = false,
+				solidOnly = false
+			},
+			new
+			{
+				tag = GameTags.RefinedMetal,
+				checkPrefabs = false,
+				solidOnly = true
+			},
+			new
+			{
+				tag = GameTags.Filter,
+				checkPrefabs = false,
+				solidOnly = false
+			},
+			new
+			{
+				tag = GameTags.Compostable,
+				checkPrefabs = true,
+				solidOnly = false
+			},
+			new
+			{
+				tag = GameTags.CombustibleLiquid,
+				checkPrefabs = false,
+				solidOnly = false
+			}
+		};
+		Dictionary<string, CodexEntry> dictionary7 = new Dictionary<string, CodexEntry>();
+		var array = obj;
+		foreach (var anon in array)
+		{
+			string text9 = anon.tag.ToString();
+			string name2 = Strings.Get("STRINGS.MISC.TAGS." + text9.ToUpper());
+			List<ContentContainer> list2 = new List<ContentContainer>();
+			GenerateTitleContainers(name2, list2);
+			List<ICodexWidget> list3 = new List<ICodexWidget>();
+			if (anon.checkPrefabs)
+			{
+				foreach (GameObject item16 in Assets.GetPrefabsWithTag(anon.tag))
+				{
+					if (!item16.HasTag(GameTags.DeprecatedContent))
+					{
+						list3.Add(new CodexIndentedLabelWithIcon(item16.GetProperName(), CodexTextStyle.Body, Def.GetUISprite(item16)));
+					}
+				}
+			}
+			else
+			{
+				foreach (Element element2 in ElementLoader.elements)
+				{
+					if (element2.disabled || (anon.solidOnly && !element2.IsSolid))
+					{
+						continue;
+					}
+					bool flag = element2.materialCategory == anon.tag;
+					Tag[] oreTags = element2.oreTags;
+					for (int k = 0; k < oreTags.Length; k++)
+					{
+						if (oreTags[k] == anon.tag)
+						{
+							flag = true;
+							break;
+						}
+					}
+					if (flag)
+					{
+						list3.Add(new CodexIndentedLabelWithIcon(element2.name, CodexTextStyle.Body, Def.GetUISprite(element2.substance)));
+					}
+				}
+			}
+			list2.Add(new ContentContainer(list3, ContentContainer.ContentLayout.GridTwoColumn));
+			CodexEntry codexEntry3 = new CodexEntry(text6, list2, name2);
+			codexEntry3.parentId = text6;
+			codexEntry3.icon = uISprite.first;
+			codexEntry3.iconColor = uISprite.second;
+			CodexCache.AddEntry(CodexCache.FormatLinkID(text9), codexEntry3);
+			dictionary7.Add(text9, codexEntry3);
+		}
+		codexEntry2 = GenerateCategoryEntry(text6, UI.CODEX.CATEGORYNAMES.ELEMENTSCLASSES, dictionary7, uISprite.first);
 		codexEntry2.parentId = text;
 		codexEntry2.category = text;
 		dictionary.Add(text6, codexEntry2);
@@ -950,6 +1280,10 @@ public static class CodexEntryGenerator
 		list2.Add(new CodexSpacer());
 		foreach (Skill resource in Db.Get().Skills.resources)
 		{
+			if (resource.deprecated)
+			{
+				continue;
+			}
 			foreach (string priorSkill2 in resource.priorSkills)
 			{
 				if (priorSkill2 == skill.Id)
@@ -1165,11 +1499,11 @@ public static class CodexEntryGenerator
 				new CodexSpacer(),
 				new CodexText(CODEX.HEADERS.HATCHESFROMEGG, CodexTextStyle.Subtitle)
 			}, ContentContainer.ContentLayout.Vertical));
-			foreach (GameObject item2 in prefabsWithTag)
+			foreach (GameObject item in prefabsWithTag)
 			{
 				containers.Add(new ContentContainer(new List<ICodexWidget>
 				{
-					new CodexIndentedLabelWithIcon(item2.GetProperName(), CodexTextStyle.Body, Def.GetUISprite(item2))
+					new CodexIndentedLabelWithIcon(item.GetProperName(), CodexTextStyle.Body, Def.GetUISprite(item))
 				}, ContentContainer.ContentLayout.Horizontal));
 			}
 		}
@@ -1184,95 +1518,56 @@ public static class CodexEntryGenerator
 				new CodexText("    • " + string.Format(CODEX.CREATURE_DESCRIPTORS.TEMPERATURE.NON_LETHAL_RANGE, GameUtil.GetFormattedTemperature(component.TemperatureLethalLow), GameUtil.GetFormattedTemperature(component.TemperatureLethalHigh)))
 			}, ContentContainer.ContentLayout.Vertical));
 		}
-		List<Tag> list = new List<Tag>();
+		new List<Tag>();
 		CreatureCalorieMonitor.Def def2 = creature.GetDef<CreatureCalorieMonitor.Def>();
-		Diet.Info[] infos;
-		if (def2 != null && def2.diet.infos.Length != 0)
+		BeehiveCalorieMonitor.Def def3 = creature.GetDef<BeehiveCalorieMonitor.Def>();
+		Diet.Info[] array = null;
+		if (def2 != null)
 		{
-			if (list.Count == 0)
-			{
-				containers.Add(new ContentContainer(new List<ICodexWidget>
-				{
-					new CodexSpacer(),
-					new CodexText(CODEX.HEADERS.DIET, CodexTextStyle.Subtitle)
-				}, ContentContainer.ContentLayout.Vertical));
-			}
-			ContentContainer contentContainer = new ContentContainer();
-			contentContainer.contentLayout = ContentContainer.ContentLayout.GridTwoColumn;
-			contentContainer.content = new List<ICodexWidget>();
-			infos = def2.diet.infos;
-			foreach (Diet.Info info in infos)
-			{
-				if (info.consumedTags.Count == 0)
-				{
-					continue;
-				}
-				foreach (Tag consumedTag in info.consumedTags)
-				{
-					Element element = ElementLoader.FindElementByHash(ElementLoader.GetElementID(consumedTag));
-					GameObject gameObject = null;
-					if (element.id == SimHashes.Vacuum || element.id == SimHashes.Void)
-					{
-						gameObject = Assets.GetPrefab(consumedTag);
-						if (gameObject == null)
-						{
-							continue;
-						}
-					}
-					if (element != null && gameObject == null)
-					{
-						if (!list.Contains(element.tag))
-						{
-							list.Add(element.tag);
-							contentContainer.content.Add(new CodexIndentedLabelWithIcon(element.name, CodexTextStyle.Body, Def.GetUISprite(element.substance)));
-						}
-					}
-					else if (gameObject != null && !list.Contains(gameObject.PrefabID()))
-					{
-						list.Add(gameObject.PrefabID());
-						contentContainer.content.Add(new CodexIndentedLabelWithIcon(gameObject.GetProperName(), CodexTextStyle.Body, Def.GetUISprite(gameObject)));
-					}
-				}
-			}
-			containers.Add(contentContainer);
+			array = def2.diet.infos;
 		}
-		bool flag = false;
-		if (def2 == null || def2.diet == null)
+		else if (def3 != null)
+		{
+			array = def3.diet.infos;
+		}
+		if (array == null || array.Length == 0)
 		{
 			return;
 		}
-		infos = def2.diet.infos;
-		for (int i = 0; i < infos.Length; i++)
+		float num = 0f;
+		foreach (AttributeModifier selfModifier in Db.Get().traits.Get(creature.GetComponent<Modifiers>().initialTraits[0]).SelfModifiers)
 		{
-			if (infos[i].producedElement != null)
+			if (selfModifier.AttributeId == Db.Get().Amounts.Calories.deltaAttribute.Id)
 			{
-				flag = true;
-				break;
+				num = selfModifier.Value;
 			}
 		}
-		if (!flag)
+		List<ICodexWidget> list = new List<ICodexWidget>();
+		Diet.Info[] array2 = array;
+		foreach (Diet.Info info in array2)
 		{
-			return;
+			if (info.consumedTags.Count == 0)
+			{
+				continue;
+			}
+			foreach (Tag consumedTag in info.consumedTags)
+			{
+				Element element = ElementLoader.FindElementByHash(ElementLoader.GetElementID(consumedTag));
+				if ((element.id != SimHashes.Vacuum && element.id != SimHashes.Void) || !(Assets.GetPrefab(consumedTag) == null))
+				{
+					float num2 = (0f - num) / info.caloriesPerKg;
+					float outputAmount = num2 * info.producedConversionRate;
+					list.Add(new CodexConversionPanel(consumedTag.ProperName(), consumedTag, num2, inputContinuous: true, info.producedElement, outputAmount, outputContinuous: true, creature));
+				}
+			}
 		}
-		ContentContainer contentContainer2 = new ContentContainer();
-		contentContainer2.contentLayout = ContentContainer.ContentLayout.GridTwoColumn;
-		contentContainer2.content = new List<ICodexWidget>();
-		ContentContainer item = new ContentContainer(new List<ICodexWidget>
+		ContentContainer contentContainer = new ContentContainer(list, ContentContainer.ContentLayout.Vertical);
+		containers.Add(new ContentContainer(new List<ICodexWidget>
 		{
 			new CodexSpacer(),
-			new CodexText(CODEX.HEADERS.PRODUCES, CodexTextStyle.Subtitle)
-		}, ContentContainer.ContentLayout.Vertical);
-		containers.Add(item);
-		List<Tag> list2 = new List<Tag>();
-		for (int j = 0; j < def2.diet.infos.Length; j++)
-		{
-			if (def2.diet.infos[j].producedElement != Tag.Invalid && !list2.Contains(def2.diet.infos[j].producedElement))
-			{
-				list2.Add(def2.diet.infos[j].producedElement);
-				contentContainer2.content.Add(new CodexIndentedLabelWithIcon(def2.diet.infos[j].producedElement.ProperName(), CodexTextStyle.Body, Def.GetUISprite(def2.diet.infos[j].producedElement)));
-			}
-		}
-		containers.Add(contentContainer2);
+			new CodexCollapsibleHeader(CODEX.HEADERS.DIET, contentContainer)
+		}, ContentContainer.ContentLayout.Vertical));
+		containers.Add(contentContainer);
 		containers.Add(new ContentContainer(new List<ICodexWidget>
 		{
 			new CodexSpacer(),
@@ -1347,6 +1642,43 @@ public static class CodexEntryGenerator
 			foreach (Descriptor item2 in effectDescriptors)
 			{
 				list.Add(new CodexTextWithTooltip("    " + item2.text, item2.tooltipText));
+			}
+			list.Add(new CodexSpacer());
+		}
+		KPrefabID component = def.BuildingComplete.GetComponent<KPrefabID>();
+		Pair<Tag, string>[] array = new Pair<Tag, string>[8]
+		{
+			new Pair<Tag, string>(RoomConstraints.ConstraintTags.IndustrialMachinery, CODEX.BUILDING_TYPE.INDUSTRIAL_MACHINERY),
+			new Pair<Tag, string>(RoomConstraints.ConstraintTags.RecBuilding, ROOMS.CRITERIA.REC_BUILDING.NAME),
+			new Pair<Tag, string>(RoomConstraints.ConstraintTags.Clinic, ROOMS.CRITERIA.CLINIC.NAME),
+			new Pair<Tag, string>(RoomConstraints.ConstraintTags.WashStation, ROOMS.CRITERIA.WASH_STATION.NAME),
+			new Pair<Tag, string>(RoomConstraints.ConstraintTags.AdvancedWashStation, ROOMS.CRITERIA.ADVANCED_WASH_STATION.NAME),
+			new Pair<Tag, string>(RoomConstraints.ConstraintTags.Toilet, ROOMS.CRITERIA.TOILET.NAME),
+			new Pair<Tag, string>(RoomConstraints.ConstraintTags.FlushToilet, ROOMS.CRITERIA.FLUSH_TOILET.NAME),
+			new Pair<Tag, string>(GameTags.Decoration, ROOMS.CRITERIA.DECORATIVE_ITEM.NAME)
+		};
+		bool flag = false;
+		Pair<Tag, string>[] array2 = array;
+		for (int i = 0; i < array2.Length; i++)
+		{
+			Pair<Tag, string> pair = array2[i];
+			if (component.HasTag(pair.first))
+			{
+				flag = true;
+				break;
+			}
+		}
+		if (flag)
+		{
+			list.Add(new CodexText(CODEX.HEADERS.BUILDINGTYPE, CodexTextStyle.Subtitle));
+			array2 = array;
+			for (int i = 0; i < array2.Length; i++)
+			{
+				Pair<Tag, string> pair2 = array2[i];
+				if (component.HasTag(pair2.first))
+				{
+					list.Add(new CodexText("    " + pair2.second));
+				}
 			}
 			list.Add(new CodexSpacer());
 		}

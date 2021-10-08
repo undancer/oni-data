@@ -28,7 +28,7 @@ namespace ProcGen
 			DebugUtil.Assert(SettingsCache.worlds.HasWorld(worldName), "Failed to load world " + worldName);
 			World worldData = SettingsCache.worlds.GetWorldData(worldName);
 			List<WorldTrait> list = new List<WorldTrait>();
-			if (!worldData.disableWorldTraits && traits != null)
+			if (traits != null)
 			{
 				DebugUtil.LogArgs("Generating a world with the traits:", string.Join(", ", traits.ToArray()));
 				foreach (string trait in traits)

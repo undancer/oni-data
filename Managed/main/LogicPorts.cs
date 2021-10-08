@@ -194,10 +194,10 @@ public class LogicPorts : KMonoBehaviour, IGameObjectEffectDescriptor, IRenderEv
 		}
 	}
 
-	private void CreatePhysicalPorts()
+	private void CreatePhysicalPorts(bool forceCreate = false)
 	{
 		int num = Grid.PosToCell(base.transform.GetPosition());
-		if (num == cell)
+		if (num == cell && !forceCreate)
 		{
 			return;
 		}
@@ -378,6 +378,10 @@ public class LogicPorts : KMonoBehaviour, IGameObjectEffectDescriptor, IRenderEv
 
 	public void SendSignal(HashedString port_id, int new_value)
 	{
+		if (outputPortInfo != null && outputPorts == null)
+		{
+			CreatePhysicalPorts(forceCreate: true);
+		}
 		foreach (LogicEventSender outputPort in outputPorts)
 		{
 			if (outputPort.ID == port_id)

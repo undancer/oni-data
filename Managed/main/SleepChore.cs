@@ -59,7 +59,7 @@ public class SleepChore : Chore<SleepChore.StatesInstance>
 					go.Trigger(-1307593733);
 				}
 			}
-			else if (!flag && !IsLoudSleeper())
+			else if (!flag && !IsLoudSleeper() && !IsGlowStick())
 			{
 				go.Trigger(-1063113160);
 			}
@@ -68,6 +68,15 @@ public class SleepChore : Chore<SleepChore.StatesInstance>
 		public bool IsLoudSleeper()
 		{
 			if (base.sm.sleeper.Get(base.smi).GetComponent<Snorer>() != null)
+			{
+				return true;
+			}
+			return false;
+		}
+
+		public bool IsGlowStick()
+		{
+			if (base.sm.sleeper.Get(base.smi).GetComponent<GlowStick>() != null)
 			{
 				return true;
 			}
@@ -186,6 +195,10 @@ public class SleepChore : Chore<SleepChore.StatesInstance>
 				.EventHandler(GameHashes.SleepDisturbedByNoise, delegate(StatesInstance smi)
 				{
 					isDisturbedByNoise.Set(value: true, smi);
+				})
+				.EventHandler(GameHashes.SleepDisturbedByFearOfDark, delegate(StatesInstance smi)
+				{
+					isScaredOfDark.Set(value: true, smi);
 				})
 				.EventHandler(GameHashes.SleepDisturbedByMovement, delegate(StatesInstance smi)
 				{

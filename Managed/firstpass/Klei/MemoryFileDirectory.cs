@@ -92,5 +92,10 @@ namespace Klei
 			result = default(FileHandle);
 			return result;
 		}
+
+		public bool IsModded()
+		{
+			return false;
+		}
 	}
 }

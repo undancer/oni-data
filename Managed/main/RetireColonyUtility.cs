@@ -80,19 +80,19 @@ public static class RetireColonyUtility
 			array2[j] = Components.BuildingCompletes[j];
 		}
 		string startWorld = null;
-		Dictionary<string, string> dictionary = new Dictionary<string, string>();
+		List<Tuple<string, string>> list2 = new List<Tuple<string, string>>();
 		foreach (WorldContainer worldContainer in ClusterManager.Instance.WorldContainers)
 		{
 			if (worldContainer.IsDiscovered && !worldContainer.IsModuleInterior)
 			{
-				dictionary.Add(worldContainer.GetComponent<ClusterGridEntity>().Name, worldContainer.worldName);
+				list2.Add(new Tuple<string, string>(worldContainer.GetComponent<ClusterGridEntity>().Name, worldContainer.worldName));
 				if (worldContainer.IsStartWorld)
 				{
 					startWorld = worldContainer.GetComponent<ClusterGridEntity>().Name;
 				}
 			}
 		}
-		return new RetiredColonyData(SaveGame.Instance.BaseName, GameClock.Instance.GetCycle(), System.DateTime.Now.ToShortDateString(), list.ToArray(), array, array2, startWorld, dictionary);
+		return new RetiredColonyData(SaveGame.Instance.BaseName, GameClock.Instance.GetCycle(), System.DateTime.Now.ToShortDateString(), list.ToArray(), array, array2, startWorld, list2);
 	}
 
 	private static RetiredColonyData LoadRetiredColony(string file, bool skipStats, Encoding enc)
@@ -106,7 +106,7 @@ public static class RetireColonyUtility
 		List<Tuple<string, int>> list2 = new List<Tuple<string, int>>();
 		List<RetiredColonyData.RetiredDuplicantData> list3 = new List<RetiredColonyData.RetiredDuplicantData>();
 		List<RetiredColonyData.RetiredColonyStatistic> list4 = new List<RetiredColonyData.RetiredColonyStatistic>();
-		Dictionary<string, string> dictionary = new Dictionary<string, string>();
+		List<Tuple<string, string>> list5 = new List<Tuple<string, string>>();
 		while (jsonReader.Read())
 		{
 			JsonToken tokenType = jsonReader.TokenType;
@@ -219,7 +219,7 @@ public static class RetireColonyUtility
 				}
 				string text5 = null;
 				RetiredColonyData.RetiredColonyStatistic retiredColonyStatistic = new RetiredColonyData.RetiredColonyStatistic();
-				List<Tuple<float, float>> list5 = new List<Tuple<float, float>>();
+				List<Tuple<float, float>> list6 = new List<Tuple<float, float>>();
 				while (jsonReader.Read())
 				{
 					tokenType = jsonReader.TokenType;
@@ -275,9 +275,9 @@ public static class RetireColonyUtility
 						}
 					}
 					Tuple<float, float> item2 = new Tuple<float, float>(a2, b2);
-					list5.Add(item2);
+					list6.Add(item2);
 				}
-				retiredColonyStatistic.value = list5.ToArray();
+				retiredColonyStatistic.value = list6.ToArray();
 				list4.Add(retiredColonyStatistic);
 			}
 			if (tokenType == JsonToken.StartObject && text == "worldIdentities")
@@ -296,8 +296,8 @@ public static class RetireColonyUtility
 					}
 					if (text7 != null && jsonReader.Value != null && tokenType == JsonToken.String)
 					{
-						string value2 = jsonReader.Value.ToString();
-						dictionary.Add(text7, value2);
+						string b3 = jsonReader.Value.ToString();
+						list5.Add(new Tuple<string, string>(text7, b3));
 					}
 				}
 			}
@@ -310,7 +310,7 @@ public static class RetireColonyUtility
 		retiredColonyData.Stats = list4.ToArray();
 		retiredColonyData.achievements = list.ToArray();
 		retiredColonyData.buildings = list2;
-		retiredColonyData.worldIdentities = dictionary;
+		retiredColonyData.worldIdentities = list5;
 		return retiredColonyData;
 	}
 

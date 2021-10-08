@@ -102,6 +102,17 @@ public class Lighting : MonoBehaviour
 		Shader.SetGlobalVector("_BuildingDamagedUVParameters", Settings.BuildingDamagedUVParameters);
 		Shader.SetGlobalTexture("_DiseaseOverlayTex", Settings.DiseaseOverlayTex);
 		Shader.SetGlobalVector("_DiseaseOverlayTexInfo", Settings.DiseaseOverlayTexInfo);
+		if (Settings.ShowRadiation)
+		{
+			Shader.SetGlobalColor("_RadHazeColor", PremultiplyAlpha(Settings.RadColor));
+		}
+		else
+		{
+			Shader.SetGlobalColor("_RadHazeColor", new Color(0f, 0f, 0f, 0f));
+		}
+		Shader.SetGlobalVector("_RadUVOffset1", new Vector4(Settings.Rad1UVOffset.x, Settings.Rad1UVOffset.y, Settings.Rad2UVOffset.x, Settings.Rad2UVOffset.y));
+		Shader.SetGlobalVector("_RadUVOffset2", new Vector4(Settings.Rad3UVOffset.x, Settings.Rad3UVOffset.y, Settings.Rad4UVOffset.x, Settings.Rad4UVOffset.y));
+		Shader.SetGlobalVector("_RadUVScales", new Vector4(1f / Settings.RadUVScales.x, 1f / Settings.RadUVScales.y, 1f / Settings.RadUVScales.z, 1f / Settings.RadUVScales.w));
 		if (LightBuffer.Instance != null && LightBuffer.Instance.Texture != null)
 		{
 			Shader.SetGlobalTexture("_LightBufferTex", LightBuffer.Instance.Texture);

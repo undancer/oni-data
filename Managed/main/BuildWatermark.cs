@@ -37,7 +37,7 @@ public class BuildWatermark : KScreen
 		}
 		else
 		{
-			text += 479045u;
+			text += 481350u;
 			text = ((!DistributionPlatform.Initialized) ? (text + "-?") : (text + "-" + DlcManager.GetActiveContentLetters()));
 			if (DebugHandler.enabled)
 			{

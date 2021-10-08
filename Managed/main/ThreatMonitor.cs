@@ -170,6 +170,14 @@ public class ThreatMonitor : GameStateMachine<ThreatMonitor, ThreatMonitor.Insta
 			{
 				GoToThreatened();
 			}
+			if ((bool)factionAlignment.GetComponent<Bee>())
+			{
+				Chore currentChore = choreDriver.GetCurrentChore();
+				if (currentChore != null && currentChore.gameObject.GetComponent<HiveWorkableEmpty>() != null)
+				{
+					currentChore.gameObject.GetComponent<HiveWorkableEmpty>().wasStung = true;
+				}
+			}
 		}
 
 		public bool WillFight()

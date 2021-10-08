@@ -34,6 +34,7 @@ public static class TextureUtil
 			TextureFormat.RGBA32 => 4, 
 			TextureFormat.RGFloat => 8, 
 			TextureFormat.RGBAFloat => 16, 
+			TextureFormat.RFloat => 4, 
 			_ => throw new ArgumentOutOfRangeException(), 
 		};
 	}
@@ -48,6 +49,7 @@ public static class TextureUtil
 			TextureFormat.RGBA32 => RenderTextureFormat.ARGB32, 
 			TextureFormat.RGFloat => RenderTextureFormat.RGFloat, 
 			TextureFormat.RGBAFloat => RenderTextureFormat.ARGBHalf, 
+			TextureFormat.RFloat => RenderTextureFormat.RFloat, 
 			_ => throw new ArgumentOutOfRangeException(), 
 		};
 	}

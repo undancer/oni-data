@@ -114,6 +114,8 @@ namespace ProcGen
 
 		public static readonly Tag HighPriorityFeature = TagManager.Create("HighPriorityFeature");
 
+		public static readonly Tag RemoveWorldBorderOverVacuum = TagManager.Create("RemoveWorldBorderOverVacuum");
+
 		public static readonly Tag CaveVoidSliver = TagManager.Create("CaveVoidSliver");
 
 		public static readonly Tag SwapLakesToBelow = TagManager.Create("SwapLakesToBelow");

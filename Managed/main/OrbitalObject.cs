@@ -68,7 +68,15 @@ public class OrbitalObject : KMonoBehaviour, IRenderEveryTick
 	{
 		float time = GameClock.Instance.GetTime();
 		bool behind;
-		Vector3 position = CalculateWorldPos(time, out behind);
+		Vector3 vector = CalculateWorldPos(time, out behind);
+		Vector3 position = vector;
+		if (orbitData.periodInCycles > 0f)
+		{
+			position.x = vector.x / (float)Grid.WidthInCells;
+			position.y = vector.y / (float)Grid.HeightInCells;
+			position.x = Camera.main.ViewportToWorldPoint(position).x;
+			position.y = Camera.main.ViewportToWorldPoint(position).y;
+		}
 		bool flag = (!orbitData.rotatesBehind || !behind) && (world == null || ClusterManager.Instance.activeWorldId == world.id);
 		base.gameObject.transform.SetPosition(position);
 		if (orbitData.periodInCycles > 0f)

@@ -16,6 +16,7 @@ public class TelephoneCallerWorkable : Workable, IWorkerPrioritizable
 	{
 		SetReportType(ReportManager.ReportType.PersonalTime);
 		workingPstComplete = new HashedString[1] { "on_pst" };
+		workAnims = new HashedString[6] { "on_pre", "on", "on_receiving", "on_pre_loop_receiving", "on_loop", "on_loop_pre" };
 	}
 
 	protected override void OnPrefabInit()
@@ -64,6 +65,7 @@ public class TelephoneCallerWorkable : Workable, IWorkerPrioritizable
 
 	protected override void OnStopWork(Worker worker)
 	{
+		operational.SetActive(value: false);
 		telephone.HangUp();
 	}
 

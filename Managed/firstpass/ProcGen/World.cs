@@ -31,6 +31,42 @@ namespace ProcGen
 		}
 
 		[Serializable]
+		public class TraitRule
+		{
+			public int min { get; private set; }
+
+			public int max { get; private set; }
+
+			public List<string> requiredTags { get; private set; }
+
+			public List<string> specificTraits { get; private set; }
+
+			public List<string> forbiddenTags { get; private set; }
+
+			public List<string> forbiddenTraits { get; private set; }
+
+			public TraitRule()
+			{
+			}
+
+			public TraitRule(int min, int max)
+			{
+				this.min = min;
+				this.max = max;
+			}
+
+			public void Validate()
+			{
+				if (specificTraits != null)
+				{
+					DebugUtil.DevAssert(requiredTags == null, "TraitRule using specificTraits does not support requiredTags");
+					DebugUtil.DevAssert(forbiddenTags == null, "TraitRule using specificTraits does not support forbiddenTags");
+					DebugUtil.DevAssert(forbiddenTraits == null, "TraitRule using specificTraits does not support forbiddenTraits");
+				}
+			}
+		}
+
+		[Serializable]
 		public class TemplateSpawnRules
 		{
 			public enum ListRule
@@ -155,9 +191,13 @@ namespace ProcGen
 
 		public string nameTable { get; private set; }
 
+		public string asteroidIcon { get; private set; }
+
 		public bool disableWorldTraits { get; private set; }
 
-		public string asteroidIcon { get; private set; }
+		public List<TraitRule> worldTraitRules { get; private set; }
+
+		public float worldTraitScale { get; private set; }
 
 		public Skip skip { get; private set; }
 
@@ -203,6 +243,9 @@ namespace ProcGen
 			seasons = new List<string>();
 			fixedTraits = new List<string>();
 			category = WorldCategory.Asteroid;
+			worldTraitScale = 1f;
+			worldTraitRules = new List<TraitRule>();
+			worldTraitRules.Add(new TraitRule(2, 4));
 		}
 
 		public void ModStartLocation(MinMax hMod, MinMax vMod)
@@ -217,32 +260,53 @@ namespace ProcGen
 
 		public void Validate()
 		{
-			if (unknownCellsAllowedSubworlds == null)
+			if (unknownCellsAllowedSubworlds != null)
+			{
+				List<string> usedSubworldFiles = new List<string>();
+				subworldFiles.ForEach(delegate(WeightedSubworldName x)
+				{
+					usedSubworldFiles.Add(x.name);
+				});
+				foreach (AllowedCellsFilter unknownCellsAllowedSubworld in unknownCellsAllowedSubworlds)
+				{
+					unknownCellsAllowedSubworld.Validate(name, subworldFiles);
+					if (unknownCellsAllowedSubworld.subworldNames == null)
+					{
+						continue;
+					}
+					foreach (string subworldName in unknownCellsAllowedSubworld.subworldNames)
+					{
+						usedSubworldFiles.Remove(subworldName);
+					}
+				}
+				usedSubworldFiles.Remove(startSubworldName);
+				if (usedSubworldFiles.Count > 0)
+				{
+					DebugUtil.LogWarningArgs("World " + name + ": defines subworldNames that are not used in unknownCellsAllowedSubworlds: \n" + string.Join(", ", usedSubworldFiles));
+				}
+			}
+			if (worldTraitRules == null)
 			{
 				return;
 			}
-			List<string> usedSubworldFiles = new List<string>();
-			subworldFiles.ForEach(delegate(WeightedSubworldName x)
+			foreach (TraitRule worldTraitRule in worldTraitRules)
 			{
-				usedSubworldFiles.Add(x.name);
-			});
-			foreach (AllowedCellsFilter unknownCellsAllowedSubworld in unknownCellsAllowedSubworlds)
+				worldTraitRule.Validate();
+			}
+		}
+
+		public bool IsValidTrait(WorldTrait trait)
+		{
+			foreach (TraitRule worldTraitRule in worldTraitRules)
 			{
-				unknownCellsAllowedSubworld.Validate(name, subworldFiles);
-				if (unknownCellsAllowedSubworld.subworldNames == null)
+				TagSet tagSet = ((worldTraitRule.requiredTags != null) ? new TagSet(worldTraitRule.requiredTags) : null);
+				TagSet tagSet2 = ((worldTraitRule.forbiddenTags != null) ? new TagSet(worldTraitRule.forbiddenTags) : null);
+				if ((tagSet == null || trait.traitTagsSet.ContainsAll(tagSet)) && (tagSet2 == null || !trait.traitTagsSet.ContainsOne(tagSet2)) && (worldTraitRule.forbiddenTraits == null || !worldTraitRule.forbiddenTraits.Contains(trait.filePath)) && trait.IsValid(this, logErrors: false))
 				{
-					continue;
-				}
-				foreach (string subworldName in unknownCellsAllowedSubworld.subworldNames)
-				{
-					usedSubworldFiles.Remove(subworldName);
+					return true;
 				}
 			}
-			usedSubworldFiles.Remove(startSubworldName);
-			if (usedSubworldFiles.Count > 0)
-			{
-				DebugUtil.LogWarningArgs("World " + name + ": defines subworldNames that are not used in unknownCellsAllowedSubworlds: \n" + string.Join(", ", usedSubworldFiles));
-			}
+			return false;
 		}
 	}
 }

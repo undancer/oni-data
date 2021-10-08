@@ -6,9 +6,9 @@ namespace STRINGS
 		{
 			public static LocString OTHER = "Miscellaneous";
 
-			public static LocString FILTER = "Filtration Medium";
+			public static LocString FILTER = UI.FormatAsLink("Filtration Medium", "FILTER");
 
-			public static LocString ICEORE = "Ice";
+			public static LocString ICEORE = UI.FormatAsLink("Ice", "ICEORE");
 
 			public static LocString PHOSPHORUS = "Phosphorus";
 
@@ -18,7 +18,7 @@ namespace STRINGS
 
 			public static LocString BUILDABLEANY = "Generic Buildable";
 
-			public static LocString REFINEDMETAL = "Refined Metal";
+			public static LocString REFINEDMETAL = UI.FormatAsLink("Refined Metal", "REFINEDMETAL");
 
 			public static LocString METAL = "Metal Ore";
 
@@ -110,7 +110,7 @@ namespace STRINGS
 
 			public static LocString PLUMBABLE = "Plumbable";
 
-			public static LocString COMPOSTABLE = "Compostable";
+			public static LocString COMPOSTABLE = UI.FormatAsLink("Compostable", "COMPOSTABLE");
 
 			public static LocString COMPOSTBASICPLANTFOOD = "Compost Muckroot";
 
@@ -174,13 +174,15 @@ namespace STRINGS
 
 			public static LocString RAILGUNPAYLOADEMPTYABLE = "Payload";
 
+			public static LocString NONCRUSHABLE = "Uncrushable";
+
 			public static LocString COMMAND_MODULE = "Command Module";
 
 			public static LocString HABITAT_MODULE = "Habitat Module";
 
 			public static LocString COMBUSTIBLEGAS = "Combustible Gas";
 
-			public static LocString COMBUSTIBLELIQUID = "Combustible Liquid";
+			public static LocString COMBUSTIBLELIQUID = UI.FormatAsLink("Combustible Liquid", "COMBUSTIBLELIQUID");
 
 			public static LocString COMBUSTIBLESOLID = "Combustible Solid";
 
@@ -577,14 +579,14 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Durability: {durability}";
 
-				public static LocString TOOLTIP = "Items lose durability each time they are equipped, and can no longer be put on by a Duplicant once they reach 0% durability\n\nItems can be repaired using the " + UI.FormatAsLink("Crafting Station", "CRAFTINGTABLE");
+				public static LocString TOOLTIP = "Items lose durability each time they are equipped, and can no longer be put on by a Duplicant once they reach 0% durability\n\nRepair of this item can be done in the appropriate fabrication station";
 			}
 
 			public class STOREDITEMDURABILITY
 			{
 				public static LocString NAME = "Durability: {durability}";
 
-				public static LocString TOOLTIP = "Items lose durability each time they are equipped, and can no longer be put on by a Duplicant once they reach 0% durability\n\nItems can be repaired using the " + UI.FormatAsLink("Crafting Station", "CRAFTINGTABLE");
+				public static LocString TOOLTIP = "Items lose durability each time they are equipped, and can no longer be put on by a Duplicant once they reach 0% durability\n\nRepair of this item can be done in the appropriate fabrication station";
 			}
 
 			public class ARTIFACTENTOMBED
