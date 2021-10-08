@@ -1,9 +1,9 @@
-name: STRINGS.WORLDS.VANILLASWAMPDEFAULT.NAME
-description: STRINGS.WORLDS.VANILLASWAMPDEFAULT.DESCRIPTION
+name: STRINGS.WORLDS.SWAMPMOONLET.NAME
+description: STRINGS.WORLDS.SWAMPMOONLET.DESCRIPTION
 nameTable: SWAMP
 asteroidIcon: asteroid_swamp_start_kanim
-disableWorldTraits: true
 
+worldTraitScale: 0.44 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 160
   Y: 274
@@ -14,6 +14,7 @@ defaultsOverrides:
     OverworldDensityMin: 18
     OverworldDensityMax: 18
     OverworldSampleBehaviour: PoissonDisk
+    POIPadding: 1
   startingWorldElements: [] # remove the algae check
 
 startSubworldName: expansion1::subworlds/swamp/SwampStart
@@ -24,6 +25,14 @@ startingBasePositionHorizontal:
 startingBasePositionVertical:
   min: 0.46
   max: 0.46
+
+worldTraitRules:
+  - min: 2
+    max: 4
+    forbiddenTags:
+      - Oil
+      - NonStartWorld
+      - GenericGeysers
 
 fixedTraits:
   - sunlightLow
@@ -45,7 +54,7 @@ subworldFiles:
   - name: expansion1::subworlds/jungle/JungleGassy
     minCount: 5
   - name: expansion1::subworlds/frozen/FrozenSlush
-    minCount: 2
+    minCount: 3
   - name: expansion1::subworlds/barren/CoalyGranite
     overridePower: 1 # by default these are 'uge
   - name: expansion1::subworlds/magma/BottomSmall

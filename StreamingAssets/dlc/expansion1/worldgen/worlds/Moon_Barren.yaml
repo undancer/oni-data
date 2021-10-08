@@ -2,6 +2,7 @@ name: STRINGS.WORLDS.MOON_BARREN.NAME
 description: STRINGS.WORLDS.MOON_BARREN.DESCRIPTION
 disableWorldTraits: true
 
+worldTraitScale: 0.09 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 96
   Y: 96

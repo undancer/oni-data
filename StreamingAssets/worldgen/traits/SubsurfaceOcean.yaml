@@ -2,6 +2,18 @@ name: STRINGS.WORLD_TRAITS.SUBSURFACE_OCEAN.NAME
 description: STRINGS.WORLD_TRAITS.SUBSURFACE_OCEAN.DESCRIPTION
 colorHex: 12D1F4
 
+ # In Spaced Out this trait becomes a surface ocean since there's no regolith layer above
+
+forbiddenDLCIds:
+  - EXPANSION1_ID # reimplemented in DLC
+
+exclusiveWithTags: # Not related to traitTags (checked against other exclusiveWithTags)
+  - SurfaceTrait
+
+traitTags:
+  - Surface # Replaces the surface biome despite the name of this trait
+  - Wet
+
 additionalSubworldFiles:
   - name: subworlds/ocean/OceanDeep
 

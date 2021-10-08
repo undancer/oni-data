@@ -1,6 +1,7 @@
 biomeNoise: noise/Generic
 borderOverride: saltyCrust
 temperatureRange: VeryCold
+singleChildCount: true
 minChildCount: 1
 density:
   min: 35
@@ -15,4 +16,5 @@ biomes:
 tags:
   - IgnoreCaveOverride
   - NoGlobalFeatureSpawning
+  - RemoveWorldBorderOverVacuum
 zoneType: Space

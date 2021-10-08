@@ -1,13 +1,12 @@
 biomeNoise: expansion1::noise/subworldMooInner
 temperatureRange: Cold
 density:
-  min: 100 #large numbers because we want just one child
-  max: 100
-minChildCount: 0
-avoidRadius: 15.0
+  min: 10
+  max: 10
+singleChildCount: true
+avoidRadius: 10.0
 doAvoidPoints: false
 dontRelaxChildren: true
-extraBiomeChildren: 0
 borderOverride: mooWorld
 sampleBehaviour: PoissonDisk
 # borderOverride: softRock

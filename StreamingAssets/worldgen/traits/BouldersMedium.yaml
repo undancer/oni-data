@@ -3,6 +3,10 @@ description: STRINGS.WORLD_TRAITS.BOULDERS_MEDIUM.DESCRIPTION
 colorHex: BDBDBD
 exclusiveWith:
   - traits/BouldersLarge
+  - AllowExceedNodeBorders 
+
+traitTags:
+  - Geodes
 
 globalFeatureMods:
   features/traits/BoulderMedium: 10

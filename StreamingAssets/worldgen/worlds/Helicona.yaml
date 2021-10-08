@@ -4,6 +4,7 @@ asteroidIcon: Asteroid_icysandstone
 
 skip: true
 
+worldTraitScale: 1 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 384
   Y: 384
@@ -19,6 +20,10 @@ startingBaseTemplate: bases/sandstoneBase
 
 seasons:
   - MeteorShowers
+
+worldTraitRules:
+  - min: 2
+    max: 4
 
 unknownCellsAllowedSubworlds: 
   - tagcommand: Default # By default add in all the Human warm and hot areas

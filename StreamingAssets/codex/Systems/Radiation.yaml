@@ -1,6 +1,7 @@
 id: "Radiation"
 title: STRINGS.CODEX.RADIATION.TITLE
-
+dlcIds:
+  - "EXPANSION1_ID"
 contentContainers:
 #-----------------------------
   - contentLayout: Vertical

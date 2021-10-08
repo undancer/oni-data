@@ -3,6 +3,7 @@ description: STRINGS.WORLDS.VOLCANIC.DESCRIPTION
 nameTable: MAGMA
 asteroidIcon: Asteroid_volcanic
 
+worldTraitScale: 1 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 256
   Y: 384
@@ -39,6 +40,10 @@ startingBaseTemplate: bases/sandstoneBase
 
 seasons:
   - MeteorShowers
+
+worldTraitRules:
+  - min: 2
+    max: 4
 
 # Rivers:
 #   - River

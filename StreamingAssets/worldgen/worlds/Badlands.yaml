@@ -2,13 +2,14 @@ name: STRINGS.WORLDS.BADLANDS.NAME # The Badlands
 description: STRINGS.WORLDS.BADLANDS.DESCRIPTION
 asteroidIcon: Asteroid_badlands
 
-# Notes:
-# minCounts are just enough space to generate guaranteed templates as this is a difficult world
-
+worldTraitScale: 1 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 256
   Y: 384
 layoutMethod: PowerTree
+
+# Notes:
+# minCounts are just enough space to generate guaranteed templates as this is a difficult world
 
 # List all the subworld files to load
 subworldFiles:
@@ -38,6 +39,10 @@ startingBasePositionVertical:
 
 seasons:
   - MeteorShowers
+
+worldTraitRules:
+  - min: 2
+    max: 4
 
 # Specify where subworlds can spawn. These rules are processed in order and their effects are cumulative.
 unknownCellsAllowedSubworlds: 

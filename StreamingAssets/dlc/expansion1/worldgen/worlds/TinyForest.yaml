@@ -3,6 +3,7 @@ description: STRINGS.WORLDS.TINYFOREST.DESCRIPTION
 disableWorldTraits: true
 skip: EditorOnly
 
+worldTraitScale: 0.04 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 64
   Y: 64
@@ -11,7 +12,7 @@ layoutMethod: PowerTree
 defaultsOverrides:
   data:
     DrawWorldBorder: true
-    DrawWorldBorderOverVacuum: false
+    DrawWorldBorderForce: false
     WorldBorderThickness: 1
     WorldBorderRange: 0
     OverworldDensityMin: 30

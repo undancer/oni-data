@@ -2,6 +2,7 @@ name: STRINGS.WORLDS.TINYSTART.NAME
 description: STRINGS.WORLDS.TINYSTART.DESCRIPTION 
 disableWorldTraits: true
 
+worldTraitScale: 0.12 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 128
   Y: 96
@@ -10,7 +11,7 @@ layoutMethod: PowerTree
 defaultsOverrides:
   data:
     DrawWorldBorder: true
-    DrawWorldBorderOverVacuum: false
+    DrawWorldBorderForce: false
     WorldBorderThickness: 1
     WorldBorderRange: 0
     OverworldDensityMin: 20

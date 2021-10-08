@@ -2,6 +2,7 @@ name: STRINGS.WORLDS.FOREST_LUSH.NAME # Verdante
 description: STRINGS.WORLDS.FOREST_LUSH.DESCRIPTION
 asteroidIcon: Asteroid_lushforest
 
+worldTraitScale: 1 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 256
   Y: 384
@@ -43,6 +44,10 @@ startingBaseTemplate: bases/forestBase
 
 seasons:
   - MeteorShowers
+
+worldTraitRules:
+  - min: 2
+    max: 4
 
 # Rivers:
 #   - water

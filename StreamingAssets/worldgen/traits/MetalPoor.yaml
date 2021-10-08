@@ -4,6 +4,9 @@ colorHex: 8494A1
 exclusiveWith:
   - traits/MetalRich
 
+traitTags:
+  - Metal
+
 elementBandModifiers:
   - element: Cuprite
     massMultiplier: .8
@@ -18,5 +21,8 @@ elementBandModifiers:
     massMultiplier: .8
     bandMultiplier: .8
   - element: GoldAmalgam
+    massMultiplier: .8
+    bandMultiplier: .8
+  - element: Cobaltite # Spaced Out
     massMultiplier: .8
     bandMultiplier: .8

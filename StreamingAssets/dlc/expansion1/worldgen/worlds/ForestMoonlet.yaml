@@ -2,8 +2,8 @@ name: STRINGS.WORLDS.FORESTMOONLET.NAME # Forest Cluster starting asteroid
 description: STRINGS.WORLDS.FORESTMOONLET.DESCRIPTION
 nameTable: FOREST
 asteroidIcon: asteroid_forest_start_kanim
-disableWorldTraits: true
 
+worldTraitScale: 0.44 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 160
   Y: 274
@@ -24,6 +24,14 @@ startingBasePositionHorizontal:
 startingBasePositionVertical:
   min: 0.46
   max: 0.46
+
+worldTraitRules:
+  - min: 2
+    max: 4
+    forbiddenTags:
+      - Oil
+      - NonStartWorld
+      - GenericGeysers
 
 fixedTraits:
   - sunlightVeryLow

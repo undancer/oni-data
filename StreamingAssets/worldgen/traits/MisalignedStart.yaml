@@ -2,6 +2,9 @@ name: STRINGS.WORLD_TRAITS.MISALIGNED_START.NAME
 description: STRINGS.WORLD_TRAITS.MISALIGNED_START.DESCRIPTION
 colorHex: 8494A1
 
+traitTags:
+  - StartChange
+
 startingBasePositionHorizontalMod:
   min: -.2
   max: .2

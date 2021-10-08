@@ -1,11 +1,11 @@
 biomeNoise: noise/OilPockets
 temperatureRange: Hot
 pdWeight: .5
-minChildCount: 2
+minChildCount: 8
 density:
-  min: 35
-  max: 45
-avoidRadius: 50.0
+  min: 15
+  max: 25
+avoidRadius: 20.0
 sampleBehaviour: PoissonDisk
 biomes:
   - name: biomes/Oil/OilPatch

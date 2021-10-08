@@ -2,17 +2,13 @@ name: STRINGS.WORLDS.VANILLASWAMPDEFAULT.NAME
 description: STRINGS.WORLDS.VANILLASWAMPDEFAULT.DESCRIPTION
 nameTable: SWAMP
 asteroidIcon: asteroid_vanilla_swamp_start_kanim
-disableWorldTraits: true
 
+worldTraitScale: 0.9 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 240
   Y: 380
 layoutMethod: PowerTree # Note: We need to add weights to the items in the layer
 #                                in order to use this.
-
-fixedTraits:
-  - sunlightMed
-  - cosmicRadiationMed
 
 defaultsOverrides:
   startingWorldElements: [] # remove the algae check
@@ -20,6 +16,17 @@ defaultsOverrides:
     OverworldDensityMin: 20
     OverworldDensityMax: 20
     OverworldSampleBehaviour: PoissonDisk
+
+worldTraitRules:
+  - min: 2
+    max: 4
+    forbiddenTags:
+      - Surface # due to classic worlds having a different surface location
+      - NonStartWorld
+
+fixedTraits:
+  - sunlightMed
+  - cosmicRadiationMed
 
 # List all the subworld files to load
 subworldFiles:
@@ -36,7 +43,6 @@ subworldFiles:
     minCount: 5
   - name: subworlds/frozen/Frozen
   - name: subworlds/magma/Bottom
-  - name: expansion1::subworlds/barren/CoalyGranite
   - name: expansion1::subworlds/oil/OilWells
   - name: expansion1::subworlds/oil/OilSparse
   - name: expansion1::subworlds/space/SpaceWithNoBorder

@@ -2,14 +2,17 @@ name: STRINGS.WORLDS.THE_ROCK.NAME
 description: STRINGS.WORLDS.THE_ROCK.DESCRIPTION
 skip: true
 asteroidIcon: Asteroid_sandstone
+disableWorldTraits: true
 
 defaultsOverrides:
   data:
     DrawWorldBorder: false
 
+worldTraitScale: 1 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 384
   Y: 384
+  
 subworldFiles:
   - name: subworlds/sandstone/SandstoneStart
   - name: subworlds/frozen/Frozen
@@ -25,6 +28,10 @@ startingBaseTemplate: bases/sandstoneBase
 
 seasons:
   - MeteorShowers
+
+worldTraitRules:
+  - min: 2
+    max: 4
 
 unknownCellsAllowedSubworlds: 
   - tagcommand: Default # By default add in all the Human warm and hot areas

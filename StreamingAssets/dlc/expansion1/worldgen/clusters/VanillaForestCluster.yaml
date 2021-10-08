@@ -2,7 +2,7 @@ name: STRINGS.CLUSTER_NAMES.VANILLA_FOREST_CLUSTER.NAME
 description: STRINGS.CLUSTER_NAMES.VANILLA_FOREST_CLUSTER.DESCRIPTION
 requiredDlcId: EXPANSION1_ID
 coordinatePrefix: V-FRST-C
-menuOrder: 1
+menuOrder: 2
 clusterCategory: 1
 
 startWorldIndex: 0

@@ -4,6 +4,9 @@ colorHex: DAA932
 exclusiveWith:
   - traits/MetalPoor
 
+traitTags:
+  - Metal
+
 elementBandModifiers:
   - element: Cuprite
     massMultiplier: 2
@@ -18,5 +21,8 @@ elementBandModifiers:
     massMultiplier: 2
     bandMultiplier: 1.5
   - element: GoldAmalgam
+    massMultiplier: 2
+    bandMultiplier: 1.5
+  - element: Cobaltite # Spaced Out
     massMultiplier: 2
     bandMultiplier: 1.5

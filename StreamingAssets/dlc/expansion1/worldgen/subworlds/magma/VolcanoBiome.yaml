@@ -1,0 +1,20 @@
+ # copy of base game with different pdWeight
+biomeNoise: noise/Generic
+temperatureRange: ExtremelyHot
+singleChildCount: true
+borderOverride: hardToDig
+borderOverridePriority: 10 # must be guaranteed
+density:
+  min: 35
+  max: 45
+avoidRadius: 50.0
+pdWeight: 0.4
+sampleBehaviour: PoissonDisk
+biomes:
+  - name: biomes/Magma/MagmaVent
+    weight: 1
+tags:
+  - ErodePointToBorderWeak # Base game tuning
+  - IgnoreCaveOverride
+  - NoGlobalFeatureSpawning
+zoneType: MagmaCore

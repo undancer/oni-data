@@ -4,6 +4,7 @@ nameTable: TERRA
 asteroidIcon: asteroid_vanilla_sandstone_start_kanim
 disableWorldTraits: true
 
+worldTraitScale: 0.9 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 240
   Y: 380
@@ -259,111 +260,14 @@ worldTemplateRules:
         tag: AtSurface
         minDistance: 0
         maxDistance: 2
-  # Curated Geysers
-  - names: 
-    - expansion1::geysers/liquid_sulfur
-    - geysers/liquid_co2
-    - geysers/small_volcano
-    listRule: TrySome
-    someCount: 2
-    priority: 50
-    allowedCellsFilter:
-    - command: Replace
-      tagcommand: DistanceFromTag
-      tag: AtStart
-      minDistance: 3
-      maxDistance: 99
-    - command: ExceptWith
-      tagcommand: DistanceFromTag
-      tag: AtDepths
-      minDistance: 0
-      maxDistance: 2
-    - command: ExceptWith
-      tagcommand: DistanceFromTag
-      tag: AtSurface
-      minDistance: 0
-      maxDistance: 2
-  # Curated metal geysers
+  # Generic Geysers
   - names:
-    - expansion1::geysers/molten_aluminum
-    - expansion1::geysers/molten_cobalt
-    - geysers/molten_copper
-    - geysers/molten_gold
-    - geysers/molten_iron
+    - geysers/generic
     listRule: TryOne
-    times: 3
+    times: 12
+    ruleId: GenericGeysers
     allowDuplicates: true
-    priority: 50
     allowedCellsFilter:
-    - command: Replace
-      tagcommand: DistanceFromTag
-      tag: AtStart
-      minDistance: 3
-      maxDistance: 99
-    - command: ExceptWith 
-      tagcommand: DistanceFromTag
-      tag: AtDepths
-      minDistance: 0
-      maxDistance: 2
-    - command: ExceptWith
-      tagcommand: DistanceFromTag
-      tag: AtSurface
-      minDistance: 0
-      maxDistance: 2
-  # Curated water geyser
-  - names:
-    - geysers/steam
-    - geysers/hot_steam
-    - geysers/hot_water
-    - geysers/filthy_water
-    - geysers/salt_water
-    - geysers/slush_water
-    - expansion1::geysers/slush_salt_water
-    listRule: TryOne
-    times: 3
-    allowDuplicates: true
-    priority: 50
-    allowedCellsFilter:
-    - command: Replace
-      tagcommand: DistanceFromTag
-      tag: AtStart
-      minDistance: 3
-      maxDistance: 99
-    - command: ExceptWith
-      tagcommand: DistanceFromTag
-      tag: AtDepths
-      minDistance: 0
-      maxDistance: 2
-    - command: ExceptWith
-      tagcommand: DistanceFromTag
-      tag: AtSurface
-      minDistance: 0
-      maxDistance: 2
-  # Curated gas geyser
-  - names:
-    - geysers/slimy_po2
-    - geysers/methane
-    - geysers/chlorine_gas
-    - geysers/hot_co2
-    - geysers/hot_hydrogen
-    - geysers/hot_po2
-    listRule: TryOne
-    times: 4
-    allowDuplicates: true
-    priority: 50
-    allowedCellsFilter:
-    - command: Replace
-      tagcommand: DistanceFromTag
-      tag: AtStart
-      minDistance: 3
-      maxDistance: 99
-    - command: ExceptWith
-      tagcommand: DistanceFromTag
-      tag: AtDepths
-      minDistance: 0
-      maxDistance: 2
-    - command: ExceptWith
-      tagcommand: DistanceFromTag
-      tag: AtSurface
-      minDistance: 0
-      maxDistance: 2
+      - command: Replace
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning

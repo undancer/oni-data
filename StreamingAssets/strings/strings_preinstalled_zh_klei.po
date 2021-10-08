@@ -57,12 +57,12 @@ msgstr ""
 #. STRINGS.BUILDING.STATUSITEMS.ANGERDAMAGE.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.ANGERDAMAGE.NAME"
 msgid "Damage: Duplicant Tantrum"
-msgstr "损坏：复制人发脾气"
+msgstr "损坏：复制人发怒"
 
 #. STRINGS.BUILDING.STATUSITEMS.ANGERDAMAGE.NOTIFICATION
 msgctxt "STRINGS.BUILDING.STATUSITEMS.ANGERDAMAGE.NOTIFICATION"
 msgid "Building Damage: Duplicant Tantrum"
-msgstr "建筑损坏：复制人发脾气"
+msgstr "建筑损坏：复制人发怒"
 
 #. STRINGS.BUILDING.STATUSITEMS.ANGERDAMAGE.NOTIFICATION_TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.ANGERDAMAGE.NOTIFICATION_TOOLTIP"
@@ -1284,13 +1284,13 @@ msgstr ""
 "康复中的复制人必须要在<b>{0}</b>格内有可获取的<style=\"KKeyword\">食物</"
 "style>"
 
-#. STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLINGn.NAME
-msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLINGn.NAME"
+#. STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.NAME"
 msgid "Cooling Contents: {UsedPower}"
 msgstr "冷却内容物：{UsedPower}"
 
-#. STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLINGn.TOOLTIP
-msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLINGn.TOOLTIP"
+#. STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.TOOLTIP"
 msgid ""
 "{UsedPower} of {MaxPower} are being used to cool the contents of this food "
 "storage"
@@ -3918,6 +3918,26 @@ msgid ""
 "skin crisping"
 msgstr "这里的<link=\"LIGHT\">光</link>足够创造一个能让皮肤舒适的氛围"
 
+#. STRINGS.BUILDING.STATUSITEMS.TELEPHONE.BABBLE.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.TELEPHONE.BABBLE.NAME"
+msgid "Babbling to no one."
+msgstr "喃喃自语。"
+
+#. STRINGS.BUILDING.STATUSITEMS.TELEPHONE.BABBLE.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.TELEPHONE.BABBLE.TOOLTIP"
+msgid "{Duplicant} just needed to vent to no one."
+msgstr "{Duplicant}只需要自己发泄一下就好。"
+
+#. STRINGS.BUILDING.STATUSITEMS.TELEPHONE.CONVERSATION.TALKING_TO
+msgctxt "STRINGS.BUILDING.STATUSITEMS.TELEPHONE.CONVERSATION.TALKING_TO"
+msgid "Talking to {Duplicant} on {Asteroid}"
+msgstr "与{Asteroid}上的{Duplicant}交谈"
+
+#. STRINGS.BUILDING.STATUSITEMS.TELEPHONE.CONVERSATION.TALKING_TO_NUM
+msgctxt "STRINGS.BUILDING.STATUSITEMS.TELEPHONE.CONVERSATION.TALKING_TO_NUM"
+msgid "Talking to {0} friends."
+msgstr "与{0}个朋友交谈。"
+
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_INSUFFICIENT_COLONIES.NAME
 msgctxt ""
 "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_INSUFFICIENT_COLONIES.NAME"
@@ -4744,14 +4764,14 @@ msgid ""
 "\n"
 "Consumes <link=\"WATER\">Water</link>.\n"
 "\n"
-"Assigned Duplicants must possess the <link=\"JUNIORRESEARCHER\">Advanced "
+"Assigned Duplicants must possess the <link=\"RESEARCHING1\">Advanced "
 "Research</link> skill."
 msgstr ""
 "执行<link=\"RESEARCH\">高级研究</link>以解锁新技术。\n"
 "\n"
 "消耗<link=\"WATER\">水</link>。\n"
 "\n"
-"指派的复制人必须具有<link=\"JUNIORRESEARCHER\">高级研究</link>技能。"
+"指派的复制人必须具有<link=\"RESEARCHING1\">高级研究</link>技能。"
 
 #. STRINGS.BUILDINGS.PREFABS.ADVANCEDRESEARCHCENTER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.ADVANCEDRESEARCHCENTER.NAME"
@@ -4933,7 +4953,7 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.EFFECT"
 msgid ""
 "Analyses and extracts <link=\"UNOBTANIUM\">Neutronium</link> from artifacts "
 "of interest."
-msgstr "分析遗迹工艺品，并从中提取出<link=\"UNOBTANIUM\">中子物质</link>。"
+msgstr "分析遗迹工艺品，并除去其表面的<link=\"UNOBTANIUM\">中子物质</link>。"
 
 #. STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.ARTIFACTANALYSISSTATION.NAME"
@@ -4986,15 +5006,14 @@ msgstr "复制人必须完成宇航员训练才能驾驶太空火箭。"
 #. STRINGS.BUILDINGS.PREFABS.ASTRONAUTTRAININGCENTER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.ASTRONAUTTRAININGCENTER.EFFECT"
 msgid ""
-"Trains Duplicants to become <link=\"ASTRONAUT\">Astronauts</link>.\n"
+"Trains Duplicants to become <link=\"ROCKETPILOTING1\">Astronaut</link>.\n"
 "\n"
-"Duplicants must possess the <link=\"ASTRONAUTTRAINEE\">Astronaut-in-"
-"Training</link> trait to receive training."
+"Duplicants must possess the <link=\"ROCKETPILOTING1\">Astronaut</link> trait "
+"to receive training."
 msgstr ""
-"训练复制人成为<link=\"ASTRONAUT\">宇航员</link>。\n"
+"训练复制人成为<link=\"ROCKETPILOTING1\">宇航员</link>。\n"
 "\n"
-"复制人必须具有<link=\"ASTRONAUTTRAINEE\">宇航员训练者</link>特质才能接受训"
-"练。"
+"复制人必须具有<link=\"ROCKETPILOTING1\">宇航员</link>特质才能接受训练。"
 
 #. STRINGS.BUILDINGS.PREFABS.ASTRONAUTTRAININGCENTER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.ASTRONAUTTRAININGCENTER.NAME"
@@ -5715,14 +5734,14 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.CLUSTERTELESCOPE.EFFECT"
 msgid ""
 "Reveals visitable Planetoids in space.\n"
 "\n"
-"Assigned Duplicants must possess the <link=\"SENIORRESEARCHER\">Astronomy</"
-"link> skill.\n"
+"Assigned Duplicants must possess the <link=\"ASTRONOMY\">Astronomy</link> "
+"skill.\n"
 "\n"
 "Building must be exposed to space to function."
 msgstr ""
 "揭示太空中可前往的小行星。\n"
 "\n"
-"指派的复制人必须具有<link=\"RESEARCHER\">天文学</link>技能。\n"
+"指派的复制人必须具有<link=\"ASTRONOMY\">天文学</link>技能。\n"
 "\n"
 "建筑必须暴露在太空中才能工作。"
 
@@ -5822,12 +5841,12 @@ msgstr "必须至少指派一名宇航员到指挥舱去驾驶火箭。"
 #. STRINGS.BUILDINGS.PREFABS.COMMANDMODULE.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.COMMANDMODULE.EFFECT"
 msgid ""
-"Contains passenger seating for Duplicant <link=\"ASTRONAUT\">Astronauts</"
+"Contains passenger seating for Duplicant <link=\"ASTRONAUTING1\">Astronauts</"
 "link>.\n"
 "\n"
 "A Command Capsule must be the last module installed at the top of a rocket."
 msgstr ""
-"包括供复制人<link=\"ASTRONAUT\">宇航员</link>使用的乘客座位。\n"
+"包括供复制人<link=\"ASTRONAUTING1\">宇航员</link>使用的乘客座位。\n"
 "\n"
 "指挥舱必须是安装在火箭顶部的最后一个舱。"
 
@@ -5958,15 +5977,15 @@ msgid ""
 "Consumes data from <link=\"TELESCOPE\">Telescopes</link> and <link="
 "\"RESEARCHMODULE\">Research Modules</link>.\n"
 "\n"
-"Assigned Duplicants must possess the <link=\"SENIORRESEARCHER\">Astronomy</"
-"link> skill."
+"Assigned Duplicants must possess the <link=\"ASTRONOMY\">Astronomy</link> "
+"skill."
 msgstr ""
 "执行<link=\"RESEARCH\">星际研究</link>以解锁新技术。\n"
 "\n"
 "消耗来自<link=\"TELESCOPE\">望远镜</link>和<link=\"RESEARCHMODULE\">研究舱</"
 "link>的数据。\n"
 "\n"
-"指派的复制人必须具有<link=\"SENIORRESEARCHER\">天文学</link>技能。"
+"指派的复制人必须具有<link=\"ASTRONOMY\">天文学</link>技能。"
 
 #. STRINGS.BUILDINGS.PREFABS.COSMICRESEARCHCENTER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.COSMICRESEARCHCENTER.NAME"
@@ -6097,7 +6116,7 @@ msgid ""
 "\n"
 "A silhouette just barely visible through the frost of the glass."
 msgstr ""
-"这个箱子看起来菲辞旧，但闻起来很清爽，像是新的一样。\n"
+"这个低温箱看起来非常旧，但闻起来很清爽，像是新的一样。\n"
 "\n"
 "通过玻璃上的霜，能隐约看到一个轮廓。"
 
@@ -6448,12 +6467,12 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.EGGINCUBATOR.EFFECT"
 msgid ""
 "Incubates <link=\"CRITTERS\">Critter</link> eggs until ready to hatch.\n"
 "\n"
-"Assigned Duplicants must possess the <link=\"RANCHER\">Critter Wrangling</"
-"link> trait."
+"Assigned Duplicants must possess the <link=\"RANCHING1\">Critter Ranching</"
+"link> ."
 msgstr ""
 "温育<link=\"CRITTERS\">小动物</link>蛋直至孵化。\n"
 "\n"
-"指派的复制人必须具有<link=\"RANCHER\">小动物的捕捉</link>特质。"
+"指派的复制人必须具有<link=\"RANCHING1\">小动物的捕捉</link>特质。"
 
 #. STRINGS.BUILDINGS.PREFABS.EGGINCUBATOR.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.EGGINCUBATOR.NAME"
@@ -6605,7 +6624,7 @@ msgid ""
 "Produces <link=\"FARMSTATIONTOOLS\">Micronutrient Fertilizer</link> to "
 "increase <link=\"PLANTS\">Plant</link> growth rates.\n"
 "\n"
-"Assigned Duplicants must possess the <link=\"FARMER\">Crop Tending</link> "
+"Assigned Duplicants must possess the <link=\"FARMING2\">Crop Tending</link> "
 "trait.\n"
 "\n"
 "This building is a necessary component of the Greenhouse room."
@@ -6613,7 +6632,7 @@ msgstr ""
 "生产<link=\"FARMSTATIONTOOLS\">微肥</link>以提升<link=\"PLANTS\">植物</link>"
 "生长速度。\n"
 "\n"
-"指派的复制人必须具有<link=\"FARMER\">作物照料</link>特质。\n"
+"指派的复制人必须具有<link=\"FARMING2\">作物照料</link>特质。\n"
 "\n"
 "这个建筑是温室的必要组成部分。"
 
@@ -7987,7 +8006,7 @@ msgstr "<link=\"HEPBRIDGETILE\">辐射粒子接合板</link>"
 msgctxt "STRINGS.BUILDINGS.PREFABS.HEPENGINE.DESC"
 msgid ""
 "Radbolt-fueled rockets support few modules, but travel exceptionally far."
-msgstr "辐射粒子燃料火箭能支撑的引擎很少，但可以前往极远的地方。"
+msgstr "辐射粒子燃料火箭能支撑的舱块很少，但可以前往极远的地方。"
 
 #. STRINGS.BUILDINGS.PREFABS.HEPENGINE.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.HEPENGINE.EFFECT"
@@ -8006,6 +8025,23 @@ msgstr ""
 "辐射粒子引擎比<link=\"HYDROGENENGINE\">液氢引擎</link>更快，但高度较受限。\n"
 "\n"
 "必须首先建造火箭的引擎，然后才能安装更多火箭舱块。"
+
+#. STRINGS.BUILDINGS.PREFABS.HEPENGINE.LOGIC_PORT_STORAGE
+msgctxt "STRINGS.BUILDINGS.PREFABS.HEPENGINE.LOGIC_PORT_STORAGE"
+msgid "Radbolt Storage"
+msgstr "辐射粒子存储"
+
+#. STRINGS.BUILDINGS.PREFABS.HEPENGINE.LOGIC_PORT_STORAGE_ACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.HEPENGINE.LOGIC_PORT_STORAGE_ACTIVE"
+msgid ""
+"Sends a <b><style=\"logic_on\">Green Signal</style></b> when its Radbolt "
+"Storage is full"
+msgstr "当辐射粒子存储充满时，输出<b><style=\"logic_on\">绿色信号</style></b>"
+
+#. STRINGS.BUILDINGS.PREFABS.HEPENGINE.LOGIC_PORT_STORAGE_INACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.HEPENGINE.LOGIC_PORT_STORAGE_INACTIVE"
+msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
+msgstr "否则，输出<b><style=\"logic_off\">红色信号</style></b>"
 
 #. STRINGS.BUILDINGS.PREFABS.HEPENGINE.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.HEPENGINE.NAME"
@@ -8278,9 +8314,9 @@ msgstr "复制人可以操作冰冷风扇来暂时使一小片区域降温。"
 #. STRINGS.BUILDINGS.PREFABS.ICECOOLEDFAN.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.ICECOOLEDFAN.EFFECT"
 msgid ""
-"Uses <link=\"ICE\">Ice</link> to dissipate a small amount of the <link=\"HEAT"
-"\">Heat</link>."
-msgstr "使用<link=\"ICE\">冰</link>来驱散少量<link=\"HEAT\">热量</link>。"
+"Uses <link=\"ICEORE\">Ice</link> to dissipate a small amount of the <link="
+"\"HEAT\">Heat</link>."
+msgstr "使用<link=\"ICEORE\">冰</link>来驱散少量<link=\"HEAT\">热量</link>。"
 
 #. STRINGS.BUILDINGS.PREFABS.ICECOOLEDFAN.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.ICECOOLEDFAN.NAME"
@@ -8734,8 +8770,7 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.LANDINGBEACON.DESC"
 msgid ""
 "Microtarget where your <link=\"RAILGUNPAYLOAD\">Interplanetary Payload</"
 "link> lands on a Planetoid surface."
-msgstr ""
-"作为<link=\"RAILGUNPAYLOAD\">行星际载货</link>在小行星表面着陆的微目标。"
+msgstr "作为<link=\"RAILGUNPAYLOAD\">星际载货</link>在小行星表面着陆的微目标。"
 
 #. STRINGS.BUILDINGS.PREFABS.LANDINGBEACON.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.LANDINGBEACON.EFFECT"
@@ -8746,11 +8781,11 @@ msgid ""
 "<link=\"RAILGUNPAYLOAD\">Interplanetary Payloads</link> must be launched "
 "from a <link=\"RAILGUN\">Interplanetary Launcher</link>."
 msgstr ""
-"引导<link=\"RAILGUNPAYLOAD\">行星际载货</link>和<link=\"ORBITALCARGOMODULE\">"
-"环轨货舱</link>在附近着陆。\n"
+"引导<link=\"RAILGUNPAYLOAD\">星际载货</link>和<link=\"ORBITALCARGOMODULE\">环"
+"轨货舱</link>在附近着陆。\n"
 "\n"
-"<link=\"RAILGUNPAYLOAD\">行星际载货</link>必须在<link=\"RAILGUN\">行星际发射"
-"器</link>发射。"
+"<link=\"RAILGUNPAYLOAD\">星际载货</link>必须在<link=\"RAILGUN\">星际发射器</"
+"link>发射。"
 
 #. STRINGS.BUILDINGS.PREFABS.LANDINGBEACON.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.LANDINGBEACON.NAME"
@@ -10339,6 +10374,45 @@ msgstr "使建筑发出响声"
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICHAMMER.NAME"
 msgid "<link=\"LOGICHAMMER\">Hammer</link>"
 msgstr "<link=\"LOGICHAMMER\">敲击器</link>"
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.DESC"
+msgid "Radbolt sensors can send a signal when a Radbolt passes over them."
+msgstr "当辐射粒子经过时，辐射粒子传感器可以输出信号。"
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.EFFECT"
+msgid ""
+"Sends a <b><style=\"logic_on\">Green Signal</style></b> or a <b><style="
+"\"logic_off\">Red Signal</style></b> when Radbolts detected enters the "
+"chosen range."
+msgstr ""
+"当检测到辐射粒子处于选定范围内时，输出<b><style=\"logic_on\">绿色信号</"
+"style></b>或<b><style=\"logic_off\">红色信号</style></b>。"
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.LOGIC_PORT
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.LOGIC_PORT"
+msgid "Detected Radbolts"
+msgstr "检测辐射粒子"
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.LOGIC_PORT_ACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.LOGIC_PORT_ACTIVE"
+msgid ""
+"Sends a <b><style=\"logic_on\">Green Signal</style></b> if detected Radbolts "
+"are within the selected range"
+msgstr ""
+"若检测到辐射粒子处于选定范围内，输出<b><style=\"logic_on\">绿色信号</style></"
+"b>"
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.LOGIC_PORT_INACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.LOGIC_PORT_INACTIVE"
+msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
+msgstr "否则，输出<b><style=\"logic_off\">红色信号</style></b>"
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.NAME"
+msgid "<link=\"LOGICHEPSENSOR\">Radbolt Sensor</link>"
+msgstr "<link=\"LOGICHEPSENSOR\">辐射粒子传感器</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDRECEIVER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDRECEIVER.DESC"
@@ -12059,7 +12133,7 @@ msgid ""
 "Generates a massive amount of <link=\"HEAT\">Heat</link>."
 msgstr ""
 "使用<link=\"ENRICHEDURANIUM\">浓缩铀</link>来产生<link=\"RADIATION\">辐射</"
-"link>以产生辐射粒子。\n"
+"link>以生成辐射粒子。\n"
 "\n"
 "生成大量的<link=\"HEAT\">热</link>。"
 
@@ -12091,24 +12165,24 @@ msgstr "投入少许离子就可以消除电荷。"
 #. STRINGS.BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.EFFECT"
 msgid ""
-"Conducts <link=\"RESEARCH\">Materials Science Research</link> to unlock new "
-"technologies.\n"
+"Conducts <link=\"RESEARCHDLC1\">Materials Science Research</link> to unlock "
+"new technologies.\n"
 "\n"
 "Consumes Radbolts.\n"
 "\n"
-"Assigned Duplicants must possess the <link=\"ATOMICRESEARCHER\">Materials "
-"Science Research</link> skill."
+"Assigned Duplicants must possess the <link=\"ATOMICRESEARCH\">Applied "
+"Sciences Research</link> skill."
 msgstr ""
-"执行<link=\"RESEARCH\">材料科学研究</link>以解锁新技术。\n"
+"执行<link=\"RESEARCHDCL1\">应用科学研究</link>以解锁新技术。\n"
 "\n"
 "消耗辐射粒子。\n"
 "\n"
-"指派的复制人必须具有<link=\"ATOMICRESEARCHER\">材料科学研究</link>技能。"
+"指派的复制人必须具有<link=\"ATOMICRESEARCH\">应用科学研究</link>技能。"
 
 #. STRINGS.BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.NAME"
-msgid "<link=\"NUCLEARLABORATORY\">Materials Study Terminal</link>"
-msgstr "<link=\"NUCLEARLABORATORY\">材料研究终端</link>"
+msgid "<link=\"NUCLEARRESEARCHCENTER\">Materials Study Terminal</link>"
+msgstr "<link=\"NUCLEARRESEARCHCENTER\">材料研究终端</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.OBJECTDISPENSER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.OBJECTDISPENSER.DESC"
@@ -12217,20 +12291,20 @@ msgstr "轨道微实验室在小行星周围轨道上进行研究。"
 #. STRINGS.BUILDINGS.PREFABS.ORBITALRESEARCHCENTER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.ORBITALRESEARCHCENTER.EFFECT"
 msgid ""
-"Conducts <link=\"RESEARCH\">Interstellar Research</link> to unlock new "
+"Conducts <link=\"RESEARCHDLC1\">Interstellar Research</link> to unlock new "
 "technologies.\n"
 "\n"
 "Consumes <link=\"POLYPROPYLENE\">Plastic</link> and <link=\"POWER\">Power</"
 "link>.\n"
 "\n"
-"Assigned Duplicants must possess the <link=\"COSMICRESEARCHER\">Orbital "
+"Assigned Duplicants must possess the <link=\"SPACERESEARCH\">Orbital "
 "Researcher</link> skill."
 msgstr ""
-"执行<link=\"RESEARCH\">星际研究</link>以解锁新技术。\n"
+"执行<link=\"RESEARCHDLC1\">星际研究</link>以解锁新技术。\n"
 "\n"
 "消耗<link=\"POLYPROPYLENE\">塑料</link>和<link=\"POWER\">电力</link>。\n"
 "\n"
-"指派的复制人必须具有<link=\"COSMICRESEARCHER\">轨道研究</link>技能。"
+"指派的复制人必须具有<link=\"SPACERESEARCH\">轨道研究</link>技能。"
 
 #. STRINGS.BUILDINGS.PREFABS.ORBITALRESEARCHCENTER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.ORBITALRESEARCHCENTER.NAME"
@@ -12769,15 +12843,15 @@ msgid ""
 "Produces <link=\"POWERSTATIONTOOLS\">Microchip</link> to increase the <link="
 "\"POWER\">Power</link> output of generators.\n"
 "\n"
-"Assigned Duplicants must possess the <link=\"POWERTECHNICIAN\">Tune Up</"
-"link> trait.\n"
+"Assigned Duplicants must possess the <link=\"TECHNICALS2\">Tune Up</link> "
+"trait.\n"
 "\n"
 "This building is a necessary component of the Power Plant room."
 msgstr ""
 "生产<link=\"POWERSTATIONTOOLS\">微芯片</link>以增加发电机输出的<link=\"POWER"
 "\">电力</link>。\n"
 "\n"
-"指派的复制人必须具有<link=\"POWERTECHNICIAN\">调整</link>特质。\n"
+"指派的复制人必须具有<link=\"TECHNICALS2\">调整</link>特质。\n"
 "\n"
 "这个建筑是发电厂的必要组成部分。"
 
@@ -13490,7 +13564,7 @@ msgid ""
 "\n"
 "Cannot transport Duplicants."
 msgstr ""
-"将<link=\"RAILGUNPAYLOAD\">行星际载货</link>在小行星间发射。\n"
+"将<link=\"RAILGUNPAYLOAD\">星际载货</link>在小行星间发射。\n"
 "\n"
 "载货可以包含<link=\"ELEMENTSSOLID\">固体</link>，<link=\"ELEMENTSLIQUID\">液"
 "体</link>，和<link=\"ELEMENTSGAS\">气体</link>材料。\n"
@@ -13517,7 +13591,7 @@ msgstr "<b><style=\"logic_off\">红色信号</style></b>：禁用载货发射。
 #. STRINGS.BUILDINGS.PREFABS.RAILGUN.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.RAILGUN.NAME"
 msgid "<link=\"RAILGUN\">Interplanetary Launcher</link>"
-msgstr "<link=\"RAILGUN\">行星际发射器</link>"
+msgstr "<link=\"RAILGUN\">星际发射器</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.RAILGUN.SIDESCREEN_HEP_REQUIRED
 msgctxt "STRINGS.BUILDINGS.PREFABS.RAILGUN.SIDESCREEN_HEP_REQUIRED"
@@ -13541,7 +13615,7 @@ msgid ""
 "\"ELEMENTSLIQUID\">Liquid</link>, and <link=\"ELEMENTSGAS\">Gas</link> "
 "materials and distributes them to the appropriate systems."
 msgstr ""
-"将由复制人运送来的<link=\"RAILGUNPAYLOAD\">行星际载货</link>拆包。\n"
+"将由复制人运送来的<link=\"RAILGUNPAYLOAD\">星际载货</link>拆包。\n"
 "\n"
 "自动分离<link=\"ELEMENTSSOLID\">固体</link>，<link=\"ELEMENTSLIQUID\">液体</"
 "link>，和<link=\"ELEMENTSGAS\">气体</link>材料，并分配到相应的系统中。"
@@ -13564,15 +13638,15 @@ msgid ""
 "Allows the assigned <link=\"RANCHER\">Rancher</link> to care for <link="
 "\"CRITTERS\">Critters</link>.\n"
 "\n"
-"Assigned Duplicants must possess the <link=\"RANCHER\">Critter Wrangling</"
-"link> trait.\n"
+"Assigned Duplicants must possess the <link=\"RANCHING1\">Critter Ranching</"
+"link> skill.\n"
 "\n"
 "This building is a necessary component of the Stable room."
 msgstr ""
 "允许指派的<link=\"RANCHER\">牧场工</link>照顾<link=\"CRITTERS\">小动物</"
 "link>。\n"
 "\n"
-"指派的复制人必须具有<link=\"RANCHER\">小动物的捕捉</link>特质。\n"
+"指派的复制人必须具有<link=\"RANCHING1\">小动物的捕捉</link>特质。\n"
 "\n"
 "这个建筑是畜舍的必要组成部分。"
 
@@ -13704,7 +13778,7 @@ msgid ""
 "\n"
 "Duplicants will lose all assigned skills in the process."
 msgstr ""
-"退换复制人的技能点以供分配。\n"
+"退还复制人的技能点以供重新分配。\n"
 "\n"
 "这个过程中复制人会失去所有分配的技能。"
 
@@ -13791,12 +13865,12 @@ msgid ""
 "Allows Duplicants to use pilot-operated rockets and control access to "
 "interior buildings.\n"
 "\n"
-"Assigned Duplicants must have the <link=\"PILOT\">Rocket Piloting</link> "
-"skill."
+"Assigned Duplicants must have the <link=\"ROCKETPILOTING1\">Rocket Piloting</"
+"link> skill."
 msgstr ""
 "允许复制人操作火箭并控制内部建筑的使用许可。\n"
 "\n"
-"必须具有<link=\"PILOT\">火箭驾驶</link>技能的复制人才能使用。"
+"必须具有<link=\"ROCKETPILOTING1\">火箭驾驶</link>技能的复制人才能使用。"
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT"
@@ -15628,12 +15702,12 @@ msgstr "你永远不会知道对面会是谁来接电话。"
 #. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT"
 msgid ""
-"Provides a way for Duplicants to chat with their friends in different "
-"locations.\n"
+"Can be used by one Duplicant to chat with themselves or with other "
+"Duplicants in different locations.\n"
 "\n"
 "Chatting increases Duplicant <link=\"MORALE\">Morale</link>."
 msgstr ""
-"提供一种让复制人与不同地点的朋友聊天的方式。\n"
+"可以由复制人使用来与自己或不同地点的朋友聊天。\n"
 "\n"
 "聊天可以提升复制人的<link=\"MORALE\">士气</link>。"
 
@@ -15644,8 +15718,9 @@ msgstr "{attrib}：{amount}（无人）"
 
 #. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_BABBLE_TOOLTIP
 msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_BABBLE_TOOLTIP"
-msgid "Duplicants will gain {amount} {attrib} if they chat to no one."
-msgstr "如果复制人没人聊天，复制人会获得{amount}{attrib}。"
+msgid ""
+"Duplicants will gain {amount} {attrib} if they chat only with themselves."
+msgstr "如果复制人只能和自己聊天，则会获得{amount}{attrib}。"
 
 #. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_CHAT
 msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_CHAT"
@@ -15655,9 +15730,9 @@ msgstr "{attrib}：{amount}（至少一名复制人）"
 #. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_CHAT_TOOLTIP
 msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_CHAT_TOOLTIP"
 msgid ""
-"Duplicants will gain {amount} {attrib} if they chat to at least one other "
-"duplicant."
-msgstr "如果复制人至少和一名其他复制人聊天，复制人会获得{amount}{attrib}。"
+"Duplicants will gain {amount} {attrib} if they chat with at least one other "
+"Duplicant."
+msgstr "如果复制人至少和一名其他复制人聊天，则会获得{amount}{attrib}。"
 
 #. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_LONG_DISTANCE
 msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_LONG_DISTANCE"
@@ -15667,10 +15742,9 @@ msgstr "{attrib}：{amount}（至少一名隔着太空的复制人）"
 #. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_LONG_DISTANCE_TOOLTIP
 msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_LONG_DISTANCE_TOOLTIP"
 msgid ""
-"Duplicants will gain {amount} {attrib} if they chat to at least one other "
-"duplicant across space."
-msgstr ""
-"如果复制人至少和其他一名复制人隔着太空聊天，复制人会获得{amount}{attrib}。"
+"Duplicants will gain {amount} {attrib} if they chat with at least one other "
+"Duplicant across space."
+msgstr "如果复制人至少和其他一名复制人隔着太空聊天，则会获得{amount}{attrib}。"
 
 #. STRINGS.BUILDINGS.PREFABS.TELEPHONE.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.NAME"
@@ -15721,14 +15795,14 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.TELESCOPE.EFFECT"
 msgid ""
 "Maps Starmap destinations.\n"
 "\n"
-"Assigned Duplicants must possess the <link=\"RESEARCHER\">Field Research</"
+"Assigned Duplicants must possess the <link=\"RESEARCHING2\">Field Research</"
 "link> skill.\n"
 "\n"
 "Building must be exposed to space to function."
 msgstr ""
 "绘制星图目的地。\n"
 "\n"
-"指派的复制人必须具有<link=\"RESEARCHER\">实地调查</link>技能。\n"
+"指派的复制人必须具有<link=\"RESEARCHING2\">实地研究</link>技能。\n"
 "\n"
 "建筑必须暴露在太空中才能工作。"
 
@@ -16095,7 +16169,7 @@ msgid ""
 "<link=\"ELEMENTSSOLID\">Solid</link>, and <link=\"ELEMENTSGAS\">Gas</link> "
 "resources to another asteroid.\n"
 "\n"
-"It can be activated by a Duplicant with the <link=\"RESEARCHER\">Field "
+"It can be activated by a Duplicant with the <link=\"RESEARCHING2\">Field "
 "Research</link> skill.\n"
 "\n"
 "This is the receiving side."
@@ -16103,7 +16177,7 @@ msgstr ""
 "一台可以将<link=\"ELEMENTSLIQUID\">液体</link>，<link=\"ELEMENTSSOLID\">固体"
 "</link>，和<link=\"ELEMENTSGAS\">气体</link>资源传送到其他小行星的机器。\n"
 "\n"
-"可以由具有<link=\"RESEARCHER\">实地调查</link>技能的复制人激活。\n"
+"可以由具有<link=\"RESEARCHING22\">实地研究</link>技能的复制人激活。\n"
 "\n"
 "这个是接收端。"
 
@@ -16124,7 +16198,7 @@ msgid ""
 "<link=\"ELEMENTSSOLID\">Solid</link>, and <link=\"ELEMENTSGAS\">Gas</link> "
 "resources to another asteroid.\n"
 "\n"
-"It can be activated by a Duplicant with the <link=\"RESEARCHER\">Field "
+"It can be activated by a Duplicant with the <link=\"RESEARCHING2\">Field "
 "Research</link> skill.\n"
 "\n"
 "This is the transmitting side."
@@ -16132,7 +16206,7 @@ msgstr ""
 "一台可以将<link=\"ELEMENTSLIQUID\">液体</link>，<link=\"ELEMENTSSOLID\">固体"
 "</link>，和<link=\"ELEMENTSGAS\">气体</link>资源传送到其他小行星的机器。\n"
 "\n"
-"可以由具有<link=\"RESEARCHER\">实地调查</link>技能的复制人激活。\n"
+"可以由具有<link=\"RESEARCHING2\">实地研究</link>技能的复制人激活。\n"
 "\n"
 "这个是发送端。"
 
@@ -16564,7 +16638,7 @@ msgstr "两个小星球"
 #. STRINGS.CLUSTER_NAMES.VANILLA_FOREST_CLUSTER.DESCRIPTION
 msgctxt "STRINGS.CLUSTER_NAMES.VANILLA_FOREST_CLUSTER.DESCRIPTION"
 msgid "A cluster of planets with a larger foresty planetoid to start on."
-msgstr "一个起始更大的森林行星组成的星群。"
+msgstr "一个从更大的森林行星开始的星群。"
 
 #. STRINGS.CLUSTER_NAMES.VANILLA_FOREST_CLUSTER.NAME
 msgctxt "STRINGS.CLUSTER_NAMES.VANILLA_FOREST_CLUSTER.NAME"
@@ -16574,17 +16648,27 @@ msgstr "大型森林星群"
 #. STRINGS.CLUSTER_NAMES.VANILLA_SANDSTONE_CLUSTER.DESCRIPTION
 msgctxt "STRINGS.CLUSTER_NAMES.VANILLA_SANDSTONE_CLUSTER.DESCRIPTION"
 msgid "A cluster of planets with a larger earthy planetoid to start on."
-msgstr "一个起始更大的类地行星组成的星群。"
+msgstr "一个从更大的类地行星开始的星群。"
 
 #. STRINGS.CLUSTER_NAMES.VANILLA_SANDSTONE_CLUSTER.NAME
 msgctxt "STRINGS.CLUSTER_NAMES.VANILLA_SANDSTONE_CLUSTER.NAME"
 msgid "Large Terra Cluster"
 msgstr "大型类地星群"
 
+#. STRINGS.CLUSTER_NAMES.VANILLA_SANDSTONE_FROZEN_CLUSTER.DESCRIPTION
+msgctxt "STRINGS.CLUSTER_NAMES.VANILLA_SANDSTONE_FROZEN_CLUSTER.DESCRIPTION"
+msgid "A cluster of planets with a frozen planetoid to start on."
+msgstr "一个从更大的冰冻行星开始的星群。"
+
+#. STRINGS.CLUSTER_NAMES.VANILLA_SANDSTONE_FROZEN_CLUSTER.NAME
+msgctxt "STRINGS.CLUSTER_NAMES.VANILLA_SANDSTONE_FROZEN_CLUSTER.NAME"
+msgid "Rime Cluster"
+msgstr "冰霜星群"
+
 #. STRINGS.CLUSTER_NAMES.VANILLA_SWAMP_CLUSTER.DESCRIPTION
 msgctxt "STRINGS.CLUSTER_NAMES.VANILLA_SWAMP_CLUSTER.DESCRIPTION"
 msgid "A cluster of planets with a larger swampy planetoid to start on."
-msgstr "一个起始更大的沼泽行星组成的星群。"
+msgstr "一个从更大的沼泽行星开始的星群。"
 
 #. STRINGS.CLUSTER_NAMES.VANILLA_SWAMP_CLUSTER.NAME
 msgctxt "STRINGS.CLUSTER_NAMES.VANILLA_SWAMP_CLUSTER.NAME"
@@ -18453,7 +18537,7 @@ msgid ""
 "Donor: #650, \"Hibiscus\"\n"
 "Adult female, 42cm, 257g"
 msgstr ""
-"实验 7D\n"
+"实验7D\n"
 "安全代码：B111\n"
 "\n"
 "实验体：#762，\"芙蓉-3号\"\n"
@@ -18520,7 +18604,7 @@ msgstr "加密级别：二"
 #. STRINGS.CODEX.A4_HIBISCUS3.TITLE
 msgctxt "STRINGS.CODEX.A4_HIBISCUS3.TITLE"
 msgid "Experiment 7D"
-msgstr "实验 7D"
+msgstr "实验7D"
 
 #. STRINGS.CODEX.A5_GENETICOOZE.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.A5_GENETICOOZE.BODY.CONTAINER1"
@@ -21568,6 +21652,11 @@ msgctxt "STRINGS.CODEX.BUDDYBUD.TITLE"
 msgid "Buddy Bud"
 msgstr "同伴芽"
 
+#. STRINGS.CODEX.BUILDING_TYPE.INDUSTRIAL_MACHINERY
+msgctxt "STRINGS.CODEX.BUILDING_TYPE.INDUSTRIAL_MACHINERY"
+msgid "Industrial Machinery"
+msgstr "工业机械"
+
 #. STRINGS.CODEX.C01_EVIL.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.C01_EVIL.BODY.CONTAINER1"
 msgid ""
@@ -22313,10 +22402,10 @@ msgstr ""
 "\n"
 "没有供给传送器的小行星可以使用火箭传输货物，可通过<link=\"LAUNCHPLATFORM\">火"
 "箭平台</link>实现或从轨道上通过<link=\"ORBITALCARGOMODULE\">环轨货舱</link>部"
-"署。另外，<link=\"RAILGUN\">行星际发射器</link>可以发送<link=\"RAILGUNPAYLOAD"
-"\">行星际载货</link>，但必须由<link=\"RAILGUNPAYLOADOPENER\">载货拆包器</"
-"link>打开。<link=\"LANDINGBEACON\">定位信标</link>可以引导载货和环轨货舱在小"
-"行星表面的指定位置着陆。"
+"署。另外，<link=\"RAILGUN\">星际发射器</link>可以发送<link=\"RAILGUNPAYLOAD"
+"\">星际载货</link>，但必须由<link=\"RAILGUNPAYLOADOPENER\">载货拆包器</link>"
+"打开。<link=\"LANDINGBEACON\">定位信标</link>可以引导载货和环轨货舱在小行星表"
+"面的指定位置着陆。"
 
 #. STRINGS.CODEX.EXOBASES.TITLE
 msgctxt "STRINGS.CODEX.EXOBASES.TITLE"
@@ -22574,6 +22663,11 @@ msgctxt "STRINGS.CODEX.HEADERS.BUILDINGREQUIREMENTS"
 msgid "Requirements"
 msgstr "需求"
 
+#. STRINGS.CODEX.HEADERS.BUILDINGTYPE
+msgctxt "STRINGS.CODEX.HEADERS.BUILDINGTYPE"
+msgid "Room Requirements Class"
+msgstr "房间需求类型"
+
 #. STRINGS.CODEX.HEADERS.COMFORTRANGE
 msgctxt "STRINGS.CODEX.HEADERS.COMFORTRANGE"
 msgid "Ideal Temperatures"
@@ -22593,6 +22687,16 @@ msgstr "需要更多的研究或探索"
 msgctxt "STRINGS.CODEX.HEADERS.DIET"
 msgid "Diet"
 msgstr "饮食"
+
+#. STRINGS.CODEX.HEADERS.ELEMENTCONSUMEDBY
+msgctxt "STRINGS.CODEX.HEADERS.ELEMENTCONSUMEDBY"
+msgid "Consumed By"
+msgstr "消耗源"
+
+#. STRINGS.CODEX.HEADERS.ELEMENTPRODUCEDBY
+msgctxt "STRINGS.CODEX.HEADERS.ELEMENTPRODUCEDBY"
+msgid "Produced By"
+msgstr "生产源"
 
 #. STRINGS.CODEX.HEADERS.ELEMENTTRANSITIONS
 msgctxt "STRINGS.CODEX.HEADERS.ELEMENTTRANSITIONS"
@@ -24915,8 +25019,6 @@ msgid ""
 "Computer</link>\n"
 "Interstellar Research is performed at the <link=\"COSMICRESEARCHCENTER"
 "\">Virtual Planetarium</link>\n"
-"Materials Science Research is performed at the <link=\"NUCLEARLABORATORY"
-"\">Materials Study Terminal</link>\n"
 "\n"
 msgstr ""
 "高级研究任务需要特殊研究站来生成正确种类的研究点。这些研究站通常会消耗更高级"
@@ -24928,13 +25030,88 @@ msgstr ""
 "基础研究可在<link=\"RESEARCHCENTER\">研究站</link>进行\n"
 "高级研究可在<link=\"ADVANCEDRESEARCHCENTER\">超级计算机</link>进行\n"
 "星际研究可在<link=\"COSMICRESEARCHCENTER\">虚拟天象仪</link>进行\n"
-"材料科学研究可在<link=\"NUCLEARLABORATORY\">材料研究终端</link>进行\n"
 "\n"
 
 #. STRINGS.CODEX.RESEARCH.TITLE
 msgctxt "STRINGS.CODEX.RESEARCH.TITLE"
 msgid "<link=\"RESEARCH\">Research</link>"
 msgstr "<link=\"RESEARCH\">研究</link>"
+
+#. STRINGS.CODEX.RESEARCHDLC1.HEADER_1
+msgctxt "STRINGS.CODEX.RESEARCHDLC1.HEADER_1"
+msgid "Research"
+msgstr "研究"
+
+#. STRINGS.CODEX.RESEARCHDLC1.HEADER_2
+msgctxt "STRINGS.CODEX.RESEARCHDLC1.HEADER_2"
+msgid "Research Tasks"
+msgstr "研究任务"
+
+#. STRINGS.CODEX.RESEARCHDLC1.HEADER_3
+msgctxt "STRINGS.CODEX.RESEARCHDLC1.HEADER_3"
+msgid "Research Types"
+msgstr "研究类型"
+
+#. STRINGS.CODEX.RESEARCHDLC1.PARAGRAPH_1
+msgctxt "STRINGS.CODEX.RESEARCHDLC1.PARAGRAPH_1"
+msgid ""
+"Doing research unlocks new types of buildings for the colony. Duplicants can "
+"perform research at the <link=\"RESEARCHCENTER\">Research Station</link>.\n"
+"\n"
+msgstr ""
+"做研究可以为殖民地解锁新的建筑类型。复制人可在<link=\"RESEARCHCENTER\">研究站"
+"</link>执行研究。\n"
+"\n"
+
+#. STRINGS.CODEX.RESEARCHDLC1.PARAGRAPH_2
+msgctxt "STRINGS.CODEX.RESEARCHDLC1.PARAGRAPH_2"
+msgid ""
+"A selected research task is completed once enough research points have been "
+"generated at the colonies research stations. Duplicants with high 'Science' "
+"attribute scores will generate research points faster than Duplicants with "
+"lower scores.\n"
+"\n"
+msgstr ""
+"一旦殖民地的研究站有足够多的研究点，选中的研究任务就会完成。\"科学\"属性高的"
+"复制人会比其他低的复制人更快地产生研究点。\n"
+"\n"
+
+#. STRINGS.CODEX.RESEARCHDLC1.PARAGRAPH_3
+msgctxt "STRINGS.CODEX.RESEARCHDLC1.PARAGRAPH_3"
+msgid ""
+"Advanced research tasks require special research stations to generate the "
+"proper kind of research points. These research stations often consume more "
+"advanced resources.\n"
+"\n"
+"Using higher level research stations also requires Duplicants to have "
+"learned higher level research <link=\"ROLES\">skills</link>.\n"
+"\n"
+"Novice Research is performed at the <link=\"RESEARCHCENTER\">Research "
+"Station</link>\n"
+"Advanced Research is performed at the <link=\"ADVANCEDRESEARCHCENTER\">Super "
+"Computer</link>\n"
+"Interstellar Research is performed at the <link=\"ORBITALRESEARCHCENTER"
+"\">Orbital Microlab</link>\n"
+"Applied Sciences Research is performed at the <link=\"NUCLEARRESEARCHCENTER"
+"\">Materials Study Terminal</link>\n"
+"\n"
+msgstr ""
+"高级研究任务需要特殊研究站来生成正确种类的研究点。这些研究站通常会消耗更高级"
+"的资源。\n"
+"\n"
+"使用更高等级的研究站同样也需要复制人习得更高等级的研究<link=\"ROLES\">技能</"
+"link>。\n"
+"\n"
+"基础研究可在<link=\"RESEARCHCENTER\">研究站</link>进行\n"
+"高级研究可在<link=\"ADVANCEDRESEARCHCENTER\">超级计算机</link>进行\n"
+"星际研究可在<link=\"ORBITALRESEARCHCENTER\">轨道微实验室</link>进行\n"
+"应用科学研究可在<link=\"NUCLEARRESEARCHCENTER\">材料研究终端</link>进行\n"
+"\n"
+
+#. STRINGS.CODEX.RESEARCHDLC1.TITLE
+msgctxt "STRINGS.CODEX.RESEARCHDLC1.TITLE"
+msgid "<link=\"RESEARCHDLC1\">Research</link>"
+msgstr "<link=\"RESEARCHDLC1\">研究</link>"
 
 #. STRINGS.CODEX.ROBOT_DESCRIPTORS.BATTERY.CAPACITY
 msgctxt "STRINGS.CODEX.ROBOT_DESCRIPTORS.BATTERY.CAPACITY"
@@ -26022,6 +26199,17 @@ msgctxt ""
 msgid "Enter an oil biome for the first time."
 msgstr "首次进入一个原油生态。"
 
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.FIRST_TELEPORT
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.FIRST_TELEPORT"
+msgid "First Teleport of Call"
+msgstr "远程呼叫"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.FIRST_TELEPORT_DESCRIPTION
+msgctxt ""
+"STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.FIRST_TELEPORT_DESCRIPTION"
+msgid "Teleport a Duplicant and defrost a Friend on another world."
+msgstr "传送复制人并解冻另一个星球的朋友。"
+
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.GENERATOR_TUNEUP
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.GENERATOR_TUNEUP"
 msgid "Finely Tuned Machine"
@@ -26032,6 +26220,16 @@ msgctxt ""
 "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.GENERATOR_TUNEUP_DESCRIPTION"
 msgid "Perform {0} Tune Ups on power generators."
 msgstr "对发电机执行{0}次调整。"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.GMO_OK
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.GMO_OK"
+msgid "GMO A-OK"
+msgstr "优良基因"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.GMO_OK_DESCRIPTION
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.GMO_OK_DESCRIPTION"
+msgid "Successfully analyze at least one seed of all mutatable plants."
+msgstr "成功分析所有可变异植物的种子至少一个。"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.HATCH_A_CRITTER
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.HATCH_A_CRITTER"
@@ -26078,6 +26276,17 @@ msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.INSPECT_POI_DESCRIPTION"
 msgid "Recover a Database entry by inspecting facility ruins."
 msgstr "通过检查设施遗迹来取回一个数据库条目。"
 
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.LAND_ON_ALL_WORLDS
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.LAND_ON_ALL_WORLDS"
+msgid "Cluster Conquest"
+msgstr "星群征服者"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.LAND_ON_ALL_WORLDS_DESCRIPTION
+msgctxt ""
+"STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.LAND_ON_ALL_WORLDS_DESCRIPTION"
+msgid "Land dupes or rovers on all worlds in the cluster."
+msgstr "使复制人或侦察者在星群中的所有星球上着陆。"
+
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.MASTERPIECE_PAINTING
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.MASTERPIECE_PAINTING"
 msgid "Art Underground"
@@ -26090,7 +26299,18 @@ msgctxt ""
 msgid ""
 "Have a Duplicant with the Masterworks skill paint a Masterpiece quality "
 "painting."
-msgstr "让一名具有大师作品技能的复制人绘出一幅杰作品质的绘画。"
+msgstr "让一名具有大师技艺技能的复制人绘出一幅杰作品质的绘画。"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.MINE_THE_GAP
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.MINE_THE_GAP"
+msgid "Mine the Gap"
+msgstr "钻拓星石"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.MINE_THE_GAP_DESCRIPTION
+msgctxt ""
+"STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.MINE_THE_GAP_DESCRIPTION"
+msgid "Mine 1,000,000kg from space POIs."
+msgstr "在太空地点挖掘1,000,000千克资源。"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.NO_PLANTERBOX
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.NO_PLANTERBOX"
@@ -26119,6 +26339,17 @@ msgid ""
 "Sinks."
 msgstr "用抽水马桶和洗手池代替你的殖民地中所有的户外厕所和洗手盆。"
 
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.RADICAL_TRIP
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.RADICAL_TRIP"
+msgid "Radical Trip"
+msgstr "辐射漫游"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.RADICAL_TRIP_DESCRIPTION
+msgctxt ""
+"STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.RADICAL_TRIP_DESCRIPTION"
+msgid "Have radbolts travel a cumulative {0}km."
+msgstr "使辐射粒子累计前进{0}千米。"
+
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.REACH_SPACE_ANY_DESTINATION
 msgctxt ""
 "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.REACH_SPACE_ANY_DESTINATION"
@@ -26132,6 +26363,17 @@ msgctxt ""
 msgid "Launch your first rocket into space."
 msgstr "发射你的第一艘火箭到太空。"
 
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.REACTOR_USAGE
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.REACTOR_USAGE"
+msgid "That's Rad!"
+msgstr "辐劲十足！"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.REACTOR_USAGE_DESCRIPTION
+msgctxt ""
+"STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.REACTOR_USAGE_DESCRIPTION"
+msgid "Run a Research Reactor at full capacity for {0} cycles."
+msgstr "使一台研究性反应堆全力运行{0}周期。"
+
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SIXKELVIN_BUILDING
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SIXKELVIN_BUILDING"
 msgid "Not 0K, But Pretty Cool"
@@ -26142,6 +26384,21 @@ msgctxt ""
 "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SIXKELVIN_BUILDING_DESCRIPTION"
 msgid "Reduce the temperature of a building to 6 Kelvin."
 msgstr "将一个建筑的温度降到6K。"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SOFT_LAUNCH
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SOFT_LAUNCH"
+msgid "Soft Launch"
+msgstr "软发射"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SOFT_LAUNCH_DESCRIPTION
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SOFT_LAUNCH_DESCRIPTION"
+msgid "Build a launchpad on a world without a teleporter."
+msgstr "在没有传送器的星球上建造发射平台。"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.ANALYZE_SEED
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.ANALYZE_SEED"
+msgid "Analyze {0} mutant"
+msgstr "分析{0}变异"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.ARM_PERFORMANCE
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.ARM_PERFORMANCE"
@@ -26164,6 +26421,12 @@ msgstr "使一个建筑自动化"
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.BLOCKED_A_COMET"
 msgid "Blocked a meteor with a Bunker Door"
 msgstr "用地堡门阻挡陨石"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.BUILD_A_LAUNCHPAD
+msgctxt ""
+"STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.BUILD_A_LAUNCHPAD"
+msgid "Build a launchpad on a new world without a teleporter"
+msgstr "在没有传送器的新星球上建造发射平台"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.BUILING_BEDS
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.BUILING_BEDS"
@@ -26265,6 +26528,12 @@ msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.CYCLE_NUMBER"
 msgid "Cycle: {0} / {1}"
 msgstr "周期：{0} / {1}"
 
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.DEFROST_DUPLICANT
+msgctxt ""
+"STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.DEFROST_DUPLICANT"
+msgid "Defrost a Duplicant"
+msgstr "解冻一名复制人"
+
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.ENTER_OIL_BIOME
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.ENTER_OIL_BIOME"
 msgid "Entered an oil biome"
@@ -26307,6 +26576,18 @@ msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.GENERATE_POWER"
 msgid "Energy generated: {0} / {1}"
 msgstr "产生能量：{0} / {1}"
 
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.GET_URANIUM_WITHOUT_STING
+msgctxt ""
+"STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS."
+"GET_URANIUM_WITHOUT_STING"
+msgid "Got uranium out of a beeta hive without getting stung"
+msgstr "从辐射蜂巢中收获浓缩铀而不被蜇"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.HARVEST_HIVE
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.HARVEST_HIVE"
+msgid "Uranium extracted from a Beeta hive without getting stung"
+msgstr "从辐射蜂巢中收获浓缩铀而不被蜇"
+
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.HATCH_A_MORPH
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.HATCH_A_MORPH"
 msgid "Hatched a critter morph"
@@ -26323,6 +26604,12 @@ msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.KELVIN_COOLING"
 msgid "Coldest building: {0:##0.#}K"
 msgstr "最冷的建筑：{0:##0.#}K"
 
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.LAND_DUPES_ON_ALL_WORLDS
+msgctxt ""
+"STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.LAND_DUPES_ON_ALL_WORLDS"
+msgid "Duplicants or rovers landed on {0} of {1} planetoids"
+msgstr "复制人或侦察者已在{0}个小行星上着陆，总共{1}个"
+
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.LAUNCHED_ROCKET
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.LAUNCHED_ROCKET"
 msgid "Launched a Rocket into Space"
@@ -26335,6 +26622,11 @@ msgctxt ""
 msgid ""
 "Sent a Duplicant on a one-way mission to the furthest Starmap destination"
 msgstr "将一名复制人以单程任务送到星图的最远目的地"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.MINE_SPACE_POI
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.MINE_SPACE_POI"
+msgid "Mined: {0:n} / {1:n} kg"
+msgstr "已挖掘：{0:n} / {1:n}千克"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.MORALE
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.MORALE"
@@ -26390,6 +26682,11 @@ msgctxt ""
 msgid " or "
 msgstr "或"
 
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.RADBOLT_TRAVEL
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.RADBOLT_TRAVEL"
+msgid "Radbolts travelled: {0:n} m / {1:n} m"
+msgstr "辐射粒子前行距离：{0:n}米 / {1:n}米"
+
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.REMAINING_CYCLES
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.REMAINING_CYCLES"
 msgid "Cycles remaining: {0} / {1}"
@@ -26398,12 +26695,30 @@ msgstr "剩余周期：{0} / {1}"
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.REVEALED
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.REVEALED"
 msgid "Revealed: {0:0.##}% / {1:0.##}%"
-msgstr "揭示：{0:0.##}% / {1:0.##}%"
+msgstr "已揭示：{0:0.##}% / {1:0.##}%"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.RUN_A_REACTOR
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.RUN_A_REACTOR"
+msgid "Reactor running for cycles: {0} / {1}"
+msgstr "反应堆运行周期：{0} / {1}"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.SKILL_BRANCH
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.SKILL_BRANCH"
 msgid "Unlocked an entire branch of the skill tree"
 msgstr "解锁技能树的一整条分支"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.SURVIVE_SPACE
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.SURVIVE_SPACE"
+msgid ""
+"Duplicants in {3} have ended each cycle in space with at least {0} morale "
+"for: {1} / {2} cycles"
+msgstr "复制人以至少{0}点士气在{3}中生存：{1} / {2}周期"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.SURVIVE_SPACE_COMPLETE
+msgctxt ""
+"STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.SURVIVE_SPACE_COMPLETE"
+msgid "Duplicants survived in space with at least {0} morale for {1} cycles."
+msgstr "复制人以至少{0}点士气在太空中生存{1}周期。"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.TAME_A_CRITTER
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.TAME_A_CRITTER"
@@ -26414,6 +26729,12 @@ msgstr "驯化一只{0}"
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.TECH_RESEARCHED"
 msgid "Tech researched: {0} / {1}"
 msgstr "研究技术：{0} / {1}"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.TELEPORT_DUPLICANT
+msgctxt ""
+"STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.TELEPORT_DUPLICANT"
+msgid "Teleport a Duplicant to another world"
+msgstr "将复制人传送到另一个星球"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.TRAVELED_IN_TUBES
 msgctxt ""
@@ -26444,6 +26765,19 @@ msgctxt ""
 msgid "Reach cycle 100 with at least one living Duplicant."
 msgstr "至少有一名复制人活过100周期。"
 
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SURVIVE_IN_A_ROCKET
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SURVIVE_IN_A_ROCKET"
+msgid "Morale High Ground"
+msgstr "翻天覆地"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SURVIVE_IN_A_ROCKET_DESCRIPTION
+msgctxt ""
+"STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SURVIVE_IN_A_ROCKET_DESCRIPTION"
+msgid ""
+"Have all Duplicants in a rocket survive in space for {0} cycles in a row "
+"with a morale of {1} or higher."
+msgstr "使在火箭中的所有复制人在太空连续生存{0}周期，且士气不低于{1}。"
+
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SURVIVE_ONE_YEAR
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SURVIVE_ONE_YEAR"
 msgid "One Year, to be Exact"
@@ -26454,6 +26788,17 @@ msgctxt ""
 "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SURVIVE_ONE_YEAR_DESCRIPTION"
 msgid "Reach cycle 365.25 with a single colony."
 msgstr "单个殖民地达到365.25周期。"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SWEETER_THAN_HONEY
+msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SWEETER_THAN_HONEY"
+msgid "Sweeter Than Honey"
+msgstr "比蜜还甜"
+
+#. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SWEETER_THAN_HONEY_DESCRIPTION
+msgctxt ""
+"STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SWEETER_THAN_HONEY_DESCRIPTION"
+msgid "Extract Uranium from a Beeta hive without getting stung."
+msgstr "从辐射蜂巢中收获浓缩铀而不被蜇。"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.TAME_BASIC_CRITTERS
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.TAME_BASIC_CRITTERS"
@@ -35204,7 +35549,7 @@ msgid ""
 "\n"
 "Increases <style=\"KKeyword\">Incubation Rate</style>\n"
 "\n"
-"Duplicants must possess the <link=\"RANCHER\">Critter Ranching I</link> "
+"Duplicants must possess the <link=\"RANCHING1\">Critter Ranching I</link> "
 "Skill to sing to an egg"
 msgstr ""
 "来自富有同情心的复制人的摇篮曲促进了<style=\"KKeyword\">蛋</style>的发育\n"
@@ -35212,7 +35557,7 @@ msgstr ""
 "加快<style=\"KKeyword\">孵化速率</style>\n"
 "\n"
 "\n"
-"复制人必须具有小<link=\"RANCHER\">小动物放牧 I</link>技能才能对蛋唱歌"
+"复制人必须具有小<link=\"RANCHING1\">小动物放牧 I</link>技能才能对蛋唱歌"
 
 #. STRINGS.DUPLICANTS.CHORES.SLEEP.NAME
 msgctxt "STRINGS.DUPLICANTS.CHORES.SLEEP.NAME"
@@ -35263,7 +35608,7 @@ msgstr "正在发泄"
 msgctxt "STRINGS.DUPLICANTS.CHORES.STRESSACTINGOUT.TOOLTIP"
 msgid ""
 "This Duplicant is having a <style=\"KKeyword\">Stress</style>-induced tantrum"
-msgstr "因为<style=\"KKeyword\">压力</style>，这名复制人正在发脾气"
+msgstr "因为<style=\"KKeyword\">压力</style>，这名复制人正在发怒"
 
 #. STRINGS.DUPLICANTS.CHORES.STRESSHEAL.NAME
 msgctxt "STRINGS.DUPLICANTS.CHORES.STRESSHEAL.NAME"
@@ -37973,6 +38318,16 @@ msgctxt "STRINGS.DUPLICANTS.MODIFIERS.LIGHTWOUNDS.TOOLTIP"
 msgid "This Duplicant sustained injuries that are a bit uncomfortable"
 msgstr "这名复制人受了轻伤，感觉不太舒服"
 
+#. STRINGS.DUPLICANTS.MODIFIERS.LONER.NAME
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.LONER.NAME"
+msgid "Alone"
+msgstr "独侠客"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.LONER.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.LONER.TOOLTIP"
+msgid "This Duplicant is more feeling focused now that they're alone"
+msgstr "这名复制人在独自一人时会更专注"
+
 #. STRINGS.DUPLICANTS.MODIFIERS.LOWOXYGEN.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.LOWOXYGEN.NAME"
 msgid "Low Oxygen"
@@ -38006,6 +38361,11 @@ msgid ""
 msgstr ""
 "一名熟练的复制人改装了这台<style=\"KKeyword\">发电机</style>，使其能暂时加速"
 "运行"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.MAJORIRRITATION.CAUSE
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.MAJORIRRITATION.CAUSE"
+msgid "Obtained by exposure to a harsh liquid or gas"
+msgstr "因接触有害液体或气体而获得"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.MAJORIRRITATION.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.MAJORIRRITATION.NAME"
@@ -38177,6 +38537,11 @@ msgid ""
 msgstr ""
 "<style=\"KKeyword\">新陈代谢</style>决定小动物燃烧<style=\"KKeyword\">卡路里"
 "</style>的速率"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.MINORIRRITATION.CAUSE
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.MINORIRRITATION.CAUSE"
+msgid "Obtained by exposure to a harsh liquid or gas"
+msgstr "因接触有害液体或气体而获得"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.MINORIRRITATION.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.MINORIRRITATION.NAME"
@@ -38819,8 +39184,8 @@ msgstr "这名复制人闻到了别人身上的什么味儿"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.SOAKINGWET.CAUSE
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.SOAKINGWET.CAUSE"
-msgid "Obtained from submergence in liquid."
-msgstr "因被液体浸没而获得。"
+msgid "Obtained from submergence in liquid"
+msgstr "因被液体浸没而获得"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.SOAKINGWET.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.SOAKINGWET.NAME"
@@ -38920,6 +39285,16 @@ msgid ""
 "\">Food</style>"
 msgstr "这名复制人吃了变质的<style=\"KKeyword\">食物</style>，心情很糟糕"
 
+#. STRINGS.DUPLICANTS.MODIFIERS.STARRYEYED.NAME
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.STARRYEYED.NAME"
+msgid "Starry Eyed"
+msgstr "观星者"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.STARRYEYED.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.STARRYEYED.TOOLTIP"
+msgid "This Duplicant loves being in space!"
+msgstr "这名复制人喜欢在太空中！"
+
 #. STRINGS.DUPLICANTS.MODIFIERS.STARVING.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.STARVING.NAME"
 msgid "Starving"
@@ -38954,7 +39329,7 @@ msgstr "麻木"
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.STRESSED_BY_COLD_WATER.TOOLTIP"
 msgid ""
 "Brr! This Duplicant was showered or doused in water that was way too cold"
-msgstr "啊！这名复制人淋到了或浸到了十分寒冷的冷水"
+msgstr "啊！这名复制人淋到或浸到了冷水"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.STRESSFULYEMPTYINGBLADDER.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.STRESSFULYEMPTYINGBLADDER.NAME"
@@ -39071,18 +39446,18 @@ msgstr ""
 
 #. STRINGS.DUPLICANTS.MODIFIERS.TELEPHONELONGDISTANCE.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.TELEPHONELONGDISTANCE.NAME"
-msgid "Long Distance"
-msgstr "长途"
+msgid "Sociable"
+msgstr "社交"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.TELEPHONELONGDISTANCE.TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.TELEPHONELONGDISTANCE.TOOLTIP"
 msgid ""
-"This Duplicant chatted on the phone with at least one other Duplicant across "
-"space\n"
+"This Duplicant is feeling sociable after chatting on the phone with someone "
+"across space\n"
 "\n"
 "Leisure activities increase Duplicants' <style=\"KKeyword\">Morale</style>"
 msgstr ""
-"这名复制人用电话和其他复制人隔着太空聊天了\n"
+"这名复制人在用电话和其他人隔着太空聊天之后感到放松\n"
 "\n"
 "休闲活动可提升复制人的<style=\"KKeyword\">士气</style>"
 
@@ -39105,15 +39480,15 @@ msgstr "由于其他复制人的鼾声，这名复制人昨夜根本没闭上眼
 
 #. STRINGS.DUPLICANTS.MODIFIERS.THRIVER.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.THRIVER.NAME"
-msgid "Duress to Impress"
-msgstr "受迫激励"
+msgid "Clutchy"
+msgstr "受迫"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.THRIVER.TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.THRIVER.TOOLTIP"
 msgid ""
-"This Duplicant kicks into hyperdrive when <style=\"KKeyword\">Stressed</"
-"style>"
-msgstr "这名复制人<style=\"KKeyword\">压力</style>上来时会进入\"超光速\"状态"
+"This Duplicant is <style=\"KKeyword\">Stressed<style=\"KKeyword\"> and has "
+"kicked into hyperdrive"
+msgstr "这些复制人<style=\"KKeyword\">压力</style>很大，已进入\"超效率\"状态"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.TIME_REMAINING
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.TIME_REMAINING"
@@ -39319,8 +39694,8 @@ msgstr "这名复制人吃了一顿大餐后感觉很舒服"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.WETFEET.CAUSE
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.WETFEET.CAUSE"
-msgid "Obtained by walking through liquid."
-msgstr "通过蹚过液体而获得。"
+msgid "Obtained by walking through liquid"
+msgstr "通过蹚过液体而获得"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.WETFEET.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.WETFEET.NAME"
@@ -39631,7 +40006,7 @@ msgctxt "STRINGS.DUPLICANTS.PERSONALITIES.BANHI.DESC"
 msgid ""
 "The \"cool loner\" vibes that radiate off a {0} never fail to make the "
 "colony swoon."
-msgstr "{0}身上散发出的\"孤傲的独行者\"气息总会令殖民地居民心醉神迷。"
+msgstr "{0}身上散发出的\"孤傲的独侠客\"气息总会令殖民地居民心醉神迷。"
 
 #. STRINGS.DUPLICANTS.PERSONALITIES.BANHI.NAME
 msgctxt "STRINGS.DUPLICANTS.PERSONALITIES.BANHI.NAME"
@@ -40003,8 +40378,8 @@ msgstr "允许创作中等吸引力的艺术"
 
 #. STRINGS.DUPLICANTS.ROLES.ARTIST.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.ARTIST.NAME"
-msgid "Aesthetic Design"
-msgstr "美学设计"
+msgid "<link=\"ARTING2\">Aesthetic Design</link>"
+msgstr "<link=\"ARTING2\">美学设计</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.ASTRONAUT.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.ASTRONAUT.DESCRIPTION"
@@ -40013,8 +40388,8 @@ msgstr "提高完成太空任务的速度"
 
 #. STRINGS.DUPLICANTS.ROLES.ASTRONAUT.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.ASTRONAUT.NAME"
-msgid "<link=\"ASTRONAUT\">Rocket Navigation</link>"
-msgstr "<link=\"ASTRONAUT\">火箭导航</link>"
+msgid "<link=\"ASTRONAUTING2\">Rocket Navigation</link>"
+msgstr "<link=\"ASTRONAUTING2\">火箭导航</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.ASTRONAUTTRAINEE.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.ASTRONAUTTRAINEE.DESCRIPTION"
@@ -40025,8 +40400,8 @@ msgstr "允许复制人操作<link=\"COMMANDMODULE\">指挥舱</link>来驾驶�
 
 #. STRINGS.DUPLICANTS.ROLES.ASTRONAUTTRAINEE.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.ASTRONAUTTRAINEE.NAME"
-msgid "<link=\"ASTRONAUTTRAINEE\">Rocket Piloting</link>"
-msgstr "<link=\"ASTRONAUTTRAINEE\">火箭驾驶</link>"
+msgid "<link=\"ASTRONAUTING1\">Rocket Piloting</link>"
+msgstr "<link=\"ASTRONAUTING1\">火箭驾驶</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.BUILDER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.BUILDER.DESCRIPTION"
@@ -40035,8 +40410,8 @@ msgstr "进一步提升复制人的建造速度"
 
 #. STRINGS.DUPLICANTS.ROLES.BUILDER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.BUILDER.NAME"
-msgid "<link=\"BUILDER\">Improved Construction II</link>"
-msgstr "<link=\"JUNIORBUILDER\">改良建造 II</link>"
+msgid "<link=\"BUILDING2\">Improved Construction II</link>"
+msgstr "<link=\"BUILDING2\">改良建造 II</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.COOK.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.COOK.DESCRIPTION"
@@ -40045,8 +40420,8 @@ msgstr "提升复制人的烹饪速度"
 
 #. STRINGS.DUPLICANTS.ROLES.COOK.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.COOK.NAME"
-msgid "<link=\"COOK\">Grilling II</link>"
-msgstr "<link=\"COOK\">烧烤 II</link>"
+msgid "<link=\"COOKING2\">Grilling II</link>"
+msgstr "<link=\"COOKING2\">烧烤 II</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.FARMER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.FARMER.DESCRIPTION"
@@ -40057,8 +40432,8 @@ msgstr "允许植物照料，这将会加快<style=\"KKeyword\">植物</style>�
 
 #. STRINGS.DUPLICANTS.ROLES.FARMER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.FARMER.NAME"
-msgid "<link=\"FARMER\">Crop Tending</link>"
-msgstr "<link=\"FARMER\">作物照料</link>"
+msgid "<link=\"FARMING2\">Crop Tending</link>"
+msgstr "<link=\"FARMING2\">作物照料</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.GROUPS.APTITUDE_DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.GROUPS.APTITUDE_DESCRIPTION"
@@ -40094,8 +40469,8 @@ msgstr "稍微提升复制人的力量"
 
 #. STRINGS.DUPLICANTS.ROLES.HANDYMAN.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.HANDYMAN.NAME"
-msgid "<link=\"HANDYMAN\">Improved Strength</link>"
-msgstr "<link=\"HANDYMAN\">改良力量</link>"
+msgid "<link=\"BASEKEEPING1\">Improved Strength</link>"
+msgstr "<link=\"BASEKEEPING1\">改良力量</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.HAULER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.HAULER.DESCRIPTION"
@@ -40104,8 +40479,8 @@ msgstr "稍微提升复制人的力量和承载能力"
 
 #. STRINGS.DUPLICANTS.ROLES.HAULER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.HAULER.NAME"
-msgid "<link=\"HAULER\">Improved Carrying I</link>"
-msgstr "<link=\"HAULER\">改良携带 I</link>"
+msgid "<link=\"HAULING1\">Improved Carrying I</link>"
+msgstr "<link=\"HAULING1\">改良携带 I</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_ARTIST.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_ARTIST.DESCRIPTION"
@@ -40114,8 +40489,8 @@ msgstr "教导最基本的艺术技能"
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_ARTIST.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_ARTIST.NAME"
-msgid "<link=\"JUNIORARTIST\">Art Fundamentals</link>"
-msgstr "<link=\"JUNIORARTIST\">艺术基础</link>"
+msgid "<link=\"ARTING1\">Art Fundamentals</link>"
+msgstr "<link=\"ARTING1\">艺术基础</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_BUILDER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_BUILDER.DESCRIPTION"
@@ -40124,8 +40499,8 @@ msgstr "稍微提升复制人的建造速度"
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_BUILDER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_BUILDER.NAME"
-msgid "<link=\"JUNIORBUILDER\">Improved Construction I</link>"
-msgstr "<link=\"JUNIORBUILDER\">改良建造 I</link>"
+msgid "<link=\"BUILDING1\">Improved Construction I</link>"
+msgstr "<link=\"BUILDING1\">改良建造 I</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_COOK.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_COOK.DESCRIPTION"
@@ -40136,8 +40511,8 @@ msgstr "允许复制人使用<link=\"COOKINGSTATION\">电动烤炉</link>来烹�
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_COOK.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_COOK.NAME"
-msgid "<link=\"JUNIORCOOK\">Grilling</link>"
-msgstr "<link=\"JUNIORCOOK\">烧烤</link>"
+msgid "<link=\"COOKING1\">Grilling</link>"
+msgstr "<link=\"COOKING1\">烧烤</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_FARMER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_FARMER.DESCRIPTION"
@@ -40149,8 +40524,8 @@ msgstr ""
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_FARMER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_FARMER.NAME"
-msgid "<link=\"JUNIORFARMER\">Improved Farming I</link>"
-msgstr "<link=\"JUNIORFARMER\">改良耕作 I</link>"
+msgid "<link=\"FARMING1\">Improved Farming I</link>"
+msgstr "<link=\"FARMING1\">改良耕作 I</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_MEDIC.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_MEDIC.DESCRIPTION"
@@ -40161,8 +40536,8 @@ msgstr "允许复制人在<link=\"APOTHECARY\">配药桌</link>生产药物"
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_MEDIC.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_MEDIC.NAME"
-msgid "<link=\"MEDIC\">Medicine Compounding</link>"
-msgstr "<link=\"MEDIC\">药物配制</link>"
+msgid "<link=\"MEDICINE1\">Medicine Compounding</link>"
+msgstr "<link=\"MEDICINE1\">药物配制</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_MINER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_MINER.DESCRIPTION"
@@ -40175,8 +40550,8 @@ msgstr ""
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_MINER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_MINER.NAME"
-msgid "<link=\"JUNIORMINER\">Hard Digging</link>"
-msgstr "<link=\"JUNIORMINER\">坚硬材料挖掘</link>"
+msgid "<link=\"MINING1\">Hard Digging</link>"
+msgstr "<link=\"MINING1\">坚硬材料挖掘</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_RESEARCHER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_RESEARCHER.DESCRIPTION"
@@ -40188,8 +40563,8 @@ msgstr ""
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_RESEARCHER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_RESEARCHER.NAME"
-msgid "<link=\"JUNIORRESEARCHER\">Advanced Research</link>"
-msgstr "<link=\"JUNIORRESEARCHER\">改良研究</link>"
+msgid "<link=\"RESEARCHING1\">Advanced Research</link>"
+msgstr "<link=\"RESEARCHING1\">高级研究</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.MACHINE_TECHNICIAN.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.MACHINE_TECHNICIAN.DESCRIPTION"
@@ -40198,8 +40573,8 @@ msgstr "稍微提高复制人的操作速度"
 
 #. STRINGS.DUPLICANTS.ROLES.MACHINE_TECHNICIAN.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.MACHINE_TECHNICIAN.NAME"
-msgid "<link=\"MACHINETECHNICIAN\">Improved Tinkering</link>"
-msgstr "<link=\"MACHINETECHNICIAN\">改良操作</link>"
+msgid "<link=\"TECHNICALS1\">Improved Tinkering</link>"
+msgstr "<link=\"TECHNICALS1\">改良操作</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.MASTER_ARTIST.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.MASTER_ARTIST.DESCRIPTION"
@@ -40208,8 +40583,8 @@ msgstr "启用绘画和雕塑的杰作"
 
 #. STRINGS.DUPLICANTS.ROLES.MASTER_ARTIST.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.MASTER_ARTIST.NAME"
-msgid "<link=\"MASTERARTIST\">Masterworks</link>"
-msgstr "<link=\"MASTERARTIST\">大师作品</link>"
+msgid "<link=\"ARTING3\">Masterworks</link>"
+msgstr "<link=\"ARTING3\">大师技艺</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.MASTER_MINER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.MASTER_MINER.DESCRIPTION"
@@ -40220,8 +40595,8 @@ msgstr "允许挖掘危险的材料，比如<link=\"CORIUM\">堆芯熔融物</li
 
 #. STRINGS.DUPLICANTS.ROLES.MASTER_MINER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.MASTER_MINER.NAME"
-msgid "<link=\"MASTERMINER\">Hazmat Digging</link>"
-msgstr "<link=\"MASTERMINER\">危险物挖掘</link>"
+msgid "<link=\"MINING4\">Hazmat Digging</link>"
+msgstr "<link=\"MINING4\">危险物挖掘</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.MATERIALS_MANAGER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.MATERIALS_MANAGER.DESCRIPTION"
@@ -40232,8 +40607,8 @@ msgstr "进一步提升复制人的力量和承载能力，使运送更快"
 
 #. STRINGS.DUPLICANTS.ROLES.MATERIALS_MANAGER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.MATERIALS_MANAGER.NAME"
-msgid "<link=\"MATERIALSMANAGER\">Improved Carrying II</link>"
-msgstr "<link=\"MATERIALSMANAGER\">改良携带 II</link>"
+msgid "<link=\"HAULING2\">Improved Carrying II</link>"
+msgstr "<link=\"HAULING2\">改良携带 I</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.MECHATRONIC_ENGINEER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.MECHATRONIC_ENGINEER.DESCRIPTION"
@@ -40244,8 +40619,8 @@ msgstr "允许复制人建造和维护<link=\"SOLIDCONDUIT\">运输轨道</link>
 
 #. STRINGS.DUPLICANTS.ROLES.MECHATRONIC_ENGINEER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.MECHATRONIC_ENGINEER.NAME"
-msgid "<link=\"MECHATRONICENGINEER\">Mechatronics Engineering</link>"
-msgstr "<link=\"MECHATRONICENGINEER\">机电工程</link>"
+msgid "<link=\"ENGINEERING1\">Mechatronics Engineering</link>"
+msgstr "<link=\"ENGINEERING1\">机电工程</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.MEDIC.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.MEDIC.DESCRIPTION"
@@ -40256,8 +40631,8 @@ msgstr "训练复制人在<link=\"DOCTORSTATION\">医务站</link>向其他复�
 
 #. STRINGS.DUPLICANTS.ROLES.MEDIC.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.MEDIC.NAME"
-msgid "<link=\"MEDIC\">Bedside Manner</link>"
-msgstr "<link=\"MEDIC\">病床礼仪</link>"
+msgid "<link=\"MEDICINE2\">Bedside Manner</link>"
+msgstr "<link=\"MEDICINE2\">病床礼仪</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.MINER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.MINER.DESCRIPTION"
@@ -40267,8 +40642,8 @@ msgstr "允许挖掘<link=\"KATAIRITE\">深渊晶石</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.MINER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.MINER.NAME"
-msgid "<link=\"MINER\">Superhard Digging</link>"
-msgstr "<link=\"MINER\">超坚硬材料挖掘</link>"
+msgid "<link=\"MINING2\">Superhard Digging</link>"
+msgstr "<link=\"MINING2\">超坚硬材料挖掘</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.NO_ROLE.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.NO_ROLE.DESCRIPTION"
@@ -40283,15 +40658,15 @@ msgstr "<link=\"NOROLE\">无业者</link>"
 #. STRINGS.DUPLICANTS.ROLES.NUCLEAR_RESEARCHER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.NUCLEAR_RESEARCHER.DESCRIPTION"
 msgid ""
-"Enables Duplicants to study matter using the <link=\"NUCLEARLABORATORY"
+"Enables Duplicants to study matter using the <link=\"NUCLEARRESEARCHCENTER"
 "\">Materials Study Terminal</link>"
 msgstr ""
-"使复制人能够使用<link=\"NUCLEARLABORATORY\">材料研究终端</link>来研究物质"
+"使复制人能够使用<link=\"NUCLEARRESEARCHCENTER\">材料研究终端</link>来研究物质"
 
 #. STRINGS.DUPLICANTS.ROLES.NUCLEAR_RESEARCHER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.NUCLEAR_RESEARCHER.NAME"
-msgid "<link=\"NUCLEARRESEARCHER\">Materials Science Research</link>"
-msgstr "<link=\"NUCLEARRESEARCHER\">材料科学研究</link>"
+msgid "<link=\"ATOMICRESEARCH\">Applied Sciences Research</link>"
+msgstr "<link=\"ATOMICRESEARCH\">应用科学研究</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.OIL_TECHNICIAN.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.OIL_TECHNICIAN.DESCRIPTION"
@@ -40313,8 +40688,8 @@ msgstr "允许复制人清空<style=\"KKeyword\">管道</style>而不把水漏�
 
 #. STRINGS.DUPLICANTS.ROLES.PLUMBER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.PLUMBER.NAME"
-msgid "<link=\"PLUMBER\">Plumbing</link>"
-msgstr "<link=\"PLUMBER\">管路工作</link>"
+msgid "<link=\"BASEKEEPING2\">Plumbing</link>"
+msgstr "<link=\"BASEKEEPING2\">管路工作</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.POWER_TECHNICIAN.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.POWER_TECHNICIAN.DESCRIPTION"
@@ -40327,8 +40702,8 @@ msgstr ""
 
 #. STRINGS.DUPLICANTS.ROLES.POWER_TECHNICIAN.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.POWER_TECHNICIAN.NAME"
-msgid "<link=\"POWERTECHNICIAN\">Electrical Engineering</link>"
-msgstr "<link=\"POWERTECHNICIAN\">电气工程</link>"
+msgid "<link=\"TECHNICALS2\">Electrical Engineering</link>"
+msgstr "<link=\"TECHNICALS2\">电气工程</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.RANCHER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.RANCHER.DESCRIPTION"
@@ -40338,8 +40713,8 @@ msgstr "允许复制人处理并照顾<link=\"CREATURES\">小动物</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.RANCHER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.RANCHER.NAME"
-msgid "<link=\"RANCHER\">Critter Ranching I</link>"
-msgstr "<link=\"RANCHER\">小动物放牧 I</link>"
+msgid "<link=\"RANCHING1\">Critter Ranching I</link>"
+msgstr "<link=\"RANCHING1\">小动物放牧 I</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.RESEARCHER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.RESEARCHER.DESCRIPTION"
@@ -40351,8 +40726,8 @@ msgstr ""
 
 #. STRINGS.DUPLICANTS.ROLES.RESEARCHER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.RESEARCHER.NAME"
-msgid "<link=\"RESEARCHER\">Field Research</link>"
-msgstr "<link=\"RESEARCHER\">实地调查</link>"
+msgid "<link=\"RESEARCHING2\">Field Research</link>"
+msgstr "<link=\"RESEARCHING2\">实地研究</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.ROCKETPILOT.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.ROCKETPILOT.DESCRIPTION"
@@ -40364,8 +40739,8 @@ msgstr ""
 
 #. STRINGS.DUPLICANTS.ROLES.ROCKETPILOT.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.ROCKETPILOT.NAME"
-msgid "<link=\"PILOT\">Rocket Piloting</link>"
-msgstr "<link=\"PILOT\">火箭驾驶</link>"
+msgid "<link=\"ROCKETPILOTING1\">Rocket Piloting</link>"
+msgstr "<link=\"ROCKETPILOTING1\">火箭驾驶</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_BUILDER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_BUILDER.DESCRIPTION"
@@ -40374,8 +40749,8 @@ msgstr "使复制人能够拆除庄严科技建筑"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_BUILDER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_BUILDER.NAME"
-msgid "<link=\"SENIORBUILDER\">Demolition</link>"
-msgstr "<link=\"SENIORBUILDER\">拆毁</link>"
+msgid "<link=\"BUILDING3\">Demolition</link>"
+msgstr "<link=\"BUILDING3\">拆毁</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_FARMER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_FARMER.DESCRIPTION"
@@ -40384,8 +40759,8 @@ msgstr "进一步提升复制人的耕作技能"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_FARMER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_FARMER.NAME"
-msgid "<link=\"SENIORFARMER\">Improved Farming II</link>"
-msgstr "<link=\"SENIORFARMER\">改良耕作 II</link>"
+msgid "<link=\"FARMING3\">Improved Farming II</link>"
+msgstr "<link=\"FARMING3\">改良耕作 II</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_MEDIC.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_MEDIC.DESCRIPTION"
@@ -40396,8 +40771,8 @@ msgstr "训练复制人能操作<link=\"ADVANCEDDOCTORSTATION\">病诊站</link>
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_MEDIC.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_MEDIC.NAME"
-msgid "<link=\"MEDIC\">Advanced Medical Care</link>"
-msgstr "<link=\"MEDIC\">高级医疗护理</link>"
+msgid "<link=\"MEDICINE3\">Advanced Medical Care</link>"
+msgstr "<link=\"MEDICINE3\">高级医疗护理</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_MINER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_MINER.DESCRIPTION"
@@ -40411,8 +40786,8 @@ msgstr ""
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_MINER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_MINER.NAME"
-msgid "<link=\"SENIORMINER\">Super-Duperhard Digging</link>"
-msgstr "<link=\"SENIORMINER\">极坚硬材料挖掘</link>"
+msgid "<link=\"MINING3\">Super-Duperhard Digging</link>"
+msgstr "<link=\"MINING3\">极坚硬材料挖掘</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_RANCHER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_RANCHER.DESCRIPTION"
@@ -40421,8 +40796,8 @@ msgstr "提升复制人的<style=\"KKeyword\">放牧</style>技能"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_RANCHER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_RANCHER.NAME"
-msgid "<link=\"SENIORRANCHER\">Critter Ranching II</link>"
-msgstr "<link=\"SENIORRANCHER\">小动物放牧 II</link>"
+msgid "<link=\"RANCHING2\">Critter Ranching II</link>"
+msgstr "<link=\"RANCHING2\">小动物放牧 II</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_RESEARCHER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_RESEARCHER.DESCRIPTION"
@@ -40433,8 +40808,8 @@ msgstr "使复制人能够使用<link=\"TELESCOPE\">望远镜</link>来进一步
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_RESEARCHER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_RESEARCHER.NAME"
-msgid "<link=\"SENIORRESEARCHER\">Astronomy</link>"
-msgstr "<link=\"SENIORRESEARCHER\">天文学</link>"
+msgid "<link=\"ASTRONOMY\">Astronomy</link>"
+msgstr "<link=\"ASTRONOMY\">天文学</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_ROCKETPILOT.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_ROCKETPILOT.DESCRIPTION"
@@ -40443,8 +40818,8 @@ msgstr "允许复制人以更快的速度驾驶火箭"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_ROCKETPILOT.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_ROCKETPILOT.NAME"
-msgid "<link=\"SENIORPILOT\">Rocket Piloting II</link>"
-msgstr "<link=\"SENIORPILOT\">火箭驾驶 II</link>"
+msgid "<link=\"ROCKETPILOTING2\">Rocket Piloting II</link>"
+msgstr "<link=\"ROCKETPILOTING2\">火箭驾驶 II</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SPACE_RESEARCHER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SPACE_RESEARCHER.DESCRIPTION"
@@ -40457,8 +40832,8 @@ msgstr ""
 
 #. STRINGS.DUPLICANTS.ROLES.SPACE_RESEARCHER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SPACE_RESEARCHER.NAME"
-msgid "<link=\"SPACERESEARCHER\">Orbital Researcher</link>"
-msgstr "<link=\"SPACERESEARCHER\">轨道研究</link>"
+msgid "<link=\"SPACERESEARCH\">Orbital Researcher</link>"
+msgstr "<link=\"SPACERESEARCH\">轨道研究</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SUIT_EXPERT.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SUIT_EXPERT.DESCRIPTION"
@@ -40467,8 +40842,8 @@ msgstr "消除穿着太空服时行走速度的损失"
 
 #. STRINGS.DUPLICANTS.ROLES.SUIT_EXPERT.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SUIT_EXPERT.NAME"
-msgid "<link=\"SUITEXPERT\">Exosuit Training</link>"
-msgstr "<link=\"SUITEXPERT\">太空服训练</link>"
+msgid "<link=\"SUITS1\">Exosuit Training</link>"
+msgstr "<link=\"SUITS1\">太空服训练</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.THERMAL_SUIT_WEARER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.THERMAL_SUIT_WEARER.DESCRIPTION"
@@ -43062,6 +43437,20 @@ msgctxt "STRINGS.DUPLICANTS.TRAITS.ALLERGIES.SHORT_DESC_TOOLTIP"
 msgid "Allergens cause excessive sneezing fits"
 msgstr "过敏原导致了过度打喷嚏"
 
+#. STRINGS.DUPLICANTS.TRAITS.ANCIENTKNOWLEDGE.DESC
+msgctxt "STRINGS.DUPLICANTS.TRAITS.ANCIENTKNOWLEDGE.DESC"
+msgid ""
+"This Duplicant has knowledge from the before times\n"
+"• Starts with 3 skill points"
+msgstr ""
+"这名复制人具有来自过去的知识\n"
+"• 初始具有3个技能点"
+
+#. STRINGS.DUPLICANTS.TRAITS.ANCIENTKNOWLEDGE.NAME
+msgctxt "STRINGS.DUPLICANTS.TRAITS.ANCIENTKNOWLEDGE.NAME"
+msgid "Ancient Knowledge"
+msgstr "远古学识"
+
 #. STRINGS.DUPLICANTS.TRAITS.ANEMIC.DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.ANEMIC.DESC"
 msgid "This Duplicant has trouble keeping up with the others"
@@ -43399,6 +43788,26 @@ msgctxt "STRINGS.DUPLICANTS.TRAITS.FUSSY.NAME"
 msgid "Fussy"
 msgstr "易怒"
 
+#. STRINGS.DUPLICANTS.TRAITS.GLOWSTICK.DESC
+msgctxt "STRINGS.DUPLICANTS.TRAITS.GLOWSTICK.DESC"
+msgid "This Duplicant is positively glowing"
+msgstr "这名复制人正在发光"
+
+#. STRINGS.DUPLICANTS.TRAITS.GLOWSTICK.NAME
+msgctxt "STRINGS.DUPLICANTS.TRAITS.GLOWSTICK.NAME"
+msgid "Glow Stick"
+msgstr "荧光棒"
+
+#. STRINGS.DUPLICANTS.TRAITS.GLOWSTICK.SHORT_DESC
+msgctxt "STRINGS.DUPLICANTS.TRAITS.GLOWSTICK.SHORT_DESC"
+msgid "Emits low amounts of rads and light"
+msgstr "释放少量的辐射和光"
+
+#. STRINGS.DUPLICANTS.TRAITS.GLOWSTICK.SHORT_DESC_TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.TRAITS.GLOWSTICK.SHORT_DESC_TOOLTIP"
+msgid "Emits low amounts of rads and light"
+msgstr "释放少量的辐射和光"
+
 #. STRINGS.DUPLICANTS.TRAITS.GRANTED_SKILL_SHARED_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTED_SKILL_SHARED_DESC"
 msgid ""
@@ -43436,8 +43845,8 @@ msgstr "教导最基本的艺术技能"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING1.NAME"
-msgid "Skilled: <link=\"JUNIORARTIST\">Art Fundamentals</link>"
-msgstr "技能：<link=\"JUNIORARTIST\">艺术基础</link>"
+msgid "Skilled: <link=\"ARTING1\">Art Fundamentals</link>"
+msgstr "技能：<link=\"ARTING1\">艺术基础</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING1.SHORT_DESC"
@@ -43460,8 +43869,8 @@ msgstr "允许创作中等吸引力的艺术"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING2.NAME"
-msgid "Skilled: Aesthetic Design"
-msgstr "技能：美学设计"
+msgid "Skilled: <link=\"ARTING2\">Aesthetic Design</link>"
+msgstr "技能：<link=\"ARTING2\">美学设计</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING2.SHORT_DESC"
@@ -43484,8 +43893,8 @@ msgstr "启用绘画和雕塑的杰作"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING3.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING3.NAME"
-msgid "Skilled: <link=\"MASTERARTIST\">Masterworks</link>"
-msgstr "技能：<link=\"MASTERARTIST\">大师作品</link>"
+msgid "Skilled: <link=\"ARTING3\">Masterworks</link>"
+msgstr "技能：<link=\"ARTING3\">大师技艺</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING3.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING3.SHORT_DESC"
@@ -43510,8 +43919,8 @@ msgstr "允许复制人操作<link=\"COMMANDMODULE\">指挥舱</link>来驾驶�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ASTRONAUTING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ASTRONAUTING1.NAME"
-msgid "Skilled: <link=\"ASTRONAUTTRAINEE\">Rocket Piloting</link>"
-msgstr "技能：<link=\"ASTRONAUTTRAINEE\">火箭驾驶</link>"
+msgid "Skilled: <link=\"ASTRONAUTING1\">Rocket Piloting</link>"
+msgstr "技能：<link=\"ASTRONAUTING1\">火箭驾驶</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ASTRONAUTING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ASTRONAUTING1.SHORT_DESC"
@@ -43534,8 +43943,8 @@ msgstr "提高完成太空任务的速度"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ASTRONAUTING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ASTRONAUTING2.NAME"
-msgid "Skilled: <link=\"ASTRONAUT\">Rocket Navigation</link>"
-msgstr "技能：<link=\"ASTRONAUT\">火箭导航</link>"
+msgid "Skilled: <link=\"ASTRONAUTING2\">Rocket Navigation</link>"
+msgstr "技能：<link=\"ASTRONAUTING2\">火箭导航</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ASTRONAUTING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ASTRONAUTING2.SHORT_DESC"
@@ -43558,8 +43967,8 @@ msgstr "稍微提升复制人的力量"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BASEKEEPING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BASEKEEPING1.NAME"
-msgid "Skilled: <link=\"HANDYMAN\">Improved Strength</link>"
-msgstr "技能：<link=\"HANDYMAN\">改良力量</link>"
+msgid "Skilled: <link=\"BASEKEEPING1\">Improved Strength</link>"
+msgstr "技能：<link=\"BASEKEEPING1\">改良力量</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BASEKEEPING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BASEKEEPING1.SHORT_DESC"
@@ -43584,8 +43993,8 @@ msgstr "允许复制人清空<style=\"KKeyword\">管道</style>而不把水漏�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BASEKEEPING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BASEKEEPING2.NAME"
-msgid "Skilled: <link=\"PLUMBER\">Plumbing</link>"
-msgstr "技能：<link=\"PLUMBER\">管路工作</link>"
+msgid "Skilled: <link=\"BASEKEEPING2\">Plumbing</link>"
+msgstr "技能：<link=\"BASEKEEPING2\">管路工作</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BASEKEEPING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BASEKEEPING2.SHORT_DESC"
@@ -43608,8 +44017,8 @@ msgstr "稍微提升复制人的建造速度"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING1.NAME"
-msgid "Skilled: <link=\"JUNIORBUILDER\">Improved Construction I</link>"
-msgstr "技能：<link=\"JUNIORBUILDER\">改良建造 I</link>"
+msgid "Skilled: <link=\"BUILDING1\">Improved Construction I</link>"
+msgstr "技能：<link=\"BUILDING1\">改良建造 I</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING1.SHORT_DESC"
@@ -43632,8 +44041,8 @@ msgstr "进一步提升复制人的建造速度"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING2.NAME"
-msgid "Skilled: <link=\"BUILDER\">Improved Construction II</link>"
-msgstr "技能：<link=\"JUNIORBUILDER\">改良建造 II</link>"
+msgid "Skilled: <link=\"BUILDING2\">Improved Construction II</link>"
+msgstr "技能：<link=\"BUILDING2\">改良建造 II</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING2.SHORT_DESC"
@@ -43656,8 +44065,8 @@ msgstr "使复制人能够拆除庄严科技建筑"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING3.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING3.NAME"
-msgid "Skilled: <link=\"SENIORBUILDER\">Demolition</link>"
-msgstr "技能：<link=\"SENIORBUILDER\">拆毁</link>"
+msgid "Skilled: <link=\"BUILDING3\">Demolition</link>"
+msgstr "技能：<link=\"BUILDING3\">拆毁</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING3.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING3.SHORT_DESC"
@@ -43682,8 +44091,8 @@ msgstr "允许复制人使用<link=\"COOKINGSTATION\">电动烤炉</link>来烹�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_COOKING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_COOKING1.NAME"
-msgid "Skilled: <link=\"JUNIORCOOK\">Grilling</link>"
-msgstr "技能：<link=\"JUNIORCOOK\">烧烤</link>"
+msgid "Skilled: <link=\"COOKING1\">Grilling</link>"
+msgstr "技能：<link=\"COOKING1\">烧烤</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_COOKING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_COOKING1.SHORT_DESC"
@@ -43706,8 +44115,8 @@ msgstr "提升复制人的烹饪速度"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_COOKING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_COOKING2.NAME"
-msgid "Skilled: <link=\"COOK\">Grilling II</link>"
-msgstr "技能：<link=\"COOK\">烧烤 II</link>"
+msgid "Skilled: <link=\"COOKING2\">Grilling II</link>"
+msgstr "技能：<link=\"COOKING2\">烧烤 II</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_COOKING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_COOKING2.SHORT_DESC"
@@ -43732,8 +44141,8 @@ msgstr "允许复制人建造和维护<link=\"SOLIDCONDUIT\">运输轨道</link>
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ENGINEERING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ENGINEERING1.NAME"
-msgid "Skilled: <link=\"MECHATRONICENGINEER\">Mechatronics Engineering</link>"
-msgstr "技能：<link=\"MECHATRONICENGINEER\">机电工程</link>"
+msgid "Skilled: <link=\"ENGINEERING1\">Mechatronics Engineering</link>"
+msgstr "技能：<link=\"ENGINEERING1\">机电工程</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ENGINEERING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ENGINEERING1.SHORT_DESC"
@@ -43759,8 +44168,8 @@ msgstr ""
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING1.NAME"
-msgid "Skilled: <link=\"JUNIORFARMER\">Improved Farming I</link>"
-msgstr "技能：<link=\"JUNIORFARMER\">改良耕作 I</link>"
+msgid "Skilled: <link=\"FARMING1\">Improved Farming I</link>"
+msgstr "技能：<link=\"FARMING1\">改良耕作 I</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING1.SHORT_DESC"
@@ -43785,8 +44194,8 @@ msgstr "允许植物照料，这将会加快<style=\"KKeyword\">植物</style>�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING2.NAME"
-msgid "Skilled: <link=\"FARMER\">Crop Tending</link>"
-msgstr "技能：<link=\"FARMER\">作物照料</link>"
+msgid "Skilled: <link=\"FARMING2\">Crop Tending</link>"
+msgstr "技能：<link=\"FARMING2\">作物照料</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING2.SHORT_DESC"
@@ -43809,8 +44218,8 @@ msgstr "进一步提升复制人的耕作技能"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING3.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING3.NAME"
-msgid "Skilled: <link=\"SENIORFARMER\">Improved Farming II</link>"
-msgstr "技能：<link=\"SENIORFARMER\">改良耕作 II</link>"
+msgid "Skilled: <link=\"FARMING3\">Improved Farming II</link>"
+msgstr "技能：<link=\"FARMING3\">改良耕作 II</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING3.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING3.SHORT_DESC"
@@ -43833,8 +44242,8 @@ msgstr "稍微提升复制人的力量和承载能力"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_HAULING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_HAULING1.NAME"
-msgid "Skilled: <link=\"HAULER\">Improved Carrying I</link>"
-msgstr "技能：<link=\"HAULER\">改良携带 I</link>"
+msgid "Skilled: <link=\"HAULING1\">Improved Carrying I</link>"
+msgstr "技能：<link=\"HAULING1\">改良携带 I</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_HAULING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_HAULING1.SHORT_DESC"
@@ -43859,8 +44268,8 @@ msgstr "进一步提升复制人的力量和承载能力，使运送更快"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_HAULING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_HAULING2.NAME"
-msgid "Skilled: <link=\"MATERIALSMANAGER\">Improved Carrying II</link>"
-msgstr "技能：<link=\"MATERIALSMANAGER\">改良携带 II</link>"
+msgid "Skilled: <link=\"HAULING2\">Improved Carrying II</link>"
+msgstr "技能：<link=\"HAULING2\">改良携带 II</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_HAULING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_HAULING2.SHORT_DESC"
@@ -43885,8 +44294,8 @@ msgstr "允许复制人在<link=\"APOTHECARY\">配药桌</link>生产药物"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE1.NAME"
-msgid "Skilled: <link=\"MEDIC\">Medicine Compounding</link>"
-msgstr "技能：<link=\"MEDIC\">药物配制</link>"
+msgid "Skilled: <link=\"MEDICINE1\">Medicine Compounding</link>"
+msgstr "技能：<link=\"MEDICINE1\">药物配制</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE1.SHORT_DESC"
@@ -43911,8 +44320,8 @@ msgstr "训练复制人在<link=\"DOCTORSTATION\">医务站</link>向其他复�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE2.NAME"
-msgid "Skilled: <link=\"MEDIC\">Bedside Manner</link>"
-msgstr "技能：<link=\"MEDIC\">病床礼仪</link>"
+msgid "Skilled: <link=\"MEDICINE2\">Bedside Manner</link>"
+msgstr "技能：<link=\"MEDICINE2\">病床礼仪</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE2.SHORT_DESC"
@@ -43937,8 +44346,8 @@ msgstr "训练复制人能操作<link=\"ADVANCEDDOCTORSTATION\">病诊站</link>
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE3.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE3.NAME"
-msgid "Skilled: <link=\"MEDIC\">Advanced Medical Care</link>"
-msgstr "技能：<link=\"MEDIC\">高级医疗护理</link>"
+msgid "Skilled: <link=\"MEDICINE3\">Advanced Medical Care</link>"
+msgstr "技能：<link=\"MEDICINE3\">高级医疗护理</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE3.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE3.SHORT_DESC"
@@ -43965,8 +44374,8 @@ msgstr ""
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING1.NAME"
-msgid "Skilled: <link=\"JUNIORMINER\">Hard Digging</link>"
-msgstr "技能：<link=\"JUNIORMINER\">坚硬材料挖掘</link>"
+msgid "Skilled: <link=\"MINING1\">Hard Digging</link>"
+msgstr "技能：<link=\"MINING1\">坚硬材料挖掘</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING1.SHORT_DESC"
@@ -43990,8 +44399,8 @@ msgstr "允许挖掘<link=\"KATAIRITE\">深渊晶石</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING2.NAME"
-msgid "Skilled: <link=\"MINER\">Superhard Digging</link>"
-msgstr "技能：<link=\"MINER\">超坚硬材料挖掘</link>"
+msgid "Skilled: <link=\"MINING2\">Superhard Digging</link>"
+msgstr "技能：<link=\"MINING2\">超坚硬材料挖掘</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING2.SHORT_DESC"
@@ -44019,8 +44428,8 @@ msgstr ""
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING3.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING3.NAME"
-msgid "Skilled: <link=\"SENIORMINER\">Super-Duperhard Digging</link>"
-msgstr "技能：<link=\"SENIORMINER\">极坚硬材料挖掘</link>"
+msgid "Skilled: <link=\"MINING3\">Super-Duperhard Digging</link>"
+msgstr "技能：<link=\"MINING3\">极坚硬材料挖掘</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING3.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING3.SHORT_DESC"
@@ -44045,8 +44454,8 @@ msgstr "允许挖掘危险的材料，比如<link=\"CORIUM\">堆芯熔融物</li
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING4.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING4.NAME"
-msgid "Skilled: <link=\"MASTERMINER\">Hazmat Digging</link>"
-msgstr "技能：<link=\"MASTERMINER\">危险物挖掘</link>"
+msgid "Skilled: <link=\"MINING4\">Hazmat Digging</link>"
+msgstr "技能：<link=\"MINING4\">危险物挖掘</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING4.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING4.SHORT_DESC"
@@ -44070,8 +44479,8 @@ msgstr "允许复制人处理并照顾<link=\"CREATURES\">小动物</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RANCHING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RANCHING1.NAME"
-msgid "Skilled: <link=\"RANCHER\">Critter Ranching I</link>"
-msgstr "技能：<link=\"RANCHER\">小动物放牧 I</link>"
+msgid "Skilled: <link=\"RANCHING1\">Critter Ranching I</link>"
+msgstr "技能：<link=\"RANCHING1\">小动物放牧 I</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RANCHING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RANCHING1.SHORT_DESC"
@@ -44094,8 +44503,8 @@ msgstr "提升复制人的<style=\"KKeyword\">放牧</style>技能"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RANCHING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RANCHING2.NAME"
-msgid "Skilled: <link=\"SENIORRANCHER\">Critter Ranching II</link>"
-msgstr "技能：<link=\"SENIORRANCHER\">小动物放牧 II</link>"
+msgid "Skilled: <link=\"RANCHING2\">Critter Ranching II</link>"
+msgstr "技能：<link=\"RANCHING2\">小动物放牧 II</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RANCHING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RANCHING2.SHORT_DESC"
@@ -44121,8 +44530,8 @@ msgstr ""
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING1.NAME"
-msgid "Skilled: <link=\"JUNIORRESEARCHER\">Advanced Research</link>"
-msgstr "技能：<link=\"JUNIORRESEARCHER\">改良研究</link>"
+msgid "Skilled: <link=\"RESEARCHING1\">Advanced Research</link>"
+msgstr "技能：<link=\"RESEARCHING1\">高级研究</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING1.SHORT_DESC"
@@ -44148,8 +44557,8 @@ msgstr ""
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING2.NAME"
-msgid "Skilled: <link=\"RESEARCHER\">Field Research</link>"
-msgstr "技能：<link=\"RESEARCHER\">实地调查</link>"
+msgid "Skilled: <link=\"RESEARCHING2\">Field Research</link>"
+msgstr "技能：<link=\"RESEARCHING2\">实地研究</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING2.SHORT_DESC"
@@ -44174,8 +44583,8 @@ msgstr "使复制人能够使用<link=\"TELESCOPE\">望远镜</link>来进一步
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING3.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING3.NAME"
-msgid "Skilled: <link=\"SENIORRESEARCHER\">Astronomy</link>"
-msgstr "技能：<link=\"SENIORRESEARCHER\">天文学</link>"
+msgid "Skilled: <link=\"ASTRONOMY\">Astronomy</link>"
+msgstr "技能：<link=\"ASTRONOMY\">天文学</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING3.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING3.SHORT_DESC"
@@ -44194,15 +44603,15 @@ msgstr ""
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.DESC"
 msgid ""
-"Enables Duplicants to study matter using the <link=\"NUCLEARLABORATORY"
+"Enables Duplicants to study matter using the <link=\"NUCLEARRESEARCHCENTER"
 "\">Materials Study Terminal</link>"
 msgstr ""
-"使复制人能够使用<link=\"NUCLEARLABORATORY\">材料研究终端</link>来研究物质"
+"使复制人能够使用<link=\"NUCLEARRESEARCHCENTER\">材料研究终端</link>来研究物质"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.NAME"
-msgid "Skilled: <link=\"NUCLEARRESEARCHER\">Materials Science Research</link>"
-msgstr "技能：<link=\"NUCLEARRESEARCHER\">材料科学研究</link>"
+msgid "Skilled: <link=\"ATOMICRESEARCH\">Applied Sciences Research</link>"
+msgstr "技能：<link=\"ATOMICRESEARCH\">应用科学研究</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.SHORT_DESC"
@@ -44225,8 +44634,8 @@ msgstr "消除穿着太空服时行走速度的损失"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_SUITS1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_SUITS1.NAME"
-msgid "Skilled: <link=\"SUITEXPERT\">Exosuit Training</link>"
-msgstr "技能：<link=\"SUITEXPERT\">太空服训练</link>"
+msgid "Skilled: <link=\"SUITS1\">Exosuit Training</link>"
+msgstr "技能：<link=\"SUITS1\">太空服训练</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_SUITS1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_SUITS1.SHORT_DESC"
@@ -44249,8 +44658,8 @@ msgstr "稍微提高复制人的操作速度"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_TECHNICALS1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_TECHNICALS1.NAME"
-msgid "Skilled: <link=\"MACHINETECHNICIAN\">Improved Tinkering</link>"
-msgstr "技能：<link=\"MACHINETECHNICIAN\">改良操作</link>"
+msgid "Skilled: <link=\"TECHNICALS1\">Improved Tinkering</link>"
+msgstr "技能：<link=\"TECHNICALS1\">改良操作</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_TECHNICALS1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_TECHNICALS1.SHORT_DESC"
@@ -44277,8 +44686,8 @@ msgstr ""
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_TECHNICALS2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_TECHNICALS2.NAME"
-msgid "Skilled: <link=\"POWERTECHNICIAN\">Electrical Engineering</link>"
-msgstr "技能：<link=\"POWERTECHNICIAN\">电气工程</link>"
+msgid "Skilled: <link=\"TECHNICALS2\">Electrical Engineering</link>"
+msgstr "技能：<link=\"TECHNICALS2\">电气工程</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_TECHNICALS2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_TECHNICALS2.SHORT_DESC"
@@ -44379,6 +44788,28 @@ msgstr "这名复制人需要更多时间来\"解决个人问题\""
 msgctxt "STRINGS.DUPLICANTS.TRAITS.IRRITABLEBOWEL.NAME"
 msgid "Irritable Bowel"
 msgstr "肠易激综合征"
+
+#. STRINGS.DUPLICANTS.TRAITS.LONER.DESC
+msgctxt "STRINGS.DUPLICANTS.TRAITS.LONER.DESC"
+msgid "This Duplicant prefers solitary pursuits"
+msgstr "这名复制人更喜欢单独工作"
+
+#. STRINGS.DUPLICANTS.TRAITS.LONER.NAME
+msgctxt "STRINGS.DUPLICANTS.TRAITS.LONER.NAME"
+msgid "Loner"
+msgstr "独侠客"
+
+#. STRINGS.DUPLICANTS.TRAITS.LONER.SHORT_DESC
+msgctxt "STRINGS.DUPLICANTS.TRAITS.LONER.SHORT_DESC"
+msgid "Attribute bonuses while alone"
+msgstr "独自时会有属性加成"
+
+#. STRINGS.DUPLICANTS.TRAITS.LONER.SHORT_DESC_TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.TRAITS.LONER.SHORT_DESC_TOOLTIP"
+msgid ""
+"Only duplicant on a world: <b>+4</b> bonus to all <style=\"KKeyword"
+"\">Attributes</style>"
+msgstr "仅该复制人在一个星球上：所有<style=\"KKeyword\">属性</style><b>+4</b>"
 
 #. STRINGS.DUPLICANTS.TRAITS.MACHINERYDOWN.DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.MACHINERYDOWN.DESC"
@@ -44594,6 +45025,26 @@ msgctxt "STRINGS.DUPLICANTS.TRAITS.NOODLEARMS.NAME"
 msgid "Noodle Arms"
 msgstr "面条臂"
 
+#. STRINGS.DUPLICANTS.TRAITS.RADIATIONEATER.DESC
+msgctxt "STRINGS.DUPLICANTS.TRAITS.RADIATIONEATER.DESC"
+msgid "This Duplicant eats radiation for breakfast (and dinner)"
+msgstr "这名复制人会将辐射作为早餐（和晚餐）"
+
+#. STRINGS.DUPLICANTS.TRAITS.RADIATIONEATER.NAME
+msgctxt "STRINGS.DUPLICANTS.TRAITS.RADIATIONEATER.NAME"
+msgid "Radiation Eater"
+msgstr "辐射吸收者"
+
+#. STRINGS.DUPLICANTS.TRAITS.RADIATIONEATER.SHORT_DESC
+msgctxt "STRINGS.DUPLICANTS.TRAITS.RADIATIONEATER.SHORT_DESC"
+msgid "Converts radiation exposure into calories"
+msgstr "将辐射转化为卡路里"
+
+#. STRINGS.DUPLICANTS.TRAITS.RADIATIONEATER.SHORT_DESC_TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.TRAITS.RADIATIONEATER.SHORT_DESC_TOOLTIP"
+msgid "Converts radiation exposure into calories"
+msgstr "将辐射转化为卡路里"
+
 #. STRINGS.DUPLICANTS.TRAITS.RANCHINGDOWN.DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.RANCHINGDOWN.DESC"
 msgid "This Duplicant just doesn't trust those beady little eyes"
@@ -44715,6 +45166,26 @@ msgstr "当<style=\"KKeyword\">喜悦</style>时，这名复制人会留下开�
 msgctxt "STRINGS.DUPLICANTS.TRAITS.SPARKLESTREAKER.NAME"
 msgid "Sparkle Streaker"
 msgstr "闪光飞奔者"
+
+#. STRINGS.DUPLICANTS.TRAITS.STARRYEYED.DESC
+msgctxt "STRINGS.DUPLICANTS.TRAITS.STARRYEYED.DESC"
+msgid "This Duplicant loves being in space"
+msgstr "这名复制人喜欢在太空中"
+
+#. STRINGS.DUPLICANTS.TRAITS.STARRYEYED.NAME
+msgctxt "STRINGS.DUPLICANTS.TRAITS.STARRYEYED.NAME"
+msgid "Starry Eyed"
+msgstr "观星者"
+
+#. STRINGS.DUPLICANTS.TRAITS.STARRYEYED.SHORT_DESC
+msgctxt "STRINGS.DUPLICANTS.TRAITS.STARRYEYED.SHORT_DESC"
+msgid "Morale bonus while in space"
+msgstr "在太空中时获得士气加成"
+
+#. STRINGS.DUPLICANTS.TRAITS.STARRYEYED.SHORT_DESC_TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.TRAITS.STARRYEYED.SHORT_DESC_TOOLTIP"
+msgid "In outer space: <b>+10</b> <style=\"KKeyword\">Morale</style>"
+msgstr "在外太空：<b>+10</b><style=\"KKeyword\">士气</style>"
 
 #. STRINGS.DUPLICANTS.TRAITS.STICKERBOMBER.DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.STICKERBOMBER.DESC"
@@ -51057,13 +51528,13 @@ msgstr "蛋壳"
 msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.FARM_STATION_TOOLS.DESC"
 msgid ""
 "Specialized <link=\"FERTILIZER\">Fertilizer</link> mixed by a Duplicant with "
-"the <link=\"FARMER\">Crop Tending</link> Skill.\n"
+"the <link=\"FARMING2\">Crop Tending</link> Skill.\n"
 "\n"
 "Increases the <style=\"KKeyword\">Growth Rate</style> of one <link=\"PLANTS"
 "\">Plant</link>."
 msgstr ""
-"由有<link=\"FARMER\">作物照料</link>技能的复制人混合的专用<link=\"FERTILIZER"
-"\">肥料</link>。\n"
+"由有<link=\"FARMING2\">作物照料</link>技能的复制人混合的专用<link="
+"\"FERTILIZER\">肥料</link>。\n"
 "\n"
 "能提高<link=\"PLANTS\">植物</link>的<style=\"KKeyword\">生长速度</style>。"
 
@@ -51131,19 +51602,18 @@ msgstr ""
 #. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.MACHINE_PARTS.TINKER_REQUIREMENT_NAME
 msgctxt ""
 "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.MACHINE_PARTS.TINKER_REQUIREMENT_NAME"
-msgid "Job: <link=\"MECHATRONICENGINEER\">Mechatronics Engineering</link>"
-msgstr "工作：<link=\"MECHATRONICENGINEER\">机电工程</link>"
+msgid "Job: <link=\"ENGINEERING1\">Mechatronics Engineering</link>"
+msgstr "工作：<link=\"ENGINEERING1\">机电工程</link>"
 
 #. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.MACHINE_PARTS.TINKER_REQUIREMENT_TOOLTIP
 msgctxt ""
 "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.MACHINE_PARTS.TINKER_REQUIREMENT_TOOLTIP"
 msgid ""
-"Can only be used by a Duplicant with <link=\"MECHATRONICENGINEER"
-"\">Mechatronics Engineering</link> to apply a <style=\"KKeyword\">Jerry Rig</"
-"style>."
+"Can only be used by a Duplicant with <link=\"ENGINEERING1\">Mechatronics "
+"Engineering</link> to apply a <style=\"KKeyword\">Jerry Rig</style>."
 msgstr ""
-"只能由学会<link=\"MECHATRONICENGINEER\">机电工程</link>的复制人应用<style="
-"\"KKeyword\">改装</style>效果。"
+"只能由学会<link=\"ENGINEERING1\">机电工程</link>的复制人应用<style=\"KKeyword"
+"\">改装</style>效果。"
 
 #. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.POWER_STATION_TOOLS.DESC
 msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.POWER_STATION_TOOLS.DESC"
@@ -51180,19 +51650,19 @@ msgstr "可用于发电机<style=\"KKeyword\">调整</style>，使其{0}增加<b
 #. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.POWER_STATION_TOOLS.TINKER_REQUIREMENT_NAME
 msgctxt ""
 "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.POWER_STATION_TOOLS.TINKER_REQUIREMENT_NAME"
-msgid "Skill: <link=\"POWERTECHNICIAN\">Electrical Engineering</link>"
-msgstr "技能：<link=\"POWERTECHNICIAN\">电气工程</link>"
+msgid "Skill: <link=\"TECHNICALS2\">Electrical Engineering</link>"
+msgstr "技能：<link=\"TECHNICALS2\">电气工程</link>"
 
 #. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.POWER_STATION_TOOLS.TINKER_REQUIREMENT_TOOLTIP
 msgctxt ""
 "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.POWER_STATION_TOOLS."
 "TINKER_REQUIREMENT_TOOLTIP"
 msgid ""
-"Can only be used by a Duplicant with <link=\"POWERTECHNICIAN\">Electrical "
+"Can only be used by a Duplicant with <link=\"TECHNICALS2\">Electrical "
 "Engineering</link> to apply a <style=\"KKeyword\">Tune Up</style>."
 msgstr ""
-"只能由学会<link=\"POWERTECHNICIAN\">电气工程</link>的复制人使用<style="
-"\"KKeyword\">调整</style>。"
+"只能由学会<link=\"TECHNICALS2\">电气工程</link>的复制人使用<style=\"KKeyword"
+"\">调整</style>。"
 
 #. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.REFINED_SUGAR.DESC
 msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.REFINED_SUGAR.DESC"
@@ -51309,13 +51779,13 @@ msgid ""
 "\">Diseases</link>. Serum Vial is very effective against <link="
 "\"SLIMESICKNESS\">Slimelung</link>.\n"
 "\n"
-"Must be administered by a Duplicant with the <link=\"MEDIC\">Advanced "
+"Must be administered by a Duplicant with the <link=\"MEDICINE3\">Advanced "
 "Medical Care</link> Skill."
 msgstr ""
 "一种极其有效的药物，用于治疗严重<link=\"DISEASE\">疾病</link>。血清瓶抵抗"
 "<link=\"SLIMESICKNESS\">粘液肺病</link>非常有效。\n"
 "\n"
-"必须由具有改良<link=\"MEDIC\">高级医疗护理</link>技能的复制人施用。"
+"必须由具有<link=\"MEDICINE3\">高级医疗护理</link>技能的复制人施用。"
 
 #. STRINGS.ITEMS.PILLS.ANTIHISTAMINE.DESC
 msgctxt "STRINGS.ITEMS.PILLS.ANTIHISTAMINE.DESC"
@@ -51446,13 +51916,13 @@ msgid ""
 "Medical Packs are very effective against <link=\"SLIMESICKNESS\">Slimelung</"
 "link>.\n"
 "\n"
-"Must be administered by a Duplicant with the <link=\"MEDIC\">Bedside Manner</"
-"link> Skill."
+"Must be administered by a Duplicant with the <link=\"MEDICINE2\">Bedside "
+"Manner</link> Skill."
 msgstr ""
 "一种由医生施用的药物，用来治疗中度<link=\"DISEASE\">疾病</link>。医疗包抵抗"
 "<link=\"SLIMESICKNESS\">粘液肺病</link>非常有效。\n"
 "\n"
-"必须由具有<link=\"MEDIC\">病床礼仪</link>技能的复制人施用。"
+"必须由具有<link=\"MEDICINE2\">病床礼仪</link>技能的复制人施用。"
 
 #. STRINGS.ITEMS.PILLS.INTERMEDIATERADPILL.DESC
 msgctxt "STRINGS.ITEMS.PILLS.INTERMEDIATERADPILL.DESC"
@@ -51522,13 +51992,13 @@ msgid ""
 msgstr ""
 "含有用于星际运输的打包资源。\n"
 "\n"
-"可由<link=\"RAILGUN\">行星际发射器</link>发射，或者由<link="
+"可由<link=\"RAILGUN\">星际发射器</link>发射，或者由<link="
 "\"RAILGUNPAYLOADOPENER\">载货拆包器</link>拆包。"
 
 #. STRINGS.ITEMS.RAILGUNPAYLOAD.NAME
 msgctxt "STRINGS.ITEMS.RAILGUNPAYLOAD.NAME"
 msgid "<link=\"RAILGUNPAYLOAD\">Interplanetary Payload</link>"
-msgstr "<link=\"RAILGUNPAYLOAD\">行星际载货</link>"
+msgstr "<link=\"RAILGUNPAYLOAD\">星际载货</link>"
 
 #. STRINGS.LORE.BUILDINGS.Desk.ENTRY
 msgctxt "STRINGS.LORE.BUILDINGS.Desk.ENTRY"
@@ -52139,7 +52609,7 @@ msgid ""
 "<b>Compost</b> button on the selected item."
 msgstr ""
 "我的复制人所烹饪<link=\"FOOD\">食物</link>的干净程度与用来制作食物的原料有直"
-"接关系。将食物储存在无菌或<link=\"REFRIGERATOR\">冷藏</link>环境中可避免食物"
+"接关系。将食物储存在防腐或<link=\"REFRIGERATOR\">冷藏</link>环境中可避免食物"
 "染上<link=\"DISEASE\">病菌</link>，同时谨慎设置的卫生站（如<link=\"WASHBASIN"
 "\">洗手盆</link>或<link=\"SHOWER\">淋浴间</link>）可防止厨师在处理食物的过程"
 "中污染食物。\n"
@@ -53557,12 +54027,11 @@ msgid ""
 "Items lose durability each time they are equipped, and can no longer be put "
 "on by a Duplicant once they reach 0% durability\n"
 "\n"
-"Items can be repaired using the <link=\"CRAFTINGTABLE\">Crafting Station</"
-"link>"
+"Repair of this item can be done in the appropriate fabrication station"
 msgstr ""
 "每次装备物品就会损失其耐久，当其耐久达到0%时复制人就不能将其穿上了\n"
 "\n"
-"物品可在<link=\"CRAFTINGTABLE\">工作台</link>维修"
+"维修这件物品可以在相应的制造站完成"
 
 #. STRINGS.MISC.STATUSITEMS.EDIBLE.NAME
 msgctxt "STRINGS.MISC.STATUSITEMS.EDIBLE.NAME"
@@ -53798,13 +54267,13 @@ msgctxt "STRINGS.MISC.STATUSITEMS.ORDERCAPTURE.TOOLTIP"
 msgid ""
 "Waiting for a Duplicant to capture this <style=\"KKeyword\">Critter</style>\n"
 "------------------\n"
-"Only Duplicants with the <link=\"RANCHER\">Critter Ranching I</link> Skill "
+"Only Duplicants with the <link=\"RANCHING1\">Critter Ranching I</link> Skill "
 "can catch critters without traps"
 msgstr ""
 "等待复制人来捕捉这只<style=\"KKeyword\">小动物</style>\n"
 "------------------\n"
-"只有具有<link=\"RANCHER\">小动物放牧 I</link>技能的复制人才能不用陷阱捕捉小动"
-"物"
+"只有具有<link=\"RANCHING1\">小动物放牧 I</link>技能的复制人才能不用陷阱捕捉小"
+"动物"
 
 #. STRINGS.MISC.STATUSITEMS.OREMASS.NAME
 msgctxt "STRINGS.MISC.STATUSITEMS.OREMASS.NAME"
@@ -54010,12 +54479,11 @@ msgid ""
 "Items lose durability each time they are equipped, and can no longer be put "
 "on by a Duplicant once they reach 0% durability\n"
 "\n"
-"Items can be repaired using the <link=\"CRAFTINGTABLE\">Crafting Station</"
-"link>"
+"Repair of this item can be done in the appropriate fabrication station"
 msgstr ""
 "每次装备物品就会损失其耐久，当其耐久达到0%时复制人就不能将其穿上了\n"
 "\n"
-"物品可在<link=\"CRAFTINGTABLE\">工作台</link>维修"
+"维修这件物品可以在相应的制造站完成"
 
 #. STRINGS.MISC.STATUSITEMS.STUDIED.NAME
 msgctxt "STRINGS.MISC.STATUSITEMS.STUDIED.NAME"
@@ -54233,8 +54701,8 @@ msgstr "可燃气体"
 
 #. STRINGS.MISC.TAGS.COMBUSTIBLELIQUID
 msgctxt "STRINGS.MISC.TAGS.COMBUSTIBLELIQUID"
-msgid "Combustible Liquid"
-msgstr "可燃液体"
+msgid "<link=\"COMBUSTIBLELIQUID\">Combustible Liquid</link>"
+msgstr "<link=\"COMBUSTIBLELIQUID\">可燃液体</link>"
 
 #. STRINGS.MISC.TAGS.COMBUSTIBLESOLID
 msgctxt "STRINGS.MISC.TAGS.COMBUSTIBLESOLID"
@@ -54253,8 +54721,8 @@ msgstr "{Item}"
 
 #. STRINGS.MISC.TAGS.COMPOSTABLE
 msgctxt "STRINGS.MISC.TAGS.COMPOSTABLE"
-msgid "Compostable"
-msgstr "可堆肥的物品"
+msgid "<link=\"COMPOSTABLE\">Compostable</link>"
+msgstr "<link=\"COMPOSTABLE\">可堆肥物</link>"
 
 #. STRINGS.MISC.TAGS.COMPOSTBASICPLANTFOOD
 msgctxt "STRINGS.MISC.TAGS.COMPOSTBASICPLANTFOOD"
@@ -54289,7 +54757,7 @@ msgstr "烹饪原料"
 #. STRINGS.MISC.TAGS.CRUSHABLE
 msgctxt "STRINGS.MISC.TAGS.CRUSHABLE"
 msgid "Crushable"
-msgstr "可粉碎的物品"
+msgstr "可粉碎物"
 
 #. STRINGS.MISC.TAGS.DECORATION
 msgctxt "STRINGS.MISC.TAGS.DECORATION"
@@ -54353,8 +54821,8 @@ msgstr "农业站"
 
 #. STRINGS.MISC.TAGS.FILTER
 msgctxt "STRINGS.MISC.TAGS.FILTER"
-msgid "Filtration Medium"
-msgstr "过滤介质"
+msgid "<link=\"FILTER\">Filtration Medium</link>"
+msgstr "<link=\"FILTER\">过滤介质</link>"
 
 #. STRINGS.MISC.TAGS.FLYINGCRITTEREDIBLE
 msgctxt "STRINGS.MISC.TAGS.FLYINGCRITTEREDIBLE"
@@ -54378,8 +54846,8 @@ msgstr "生活舱"
 
 #. STRINGS.MISC.TAGS.ICEORE
 msgctxt "STRINGS.MISC.TAGS.ICEORE"
-msgid "Ice"
-msgstr "冰"
+msgid "<link=\"ICEORE\">Ice</link>"
+msgstr "<link=\"ICEORE\">冰</link>"
 
 #. STRINGS.MISC.TAGS.INDUSTRIALINGREDIENT
 msgctxt "STRINGS.MISC.TAGS.INDUSTRIALINGREDIENT"
@@ -54465,6 +54933,11 @@ msgstr "混合物"
 msgctxt "STRINGS.MISC.TAGS.MULTITOOL"
 msgid "Multitool"
 msgstr "多功能工具"
+
+#. STRINGS.MISC.TAGS.NONCRUSHABLE
+msgctxt "STRINGS.MISC.TAGS.NONCRUSHABLE"
+msgid "Uncrushable"
+msgstr "不可粉碎物"
 
 #. STRINGS.MISC.TAGS.OIL
 msgctxt "STRINGS.MISC.TAGS.OIL"
@@ -54553,8 +55026,8 @@ msgstr "贵金属矿石"
 
 #. STRINGS.MISC.TAGS.REFINEDMETAL
 msgctxt "STRINGS.MISC.TAGS.REFINEDMETAL"
-msgid "Refined Metal"
-msgstr "精炼金属"
+msgid "<link=\"REFINEDMETAL\">Refined Metal</link>"
+msgstr "<link=\"REFINEDMETAL\">精炼金属</link>"
 
 #. STRINGS.MISC.TAGS.RELAXATION_POINT
 msgctxt "STRINGS.MISC.TAGS.RELAXATION_POINT"
@@ -59055,18 +59528,18 @@ msgstr "解锁进阶技术。"
 #. STRINGS.RESEARCH.TYPES.DELTA.DESC
 msgctxt "STRINGS.RESEARCH.TYPES.DELTA.DESC"
 msgid ""
-"<link=\"RESEARCH\">Materials Science Research</link> is required to unlock "
+"<link=\"RESEARCH\">Applied Sciences Research</link> is required to unlock "
 "materials science technologies.\n"
-"It can be conducted at a <link=\"NUCLEARLABORATORY\">Materials Study "
+"It can be conducted at a <link=\"NUCLEARRESEARCHCENTER\">Materials Study "
 "Terminal</link>."
 msgstr ""
-"解锁基础技术需要<link=\"RESEARCH\">材料科学研究</link>。\n"
-"可以在<link=\"NUCLEARLABORATORY\">材料研究终端</link>进行。"
+"解锁基础技术需要<link=\"RESEARCH\">应用科学研究</link>。\n"
+"可以在<link=\"NUCLEARRESEARCHCENTER\">材料研究终端</link>进行。"
 
 #. STRINGS.RESEARCH.TYPES.DELTA.NAME
 msgctxt "STRINGS.RESEARCH.TYPES.DELTA.NAME"
-msgid "Materials Science Research"
-msgstr "材料科学研究"
+msgid "Applied Sciences Research"
+msgstr "应用科学研究"
 
 #. STRINGS.RESEARCH.TYPES.DELTA.RECIPEDESC
 msgctxt "STRINGS.RESEARCH.TYPES.DELTA.RECIPEDESC"
@@ -59635,7 +60108,7 @@ msgstr "不能包含任何有工业机械标签的建筑"
 #. STRINGS.ROOMS.CRITERIA.NO_INDUSTRIAL_MACHINERY.NAME
 msgctxt "STRINGS.ROOMS.CRITERIA.NO_INDUSTRIAL_MACHINERY.NAME"
 msgid "No industrial machinery"
-msgstr "无工业器械"
+msgstr "无工业机械"
 
 #. STRINGS.ROOMS.CRITERIA.NO_OUTHOUSES.DESCRIPTION
 msgctxt "STRINGS.ROOMS.CRITERIA.NO_OUTHOUSES.DESCRIPTION"
@@ -62063,7 +62536,7 @@ msgstr ""
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.GASCOOLING"
 msgid ""
 "Reduces the <style=\"KKeyword\">Temperature</style> of piped <style="
-"\"KKeyword\">Gases</style>by <b>{0}</b>"
+"\"KKeyword\">Gases</style> by <b>{0}</b>"
 msgstr ""
 "降低管道内<style=\"KKeyword\">气体</style>的<style=\"KKeyword\">温度</"
 "style><b>{0}</b>"
@@ -62174,13 +62647,13 @@ msgid ""
 "\">Volume</style> and <style=\"KKeyword\">Specific Heat Capacity</style> of "
 "the pumped <style=\"KKeyword\">Gas</style>\n"
 "\n"
-"Cooling 1  kg of <link=\"OXYGEN\">Oxygen</link> the entire <b>{1}</b> will "
+"Cooling 1 kg of <link=\"OXYGEN\">Oxygen</link> the entire <b>{1}</b> will "
 "output <b>{0}</b>"
 msgstr ""
 "基于泵送<style=\"KKeyword\">气体</style>的<style=\"KKeyword\">量</style>和"
 "<style=\"KKeyword\">比热容</style>产生<style=\"KKeyword\">热量</style>\n"
 "\n"
-"完全冷却1千克<b>{1}</b>的<link=\"OXYGEN\">氧气</link>会放出<b>{0}</b>的热量"
+"使1千克的<link=\"OXYGEN\">氧气</link>完全冷却<b>{1}</b>会放出<b>{0}</b>的热量"
 
 #. STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.HEATGENERATED_LIQUIDCONDITIONER
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.HEATGENERATED_LIQUIDCONDITIONER"
@@ -62189,13 +62662,13 @@ msgid ""
 "\">Volume</style> and <style=\"KKeyword\">Specific Heat Capacity</style> of "
 "the pumped <style=\"KKeyword\">Liquid</style>\n"
 "\n"
-"Cooling 10  kg of <link=\"WATER\">Water</link> the entire <b>{1}</b> will "
+"Cooling 10 kg of <link=\"WATER\">Water</link> the entire <b>{1}</b> will "
 "output <b>{0}</b>"
 msgstr ""
 "基于泵送<style=\"KKeyword\">液体</style>的<style=\"KKeyword\">量</style>和"
 "<style=\"KKeyword\">比热容</style>产生<style=\"KKeyword\">热量</style>\n"
 "\n"
-"完全冷却10千克<b>{1}</b>的<link=\"WATER\">水</link>会放出<style=\"consumed"
+"使10千克的<link=\"WATER\">水</link>完全冷却<b>{1}</b>会放出<style=\"consumed"
 "\">{0}</style>的热量"
 
 #. STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.IMPROVED_BUILDINGS
@@ -63111,6 +63584,11 @@ msgstr "<link=\"DISEASE\">疾病</link>"
 msgctxt "STRINGS.UI.CODEX.CATEGORYNAMES.ELEMENTS"
 msgid "<link=\"ELEMENTS\">Elements</link>"
 msgstr "<link=\"ELEMENTS\">元素</link>"
+
+#. STRINGS.UI.CODEX.CATEGORYNAMES.ELEMENTSCLASSES
+msgctxt "STRINGS.UI.CODEX.CATEGORYNAMES.ELEMENTSCLASSES"
+msgid "<link=\"ELEMENTSCLASSES\">Classes</link>"
+msgstr "<link=\"ELEMENTSCLASSES\">类别</link>"
 
 #. STRINGS.UI.CODEX.CATEGORYNAMES.ELEMENTSGAS
 msgctxt "STRINGS.UI.CODEX.CATEGORYNAMES.ELEMENTSGAS"
@@ -65559,6 +66037,11 @@ msgstr "火箭"
 msgctxt "STRINGS.UI.DETAILTABS.SIMPLEINFO.GROUPNAME_STATUS"
 msgid "STATUS"
 msgstr "状态"
+
+#. STRINGS.UI.DETAILTABS.SIMPLEINFO.GROUPNAME_WORLDTRAITS
+msgctxt "STRINGS.UI.DETAILTABS.SIMPLEINFO.GROUPNAME_WORLDTRAITS"
+msgid "WORLD TRAITS"
+msgstr "世界特质"
 
 #. STRINGS.UI.DETAILTABS.SIMPLEINFO.NAME
 msgctxt "STRINGS.UI.DETAILTABS.SIMPLEINFO.NAME"
@@ -68796,7 +69279,7 @@ msgstr ""
 "我们检测到这台电脑不满足运行《缺氧》的最低配置要求。你也许能使用当前配置继续"
 "游戏，但游戏流畅度会受到影响。\n"
 "\n"
-"请注意，你的游戏体检可能会大打折扣。"
+"请注意，你的游戏体验可能会大打折扣。"
 
 #. STRINGS.UI.FRONTEND.MINSPECSCREEN.OKBUTTON
 msgctxt "STRINGS.UI.FRONTEND.MINSPECSCREEN.OKBUTTON"
@@ -69341,8 +69824,8 @@ msgstr "Steam创意工坊"
 
 #. STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER
 msgctxt "STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER"
-msgid "COSMIC CALLING"
-msgstr "天外来电"
+msgid "UNEXPLAINED TRAITS"
+msgstr "未知特质"
 
 #. STRINGS.UI.FRONTEND.MOTD.NEWS_BODY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.NEWS_BODY"
@@ -69360,27 +69843,26 @@ msgstr "加入讨论"
 #. STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY"
 msgid ""
-"Welcome to the <b>COSMIC CALLING UPDATE</b>\n"
+"Welcome to the <b>UNEXPLAINED TRAITS UPDATE</b>\n"
 "\n"
 "<b><i>Spaced Out!</i></b>\n"
-"•<indent=20px>New buildings allow automation signals to be broadcast between "
-"asteroids.</indent>\n"
-"•<indent=20px>Duplicants can boost their morale by having a chat on the new "
-"Party Line Phone.</indent>\n"
-"•<indent=20px>Radbolts can pass through a new special type of wall tile.</"
-"indent>\n"
-"•<indent=20px>Rocket engine speeds and ranges have been rebalanced.</"
-"indent>\n"
+"•<indent=20px>New world traits added to world generation system and old "
+"traits made compatible with Spaced Out!</indent>\n"
+"•<indent=20px>New traits related to space travel and radiation added for "
+"Duplicants.</indent>\n"
+"•<indent=20px>Added Spaced Out! specific Achievements.</indent>\n"
+"•<indent=20px>Changes and improvements to codex categories.</indent>\n"
 "\n"
 "   Check out the full patch notes for more details!"
 msgstr ""
-"欢迎来到<b>天外来电更新</b>\n"
+"欢迎来到<b>不明特质更新</b>\n"
 "\n"
 "<b><I>《眼冒金星！》</i></b>\n"
-"•<indent=20px>新的建筑，能够使自动化信号在不同小行星间播报。</indent>\n"
-"•<indent=20px>复制人能够用新的共线电话聊天来增强士气。</indent>\n"
-"•<indent=20px>辐射粒子可以通过新的特殊墙砖。</indent>\n"
-"•<indent=20px>火箭引擎速度和范围重新平衡。</indent>\n"
+"•<indent=20px>新的世界特质已加入世界生成系统，旧特质已与《眼冒金星！》兼容。"
+"</indent>\n"
+"•<indent=20px>新的与太空旅行和辐射相关的复制人特质。</indent>\n"
+"•<indent=20px>加入了《眼冒金星！》特有成就。</indent>\n"
+"•<indent=20px>对数据库进行了优化和改进。</indent>\n"
 "\n"
 "   请查看完整的更新日志了解详情！"
 
@@ -70330,7 +70812,7 @@ msgstr "微小陨石损害"
 #. STRINGS.UI.GAMEOBJECTEFFECTS.DAMAGE_POPS.MINION_DESTRUCTION
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.DAMAGE_POPS.MINION_DESTRUCTION"
 msgid "Tantrum Damage"
-msgstr "发脾气损害"
+msgstr "发怒损害"
 
 #. STRINGS.UI.GAMEOBJECTEFFECTS.DAMAGE_POPS.OVERHEAT
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.DAMAGE_POPS.OVERHEAT"
@@ -72419,7 +72901,7 @@ msgstr "病菌概览"
 #. STRINGS.UI.OVERLAYS.DISEASE.NO_DISEASE
 msgctxt "STRINGS.UI.OVERLAYS.DISEASE.NO_DISEASE"
 msgid "Zero surface germs"
-msgstr "表面零病菌"
+msgstr "零表面病菌"
 
 #. STRINGS.UI.OVERLAYS.ELECTRICAL.BUTTON
 msgctxt "STRINGS.UI.OVERLAYS.ELECTRICAL.BUTTON"
@@ -74021,7 +74503,7 @@ msgstr "自动化"
 #. STRINGS.UI.RESEARCHSCREEN.FILTER_BUTTONS.AVAILABLE
 msgctxt "STRINGS.UI.RESEARCHSCREEN.FILTER_BUTTONS.AVAILABLE"
 msgid "Next"
-msgstr "下一页"
+msgstr "下一项"
 
 #. STRINGS.UI.RESEARCHSCREEN.FILTER_BUTTONS.COMPLETED
 msgctxt "STRINGS.UI.RESEARCHSCREEN.FILTER_BUTTONS.COMPLETED"
@@ -75050,8 +75532,8 @@ msgstr "这项工作不提供培训"
 
 #. STRINGS.UI.ROLES_SCREEN.PERKS.NUCLEAR_RESEARCH.DESCRIPTION
 msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.NUCLEAR_RESEARCH.DESCRIPTION"
-msgid "<link=\"NUCLEARLABORATORY\">Materials Study Terminal</link> Usage"
-msgstr "<link=\"NUCLEARLABORATORY\">材料研究终端</link>的使用"
+msgid "<link=\"NUCLEARRESEARCHCENTER\">Materials Study Terminal</link> Usage"
+msgstr "<link=\"NUCLEARRESEARCHCENTER\">材料研究终端</link>的使用"
 
 #. STRINGS.UI.ROLES_SCREEN.PERKS.ORBITAL_RESEARCH.DESCRIPTION
 msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.ORBITAL_RESEARCH.DESCRIPTION"
@@ -77483,13 +77965,13 @@ msgstr "闪烁小行星带"
 #. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.HELIUMCLOUD.DESC
 msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.HELIUMCLOUD.DESC"
 msgid ""
-"A cloud of resources containing <link=\"WATER\">Water</link>, <link="
-"\"HYDROGEN\">Hydrogen</link>, and <link=\"NIOBIUM\">Niobium</link>.\n"
+"A cloud of resources containing <link=\"WATER\">Water</link> and <link="
+"\"HYDROGEN\">Hydrogen</link>.\n"
 "\n"
 "Harvesting resources requires a rocket equipped with a <link="
 "\"NOSECONEHARVEST\">Drillcone</link>."
 msgstr ""
-"一片资源气云，含有<link=\"WATER\">水</link>，<link=\"HYDROGEN\">氢气</"
+"一片资源气云，含有<link=\"WATER\">水</link>和<link=\"HYDROGEN\">氢气</"
 "link>。\n"
 "\n"
 "资源收集需要装有<link=\"NOSECONEHARVEST\">钻头前锥</link>的火箭。"
@@ -78827,22 +79309,23 @@ msgstr "驾驶员已登上火箭"
 #. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.PILOT_BOARDED.TOOLTIP.FAILURE
 msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.PILOT_BOARDED.TOOLTIP.FAILURE"
 msgid ""
-"At least one crew member aboard the rocket must possess the <link=\"PILOT"
-"\">Rocket Piloting</link> skill to launch\n"
+"At least one crew member aboard the rocket must possess the <link="
+"\"ROCKETPILOTING1\">Rocket Piloting</link> skill to launch\n"
 "------------------\n"
 "Qualified Duplicants must be assigned to the rocket crew, and have access to "
 "the module's hatch"
 msgstr ""
-"火箭上至少有一名成员具有<link=\"PILOT\">火箭驾驶</link>技能才能发射\n"
+"火箭上至少有一名成员具有<link=\"ROCKETPILOTING1\">火箭驾驶</link>技能才能发"
+"射\n"
 "------------------\n"
 "这艘火箭的成员中必须分配了合格的复制人，并且他能够进入火箭的舱门"
 
 #. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.PILOT_BOARDED.TOOLTIP.READY
 msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.PILOT_BOARDED.TOOLTIP.READY"
 msgid ""
-"A Duplicant with the <link=\"PILOT\">Rocket Piloting</link> skill is "
-"currently onboard"
-msgstr "有着<link=\"PILOT\">火箭驾驶</link>技能的复制人已登上火箭"
+"A Duplicant with the <link=\"ROCKETPILOTING1\">Rocket Piloting</link> skill "
+"is currently onboard"
+msgstr "有着<link=\"ROCKETPILOTING1\">火箭驾驶</link>技能的复制人已登上火箭"
 
 #. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.PILOT_BOARDED.TOOLTIP.WARNING
 msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.PILOT_BOARDED.TOOLTIP.WARNING"
@@ -81033,7 +81516,7 @@ msgctxt ""
 "STRINGS.UI.UISIDESCREENS.ARTIFACTANALYSISSIDESCREEN."
 "NO_ARTIFACTS_DISCOVERED_TOOLTIP"
 msgid "Analyzing artifacts requires a Duplicant with the Masterworks skill"
-msgstr "分析工艺品需要一名具有大师作品技能的艺术家"
+msgstr "分析工艺品需要一名具有大师技艺技能的艺术家"
 
 #. STRINGS.UI.UISIDESCREENS.ASSIGNABLESIDESCREEN.ASSIGN_TO_TOOLTIP
 msgctxt "STRINGS.UI.UISIDESCREENS.ASSIGNABLESIDESCREEN.ASSIGN_TO_TOOLTIP"
@@ -82164,6 +82647,11 @@ msgstr "未在钻取"
 msgctxt "STRINGS.UI.UISIDESCREENS.HARVESTMODULESIDESCREEN.TITLE"
 msgid "Resource Gathering"
 msgstr "资源收集"
+
+#. STRINGS.UI.UISIDESCREENS.HEPSWITCHSIDESCREEN.TITLE
+msgctxt "STRINGS.UI.UISIDESCREENS.HEPSWITCHSIDESCREEN.TITLE"
+msgid "Radbolt Threshold"
+msgstr "辐射粒子阈值"
 
 #. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_E
 msgctxt ""
@@ -84198,6 +84686,31 @@ msgstr ""
 msgctxt "STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.DISEASE_UNITS"
 msgid ""
 msgstr ""
+
+#. STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.HEPS
+msgctxt "STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.HEPS"
+msgid "Radbolt Reading"
+msgstr "辐射粒子读数"
+
+#. STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.HEPS_TOOLTIP_ABOVE
+msgctxt ""
+"STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.HEPS_TOOLTIP_ABOVE"
+msgid ""
+"Will send a <b><style=\"logic_on\">Green Signal</style></b> if the <style="
+"\"KKeyword\">Radbolts</style> is above <b>{0}</b>"
+msgstr ""
+"若<style=\"KKeyword\">辐射粒子</style>高于<b>{0}</b>，输出<b><style="
+"\"logic_on\">绿色信号</style></b>"
+
+#. STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.HEPS_TOOLTIP_BELOW
+msgctxt ""
+"STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.HEPS_TOOLTIP_BELOW"
+msgid ""
+"Will send a <b><style=\"logic_on\">Green Signal</style></b> if the <style="
+"\"KKeyword\">Radbolts</style> is below <b>{0}</b>"
+msgstr ""
+"若<style=\"KKeyword\">辐射粒子</style>低于<b>{0}</b>，输出<b><style="
+"\"logic_on\">绿色信号</style></b>"
 
 #. STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.PRESSURE
 msgctxt "STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.PRESSURE"
@@ -86980,6 +87493,16 @@ msgctxt "STRINGS.WORLD_TRAITS.BOULDERS_SMALL.NAME"
 msgid "Small Boulders"
 msgstr "小型石块"
 
+#. STRINGS.WORLD_TRAITS.CRASHED_SATELLITES.DESCRIPTION
+msgctxt "STRINGS.WORLD_TRAITS.CRASHED_SATELLITES.DESCRIPTION"
+msgid "Crashed relics from the past that emit radiation."
+msgstr "来自过去的坠毁的遗迹，能够释放辐射。"
+
+#. STRINGS.WORLD_TRAITS.CRASHED_SATELLITES.NAME
+msgctxt "STRINGS.WORLD_TRAITS.CRASHED_SATELLITES.NAME"
+msgid "Crashed Satellites"
+msgstr "撞毁的卫星群"
+
 #. STRINGS.WORLD_TRAITS.DEEP_OIL.DESCRIPTION
 msgctxt "STRINGS.WORLD_TRAITS.DEEP_OIL.DESCRIPTION"
 msgid ""
@@ -86994,6 +87517,16 @@ msgctxt "STRINGS.WORLD_TRAITS.DEEP_OIL.NAME"
 msgid "Trapped Oil"
 msgstr "被圈闭的原油"
 
+#. STRINGS.WORLD_TRAITS.DISTRESS_SIGNAL.DESCRIPTION
+msgctxt "STRINGS.WORLD_TRAITS.DISTRESS_SIGNAL.DESCRIPTION"
+msgid "A faint signal originating from a long time ago"
+msgstr "很久之前发出的微弱信号"
+
+#. STRINGS.WORLD_TRAITS.DISTRESS_SIGNAL.NAME
+msgctxt "STRINGS.WORLD_TRAITS.DISTRESS_SIGNAL.NAME"
+msgid "Distress Signal"
+msgstr "求救信号"
+
 #. STRINGS.WORLD_TRAITS.FROZEN_CORE.DESCRIPTION
 msgctxt "STRINGS.WORLD_TRAITS.FROZEN_CORE.DESCRIPTION"
 msgid "This world has a chilly core of solid <link=\"ICE\">Ice</link>"
@@ -87002,7 +87535,7 @@ msgstr "这个星球有着由固体<link=\"ICE\">冰</link>组成的冰冷核心
 #. STRINGS.WORLD_TRAITS.FROZEN_CORE.NAME
 msgctxt "STRINGS.WORLD_TRAITS.FROZEN_CORE.NAME"
 msgid "Frozen Core"
-msgstr "冰核"
+msgstr "冰冻核心"
 
 #. STRINGS.WORLD_TRAITS.GEOACTIVE.DESCRIPTION
 msgctxt "STRINGS.WORLD_TRAITS.GEOACTIVE.DESCRIPTION"
@@ -87067,6 +87600,16 @@ msgctxt "STRINGS.WORLD_TRAITS.IRREGULAR_OIL.NAME"
 msgid "Irregular Oil"
 msgstr "不规则原油区"
 
+#. STRINGS.WORLD_TRAITS.LUSH_CORE.DESCRIPTION
+msgctxt "STRINGS.WORLD_TRAITS.LUSH_CORE.DESCRIPTION"
+msgid "This world has a lush forest core"
+msgstr "这个星球有一个繁茂的森林核心"
+
+#. STRINGS.WORLD_TRAITS.LUSH_CORE.NAME
+msgctxt "STRINGS.WORLD_TRAITS.LUSH_CORE.NAME"
+msgid "Lush Core"
+msgstr "繁茂核心"
+
 #. STRINGS.WORLD_TRAITS.MAGMA_VENTS.DESCRIPTION
 msgctxt "STRINGS.WORLD_TRAITS.MAGMA_VENTS.DESCRIPTION"
 msgid ""
@@ -87078,6 +87621,16 @@ msgstr "这个星球核心区的<link=\"MAGMA\">岩浆</link>已经蔓延到了�
 msgctxt "STRINGS.WORLD_TRAITS.MAGMA_VENTS.NAME"
 msgid "Magma Channels"
 msgstr "岩浆通道"
+
+#. STRINGS.WORLD_TRAITS.METAL_CAVES.DESCRIPTION
+msgctxt "STRINGS.WORLD_TRAITS.METAL_CAVES.DESCRIPTION"
+msgid "Metallic caves description"
+msgstr "金属洞穴的描述"
+
+#. STRINGS.WORLD_TRAITS.METAL_CAVES.NAME
+msgctxt "STRINGS.WORLD_TRAITS.METAL_CAVES.NAME"
+msgid "Metallic Caves"
+msgstr "金属洞穴"
 
 #. STRINGS.WORLD_TRAITS.METAL_POOR.DESCRIPTION
 msgctxt "STRINGS.WORLD_TRAITS.METAL_POOR.DESCRIPTION"
@@ -87132,6 +87685,23 @@ msgstr "每次遇到的这个星球都会以特别稳定的状态存在"
 msgctxt "STRINGS.WORLD_TRAITS.NO_TRAITS.NAME"
 msgid "<i>This world is stable and has no unusual features.</i>"
 msgstr "<i>这个星球很稳定，没有什么不寻常的特质。</i>"
+
+#. STRINGS.WORLD_TRAITS.NO_TRAITS.NAME_SHORTHAND
+msgctxt "STRINGS.WORLD_TRAITS.NO_TRAITS.NAME_SHORTHAND"
+msgid "No unusual features"
+msgstr "没有不寻常的特质"
+
+#. STRINGS.WORLD_TRAITS.RADIOACTIVE_CRUST.DESCRIPTION
+msgctxt "STRINGS.WORLD_TRAITS.RADIOACTIVE_CRUST.DESCRIPTION"
+msgid ""
+"Deposits of <link=\"URANIUMORE\">Uranium Ore</link> are found in this "
+"world's crust"
+msgstr "这个星球的地壳中发现有<link=\"URANIUMORE\">铀矿</link>矿藏"
+
+#. STRINGS.WORLD_TRAITS.RADIOACTIVE_CRUST.NAME
+msgctxt "STRINGS.WORLD_TRAITS.RADIOACTIVE_CRUST.NAME"
+msgid "Radioactive Crust"
+msgstr "放射性地壳"
 
 #. STRINGS.WORLD_TRAITS.SLIME_SPLATS.DESCRIPTION
 msgctxt "STRINGS.WORLD_TRAITS.SLIME_SPLATS.DESCRIPTION"
@@ -87379,6 +87949,25 @@ msgstr ""
 msgctxt "STRINGS.WORLDS.MEDIUMSANDYRADIOACTIVEVANILLAWARPPLANET.NAME"
 msgid "Radioactive Terra Asteroid"
 msgstr "放射性类地小行星"
+
+#. STRINGS.WORLDS.MEDIUMSWAMPY.DESCRIPTION
+msgctxt "STRINGS.WORLDS.MEDIUMSWAMPY.DESCRIPTION"
+msgid ""
+"A large-ish, polluted swamp world.\n"
+"\n"
+"<smallcaps>Mid-sized Swampy Asteroids are full of swampy and marshy areas, "
+"but also contain a variety of other biomes diverse enough to keep a "
+"determined colony supplied with essentials.</smallcaps>"
+msgstr ""
+"一个稍大的，受污染的沼泽小行星。\n"
+"\n"
+"<smallcaps>中型沼泽小行星有大量的冰冻泥浆和荒地，但也含有其他各种生态，足以让"
+"一个殖民地发展起来。</smallcaps>"
+
+#. STRINGS.WORLDS.MEDIUMSWAMPY.NAME
+msgctxt "STRINGS.WORLDS.MEDIUMSWAMPY.NAME"
+msgid "Mid-Sized Swampy Asteroid"
+msgstr "中型沼泽小行星"
 
 #. STRINGS.WORLDS.METALHEAVYLANDINGSITE.DESCRIPTION
 msgctxt "STRINGS.WORLDS.METALHEAVYLANDINGSITE.DESCRIPTION"
@@ -87972,6 +88561,123 @@ msgstr ""
 msgctxt "STRINGS.WORLDS.WATERMOONLET.NAME"
 msgid "Water Asteroid"
 msgstr "水域小行星"
+
+#~ msgctxt "STRINGS.DUPLICANTS.TRAITS.GLOWSTICK.DESC"
+#~ msgid ""
+#~ "This Duplicant glows green with radiation, but has increased radiation "
+#~ "resistance."
+#~ msgstr "这名复制人会发出辐射的绿光，但辐射抗性也更高。"
+
+#~ msgctxt "STRINGS.DUPLICANTS.TRAITS.GLOWSTICK.SHORT_DESC_TOOLTIP"
+#~ msgid "Emits low amounts of radiation and light"
+#~ msgstr "释放少量的辐射和光"
+
+#~ msgctxt "STRINGS.DUPLICANTS.TRAITS.RADIATIONEATER.DESC"
+#~ msgid "This Duplicant can convert Radiation exposure into Calories."
+#~ msgstr "这名复制人能将辐射转化为卡路里。"
+
+#~ msgctxt "STRINGS.DUPLICANTS.TRAITS.STARRYEYED.DESC"
+#~ msgid "This Duplicant likes being in space"
+#~ msgstr "这名复制人喜欢在太空中"
+
+#~ msgctxt "STRINGS.WORLDS.MEDIUMSWAMPY.NAME"
+#~ msgid "Swampy Asteroid"
+#~ msgstr "沼泽小行星"
+
+#~ msgctxt "STRINGS.DUPLICANTS.TRAITS.LONER.SHORT_DESC"
+#~ msgid "Attribute bonuses while <style=\"KKeyword\">Alone</style>"
+#~ msgstr "<style=\"KKeyword\">独自一人</style>时有属性加成"
+
+#~ msgctxt "STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER"
+#~ msgid "COSMIC CALLING"
+#~ msgstr "天外来电"
+
+#~ msgctxt "STRINGS.MISC.TAGS.COMBUSTIBLELIQUID"
+#~ msgid "Combustible Liquid"
+#~ msgstr "可燃液体"
+
+#~ msgctxt "STRINGS.MISC.TAGS.COMPOSTABLE"
+#~ msgid "Compostable"
+#~ msgstr "可堆肥的物品"
+
+#~ msgctxt "STRINGS.MISC.TAGS.FILTER"
+#~ msgid "Filtration Medium"
+#~ msgstr "过滤介质"
+
+#~ msgctxt "STRINGS.MISC.TAGS.ICEORE"
+#~ msgid "Ice"
+#~ msgstr "冰"
+
+#~ msgctxt "STRINGS.MISC.TAGS.REFINEDMETAL"
+#~ msgid "Refined Metal"
+#~ msgstr "精炼金属"
+
+#~ msgctxt "STRINGS.DUPLICANTS.MODIFIERS.THRIVER.NAME"
+#~ msgid "Duress to Impress"
+#~ msgstr "受迫激励"
+
+#~ msgctxt "STRINGS.DUPLICANTS.MODIFIERS.THRIVER.TOOLTIP"
+#~ msgid ""
+#~ "This Duplicant kicks into hyperdrive when <style=\"KKeyword\">Stressed</"
+#~ "style>"
+#~ msgstr ""
+#~ "这名复制人<style=\"KKeyword\">压力</style>上来时会进入\"超光速\"状态"
+
+#~ msgctxt "STRINGS.DUPLICANTS.ROLES.ARTIST.NAME"
+#~ msgid "Aesthetic Design"
+#~ msgstr "美学设计"
+
+#~ msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_BUILDER.NAME"
+#~ msgid "<link=\"JUNIORBUILDER\">Improved Construction I</link>"
+#~ msgstr "<link=\"JUNIORBUILDER\">改良建造 I</link>"
+
+#~ msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_COOK.NAME"
+#~ msgid "<link=\"JUNIORCOOK\">Grilling</link>"
+#~ msgstr "<link=\"JUNIORCOOK\">烧烤</link>"
+
+#~ msgctxt "STRINGS.DUPLICANTS.ROLES.MATERIALS_MANAGER.NAME"
+#~ msgid "<link=\"MATERIALSMANAGER\">Improved Carrying II</link>"
+#~ msgstr "<link=\"MATERIALSMANAGER\">改良携带 II</link>"
+
+#~ msgctxt "STRINGS.DUPLICANTS.ROLES.NUCLEAR_RESEARCHER.NAME"
+#~ msgid "<link=\"NUCLEARRESEARCHER\">Materials Science Research</link>"
+#~ msgstr "<link=\"NUCLEARRESEARCHER\">材料科学研究</link>"
+
+#~ msgctxt "STRINGS.DUPLICANTS.ROLES.PLUMBER.NAME"
+#~ msgid "<link=\"PLUMBER\">Plumbing</link>"
+#~ msgstr "<link=\"PLUMBER\">管路工作</link>"
+
+#~ msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_RANCHER.NAME"
+#~ msgid "<link=\"SENIORRANCHER\">Critter Ranching II</link>"
+#~ msgstr "<link=\"SENIORRANCHER\">小动物放牧 II</link>"
+
+#~ msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_RESEARCHER.NAME"
+#~ msgid "<link=\"SENIORRESEARCHER\">Astronomy</link>"
+#~ msgstr "<link=\"SENIORRESEARCHER\">天文学</link>"
+
+#~ msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING2.NAME"
+#~ msgid "Skilled: Aesthetic Design"
+#~ msgstr "技能：美学设计"
+
+#~ msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING1.NAME"
+#~ msgid "Skilled: <link=\"JUNIORBUILDER\">Improved Construction I</link>"
+#~ msgstr "技能：<link=\"JUNIORBUILDER\">改良建造 I</link>"
+
+#~ msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_COOKING1.NAME"
+#~ msgid "Skilled: <link=\"JUNIORCOOK\">Grilling</link>"
+#~ msgstr "技能：<link=\"JUNIORCOOK\">烧烤</link>"
+
+#~ msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_HAULING2.NAME"
+#~ msgid "Skilled: <link=\"MATERIALSMANAGER\">Improved Carrying II</link>"
+#~ msgstr "技能：<link=\"MATERIALSMANAGER\">改良携带 II</link>"
+
+#~ msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RANCHING2.NAME"
+#~ msgid "Skilled: <link=\"SENIORRANCHER\">Critter Ranching II</link>"
+#~ msgstr "技能：<link=\"SENIORRANCHER\">小动物放牧 II</link>"
+
+#~ msgctxt "STRINGS.DUPLICANTS.MODIFIERS.TELEPHONELONGDISTANCE.NAME"
+#~ msgid "Long Distance"
+#~ msgstr "长途"
 
 #~ msgctxt "STRINGS.UI.UISIDESCREENS.LOGICBROADCASTCHANNELSIDESCREEN.IN_RANGE"
 #~ msgid "Range OK"
@@ -90237,10 +90943,6 @@ msgstr "水域小行星"
 #~ "\n"
 #~ "这些技术高超的复制人的任务就是在屏幕保护程序运行时晃动一下控制柄。"
 
-#~ msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPORTALPAD.DESC"
-#~ msgid "Teleporter Pads move Duplicants and items from one area to another."
-#~ msgstr "传送台能将复制人和物品由一个地方移到另一个地方。"
-
 #~ msgctxt "STRINGS.BUILDINGS.PREFABS.WARPCONDUITRECEIVER.DESC"
 #~ msgid ""
 #~ "A mysterious portal.\n"
@@ -90588,10 +91290,6 @@ msgstr "水域小行星"
 #~ msgid "This rocket can potentially travel at {0}"
 #~ msgstr "这艘火箭可以以{0}的速率前行"
 
-#~ msgctxt "STRINGS.DUPLICANTS.MODIFIERS.THRIVER.NAME"
-#~ msgid "Clutch"
-#~ msgstr "受迫"
-
 #~ msgctxt "STRINGS.DUPLICANTS.MODIFIERS.THRIVER.TOOLTIP"
 #~ msgid "This Duplicant is working well while stressed"
 #~ msgstr "这名复制人压力大时工作得更好"
@@ -90748,10 +91446,6 @@ msgstr "水域小行星"
 #~ msgid "Duplicants will take one of these pills themselves when needed."
 #~ msgstr "需要时，复制人会自己来服用这些药片。"
 
-#~ msgctxt "STRINGS.DUPLICANTS.TRAITS.ARTDOWN.DESC"
-#~ msgid "This Duplicant was printed without the creativity gene"
-#~ msgstr "这名复制人打印出来就没有创造力的基因"
-
 #~ msgctxt "STRINGS.DUPLICANTS.TRAITS.ARTDOWN.NAME"
 #~ msgid "Uninspired"
 #~ msgstr "缺乏灵感"
@@ -90869,10 +91563,6 @@ msgstr "水域小行星"
 #~ msgstr ""
 #~ "(C<sub>12</sub>H<sub>22</sub>O<sub>11</sub>) 熔融蔗糖是一种被加热成<link="
 #~ "\"ELEMENTSLIQUID\">液态</link>的可食用的碳水化合物。"
-
-#~ msgctxt "STRINGS.GAMEPLAY_EVENTS.EVENT_TYPES.WARPWORLDREVEAL.DESCRIPTION"
-#~ msgid "This device can send a Duplicant to another world"
-#~ msgstr "这台设备可以将一名复制人送到另一个世界"
 
 #~ msgctxt "STRINGS.NAMEGEN.WORLD.ROOTS.SULFUR"
 #~ msgid ""
@@ -93440,10 +94130,6 @@ msgstr "水域小行星"
 #~ msgstr ""
 #~ "当输入为待命状态或者计时器还在流动时输出<link=\"LOGIC\">待命</link>信号"
 
-#~ msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICGATEFILTER.OUTPUT_NAME"
-#~ msgid "Filtered Signal"
-#~ msgstr "过滤式信号"
-
 #~ msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICGATENOT.EFFECT"
 #~ msgid ""
 #~ "Becomes <link=\"LOGIC\">Active</link> if the system connected to its "
@@ -95327,10 +96013,6 @@ msgstr "水域小行星"
 #~ "\n"
 #~ "• 拒绝执行任务：{0}"
 
-#~ msgctxt "STRINGS.DUPLICANTS.TRAITS.ROCKCRUSHER.DESC"
-#~ msgid "This Duplicant is incredibly strong."
-#~ msgstr "这名复制人非常强壮。"
-
 #~ msgctxt "STRINGS.DUPLICANTS.TRAITS.ROCKCRUSHER.NAME"
 #~ msgid "Rock Crusher"
 #~ msgstr "岩石破坏者"
@@ -96059,10 +96741,6 @@ msgstr "水域小行星"
 #~ msgctxt "STRINGS.DUPLICANTS.MODIFIERS.SOILEDSUIT.TOOLTIP"
 #~ msgid "This Duplicant's suit is full of waste"
 #~ msgstr "这名复制人的太空服中充满了废物"
-
-#~ msgctxt "STRINGS.DUPLICANTS.ROLES.ARTIST.NAME"
-#~ msgid "<link=\"ARTIST\">Aesthetic Design</link>"
-#~ msgstr "<link=\"ARTIST\">美学设计</link>"
 
 #~ msgctxt "STRINGS.DUPLICANTS.ROLES.GROUPS.APTITUDE_DESCRIPTION"
 #~ msgid ""

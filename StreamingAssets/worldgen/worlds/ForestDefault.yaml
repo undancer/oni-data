@@ -2,6 +2,7 @@ name: STRINGS.WORLDS.FOREST_DEFAULT.NAME # Arboria
 description: STRINGS.WORLDS.FOREST_DEFAULT.DESCRIPTION
 asteroidIcon: Asteroid_forest
 
+worldTraitScale: 1 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 256
   Y: 384
@@ -46,6 +47,10 @@ startingBasePositionVertical:
 
 seasons:
   - MeteorShowers
+
+worldTraitRules:
+  - min: 2
+    max: 4
 
 # Rivers:
 #   - water

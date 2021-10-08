@@ -1,5 +1,6 @@
 biomeNoise: expansion1::noise/Radioactive
 temperatureRange: Cold
+minChildCount: 4
 density:
   min: 12
   max: 17

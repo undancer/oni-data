@@ -2,20 +2,16 @@ name: STRINGS.WORLDS.MEDIUMFORESTYRADIOACTIVEVANILLAWARPPLANET.NAME
 description: STRINGS.WORLDS.MEDIUMFORESTYRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION
 nameTable: FOREST
 asteroidIcon: asteroid_vanilla_swamp_warp_kanim
-disableWorldTraits: true
 
+worldTraitScale: 0.3 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 160
   Y: 176
 layoutMethod: PowerTree
 
-fixedTraits:
-  - sunlightMedLow
-  - cosmicRadiationMedHigh
-
 defaultsOverrides:
   data:
-    DrawWorldBorderOverVacuum: false
+    DrawWorldBorderForce: false
     DrawWorldBorder: true
     WorldBorderThickness: 3
     WorldBorderRange: 1
@@ -24,6 +20,21 @@ defaultsOverrides:
     OverworldAvoidRadius: 5
     OverworldSampleBehaviour: PoissonDisk
     POIPadding: 1
+
+worldTraitRules:
+  - min: 2
+    max: 2
+    forbiddenTags:
+      - StartWorldOnly
+      - Oil
+      - LargeWorld
+      - Surface # surface is too specific
+      - Core # would reduce too much uranium
+      - GenericGeysers
+
+fixedTraits:
+  - sunlightMedLow
+  - cosmicRadiationMedHigh
 
 startSubworldName: expansion1::subworlds/forest/ForestWarpStart
 startingBaseTemplate:  expansion1::bases/warpworldForestBase
@@ -48,12 +59,15 @@ subworldFiles:
   - name: expansion1::subworlds/forest/ForestWarpStart # center
   - name: expansion1::subworlds/forest/med_Forest # ring 1
   - name: expansion1::subworlds/rust/med_Rust # ring 2/3
-    minCount: 6
-#    maxCount: 6
+    minCount: 4
   - name: expansion1::subworlds/ocean/med_Ocean #ring 3/ 4/ surface
-    minCount: 6
+    minCount: 4
     
 unknownCellsAllowedSubworlds: 
+  - tagcommand: Default
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/forest/med_Forest
   - tagcommand: DistanceFromTag
     tag: AtStart
     minDistance: 1
@@ -138,7 +152,7 @@ worldTemplateRules:
   # Ocean
   - names:
       - poi/poi_ocean_geyser_saltwater
-    listRule: GuaranteeOne
+    listRule: TryOne
     priority: 100 
     allowedCellsFilter:
       - command: Replace

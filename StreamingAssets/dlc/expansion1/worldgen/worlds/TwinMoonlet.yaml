@@ -3,6 +3,7 @@ description: STRINGS.WORLDS.TWINMOONLET.DESCRIPTION
 nameTable: TERRA
 disableWorldTraits: true
 
+worldTraitScale: 0.15 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 96
   Y: 160
@@ -11,7 +12,7 @@ layoutMethod: PowerTree
 defaultsOverrides:
   data:
     DrawWorldBorder: true
-    DrawWorldBorderOverVacuum: false
+    DrawWorldBorderForce: false
     WorldBorderThickness: 1
     WorldBorderRange: 0
     OverworldDensityMin: 15

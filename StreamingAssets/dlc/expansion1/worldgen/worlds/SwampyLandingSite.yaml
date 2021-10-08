@@ -2,8 +2,8 @@ name: STRINGS.WORLDS.SWAMPYLANDINGSITE.NAME
 description: STRINGS.WORLDS.SWAMPYLANDINGSITE.DESCRIPTION
 nameTable: SWAMP
 asteroidIcon: asteroid_forest_rocket_kanim
-disableWorldTraits: true
 
+worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 128
   Y: 153
@@ -11,7 +11,7 @@ layoutMethod: PowerTree
 
 defaultsOverrides:
   data:
-    DrawWorldBorderOverVacuum: false
+    DrawWorldBorderForce: false
     DrawWorldBorder: true
     WorldBorderThickness: 5
     WorldBorderRange: 2
@@ -29,6 +29,20 @@ startingBasePositionHorizontal:
 startingBasePositionVertical:
   min: 0.65
   max: 0.65
+
+worldTraitRules:
+  - min: 1
+    max: 2
+    forbiddenTags:
+      - StartWorldOnly
+      - GenericGeysers
+      - Oil
+      - LargeWorld
+      - Surface
+      - Crust
+      - Challenge
+      - Core # would reduce too much uranium
+      - StartChange
 
 fixedTraits:
   - sunlightLow

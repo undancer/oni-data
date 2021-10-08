@@ -4,6 +4,7 @@ nameTable: REGOLITH
 asteroidIcon: asteroid_regolith_moonlet_kanim
 disableWorldTraits: true
 
+worldTraitScale: 0.09 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 96
   Y: 96
@@ -11,7 +12,7 @@ layoutMethod: PowerTree
 
 defaultsOverrides:
   data:
-    DrawWorldBorderOverVacuum: false
+    DrawWorldBorderForce: false
     DrawWorldBorder: true
     WorldBorderThickness: 4
     WorldBorderRange: 1

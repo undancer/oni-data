@@ -43,6 +43,13 @@ add:
       weight: 0.5
     - element: Sand
       weight: 1
+  radioactiveCrust:
+    - element: SedimentaryRock
+      weight: 1
+    - element: UraniumOre
+      weight: 0.5
+    - element: Granite
+      weight: 1
   sandyCrust:
     - element: Sandstone
       weight: 1

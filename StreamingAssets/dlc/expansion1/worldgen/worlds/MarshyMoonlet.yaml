@@ -2,11 +2,11 @@ name: STRINGS.WORLDS.MARSHYMOONLET.NAME
 description: STRINGS.WORLDS.MARSHYMOONLET.DESCRIPTION
 nameTable: SWAMP
 asteroidIcon: asteroid_marshy_moonlet_kanim
-disableWorldTraits: true
 
 # Notes:
 # - Marsh/Jungle do not have their default geysers
 
+worldTraitScale: 0.06 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 64
   Y: 96
@@ -14,7 +14,7 @@ layoutMethod: PowerTree
 
 defaultsOverrides:
   data:
-    DrawWorldBorderOverVacuum: false
+    DrawWorldBorderForce: false
     DrawWorldBorder: true
     WorldBorderThickness: 2
     WorldBorderRange: 1
@@ -33,6 +33,26 @@ startingBasePositionVertical:
   min: 0.50
   max: 0.55
 
+worldTraitRules:
+  - min: 0
+    max: 1
+    forbiddenTags:
+      - StartWorldOnly
+      - Geodes
+      - LargeWorld
+      - Oil
+      - GenericGeysers
+      - StartChange
+    forbiddenTraits:
+      - traits/MagmaVents
+      - expansion1::traits/Volcanoes
+      - traits/SlimeSplats
+      - expansion1::traits/LushCore # excluded by design
+
+fixedTraits:
+  - sunlightMedHigh
+  - cosmicRadiationMed
+
 # List all the subworld files to load
 subworldFiles:
   - name: subworlds/space/Space
@@ -43,10 +63,6 @@ subworldFiles:
   - name: expansion1::subworlds/jungle/med_JungleInactive
     minCount: 1
   - name: expansion1::subworlds/magma/BottomSmall
-  
-fixedTraits:
-  - sunlightMedHigh
-  - cosmicRadiationMed
   
 unknownCellsAllowedSubworlds: 
   - tagcommand: Default
@@ -114,7 +130,10 @@ worldTemplateRules:
     priority: 140
     allowedCellsFilter:
       - command: Replace
-        zoneTypes: [ MagmaCore ]
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 0
+        maxDistance: 0
   # Curated Geysers
   - names:
     - geysers/slimy_po2

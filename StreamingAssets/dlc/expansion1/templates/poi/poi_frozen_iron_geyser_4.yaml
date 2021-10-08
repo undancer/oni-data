@@ -1,530 +1,279 @@
-name: poi_frozen_iron_geyser_4
 info:
   size:
-    X: 14
-    Y: 13
-  area: 108
+    X: 10
+    Y: 6
+  area: 57
 cells:
-- element: Granite
-  mass: 1840
-  temperature: 222.334839
-  location_x: -2
-  location_y: -5
-- element: Granite
-  mass: 1840
-  temperature: 222.215912
-  location_x: -1
-  location_y: -5
-- element: Granite
-  mass: 1840
-  temperature: 222.268143
-  location_y: -5
-- element: Granite
-  mass: 1840
-  temperature: 222.392059
-  location_x: 1
-  location_y: -5
-- element: Ice
-  mass: 1000
-  temperature: 172.691833
-  location_x: -4
-  location_y: -4
-- element: Ice
-  mass: 1000
-  temperature: 172.046417
-  location_x: -3
-  location_y: -4
-- element: Granite
-  mass: 1840
-  temperature: 221.981064
-  location_x: -2
-  location_y: -4
-- element: DirtyIce
-  mass: 500
-  temperature: 225.149994
-  location_x: -1
-  location_y: -4
-- element: DirtyIce
-  mass: 500
-  temperature: 225.149994
-  location_y: -4
-- element: Granite
-  mass: 1840
-  temperature: 222.268326
-  diseaseCount: -1
-  location_x: 1
-  location_y: -4
-- element: SolidCarbonDioxide
-  mass: 1
-  temperature: 176.455719
-  location_x: -6
-  location_y: -3
-- element: Ice
-  mass: 1000
-  temperature: 172.561035
-  location_x: -5
-  location_y: -3
 - element: Oxygen
-  mass: 3.28652906
-  temperature: 172.986496
-  location_x: -4
-  location_y: -3
-- element: Oxygen
-  mass: 1.98144066
-  temperature: 180.832428
-  location_x: -3
-  location_y: -3
-- element: DirtyIce
-  mass: 500
-  temperature: 225.149994
-  location_x: -2
-  location_y: -3
-- element: DirtyIce
-  mass: 500
-  temperature: 225.149994
-  location_x: -1
-  location_y: -3
-- element: Oxygen
-  mass: 0.78796804
-  temperature: 206.967514
-  location_y: -3
-- element: Granite
-  mass: 1840
-  temperature: 222.189423
-  diseaseCount: -1
-  location_x: 1
-  location_y: -3
-- element: Ice
-  mass: 1000
-  temperature: 173.074142
-  location_x: -6
-  location_y: -2
-- element: Oxygen
-  mass: 3.94931388
-  temperature: 173.603958
-  location_x: -5
-  location_y: -2
-- element: Oxygen
-  mass: 3.1037457
-  temperature: 174.445435
+  mass: 0.52804631
+  temperature: 193.55159
   location_x: -4
   location_y: -2
-- element: Oxygen
-  mass: 0.939264297
-  temperature: 183.165359
+- element: DirtyIce
+  mass: 500
+  temperature: 225.14653
   location_x: -3
   location_y: -2
-- element: Oxygen
-  mass: 1.56211281
-  temperature: 177.153442
+- element: DirtyIce
+  mass: 500
+  temperature: 225.140503
   location_x: -2
-  location_y: -2
-- element: DirtyIce
-  mass: 500
-  temperature: 225.149994
-  location_x: -1
-  location_y: -2
-- element: DirtyIce
-  mass: 500
-  temperature: 225.149994
   location_y: -2
 - element: BrineIce
   mass: 1000
-  temperature: 175.949509
+  temperature: 176.172012
+  location_x: -1
+  location_y: -2
+- element: DirtyIce
+  mass: 500
+  temperature: 227.286514
+  location_y: -2
+- element: DirtyIce
+  mass: 500
+  temperature: 229.590851
   location_x: 1
   location_y: -2
-- element: Ice
-  mass: 1000
-  temperature: 174.493896
-  location_x: -5
-  location_y: -1
-- element: Ice
-  mass: 1000
-  temperature: 175.303543
-  location_x: -4
-  location_y: -1
-- element: Oxygen
-  mass: 0.340992093
-  temperature: 177.94252
-  location_x: -3
-  location_y: -1
-- element: Oxygen
-  mass: 0.466944188
-  temperature: 180.219864
-  location_x: -2
-  location_y: -1
-- element: DirtyIce
-  mass: 500
-  temperature: 225.149994
-  location_x: -1
-  location_y: -1
-- element: DirtyIce
-  mass: 500
-  temperature: 225.149994
-  location_y: -1
-- element: BrineIce
-  mass: 1000
-  temperature: 176.163315
-  location_x: 1
-  location_y: -1
-- element: DirtyIce
-  mass: 500
-  temperature: 227.296112
+- element: Granite
+  mass: 1840
+  temperature: 222.260773
   location_x: 2
-  location_y: -1
-- element: DirtyIce
-  mass: 500
-  temperature: 229.592926
+  location_y: -2
+- element: Granite
+  mass: 1840
+  temperature: 221.365143
   location_x: 3
-  location_y: -1
+  location_y: -2
 - element: Granite
   mass: 1840
-  temperature: 222.25891139
+  temperature: 220.071991
   location_x: 4
-  location_y: -1
+  location_y: -2
 - element: Granite
   mass: 1840
-  temperature: 221.3647
+  temperature: 212.848862
   location_x: 5
-  location_y: -1
-- element: Granite
-  mass: 1840
-  temperature: 220.074768
-  location_x: 6
-  location_y: -1
-- element: Granite
-  mass: 1840
-  temperature: 212.841812
-  location_x: 7
-  location_y: -1
-- element: BrineIce
-  mass: 1000
-  temperature: 176.430038
-  location_x: -4
-- element: BrineIce
-  mass: 1000
-  temperature: 176.546951
-  location_x: -3
+  location_y: -2
 - element: Oxygen
-  mass: 0.00691200094
-  temperature: 182.10762
+  mass: 0.062115863
+  temperature: 194.465729
+  location_x: -4
+  location_y: -1
+- element: DirtyIce
+  mass: 500
+  temperature: 225.149948
+  location_x: -3
+  location_y: -1
+- element: Oxygen
+  mass: 1.33000004
+  temperature: 183.149994
   location_x: -2
-- element: DirtyIce
-  mass: 500
-  temperature: 225.149994
+  location_y: -1
+- element: Unobtanium
+  mass: 9999
+  temperature: 296.149994
   location_x: -1
-- element: DirtyIce
-  mass: 500
-  temperature: 225.149994
+  location_y: -1
+- element: Unobtanium
+  mass: 9999
+  temperature: 296.149994
+  location_y: -1
 - element: Unobtanium
   mass: 9999
   temperature: 296.149994
   location_x: 1
+  location_y: -1
 - element: Unobtanium
   mass: 9999
   temperature: 296.149994
   location_x: 2
-- element: Unobtanium
-  mass: 9999
-  temperature: 296.149994
-  location_x: 3
-- element: Unobtanium
-  mass: 9999
-  temperature: 296.149994
-  location_x: 4
+  location_y: -1
 - element: Ice
   mass: 597.830017
-  temperature: 224.149994
-  location_x: 5
+  temperature: 224.148758
+  location_x: 3
+  location_y: -1
 - element: Vacuum
-  location_x: 6
+  location_x: 4
+  location_y: -1
 - element: Granite
   mass: 1840
-  temperature: 220.741776
-  location_x: 7
-- element: Ice
-  mass: 1000
-  temperature: 177.283936
+  temperature: 220.738541
+  location_x: 5
+  location_y: -1
+- element: DirtyIce
+  mass: 500
+  temperature: 225.140686
+  location_x: -4
+- element: DirtyIce
+  mass: 500
+  temperature: 225.149994
   location_x: -3
-  location_y: 1
 - element: DirtyIce
   mass: 500
   temperature: 225.149994
   location_x: -2
-  location_y: 1
 - element: DirtyIce
   mass: 500
   temperature: 225.149994
   location_x: -1
-  location_y: 1
 - element: DirtyIce
   mass: 500
-  temperature: 225.149994
-  location_y: 1
-- element: DirtyIce
-  mass: 500
-  temperature: 225.149994
+  temperature: 225.149796
+- element: Ice
+  mass: 597.830017
+  temperature: 224.150238
   location_x: 1
-  location_y: 1
-- element: DirtyIce
-  mass: 500
-  temperature: 225.149994
+- element: Ice
+  mass: 597.830017
+  temperature: 224.149994
   location_x: 2
-  location_y: 1
-- element: Ice
-  mass: 597.830017
-  temperature: 224.149994
+- element: Oxygen
+  mass: 1.33000004
+  temperature: 183.149994
   location_x: 3
-  location_y: 1
-- element: Ice
-  mass: 597.830017
-  temperature: 224.149994
-  location_x: 4
-  location_y: 1
-- element: Ice
-  mass: 597.830017
-  temperature: 224.149994
-  location_x: 5
-  location_y: 1
 - element: Granite
   mass: 1103.27698
-  temperature: 231.299149
-  location_x: 6
-  location_y: 1
+  temperature: 231.286789
+  location_x: 4
 - element: DirtyIce
   mass: 500
-  temperature: 222.520004
-  location_x: 7
+  temperature: 222.521698
+  location_x: 5
+- element: DirtyIce
+  mass: 500
+  temperature: 225.135666
+  location_x: -4
   location_y: 1
-- element: Ice
-  mass: 1000
-  temperature: 176.775406
+- element: Oxygen
+  mass: 1.33000004
+  temperature: 183.149994
   location_x: -3
-  location_y: 2
-- element: DirtyIce
-  mass: 500
-  temperature: 225.149994
+  location_y: 1
+- element: Oxygen
+  mass: 1.33000004
+  temperature: 183.149994
   location_x: -2
-  location_y: 2
+  location_y: 1
 - element: DirtyIce
   mass: 500
   temperature: 225.149994
   location_x: -1
-  location_y: 2
+  location_y: 1
 - element: DirtyIce
   mass: 500
-  temperature: 225.149994
-  location_y: 2
-- element: DirtyIce
-  mass: 500
-  temperature: 225.149994
+  temperature: 225.149597
+  location_y: 1
+- element: Ice
+  mass: 597.830017
+  temperature: 224.150238
   location_x: 1
-  location_y: 2
-- element: DirtyIce
-  mass: 500
-  temperature: 225.149994
+  location_y: 1
+- element: Ice
+  mass: 597.830017
+  temperature: 224.149994
   location_x: 2
-  location_y: 2
+  location_y: 1
 - element: Ice
   mass: 597.830017
   temperature: 224.149994
   location_x: 3
-  location_y: 2
+  location_y: 1
 - element: Ice
   mass: 597.830017
-  temperature: 224.149994
+  temperature: 224.569916
   location_x: 4
-  location_y: 2
-- element: Ice
-  mass: 597.830017
-  temperature: 224.149994
-  location_x: 5
-  location_y: 2
-- element: Ice
-  mass: 597.830017
-  temperature: 224.566925
-  location_x: 6
-  location_y: 2
-- element: Ice
-  mass: 1000
-  temperature: 176.698029
-  location_x: -3
-  location_y: 3
+  location_y: 1
 - element: SolidCarbonDioxide
   mass: 1
-  temperature: 189.406998
+  temperature: 200.220383
+  location_x: -4
+  location_y: 2
+- element: Oxygen
+  mass: 1.33000004
+  temperature: 183.149994
+  location_x: -3
+  location_y: 2
+- element: Oxygen
+  mass: 1.33000004
+  temperature: 183.149994
   location_x: -2
-  location_y: 3
+  location_y: 2
 - element: DirtyIce
   mass: 500
-  temperature: 225.149994
+  temperature: 225.149597
   location_x: -1
-  location_y: 3
-- element: DirtyIce
-  mass: 500
-  temperature: 225.149994
-  location_y: 3
-- element: DirtyIce
-  mass: 500
-  temperature: 225.149994
+  location_y: 2
+- element: Ice
+  mass: 597.830017
+  temperature: 224.150482
+  location_y: 2
+- element: Ice
+  mass: 597.830017
+  temperature: 224.149994
   location_x: 1
-  location_y: 3
+  location_y: 2
 - element: Ice
   mass: 597.830017
   temperature: 224.149994
   location_x: 2
-  location_y: 3
+  location_y: 2
 - element: Ice
   mass: 597.830017
-  temperature: 224.149994
+  temperature: 224.15033
   location_x: 3
-  location_y: 3
-- element: Ice
-  mass: 597.830017
-  temperature: 224.149994
-  location_x: 4
-  location_y: 3
-- element: Ice
-  mass: 597.830017
-  temperature: 224.149994
-  location_x: 5
-  location_y: 3
+  location_y: 2
 - element: DirtyIce
   mass: 500
-  temperature: 225.566101
-  location_x: 6
-  location_y: 3
+  temperature: 225.561111
+  location_x: 4
+  location_y: 2
 - element: BrineIce
   mass: 1000
-  temperature: 173.883545
+  temperature: 173.888962
+  location_x: -4
+  location_y: 3
+- element: DirtyIce
+  mass: 500
+  temperature: 225.14006
+  location_x: -3
+  location_y: 3
+- element: Oxygen
+  mass: 1.33000004
+  temperature: 183.149994
   location_x: -2
-  location_y: 4
-- element: DirtyIce
-  mass: 500
-  temperature: 225.149994
+  location_y: 3
+- element: Oxygen
+  mass: 1.33000004
+  temperature: 183.149994
   location_x: -1
-  location_y: 4
-- element: DirtyIce
-  mass: 500
-  temperature: 225.149994
-  location_y: 4
+  location_y: 3
+- element: Ice
+  mass: 597.830017
+  temperature: 224.149994
+  location_y: 3
 - element: Ice
   mass: 597.830017
   temperature: 224.149994
   location_x: 1
-  location_y: 4
+  location_y: 3
 - element: Ice
   mass: 597.830017
-  temperature: 224.149994
+  temperature: 224.148392
   location_x: 2
-  location_y: 4
+  location_y: 3
 - element: Ice
   mass: 597.830017
-  temperature: 224.149994
+  temperature: 224.139755
   location_x: 3
-  location_y: 4
-- element: Ice
-  mass: 597.830017
-  temperature: 224.149994
-  location_x: 4
-  location_y: 4
-- element: Ice
-  mass: 597.830017
-  temperature: 224.149994
-  location_x: 5
-  location_y: 4
+  location_y: 3
 - element: Granite
   mass: 1840
-  temperature: 206.064911
-  location_x: 6
-  location_y: 4
-- element: Ice
-  mass: 611.854431
-  temperature: 224.239883
-  location_x: -1
-  location_y: 5
-- element: DirtyIce
-  mass: 500
-  temperature: 225.149994
-  location_y: 5
-- element: Ice
-  mass: 597.830017
-  temperature: 224.149994
-  location_x: 1
-  location_y: 5
-- element: Ice
-  mass: 597.830017
-  temperature: 224.149994
-  location_x: 2
-  location_y: 5
-- element: Ice
-  mass: 597.830017
-  temperature: 224.149994
-  location_x: 3
-  location_y: 5
-- element: Oxygen
-  mass: 0.672111988
-  temperature: 212.540741
+  temperature: 206.076614
   location_x: 4
-  location_y: 5
-- element: DirtyIce
-  mass: 500
-  temperature: 214.935135
-  location_x: 5
-  location_y: 5
-- element: Ice
-  mass: 616.588684
-  temperature: 212.099625
-  location_x: -1
-  location_y: 6
-- element: Oxygen
-  mass: 0.692513585
-  temperature: 210.714279
-  location_y: 6
-- element: Ice
-  mass: 597.830017
-  temperature: 224.149994
-  location_x: 1
-  location_y: 6
-- element: Ice
-  mass: 597.830017
-  temperature: 224.149994
-  location_x: 2
-  location_y: 6
-- element: Oxygen
-  mass: 0.592354059
-  temperature: 206.014099
-  location_x: 3
-  location_y: 6
-- element: Ice
-  mass: 603.598328
-  temperature: 207.785522
-  location_x: 4
-  location_y: 6
-- element: Ice
-  mass: 617.348267
-  temperature: 207.636627
-  location_y: 7
-- element: Ice
-  mass: 614.287903
-  temperature: 215.855194
-  location_x: 1
-  location_y: 7
-- element: Ice
-  mass: 613.257446
-  temperature: 213.680557
-  location_x: 2
-  location_y: 7
-- element: Granite
-  mass: 1124.23535
-  temperature: 203.960251
-  location_x: 3
-  location_y: 7
+  location_y: 3
 otherEntities:
 - id: GeyserGeneric_molten_iron
-  location_x: 2
-  location_y: 1
   element: Katairite
-  temperature: 372.149994
+  temperature: 99
   units: 1
   type: Other

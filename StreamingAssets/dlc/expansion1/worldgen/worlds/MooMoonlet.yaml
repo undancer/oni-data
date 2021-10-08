@@ -2,8 +2,8 @@ name: STRINGS.WORLDS.MOOMOONLET.NAME
 description: STRINGS.WORLDS.MOOMOONLET.DESCRIPTION
 nameTable: MOO
 asteroidIcon: asteroid_moo_planet_kanim
-disableWorldTraits: true
 
+worldTraitScale: 0.08 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 96
   Y: 80
@@ -11,7 +11,7 @@ layoutMethod: PowerTree
 
 defaultsOverrides:
   data:
-    DrawWorldBorderOverVacuum: false
+    DrawWorldBorderForce: false
     DrawWorldBorder: true
     WorldBorderThickness: 4
     WorldBorderRange: 2
@@ -20,16 +20,34 @@ defaultsOverrides:
     OverworldAvoidRadius: 5
     OverworldSampleBehaviour: PoissonDisk
 
+disableWorldTraits: true # insufficient traits to support world
+worldTraitRules:
+  - min: 0
+    max: 1
+    forbiddenTags:
+      - StartWorldOnly
+      - GenericGeysers
+      - Surface
+      - StartChange
+      - Oil
+      - Geodes # features are all full
+      - LargeWorld
+      - Metal # none on world
+    forbiddenTraits:
+      - traits/MagmaVents
+      - expansion1::traits/Volcanoes
+      - traits/SlimeSplats
+
+fixedTraits:
+  - sunlightVeryHigh
+  - cosmicRadiationMedHigh
+
 # List all the subworld files to load
 subworldFiles:
   - name: subworlds/space/Space
   - name: expansion1::subworlds/moo/MooCaverns
   - name: expansion1::subworlds/moo/MooChasms
   - name: expansion1::subworlds/moo/MooCore
-
-fixedTraits:
-  - sunlightVeryHigh
-  - cosmicRadiationMedHigh
 
 unknownCellsAllowedSubworlds: 
   - tagcommand: Default

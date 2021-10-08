@@ -2,8 +2,8 @@ name: STRINGS.WORLDS.REGOLITHMOONLET.NAME
 description: STRINGS.WORLDS.REGOLITHMOONLET.DESCRIPTION
 nameTable: REGOLITH
 asteroidIcon: asteroid_regolith_moonlet_kanim
-disableWorldTraits: true
 
+worldTraitScale: 0.15 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 160
   Y: 96
@@ -11,7 +11,7 @@ layoutMethod: PowerTree
 
 defaultsOverrides:
   data:
-    DrawWorldBorderOverVacuum: false
+    DrawWorldBorderForce: false
     DrawWorldBorder: true
     WorldBorderThickness: 2
     WorldBorderRange: 1
@@ -19,6 +19,23 @@ defaultsOverrides:
     OverworldDensityMax: 15
     OverworldAvoidRadius: 5
     OverworldSampleBehaviour: PoissonDisk
+
+worldTraitRules:
+  - min: 0
+    max: 1
+    forbiddenTags:
+      - StartWorldOnly
+      - Oil
+      - StartChange
+      - GenericGeysers
+      - Surface
+      - Crust
+      - Geodes
+      - LargeWorld
+    forbiddenTraits:
+      - traits/SlimeSplats
+      - traits/MagmaVents
+      - expansion1::traits/Volcanoes
 
 # List all the zone files to load
 subworldFiles:

@@ -2,5 +2,8 @@ name: STRINGS.WORLD_TRAITS.GEODES.NAME
 description: STRINGS.WORLD_TRAITS.GEODES.DESCRIPTION
 colorHex: 9231C0
 
+traitTags:
+  - Geodes
+
 globalFeatureMods:
   features/traits/Geode: 10

@@ -5,6 +5,7 @@ nameTable: SWAMP
 asteroidIcon: asteroid_swamp_oil_kanim
 disableWorldTraits: true
 
+worldTraitScale: 0.12 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 96
   Y: 128
@@ -12,7 +13,7 @@ layoutMethod: PowerTree
 
 defaultsOverrides:
   data:
-    DrawWorldBorderOverVacuum: false
+    DrawWorldBorderForce: false
     DrawWorldBorder: true
     WorldBorderThickness: 3
     WorldBorderRange: 1
@@ -25,7 +26,7 @@ defaultsOverrides:
 startSubworldName: expansion1::subworlds/swamp/SwampWarpStart
 startingBaseTemplate:  expansion1::bases/warpworldSwampBase
 startingBasePositionHorizontal:
-  min: 0.3
+  min: 0.4
   max: 0.7
 startingBasePositionVertical:
   min: 0.50

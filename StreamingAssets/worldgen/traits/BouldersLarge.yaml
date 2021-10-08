@@ -4,5 +4,9 @@ colorHex: BDBDBD
 exclusiveWith:
   - traits/BouldersMixed
 
+traitTags:
+  - LargeWorld
+  - Geodes
+
 globalFeatureMods:
   features/traits/BoulderLarge: 5

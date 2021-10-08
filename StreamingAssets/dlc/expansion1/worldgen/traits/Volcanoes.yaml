@@ -1,0 +1,49 @@
+name: STRINGS.WORLD_TRAITS.VOLCANOES.NAME
+description: STRINGS.WORLD_TRAITS.VOLCANOES.DESCRIPTION
+colorHex: BF1C1C
+
+# Base game trait reimplemented; space is now two subworlds tall
+
+# Note: Requires a start subworld defined
+
+traitTags:
+  - VeryHot
+  - Challenge
+
+additionalSubworldFiles:
+  - name: expansion1::subworlds/magma/VolcanoBiome
+
+additionalUnknownCellFilters:
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 2 # spaced out worlds are smaller (3 in base trait)
+    maxDistance: 999
+    command: UnionWith
+    subworldNames:
+      - expansion1::subworlds/magma/VolcanoBiome
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 0
+    maxDistance: 2
+    command: ExceptWith
+    subworldNames:
+      - expansion1::subworlds/magma/VolcanoBiome
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 0
+    maxDistance: 1
+    command: ExceptWith
+    subworldNames:
+      - expansion1::subworlds/magma/VolcanoBiome
+
+additionalWorldTemplateRules:
+  - names:
+      - geysers/volcanohole
+    listRule: TryOne
+    times: 8
+    allowDuplicates: true
+    allowExtremeTemperatureOverlap: true # VolcanoBiome has 1 child so this should be fine in most cases
+    allowedCellsFilter:
+      - command: Replace
+        subworldNames:
+          - expansion1::subworlds/magma/VolcanoBiome

@@ -1039,13 +1039,13 @@ msgctxt "STRINGS.BUILDING.STATUSITEMS.FOOD_CONTAINERS_OUTSIDE_RANGE.TOOLTIP"
 msgid "Recuperating Duplicants must have <style=\"KKeyword\">Food</style> available within <b>{0}</b> cells"
 msgstr "Макс. количество клеток, в котором <style=\"KKeyword\">еда</style> может находиться от выздоравливающих дубликантов: <b>{0}</b>"
 
-#. STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLINGn.NAME
-msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLINGn.NAME"
+#. STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.NAME"
 msgid "Cooling Contents: {UsedPower}"
 msgstr "Охлаждение содержимого: {UsedPower}"
 
-#. STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLINGn.TOOLTIP
-msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLINGn.TOOLTIP"
+#. STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.TOOLTIP"
 msgid "{UsedPower} of {MaxPower} are being used to cool the contents of this food storage"
 msgstr "Использование энергии для охлаждения еды в хранилище: {UsedPower} из {MaxPower}"
 
@@ -3069,6 +3069,26 @@ msgctxt "STRINGS.BUILDING.STATUSITEMS.TANNINGLIGHTSUFFICIENT.TOOLTIP"
 msgid "There is sufficient <link=\"LIGHT\">Light</link> here to create pleasing skin crisping"
 msgstr "<link=\"LIGHT\">Свет</link> здесь достаточно ярок и позволяет немного поджариться"
 
+#. STRINGS.BUILDING.STATUSITEMS.TELEPHONE.BABBLE.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.TELEPHONE.BABBLE.NAME"
+msgid "Babbling to no one."
+msgstr "Бормочет что-то в одиночестве."
+
+#. STRINGS.BUILDING.STATUSITEMS.TELEPHONE.BABBLE.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.TELEPHONE.BABBLE.TOOLTIP"
+msgid "{Duplicant} just needed to vent to no one."
+msgstr "Дубликанту {Duplicant} нужно было выговориться в пустоту."
+
+#. STRINGS.BUILDING.STATUSITEMS.TELEPHONE.CONVERSATION.TALKING_TO
+msgctxt "STRINGS.BUILDING.STATUSITEMS.TELEPHONE.CONVERSATION.TALKING_TO"
+msgid "Talking to {Duplicant} on {Asteroid}"
+msgstr "Разговаривает с дубликантом {Duplicant} на астероиде {Asteroid}"
+
+#. STRINGS.BUILDING.STATUSITEMS.TELEPHONE.CONVERSATION.TALKING_TO_NUM
+msgctxt "STRINGS.BUILDING.STATUSITEMS.TELEPHONE.CONVERSATION.TALKING_TO_NUM"
+msgid "Talking to {0} friends."
+msgstr "Разговаривает с {0} друзьями."
+
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_INSUFFICIENT_COLONIES.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_INSUFFICIENT_COLONIES.NAME"
 msgid "Too few Printing Pods {progress}"
@@ -3721,8 +3741,8 @@ msgstr "Суперкомпьютеры дают доступ к более пр�
 
 #. STRINGS.BUILDINGS.PREFABS.ADVANCEDRESEARCHCENTER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.ADVANCEDRESEARCHCENTER.EFFECT"
-msgid "Conducts <link=\"RESEARCH\">Advanced Research</link> to unlock new technologies.\n\nConsumes <link=\"WATER\">Water</link>.\n\nAssigned Duplicants must possess the <link=\"JUNIORRESEARCHER\">Advanced Research</link> skill."
-msgstr "Проводится <link=\"RESEARCH\">углубленное исследование</link> для разблокирования новых технологий.\n\nРасходует ресурс — <link=\"WATER\">воду</link>.\n\nНазначенные дубликанты должны иметь навык <link=\"JUNIORRESEARCHER\">\"Углубленное исследование\"</link>."
+msgid "Conducts <link=\"RESEARCH\">Advanced Research</link> to unlock new technologies.\n\nConsumes <link=\"WATER\">Water</link>.\n\nAssigned Duplicants must possess the <link=\"RESEARCHING1\">Advanced Research</link> skill."
+msgstr "Проводится <link=\"RESEARCH\">углубленное исследование</link> для разблокирования новых технологий.\n\nРасходует ресурс — <link=\"WATER\">воду</link>.\n\nНазначенные дубликанты должны иметь навык <link=\"RESEARCHING1\">\"Углубленное исследование\"</link>."
 
 #. STRINGS.BUILDINGS.PREFABS.ADVANCEDRESEARCHCENTER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.ADVANCEDRESEARCHCENTER.NAME"
@@ -3886,8 +3906,8 @@ msgstr "Чтобы пилотировать космические ракеты,
 
 #. STRINGS.BUILDINGS.PREFABS.ASTRONAUTTRAININGCENTER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.ASTRONAUTTRAININGCENTER.EFFECT"
-msgid "Trains Duplicants to become <link=\"ASTRONAUT\">Astronauts</link>.\n\nDuplicants must possess the <link=\"ASTRONAUTTRAINEE\">Astronaut-in-Training</link> trait to receive training."
-msgstr "Тренировка для дубликантов, чтобы сделать их <link=\"ASTRONAUT\">астронавтами</link>.\n\nЧтобы пройти тренировку, дубликанты должны обладать характеристикой <link=\"ASTRONAUTTRAINEE\">\"Обучаемый астронавт\"</link>."
+msgid "Trains Duplicants to become <link=\"ROCKETPILOTING1\">Astronaut</link>.\n\nDuplicants must possess the <link=\"ROCKETPILOTING1\">Astronaut</link> trait to receive training."
+msgstr "Тренировка для дубликантов, чтобы сделать их <link=\"ROCKETPILOTING1\">астронавтами</link>.\n\nЧтобы пройти тренировку, дубликанты должны обладать характеристикой <link=\"ROCKETPILOTING1\">\"Астронавт\"</link>."
 
 #. STRINGS.BUILDINGS.PREFABS.ASTRONAUTTRAININGCENTER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.ASTRONAUTTRAININGCENTER.NAME"
@@ -4401,8 +4421,8 @@ msgstr "Телескопы нужны, чтобы изучать космос. �
 
 #. STRINGS.BUILDINGS.PREFABS.CLUSTERTELESCOPE.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.CLUSTERTELESCOPE.EFFECT"
-msgid "Reveals visitable Planetoids in space.\n\nAssigned Duplicants must possess the <link=\"SENIORRESEARCHER\">Astronomy</link> skill.\n\nBuilding must be exposed to space to function."
-msgstr "Показывает планетоиды, пригодные для посещения.\n\nНазначенные дубликанты должны обладать навыком \"<link=\"SENIORRESEARCHER\">Астрономия</link>\".\n\nДля функционирования зданию требуется доступ к космической среде."
+msgid "Reveals visitable Planetoids in space.\n\nAssigned Duplicants must possess the <link=\"ASTRONOMY\">Astronomy</link> skill.\n\nBuilding must be exposed to space to function."
+msgstr "Показывает планетоиды, пригодные для посещения.\n\nНазначенные дубликанты должны обладать навыком \"<link=\"ASTRONOMY\">Астрономия</link>\".\n\nДля функционирования зданию требуется доступ к космической среде."
 
 #. STRINGS.BUILDINGS.PREFABS.CLUSTERTELESCOPE.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.CLUSTERTELESCOPE.NAME"
@@ -4466,8 +4486,8 @@ msgstr "Как минимум один астронавт должен быть 
 
 #. STRINGS.BUILDINGS.PREFABS.COMMANDMODULE.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.COMMANDMODULE.EFFECT"
-msgid "Contains passenger seating for Duplicant <link=\"ASTRONAUT\">Astronauts</link>.\n\nA Command Capsule must be the last module installed at the top of a rocket."
-msgstr "Пассажирские места для дубликантов-<link=\"ASTRONAUT\">астронавтов</link>.\n\nКомандный модуль должен быть установлен на вершину ракеты последним."
+msgid "Contains passenger seating for Duplicant <link=\"ASTRONAUTING1\">Astronauts</link>.\n\nA Command Capsule must be the last module installed at the top of a rocket."
+msgstr "Пассажирские места для дубликантов-<link=\"ASTRONAUTING1\">астронавтов</link>.\n\nКомандный модуль должен быть установлен на вершину ракеты последним."
 
 #. STRINGS.BUILDINGS.PREFABS.COMMANDMODULE.LOGIC_PORT_LAUNCH
 msgctxt "STRINGS.BUILDINGS.PREFABS.COMMANDMODULE.LOGIC_PORT_LAUNCH"
@@ -4566,8 +4586,8 @@ msgstr "Планетарии позволяют исследовать мест�
 
 #. STRINGS.BUILDINGS.PREFABS.COSMICRESEARCHCENTER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.COSMICRESEARCHCENTER.EFFECT"
-msgid "Conducts <link=\"RESEARCH\">Interstellar Research</link> to unlock new technologies.\n\nConsumes data from <link=\"TELESCOPE\">Telescopes</link> and <link=\"RESEARCHMODULE\">Research Modules</link>.\n\nAssigned Duplicants must possess the <link=\"SENIORRESEARCHER\">Astronomy</link> skill."
-msgstr "Проводит <link=\"RESEARCH\">космические исследования</link> для разблокирования новых технологий.\n\nРаботает на основе информации, полученной из <link=\"TELESCOPE\">телескопов</link> и <link=\"RESEARCHMODULE\">исследовательских модулей</link>.\n\nНазначенные дубликанты должны обладать навыком <link=\"SENIORRESEARCHER\">\"Астрономия\"</link>."
+msgid "Conducts <link=\"RESEARCH\">Interstellar Research</link> to unlock new technologies.\n\nConsumes data from <link=\"TELESCOPE\">Telescopes</link> and <link=\"RESEARCHMODULE\">Research Modules</link>.\n\nAssigned Duplicants must possess the <link=\"ASTRONOMY\">Astronomy</link> skill."
+msgstr "Проводит <link=\"RESEARCH\">космические исследования</link> для разблокирования новых технологий.\n\nРаботает на основе информации, полученной из <link=\"TELESCOPE\">телескопов</link> и <link=\"RESEARCHMODULE\">исследовательских модулей</link>.\n\nНазначенные дубликанты должны обладать навыком <link=\"ASTRONOMY\">\"Астрономия\"</link>."
 
 #. STRINGS.BUILDINGS.PREFABS.COSMICRESEARCHCENTER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.COSMICRESEARCHCENTER.NAME"
@@ -4931,8 +4951,8 @@ msgstr "Инкубаторы способны обеспечивать идеа�
 
 #. STRINGS.BUILDINGS.PREFABS.EGGINCUBATOR.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.EGGINCUBATOR.EFFECT"
-msgid "Incubates <link=\"CRITTERS\">Critter</link> eggs until ready to hatch.\n\nAssigned Duplicants must possess the <link=\"RANCHER\">Critter Wrangling</link> trait."
-msgstr "Здесь можно хранить яйца различных <link=\"CRITTERS\">существ</link> до момента их вылупления.\n\nНазначенные сюда дубликанты должны обладать характеристикой <link=\"RANCHER\">\"Опытный ловец\"</link>."
+msgid "Incubates <link=\"CRITTERS\">Critter</link> eggs until ready to hatch.\n\nAssigned Duplicants must possess the <link=\"RANCHING1\">Critter Ranching</link> ."
+msgstr "Здесь можно хранить яйца различных <link=\"CRITTERS\">существ</link> до момента их вылупления.\n\nНазначенные сюда дубликанты должны обладать навыком <link=\"RANCHING1\">животноводства</link>."
 
 #. STRINGS.BUILDINGS.PREFABS.EGGINCUBATOR.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.EGGINCUBATOR.NAME"
@@ -5046,8 +5066,8 @@ msgstr "Эта станция оказывает влияние только н�
 
 #. STRINGS.BUILDINGS.PREFABS.FARMSTATION.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.FARMSTATION.EFFECT"
-msgid "Produces <link=\"FARMSTATIONTOOLS\">Micronutrient Fertilizer</link> to increase <link=\"PLANTS\">Plant</link> growth rates.\n\nAssigned Duplicants must possess the <link=\"FARMER\">Crop Tending</link> trait.\n\nThis building is a necessary component of the Greenhouse room."
-msgstr "Производит <link=\"FARMSTATIONTOOLS\">микроудобрение</link>, позволяющее увеличить скорость созревания <link=\"PLANTS\">растений</link>.\n\nНазначенные сюда дубликанты должны обладать характеристикой <link=\"FARMER\">\"Агроном\"</link>.\n\nЭто строение — обязательная часть теплицы."
+msgid "Produces <link=\"FARMSTATIONTOOLS\">Micronutrient Fertilizer</link> to increase <link=\"PLANTS\">Plant</link> growth rates.\n\nAssigned Duplicants must possess the <link=\"FARMING2\">Crop Tending</link> trait.\n\nThis building is a necessary component of the Greenhouse room."
+msgstr "Производит <link=\"FARMSTATIONTOOLS\">микроудобрение</link>, позволяющее увеличить скорость созревания <link=\"PLANTS\">растений</link>.\n\nНазначенные сюда дубликанты должны обладать характеристикой <link=\"FARMING2\">\"Агроном\"</link>.\n\nЭто строение — обязательная часть теплицы."
 
 #. STRINGS.BUILDINGS.PREFABS.FARMSTATION.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.FARMSTATION.NAME"
@@ -6191,8 +6211,8 @@ msgstr "Дубликанты могут использовать ледяной 
 
 #. STRINGS.BUILDINGS.PREFABS.ICECOOLEDFAN.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.ICECOOLEDFAN.EFFECT"
-msgid "Uses <link=\"ICE\">Ice</link> to dissipate a small amount of the <link=\"HEAT\">Heat</link>."
-msgstr "Использует <link=\"ICE\">лед</link>, чтобы немного снизить <link=\"HEAT\">температуру</link>."
+msgid "Uses <link=\"ICEORE\">Ice</link> to dissipate a small amount of the <link=\"HEAT\">Heat</link>."
+msgstr "Использует <link=\"ICEORE\">лед</link>, чтобы немного снизить <link=\"HEAT\">температуру</link>."
 
 #. STRINGS.BUILDINGS.PREFABS.ICECOOLEDFAN.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.ICECOOLEDFAN.NAME"
@@ -7594,6 +7614,36 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICHAMMER.NAME"
 msgid "<link=\"LOGICHAMMER\">Hammer</link>"
 msgstr "<link=\"LOGICHAMMER\">Молот</link>"
 
+#. STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.DESC"
+msgid "Radbolt sensors can send a signal when a Radbolt passes over them."
+msgstr "Сенсоры радболтов могут отправлять сигнал, когда радболт проходит рядом с ними."
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.EFFECT"
+msgid "Sends a <b><style=\"logic_on\">Green Signal</style></b> or a <b><style=\"logic_off\">Red Signal</style></b> when Radbolts detected enters the chosen range."
+msgstr "Отправляет <b><style=\"logic_on\">зеленый</style></b> или <b><style=\"logic_off\">красный сигнал</style></b>, когда количество зарегистрированных радболтов достигает нужных величин."
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.LOGIC_PORT
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.LOGIC_PORT"
+msgid "Detected Radbolts"
+msgstr "Обнаруженные радболты"
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.LOGIC_PORT_ACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.LOGIC_PORT_ACTIVE"
+msgid "Sends a <b><style=\"logic_on\">Green Signal</style></b> if detected Radbolts are within the selected range"
+msgstr "Отправляет <b><style=\"logic_on\">зеленый сигнал</style></b>, когда количество зарегистрированных радболтов находится в пределах заданных величин"
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.LOGIC_PORT_INACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.LOGIC_PORT_INACTIVE"
+msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
+msgstr "В противном случае отправляет <b><style=\"logic_off\">красный сигнал</style></b>"
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.NAME"
+msgid "<link=\"LOGICHEPSENSOR\">Radbolt Sensor</link>"
+msgstr "<link=\"LOGICHEPSENSOR\">Сенсор радболтов</link>"
+
 #. STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDRECEIVER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDRECEIVER.DESC"
 msgid "Receives automation signals from space."
@@ -8761,13 +8811,13 @@ msgstr "Поставляется с несколькими бесплатным�
 
 #. STRINGS.BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.EFFECT"
-msgid "Conducts <link=\"RESEARCH\">Materials Science Research</link> to unlock new technologies.\n\nConsumes Radbolts.\n\nAssigned Duplicants must possess the <link=\"ATOMICRESEARCHER\">Materials Science Research</link> skill."
-msgstr "Проводит <link=\"RESEARCH\">исследование материалов</link>, чтобы открыть новые технологии.\n\nПотребляет радболты.\n\n Назначенные дубликанты должны обладать навыком <link=\"ATOMICRESEARCHER\">исследования материалов</link>."
+msgid "Conducts <link=\"RESEARCHDLC1\">Materials Science Research</link> to unlock new technologies.\n\nConsumes Radbolts.\n\nAssigned Duplicants must possess the <link=\"ATOMICRESEARCH\">Materials Science Research</link> skill."
+msgstr "Проводит <link=\"RESEARCHDLC1\">исследование материалов</link>, чтобы открыть новые технологии.\n\nПотребляет радболты.\n\n Назначенные дубликанты должны обладать навыком <link=\"ATOMICRESEARCH\">исследования материалов</link>."
 
 #. STRINGS.BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.NAME"
-msgid "<link=\"NUCLEARLABORATORY\">Materials Study Terminal</link>"
-msgstr "<link=\"NUCLEARLABORATORY\">Терминал для изучения материалов</link>"
+msgid "<link=\"NUCLEARRESEARCHCENTER\">Materials Study Terminal</link>"
+msgstr "<link=\"NUCLEARRESEARCHCENTER\">Терминал для изучения материалов</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.OBJECTDISPENSER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.OBJECTDISPENSER.DESC"
@@ -8851,8 +8901,8 @@ msgstr "Орбитальные микролаборатории проводят
 
 #. STRINGS.BUILDINGS.PREFABS.ORBITALRESEARCHCENTER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.ORBITALRESEARCHCENTER.EFFECT"
-msgid "Conducts <link=\"RESEARCH\">Interstellar Research</link> to unlock new technologies.\n\nConsumes <link=\"POLYPROPYLENE\">Plastic</link> and <link=\"POWER\">Power</link>.\n\nAssigned Duplicants must possess the <link=\"COSMICRESEARCHER\">Orbital Researcher</link> skill."
-msgstr "Проводит <link=\"RESEARCH\">космические исследования</link> для разблокирования новых технологий.\n\nРасходует <link=\"POLYPROPYLENE\">пластмассу</link> и <link=\"POWER\">энергию</link>.\n\nНазначенные дубликанты должны иметь навык <link=\"COSMICRESEARCHER\">\"Орбитальный исследователь\"</link>."
+msgid "Conducts <link=\"RESEARCHDLC1\">Interstellar Research</link> to unlock new technologies.\n\nConsumes <link=\"POLYPROPYLENE\">Plastic</link> and <link=\"POWER\">Power</link>.\n\nAssigned Duplicants must possess the <link=\"SPACERESEARCH\">Orbital Researcher</link> skill."
+msgstr "Проводит <link=\"RESEARCHDLC1\">космические исследования</link> для разблокирования новых технологий.\n\nРасходует <link=\"POLYPROPYLENE\">пластмассу</link> и <link=\"POWER\">энергию</link>.\n\nНазначенные дубликанты должны иметь навык <link=\"SPACERESEARCH\">\"Орбитальный исследователь\"</link>."
 
 #. STRINGS.BUILDINGS.PREFABS.ORBITALRESEARCHCENTER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.ORBITALRESEARCHCENTER.NAME"
@@ -9241,8 +9291,8 @@ msgstr "За станцией может быть одновременно за�
 
 #. STRINGS.BUILDINGS.PREFABS.POWERCONTROLSTATION.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.POWERCONTROLSTATION.EFFECT"
-msgid "Produces <link=\"POWERSTATIONTOOLS\">Microchip</link> to increase the <link=\"POWER\">Power</link> output of generators.\n\nAssigned Duplicants must possess the <link=\"POWERTECHNICIAN\">Tune Up</link> trait.\n\nThis building is a necessary component of the Power Plant room."
-msgstr "Производит <link=\"POWERSTATIONTOOLS\">микропроцессоры</link>, позволяющие увеличить выработку <link=\"POWER\">энергии</link> генераторами.\n\nНазначенные сюда дубликанты должны обладать характеристикой <link=\"POWERTECHNICIAN\">\"Настройка\"</link>.\n\nЭто строение — обязательная часть электростанции."
+msgid "Produces <link=\"POWERSTATIONTOOLS\">Microchip</link> to increase the <link=\"POWER\">Power</link> output of generators.\n\nAssigned Duplicants must possess the <link=\"TECHNICALS2\">Tune Up</link> trait.\n\nThis building is a necessary component of the Power Plant room."
+msgstr "Производит <link=\"POWERSTATIONTOOLS\">микропроцессоры</link>, позволяющие увеличить выработку <link=\"POWER\">энергии</link> генераторами.\n\nНазначенные сюда дубликанты должны обладать характеристикой <link=\"TECHNICALS2\">\"Настройка\"</link>.\n\nЭто строение — обязательная часть электростанции."
 
 #. STRINGS.BUILDINGS.PREFABS.POWERCONTROLSTATION.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.POWERCONTROLSTATION.NAME"
@@ -9796,8 +9846,8 @@ msgstr "Ухаживайте за существами, чтобы они луч
 
 #. STRINGS.BUILDINGS.PREFABS.RANCHSTATION.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.RANCHSTATION.EFFECT"
-msgid "Allows the assigned <link=\"RANCHER\">Rancher</link> to care for <link=\"CRITTERS\">Critters</link>.\n\nAssigned Duplicants must possess the <link=\"RANCHER\">Critter Wrangling</link> trait.\n\nThis building is a necessary component of the Stable room."
-msgstr "Позволяет назначенному <link=\"RANCHER\">животноводу</link> ухаживать за <link=\"CRITTERS\">существами</link>.\n\nНазначенные сюда дубликанты должны обладать характеристикой <link=\"RANCHER\">\"Опытный ловец\"</link>.\n\nЭто строение — обязательная часть хлева."
+msgid "Allows the assigned <link=\"RANCHER\">Rancher</link> to care for <link=\"CRITTERS\">Critters</link>.\n\nAssigned Duplicants must possess the <link=\"RANCHING1\">Critter Ranching</link> skill.\n\nThis building is a necessary component of the Stable room."
+msgstr "Позволяет назначенному <link=\"RANCHER\">животноводу</link> ухаживать за <link=\"CRITTERS\">существами</link>.\n\nНазначенные сюда дубликанты должны обладать навыком <link=\"RANCHING1\">животноводства</link>.\n\nЭто строение — обязательная часть хлева."
 
 #. STRINGS.BUILDINGS.PREFABS.RANCHSTATION.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.RANCHSTATION.NAME"
@@ -9951,8 +10001,8 @@ msgstr "Кто-то должен щелкать по кнопкам управл
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.EFFECT"
-msgid "Allows Duplicants to use pilot-operated rockets and control access to interior buildings.\n\nAssigned Duplicants must have the <link=\"PILOT\">Rocket Piloting</link> skill."
-msgstr "Позволяет дубликантам использовать ракеты с пилотным управлением и регулировать доступ во внутренние строения.\n\nНазначенные дубликанты должны обладать навыком \"<link=\"PILOT\">пилотирование ракеты</link>\"."
+msgid "Allows Duplicants to use pilot-operated rockets and control access to interior buildings.\n\nAssigned Duplicants must have the <link=\"ROCKETPILOTING1\">Rocket Piloting</link> skill."
+msgstr "Позволяет дубликантам использовать ракеты с пилотным управлением и регулировать доступ во внутренние строения.\n\nНазначенные дубликанты должны обладать навыком \"<link=\"ROCKETPILOTING1\">пилотирование ракеты</link>\"."
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT"
@@ -11216,8 +11266,38 @@ msgstr "Никогда не знаешь, кто ответит с того ко
 
 #. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT"
-msgid "Provides a way for Duplicants to chat with their friends in different locations.\n\nChatting increases Duplicant <link=\"MORALE\">Morale</link>."
-msgstr "Позволяет дубликантам общаться друг с другом через расстояния.\n\nОбщение повышает <link=\"MORALE\">моральный дух</link> дубликантов."
+msgid "Can be used by one Duplicant to chat with themselves or with other Duplicants in different locations.\n\nChatting increases Duplicant <link=\"MORALE\">Morale</link>."
+msgstr "Позволяет одному дубликанту поговорить самому с собой или с дубликантами в других локациях.\n\nОбщение повышает <link=\"MORALE\">моральный дух</link> дубликантов."
+
+#. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_BABBLE
+msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_BABBLE"
+msgid "{attrib}: {amount} (No One)"
+msgstr "{attrib}: {amount} (разговор с собой)"
+
+#. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_BABBLE_TOOLTIP
+msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_BABBLE_TOOLTIP"
+msgid "Duplicants will gain {amount} {attrib} if they chat only with themselves."
+msgstr "Дубликанты получают прибавку {amount} к характеристике {attrib}, если говорят сами с собой."
+
+#. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_CHAT
+msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_CHAT"
+msgid "{attrib}: {amount} (At least one duplicant)"
+msgstr "{attrib}: {amount} (разговор с другим дубликантом)"
+
+#. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_CHAT_TOOLTIP
+msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_CHAT_TOOLTIP"
+msgid "Duplicants will gain {amount} {attrib} if they chat with at least one other Duplicant."
+msgstr "Дубликанты получают прибавку {amount} к характеристике {attrib}, если говорят хотя бы с одним другим дубликантом."
+
+#. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_LONG_DISTANCE
+msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_LONG_DISTANCE"
+msgid "{attrib}: {amount} (At least one duplicant across space)"
+msgstr "{attrib}: {amount} (разговор с другим дубликантом из космоса)"
+
+#. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_LONG_DISTANCE_TOOLTIP
+msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_LONG_DISTANCE_TOOLTIP"
+msgid "Duplicants will gain {amount} {attrib} if they chat with at least one other Duplicant across space."
+msgstr "Дубликанты получают прибавку {amount} к характеристике {attrib}, если говорят хотя бы с одним другим дубликантом в другой части космоса."
 
 #. STRINGS.BUILDINGS.PREFABS.TELEPHONE.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.NAME"
@@ -11261,8 +11341,8 @@ msgstr "Телескопы необходимы для изучения звез
 
 #. STRINGS.BUILDINGS.PREFABS.TELESCOPE.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.TELESCOPE.EFFECT"
-msgid "Maps Starmap destinations.\n\nAssigned Duplicants must possess the <link=\"RESEARCHER\">Field Research</link> skill.\n\nBuilding must be exposed to space to function."
-msgstr "Наносит точки назначения на звездную карту.\n\nНазначенные дубликанты должны обладать навыком <link=\"RESEARCHER\">\"Полевое исследование\"</link>.\n\nДля функционирования зданию требуется доступ к космической среде."
+msgid "Maps Starmap destinations.\n\nAssigned Duplicants must possess the <link=\"RESEARCHING2\">Field Research</link> skill.\n\nBuilding must be exposed to space to function."
+msgstr "Наносит точки назначения на звездную карту.\n\nНазначенные дубликанты должны обладать навыком <link=\"RESEARCHING2\">\"Полевое исследование\"</link>.\n\nДля функционирования зданию требуется доступ к космической среде."
 
 #. STRINGS.BUILDINGS.PREFABS.TELESCOPE.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.TELESCOPE.NAME"
@@ -11526,8 +11606,8 @@ msgstr "Трубы на задней стороне уходят в никуда
 
 #. STRINGS.BUILDINGS.PREFABS.WARPCONDUITRECEIVER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.WARPCONDUITRECEIVER.EFFECT"
-msgid "A machine capable of teleporting <link=\"ELEMENTSLIQUID\">Liquid</link>, <link=\"ELEMENTSSOLID\">Solid</link>, and <link=\"ELEMENTSGAS\">Gas</link> resources to another asteroid.\n\nIt can be activated by a Duplicant with the <link=\"RESEARCHER\">Field Research</link> skill.\n\nThis is the receiving side."
-msgstr "Машина, телепортирующая <link=\"ELEMENTSLIQUID\">жидкие</link>, <link=\"ELEMENTSSOLID\">твердые</link> и <link=\"ELEMENTSGAS\">газовые</link> ресурсы на другой астероид.\n\nЕе может активировать дубликант, обладающий навыком <link=\"RESEARCHER\">Полевое исследование</link>.\n\nЭто принимающая сторона."
+msgid "A machine capable of teleporting <link=\"ELEMENTSLIQUID\">Liquid</link>, <link=\"ELEMENTSSOLID\">Solid</link>, and <link=\"ELEMENTSGAS\">Gas</link> resources to another asteroid.\n\nIt can be activated by a Duplicant with the <link=\"RRESEARCHING2\">Field Research</link> skill.\n\nThis is the receiving side."
+msgstr "Машина, телепортирующая <link=\"ELEMENTSLIQUID\">жидкие</link>, <link=\"ELEMENTSSOLID\">твердые</link> и <link=\"ELEMENTSGAS\">газовые</link> ресурсы на другой астероид.\n\nЕе может активировать дубликант, обладающий навыком <link=\"RRESEARCHING2\">Полевое исследование</link>.\n\nЭто принимающая сторона."
 
 #. STRINGS.BUILDINGS.PREFABS.WARPCONDUITRECEIVER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.WARPCONDUITRECEIVER.NAME"
@@ -11541,8 +11621,8 @@ msgstr "Трубы на задней стороне уходят в никуда
 
 #. STRINGS.BUILDINGS.PREFABS.WARPCONDUITSENDER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.WARPCONDUITSENDER.EFFECT"
-msgid "A machine capable of teleporting <link=\"ELEMENTSLIQUID\">Liquid</link>, <link=\"ELEMENTSSOLID\">Solid</link>, and <link=\"ELEMENTSGAS\">Gas</link> resources to another asteroid.\n\nIt can be activated by a Duplicant with the <link=\"RESEARCHER\">Field Research</link> skill.\n\nThis is the transmitting side."
-msgstr "Машина, телепортирующая <link=\"ELEMENTSLIQUID\">жидкие</link>, <link=\"ELEMENTSSOLID\">твердые</link> и <link=\"ELEMENTSGAS\">газовые</link> ресурсы на другой астероид.\n\nЕе может активировать дубликант, обладающий навыком <link=\"RESEARCHER\">Полевое исследование</link>.\n\nЭто передающая сторона."
+msgid "A machine capable of teleporting <link=\"ELEMENTSLIQUID\">Liquid</link>, <link=\"ELEMENTSSOLID\">Solid</link>, and <link=\"ELEMENTSGAS\">Gas</link> resources to another asteroid.\n\nIt can be activated by a Duplicant with the <link=\"RESEARCHING2\">Field Research</link> skill.\n\nThis is the transmitting side."
+msgstr "Машина, телепортирующая <link=\"ELEMENTSLIQUID\">жидкие</link>, <link=\"ELEMENTSSOLID\">твердые</link> и <link=\"ELEMENTSGAS\">газовые</link> ресурсы на другой астероид.\n\nЕе может активировать дубликант, обладающий навыком <link=\"RESEARCHING2\">Полевое исследование</link>.\n\nЭто передающая сторона."
 
 #. STRINGS.BUILDINGS.PREFABS.WARPCONDUITSENDER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.WARPCONDUITSENDER.NAME"
@@ -13564,6 +13644,11 @@ msgctxt "STRINGS.CODEX.BUDDYBUD.TITLE"
 msgid "Buddy Bud"
 msgstr "Дружок"
 
+#. STRINGS.CODEX.BUILDING_TYPE.INDUSTRIAL_MACHINERY
+msgctxt "STRINGS.CODEX.BUILDING_TYPE.INDUSTRIAL_MACHINERY"
+msgid "Industrial Machinery"
+msgstr "Промышленное оборудование"
+
 #. STRINGS.CODEX.C01_EVIL.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.C01_EVIL.BODY.CONTAINER1"
 msgid "Clearly Nikola is evil. He has some kind of scheme going on that he’s keeping secret from the rest of Gravitas and I haven’t been able to crack what that is because it’s offline and he’s always at his computer. Whenever I ask him what he’s up to he says I wouldn’t understand. Pfft! We both went through the same particle physics classes, buddy. Just because you mash a keyboard and I adjust knobs does not mean I don’t know what the Time Containment Field does.\n\nAnd then today I dropped a wrench and Nikola nearly jumped out of his skin! He spun around and screamed at me never to do that again. And then when I said, \"Geez, it’s not the end of the world,\" he was like, \"Yeah, it’s not like the world will blow up if I get this wrong\" really sarcastic like.\n\nWhich technically is true. If the Time Containment Field were to break down the Temporal Bow could theoretically blow up the world but that’s why there are safety systems in place. And safety systems on safety systems. And then safety systems on top of that. But then he built all the safety systems so if he wanted to…\n------------------\n"
@@ -14059,6 +14144,11 @@ msgctxt "STRINGS.CODEX.HEADERS.BUILDINGREQUIREMENTS"
 msgid "Requirements"
 msgstr "Требования"
 
+#. STRINGS.CODEX.HEADERS.BUILDINGTYPE
+msgctxt "STRINGS.CODEX.HEADERS.BUILDINGTYPE"
+msgid "Room Requirements Class"
+msgstr "Тип по требованиям к комнате"
+
 #. STRINGS.CODEX.HEADERS.COMFORTRANGE
 msgctxt "STRINGS.CODEX.HEADERS.COMFORTRANGE"
 msgid "Ideal Temperatures"
@@ -14078,6 +14168,16 @@ msgstr "Требуются дополнительные исследования
 msgctxt "STRINGS.CODEX.HEADERS.DIET"
 msgid "Diet"
 msgstr "Питание"
+
+#. STRINGS.CODEX.HEADERS.ELEMENTCONSUMEDBY
+msgctxt "STRINGS.CODEX.HEADERS.ELEMENTCONSUMEDBY"
+msgid "Consumed By"
+msgstr "Потребитель:"
+
+#. STRINGS.CODEX.HEADERS.ELEMENTPRODUCEDBY
+msgctxt "STRINGS.CODEX.HEADERS.ELEMENTPRODUCEDBY"
+msgid "Produced By"
+msgstr "Производитель:"
 
 #. STRINGS.CODEX.HEADERS.ELEMENTTRANSITIONS
 msgctxt "STRINGS.CODEX.HEADERS.ELEMENTTRANSITIONS"
@@ -15236,13 +15336,48 @@ msgstr "Выбранное задание по исследованию буде
 
 #. STRINGS.CODEX.RESEARCH.PARAGRAPH_3
 msgctxt "STRINGS.CODEX.RESEARCH.PARAGRAPH_3"
-msgid "Advanced research tasks require special research stations to generate the proper kind of research points. These research stations often consume more advanced resources.\n\nUsing higher level research stations also requires Duplicants to have learned higher level research <link=\"ROLES\">skills</link>.\n\nNovice Research is performed at the <link=\"RESEARCHCENTER\">Research Station</link>\nAdvanced Research is performed at the <link=\"ADVANCEDRESEARCHCENTER\">Super Computer</link>\nInterstellar Research is performed at the <link=\"COSMICRESEARCHCENTER\">Virtual Planetarium</link>\nMaterials Science Research is performed at the <link=\"NUCLEARLABORATORY\">Materials Study Terminal</link>\n\n"
-msgstr "Для заданий, связанных с углубленными исследованиями, требуются специальные исследовательские станции, которые производят очки исследования нужного вида. Эти исследовательские станции зачастую расходуют более ценные ресурсы.\n\nДля их использования дубликанты должны овладеть <link=\"ROLES\">навыками</link> исследования более высокого уровня.\n\nБазовые исследования проводятся на <link=\"RESEARCHCENTER\">исследовательских станциях</link>.\nУглубленные исследования — на <link=\"ADVANCEDRESEARCHCENTER\">суперкомпьютере</link>.\nКосмические — в <link=\"COSMICRESEARCHCENTER\">виртуальном планетарии</link>.\nИзучение материалов — в <link=\"NUCLEARLABORATORY\">терминале для изучения материалов</link>.\n\n"
+msgid "Advanced research tasks require special research stations to generate the proper kind of research points. These research stations often consume more advanced resources.\n\nUsing higher level research stations also requires Duplicants to have learned higher level research <link=\"ROLES\">skills</link>.\n\nNovice Research is performed at the <link=\"RESEARCHCENTER\">Research Station</link>\nAdvanced Research is performed at the <link=\"ADVANCEDRESEARCHCENTER\">Super Computer</link>\nInterstellar Research is performed at the <link=\"COSMICRESEARCHCENTER\">Virtual Planetarium</link>\n\n"
+msgstr "Для заданий, связанных с углубленными исследованиями, требуются специальные исследовательские станции, которые производят очки исследования нужного вида. Эти исследовательские станции зачастую расходуют более ценные ресурсы.\n\nДля их использования дубликанты должны овладеть <link=\"ROLES\">навыками</link> исследования более высокого уровня.\n\nБазовые исследования проводятся на <link=\"RESEARCHCENTER\">исследовательских станциях</link>.\nУглубленные исследования — на <link=\"ADVANCEDRESEARCHCENTER\">суперкомпьютере</link>.\nКосмические — в <link=\"COSMICRESEARCHCENTER\">виртуальном планетарии</link>.\n\n"
 
 #. STRINGS.CODEX.RESEARCH.TITLE
 msgctxt "STRINGS.CODEX.RESEARCH.TITLE"
 msgid "<link=\"RESEARCH\">Research</link>"
 msgstr "<link=\"RESEARCH\">Исследования</link>"
+
+#. STRINGS.CODEX.RESEARCHDLC1.HEADER_1
+msgctxt "STRINGS.CODEX.RESEARCHDLC1.HEADER_1"
+msgid "Research"
+msgstr "Исследование"
+
+#. STRINGS.CODEX.RESEARCHDLC1.HEADER_2
+msgctxt "STRINGS.CODEX.RESEARCHDLC1.HEADER_2"
+msgid "Research Tasks"
+msgstr "Поручения по исследованию"
+
+#. STRINGS.CODEX.RESEARCHDLC1.HEADER_3
+msgctxt "STRINGS.CODEX.RESEARCHDLC1.HEADER_3"
+msgid "Research Types"
+msgstr "Виды исследования:"
+
+#. STRINGS.CODEX.RESEARCHDLC1.PARAGRAPH_1
+msgctxt "STRINGS.CODEX.RESEARCHDLC1.PARAGRAPH_1"
+msgid "Doing research unlocks new types of buildings for the colony. Duplicants can perform research at the <link=\"RESEARCHCENTER\">Research Station</link>.\n\n"
+msgstr "Проводимые исследования позволяют разблокировать новые типы строений для колонии. Дубликанты могут проводить исследования на <link=\"RESEARCHCENTER\">исследовательской станции</link>.\n\n"
+
+#. STRINGS.CODEX.RESEARCHDLC1.PARAGRAPH_2
+msgctxt "STRINGS.CODEX.RESEARCHDLC1.PARAGRAPH_2"
+msgid "A selected research task is completed once enough research points have been generated at the colonies research stations. Duplicants with high 'Science' attribute scores will generate research points faster than Duplicants with lower scores.\n\n"
+msgstr "Выбранное задание по исследованию будет завершено, когда на исследовательских станциях колонии будет произведено достаточно очков исследования. Чем выше характеристика исследования дубликанта, тем быстрее он производит эти очки.\n\n"
+
+#. STRINGS.CODEX.RESEARCHDLC1.PARAGRAPH_3
+msgctxt "STRINGS.CODEX.RESEARCHDLC1.PARAGRAPH_3"
+msgid "Advanced research tasks require special research stations to generate the proper kind of research points. These research stations often consume more advanced resources.\n\nUsing higher level research stations also requires Duplicants to have learned higher level research <link=\"ROLES\">skills</link>.\n\nNovice Research is performed at the <link=\"RESEARCHCENTER\">Research Station</link>\nAdvanced Research is performed at the <link=\"ADVANCEDRESEARCHCENTER\">Super Computer</link>\nInterstellar Research is performed at the <link=\"ORBITALRESEARCHCENTER\">Orbital Microlab</link>\nMaterials Science Research is performed at the <link=\"NUCLEARRESEARCHCENTER\">Materials Study Terminal</link>\n\n"
+msgstr "Для заданий, связанных с углубленными исследованиями, требуются специальные исследовательские станции, которые производят очки исследования нужного вида. Эти исследовательские станции зачастую расходуют более ценные ресурсы.\n\nДля их использования дубликанты должны овладеть <link=\"ROLES\">навыками</link> исследования более высокого уровня.\n\nБазовые исследования проводятся на <link=\"RESEARCHCENTER\">исследовательских станциях</link>.\nУглубленные исследования — на <link=\"ADVANCEDRESEARCHCENTER\">суперкомпьютере</link>.\nКосмические — в <link=\"ORBITALRESEARCHCENTER\">орбитальной микролаборатории</link>.\nИзучение материалов — в <link=\"NUCLEARRESEARCHCENTER\">терминале для изучения материалов</link>.\n\n"
+
+#. STRINGS.CODEX.RESEARCHDLC1.TITLE
+msgctxt "STRINGS.CODEX.RESEARCHDLC1.TITLE"
+msgid "<link=\"RESEARCHDLC1\">Research</link>"
+msgstr "<link=\"RESEARCHDLC1\">Исследования</link>"
 
 #. STRINGS.CODEX.ROBOT_DESCRIPTORS.BATTERY.CAPACITY
 msgctxt "STRINGS.CODEX.ROBOT_DESCRIPTORS.BATTERY.CAPACITY"
@@ -17521,7 +17656,7 @@ msgstr "<link=\"DRECKO\">Детеныш дреккона</link>"
 
 #. STRINGS.CREATURES.SPECIES.DRECKO.DESC
 msgctxt "STRINGS.CREATURES.SPECIES.DRECKO.DESC"
-msgid "Dreckos are nonhostile critters that graze on <link=\"SPICEVINE\">Pincha Pepper</link>, <link=\"SWAMPLILY\">Balm Lily</link> or <link=\"BASICSINGLEHARVESTPLANT\">Mealwood Plants</link>.\n\nTheir backsides are covered in thick woolly fibers that only grow in <link=\"HYDROGEN\">Hydrogen</link> climates."
+msgid "Dreckos are nonhostile critters that graze on <link=\"SPICEVINE\">Pincha Pepperplants</link>, <link=\"SWAMPLILY\">Balm Lily</link> or <link=\"BASICSINGLEHARVESTPLANT\">Mealwood Plants</link>.\n\nTheir backsides are covered in thick woolly fibers that only grow in <link=\"HYDROGEN\">Hydrogen</link> climates."
 msgstr "Дрекконы — мирные создания, которые предпочитают обгладывать <link=\"SPICEVINE\">колючий перцовый орешник</link>, <link=\"SWAMPLILY\">бальзамилии</link> и <link=\"BASICSINGLEHARVESTPLANT\">пищевые деревья</link>.\n\nИх спины покрыты толстыми ворсистыми волокнами, которые растут только при наличии в атмосфере <link=\"HYDROGEN\">водорода</link>."
 
 #. STRINGS.CREATURES.SPECIES.DRECKO.EGG_NAME
@@ -23511,8 +23646,8 @@ msgstr "Поет яйцу"
 
 #. STRINGS.DUPLICANTS.CHORES.SINGTOEGG.TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.CHORES.SINGTOEGG.TOOLTIP"
-msgid "A gentle lullaby from a supportive Duplicant encourages developing <style=\"KKeyword\">Eggs</style>\n\nIncreases <style=\"KKeyword\">Incubation Rate</style>\n\nDuplicants must possess the <link=\"RANCHER\">Critter Ranching I</link> Skill to sing to an egg"
-msgstr "Нежная колыбельная заботливого дубликанта поможет <style=\"KKeyword\">яйцам</style> развиваться\n\nУвеличивает скорость <style=\"KKeyword\">инкубации</style>\n\nЧтобы петь яйцам, надо обладать навыком <link=\"RANCHER\">животноводства I</link>"
+msgid "A gentle lullaby from a supportive Duplicant encourages developing <style=\"KKeyword\">Eggs</style>\n\nIncreases <style=\"KKeyword\">Incubation Rate</style>\n\nDuplicants must possess the <link=\"RANCHING1\">Critter Ranching I</link> Skill to sing to an egg"
+msgstr "Нежная колыбельная заботливого дубликанта поможет <style=\"KKeyword\">яйцам</style> развиваться\n\nУвеличивает скорость <style=\"KKeyword\">инкубации</style>\n\nЧтобы петь яйцам, надо обладать навыком <link=\"RANCHING1\">животноводства I</link>"
 
 #. STRINGS.DUPLICANTS.CHORES.SLEEP.NAME
 msgctxt "STRINGS.DUPLICANTS.CHORES.SLEEP.NAME"
@@ -25859,6 +25994,16 @@ msgctxt "STRINGS.DUPLICANTS.MODIFIERS.LIGHTWOUNDS.TOOLTIP"
 msgid "This Duplicant sustained injuries that are a bit uncomfortable"
 msgstr "Этот дубликант немного пострадал и чувствует себя некомфортно"
 
+#. STRINGS.DUPLICANTS.MODIFIERS.LONER.NAME
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.LONER.NAME"
+msgid "Alone"
+msgstr "Наедине с собой"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.LONER.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.LONER.TOOLTIP"
+msgid "This Duplicant is more feeling focused now that they're alone"
+msgstr "Этот дубликант чувствует себя более сосредоточенным, оставшись наедине с собой"
+
 #. STRINGS.DUPLICANTS.MODIFIERS.LOWOXYGEN.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.LOWOXYGEN.NAME"
 msgid "Low Oxygen"
@@ -26669,6 +26814,16 @@ msgctxt "STRINGS.DUPLICANTS.MODIFIERS.STALEFOOD.TOOLTIP"
 msgid "This Duplicant is in a bad mood from having to eat stale <style=\"KKeyword\">Food</style>"
 msgstr "Этот дубликант в плохом настроении, потому что ему пришлось есть несвежую <style=\"KKeyword\">еду</style>"
 
+#. STRINGS.DUPLICANTS.MODIFIERS.STARRYEYED.NAME
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.STARRYEYED.NAME"
+msgid "Starry Eyed"
+msgstr "Звездолюб"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.STARRYEYED.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.STARRYEYED.TOOLTIP"
+msgid "This Duplicant loves being in space!"
+msgstr "Этот дубликант обожает находиться в космосе!"
+
 #. STRINGS.DUPLICANTS.MODIFIERS.STARVING.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.STARVING.NAME"
 msgid "Starving"
@@ -26784,6 +26939,16 @@ msgctxt "STRINGS.DUPLICANTS.MODIFIERS.TELEPHONECHAT.TOOLTIP"
 msgid "This Duplicant chatted on the phone with at least one other Duplicant\n\nLeisure activities increase Duplicants' <style=\"KKeyword\">Morale</style>"
 msgstr "Этот дубликант поболтал как минимум с одним другом\n\nДосуговая деятельность поднимает уровень <style=\"KKeyword\">морального духа</style> дубликантов"
 
+#. STRINGS.DUPLICANTS.MODIFIERS.TELEPHONELONGDISTANCE.NAME
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.TELEPHONELONGDISTANCE.NAME"
+msgid "Sociable"
+msgstr "Общительность"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.TELEPHONELONGDISTANCE.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.TELEPHONELONGDISTANCE.TOOLTIP"
+msgid "This Duplicant is feeling sociable after chatting on the phone with someone across space\n\nLeisure activities increase Duplicants' <style=\"KKeyword\">Morale</style>"
+msgstr "Этот дубликант чувствует себя более общительным, после того как поболтал по телефону с кем-то из космоса\n\nДосуговая деятельность поднимает уровень <style=\"KKeyword\">морального духа</style> дубликантов"
+
 #. STRINGS.DUPLICANTS.MODIFIERS.TEMPEXCHANGE.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.TEMPEXCHANGE.NAME"
 msgid "Environmental Exchange"
@@ -26801,13 +26966,13 @@ msgstr "Этот дубликант прошлой ночью глаз не со
 
 #. STRINGS.DUPLICANTS.MODIFIERS.THRIVER.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.THRIVER.NAME"
-msgid "Duress to Impress"
-msgstr "Жизнь бьет ключом"
+msgid "Clutchy"
+msgstr "На пределе сил"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.THRIVER.TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.THRIVER.TOOLTIP"
-msgid "This Duplicant kicks into hyperdrive when <style=\"KKeyword\">Stressed</style>"
-msgstr "Этот дубликант становится гиперактивным, когда находится в <style=\"KKeyword\">стрессе</style>"
+msgid "This Duplicant is <style=\"KKeyword\">Stressed<style=\"KKeyword\"> and has kicked into hyperdrive"
+msgstr "Этот дубликант испытывает <style=\"KKeyword\">стресс<style=\"KKeyword\"> и поэтому действует в сверхскоростном режиме"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.TIME_REMAINING
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.TIME_REMAINING"
@@ -27566,8 +27731,8 @@ msgstr "Позволяет создавать относительно прив�
 
 #. STRINGS.DUPLICANTS.ROLES.ARTIST.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.ARTIST.NAME"
-msgid "Aesthetic Design"
-msgstr "Эстетический дизайн"
+msgid "<link=\"ARTING2\">Aesthetic Design</link>"
+msgstr "<link=\"ARTING2\">Эстетический дизайн</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.ASTRONAUT.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.ASTRONAUT.DESCRIPTION"
@@ -27576,8 +27741,8 @@ msgstr "Увеличивает скорость завершения косми�
 
 #. STRINGS.DUPLICANTS.ROLES.ASTRONAUT.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.ASTRONAUT.NAME"
-msgid "<link=\"ASTRONAUT\">Rocket Navigation</link>"
-msgstr "<link=\"ASTRONAUT\">Ракетная навигация</link>"
+msgid "<link=\"ASTRONAUTING2\">Rocket Navigation</link>"
+msgstr "<link=\"ASTRONAUTING2\">Ракетная навигация</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.ASTRONAUTTRAINEE.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.ASTRONAUTTRAINEE.DESCRIPTION"
@@ -27586,8 +27751,8 @@ msgstr "Позволяет дубликанту работать с <link=\"COMM
 
 #. STRINGS.DUPLICANTS.ROLES.ASTRONAUTTRAINEE.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.ASTRONAUTTRAINEE.NAME"
-msgid "<link=\"ASTRONAUTTRAINEE\">Rocket Piloting</link>"
-msgstr "<link=\"ASTRONAUTTRAINEE\">Пилотирование ракеты</link>"
+msgid "<link=\"ASTRONAUTING1\">Rocket Piloting</link>"
+msgstr "<link=\"ASTRONAUTING1\">Пилотирование ракеты</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.BUILDER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.BUILDER.DESCRIPTION"
@@ -27596,8 +27761,8 @@ msgstr "Значительно увеличивает скорость стро�
 
 #. STRINGS.DUPLICANTS.ROLES.BUILDER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.BUILDER.NAME"
-msgid "<link=\"BUILDER\">Improved Construction II</link>"
-msgstr "<link=\"BUILDER\">Улучшенное строительство II</link>"
+msgid "<link=\"BUILDING2\">Improved Construction II</link>"
+msgstr "<link=\"BUILDING2\">Улучшенное строительство II</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.COOK.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.COOK.DESCRIPTION"
@@ -27606,8 +27771,8 @@ msgstr "Увеличивает у дубликанта скорость гото
 
 #. STRINGS.DUPLICANTS.ROLES.COOK.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.COOK.NAME"
-msgid "<link=\"COOK\">Grilling II</link>"
-msgstr "<link=\"COOK\">Гриль II</link>"
+msgid "<link=\"COOKING2\">Grilling II</link>"
+msgstr "<link=\"COOKING2\">Гриль II</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.FARMER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.FARMER.DESCRIPTION"
@@ -27616,8 +27781,8 @@ msgstr "Позволяет ухаживать за <style=\"KKeyword\">раст�
 
 #. STRINGS.DUPLICANTS.ROLES.FARMER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.FARMER.NAME"
-msgid "<link=\"FARMER\">Crop Tending</link>"
-msgstr "<link=\"FARMER\">Уход за растениями</link>"
+msgid "<link=\"FARMING2\">Crop Tending</link>"
+msgstr "<link=\"FARMING2\">Уход за растениями</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.GROUPS.APTITUDE_DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.GROUPS.APTITUDE_DESCRIPTION"
@@ -27641,8 +27806,8 @@ msgstr "Незначительный бонус к физической силе
 
 #. STRINGS.DUPLICANTS.ROLES.HANDYMAN.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.HANDYMAN.NAME"
-msgid "<link=\"HANDYMAN\">Improved Strength</link>"
-msgstr "<link=\"HANDYMAN\">Улучшенная сила</link>"
+msgid "<link=\"BASEKEEPING1\">Improved Strength</link>"
+msgstr "<link=\"BASEKEEPING1\">Улучшенная сила</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.HAULER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.HAULER.DESCRIPTION"
@@ -27651,8 +27816,8 @@ msgstr "Незначительно увеличивает силу дублик�
 
 #. STRINGS.DUPLICANTS.ROLES.HAULER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.HAULER.NAME"
-msgid "<link=\"HAULER\">Improved Carrying I</link>"
-msgstr "<link=\"HAULER\">Улучшенная переноска I</link>"
+msgid "<link=\"HAULING1\">Improved Carrying I</link>"
+msgstr "<link=\"HAULING1\">Улучшенная переноска I</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_ARTIST.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_ARTIST.DESCRIPTION"
@@ -27661,8 +27826,8 @@ msgstr "Обучает базовым художественным навыка�
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_ARTIST.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_ARTIST.NAME"
-msgid "<link=\"JUNIORARTIST\">Art Fundamentals</link>"
-msgstr "<link=\"JUNIORARTIST\">Основы искусства</link>"
+msgid "<link=\"ARTING1\">Art Fundamentals</link>"
+msgstr "<link=\"ARTING1\">Основы искусства</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_BUILDER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_BUILDER.DESCRIPTION"
@@ -27671,8 +27836,8 @@ msgstr "Незначительно увеличивает скорость ст�
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_BUILDER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_BUILDER.NAME"
-msgid "<link=\"JUNIORBUILDER\">Improved Construction I</link>"
-msgstr "<link=\"JUNIORBUILDER\">Улучшенное строительство I</link>"
+msgid "<link=\"BUILDING1\">Improved Construction I</link>"
+msgstr "<link=\"BUILDING1\">Улучшенное строительство I</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_COOK.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_COOK.DESCRIPTION"
@@ -27681,8 +27846,8 @@ msgstr "Позволяет дубликантам готовить на <link=\"
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_COOK.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_COOK.NAME"
-msgid "<link=\"JUNIORCOOK\">Grilling</link>"
-msgstr "<link=\"JUNIORCOOK\">Гриль</link>"
+msgid "<link=\"COOKING1\">Grilling</link>"
+msgstr "<link=\"COOKING1\">Гриль</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_FARMER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_FARMER.DESCRIPTION"
@@ -27691,8 +27856,8 @@ msgstr "Незначительно улучшает навыки земледе�
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_FARMER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_FARMER.NAME"
-msgid "<link=\"JUNIORFARMER\">Improved Farming I</link>"
-msgstr "<link=\"JUNIORFARMER\">Улучшенное земледелие I</link>"
+msgid "<link=\"FARMING1\">Improved Farming I</link>"
+msgstr "<link=\"FARMING1\">Улучшенное земледелие I</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_MEDIC.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_MEDIC.DESCRIPTION"
@@ -27701,8 +27866,8 @@ msgstr "Позволяет дубликантам создавать лекар�
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_MEDIC.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_MEDIC.NAME"
-msgid "<link=\"MEDIC\">Medicine Compounding</link>"
-msgstr "<link=\"MEDIC\">Создание лекарств</link>"
+msgid "<link=\"MEDICINE1\">Medicine Compounding</link>"
+msgstr "<link=\"MEDICINE1\">Создание лекарств</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_MINER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_MINER.DESCRIPTION"
@@ -27711,8 +27876,8 @@ msgstr "Позволяет добывать <style=\"KKeyword\">очень тв�
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_MINER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_MINER.NAME"
-msgid "<link=\"JUNIORMINER\">Hard Digging</link>"
-msgstr "<link=\"JUNIORMINER\">Улучшенное рытье</link>"
+msgid "<link=\"MINING1\">Hard Digging</link>"
+msgstr "<link=\"MINING1\">Улучшенное рытье</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_RESEARCHER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_RESEARCHER.DESCRIPTION"
@@ -27721,8 +27886,8 @@ msgstr "Позволяет дубликантам проводить иссле�
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_RESEARCHER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_RESEARCHER.NAME"
-msgid "<link=\"JUNIORRESEARCHER\">Advanced Research</link>"
-msgstr "<link=\"JUNIORRESEARCHER\">Углубленное исследование</link>"
+msgid "<link=\"RESEARCHING1\">Advanced Research</link>"
+msgstr "<link=\"RESEARCHING1\">Углубленное исследование</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.MACHINE_TECHNICIAN.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.MACHINE_TECHNICIAN.DESCRIPTION"
@@ -27731,8 +27896,8 @@ msgstr "Незначительно ускоряет скорость работ�
 
 #. STRINGS.DUPLICANTS.ROLES.MACHINE_TECHNICIAN.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.MACHINE_TECHNICIAN.NAME"
-msgid "<link=\"MACHINETECHNICIAN\">Improved Tinkering</link>"
-msgstr "<link=\"MACHINETECHNICIAN\">Улучшенная работа с техникой</link>"
+msgid "<link=\"TECHNICALS1\">Improved Tinkering</link>"
+msgstr "<link=\"TECHNICALS1\">Улучшенная работа с техникой</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.MASTER_ARTIST.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.MASTER_ARTIST.DESCRIPTION"
@@ -27741,8 +27906,8 @@ msgstr "Позволяет создавать произведения иску�
 
 #. STRINGS.DUPLICANTS.ROLES.MASTER_ARTIST.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.MASTER_ARTIST.NAME"
-msgid "<link=\"MASTERARTIST\">Masterworks</link>"
-msgstr "<link=\"MASTERARTIST\">Гениальное искусство</link>"
+msgid "<link=\"ARTING3\">Masterworks</link>"
+msgstr "<link=\"ARTING3\">Гениальное искусство</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.MASTER_MINER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.MASTER_MINER.DESCRIPTION"
@@ -27751,8 +27916,8 @@ msgstr "Позволяет добывать опасные материалы, �
 
 #. STRINGS.DUPLICANTS.ROLES.MASTER_MINER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.MASTER_MINER.NAME"
-msgid "<link=\"MASTERMINER\">Hazmat Digging</link>"
-msgstr "<link=\"MASTERMINER\">Рытье опасных материалов</link>"
+msgid "<link=\"MINING4\">Hazmat Digging</link>"
+msgstr "<link=\"MINING4\">Рытье опасных материалов</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.MATERIALS_MANAGER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.MATERIALS_MANAGER.DESCRIPTION"
@@ -27761,8 +27926,8 @@ msgstr "Усиливает дубликанта и позволяет ему п�
 
 #. STRINGS.DUPLICANTS.ROLES.MATERIALS_MANAGER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.MATERIALS_MANAGER.NAME"
-msgid "<link=\"MATERIALSMANAGER\">Improved Carrying II</link>"
-msgstr "<link=\"MATERIALSMANAGER\">Улучшенная переноска II</link>"
+msgid "<link=\"HAULING2\">Improved Carrying II</link>"
+msgstr "<link=\"HAULING2\">Улучшенная переноска II</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.MECHATRONIC_ENGINEER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.MECHATRONIC_ENGINEER.DESCRIPTION"
@@ -27771,8 +27936,8 @@ msgstr "Позволяет сооружать и обслуживать <link=\"
 
 #. STRINGS.DUPLICANTS.ROLES.MECHATRONIC_ENGINEER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.MECHATRONIC_ENGINEER.NAME"
-msgid "<link=\"MECHATRONICENGINEER\">Mechatronics Engineering</link>"
-msgstr "<link=\"MECHATRONICENGINEER\">Мехатронная инженерия</link>"
+msgid "<link=\"ENGINEERING1\">Mechatronics Engineering</link>"
+msgstr "<link=\"ENGINEERING1\">Мехатронная инженерия</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.MEDIC.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.MEDIC.DESCRIPTION"
@@ -27781,8 +27946,8 @@ msgstr "Учит дубликантов давать лекарства в <link
 
 #. STRINGS.DUPLICANTS.ROLES.MEDIC.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.MEDIC.NAME"
-msgid "<link=\"MEDIC\">Bedside Manner</link>"
-msgstr "<link=\"MEDIC\">Уход за больными</link>"
+msgid "<link=\"MEDICINE2\">Bedside Manner</link>"
+msgstr "<link=\"MEDICINE2\">Уход за больными</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.MINER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.MINER.DESCRIPTION"
@@ -27791,8 +27956,8 @@ msgstr "Позволяет добывать <link=\"KATAIRITE\">бездноли
 
 #. STRINGS.DUPLICANTS.ROLES.MINER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.MINER.NAME"
-msgid "<link=\"MINER\">Superhard Digging</link>"
-msgstr "<link=\"MINER\">Суперулучшенное рытье</link>"
+msgid "<link=\"MINING2\">Superhard Digging</link>"
+msgstr "<link=\"MINING2\">Суперулучшенное рытье</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.NO_ROLE.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.NO_ROLE.DESCRIPTION"
@@ -27806,13 +27971,13 @@ msgstr "<link=\"NOROLE\">Безработный</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.NUCLEAR_RESEARCHER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.NUCLEAR_RESEARCHER.DESCRIPTION"
-msgid "Enables Duplicants to study matter using the <link=\"NUCLEARLABORATORY\">Materials Study Terminal</link>"
-msgstr "Позволяет дубликантам исследовать материалы с помощью <link=\"NUCLEARLABORATORY\">терминала для изучения материалов</link>."
+msgid "Enables Duplicants to study matter using the <link=\"NUCLEARRESEARCHCENTER\">Materials Study Terminal</link>"
+msgstr "Позволяет дубликантам исследовать материалы с помощью <link=\"NUCLEARRESEARCHCENTER\">терминала для изучения материалов</link>."
 
 #. STRINGS.DUPLICANTS.ROLES.NUCLEAR_RESEARCHER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.NUCLEAR_RESEARCHER.NAME"
-msgid "<link=\"NUCLEARRESEARCHER\">Materials Science Research</link>"
-msgstr "<link=\"NUCLEARRESEARCHER\">Исследование материалов</link>"
+msgid "<link=\"ATOMICRESEARCH\">Materials Science Research</link>"
+msgstr "<link=\"ATOMICRESEARCH\">Исследование материалов</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.OIL_TECHNICIAN.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.OIL_TECHNICIAN.DESCRIPTION"
@@ -27831,8 +27996,8 @@ msgstr "Позволяет дубликанту опустошать <style=\"KK
 
 #. STRINGS.DUPLICANTS.ROLES.PLUMBER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.PLUMBER.NAME"
-msgid "<link=\"PLUMBER\">Plumbing</link>"
-msgstr "<link=\"PLUMBER\">Водопровод</link>"
+msgid "<link=\"BASEKEEPING2\">Plumbing</link>"
+msgstr "<link=\"BASEKEEPING2\">Водопровод</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.POWER_TECHNICIAN.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.POWER_TECHNICIAN.DESCRIPTION"
@@ -27841,8 +28006,8 @@ msgstr "Позволяет <style=\"KKeyword\">отлаживать</style> ге
 
 #. STRINGS.DUPLICANTS.ROLES.POWER_TECHNICIAN.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.POWER_TECHNICIAN.NAME"
-msgid "<link=\"POWERTECHNICIAN\">Electrical Engineering</link>"
-msgstr "<link=\"POWERTECHNICIAN\">Электрическая инженерия</link>"
+msgid "<link=\"TECHNICALS2\">Electrical Engineering</link>"
+msgstr "<link=\"TECHNICALS2\">Электрическая инженерия</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.RANCHER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.RANCHER.DESCRIPTION"
@@ -27851,8 +28016,8 @@ msgstr "Позволяет дубликанту заниматься уходо�
 
 #. STRINGS.DUPLICANTS.ROLES.RANCHER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.RANCHER.NAME"
-msgid "<link=\"RANCHER\">Critter Ranching I</link>"
-msgstr "<link=\"RANCHER\">Животноводство I</link>"
+msgid "<link=\"RANCHING1\">Critter Ranching I</link>"
+msgstr "<link=\"RANCHING1\">Животноводство I</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.RESEARCHER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.RESEARCHER.DESCRIPTION"
@@ -27861,8 +28026,8 @@ msgstr "Дубликанты могут исследовать <style=\"KKeyword
 
 #. STRINGS.DUPLICANTS.ROLES.RESEARCHER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.RESEARCHER.NAME"
-msgid "<link=\"RESEARCHER\">Field Research</link>"
-msgstr "<link=\"RESEARCHER\">Полевое исследование</link>"
+msgid "<link=\"RESEARCHING2\">Field Research</link>"
+msgstr "<link=\"RESEARCHING2\">Полевое исследование</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.ROCKETPILOT.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.ROCKETPILOT.DESCRIPTION"
@@ -27871,8 +28036,8 @@ msgstr "Позволяет дубликанту работать на <link=\"RO
 
 #. STRINGS.DUPLICANTS.ROLES.ROCKETPILOT.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.ROCKETPILOT.NAME"
-msgid "<link=\"PILOT\">Rocket Piloting</link>"
-msgstr "<link=\"PILOT\">Пилотирование ракеты</link>"
+msgid "<link=\"ROCKETPILOTING1\">Rocket Piloting</link>"
+msgstr "<link=\"ROCKETPILOTING1\">Пилотирование ракеты</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_BUILDER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_BUILDER.DESCRIPTION"
@@ -27881,8 +28046,8 @@ msgstr "Позволяет дубликанту разрушать здания 
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_BUILDER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_BUILDER.NAME"
-msgid "<link=\"SENIORBUILDER\">Demolition</link>"
-msgstr "<link=\"SENIORBUILDER\">Снос</link>"
+msgid "<link=\"BUILDING3\">Demolition</link>"
+msgstr "<link=\"BUILDING3\">Снос</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_FARMER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_FARMER.DESCRIPTION"
@@ -27891,8 +28056,8 @@ msgstr "Значительно увеличивает навыки землед�
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_FARMER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_FARMER.NAME"
-msgid "<link=\"SENIORFARMER\">Improved Farming II</link>"
-msgstr "<link=\"SENIORFARMER\">Улучшенное земледелие II</link>"
+msgid "<link=\"FARMING3\">Improved Farming II</link>"
+msgstr "<link=\"FARMING3\">Улучшенное земледелие II</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_MEDIC.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_MEDIC.DESCRIPTION"
@@ -27901,8 +28066,8 @@ msgstr "Обучает дубликантов управлять <link=\"ADVANCE
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_MEDIC.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_MEDIC.NAME"
-msgid "<link=\"MEDIC\">Advanced Medical Care</link>"
-msgstr "<link=\"MEDIC\">Улучшенная медицинская помощь</link>"
+msgid "<link=\"MEDICINE3\">Advanced Medical Care</link>"
+msgstr "<link=\"MEDICINE3\">Улучшенная медицинская помощь</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_MINER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_MINER.DESCRIPTION"
@@ -27911,8 +28076,8 @@ msgstr "Позволяет добыть <style=\"KKeyword\">почти непр�
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_MINER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_MINER.NAME"
-msgid "<link=\"SENIORMINER\">Super-Duperhard Digging</link>"
-msgstr "<link=\"SENIORMINER\">Супер-пупер-улучшенное рытье</link>"
+msgid "<link=\"MINING3\">Super-Duperhard Digging</link>"
+msgstr "<link=\"MINING3\">Супер-пупер-улучшенное рытье</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_RANCHER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_RANCHER.DESCRIPTION"
@@ -27921,8 +28086,8 @@ msgstr "Улучшает навыки <style=\"KKeyword\">животноводс
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_RANCHER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_RANCHER.NAME"
-msgid "<link=\"SENIORRANCHER\">Critter Ranching II</link>"
-msgstr "<link=\"SENIORRANCHER\">Животноводство II</link>"
+msgid "<link=\"RANCHING2\">Critter Ranching II</link>"
+msgstr "<link=\"RANCHING2\">Животноводство II</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_RESEARCHER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_RESEARCHER.DESCRIPTION"
@@ -27931,8 +28096,8 @@ msgstr "Позволяет дубликантам исследовать кос�
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_RESEARCHER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_RESEARCHER.NAME"
-msgid "<link=\"SENIORRESEARCHER\">Astronomy</link>"
-msgstr "<link=\"SENIORRESEARCHER\">Астрономия</link>"
+msgid "<link=\"ASTRONOMY\">Astronomy</link>"
+msgstr "<link=\"ASTRONOMY\">Астрономия</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_ROCKETPILOT.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_ROCKETPILOT.DESCRIPTION"
@@ -27941,8 +28106,8 @@ msgstr "Позволяет дубликантам быстрее управля�
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_ROCKETPILOT.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_ROCKETPILOT.NAME"
-msgid "<link=\"SENIORPILOT\">Rocket Piloting II</link>"
-msgstr "<link=\"SENIORPILOT\">Пилотирование ракеты II</link>"
+msgid "<link=\"ROCKETPILOTING2\">Rocket Piloting II</link>"
+msgstr "<link=\"ROCKETPILOTING2\">Пилотирование ракеты II</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SPACE_RESEARCHER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SPACE_RESEARCHER.DESCRIPTION"
@@ -27951,8 +28116,8 @@ msgstr "Позволяет дубликантам исследовать кос�
 
 #. STRINGS.DUPLICANTS.ROLES.SPACE_RESEARCHER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SPACE_RESEARCHER.NAME"
-msgid "<link=\"SPACERESEARCHER\">Orbital Researcher</link>"
-msgstr "<link=\"SPACERESEARCHER\">Орбитальный исследователь</link>"
+msgid "<link=\"SPACERESEARCH\">Orbital Researcher</link>"
+msgstr "<link=\"SPACERESEARCH\">Орбитальный исследователь</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SUIT_EXPERT.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SUIT_EXPERT.DESCRIPTION"
@@ -27961,8 +28126,8 @@ msgstr "После надевания костюма скорость бега �
 
 #. STRINGS.DUPLICANTS.ROLES.SUIT_EXPERT.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SUIT_EXPERT.NAME"
-msgid "<link=\"SUITEXPERT\">Exosuit Training</link>"
-msgstr "<link=\"SUITEXPERT\">Тренировка в экзокостюмах</link>"
+msgid "<link=\"SUITS1\">Exosuit Training</link>"
+msgstr "<link=\"SUITS1\">Тренировка в экзокостюмах</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.THERMAL_SUIT_WEARER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.THERMAL_SUIT_WEARER.DESCRIPTION"
@@ -30419,6 +30584,26 @@ msgctxt "STRINGS.DUPLICANTS.TRAITS.FUSSY.NAME"
 msgid "Fussy"
 msgstr "Ворчун"
 
+#. STRINGS.DUPLICANTS.TRAITS.GLOWSTICK.DESC
+msgctxt "STRINGS.DUPLICANTS.TRAITS.GLOWSTICK.DESC"
+msgid "This Duplicant glows green with radiation, but has increased radiation resistance."
+msgstr "Этот дубликант светится зеленым из-за радиации, но обладает повышенной устойчивостью к ней."
+
+#. STRINGS.DUPLICANTS.TRAITS.GLOWSTICK.NAME
+msgctxt "STRINGS.DUPLICANTS.TRAITS.GLOWSTICK.NAME"
+msgid "Glow Stick"
+msgstr "Светящаяся палочка"
+
+#. STRINGS.DUPLICANTS.TRAITS.GLOWSTICK.SHORT_DESC
+msgctxt "STRINGS.DUPLICANTS.TRAITS.GLOWSTICK.SHORT_DESC"
+msgid "Emits low amounts of radiation and light"
+msgstr "Излучает немного света и радиации"
+
+#. STRINGS.DUPLICANTS.TRAITS.GLOWSTICK.SHORT_DESC_TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.TRAITS.GLOWSTICK.SHORT_DESC_TOOLTIP"
+msgid "Emits low amounts of radiation and light"
+msgstr "Излучает немного света и радиации"
+
 #. STRINGS.DUPLICANTS.TRAITS.GRANTED_SKILL_SHARED_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTED_SKILL_SHARED_DESC"
 msgid "This Duplicant begins with a pre-learned <style=\"KKeyword\">Skill</style>, but does not have increased <style=\"KKeyword\">Morale Requirements</style>.\n\n{0}\n{1}"
@@ -30441,8 +30626,8 @@ msgstr "Обучает базовым художественным навыка�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING1.NAME"
-msgid "Skilled: <link=\"JUNIORARTIST\">Art Fundamentals</link>"
-msgstr "Навык: <link=\"JUNIORARTIST\">основы искусства</link>"
+msgid "Skilled: <link=\"ARTING1\">Art Fundamentals</link>"
+msgstr "Навык: <link=\"ARTING1\">основы искусства</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING1.SHORT_DESC"
@@ -30461,8 +30646,8 @@ msgstr "Позволяет создавать относительно прив�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING2.NAME"
-msgid "Skilled: Aesthetic Design"
-msgstr "Навык: эстетический дизайн"
+msgid "Skilled: <link=\"ARTING2\">Aesthetic Design</link>"
+msgstr "Навык: <link=\"ARTING2\">эстетический дизайн</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING2.SHORT_DESC"
@@ -30481,8 +30666,8 @@ msgstr "Позволяет создавать произведения иску�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING3.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING3.NAME"
-msgid "Skilled: <link=\"MASTERARTIST\">Masterworks</link>"
-msgstr "Навык: <link=\"MASTERARTIST\">гениальное искусство</link>"
+msgid "Skilled: <link=\"ARTING3\">Masterworks</link>"
+msgstr "Навык: <link=\"ARTING3\">гениальное искусство</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING3.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING3.SHORT_DESC"
@@ -30501,8 +30686,8 @@ msgstr "Позволяет дубликанту работать с <link=\"COMM
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ASTRONAUTING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ASTRONAUTING1.NAME"
-msgid "Skilled: <link=\"ASTRONAUTTRAINEE\">Rocket Piloting</link>"
-msgstr "Навык: <link=\"ASTRONAUTTRAINEE\">пилотирование ракеты</link>"
+msgid "Skilled: <link=\"ASTRONAUTING1\">Rocket Piloting</link>"
+msgstr "Навык: <link=\"ASTRONAUTING1\">пилотирование ракеты</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ASTRONAUTING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ASTRONAUTING1.SHORT_DESC"
@@ -30521,8 +30706,8 @@ msgstr "Увеличивает скорость завершения косми�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ASTRONAUTING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ASTRONAUTING2.NAME"
-msgid "Skilled: <link=\"ASTRONAUT\">Rocket Navigation</link>"
-msgstr "Навык: <link=\"ASTRONAUT\">ракетная навигация</link>"
+msgid "Skilled: <link=\"ASTRONAUTING2\">Rocket Navigation</link>"
+msgstr "Навык: <link=\"ASTRONAUTING2\">ракетная навигация</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ASTRONAUTING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ASTRONAUTING2.SHORT_DESC"
@@ -30541,8 +30726,8 @@ msgstr "Незначительный бонус к физической силе
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BASEKEEPING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BASEKEEPING1.NAME"
-msgid "Skilled: <link=\"HANDYMAN\">Improved Strength</link>"
-msgstr "Навык: <link=\"HANDYMAN\">улучшенная сила</link>"
+msgid "Skilled: <link=\"BASEKEEPING1\">Improved Strength</link>"
+msgstr "Навык: <link=\"BASEKEEPING1\">улучшенная сила</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BASEKEEPING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BASEKEEPING1.SHORT_DESC"
@@ -30561,8 +30746,8 @@ msgstr "Позволяет дубликанту опустошать <style=\"KK
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BASEKEEPING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BASEKEEPING2.NAME"
-msgid "Skilled: <link=\"PLUMBER\">Plumbing</link>"
-msgstr "Навык: <link=\"PLUMBER\">водопровод</link>"
+msgid "Skilled: <link=\"BASEKEEPING2\">Plumbing</link>"
+msgstr "Навык: <link=\"BASEKEEPING2\">водопровод</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BASEKEEPING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BASEKEEPING2.SHORT_DESC"
@@ -30581,8 +30766,8 @@ msgstr "Незначительно увеличивает скорость ст�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING1.NAME"
-msgid "Skilled: <link=\"JUNIORBUILDER\">Improved Construction I</link>"
-msgstr "Навык: <link=\"JUNIORBUILDER\">улучшенное строительство I</link>"
+msgid "Skilled: <link=\"BUILDING1\">Improved Construction I</link>"
+msgstr "Навык: <link=\"BUILDING1\">улучшенное строительство I</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING1.SHORT_DESC"
@@ -30601,8 +30786,8 @@ msgstr "Значительно увеличивает скорость стро�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING2.NAME"
-msgid "Skilled: <link=\"BUILDER\">Improved Construction II</link>"
-msgstr "Навык: <link=\"BUILDER\">улучшенное строительство II</link>"
+msgid "Skilled: <link=\"BUILDING2\">Improved Construction II</link>"
+msgstr "Навык: <link=\"BUILDING2\">улучшенное строительство II</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING2.SHORT_DESC"
@@ -30621,8 +30806,8 @@ msgstr "Позволяет дубликанту разрушать здания 
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING3.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING3.NAME"
-msgid "Skilled: <link=\"SENIORBUILDER\">Demolition</link>"
-msgstr "Навык: <link=\"SENIORBUILDER\">Снос</link>"
+msgid "Skilled: <link=\"BUILDING3\">Demolition</link>"
+msgstr "Навык: <link=\"BUILDING3\">Снос</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING3.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING3.SHORT_DESC"
@@ -30641,8 +30826,8 @@ msgstr "Позволяет дубликантам готовить на <link=\"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_COOKING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_COOKING1.NAME"
-msgid "Skilled: <link=\"JUNIORCOOK\">Grilling</link>"
-msgstr "Навык: <link=\"JUNIORCOOK\">гриль</link>"
+msgid "Skilled: <link=\"COOKING1\">Grilling</link>"
+msgstr "Навык: <link=\"COOKING1\">гриль</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_COOKING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_COOKING1.SHORT_DESC"
@@ -30661,8 +30846,8 @@ msgstr "Увеличивает у дубликанта скорость гото
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_COOKING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_COOKING2.NAME"
-msgid "Skilled: <link=\"COOK\">Grilling II</link>"
-msgstr "Навык: <link=\"COOK\">гриль II</link>"
+msgid "Skilled: <link=\"COOKING2\">Grilling II</link>"
+msgstr "Навык: <link=\"COOKING2\">гриль II</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_COOKING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_COOKING2.SHORT_DESC"
@@ -30681,8 +30866,8 @@ msgstr "Позволяет сооружать и обслуживать <link=\"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ENGINEERING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ENGINEERING1.NAME"
-msgid "Skilled: <link=\"MECHATRONICENGINEER\">Mechatronics Engineering</link>"
-msgstr "Навык: <link=\"MECHATRONICENGINEER\">мехатронная инженерия</link>"
+msgid "Skilled: <link=\"ENGINEERING1\">Mechatronics Engineering</link>"
+msgstr "Навык: <link=\"ENGINEERING1\">мехатронная инженерия</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ENGINEERING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ENGINEERING1.SHORT_DESC"
@@ -30701,8 +30886,8 @@ msgstr "Незначительно улучшает навыки земледе�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING1.NAME"
-msgid "Skilled: <link=\"JUNIORFARMER\">Improved Farming I</link>"
-msgstr "Навык: <link=\"JUNIORFARMER\">улучшенное земледелие I</link>"
+msgid "Skilled: <link=\"FARMING1\">Improved Farming I</link>"
+msgstr "Навык: <link=\"FARMING1\">улучшенное земледелие I</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING1.SHORT_DESC"
@@ -30721,8 +30906,8 @@ msgstr "Позволяет ухаживать за <style=\"KKeyword\">раст�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING2.NAME"
-msgid "Skilled: <link=\"FARMER\">Crop Tending</link>"
-msgstr "Навык: <link=\"FARMER\">уход за растениями</link>"
+msgid "Skilled: <link=\"FARMING2\">Crop Tending</link>"
+msgstr "Навык: <link=\"FARMING2\">уход за растениями</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING2.SHORT_DESC"
@@ -30741,8 +30926,8 @@ msgstr "Значительно увеличивает навыки землед�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING3.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING3.NAME"
-msgid "Skilled: <link=\"SENIORFARMER\">Improved Farming II</link>"
-msgstr "Навык: <link=\"SENIORFARMER\">улучшенное земледелие II</link>"
+msgid "Skilled: <link=\"FARMING3\">Improved Farming II</link>"
+msgstr "Навык: <link=\"FARMING3\">улучшенное земледелие II</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING3.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING3.SHORT_DESC"
@@ -30761,8 +30946,8 @@ msgstr "Незначительно увеличивает силу дублик�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_HAULING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_HAULING1.NAME"
-msgid "Skilled: <link=\"HAULER\">Improved Carrying I</link>"
-msgstr "Навык: <link=\"HAULER\">улучшенная переноска I</link>"
+msgid "Skilled: <link=\"HAULING1\">Improved Carrying I</link>"
+msgstr "Навык: <link=\"HAULING1\">улучшенная переноска I</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_HAULING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_HAULING1.SHORT_DESC"
@@ -30781,8 +30966,8 @@ msgstr "Усиливает дубликанта и позволяет ему п�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_HAULING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_HAULING2.NAME"
-msgid "Skilled: <link=\"MATERIALSMANAGER\">Improved Carrying II</link>"
-msgstr "Навык: <link=\"MATERIALSMANAGER\">улучшенная переноска II</link>"
+msgid "Skilled: <link=\"HAULING2\">Improved Carrying II</link>"
+msgstr "Навык: <link=\"HAULING2\">улучшенная переноска II</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_HAULING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_HAULING2.SHORT_DESC"
@@ -30801,8 +30986,8 @@ msgstr "Позволяет дубликантам создавать лекар�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE1.NAME"
-msgid "Skilled: <link=\"MEDIC\">Medicine Compounding</link>"
-msgstr "Навык: <link=\"MEDIC\">создание лекарств</link>"
+msgid "Skilled: <link=\"MEDICINE1\">Medicine Compounding</link>"
+msgstr "Навык: <link=\"MEDICINE1\">создание лекарств</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE1.SHORT_DESC"
@@ -30821,8 +31006,8 @@ msgstr "Учит дубликантов давать лекарства в <link
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE2.NAME"
-msgid "Skilled: <link=\"MEDIC\">Bedside Manner</link>"
-msgstr "Навык: <link=\"MEDIC\">уход за больными</link>"
+msgid "Skilled: <link=\"MEDICINE2\">Bedside Manner</link>"
+msgstr "Навык: <link=\"MEDICINE2\">уход за больными</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE2.SHORT_DESC"
@@ -30841,8 +31026,8 @@ msgstr "Обучает дубликантов управлять <link=\"ADVANCE
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE3.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE3.NAME"
-msgid "Skilled: <link=\"MEDIC\">Advanced Medical Care</link>"
-msgstr "Навык: <link=\"MEDIC\">улучшенная медицинская помощь</link>"
+msgid "Skilled: <link=\"MEDICINE3\">Advanced Medical Care</link>"
+msgstr "Навык: <link=\"MEDICINE3\">улучшенная медицинская помощь</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE3.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE3.SHORT_DESC"
@@ -30861,8 +31046,8 @@ msgstr "Позволяет добывать <style=\"KKeyword\">очень тв�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING1.NAME"
-msgid "Skilled: <link=\"JUNIORMINER\">Hard Digging</link>"
-msgstr "Навык: <link=\"JUNIORMINER\">улучшенное рытье</link>"
+msgid "Skilled: <link=\"MINING1\">Hard Digging</link>"
+msgstr "Навык: <link=\"MINING1\">улучшенное рытье</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING1.SHORT_DESC"
@@ -30881,8 +31066,8 @@ msgstr "Позволяет добывать <link=\"KATAIRITE\">бездноли
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING2.NAME"
-msgid "Skilled: <link=\"MINER\">Superhard Digging</link>"
-msgstr "Навык: <link=\"MINER\">суперулучшенное рытье</link>"
+msgid "Skilled: <link=\"MINING2\">Superhard Digging</link>"
+msgstr "Навык: <link=\"MINING2\">суперулучшенное рытье</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING2.SHORT_DESC"
@@ -30901,8 +31086,8 @@ msgstr "Позволяет добыть <style=\"KKeyword\">почти непр�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING3.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING3.NAME"
-msgid "Skilled: <link=\"SENIORMINER\">Super-Duperhard Digging</link>"
-msgstr "Навык: <link=\"SENIORMINER\">супер-пупер-улучшенное рытье</link>"
+msgid "Skilled: <link=\"MINING3\">Super-Duperhard Digging</link>"
+msgstr "Навык: <link=\"MINING3\">супер-пупер-улучшенное рытье</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING3.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING3.SHORT_DESC"
@@ -30921,8 +31106,8 @@ msgstr "Позволяет добывать опасные материалы, �
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING4.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING4.NAME"
-msgid "Skilled: <link=\"MASTERMINER\">Hazmat Digging</link>"
-msgstr "Навык: <link=\"MASTERMINER\">рытье опасных материалов</link>"
+msgid "Skilled: <link=\"MINING4\">Hazmat Digging</link>"
+msgstr "Навык: <link=\"MINING4\">рытье опасных материалов</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING4.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING4.SHORT_DESC"
@@ -30941,8 +31126,8 @@ msgstr "Позволяет дубликанту заниматься уходо�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RANCHING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RANCHING1.NAME"
-msgid "Skilled: <link=\"RANCHER\">Critter Ranching I</link>"
-msgstr "Навык: <link=\"RANCHER\">животноводство I</link>"
+msgid "Skilled: <link=\"RANCHING1\">Critter Ranching I</link>"
+msgstr "Навык: <link=\"RANCHING1\">животноводство I</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RANCHING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RANCHING1.SHORT_DESC"
@@ -30961,8 +31146,8 @@ msgstr "Улучшает навыки <style=\"KKeyword\">животноводс
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RANCHING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RANCHING2.NAME"
-msgid "Skilled: <link=\"SENIORRANCHER\">Critter Ranching II</link>"
-msgstr "Навык: <link=\"SENIORRANCHER\">животноводство I</link>"
+msgid "Skilled: <link=\"RANCHING2\">Critter Ranching II</link>"
+msgstr "Навык: <link=\"RANCHING2\">животноводство I</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RANCHING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RANCHING2.SHORT_DESC"
@@ -30981,8 +31166,8 @@ msgstr "Позволяет дубликантам проводить иссле�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING1.NAME"
-msgid "Skilled: <link=\"JUNIORRESEARCHER\">Advanced Research</link>"
-msgstr "Навык: <link=\"JUNIORRESEARCHER\">углубленное исследование</link>"
+msgid "Skilled: <link=\"RESEARCHING1\">Advanced Research</link>"
+msgstr "Навык: <link=\"RESEARCHING1\">углубленное исследование</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING1.SHORT_DESC"
@@ -31001,8 +31186,8 @@ msgstr "Дубликанты могут исследовать <style=\"KKeyword
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING2.NAME"
-msgid "Skilled: <link=\"RESEARCHER\">Field Research</link>"
-msgstr "Навык: <link=\"RESEARCHER\">полевое исследование</link>"
+msgid "Skilled: <link=\"RESEARCHING2\">Field Research</link>"
+msgstr "Навык: <link=\"RESEARCHING2\">полевое исследование</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING2.SHORT_DESC"
@@ -31021,8 +31206,8 @@ msgstr "Позволяет дубликантам исследовать кос�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING3.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING3.NAME"
-msgid "Skilled: <link=\"SENIORRESEARCHER\">Astronomy</link>"
-msgstr "Навык: <link=\"SENIORRESEARCHER\">астрономия</link>"
+msgid "Skilled: <link=\"ASTRONOMY\">Astronomy</link>"
+msgstr "Навык: <link=\"ASTRONOMY\">астрономия</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING3.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING3.SHORT_DESC"
@@ -31036,13 +31221,13 @@ msgstr "Этот дубликант получает <style=\"KKeyword\">нав�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.DESC"
-msgid "Enables Duplicants to study matter using the <link=\"NUCLEARLABORATORY\">Materials Study Terminal</link>"
-msgstr "Позволяет дубликантам исследовать материалы с помощью <link=\"NUCLEARLABORATORY\">терминала для изучения материалов</link>."
+msgid "Enables Duplicants to study matter using the <link=\"NUCLEARRESEARCHCENTER\">Materials Study Terminal</link>"
+msgstr "Позволяет дубликантам исследовать материалы с помощью <link=\"NUCLEARRESEARCHCENTER\">терминала для изучения материалов</link>."
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.NAME"
-msgid "Skilled: <link=\"NUCLEARRESEARCHER\">Materials Science Research</link>"
-msgstr "Навык: <link=\"NUCLEARRESEARCHER\">Исследование материалов</link>"
+msgid "Skilled: <link=\"ATOMICRESEARCH\">Materials Science Research</link>"
+msgstr "Навык: <link=\"ATOMICRESEARCH\">Исследование материалов</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.SHORT_DESC"
@@ -31061,8 +31246,8 @@ msgstr "После надевания костюма скорость бега �
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_SUITS1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_SUITS1.NAME"
-msgid "Skilled: <link=\"SUITEXPERT\">Exosuit Training</link>"
-msgstr "Навык: <link=\"SUITEXPERT\">тренировка в экзокостюмах</link>"
+msgid "Skilled: <link=\"SUITS1\">Exosuit Training</link>"
+msgstr "Навык: <link=\"SUITS1\">тренировка в экзокостюмах</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_SUITS1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_SUITS1.SHORT_DESC"
@@ -31081,8 +31266,8 @@ msgstr "Незначительно ускоряет скорость работ�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_TECHNICALS1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_TECHNICALS1.NAME"
-msgid "Skilled: <link=\"MACHINETECHNICIAN\">Improved Tinkering</link>"
-msgstr "Навык: <link=\"MACHINETECHNICIAN\">улучшенная работа с техникой</link>"
+msgid "Skilled: <link=\"TECHNICALS1\">Improved Tinkering</link>"
+msgstr "Навык: <link=\"TECHNICALS1\">улучшенная работа с техникой</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_TECHNICALS1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_TECHNICALS1.SHORT_DESC"
@@ -31101,8 +31286,8 @@ msgstr "Позволяет <style=\"KKeyword\">отлаживать</style> ге
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_TECHNICALS2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_TECHNICALS2.NAME"
-msgid "Skilled: <link=\"POWERTECHNICIAN\">Electrical Engineering</link>"
-msgstr "Навык: <link=\"POWERTECHNICIAN\">электрическая инженерия</link>"
+msgid "Skilled: <link=\"TECHNICALS2\">Electrical Engineering</link>"
+msgstr "Навык: <link=\"TECHNICALS2\">электрическая инженерия</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_TECHNICALS2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_TECHNICALS2.SHORT_DESC"
@@ -31193,6 +31378,26 @@ msgstr "Этому дубликанту потребуется дополнит�
 msgctxt "STRINGS.DUPLICANTS.TRAITS.IRRITABLEBOWEL.NAME"
 msgid "Irritable Bowel"
 msgstr "Чувствительный кишечник"
+
+#. STRINGS.DUPLICANTS.TRAITS.LONER.DESC
+msgctxt "STRINGS.DUPLICANTS.TRAITS.LONER.DESC"
+msgid "This Duplicant prefers solitary pursuits"
+msgstr "Этот дубликант предпочитает быть в одиночестве"
+
+#. STRINGS.DUPLICANTS.TRAITS.LONER.NAME
+msgctxt "STRINGS.DUPLICANTS.TRAITS.LONER.NAME"
+msgid "Loner"
+msgstr "Одиночка"
+
+#. STRINGS.DUPLICANTS.TRAITS.LONER.SHORT_DESC
+msgctxt "STRINGS.DUPLICANTS.TRAITS.LONER.SHORT_DESC"
+msgid "Attribute bonuses while <style=\"KKeyword\">Alone</style>"
+msgstr "Бонусы к характеристикам, когда <style=\"KKeyword\">наедине с собой</style>"
+
+#. STRINGS.DUPLICANTS.TRAITS.LONER.SHORT_DESC_TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.TRAITS.LONER.SHORT_DESC_TOOLTIP"
+msgid "Only duplicant on a world: <b>+4</b> bonus to all <style=\"KKeyword\">Attributes</style>"
+msgstr "Единственный дубликант в мире: <b>+4</b> ко всем <style=\"KKeyword\">характеристикам</style>"
 
 #. STRINGS.DUPLICANTS.TRAITS.MACHINERYDOWN.DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.MACHINERYDOWN.DESC"
@@ -31379,6 +31584,26 @@ msgctxt "STRINGS.DUPLICANTS.TRAITS.NOODLEARMS.NAME"
 msgid "Noodle Arms"
 msgstr "Руки-макаронины"
 
+#. STRINGS.DUPLICANTS.TRAITS.RADIATIONEATER.DESC
+msgctxt "STRINGS.DUPLICANTS.TRAITS.RADIATIONEATER.DESC"
+msgid "This Duplicant can convert Radiation exposure into Calories."
+msgstr "Этот дубликант может преобразовывать радиацию в калории."
+
+#. STRINGS.DUPLICANTS.TRAITS.RADIATIONEATER.NAME
+msgctxt "STRINGS.DUPLICANTS.TRAITS.RADIATIONEATER.NAME"
+msgid "Radiation Eater"
+msgstr "Поедатель радиации"
+
+#. STRINGS.DUPLICANTS.TRAITS.RADIATIONEATER.SHORT_DESC
+msgctxt "STRINGS.DUPLICANTS.TRAITS.RADIATIONEATER.SHORT_DESC"
+msgid "Converts Radiation exposure into Calories"
+msgstr "Преобразовывает радиацию в калории"
+
+#. STRINGS.DUPLICANTS.TRAITS.RADIATIONEATER.SHORT_DESC_TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.TRAITS.RADIATIONEATER.SHORT_DESC_TOOLTIP"
+msgid "Converts Radiation exposure into Calories"
+msgstr "Преобразовывает радиацию в калории"
+
 #. STRINGS.DUPLICANTS.TRAITS.RANCHINGDOWN.DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.RANCHINGDOWN.DESC"
 msgid "This Duplicant just doesn't trust those beady little eyes"
@@ -31493,6 +31718,26 @@ msgstr "Этот дубликант оставляет за собой шлей�
 msgctxt "STRINGS.DUPLICANTS.TRAITS.SPARKLESTREAKER.NAME"
 msgid "Sparkle Streaker"
 msgstr "Искорка"
+
+#. STRINGS.DUPLICANTS.TRAITS.STARRYEYED.DESC
+msgctxt "STRINGS.DUPLICANTS.TRAITS.STARRYEYED.DESC"
+msgid "This Duplicant likes being in space"
+msgstr "Этот дубликант любит находиться в космосе"
+
+#. STRINGS.DUPLICANTS.TRAITS.STARRYEYED.NAME
+msgctxt "STRINGS.DUPLICANTS.TRAITS.STARRYEYED.NAME"
+msgid "Starry Eyed"
+msgstr "Звездолюб"
+
+#. STRINGS.DUPLICANTS.TRAITS.STARRYEYED.SHORT_DESC
+msgctxt "STRINGS.DUPLICANTS.TRAITS.STARRYEYED.SHORT_DESC"
+msgid "Morale bonus while in space"
+msgstr "Бонус к моральному духу в космосе"
+
+#. STRINGS.DUPLICANTS.TRAITS.STARRYEYED.SHORT_DESC_TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.TRAITS.STARRYEYED.SHORT_DESC_TOOLTIP"
+msgid "In outer space: <b>+10</b> <style=\"KKeyword\">Morale</style>"
+msgstr "В открытом космосе: <b>+10</b> к <style=\"KKeyword\">моральному духу</style>"
 
 #. STRINGS.DUPLICANTS.TRAITS.STICKERBOMBER.DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.STICKERBOMBER.DESC"
@@ -36096,8 +36341,8 @@ msgstr "Яичная скорлупа"
 
 #. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.FARM_STATION_TOOLS.DESC
 msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.FARM_STATION_TOOLS.DESC"
-msgid "Specialized <link=\"FERTILIZER\">Fertilizer</link> mixed by a Duplicant with the <link=\"FARMER\">Crop Tending</link> Skill.\n\nIncreases the <style=\"KKeyword\">Growth Rate</style> of one <link=\"PLANTS\">Plant</link>."
-msgstr "Специализированное <link=\"FERTILIZER\">удобрение</link>, приготовленное дубликантом с навыком <link=\"FARMER\">ухода за растениями</link>.\n\nУскоряет <style=\"KKeyword\">созревание</style> одного <link=\"PLANTS\">растения</link>."
+msgid "Specialized <link=\"FERTILIZER\">Fertilizer</link> mixed by a Duplicant with the <link=\"FARMING2\">Crop Tending</link> Skill.\n\nIncreases the <style=\"KKeyword\">Growth Rate</style> of one <link=\"PLANTS\">Plant</link>."
+msgstr "Специализированное <link=\"FERTILIZER\">удобрение</link>, приготовленное дубликантом с навыком <link=\"FARMING2\">ухода за растениями</link>.\n\nУскоряет <style=\"KKeyword\">созревание</style> одного <link=\"PLANTS\">растения</link>."
 
 #. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.FARM_STATION_TOOLS.NAME
 msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.FARM_STATION_TOOLS.NAME"
@@ -36146,13 +36391,13 @@ msgstr "Может использоваться для <style=\"KKeyword\">ул�
 
 #. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.MACHINE_PARTS.TINKER_REQUIREMENT_NAME
 msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.MACHINE_PARTS.TINKER_REQUIREMENT_NAME"
-msgid "Job: <link=\"MECHATRONICENGINEER\">Mechatronics Engineering</link>"
-msgstr "<link=\"MECHATRONICENGINEER\">Мехатронная инженерия</link>"
+msgid "Job: <link=\"ENGINEERING1\">Mechatronics Engineering</link>"
+msgstr "<link=\"ENGINEERING1\">Мехатронная инженерия</link>"
 
 #. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.MACHINE_PARTS.TINKER_REQUIREMENT_TOOLTIP
 msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.MACHINE_PARTS.TINKER_REQUIREMENT_TOOLTIP"
-msgid "Can only be used by a Duplicant with <link=\"MECHATRONICENGINEER\">Mechatronics Engineering</link> to apply a <style=\"KKeyword\">Jerry Rig</style>."
-msgstr "Может использоваться дубликантами с навыком <link=\"MECHATRONICENGINEER\">мехатронной инженерии</link> для <style=\"KKeyword\">отладки механизмов</style>"
+msgid "Can only be used by a Duplicant with <link=\"ENGINEERING1\">Mechatronics Engineering</link> to apply a <style=\"KKeyword\">Jerry Rig</style>."
+msgstr "Может использоваться дубликантами с навыком <link=\"ENGINEERING1\">мехатронной инженерии</link> для <style=\"KKeyword\">отладки механизмов</style>"
 
 #. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.POWER_STATION_TOOLS.DESC
 msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.POWER_STATION_TOOLS.DESC"
@@ -36176,13 +36421,13 @@ msgstr "Может использоваться для <style=\"KKeyword\">на�
 
 #. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.POWER_STATION_TOOLS.TINKER_REQUIREMENT_NAME
 msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.POWER_STATION_TOOLS.TINKER_REQUIREMENT_NAME"
-msgid "Skill: <link=\"POWERTECHNICIAN\">Electrical Engineering</link>"
-msgstr "Навык: <link=\"POWERTECHNICIAN\">электрическая инженерия</link>"
+msgid "Skill: <link=\"TECHNICALS2\">Electrical Engineering</link>"
+msgstr "Навык: <link=\"TECHNICALS2\">электрическая инженерия</link>"
 
 #. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.POWER_STATION_TOOLS.TINKER_REQUIREMENT_TOOLTIP
 msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.POWER_STATION_TOOLS.TINKER_REQUIREMENT_TOOLTIP"
-msgid "Can only be used by a Duplicant with <link=\"POWERTECHNICIAN\">Electrical Engineering</link> to apply a <style=\"KKeyword\">Tune Up</style>."
-msgstr "Может использоваться дубликантами с навыком <link=\"POWERTECHNICIAN\">электрической инженерии</link> для <style=\"KKeyword\">настройки работы механизма</style>."
+msgid "Can only be used by a Duplicant with <link=\"TECHNICALS2\">Electrical Engineering</link> to apply a <style=\"KKeyword\">Tune Up</style>."
+msgstr "Может использоваться дубликантами с навыком <link=\"TECHNICALS2\">электрической инженерии</link> для <style=\"KKeyword\">настройки работы механизма</style>."
 
 #. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.REFINED_SUGAR.DESC
 msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.REFINED_SUGAR.DESC"
@@ -36256,8 +36501,8 @@ msgstr "Пенициллиновый флакон"
 
 #. STRINGS.ITEMS.PILLS.ADVANCEDCURE.RECIPEDESC
 msgctxt "STRINGS.ITEMS.PILLS.ADVANCEDCURE.RECIPEDESC"
-msgid "An extremely powerful medication created to treat severe <link=\"DISEASE\">Diseases</link>. Serum Vial is very effective against <link=\"SLIMESICKNESS\">Slimelung</link>.\n\nMust be administered by a Duplicant with the <link=\"MEDIC\">Advanced Medical Care</link> Skill."
-msgstr "Невероятно сильное лекарство, предназначенное для борьбы с серьезными <link=\"DISEASE\">болезнями</link>. Пенициллиновый флакон очень эффективен против <link=\"SLIMESICKNESS\">легочной слизи</link>.\n\nДолжен быть назначен дубликантом с навыком <link=\"MEDIC\">улучшенной медицинской помощи</link>."
+msgid "An extremely powerful medication created to treat severe <link=\"DISEASE\">Diseases</link>. Serum Vial is very effective against <link=\"SLIMESICKNESS\">Slimelung</link>.\n\nMust be administered by a Duplicant with the <link=\"MEDICINE3\">Advanced Medical Care</link> Skill."
+msgstr "Невероятно сильное лекарство, предназначенное для борьбы с серьезными <link=\"DISEASE\">болезнями</link>. Пенициллиновый флакон очень эффективен против <link=\"SLIMESICKNESS\">легочной слизи</link>.\n\nДолжен быть назначен дубликантом с навыком <link=\"MEDICINE3\">улучшенной медицинской помощи</link>."
 
 #. STRINGS.ITEMS.PILLS.ANTIHISTAMINE.DESC
 msgctxt "STRINGS.ITEMS.PILLS.ANTIHISTAMINE.DESC"
@@ -36346,8 +36591,8 @@ msgstr "Аптечка"
 
 #. STRINGS.ITEMS.PILLS.INTERMEDIATECURE.RECIPEDESC
 msgctxt "STRINGS.ITEMS.PILLS.INTERMEDIATECURE.RECIPEDESC"
-msgid "A doctor-administered cure for moderate <link=\"DISEASE\">Diseases</link>. Medical Packs are very effective against <link=\"SLIMESICKNESS\">Slimelung</link>.\n\nMust be administered by a Duplicant with the <link=\"MEDIC\">Bedside Manner</link> Skill."
-msgstr "Выдаваемое врачом лекарство от <link=\"DISEASE\">болезней</link> средней тяжести. Содержимое аптечки очень эффективно против <link=\"SLIMESICKNESS\">легочной слизи</link>.\n\nДолжны применяться дубликантом с навыком <link=\"MEDIC\">ухода за больными</link>."
+msgid "A doctor-administered cure for moderate <link=\"DISEASE\">Diseases</link>. Medical Packs are very effective against <link=\"SLIMESICKNESS\">Slimelung</link>.\n\nMust be administered by a Duplicant with the <link=\"MEDICINE2\">Bedside Manner</link> Skill."
+msgstr "Выдаваемое врачом лекарство от <link=\"DISEASE\">болезней</link> средней тяжести. Содержимое аптечки очень эффективно против <link=\"SLIMESICKNESS\">легочной слизи</link>.\n\nДолжны применяться дубликантом с навыком <link=\"MEDICINE2\">ухода за больными</link>."
 
 #. STRINGS.ITEMS.PILLS.INTERMEDIATERADPILL.DESC
 msgctxt "STRINGS.ITEMS.PILLS.INTERMEDIATERADPILL.DESC"
@@ -37971,8 +38216,8 @@ msgstr "Ожидается отлов"
 
 #. STRINGS.MISC.STATUSITEMS.ORDERCAPTURE.TOOLTIP
 msgctxt "STRINGS.MISC.STATUSITEMS.ORDERCAPTURE.TOOLTIP"
-msgid "Waiting for a Duplicant to capture this <style=\"KKeyword\">Critter</style>\n------------------\nOnly Duplicants with the <link=\"RANCHER\">Critter Ranching I</link> Skill can catch critters without traps"
-msgstr "Ожидается дубликант, который поймает это <style=\"KKeyword\">существо</style>\n------------------\nТолько дубликанты с навыком <link=\"RANCHER\">животноводства I</link> могут ловить создания без использования ловушек"
+msgid "Waiting for a Duplicant to capture this <style=\"KKeyword\">Critter</style>\n------------------\nOnly Duplicants with the <link=\"RANCHING1\">Critter Ranching I</link> Skill can catch critters without traps"
+msgstr "Ожидается дубликант, который поймает это <style=\"KKeyword\">существо</style>\n------------------\nТолько дубликанты с навыком <link=\"RANCHING1\">животноводства I</link> могут ловить создания без использования ловушек"
 
 #. STRINGS.MISC.STATUSITEMS.OREMASS.NAME
 msgctxt "STRINGS.MISC.STATUSITEMS.OREMASS.NAME"
@@ -38366,8 +38611,8 @@ msgstr "Горючий газ"
 
 #. STRINGS.MISC.TAGS.COMBUSTIBLELIQUID
 msgctxt "STRINGS.MISC.TAGS.COMBUSTIBLELIQUID"
-msgid "Combustible Liquid"
-msgstr "Горючая жидкость"
+msgid "<link=\"COMBUSTIBLELIQUID\">Combustible Liquid</link>"
+msgstr "<link=\"COMBUSTIBLELIQUID\">Горючая жидкость</link>"
 
 #. STRINGS.MISC.TAGS.COMBUSTIBLESOLID
 msgctxt "STRINGS.MISC.TAGS.COMBUSTIBLESOLID"
@@ -38386,8 +38631,8 @@ msgstr "{Item}"
 
 #. STRINGS.MISC.TAGS.COMPOSTABLE
 msgctxt "STRINGS.MISC.TAGS.COMPOSTABLE"
-msgid "Compostable"
-msgstr "Биоразлагаемое"
+msgid "<link=\"COMPOSTABLE\">Compostable</link>"
+msgstr "<link=\"COMPOSTABLE\">Биоразлагаемое</link>"
 
 #. STRINGS.MISC.TAGS.COMPOSTBASICPLANTFOOD
 msgctxt "STRINGS.MISC.TAGS.COMPOSTBASICPLANTFOOD"
@@ -38486,8 +38731,8 @@ msgstr "Сельскохозяйственная станция"
 
 #. STRINGS.MISC.TAGS.FILTER
 msgctxt "STRINGS.MISC.TAGS.FILTER"
-msgid "Filtration Medium"
-msgstr "Фильтрующий материал"
+msgid "<link=\"FILTER\">Filtration Medium</link>"
+msgstr "<link=\"FILTER\">Фильтрующий материал</link>"
 
 #. STRINGS.MISC.TAGS.FLYINGCRITTEREDIBLE
 msgctxt "STRINGS.MISC.TAGS.FLYINGCRITTEREDIBLE"
@@ -38511,8 +38756,8 @@ msgstr "Жилищный модуль"
 
 #. STRINGS.MISC.TAGS.ICEORE
 msgctxt "STRINGS.MISC.TAGS.ICEORE"
-msgid "Ice"
-msgstr "Лед"
+msgid "<link=\"ICEORE\">Ice</link>"
+msgstr "<link=\"ICEORE\">Лед</link>"
 
 #. STRINGS.MISC.TAGS.INDUSTRIALINGREDIENT
 msgctxt "STRINGS.MISC.TAGS.INDUSTRIALINGREDIENT"
@@ -38598,6 +38843,11 @@ msgstr "Смесь"
 msgctxt "STRINGS.MISC.TAGS.MULTITOOL"
 msgid "Multitool"
 msgstr "Мультиинструмент"
+
+#. STRINGS.MISC.TAGS.NONCRUSHABLE
+msgctxt "STRINGS.MISC.TAGS.NONCRUSHABLE"
+msgid "Uncrushable"
+msgstr "Нельзя разрушить"
 
 #. STRINGS.MISC.TAGS.OIL
 msgctxt "STRINGS.MISC.TAGS.OIL"
@@ -38686,8 +38936,8 @@ msgstr "Руда драгоценного металла"
 
 #. STRINGS.MISC.TAGS.REFINEDMETAL
 msgctxt "STRINGS.MISC.TAGS.REFINEDMETAL"
-msgid "Refined Metal"
-msgstr "Обработанный металл"
+msgid "<link=\"REFINEDMETAL\">Refined Metal</link>"
+msgstr "<link=\"REFINEDMETAL\">Обработанный металл</link>"
 
 #. STRINGS.MISC.TAGS.RELAXATION_POINT
 msgctxt "STRINGS.MISC.TAGS.RELAXATION_POINT"
@@ -42666,8 +42916,8 @@ msgstr "Открывает доступ к усовершенствованны�
 
 #. STRINGS.RESEARCH.TYPES.DELTA.DESC
 msgctxt "STRINGS.RESEARCH.TYPES.DELTA.DESC"
-msgid "<link=\"RESEARCH\">Materials Science Research</link> is required to unlock materials science technologies.\nIt can be conducted at a <link=\"NUCLEARLABORATORY\">Materials Study Terminal</link>."
-msgstr "Для разблокирования технологий исследования материалов требуется <link=\"RESEARCH\">Исследование материалов</link>.\nЕго можно провести в <link=\"NUCLEARLABORATORY\">Терминал для изучения материалов</link>."
+msgid "<link=\"RESEARCH\">Materials Science Research</link> is required to unlock materials science technologies.\nIt can be conducted at a <link=\"NUCLEARRESEARCHCENTER\">Materials Study Terminal</link>."
+msgstr "Для разблокирования технологий исследования материалов требуется <link=\"RESEARCH\">Исследование материалов</link>.\nЕго можно провести в <link=\"NUCLEARRESEARCHCENTER\">Терминал для изучения материалов</link>."
 
 #. STRINGS.RESEARCH.TYPES.DELTA.NAME
 msgctxt "STRINGS.RESEARCH.TYPES.DELTA.NAME"
@@ -44896,7 +45146,7 @@ msgstr "Ингредиенты:\n{0}"
 
 #. STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.GASCOOLING
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.GASCOOLING"
-msgid "Reduces the <style=\"KKeyword\">Temperature</style> of piped <style=\"KKeyword\">Gases</style>by <b>{0}</b>"
+msgid "Reduces the <style=\"KKeyword\">Temperature</style> of piped <style=\"KKeyword\">Gases</style> by <b>{0}</b>"
 msgstr "Снижает <style=\"KKeyword\">температуру</style> <style=\"KKeyword\">газов</style> в трубах на <b>{0}</b>"
 
 #. STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.GEYSER_DISEASE
@@ -44951,12 +45201,12 @@ msgstr "Вырабатывает <style=\"produced\">{0}</style> в сек.\n\n�
 
 #. STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.HEATGENERATED_AIRCONDITIONER
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.HEATGENERATED_AIRCONDITIONER"
-msgid "Generates <style=\"KKeyword\">Heat</style> based on the <style=\"KKeyword\">Volume</style> and <style=\"KKeyword\">Specific Heat Capacity</style> of the pumped <style=\"KKeyword\">Gas</style>\n\nCooling 1  kg of <link=\"OXYGEN\">Oxygen</link> the entire <b>{1}</b> will output <b>{0}</b>"
+msgid "Generates <style=\"KKeyword\">Heat</style> based on the <style=\"KKeyword\">Volume</style> and <style=\"KKeyword\">Specific Heat Capacity</style> of the pumped <style=\"KKeyword\">Gas</style>\n\nCooling 1 kg of <link=\"OXYGEN\">Oxygen</link> the entire <b>{1}</b> will output <b>{0}</b>"
 msgstr "Вырабатывает <style=\"KKeyword\">тепло</style> в зависимости от <style=\"KKeyword\">объема</style> и <style=\"KKeyword\">удельной теплоемкости</style> закачиваемого <style=\"KKeyword\">газа</style>\n\nПри охлаждении 1 кг <link=\"OXYGEN\">кислорода</link> <b>{1}</b> производит <b>{0}</b>"
 
 #. STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.HEATGENERATED_LIQUIDCONDITIONER
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.HEATGENERATED_LIQUIDCONDITIONER"
-msgid "Generates <style=\"KKeyword\">Heat</style> based on the <style=\"KKeyword\">Volume</style> and <style=\"KKeyword\">Specific Heat Capacity</style> of the pumped <style=\"KKeyword\">Liquid</style>\n\nCooling 10  kg of <link=\"WATER\">Water</link> the entire <b>{1}</b> will output <b>{0}</b>"
+msgid "Generates <style=\"KKeyword\">Heat</style> based on the <style=\"KKeyword\">Volume</style> and <style=\"KKeyword\">Specific Heat Capacity</style> of the pumped <style=\"KKeyword\">Liquid</style>\n\nCooling 10 kg of <link=\"WATER\">Water</link> the entire <b>{1}</b> will output <b>{0}</b>"
 msgstr "Вырабатывает <style=\"KKeyword\">тепло</style> в зависимости от <style=\"KKeyword\">объема</style> и <style=\"KKeyword\">удельной теплоемкости</style> закачиваемой <style=\"KKeyword\">жидкости</style>\n\nПри охлаждении 10 кг <link=\"WATER\">воды</link> <b>{1}</b> производит <b>{0}</b>"
 
 #. STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.IMPROVED_BUILDINGS
@@ -45683,6 +45933,11 @@ msgstr "<link=\"DISEASE\">Болезнь</link>"
 msgctxt "STRINGS.UI.CODEX.CATEGORYNAMES.ELEMENTS"
 msgid "<link=\"ELEMENTS\">Elements</link>"
 msgstr "<link=\"ELEMENTS\">Вещества</link>"
+
+#. STRINGS.UI.CODEX.CATEGORYNAMES.ELEMENTSCLASSES
+msgctxt "STRINGS.UI.CODEX.CATEGORYNAMES.ELEMENTSCLASSES"
+msgid "<link=\"ELEMENTSCLASSES\">Classes</link>"
+msgstr "<link=\"ELEMENTSCLASSES\">Классы</link>"
 
 #. STRINGS.UI.CODEX.CATEGORYNAMES.ELEMENTSGAS
 msgctxt "STRINGS.UI.CODEX.CATEGORYNAMES.ELEMENTSGAS"
@@ -47873,6 +48128,11 @@ msgstr "РАКЕТНАЯ ТЕХНИКА"
 msgctxt "STRINGS.UI.DETAILTABS.SIMPLEINFO.GROUPNAME_STATUS"
 msgid "STATUS"
 msgstr "СТАТУС"
+
+#. STRINGS.UI.DETAILTABS.SIMPLEINFO.GROUPNAME_WORLDTRAITS
+msgctxt "STRINGS.UI.DETAILTABS.SIMPLEINFO.GROUPNAME_WORLDTRAITS"
+msgid "WORLD TRAITS"
+msgstr "ХАРАКТЕРИСТИКИ МИРА"
 
 #. STRINGS.UI.DETAILTABS.SIMPLEINFO.NAME
 msgctxt "STRINGS.UI.DETAILTABS.SIMPLEINFO.NAME"
@@ -50866,8 +51126,8 @@ msgstr "МАСТЕРСКАЯ STEAM"
 
 #. STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER
 msgctxt "STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER"
-msgid "COSMIC CALLING"
-msgstr "ЗОВ КОСМОСА"
+msgid "UNEXPLAINED TRAITS"
+msgstr "НЕОБЪЯСНИМЫЕ ОСОБЕННОСТИ"
 
 #. STRINGS.UI.FRONTEND.MOTD.NEWS_BODY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.NEWS_BODY"
@@ -50881,8 +51141,8 @@ msgstr "ПРИСОЕДИНИТЬСЯ К ОБСУЖДЕНИЮ"
 
 #. STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY"
-msgid "Welcome to the <b>COSMIC CALLING UPDATE</b>\n\n<b><i>Spaced Out!</i></b>\n•<indent=20px>New buildings allow automation signals to be broadcast between asteroids.</indent>\n•<indent=20px>Duplicants can boost their morale by having a chat on the new Party Line Phone.</indent>\n•<indent=20px>Radbolts can pass through a new special type of wall tile.</indent>\n•<indent=20px>Rocket engine speeds and ranges have been rebalanced.</indent>\n\n   Check out the full patch notes for more details!"
-msgstr "Добро пожаловать в обновление <b>ЗОВ КОСМОСА</b>!\n\n<b><i>Spaced Out!</i></b>\n•<indent=20px>Новые строения обеспечивают передачу сигналов автоматизации между астероидами.</indent>\n•<indent=20px>Дубликанты могут поднимать свой моральный дух, поболтав по спаренному телефону.</indent>\n•<indent=20px>Радболты теперь могут проходить сквозь особые клетки стен.</indent>\n•<indent=20px>Обновлен баланс скорости и дальности ракетных двигателей.</indent>\n\n   Прочитайте полный список обновлений, чтобы узнать больше!"
+msgid "Welcome to the <b>UNEXPLAINED TRAITS UPDATE</b>\n\n<b><i>Spaced Out!</i></b>\n•<indent=20px>New world traits added to world generation system and old traits made compatible with Spaced Out!</indent>\n•<indent=20px>New traits related to space travel and radiation added for Duplicants.</indent>\n•<indent=20px>Added Spaced Out! specific Achievements.</indent>\n•<indent=20px>Changes and improvements to codex categories.</indent>\n\n   Check out the full patch notes for more details!"
+msgstr "Добро пожаловать в обновление <b>НЕОБЪЯСНИМЫЕ ОСОБЕННОСТИ</b>\n\n<b><i>Spaced Out!</i></b>\n•<indent=20px>В систему генерации миров добавлены новые характеристики, а старые теперь совместимы со Spaced Out!</indent>\n•<indent=20px>Дубликантам доступны новые характеристики, связанные с космическими путешествиями и радиацией.</indent>\n•<indent=20px>Добавлены специальные достижения Spaced Out!</indent>\n•<indent=20px>Добавлены изменения и исправления в категориях базы данных.</indent>\n\n   Прочитайте полный список обновлений, чтобы узнать больше!"
 
 #. STRINGS.UI.FRONTEND.MOTD.UPDATE_TEXT
 msgctxt "STRINGS.UI.FRONTEND.MOTD.UPDATE_TEXT"
@@ -55616,8 +55876,8 @@ msgstr "Для этой работы не нужна практика"
 
 #. STRINGS.UI.ROLES_SCREEN.PERKS.NUCLEAR_RESEARCH.DESCRIPTION
 msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.NUCLEAR_RESEARCH.DESCRIPTION"
-msgid "<link=\"NUCLEARLABORATORY\">Materials Study Terminal</link> Usage"
-msgstr "Использование <link=\"NUCLEARLABORATORY\">терминала для изучения материалов</link>"
+msgid "<link=\"NUCLEARRESEARCHCENTER\">Materials Study Terminal</link> Usage"
+msgstr "Использование <link=\"NUCLEARRESEARCHCENTER\">терминала для изучения материалов</link>"
 
 #. STRINGS.UI.ROLES_SCREEN.PERKS.ORBITAL_RESEARCH.DESCRIPTION
 msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.ORBITAL_RESEARCH.DESCRIPTION"
@@ -57411,8 +57671,8 @@ msgstr "Мерцающее поле астероидов"
 
 #. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.HELIUMCLOUD.DESC
 msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.HELIUMCLOUD.DESC"
-msgid "A cloud of resources containing <link=\"WATER\">Water</link>, <link=\"HYDROGEN\">Hydrogen</link>, and <link=\"NIOBIUM\">Niobium</link>.\n\nHarvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
-msgstr "Облако ресурсов, содержащее <link=\"WATER\">воду</link>, <link=\"HYDROGEN\">водород</link> и<link=\"NIOBIUM\">ниобий</link>.\n\nДля сбора ресурсов требуется ракета, оснащенная <link=\"NOSECONEHARVEST\">носовым буром</link>."
+msgid "A cloud of resources containing <link=\"WATER\">Water</link> and <link=\"HYDROGEN\">Hydrogen</link>.\n\nHarvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
+msgstr "Облако ресурсов, содержащее <link=\"WATER\">воду</link> и <link=\"HYDROGEN\">водород</link>.\n\nДля сбора ресурсов требуется ракета, оснащенная <link=\"NOSECONEHARVEST\">носовым буром</link>."
 
 #. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.HELIUMCLOUD.NAME
 msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.HELIUMCLOUD.NAME"
@@ -58441,13 +58701,13 @@ msgstr "Пилот на борту."
 
 #. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.PILOT_BOARDED.TOOLTIP.FAILURE
 msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.PILOT_BOARDED.TOOLTIP.FAILURE"
-msgid "At least one crew member aboard the rocket must possess the <link=\"PILOT\">Rocket Piloting</link> skill to launch\n------------------\nQualified Duplicants must be assigned to the rocket crew, and have access to the module's hatch"
-msgstr "Хотя бы один член экипажа должен обладать навыком <link=\"PILOT\">\"пилотирование ракеты\"</link>.\n------------------\nНеобходимо назначить дубликанта с таким навыком в экипаж и обеспечить доступ к люку ракеты."
+msgid "At least one crew member aboard the rocket must possess the <link=\"ROCKETPILOTING1\">Rocket Piloting</link> skill to launch\n------------------\nQualified Duplicants must be assigned to the rocket crew, and have access to the module's hatch"
+msgstr "Хотя бы один член экипажа должен обладать навыком <link=\"ROCKETPILOTING1\">\"пилотирование ракеты\"</link>.\n------------------\nНеобходимо назначить дубликанта с таким навыком в экипаж и обеспечить доступ к люку ракеты."
 
 #. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.PILOT_BOARDED.TOOLTIP.READY
 msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.PILOT_BOARDED.TOOLTIP.READY"
-msgid "A Duplicant with the <link=\"PILOT\">Rocket Piloting</link> skill is currently onboard"
-msgstr "На борту есть дубликант с навыком \"<link=\"PILOT\">пилотирование ракеты</link>\"."
+msgid "A Duplicant with the <link=\"ROCKETPILOTING1\">Rocket Piloting</link> skill is currently onboard"
+msgstr "На борту есть дубликант с навыком \"<link=\"ROCKETPILOTING1\">пилотирование ракеты</link>\"."
 
 #. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.PILOT_BOARDED.TOOLTIP.WARNING
 msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.PILOT_BOARDED.TOOLTIP.WARNING"
@@ -61439,6 +61699,11 @@ msgctxt "STRINGS.UI.UISIDESCREENS.HARVESTMODULESIDESCREEN.TITLE"
 msgid "Resource Gathering"
 msgstr "Сбор ресурсов"
 
+#. STRINGS.UI.UISIDESCREENS.HEPSWITCHSIDESCREEN.TITLE
+msgctxt "STRINGS.UI.UISIDESCREENS.HEPSWITCHSIDESCREEN.TITLE"
+msgid "Radbolt Threshold"
+msgstr "Пороговое количество радболтов"
+
 #. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_E
 msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_E"
 msgid "E"
@@ -62739,6 +63004,11 @@ msgctxt "STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.MAX_HEIGHT.
 msgid "    • Engine's height limit reached or exceeded"
 msgstr "    • Достигнут или превышен предел высоты двигателя"
 
+#. STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.MAX_HEIGHT.FAILED_NO_ENGINE
+msgctxt "STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.MAX_HEIGHT.FAILED_NO_ENGINE"
+msgid "    • Rocket requires space for an engine"
+msgstr "    • Ракете нужно место для двигателя"
+
 #. STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.MAX_MODULES.COMPLETE
 msgctxt "STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.MAX_MODULES.COMPLETE"
 msgid ""
@@ -63073,6 +63343,21 @@ msgstr "Отправляет <b><style=\"logic_on\">зеленый сигнал<
 msgctxt "STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.DISEASE_UNITS"
 msgid ""
 msgstr ""
+
+#. STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.HEPS
+msgctxt "STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.HEPS"
+msgid "Radbolt Reading"
+msgstr "Показатель количества радболтов"
+
+#. STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.HEPS_TOOLTIP_ABOVE
+msgctxt "STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.HEPS_TOOLTIP_ABOVE"
+msgid "Will send a <b><style=\"logic_on\">Green Signal</style></b> if the <style=\"KKeyword\">Radbolts</style> is above <b>{0}</b>"
+msgstr "Отправляет <b><style=\"logic_on\">зеленый сигнал</style></b>, если <style=\"KKeyword\">радболтов</style> больше <b>{0}</b>"
+
+#. STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.HEPS_TOOLTIP_BELOW
+msgctxt "STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.HEPS_TOOLTIP_BELOW"
+msgid "Will send a <b><style=\"logic_on\">Green Signal</style></b> if the <style=\"KKeyword\">Radbolts</style> is below <b>{0}</b>"
+msgstr "Отправляет <b><style=\"logic_on\">зеленый сигнал</style></b>, если <style=\"KKeyword\">радболтов</style> меньше <b>{0}</b>"
 
 #. STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.PRESSURE
 msgctxt "STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.PRESSURE"
@@ -65499,6 +65784,16 @@ msgctxt "STRINGS.WORLD_TRAITS.IRREGULAR_OIL.NAME"
 msgid "Irregular Oil"
 msgstr "Странная нефть"
 
+#. STRINGS.WORLD_TRAITS.LUSH_CORE.DESCRIPTION
+msgctxt "STRINGS.WORLD_TRAITS.LUSH_CORE.DESCRIPTION"
+msgid "This world has a lush forest core."
+msgstr "Этот мир покрыт густыми лесами."
+
+#. STRINGS.WORLD_TRAITS.LUSH_CORE.NAME
+msgctxt "STRINGS.WORLD_TRAITS.LUSH_CORE.NAME"
+msgid "Lush Core"
+msgstr "Буйная растительность"
+
 #. STRINGS.WORLD_TRAITS.MAGMA_VENTS.DESCRIPTION
 msgctxt "STRINGS.WORLD_TRAITS.MAGMA_VENTS.DESCRIPTION"
 msgid "The <link=\"MAGMA\">Magma</link> from this world's core has leaked into the mantle and crust"
@@ -65508,6 +65803,16 @@ msgstr "<link=\"MAGMA\">Магма</link> из ядра просочилась �
 msgctxt "STRINGS.WORLD_TRAITS.MAGMA_VENTS.NAME"
 msgid "Magma Channels"
 msgstr "Каналы с магмой"
+
+#. STRINGS.WORLD_TRAITS.METAL_CAVES.DESCRIPTION
+msgctxt "STRINGS.WORLD_TRAITS.METAL_CAVES.DESCRIPTION"
+msgid "Metallic caves description"
+msgstr "Описание металлических пещер"
+
+#. STRINGS.WORLD_TRAITS.METAL_CAVES.NAME
+msgctxt "STRINGS.WORLD_TRAITS.METAL_CAVES.NAME"
+msgid "Metallic Caves"
+msgstr "Металлические пещеры"
 
 #. STRINGS.WORLD_TRAITS.METAL_POOR.DESCRIPTION
 msgctxt "STRINGS.WORLD_TRAITS.METAL_POOR.DESCRIPTION"
@@ -65553,6 +65858,21 @@ msgstr "Этот мир обладает неизменно стабильной
 msgctxt "STRINGS.WORLD_TRAITS.NO_TRAITS.NAME"
 msgid "<i>This world is stable and has no unusual features.</i>"
 msgstr "<i>Этот мир стабилен и не отличается какими-либо особенностями.</i>"
+
+#. STRINGS.WORLD_TRAITS.NO_TRAITS.NAME_SHORTHAND
+msgctxt "STRINGS.WORLD_TRAITS.NO_TRAITS.NAME_SHORTHAND"
+msgid "No unusal features"
+msgstr "Без каких-либо особенностей"
+
+#. STRINGS.WORLD_TRAITS.RADIOACTIVE_CRUST.DESCRIPTION
+msgctxt "STRINGS.WORLD_TRAITS.RADIOACTIVE_CRUST.DESCRIPTION"
+msgid "Deposits of <link=\"URANIUMORE\">Uranium Ore</link> are found in this world's crust."
+msgstr "В коре этого мира можно найти месторождения <link=\"URANIUMORE\">урановой руды</link>."
+
+#. STRINGS.WORLD_TRAITS.RADIOACTIVE_CRUST.NAME
+msgctxt "STRINGS.WORLD_TRAITS.RADIOACTIVE_CRUST.NAME"
+msgid "Radioactive Crust"
+msgstr "Радиоактивная кора"
 
 #. STRINGS.WORLD_TRAITS.SLIME_SPLATS.DESCRIPTION
 msgctxt "STRINGS.WORLD_TRAITS.SLIME_SPLATS.DESCRIPTION"

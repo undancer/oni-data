@@ -2,8 +2,8 @@ name: STRINGS.WORLDS.WATERMOONLET.NAME
 description: STRINGS.WORLDS.WATERMOONLET.DESCRIPTION
 nameTable: WATER
 asteroidIcon: asteroid_water_moonlet_kanim
-disableWorldTraits: true
 
+worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 80
   Y: 174
@@ -20,7 +20,7 @@ startingBasePositionVertical:
 
 defaultsOverrides:
   data:
-    DrawWorldBorderOverVacuum: false
+    DrawWorldBorderForce: false
     DrawWorldBorder: true
     WorldBorderThickness: 4
     WorldBorderRange: 2
@@ -29,6 +29,25 @@ defaultsOverrides:
     OverworldAvoidRadius: 5
     OverworldSampleBehaviour: PoissonDisk
     POIPadding: 2
+
+disableWorldTraits: true # insufficient variety to support world
+worldTraitRules:
+  - min: 0 # 1
+    max: 1 # 2
+    forbiddenTags:
+      - StartWorldOnly
+      - Oil
+      - StartChange
+      - GenericGeysers
+      - Surface
+      - Geodes
+      - LargeWorld
+      - Crust
+      # - VeryCold
+    forbiddenTraits:
+      - traits/MagmaVents
+      - expansion1::traits/Volcanoes
+      - traits/SlimeSplats
 
 subworldFiles:
   - name: subworlds/space/Space

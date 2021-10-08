@@ -12,7 +12,7 @@ layoutMethod: PowerTree
 defaultsOverrides:
   data:
     DrawWorldBorder: true
-    DrawWorldBorderOverVacuum: false
+    DrawWorldBorderForce: false
     WorldBorderThickness: 1
     WorldBorderRange: 0
     OverworldDensityMin: 15

@@ -2,6 +2,15 @@ name: STRINGS.WORLD_TRAITS.VOLCANOES.NAME
 description: STRINGS.WORLD_TRAITS.VOLCANOES.DESCRIPTION
 colorHex: BF1C1C
 
+forbiddenDLCIds:
+  - EXPANSION1_ID # reimplemented in DLC
+
+# Note: Requires a start subworld defined
+
+traitTags:
+  - VeryHot
+  - Challenge
+
 additionalSubworldFiles:
   - name: subworlds/magma/VolcanoBiome
 

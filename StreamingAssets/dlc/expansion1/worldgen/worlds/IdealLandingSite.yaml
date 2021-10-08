@@ -2,8 +2,8 @@ name: STRINGS.WORLDS.IDEALLANDINGSITE.NAME
 description: STRINGS.WORLDS.IDEALLANDINGSITE.DESCRIPTION
 nameTable: FOREST
 asteroidIcon: asteroid_swamp_rocket_kanim
-disableWorldTraits: true
 
+worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 128
   Y: 153
@@ -11,7 +11,7 @@ layoutMethod: PowerTree
 
 defaultsOverrides:
   data:
-    DrawWorldBorderOverVacuum: false
+    DrawWorldBorderForce: false
     DrawWorldBorder: true
     WorldBorderThickness: 5
     WorldBorderRange: 2
@@ -19,6 +19,24 @@ defaultsOverrides:
     OverworldDensityMax: 18
     OverworldAvoidRadius: 5
     OverworldSampleBehaviour: PoissonDisk
+
+worldTraitRules:
+  - min: 1
+    max: 2
+    forbiddenTags:
+      - Oil
+      - LargeWorld
+      - Surface
+      - Crust
+      - Challenge
+      - Core # would reduce too much uranium
+      - GenericGeysers
+      - StartChange
+      - StartWorldOnly
+
+fixedTraits:
+  - sunlightLow
+  - cosmicRadiationMedLow
 
 startSubworldName: expansion1::subworlds/barren/LargeChasmStart
 startingBaseTemplate:  poi/poi_satellite_3_a
@@ -28,10 +46,6 @@ startingBasePositionHorizontal:
 startingBasePositionVertical:
   min: 0.65
   max: 0.65
-
-fixedTraits:
-  - sunlightLow
-  - cosmicRadiationMedLow
 
 # List all the subworld files to load
 subworldFiles:

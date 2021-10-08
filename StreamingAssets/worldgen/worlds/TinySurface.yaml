@@ -3,6 +3,7 @@ description: STRINGS.WORLDS.TINYSURFACE.DESCRIPTION
 disableWorldTraits: true
 asteroidIcon: asteroid_swamp_rocket_kanim
 
+worldTraitScale: 1 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 32
   Y: 32
@@ -15,12 +16,13 @@ defaultsOverrides:
     OverworldDensityMin: 10
     OverworldDensityMax: 10
     DrawWorldBorder: true
-    DrawWorldBorderOverVacuum: false
+    DrawWorldBorderForce: false
     WorldBorderThickness: 1
     WorldBorderRange: 0
 #    OverworldMinNodes: 1
   startingWorldElements: [] # remove the algae check
 
+worldTraitRules: [] # Disable world traits
 
 # List all the subworld files to load
 subworldFiles:

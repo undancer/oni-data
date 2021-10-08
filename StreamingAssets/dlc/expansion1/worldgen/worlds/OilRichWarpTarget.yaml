@@ -2,33 +2,44 @@ name: STRINGS.WORLDS.OILRICHWARPTARGET.NAME
 description: STRINGS.WORLDS.OILRICHWARPTARGET.DESCRIPTION
 nameTable: SANDSTONE
 asteroidIcon: asteroid_swamp_teleport_kanim
-disableWorldTraits: true
 
+worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 128
   Y: 153
 layoutMethod: PowerTree
 
-fixedTraits:
-  - sunlightMedLow
-  - cosmicRadiationLow
-
 defaultsOverrides:
   data:
-    DrawWorldBorderOverVacuum: false
+    DrawWorldBorderForce: false
     DrawWorldBorder: true
-    WorldBorderThickness: 5
-    WorldBorderRange: 2
+    WorldBorderThickness: 4
+    WorldBorderRange: 1
     OverworldDensityMin: 18
     OverworldDensityMax: 18
     OverworldAvoidRadius: 5
     OverworldSampleBehaviour: PoissonDisk
+    POIPadding: 1
+
+worldTraitRules:
+  - min: 1
+    max: 2
+    forbiddenTags:
+      - StartWorldOnly
+      - LargeWorld
+      - Challenge
+      - Surface
+      - GenericGeysers
+
+fixedTraits:
+  - sunlightMedLow
+  - cosmicRadiationLow
 
 startSubworldName: expansion1::subworlds/sandstone/SandstoneWarpStart
 startingBaseTemplate:  expansion1::bases/warpworldSandstoneBase
 startingBasePositionHorizontal:
-  min: 0.2
-  max: 0.8
+  min: 0.4
+  max: 0.6
 startingBasePositionVertical:
   min: 0.50
   max: 0.55
@@ -43,11 +54,8 @@ subworldFiles:
   - name: expansion1::subworlds/space/SpaceWithSaltyBorder
   - name: expansion1::subworlds/magma/BottomSmall
   - name: expansion1::subworlds/oil/OilSparse
-    minCount: 1
   - name: expansion1::subworlds/oil/OilWells
-    minCount: 3
   - name: expansion1::subworlds/rust/med_Rust
-    minCount: 2
   - name: expansion1::subworlds/ocean/med_OceanSurface
     minCount: 4
 
@@ -140,8 +148,8 @@ worldTemplateRules:
       - command: Replace
         tagcommand: DistanceFromTag
         tag: AtStart
-        minDistance: 2
-        maxDistance: 3
+        minDistance: 1
+        maxDistance: 4
       - command: IntersectWith
         zoneTypes: [ Sandstone, Ocean, Rust ]
       - command: ExceptWith

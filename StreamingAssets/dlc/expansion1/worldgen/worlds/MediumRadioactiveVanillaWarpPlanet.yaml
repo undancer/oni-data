@@ -1,21 +1,17 @@
-name: STRINGS.WORLDS.MEDIUMRADIOACTIVEVANILLAWARPPLANET.NAME
+name: STRINGS.WORLDS.MEDIUMRADIOACTIVEVANILLAWARPPLANET.NAME # Radioactive Swamp Asteroid
 description: STRINGS.WORLDS.MEDIUMRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION
 nameTable: SWAMP
 asteroidIcon: asteroid_vanilla_sandstone_warp_kanim
-disableWorldTraits: true
 
+worldTraitScale: 0.3 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 160
   Y: 176
 layoutMethod: PowerTree
 
-fixedTraits:
-  - sunlightMedLow
-  - cosmicRadiationMedHigh
-
 defaultsOverrides:
   data:
-    DrawWorldBorderOverVacuum: false
+    DrawWorldBorderForce: false
     DrawWorldBorder: true
     WorldBorderThickness: 3
     WorldBorderRange: 1
@@ -24,6 +20,21 @@ defaultsOverrides:
     OverworldAvoidRadius: 5
     OverworldSampleBehaviour: PoissonDisk
     POIPadding: 1
+
+worldTraitRules:
+  - min: 2
+    max: 2
+    forbiddenTags:
+      - StartWorldOnly
+      - Oil
+      - LargeWorld
+      - Surface # surface is too specific
+      - Core # would reduce too much uranium
+      - GenericGeysers
+
+fixedTraits:
+  - sunlightMedLow
+  - cosmicRadiationMedHigh
 
 startSubworldName: expansion1::subworlds/swamp/SwampWarpStart
 startingBaseTemplate:  expansion1::bases/warpworldSwampBase
@@ -117,7 +128,7 @@ unknownCellsAllowedSubworlds:
     subworldNames:
       - expansion1::subworlds/marsh/HotMarshSteamy
       - expansion1::subworlds/frozen/FrozenSlush
-  - tagcommand: DistanceFromTag # Oil
+  - tagcommand: DistanceFromTag # Above Core
     tag: AtDepths
     minDistance: 1
     maxDistance: 1
@@ -156,7 +167,7 @@ worldTemplateRules:
   - names:
     - expansion1::poi/poi_geyser_dirty_slush
     - expansion1::poi/poi_frozen_salt_water_geyser
-    listRule: GuaranteeAll
+    listRule: TryAll
     priority: 100
     allowedCellsFilter:
       - command: Replace

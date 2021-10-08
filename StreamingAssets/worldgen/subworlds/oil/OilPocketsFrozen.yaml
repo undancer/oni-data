@@ -1,10 +1,10 @@
 biomeNoise: noise/OilPockets
 temperatureRange: VeryCold
-minChildCount: 2
+minChildCount: 5
 density:
-  min: 35
-  max: 45
-avoidRadius: 50.0
+  min: 25
+  max: 35
+avoidRadius: 25.0
 sampleBehaviour: PoissonDisk
 biomes:
   - name: biomes/Oil/OilPocketsFrozen

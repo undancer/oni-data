@@ -558,7 +558,7 @@ msgstr ""
 #. STRINGS.BUILDING.STATUSITEMS.CONVEYOR_CONTENTS.EMPTY
 msgctxt "STRINGS.BUILDING.STATUSITEMS.CONVEYOR_CONTENTS.EMPTY"
 msgid "Empty"
-msgstr "비우기"
+msgstr "비어있음"
 
 #. STRINGS.BUILDING.STATUSITEMS.COOLING.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.COOLING.NAME"
@@ -959,7 +959,7 @@ msgstr "<style=\"produced\">{FlowRate}</style>의 속도로 <link=\"OXYGEN\">산
 #. STRINGS.BUILDING.STATUSITEMS.EMPTYPUMPINGSTATION.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.EMPTYPUMPINGSTATION.NAME"
 msgid "Empty"
-msgstr "비우기"
+msgstr "비어있음"
 
 #. STRINGS.BUILDING.STATUSITEMS.EMPTYPUMPINGSTATION.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.EMPTYPUMPINGSTATION.TOOLTIP"
@@ -1174,13 +1174,13 @@ msgctxt "STRINGS.BUILDING.STATUSITEMS.FOOD_CONTAINERS_OUTSIDE_RANGE.TOOLTIP"
 msgid "Recuperating Duplicants must have <style=\"KKeyword\">Food</style> available within <b>{0}</b> cells"
 msgstr "회복 중인 복제체는 <b>{0}</b> 셀 범위 내에 <style=\"KKeyword\">식품</style>이 있어야 합니다."
 
-#. STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLINGn.NAME
-msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLINGn.NAME"
+#. STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.NAME"
 msgid "Cooling Contents: {UsedPower}"
 msgstr "냉각 콘텐츠: {UsedPower}"
 
-#. STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLINGn.TOOLTIP
-msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLINGn.TOOLTIP"
+#. STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FRIDGECOOLING.TOOLTIP"
 msgid "{UsedPower} of {MaxPower} are being used to cool the contents of this food storage"
 msgstr "{MaxPower} 중 {UsedPower}은(는) 이 식품 저장고의 내용물을 식히는 데 사용되고 있습니다."
 
@@ -1307,7 +1307,7 @@ msgstr "{Epitaph}"
 #. STRINGS.BUILDING.STATUSITEMS.GRAVEEMPTY.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.GRAVEEMPTY.NAME"
 msgid "Empty"
-msgstr "비우기"
+msgstr "비어있음"
 
 #. STRINGS.BUILDING.STATUSITEMS.GRAVEEMPTY.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.GRAVEEMPTY.TOOLTIP"
@@ -2805,7 +2805,7 @@ msgstr ""
 #. STRINGS.BUILDING.STATUSITEMS.PIPECONTENTS.EMPTY
 msgctxt "STRINGS.BUILDING.STATUSITEMS.PIPECONTENTS.EMPTY"
 msgid "Empty"
-msgstr "비우기"
+msgstr "비어있음"
 
 #. STRINGS.BUILDING.STATUSITEMS.PIPEMAYMELT.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.PIPEMAYMELT.NAME"
@@ -3508,6 +3508,26 @@ msgstr "태닝 라이트 사용 가능"
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TANNINGLIGHTSUFFICIENT.TOOLTIP"
 msgid "There is sufficient <link=\"LIGHT\">Light</link> here to create pleasing skin crisping"
 msgstr "기분 좋게 피부를 바싹 태우기에 충분한<link=\"LIGHT\">빛</link>이 있습니다."
+
+#. STRINGS.BUILDING.STATUSITEMS.TELEPHONE.BABBLE.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.TELEPHONE.BABBLE.NAME"
+msgid "Babbling to no one."
+msgstr "아무에게나 지껄이는 중."
+
+#. STRINGS.BUILDING.STATUSITEMS.TELEPHONE.BABBLE.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.TELEPHONE.BABBLE.TOOLTIP"
+msgid "{Duplicant} just needed to vent to no one."
+msgstr "{Duplicant}은(는) 아무에게나 말을 해야 했습니다."
+
+#. STRINGS.BUILDING.STATUSITEMS.TELEPHONE.CONVERSATION.TALKING_TO
+msgctxt "STRINGS.BUILDING.STATUSITEMS.TELEPHONE.CONVERSATION.TALKING_TO"
+msgid "Talking to {Duplicant} on {Asteroid}"
+msgstr "{Asteroid}에서 {Duplicant}(으)와(과) 말하는 중"
+
+#. STRINGS.BUILDING.STATUSITEMS.TELEPHONE.CONVERSATION.TALKING_TO_NUM
+msgctxt "STRINGS.BUILDING.STATUSITEMS.TELEPHONE.CONVERSATION.TALKING_TO_NUM"
+msgid "Talking to {0} friends."
+msgstr "친구 {0}명과 이야기 중입니다."
 
 #. STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_INSUFFICIENT_COLONIES.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.TEMPORAL_TEAR_OPENER_INSUFFICIENT_COLONIES.NAME"
@@ -4258,13 +4278,13 @@ msgid ""
 "\n"
 "Consumes <link=\"WATER\">Water</link>.\n"
 "\n"
-"Assigned Duplicants must possess the <link=\"JUNIORRESEARCHER\">Advanced Research</link> skill."
+"Assigned Duplicants must possess the <link=\"RESEARCHING1\">Advanced Research</link> skill."
 msgstr ""
 "<link=\"RESEARCH\">고급 연구</link>를 수행하여 새로운 기술을 잠금 해제합니다.\n"
 "\n"
 "<link=\"WATER\">물</link>을 소비합니다.\n"
 "\n"
-"할당된 복제체는 <link=\"JUNIORRESEARCHER\">고급 연구</link> 기술을 가지고 있어야 합니다."
+"할당된 복제체는 <link=\"RESEARCHING1\">고급 연구</link> 기술을 가지고 있어야 합니다."
 
 #. STRINGS.BUILDINGS.PREFABS.ADVANCEDRESEARCHCENTER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.ADVANCEDRESEARCHCENTER.NAME"
@@ -4467,13 +4487,13 @@ msgstr "복제체는 우주 로켓을 조종하기 위해 우주비행사 훈련
 #. STRINGS.BUILDINGS.PREFABS.ASTRONAUTTRAININGCENTER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.ASTRONAUTTRAININGCENTER.EFFECT"
 msgid ""
-"Trains Duplicants to become <link=\"ASTRONAUT\">Astronauts</link>.\n"
+"Trains Duplicants to become <link=\"ROCKETPILOTING1\">Astronaut</link>.\n"
 "\n"
-"Duplicants must possess the <link=\"ASTRONAUTTRAINEE\">Astronaut-in-Training</link> trait to receive training."
+"Duplicants must possess the <link=\"ROCKETPILOTING1\">Astronaut</link> trait to receive training."
 msgstr ""
-"복제체가 <link=\"ASTRONAUT\">우주비행사</link>가 되도록 훈련시킵니다.\n"
+"복제체가 <link=\"ROCKETPILOTING1\">우주비행사</link>가 되도록 훈련시킵니다.\n"
 "\n"
-"복제체는 훈련을 받기 위해 <link=\"ASTRONAUTTRAINEE\">예비 우주비행사</link> 특성을 가져야 합니다."
+"복제체는 훈련을 받기 위해 <link=\"ROCKETPILOTING1\">우주비행사</link> 특성을 가져야 합니다."
 
 #. STRINGS.BUILDINGS.PREFABS.ASTRONAUTTRAININGCENTER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.ASTRONAUTTRAININGCENTER.NAME"
@@ -5073,7 +5093,7 @@ msgstr "로켓 발사 점검 목록이 완료되면 <b><style=\"logic_on\">녹�
 #. STRINGS.BUILDINGS.PREFABS.CLUSTERCOMMANDMODULE.LOGIC_PORT_READY_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.CLUSTERCOMMANDMODULE.LOGIC_PORT_READY_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.CLUSTERCOMMANDMODULE.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.CLUSTERCOMMANDMODULE.NAME"
@@ -5105,13 +5125,13 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.CLUSTERTELESCOPE.EFFECT"
 msgid ""
 "Reveals visitable Planetoids in space.\n"
 "\n"
-"Assigned Duplicants must possess the <link=\"SENIORRESEARCHER\">Astronomy</link> skill.\n"
+"Assigned Duplicants must possess the <link=\"ASTRONOMY\">Astronomy</link> skill.\n"
 "\n"
 "Building must be exposed to space to function."
 msgstr ""
 "우주에서 방문할 수 있는 미행성을 보여줍니다.\n"
 "\n"
-"할당된 복제체는 <link=\"SENIORRESEARCHER\">천문학</link> 기술을 가지고 있어야 합니다.\n"
+"할당된 복제체는 <link=\"ASTRONOMY\">천문학</link> 기술을 가지고 있어야 합니다.\n"
 "\n"
 "건조물이 작동하려면 우주에 노출되어야 합니다."
 
@@ -5194,11 +5214,11 @@ msgstr "로켓을 조종하려면 적어도 한 우주비행사가 지령 모듈
 #. STRINGS.BUILDINGS.PREFABS.COMMANDMODULE.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.COMMANDMODULE.EFFECT"
 msgid ""
-"Contains passenger seating for Duplicant <link=\"ASTRONAUT\">Astronauts</link>.\n"
+"Contains passenger seating for Duplicant <link=\"ASTRONAUTING1\">Astronauts</link>.\n"
 "\n"
 "A Command Capsule must be the last module installed at the top of a rocket."
 msgstr ""
-"복제체 <link=\"ASTRONAUT\">우주비행사</link>를 위한 승객석을 포함합니다.\n"
+"복제체 <link=\"ASTRONAUTING1\">우주비행사</link>를 위한 승객석을 포함합니다.\n"
 "\n"
 "지령 캡슐은 로켓 상단에 마지막으로 설치된 모듈이어야 합니다."
 
@@ -5230,7 +5250,7 @@ msgstr "로켓 발사 점검 목록이 완료되면 <b><style=\"logic_on\">녹�
 #. STRINGS.BUILDINGS.PREFABS.COMMANDMODULE.LOGIC_PORT_READY_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.COMMANDMODULE.LOGIC_PORT_READY_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.COMMANDMODULE.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.COMMANDMODULE.NAME"
@@ -5316,13 +5336,13 @@ msgid ""
 "\n"
 "Consumes data from <link=\"TELESCOPE\">Telescopes</link> and <link=\"RESEARCHMODULE\">Research Modules</link>.\n"
 "\n"
-"Assigned Duplicants must possess the <link=\"SENIORRESEARCHER\">Astronomy</link> skill."
+"Assigned Duplicants must possess the <link=\"ASTRONOMY\">Astronomy</link> skill."
 msgstr ""
 "<link=\"RESEARCH\">성간 연구</link>를 수행하여 새로운 테크놀로지를 잠금 해제합니다.\n"
 "\n"
 "<link=\"TELESCOPE\">망원경</link> 및 <link=\"RESEARCHMODULE\">연구 모듈</link>의 데이터를 소비합니다.\n"
 "\n"
-"할당된 복제체는 <link=\"SENIORRESEARCHER\">천문학</link> 기술을 가지고 있어야 합니다."
+"할당된 복제체는 <link=\"ASTRONOMY\">천문학</link> 기술을 가지고 있어야 합니다."
 
 #. STRINGS.BUILDINGS.PREFABS.COSMICRESEARCHCENTER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.COSMICRESEARCHCENTER.NAME"
@@ -5762,11 +5782,11 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.EGGINCUBATOR.EFFECT"
 msgid ""
 "Incubates <link=\"CRITTERS\">Critter</link> eggs until ready to hatch.\n"
 "\n"
-"Assigned Duplicants must possess the <link=\"RANCHER\">Critter Wrangling</link> trait."
+"Assigned Duplicants must possess the <link=\"RANCHING1\">Critter Ranching</link> ."
 msgstr ""
 "부화할 준비가 될 때까지 <link=\"CRITTERS\">크리터</link> 알을 부화시킵니다.\n"
 "\n"
-"할당된 복제체는 <link=\"RANCHER\">크리터 생포</link> 특성을 가져야 합니다."
+"할당된 복제체는 <link=\"RANCHING1\">크리터 생포</link> 특성을 가져야 합니다."
 
 #. STRINGS.BUILDINGS.PREFABS.EGGINCUBATOR.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.EGGINCUBATOR.NAME"
@@ -5907,13 +5927,13 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.FARMSTATION.EFFECT"
 msgid ""
 "Produces <link=\"FARMSTATIONTOOLS\">Micronutrient Fertilizer</link> to increase <link=\"PLANTS\">Plant</link> growth rates.\n"
 "\n"
-"Assigned Duplicants must possess the <link=\"FARMER\">Crop Tending</link> trait.\n"
+"Assigned Duplicants must possess the <link=\"FARMING2\">Crop Tending</link> trait.\n"
 "\n"
 "This building is a necessary component of the Greenhouse room."
 msgstr ""
 "<link=\"PLANTS\">식물</link> 생장률을 높이기 위해 <link=\"FARMSTATIONTOOLS\">미량 영양소 비료</link>를 생산합니다.\n"
 "\n"
-"할당된 복제체는 <link=\"FARMER\">작물 경작</link> 특성을 가져야 합니다.\n"
+"할당된 복제체는 <link=\"FARMING2\">작물 경작</link> 특성을 가져야 합니다.\n"
 "\n"
 "이 건조물은 온실 방의 필수 구성 요소입니다."
 
@@ -6418,7 +6438,7 @@ msgstr "파이프의 세균 수가 선택한 범위 내에 있으면 <b><style=\
 #. STRINGS.BUILDINGS.PREFABS.GASCONDUITDISEASESENSOR.LOGIC_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.GASCONDUITDISEASESENSOR.LOGIC_PORT_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.GASCONDUITDISEASESENSOR.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.GASCONDUITDISEASESENSOR.NAME"
@@ -6448,7 +6468,7 @@ msgstr "구성된 기체가 감지되면 <b><style=\"logic_on\">녹색 신호</s
 #. STRINGS.BUILDINGS.PREFABS.GASCONDUITELEMENTSENSOR.LOGIC_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.GASCONDUITELEMENTSENSOR.LOGIC_PORT_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.GASCONDUITELEMENTSENSOR.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.GASCONDUITELEMENTSENSOR.NAME"
@@ -6529,7 +6549,7 @@ msgstr "포함된 기체가 선택한 온도 범위 내에 있으면 <b><style=\
 #. STRINGS.BUILDINGS.PREFABS.GASCONDUITTEMPERATURESENSOR.LOGIC_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.GASCONDUITTEMPERATURESENSOR.LOGIC_PORT_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.GASCONDUITTEMPERATURESENSOR.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.GASCONDUITTEMPERATURESENSOR.NAME"
@@ -6594,7 +6614,7 @@ msgstr "한계에 도달하면 <b><style=\"logic_on\">녹색 신호</style></b>�
 #. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.OUTPUT_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.OUTPUT_PORT_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.RESET_PORT_ACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.GASLIMITVALVE.RESET_PORT_ACTIVE"
@@ -7356,8 +7376,8 @@ msgstr "복제체는 아이스-E 팬을 작동하여 필요에 따라 작은 영
 
 #. STRINGS.BUILDINGS.PREFABS.ICECOOLEDFAN.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.ICECOOLEDFAN.EFFECT"
-msgid "Uses <link=\"ICE\">Ice</link> to dissipate a small amount of the <link=\"HEAT\">Heat</link>."
-msgstr "<link=\"ICE\">얼음</link>을 사용하여 소량의 <link=\"HEAT\">열</link>을 분산시킵니다."
+msgid "Uses <link=\"ICEORE\">Ice</link> to dissipate a small amount of the <link=\"HEAT\">Heat</link>."
+msgstr "<link=\"ICEORE\">얼음</link>을 사용하여 소량의 <link=\"HEAT\">열</link>을 분산시킵니다."
 
 #. STRINGS.BUILDINGS.PREFABS.ICECOOLEDFAN.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.ICECOOLEDFAN.NAME"
@@ -8033,7 +8053,7 @@ msgstr "파이프의 세균 수가 선택한 범위 내에 있으면 <b><style=\
 #. STRINGS.BUILDINGS.PREFABS.LIQUIDCONDUITDISEASESENSOR.LOGIC_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDCONDUITDISEASESENSOR.LOGIC_PORT_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.LIQUIDCONDUITDISEASESENSOR.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDCONDUITDISEASESENSOR.NAME"
@@ -8063,7 +8083,7 @@ msgstr "구성된 액체가 감지되면 <b><style=\"logic_on\">녹색 신호</s
 #. STRINGS.BUILDINGS.PREFABS.LIQUIDCONDUITELEMENTSENSOR.LOGIC_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDCONDUITELEMENTSENSOR.LOGIC_PORT_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.LIQUIDCONDUITELEMENTSENSOR.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDCONDUITELEMENTSENSOR.NAME"
@@ -8144,7 +8164,7 @@ msgstr "포함된 액체가 선택한 온도 범위 내에 있으면 <b><style=\
 #. STRINGS.BUILDINGS.PREFABS.LIQUIDCONDUITTEMPERATURESENSOR.LOGIC_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDCONDUITTEMPERATURESENSOR.LOGIC_PORT_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.LIQUIDCONDUITTEMPERATURESENSOR.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDCONDUITTEMPERATURESENSOR.NAME"
@@ -8283,7 +8303,7 @@ msgstr "한계에 도달하면 <b><style=\"logic_on\">녹색 신호</style></b>�
 #. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.OUTPUT_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.OUTPUT_PORT_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.RESET_PORT_ACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.LIQUIDLIMITVALVE.RESET_PORT_ACTIVE"
@@ -8543,7 +8563,7 @@ msgstr "카운터가 선택한 값과 일치하면 <b><style=\"logic_on\">녹색
 #. STRINGS.BUILDINGS.PREFABS.LOGICCOUNTER.OUTPUT_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICCOUNTER.OUTPUT_PORT_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.LOGICCOUNTER.RESET_PORT_ACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICCOUNTER.RESET_PORT_ACTIVE"
@@ -8588,7 +8608,7 @@ msgstr "방의 크리터와 알의 수가 선택한 범위 내에 있으면 <b><
 #. STRINGS.BUILDINGS.PREFABS.LOGICCRITTERCOUNTSENSOR.LOGIC_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICCRITTERCOUNTSENSOR.LOGIC_PORT_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.LOGICCRITTERCOUNTSENSOR.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICCRITTERCOUNTSENSOR.NAME"
@@ -8623,7 +8643,7 @@ msgstr "세균 수가 선택한 범위 내에 있으면<b><style=\"logic_on\">�
 #. STRINGS.BUILDINGS.PREFABS.LOGICDISEASESENSOR.LOGIC_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICDISEASESENSOR.LOGIC_PORT_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.LOGICDISEASESENSOR.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICDISEASESENSOR.NAME"
@@ -8653,7 +8673,7 @@ msgstr "복제체가 센서의 타일 범위 내에 있으면 <b><style=\"logic_
 #. STRINGS.BUILDINGS.PREFABS.LOGICDUPLICANTSENSOR.LOGIC_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICDUPLICANTSENSOR.LOGIC_PORT_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.LOGICDUPLICANTSENSOR.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICDUPLICANTSENSOR.NAME"
@@ -8689,7 +8709,7 @@ msgstr "선택한 기체가 감지되면 <b><style=\"logic_on\">녹색 신호</s
 #. STRINGS.BUILDINGS.PREFABS.LOGICELEMENTSENSORGAS.LOGIC_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICELEMENTSENSORGAS.LOGIC_PORT_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.LOGICELEMENTSENSORGAS.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICELEMENTSENSORGAS.NAME"
@@ -8725,7 +8745,7 @@ msgstr "선택한 액체가 감지되면 <b><style=\"logic_on\">녹색 신호</s
 #. STRINGS.BUILDINGS.PREFABS.LOGICELEMENTSENSORLIQUID.LOGIC_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICELEMENTSENSORLIQUID.LOGIC_PORT_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.LOGICELEMENTSENSORLIQUID.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICELEMENTSENSORLIQUID.NAME"
@@ -9063,6 +9083,36 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICHAMMER.NAME"
 msgid "<link=\"LOGICHAMMER\">Hammer</link>"
 msgstr "<link=\"LOGICHAMMER\">해머</link>"
 
+#. STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.DESC"
+msgid "Radbolt sensors can send a signal when a Radbolt passes over them."
+msgstr "래드볼트 센서는 래드볼트가 센서를 지나갈 때 신호를 보낼 수 있습니다."
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.EFFECT"
+msgid "Sends a <b><style=\"logic_on\">Green Signal</style></b> or a <b><style=\"logic_off\">Red Signal</style></b> when Radbolts detected enters the chosen range."
+msgstr "감지된 래드볼트가 선택 범위에 들어갈 때 <b><style=\"logic_on\">녹색 신호</style></b> 또는 <b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.LOGIC_PORT
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.LOGIC_PORT"
+msgid "Detected Radbolts"
+msgstr "감지된 래드볼트"
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.LOGIC_PORT_ACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.LOGIC_PORT_ACTIVE"
+msgid "Sends a <b><style=\"logic_on\">Green Signal</style></b> if detected Radbolts are within the selected range"
+msgstr "감지된 래드볼트 선택한 범위 내에 있으면 <b><style=\"logic_on\">녹색 신호</style></b>를 보냅니다."
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.LOGIC_PORT_INACTIVE
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.LOGIC_PORT_INACTIVE"
+msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
+
+#. STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICHEPSENSOR.NAME"
+msgid "<link=\"LOGICHEPSENSOR\">Radbolt Sensor</link>"
+msgstr "<link=\"LOGICHEPSENSOR\">래드볼트 센서</link>"
+
 #. STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDRECEIVER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICINTERASTEROIDRECEIVER.DESC"
 msgid "Receives automation signals from space."
@@ -9274,7 +9324,7 @@ msgstr "기체 압력이 선택한 범위 내에 있으면 <b><style=\"logic_on\
 #. STRINGS.BUILDINGS.PREFABS.LOGICPRESSURESENSORGAS.LOGIC_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICPRESSURESENSORGAS.LOGIC_PORT_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.LOGICPRESSURESENSORGAS.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICPRESSURESENSORGAS.NAME"
@@ -9310,7 +9360,7 @@ msgstr "액체 압력이 선택한 범위 내에 있으면 <b><style=\"logic_on\
 #. STRINGS.BUILDINGS.PREFABS.LOGICPRESSURESENSORLIQUID.LOGIC_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICPRESSURESENSORLIQUID.LOGIC_PORT_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.LOGICPRESSURESENSORLIQUID.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICPRESSURESENSORLIQUID.NAME"
@@ -9340,7 +9390,7 @@ msgstr "주위 <link=\"RADIATION\">방사선</link>이 선택한 범위 내에 �
 #. STRINGS.BUILDINGS.PREFABS.LOGICRADIATIONSENSOR.LOGIC_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICRADIATIONSENSOR.LOGIC_PORT_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.LOGICRADIATIONSENSOR.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICRADIATIONSENSOR.NAME"
@@ -9578,7 +9628,7 @@ msgstr "주위 <link=\"HEAT\">온도</link>가 선택한 범위 내에 있으면
 #. STRINGS.BUILDINGS.PREFABS.LOGICTEMPERATURESENSOR.LOGIC_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICTEMPERATURESENSOR.LOGIC_PORT_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.LOGICTEMPERATURESENSOR.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICTEMPERATURESENSOR.NAME"
@@ -9608,7 +9658,7 @@ msgstr "현재 시간이 선택한 <b><style=\"logic_on\">녹색</style></b> 범
 #. STRINGS.BUILDINGS.PREFABS.LOGICTIMEOFDAYSENSOR.LOGIC_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICTIMEOFDAYSENSOR.LOGIC_PORT_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.LOGICTIMEOFDAYSENSOR.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICTIMEOFDAYSENSOR.NAME"
@@ -9668,7 +9718,7 @@ msgstr "현재 <link=\"POWER\">와트수</link>가 선택한 범위 내에 있�
 #. STRINGS.BUILDINGS.PREFABS.LOGICWATTAGESENSOR.LOGIC_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICWATTAGESENSOR.LOGIC_PORT_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.LOGICWATTAGESENSOR.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICWATTAGESENSOR.NAME"
@@ -10503,22 +10553,22 @@ msgstr "이온이 몇 개 무료로 함께 제공됩니다."
 #. STRINGS.BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.EFFECT"
 msgid ""
-"Conducts <link=\"RESEARCH\">Materials Science Research</link> to unlock new technologies.\n"
+"Conducts <link=\"RESEARCHDLC1\">Materials Science Research</link> to unlock new technologies.\n"
 "\n"
 "Consumes Radbolts.\n"
 "\n"
-"Assigned Duplicants must possess the <link=\"ATOMICRESEARCHER\">Materials Science Research</link> skill."
+"Assigned Duplicants must possess the <link=\"ATOMICRESEARCH\">Materials Science Research</link> skill."
 msgstr ""
-"<link=\"RESEARCH\">재료 과학 연구</link>를 수행하여 새로운 기술을 잠금 해제합니다.\n"
+"<link=\"RESEARCHDLC1\">재료 과학 연구</link>를 수행하여 새로운 기술을 잠금 해제합니다.\n"
 "\n"
 "래드볼트를 소비합니다.\n"
 "\n"
-"할당된 복제체는 <link=\"ATOMICRESEARCHER\">재료 과학 연구</link> 기술을 가지고 있어야 합니다."
+"할당된 복제체는 <link=\"ATOMICRESEARCH\">재료 과학 연구</link> 기술을 가지고 있어야 합니다."
 
 #. STRINGS.BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.NUCLEARRESEARCHCENTER.NAME"
-msgid "<link=\"NUCLEARLABORATORY\">Materials Study Terminal</link>"
-msgstr "<link=\"NUCLEARLABORATORY\">재료 연구 터미널</link>"
+msgid "<link=\"NUCLEARRESEARCHCENTER\">Materials Study Terminal</link>"
+msgstr "<link=\"NUCLEARRESEARCHCENTER\">재료 연구 터미널</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.OBJECTDISPENSER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.OBJECTDISPENSER.DESC"
@@ -10615,17 +10665,17 @@ msgstr "궤도 마이크로랩은 미행성 주위의 궤도에서 연구를 수
 #. STRINGS.BUILDINGS.PREFABS.ORBITALRESEARCHCENTER.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.ORBITALRESEARCHCENTER.EFFECT"
 msgid ""
-"Conducts <link=\"RESEARCH\">Interstellar Research</link> to unlock new technologies.\n"
+"Conducts <link=\"RESEARCHDLC1\">Interstellar Research</link> to unlock new technologies.\n"
 "\n"
 "Consumes <link=\"POLYPROPYLENE\">Plastic</link> and <link=\"POWER\">Power</link>.\n"
 "\n"
-"Assigned Duplicants must possess the <link=\"COSMICRESEARCHER\">Orbital Researcher</link> skill."
+"Assigned Duplicants must possess the <link=\"SPACERESEARCH\">Orbital Researcher</link> skill."
 msgstr ""
-"<link=\"RESEARCH\">성간 연구</link>를 수행하여 새로운 기술을 잠금 해제합니다.\n"
+"<link=\"RESEARCHDLC1\">성간 연구</link>를 수행하여 새로운 기술을 잠금 해제합니다.\n"
 "\n"
 "<link=\"POLYPROPYLENE\">플라스틱</link>과 <link=\"POWER\">전력</link>을 소비합니다.\n"
 "\n"
-"할당된 복제체는 <link=\"COSMICRESEARCHER\">궤도 연구원</link> 기술을 가지고 있어야 합니다."
+"할당된 복제체는 <link=\"SPACERESEARCH\">궤도 연구원</link> 기술을 가지고 있어야 합니다."
 
 #. STRINGS.BUILDINGS.PREFABS.ORBITALRESEARCHCENTER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.ORBITALRESEARCHCENTER.NAME"
@@ -11097,13 +11147,13 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.POWERCONTROLSTATION.EFFECT"
 msgid ""
 "Produces <link=\"POWERSTATIONTOOLS\">Microchip</link> to increase the <link=\"POWER\">Power</link> output of generators.\n"
 "\n"
-"Assigned Duplicants must possess the <link=\"POWERTECHNICIAN\">Tune Up</link> trait.\n"
+"Assigned Duplicants must possess the <link=\"TECHNICALS2\">Tune Up</link> trait.\n"
 "\n"
 "This building is a necessary component of the Power Plant room."
 msgstr ""
 "발전기의 <link=\"POWER\">전력</link> 출력을 높이기 위해 <link=\"POWERSTATIONTOOLS\">마이크로칩</link>을 생산합니다.\n"
 "\n"
-"할당된 복제체는 <link=\"POWERTECHNICIAN\">튠업</link> 특성을 가져야 합니다.\n"
+"할당된 복제체는 <link=\"TECHNICALS2\">튠업</link> 특성을 가져야 합니다.\n"
 "\n"
 "이 건조물은 발전소 방의 필수 구성 요소입니다."
 
@@ -11830,13 +11880,13 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.RANCHSTATION.EFFECT"
 msgid ""
 "Allows the assigned <link=\"RANCHER\">Rancher</link> to care for <link=\"CRITTERS\">Critters</link>.\n"
 "\n"
-"Assigned Duplicants must possess the <link=\"RANCHER\">Critter Wrangling</link> trait.\n"
+"Assigned Duplicants must possess the <link=\"RANCHING1\">Critter Ranching</link> skill.\n"
 "\n"
 "This building is a necessary component of the Stable room."
 msgstr ""
 "<link=\"CRITTERS\">사육자</link>가 <link=\"RANCHER\">크리터</link>를 돌볼 수 있게 합니다.\n"
 "\n"
-"할당된 복제체는 <link=\"RANCHER\">크리터 생포</link> 특성을 가져야 합니다.\n"
+"할당된 복제체는 <link=\"RANCHING1\">사육</link> 기술을 가져야 합니다.\n"
 "\n"
 "이 건조물은 외양간 방의 필수 구성 요소입니다."
 
@@ -11889,7 +11939,7 @@ msgstr "가득 차면 <b><style=\"logic_on\">녹색 신호</style></b>를 보냅
 #. STRINGS.BUILDINGS.PREFABS.REFRIGERATOR.LOGIC_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.REFRIGERATOR.LOGIC_PORT_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.REFRIGERATOR.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.REFRIGERATOR.NAME"
@@ -12035,11 +12085,11 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.EFFECT"
 msgid ""
 "Allows Duplicants to use pilot-operated rockets and control access to interior buildings.\n"
 "\n"
-"Assigned Duplicants must have the <link=\"PILOT\">Rocket Piloting</link> skill."
+"Assigned Duplicants must have the <link=\"ROCKETPILOTING1\">Rocket Piloting</link> skill."
 msgstr ""
 "복제체가 파일럿 작동 로켓을 사용하고 내부 건물에 대한 액세스를 제어할 수 있습니다.\n"
 "\n"
-"할당된 복제체는 <link=\"PILOT\">로켓 조종</link> 기술이 있어야 합니다."
+"할당된 복제체는 <link=\"ROCKETPILOTING1\">로켓 조종</link> 기술이 있어야 합니다."
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT
 msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKETCONTROLSTATION.LOGIC_PORT"
@@ -12862,7 +12912,7 @@ msgstr "레일에 있는 물체의 세균 수가 선택한 범위 내에 있으�
 #. STRINGS.BUILDINGS.PREFABS.SOLIDCONDUITDISEASESENSOR.LOGIC_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDCONDUITDISEASESENSOR.LOGIC_PORT_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.SOLIDCONDUITDISEASESENSOR.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDCONDUITDISEASESENSOR.NAME"
@@ -12892,7 +12942,7 @@ msgstr "구성된 물품이 레일에서 감지되면 <b><style=\"logic_on\">녹
 #. STRINGS.BUILDINGS.PREFABS.SOLIDCONDUITELEMENTSENSOR.LOGIC_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDCONDUITELEMENTSENSOR.LOGIC_PORT_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.SOLIDCONDUITELEMENTSENSOR.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDCONDUITELEMENTSENSOR.NAME"
@@ -12958,7 +13008,7 @@ msgstr "포함된 물품이 선택한 온도 범위 내에 있으면 <b><style=\
 #. STRINGS.BUILDINGS.PREFABS.SOLIDCONDUITTEMPERATURESENSOR.LOGIC_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDCONDUITTEMPERATURESENSOR.LOGIC_PORT_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.SOLIDCONDUITTEMPERATURESENSOR.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDCONDUITTEMPERATURESENSOR.NAME"
@@ -13023,7 +13073,7 @@ msgstr "한계에 도달하면 <b><style=\"logic_on\">녹색 신호</style></b>�
 #. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.OUTPUT_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.OUTPUT_PORT_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.RESET_PORT_ACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDLIMITVALVE.RESET_PORT_ACTIVE"
@@ -13318,7 +13368,7 @@ msgstr "가득 차면 <b><style=\"logic_on\">녹색 신호</style></b>를 보냅
 #. STRINGS.BUILDINGS.PREFABS.STORAGELOCKERSMART.LOGIC_PORT_INACTIVE
 msgctxt "STRINGS.BUILDINGS.PREFABS.STORAGELOCKERSMART.LOGIC_PORT_INACTIVE"
 msgid "Otherwise, sends a <b><style=\"logic_off\">Red Signal</style></b>"
-msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다"
+msgstr "그 외에는<b><style=\"logic_off\">적색 신호</style></b>를 보냅니다."
 
 #. STRINGS.BUILDINGS.PREFABS.STORAGELOCKERSMART.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.STORAGELOCKERSMART.NAME"
@@ -13606,13 +13656,43 @@ msgstr "반대편에 누가 있을지 모릅니다."
 #. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT"
 msgid ""
-"Provides a way for Duplicants to chat with their friends in different locations.\n"
+"Can be used by one Duplicant to chat with themselves or with other Duplicants in different locations.\n"
 "\n"
 "Chatting increases Duplicant <link=\"MORALE\">Morale</link>."
 msgstr ""
-"복제체가 다른 위치에 있는 친구들과 대화할 수 있는 방법을 제공합니다.\n"
+"한 복제체가 자신 또는 다른 위치에 있는 다른 복제체와 잡담하는 데 사용할 수 있습니다.\n"
 "\n"
-"대화는 복제체의 <link=\"MORALE\">사기</link>를 증가시킵니다."
+"잡담은 복제체의 <link=\"MORALE\">사기</link>를 증가시킵니다."
+
+#. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_BABBLE
+msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_BABBLE"
+msgid "{attrib}: {amount} (No One)"
+msgstr "{attrib}: {amount} (아무도 없음)"
+
+#. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_BABBLE_TOOLTIP
+msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_BABBLE_TOOLTIP"
+msgid "Duplicants will gain {amount} {attrib} if they chat only with themselves."
+msgstr "복제체는 자신과만 잡담하면 {amount} {attrib}을(를) 얻습니다."
+
+#. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_CHAT
+msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_CHAT"
+msgid "{attrib}: {amount} (At least one duplicant)"
+msgstr "{attrib}: {amount} (적어도 하나의 복제체)"
+
+#. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_CHAT_TOOLTIP
+msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_CHAT_TOOLTIP"
+msgid "Duplicants will gain {amount} {attrib} if they chat with at least one other Duplicant."
+msgstr "복제체는 적어도 한 명의 다른 복제체와 잡담하면 {amount} {attrib}을(를) 얻습니다."
+
+#. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_LONG_DISTANCE
+msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_LONG_DISTANCE"
+msgid "{attrib}: {amount} (At least one duplicant across space)"
+msgstr "{attrib}: {amount} (우주 전체 하나 이상의 복제체)"
+
+#. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_LONG_DISTANCE_TOOLTIP
+msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_LONG_DISTANCE_TOOLTIP"
+msgid "Duplicants will gain {amount} {attrib} if they chat with at least one other Duplicant across space."
+msgstr "복제체는 우주 전체에서 적어도 한 명의 다른 복제체와 잡담하면 {amount} {attrib}을(를) 얻습니다."
 
 #. STRINGS.BUILDINGS.PREFABS.TELEPHONE.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.NAME"
@@ -13659,13 +13739,13 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.TELESCOPE.EFFECT"
 msgid ""
 "Maps Starmap destinations.\n"
 "\n"
-"Assigned Duplicants must possess the <link=\"RESEARCHER\">Field Research</link> skill.\n"
+"Assigned Duplicants must possess the <link=\"RESEARCHING2\">Field Research</link> skill.\n"
 "\n"
 "Building must be exposed to space to function."
 msgstr ""
 "스타맵 목적지점을 표시합니다.\n"
 "\n"
-"할당된 복제체는 <link=\"RESEARCHER\">현장 연구</link> 기술을 가지고 있어야 합니다.\n"
+"할당된 복제체는 <link=\"RESEARCHING2\">현장 연구</link> 기술을 가지고 있어야 합니다.\n"
 "\n"
 "건조물은 우주에 노출되어 있어야 작동합니다."
 
@@ -14006,13 +14086,13 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.WARPCONDUITRECEIVER.EFFECT"
 msgid ""
 "A machine capable of teleporting <link=\"ELEMENTSLIQUID\">Liquid</link>, <link=\"ELEMENTSSOLID\">Solid</link>, and <link=\"ELEMENTSGAS\">Gas</link> resources to another asteroid.\n"
 "\n"
-"It can be activated by a Duplicant with the <link=\"RESEARCHER\">Field Research</link> skill.\n"
+"It can be activated by a Duplicant with the <link=\"RRESEARCHING2\">Field Research</link> skill.\n"
 "\n"
 "This is the receiving side."
 msgstr ""
 "<link=\"ELEMENTSLIQUID\">액체</link>, <link=\"ELEMENTSSOLID\">고체</link>, <link=\"ELEMENTSGAS\">기체</link> 자원을 다른 소행성으로 텔레포트할 수 있는 기계.\n"
 "\n"
-"<link=\"RESEARCHER\">현장 연구</link> 기술을 가진 복제체가 활성화할 수 있습니다.\n"
+"<link=\"RRESEARCHING2\">현장 연구</link> 기술을 가진 복제체가 활성화할 수 있습니다.\n"
 "\n"
 "이쪽이 받는 쪽입니다."
 
@@ -14031,13 +14111,13 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.WARPCONDUITSENDER.EFFECT"
 msgid ""
 "A machine capable of teleporting <link=\"ELEMENTSLIQUID\">Liquid</link>, <link=\"ELEMENTSSOLID\">Solid</link>, and <link=\"ELEMENTSGAS\">Gas</link> resources to another asteroid.\n"
 "\n"
-"It can be activated by a Duplicant with the <link=\"RESEARCHER\">Field Research</link> skill.\n"
+"It can be activated by a Duplicant with the <link=\"RESEARCHING2\">Field Research</link> skill.\n"
 "\n"
 "This is the transmitting side."
 msgstr ""
 "<link=\"ELEMENTSLIQUID\">액체</link>, <link=\"ELEMENTSSOLID\">고체</link>, <link=\"ELEMENTSGAS\">기체</link> 자원을 다른 소행성으로 텔레포트할 수 있는 기계.\n"
 "\n"
-"<link=\"RESEARCHER\">현장 연구</link> 기술을 가진 복제체가 활성화할 수 있습니다.\n"
+"<link=\"RESEARCHING2\">현장 연구</link> 기술을 가진 복제체가 활성화할 수 있습니다.\n"
 "\n"
 "이쪽이 보내는 쪽입니다."
 
@@ -18326,7 +18406,7 @@ msgstr "암호화 수준: 2"
 #. STRINGS.CODEX.B7_INSPACE.TITLE
 msgctxt "STRINGS.CODEX.B7_INSPACE.TITLE"
 msgid "In Space"
-msgstr "우주에 있음"
+msgstr "우주에서"
 
 #. STRINGS.CODEX.B7_TIMESARROWTHOUGHTS.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.B7_TIMESARROWTHOUGHTS.BODY.CONTAINER1"
@@ -18646,6 +18726,11 @@ msgstr "장식 식물"
 msgctxt "STRINGS.CODEX.BUDDYBUD.TITLE"
 msgid "Buddy Bud"
 msgstr "친구눈"
+
+#. STRINGS.CODEX.BUILDING_TYPE.INDUSTRIAL_MACHINERY
+msgctxt "STRINGS.CODEX.BUILDING_TYPE.INDUSTRIAL_MACHINERY"
+msgid "Industrial Machinery"
+msgstr "산업용 기계"
 
 #. STRINGS.CODEX.C01_EVIL.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.C01_EVIL.BODY.CONTAINER1"
@@ -19408,6 +19493,11 @@ msgctxt "STRINGS.CODEX.HEADERS.BUILDINGREQUIREMENTS"
 msgid "Requirements"
 msgstr "요건"
 
+#. STRINGS.CODEX.HEADERS.BUILDINGTYPE
+msgctxt "STRINGS.CODEX.HEADERS.BUILDINGTYPE"
+msgid "Room Requirements Class"
+msgstr "방 요건 등급"
+
 #. STRINGS.CODEX.HEADERS.COMFORTRANGE
 msgctxt "STRINGS.CODEX.HEADERS.COMFORTRANGE"
 msgid "Ideal Temperatures"
@@ -19427,6 +19517,16 @@ msgstr "더 많은 연구와 탐사가 필요함"
 msgctxt "STRINGS.CODEX.HEADERS.DIET"
 msgid "Diet"
 msgstr "식성"
+
+#. STRINGS.CODEX.HEADERS.ELEMENTCONSUMEDBY
+msgctxt "STRINGS.CODEX.HEADERS.ELEMENTCONSUMEDBY"
+msgid "Consumed By"
+msgstr "소비자:"
+
+#. STRINGS.CODEX.HEADERS.ELEMENTPRODUCEDBY
+msgctxt "STRINGS.CODEX.HEADERS.ELEMENTPRODUCEDBY"
+msgid "Produced By"
+msgstr "생산자:"
 
 #. STRINGS.CODEX.HEADERS.ELEMENTTRANSITIONS
 msgctxt "STRINGS.CODEX.HEADERS.ELEMENTTRANSITIONS"
@@ -21304,7 +21404,6 @@ msgid ""
 "Novice Research is performed at the <link=\"RESEARCHCENTER\">Research Station</link>\n"
 "Advanced Research is performed at the <link=\"ADVANCEDRESEARCHCENTER\">Super Computer</link>\n"
 "Interstellar Research is performed at the <link=\"COSMICRESEARCHCENTER\">Virtual Planetarium</link>\n"
-"Materials Science Research is performed at the <link=\"NUCLEARLABORATORY\">Materials Study Terminal</link>\n"
 "\n"
 msgstr ""
 "고급 연구 작업에는 적절한 종류의 연구 포인트를 생성하기 위해 특수 연구 스테이션이 필요합니다. 이러한 연구 스테이션은 종종 더 고급 자원을 소비합니다.\n"
@@ -21314,13 +21413,73 @@ msgstr ""
 "초급 연구는 <link=\"RESEARCHCENTER\">연구 스테이션</link>에서 수행됩니다.\n"
 "고급 연구는 <link=\"ADVANCEDRESEARCHCENTER\">슈퍼 컴퓨터</link>에서 수행됩니다.\n"
 "성간 연구는 <link=\"COSMICRESEARCHCENTER\">가상 플라네타륨</link>에서 수행됩니다.\n"
-"재료 과학 연구는 <link=\"NUCLEARLABORATORY\">재료 연구 터미널</link>에서 수행됩니다.\n"
 "\n"
 
 #. STRINGS.CODEX.RESEARCH.TITLE
 msgctxt "STRINGS.CODEX.RESEARCH.TITLE"
 msgid "<link=\"RESEARCH\">Research</link>"
 msgstr "<link=\"RESEARCH\">연구</link>"
+
+#. STRINGS.CODEX.RESEARCHDLC1.HEADER_1
+msgctxt "STRINGS.CODEX.RESEARCHDLC1.HEADER_1"
+msgid "Research"
+msgstr "연구"
+
+#. STRINGS.CODEX.RESEARCHDLC1.HEADER_2
+msgctxt "STRINGS.CODEX.RESEARCHDLC1.HEADER_2"
+msgid "Research Tasks"
+msgstr "연구 작업"
+
+#. STRINGS.CODEX.RESEARCHDLC1.HEADER_3
+msgctxt "STRINGS.CODEX.RESEARCHDLC1.HEADER_3"
+msgid "Research Types"
+msgstr "연구 유형"
+
+#. STRINGS.CODEX.RESEARCHDLC1.PARAGRAPH_1
+msgctxt "STRINGS.CODEX.RESEARCHDLC1.PARAGRAPH_1"
+msgid ""
+"Doing research unlocks new types of buildings for the colony. Duplicants can perform research at the <link=\"RESEARCHCENTER\">Research Station</link>.\n"
+"\n"
+msgstr ""
+"연구를 수행하면 콜로니를 위한 새로운 유형의 건조물이 생깁니다. 복제체는 <link=\"RESEARCHCENTER\">연구 스테이션</link>에서 연구를 수행할 수 있습니다.\n"
+"\n"
+
+#. STRINGS.CODEX.RESEARCHDLC1.PARAGRAPH_2
+msgctxt "STRINGS.CODEX.RESEARCHDLC1.PARAGRAPH_2"
+msgid ""
+"A selected research task is completed once enough research points have been generated at the colonies research stations. Duplicants with high 'Science' attribute scores will generate research points faster than Duplicants with lower scores.\n"
+"\n"
+msgstr ""
+"콜로니 연구 스테이션에서 충분한 연구 포인트가 생성되면 선택된 연구 작업이 완료됩니다. '과학' 속성 점수가 높은 복제체는 점수가 낮은 복제체보다 연구 포인트를 더 빨리 생성합니다.\n"
+"\n"
+
+#. STRINGS.CODEX.RESEARCHDLC1.PARAGRAPH_3
+msgctxt "STRINGS.CODEX.RESEARCHDLC1.PARAGRAPH_3"
+msgid ""
+"Advanced research tasks require special research stations to generate the proper kind of research points. These research stations often consume more advanced resources.\n"
+"\n"
+"Using higher level research stations also requires Duplicants to have learned higher level research <link=\"ROLES\">skills</link>.\n"
+"\n"
+"Novice Research is performed at the <link=\"RESEARCHCENTER\">Research Station</link>\n"
+"Advanced Research is performed at the <link=\"ADVANCEDRESEARCHCENTER\">Super Computer</link>\n"
+"Interstellar Research is performed at the <link=\"ORBITALRESEARCHCENTER\">Orbital Microlab</link>\n"
+"Materials Science Research is performed at the <link=\"NUCLEARRESEARCHCENTER\">Materials Study Terminal</link>\n"
+"\n"
+msgstr ""
+"고급 연구 작업에는 적절한 종류의 연구 포인트를 생성하기 위해 특수 연구 스테이션이 필요합니다. 이러한 연구 스테이션은 종종 더 고급 자원을 소비합니다.\n"
+"\n"
+"더 높은 수준의 연구 스테이션을 사용하려면 복제체가 더 높은 수준의 연구 <link=\"ROLES\">기술</link>을 배워야 합니다.\n"
+"\n"
+"초급 연구는 <link=\"RESEARCHCENTER\">연구 스테이션</link>에서 수행됩니다.\n"
+"고급 연구는 <link=\"ADVANCEDRESEARCHCENTER\">슈퍼 컴퓨터</link>에서 수행됩니다.\n"
+"성간 연구는 <link=\"ORBITALRESEARCHCENTER\">궤도 마이크로랩</link>에서 수행됩니다.\n"
+"재료 과학 연구는 <link=\"NUCLEARRESEARCHCENTER\">재료 연구 터미널</link>에서 수행됩니다.\n"
+"\n"
+
+#. STRINGS.CODEX.RESEARCHDLC1.TITLE
+msgctxt "STRINGS.CODEX.RESEARCHDLC1.TITLE"
+msgid "<link=\"RESEARCHDLC1\">Research</link>"
+msgstr "<link=\"RESEARCHDLC1\">연구</link>"
 
 #. STRINGS.CODEX.ROBOT_DESCRIPTORS.BATTERY.CAPACITY
 msgctxt "STRINGS.CODEX.ROBOT_DESCRIPTORS.BATTERY.CAPACITY"
@@ -23887,11 +24046,11 @@ msgstr "<link=\"DRECKO\">애기끌이</link>"
 #. STRINGS.CREATURES.SPECIES.DRECKO.DESC
 msgctxt "STRINGS.CREATURES.SPECIES.DRECKO.DESC"
 msgid ""
-"Dreckos are nonhostile critters that graze on <link=\"SPICEVINE\">Pincha Pepper</link>, <link=\"SWAMPLILY\">Balm Lily</link> or <link=\"BASICSINGLEHARVESTPLANT\">Mealwood Plants</link>.\n"
+"Dreckos are nonhostile critters that graze on <link=\"SPICEVINE\">Pincha Pepperplants</link>, <link=\"SWAMPLILY\">Balm Lily</link> or <link=\"BASICSINGLEHARVESTPLANT\">Mealwood Plants</link>.\n"
 "\n"
 "Their backsides are covered in thick woolly fibers that only grow in <link=\"HYDROGEN\">Hydrogen</link> climates."
 msgstr ""
-"기끌이는 <link=\"SPICEVINE\">꼬집후추</link>, <link=\"SWAMPLILY\">아물나리</link>, <link=\"BASICSINGLEHARVESTPLANT\">끼니나무 식물</link>을 섭취하는 호전적이지 않은 크리터입니다.\n"
+"기끌이는 <link=\"SPICEVINE\">꼬집후추풀</link>, <link=\"SWAMPLILY\">아물나리</link>, <link=\"BASICSINGLEHARVESTPLANT\">끼니나무 식물</link>을 섭취하는 호전적이지 않은 크리터입니다.\n"
 "\n"
 "등 부분은 <link=\"HYDROGEN\">수소</link> 기후에서만 자라는 털이 많은 두꺼운 섬유로 덮여 있습니다."
 
@@ -28512,7 +28671,7 @@ msgstr "새로운 건조물을 짓습니다."
 #. STRINGS.DUPLICANTS.CHOREGROUPS.BUILD.NAME
 msgctxt "STRINGS.DUPLICANTS.CHOREGROUPS.BUILD.NAME"
 msgid "Building"
-msgstr "건조물"
+msgstr "Building"
 
 #. STRINGS.DUPLICANTS.CHOREGROUPS.COMBAT.ARCHETYPE_NAME
 msgctxt "STRINGS.DUPLICANTS.CHOREGROUPS.COMBAT.ARCHETYPE_NAME"
@@ -30542,13 +30701,13 @@ msgid ""
 "\n"
 "Increases <style=\"KKeyword\">Incubation Rate</style>\n"
 "\n"
-"Duplicants must possess the <link=\"RANCHER\">Critter Ranching I</link> Skill to sing to an egg"
+"Duplicants must possess the <link=\"RANCHING1\">Critter Ranching I</link> Skill to sing to an egg"
 msgstr ""
 "친근한 복제체가 자장가를 부르면 <style=\"KKeyword\">알</style>의 자라는 데 도움이 됩니다.\n"
 "\n"
 "<style=\"KKeyword\">부화율</style> 증가됨\n"
 "\n"
-"복제체는 알에 대고 노래하려면 <link=\"RANCHER\">크리터 사육 I</link> 기술을 가져야 합니다."
+"복제체는 알에 대고 노래하려면 <link=\"RANCHING1\">크리터 사육 I</link> 기술을 가져야 합니다."
 
 #. STRINGS.DUPLICANTS.CHORES.SLEEP.NAME
 msgctxt "STRINGS.DUPLICANTS.CHORES.SLEEP.NAME"
@@ -33107,6 +33266,16 @@ msgctxt "STRINGS.DUPLICANTS.MODIFIERS.LIGHTWOUNDS.TOOLTIP"
 msgid "This Duplicant sustained injuries that are a bit uncomfortable"
 msgstr "이 복제체는 조금 불편한 수준의 부상을 입었습니다."
 
+#. STRINGS.DUPLICANTS.MODIFIERS.LONER.NAME
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.LONER.NAME"
+msgid "Alone"
+msgstr "홀로"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.LONER.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.LONER.TOOLTIP"
+msgid "This Duplicant is more feeling focused now that they're alone"
+msgstr "이 복제체는 이제 혼자라서 더 집중하고 있습니다."
+
 #. STRINGS.DUPLICANTS.MODIFIERS.LOWOXYGEN.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.LOWOXYGEN.NAME"
 msgid "Low Oxygen"
@@ -33983,6 +34152,16 @@ msgctxt "STRINGS.DUPLICANTS.MODIFIERS.STALEFOOD.TOOLTIP"
 msgid "This Duplicant is in a bad mood from having to eat stale <style=\"KKeyword\">Food</style>"
 msgstr "이 복제체는 한물간 <style=\"KKeyword\">식품</style>을 먹어서 기분이 나쁩니다."
 
+#. STRINGS.DUPLICANTS.MODIFIERS.STARRYEYED.NAME
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.STARRYEYED.NAME"
+msgid "Starry Eyed"
+msgstr "별이 빛나는 눈"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.STARRYEYED.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.STARRYEYED.TOOLTIP"
+msgid "This Duplicant loves being in space!"
+msgstr "이 복제체는 우주에 있는 것을 좋아합니다!"
+
 #. STRINGS.DUPLICANTS.MODIFIERS.STARVING.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.STARVING.NAME"
 msgid "Starving"
@@ -34116,6 +34295,22 @@ msgstr ""
 "\n"
 "레저 활동은 통해 복제체의 <style=\"KKeyword\">사기</style>를 높입니다."
 
+#. STRINGS.DUPLICANTS.MODIFIERS.TELEPHONELONGDISTANCE.NAME
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.TELEPHONELONGDISTANCE.NAME"
+msgid "Sociable"
+msgstr "사교적"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.TELEPHONELONGDISTANCE.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.TELEPHONELONGDISTANCE.TOOLTIP"
+msgid ""
+"This Duplicant is feeling sociable after chatting on the phone with someone across space\n"
+"\n"
+"Leisure activities increase Duplicants' <style=\"KKeyword\">Morale</style>"
+msgstr ""
+"이 복제체는 우주 너머에 있는 누군가와 전화 통화를 한 후 사교적이 되었습니다.\n"
+"\n"
+"여가 활동은 복제체의 <style=\"KKeyword\">사기</style>를 높입니다."
+
 #. STRINGS.DUPLICANTS.MODIFIERS.TEMPEXCHANGE.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.TEMPEXCHANGE.NAME"
 msgid "Environmental Exchange"
@@ -34133,13 +34328,13 @@ msgstr "이 복제체는 지난 밤에 친구가 코를 시끄럽게 구는 바�
 
 #. STRINGS.DUPLICANTS.MODIFIERS.THRIVER.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.THRIVER.NAME"
-msgid "Duress to Impress"
-msgstr "강박의 인상"
+msgid "Clutchy"
+msgstr "클러치"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.THRIVER.TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.THRIVER.TOOLTIP"
-msgid "This Duplicant kicks into hyperdrive when <style=\"KKeyword\">Stressed</style>"
-msgstr "이 복제체는 <style=\"KKeyword\">스트레스</style> 받을 때 초가동 상태가 됩니다."
+msgid "This Duplicant is <style=\"KKeyword\">Stressed<style=\"KKeyword\"> and has kicked into hyperdrive"
+msgstr "이 복제체는 <style=\"KKeyword\">스트레스<style=\"KKeyword\">를 받고 하이퍼드라이브 상태가 되었습니다."
 
 #. STRINGS.DUPLICANTS.MODIFIERS.TIME_REMAINING
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.TIME_REMAINING"
@@ -34942,8 +35137,8 @@ msgstr "적당히 매력적인 예술품을 만들 수 있습니다."
 
 #. STRINGS.DUPLICANTS.ROLES.ARTIST.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.ARTIST.NAME"
-msgid "Aesthetic Design"
-msgstr "미학적인 디자인"
+msgid "<link=\"ARTING2\">Aesthetic Design</link>"
+msgstr "<link=\"ARTING2\">미적 디자인</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.ASTRONAUT.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.ASTRONAUT.DESCRIPTION"
@@ -34952,8 +35147,8 @@ msgstr "우주 임무 완료 속도를 향상시킵니다."
 
 #. STRINGS.DUPLICANTS.ROLES.ASTRONAUT.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.ASTRONAUT.NAME"
-msgid "<link=\"ASTRONAUT\">Rocket Navigation</link>"
-msgstr "<link=\"ASTRONAUT\">로켓 조종</link>"
+msgid "<link=\"ASTRONAUTING2\">Rocket Navigation</link>"
+msgstr "<link=\"ASTRONAUTING2\">로켓 조종</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.ASTRONAUTTRAINEE.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.ASTRONAUTTRAINEE.DESCRIPTION"
@@ -34962,8 +35157,8 @@ msgstr "복제체가 <link=\"COMMANDMODULE\">지령 캡슐</link>을 조작하�
 
 #. STRINGS.DUPLICANTS.ROLES.ASTRONAUTTRAINEE.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.ASTRONAUTTRAINEE.NAME"
-msgid "<link=\"ASTRONAUTTRAINEE\">Rocket Piloting</link>"
-msgstr "<link=\"ASTRONAUTTRAINEE\">로켓 조종</link>"
+msgid "<link=\"ASTRONAUTING1\">Rocket Piloting</link>"
+msgstr "<link=\"ASTRONAUTING1\">로켓 조종</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.BUILDER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.BUILDER.DESCRIPTION"
@@ -34972,8 +35167,8 @@ msgstr "복제체의 건조 속도를 더 증가합니다."
 
 #. STRINGS.DUPLICANTS.ROLES.BUILDER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.BUILDER.NAME"
-msgid "<link=\"BUILDER\">Improved Construction II</link>"
-msgstr "<link=\"BUILDER\">개선된 건조 II</link>"
+msgid "<link=\"BUILDING2\">Improved Construction II</link>"
+msgstr "<link=\"BUILDING2\">개선된 건조 II</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.COOK.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.COOK.DESCRIPTION"
@@ -34982,8 +35177,8 @@ msgstr "복제체의 조리 속도를 향상시킵니다."
 
 #. STRINGS.DUPLICANTS.ROLES.COOK.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.COOK.NAME"
-msgid "<link=\"COOK\">Grilling II</link>"
-msgstr "<link=\"COOK\">그릴 II</link>"
+msgid "<link=\"COOKING2\">Grilling II</link>"
+msgstr "<link=\"COOKING2\">그릴 II</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.FARMER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.FARMER.DESCRIPTION"
@@ -34992,8 +35187,8 @@ msgstr "<style=\"KKeyword\">식물</style> 경작을 가능하게 하여 생장 
 
 #. STRINGS.DUPLICANTS.ROLES.FARMER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.FARMER.NAME"
-msgid "<link=\"FARMER\">Crop Tending</link>"
-msgstr "<link=\"FARMER\">작물 경작</link>"
+msgid "<link=\"FARMING2\">Crop Tending</link>"
+msgstr "<link=\"FARMING2\">작물 경작</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.GROUPS.APTITUDE_DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.GROUPS.APTITUDE_DESCRIPTION"
@@ -35023,8 +35218,8 @@ msgstr "복제체의 물리적인 힘을 조금 향상합니다."
 
 #. STRINGS.DUPLICANTS.ROLES.HANDYMAN.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.HANDYMAN.NAME"
-msgid "<link=\"HANDYMAN\">Improved Strength</link>"
-msgstr "<link=\"HANDYMAN\">힘 향상</link>"
+msgid "<link=\"BASEKEEPING1\">Improved Strength</link>"
+msgstr "<link=\"BASEKEEPING1\">힘 향상</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.HAULER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.HAULER.DESCRIPTION"
@@ -35033,8 +35228,8 @@ msgstr "복제체의 힘과 운반 용량을 조금 증가합니다."
 
 #. STRINGS.DUPLICANTS.ROLES.HAULER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.HAULER.NAME"
-msgid "<link=\"HAULER\">Improved Carrying I</link>"
-msgstr "<link=\"HAULER\">개선된 운반 I</link>"
+msgid "<link=\"HAULING1\">Improved Carrying I</link>"
+msgstr "<link=\"HAULING1\">개선된 운반 I</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_ARTIST.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_ARTIST.DESCRIPTION"
@@ -35043,8 +35238,8 @@ msgstr "가장 기본적인 수준의 예술 기술을 가르칩니다."
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_ARTIST.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_ARTIST.NAME"
-msgid "<link=\"JUNIORARTIST\">Art Fundamentals</link>"
-msgstr "<link=\"JUNIORARTIST\">예술의 기초</link>"
+msgid "<link=\"ARTING1\">Art Fundamentals</link>"
+msgstr "<link=\"ARTING1\">예술의 기초</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_BUILDER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_BUILDER.DESCRIPTION"
@@ -35053,8 +35248,8 @@ msgstr "복제체의 건조 속도를 조금 향상합니다."
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_BUILDER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_BUILDER.NAME"
-msgid "<link=\"JUNIORBUILDER\">Improved Construction I</link>"
-msgstr "<link=\"JUNIORBUILDER\">개선된 건조 I</link>"
+msgid "<link=\"BUILDING1\">Improved Construction I</link>"
+msgstr "<link=\"BUILDING1\">개선된 건조 I</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_COOK.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_COOK.DESCRIPTION"
@@ -35063,8 +35258,8 @@ msgstr "복제체가 <link=\"COOKINGSTATION\">전기 그릴</link>을 사용할 
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_COOK.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_COOK.NAME"
-msgid "<link=\"JUNIORCOOK\">Grilling</link>"
-msgstr "<link=\"JUNIORCOOK\">그릴</link>"
+msgid "<link=\"COOKING1\">Grilling</link>"
+msgstr "<link=\"COOKING1\">그릴</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_FARMER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_FARMER.DESCRIPTION"
@@ -35073,8 +35268,8 @@ msgstr "복제체의 재배 기술을 약간 증가하여 새로운 식물 <styl
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_FARMER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_FARMER.NAME"
-msgid "<link=\"JUNIORFARMER\">Improved Farming I</link>"
-msgstr "<link=\"JUNIORFARMER\">개선된 재배 I</link>"
+msgid "<link=\"FARMING1\">Improved Farming I</link>"
+msgstr "<link=\"FARMING1\">개선된 재배 I</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_MEDIC.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_MEDIC.DESCRIPTION"
@@ -35083,8 +35278,8 @@ msgstr "복제체가 <link=\"APOTHECARY\">약제대</link>에서 약을 만들 �
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_MEDIC.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_MEDIC.NAME"
-msgid "<link=\"MEDIC\">Medicine Compounding</link>"
-msgstr "<link=\"MEDIC\">약품 합성</link>"
+msgid "<link=\"MEDICINE1\">Medicine Compounding</link>"
+msgstr "<link=\"MEDICINE1\">약품 합성</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_MINER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_MINER.DESCRIPTION"
@@ -35093,8 +35288,8 @@ msgstr "<link=\"GRANITE\">화강암</link>과 같이 <style=\"KKeyword\">매우 
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_MINER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_MINER.NAME"
-msgid "<link=\"JUNIORMINER\">Hard Digging</link>"
-msgstr "<link=\"JUNIORMINER\">경도 굴착</link>"
+msgid "<link=\"MINING1\">Hard Digging</link>"
+msgstr "<link=\"MINING1\">경도 굴착</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_RESEARCHER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_RESEARCHER.DESCRIPTION"
@@ -35103,8 +35298,8 @@ msgstr "복제체가 <link=\"ADVANCEDRESEARCHCENTER\">슈퍼 컴퓨터</link>를
 
 #. STRINGS.DUPLICANTS.ROLES.JUNIOR_RESEARCHER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.JUNIOR_RESEARCHER.NAME"
-msgid "<link=\"JUNIORRESEARCHER\">Advanced Research</link>"
-msgstr "<link=\"JUNIORRESEARCHER\">고급 연구</link>"
+msgid "<link=\"RESEARCHING1\">Advanced Research</link>"
+msgstr "<link=\"RESEARCHING1\">고급 연구</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.MACHINE_TECHNICIAN.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.MACHINE_TECHNICIAN.DESCRIPTION"
@@ -35113,8 +35308,8 @@ msgstr "복제체의 땜질 속도가 조금 향상됩니다."
 
 #. STRINGS.DUPLICANTS.ROLES.MACHINE_TECHNICIAN.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.MACHINE_TECHNICIAN.NAME"
-msgid "<link=\"MACHINETECHNICIAN\">Improved Tinkering</link>"
-msgstr "<link=\"MACHINETECHNICIAN\">땜질 향상</link>"
+msgid "<link=\"TECHNICALS1\">Improved Tinkering</link>"
+msgstr "<link=\"TECHNICALS1\">땜질 향상</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.MASTER_ARTIST.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.MASTER_ARTIST.DESCRIPTION"
@@ -35123,8 +35318,8 @@ msgstr "걸작 그림과 조형물을 만들 수 있습니다."
 
 #. STRINGS.DUPLICANTS.ROLES.MASTER_ARTIST.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.MASTER_ARTIST.NAME"
-msgid "<link=\"MASTERARTIST\">Masterworks</link>"
-msgstr "<link=\"MASTERARTIST\">걸작</link>"
+msgid "<link=\"ARTING3\">Masterworks</link>"
+msgstr "<link=\"ARTING3\">걸작</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.MASTER_MINER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.MASTER_MINER.DESCRIPTION"
@@ -35133,8 +35328,8 @@ msgstr "<link=\"CORIUM\">코륨</link>과 같은 위험 물질의 굴착을 가�
 
 #. STRINGS.DUPLICANTS.ROLES.MASTER_MINER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.MASTER_MINER.NAME"
-msgid "<link=\"MASTERMINER\">Hazmat Digging</link>"
-msgstr "<link=\"MASTERMINER\">위험 물질 굴착</link>"
+msgid "<link=\"MINING4\">Hazmat Digging</link>"
+msgstr "<link=\"MINING4\">위험 물질 굴착</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.MATERIALS_MANAGER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.MATERIALS_MANAGER.DESCRIPTION"
@@ -35143,8 +35338,8 @@ msgstr "복제체의 힘과 운반 용량이 더 늘어나서 배달이 더 빨�
 
 #. STRINGS.DUPLICANTS.ROLES.MATERIALS_MANAGER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.MATERIALS_MANAGER.NAME"
-msgid "<link=\"MATERIALSMANAGER\">Improved Carrying II</link>"
-msgstr "<link=\"MATERIALSMANAGER\">개선된 운반 II</link>"
+msgid "<link=\"HAULING2\">Improved Carrying II</link>"
+msgstr "<link=\"HAULING2\">개선된 운반 II</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.MECHATRONIC_ENGINEER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.MECHATRONIC_ENGINEER.DESCRIPTION"
@@ -35153,8 +35348,8 @@ msgstr "<link=\"SOLIDCONDUIT\">컨베이어 레일</link> 시스템을 건조 �
 
 #. STRINGS.DUPLICANTS.ROLES.MECHATRONIC_ENGINEER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.MECHATRONIC_ENGINEER.NAME"
-msgid "<link=\"MECHATRONICENGINEER\">Mechatronics Engineering</link>"
-msgstr "<link=\"MECHATRONICENGINEER\">메커트로닉스 엔지니어링</link>"
+msgid "<link=\"ENGINEERING1\">Mechatronics Engineering</link>"
+msgstr "<link=\"ENGINEERING1\">메커트로닉스 엔지니어링</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.MEDIC.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.MEDIC.DESCRIPTION"
@@ -35163,8 +35358,8 @@ msgstr "복제체가 <link=\"DOCTORSTATION\">병실</link>에서 투약할 수 �
 
 #. STRINGS.DUPLICANTS.ROLES.MEDIC.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.MEDIC.NAME"
-msgid "<link=\"MEDIC\">Bedside Manner</link>"
-msgstr "<link=\"MEDIC\">환자를 대하는 태도</link>"
+msgid "<link=\"MEDICINE2\">Bedside Manner</link>"
+msgstr "<link=\"MEDICINE2\">환자를 대하는 태도</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.MINER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.MINER.DESCRIPTION"
@@ -35173,8 +35368,8 @@ msgstr "<link=\"KATAIRITE\">심성석</link> 원소의 굴착을 가능하게 �
 
 #. STRINGS.DUPLICANTS.ROLES.MINER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.MINER.NAME"
-msgid "<link=\"MINER\">Superhard Digging</link>"
-msgstr "<link=\"MINER\">초경도 굴착</link>"
+msgid "<link=\"MINING2\">Superhard Digging</link>"
+msgstr "<link=\"MINING2\">초경도 굴착</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.NO_ROLE.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.NO_ROLE.DESCRIPTION"
@@ -35188,13 +35383,13 @@ msgstr "<link=\"NOROLE\">무직</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.NUCLEAR_RESEARCHER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.NUCLEAR_RESEARCHER.DESCRIPTION"
-msgid "Enables Duplicants to study matter using the <link=\"NUCLEARLABORATORY\">Materials Study Terminal</link>"
-msgstr "복제체가 <link=\"NUCLEARLABORATORY\">재료 연구 터미널</link>을 사용하여 물질을 연구할 수 있습니다."
+msgid "Enables Duplicants to study matter using the <link=\"NUCLEARRESEARCHCENTER\">Materials Study Terminal</link>"
+msgstr "복제체가 <link=\"NUCLEARRESEARCHCENTER\">재료 연구 터미널</link>을 사용하여 물질을 연구할 수 있습니다."
 
 #. STRINGS.DUPLICANTS.ROLES.NUCLEAR_RESEARCHER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.NUCLEAR_RESEARCHER.NAME"
-msgid "<link=\"NUCLEARRESEARCHER\">Materials Science Research</link>"
-msgstr "<link=\"NUCLEARRESEARCHER\">재료 과학 연구</link>"
+msgid "<link=\"ATOMICRESEARCH\">Materials Science Research</link>"
+msgstr "<link=\"ATOMICRESEARCH\">재료 과학 연구</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.OIL_TECHNICIAN.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.OIL_TECHNICIAN.DESCRIPTION"
@@ -35213,8 +35408,8 @@ msgstr "복제체는 어지럽히지 않고 <style=\"KKeyword\">파이프</style
 
 #. STRINGS.DUPLICANTS.ROLES.PLUMBER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.PLUMBER.NAME"
-msgid "<link=\"PLUMBER\">Plumbing</link>"
-msgstr "<link=\"PLUMBER\">배관</link>"
+msgid "<link=\"BASEKEEPING2\">Plumbing</link>"
+msgstr "<link=\"BASEKEEPING2\">배관</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.POWER_TECHNICIAN.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.POWER_TECHNICIAN.DESCRIPTION"
@@ -35223,8 +35418,8 @@ msgstr "일시적으로 향상된 <style=\"KKeyword\">전력</style> 출력을 �
 
 #. STRINGS.DUPLICANTS.ROLES.POWER_TECHNICIAN.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.POWER_TECHNICIAN.NAME"
-msgid "<link=\"POWERTECHNICIAN\">Electrical Engineering</link>"
-msgstr "<link=\"POWERTECHNICIAN\">전기 엔지니어링</link>"
+msgid "<link=\"TECHNICALS2\">Electrical Engineering</link>"
+msgstr "<link=\"TECHNICALS2\">전기 엔지니어링</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.RANCHER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.RANCHER.DESCRIPTION"
@@ -35233,8 +35428,8 @@ msgstr "복제체가 <link=\"CREATURES\">크리터</link>를 다루고 돌볼 �
 
 #. STRINGS.DUPLICANTS.ROLES.RANCHER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.RANCHER.NAME"
-msgid "<link=\"RANCHER\">Critter Ranching I</link>"
-msgstr "<link=\"RANCHER\">크리터 사육 I</link>"
+msgid "<link=\"RANCHING1\">Critter Ranching I</link>"
+msgstr "<link=\"RANCHING1\">크리터 사육 I</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.RESEARCHER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.RESEARCHER.DESCRIPTION"
@@ -35243,8 +35438,8 @@ msgstr "복제체는 <style=\"KKeyword\">분출구</style>, 미행성, 기타 �
 
 #. STRINGS.DUPLICANTS.ROLES.RESEARCHER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.RESEARCHER.NAME"
-msgid "<link=\"RESEARCHER\">Field Research</link>"
-msgstr "<link=\"RESEARCHER\">현장 연구</link>"
+msgid "<link=\"RESEARCHING2\">Field Research</link>"
+msgstr "<link=\"RESEARCHING2\">현장 연구</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.ROCKETPILOT.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.ROCKETPILOT.DESCRIPTION"
@@ -35253,8 +35448,8 @@ msgstr "복제체가 <link=\"ROCKETCONTROLSTATION\">로켓 조종실</link>을 �
 
 #. STRINGS.DUPLICANTS.ROLES.ROCKETPILOT.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.ROCKETPILOT.NAME"
-msgid "<link=\"PILOT\">Rocket Piloting</link>"
-msgstr "<link=\"PILOT\">로켓 조종</link>"
+msgid "<link=\"ROCKETPILOTING1\">Rocket Piloting</link>"
+msgstr "<link=\"ROCKETPILOTING1\">로켓 조종</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_BUILDER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_BUILDER.DESCRIPTION"
@@ -35263,8 +35458,8 @@ msgstr "복제체가 그라비타스 건조물을 해체할 수 있습니다."
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_BUILDER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_BUILDER.NAME"
-msgid "<link=\"SENIORBUILDER\">Demolition</link>"
-msgstr "<link=\"SENIORBUILDER\">파괴</link>"
+msgid "<link=\"BUILDING3\">Demolition</link>"
+msgstr "<link=\"BUILDING3\">파괴</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_FARMER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_FARMER.DESCRIPTION"
@@ -35273,8 +35468,8 @@ msgstr "복제체의 재배 기술을 더 향상시킵니다."
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_FARMER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_FARMER.NAME"
-msgid "<link=\"SENIORFARMER\">Improved Farming II</link>"
-msgstr "<link=\"SENIORFARMER\">개선된 재배 II</link>"
+msgid "<link=\"FARMING3\">Improved Farming II</link>"
+msgstr "<link=\"FARMING3\">개선된 재배 II</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_MEDIC.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_MEDIC.DESCRIPTION"
@@ -35283,8 +35478,8 @@ msgstr "복제체가 <link=\"ADVANCEDDOCTORSTATION\">질병 진료소</link>를 
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_MEDIC.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_MEDIC.NAME"
-msgid "<link=\"MEDIC\">Advanced Medical Care</link>"
-msgstr "<link=\"MEDIC\">고급 의료</link>"
+msgid "<link=\"MEDICINE3\">Advanced Medical Care</link>"
+msgstr "<link=\"MEDICINE3\">고급 의료</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_MINER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_MINER.DESCRIPTION"
@@ -35293,8 +35488,8 @@ msgstr "<link=\"DIAMOND\">다이아몬드</link>와 <link=\"OBSIDIAN\">흑요석
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_MINER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_MINER.NAME"
-msgid "<link=\"SENIORMINER\">Super-Duperhard Digging</link>"
-msgstr "<link=\"SENIORMINER\">초특경도 굴착</link>"
+msgid "<link=\"MINING3\">Super-Duperhard Digging</link>"
+msgstr "<link=\"MINING3\">초특경도 굴착</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_RANCHER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_RANCHER.DESCRIPTION"
@@ -35303,8 +35498,8 @@ msgstr "복제체의 <style=\"KKeyword\">사육</style> 기술을 향상시킵�
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_RANCHER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_RANCHER.NAME"
-msgid "<link=\"SENIORRANCHER\">Critter Ranching II</link>"
-msgstr "<link=\"SENIORRANCHER\">크리터 사육 II</link>"
+msgid "<link=\"RANCHING2\">Critter Ranching II</link>"
+msgstr "<link=\"RANCHING2\">크리터 사육 II</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_RESEARCHER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_RESEARCHER.DESCRIPTION"
@@ -35313,8 +35508,8 @@ msgstr "<link=\"TELESCOPE\"></link>으로 복제체가 우주를 연구할 수 �
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_RESEARCHER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_RESEARCHER.NAME"
-msgid "<link=\"SENIORRESEARCHER\">Astronomy</link>"
-msgstr "<link=\"SENIORRESEARCHER\">천문학</link>"
+msgid "<link=\"ASTRONOMY\">Astronomy</link>"
+msgstr "<link=\"ASTRONOMY\">천문학</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_ROCKETPILOT.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_ROCKETPILOT.DESCRIPTION"
@@ -35323,8 +35518,8 @@ msgstr "복제체가 더 빠른 속도로 로켓을 조종할 수 있습니다."
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_ROCKETPILOT.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_ROCKETPILOT.NAME"
-msgid "<link=\"SENIORPILOT\">Rocket Piloting II</link>"
-msgstr "<link=\"SENIORPILOT\">로켓 조종 II</link>"
+msgid "<link=\"ROCKETPILOTING2\">Rocket Piloting II</link>"
+msgstr "<link=\"ROCKETPILOTING2\">로켓 조종 II</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SPACE_RESEARCHER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SPACE_RESEARCHER.DESCRIPTION"
@@ -35333,8 +35528,8 @@ msgstr "복제체가 <link=\"ORBITALRESEARCHCENTER\">궤도 마이크로랩</lin
 
 #. STRINGS.DUPLICANTS.ROLES.SPACE_RESEARCHER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SPACE_RESEARCHER.NAME"
-msgid "<link=\"SPACERESEARCHER\">Orbital Researcher</link>"
-msgstr "<link=\"SPACERESEARCHER\">궤도 연구원</link>"
+msgid "<link=\"SPACERESEARCH\">Orbital Researcher</link>"
+msgstr "<link=\"SPACERESEARCH\">궤도 연구원</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.SUIT_EXPERT.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SUIT_EXPERT.DESCRIPTION"
@@ -35343,8 +35538,8 @@ msgstr "특수복 착용 시 달리기 속도 손실을 제거합니다."
 
 #. STRINGS.DUPLICANTS.ROLES.SUIT_EXPERT.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SUIT_EXPERT.NAME"
-msgid "<link=\"SUITEXPERT\">Exosuit Training</link>"
-msgstr "<link=\"SUITEXPERT\">외부특수복 훈련</link>"
+msgid "<link=\"SUITS1\">Exosuit Training</link>"
+msgstr "<link=\"SUITS1\">외부특수복 훈련</link>"
 
 #. STRINGS.DUPLICANTS.ROLES.THERMAL_SUIT_WEARER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.THERMAL_SUIT_WEARER.DESCRIPTION"
@@ -37047,7 +37242,7 @@ msgstr "썩었음"
 #. STRINGS.DUPLICANTS.STATUSITEMS.ROTTEN.TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.ROTTEN.TOOLTIP"
 msgid "Gross!"
-msgstr "우웩!"
+msgstr "징그럽잖아!"
 
 #. STRINGS.DUPLICANTS.STATUSITEMS.SEVEREWOUNDS.NAME
 msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.SEVEREWOUNDS.NAME"
@@ -38066,6 +38261,26 @@ msgctxt "STRINGS.DUPLICANTS.TRAITS.FUSSY.NAME"
 msgid "Fussy"
 msgstr "까다로움"
 
+#. STRINGS.DUPLICANTS.TRAITS.GLOWSTICK.DESC
+msgctxt "STRINGS.DUPLICANTS.TRAITS.GLOWSTICK.DESC"
+msgid "This Duplicant glows green with radiation, but has increased radiation resistance."
+msgstr "이 복제체는 방사선으로 녹색으로 빛나지만 증가된 방사선 저항을 가지고 있습니다."
+
+#. STRINGS.DUPLICANTS.TRAITS.GLOWSTICK.NAME
+msgctxt "STRINGS.DUPLICANTS.TRAITS.GLOWSTICK.NAME"
+msgid "Glow Stick"
+msgstr "글로우 스틱"
+
+#. STRINGS.DUPLICANTS.TRAITS.GLOWSTICK.SHORT_DESC
+msgctxt "STRINGS.DUPLICANTS.TRAITS.GLOWSTICK.SHORT_DESC"
+msgid "Emits low amounts of radiation and light"
+msgstr "적은 양의 방사선과 빛 방출"
+
+#. STRINGS.DUPLICANTS.TRAITS.GLOWSTICK.SHORT_DESC_TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.TRAITS.GLOWSTICK.SHORT_DESC_TOOLTIP"
+msgid "Emits low amounts of radiation and light"
+msgstr "적은 양의 방사선과 빛 방출"
+
 #. STRINGS.DUPLICANTS.TRAITS.GRANTED_SKILL_SHARED_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTED_SKILL_SHARED_DESC"
 msgid ""
@@ -38096,8 +38311,8 @@ msgstr "가장 기본적인 수준의 예술 기술을 가르칩니다."
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING1.NAME"
-msgid "Skilled: <link=\"JUNIORARTIST\">Art Fundamentals</link>"
-msgstr "숙련: <link=\"JUNIORARTIST\">미술 기초</link>"
+msgid "Skilled: <link=\"ARTING1\">Art Fundamentals</link>"
+msgstr "숙련: <link=\"ARTING1\">미술 기초</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING1.SHORT_DESC"
@@ -38116,8 +38331,8 @@ msgstr "적당히 매력적인 예술품을 만들 수 있습니다."
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING2.NAME"
-msgid "Skilled: Aesthetic Design"
-msgstr "숙련: 미적 디자인"
+msgid "Skilled: <link=\"ARTING2\">Aesthetic Design</link>"
+msgstr "숙련: <link=\"ARTING2\">미적 디자인</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING2.SHORT_DESC"
@@ -38136,8 +38351,8 @@ msgstr "걸작 그림과 조형물을 만들 수 있습니다."
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING3.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING3.NAME"
-msgid "Skilled: <link=\"MASTERARTIST\">Masterworks</link>"
-msgstr "숙련: <link=\"MASTERARTIST\">걸작</link>"
+msgid "Skilled: <link=\"ARTING3\">Masterworks</link>"
+msgstr "숙련: <link=\"ARTING3\">명작</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING3.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ARTING3.SHORT_DESC"
@@ -38156,8 +38371,8 @@ msgstr "복제체가 <link=\"COMMANDMODULE\">지령 캡슐</link>을 조작하�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ASTRONAUTING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ASTRONAUTING1.NAME"
-msgid "Skilled: <link=\"ASTRONAUTTRAINEE\">Rocket Piloting</link>"
-msgstr "숙련: <link=\"ASTRONAUTTRAINEE\">로켓 조종</link>"
+msgid "Skilled: <link=\"ASTRONAUTING1\">Rocket Piloting</link>"
+msgstr "숙련: <link=\"ASTRONAUTING1\">로켓 조종</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ASTRONAUTING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ASTRONAUTING1.SHORT_DESC"
@@ -38176,8 +38391,8 @@ msgstr "우주 임무 완료 속도를 향상시킵니다."
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ASTRONAUTING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ASTRONAUTING2.NAME"
-msgid "Skilled: <link=\"ASTRONAUT\">Rocket Navigation</link>"
-msgstr "숙련: <link=\"ASTRONAUT\">로켓 항행</link>"
+msgid "Skilled: <link=\"ASTRONAUTING2\">Rocket Navigation</link>"
+msgstr "숙련: <link=\"ASTRONAUTING2\">로켓 항행</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ASTRONAUTING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ASTRONAUTING2.SHORT_DESC"
@@ -38196,8 +38411,8 @@ msgstr "복제체의 물리적인 힘을 조금 향상합니다."
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BASEKEEPING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BASEKEEPING1.NAME"
-msgid "Skilled: <link=\"HANDYMAN\">Improved Strength</link>"
-msgstr "숙련: <link=\"HANDYMAN\">힘 향상</link>"
+msgid "Skilled: <link=\"BASEKEEPING1\">Improved Strength</link>"
+msgstr "숙련: <link=\"BASEKEEPING1\">힘 향상</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BASEKEEPING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BASEKEEPING1.SHORT_DESC"
@@ -38216,8 +38431,8 @@ msgstr "복제체는 어지럽히지 않고 <style=\"KKeyword\">파이프</style
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BASEKEEPING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BASEKEEPING2.NAME"
-msgid "Skilled: <link=\"PLUMBER\">Plumbing</link>"
-msgstr "숙련: <link=\"PLUMBER\">배관</link>"
+msgid "Skilled: <link=\"BASEKEEPING2\">Plumbing</link>"
+msgstr "숙련: <link=\"BASEKEEPING2\">배관</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BASEKEEPING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BASEKEEPING2.SHORT_DESC"
@@ -38236,8 +38451,8 @@ msgstr "복제체의 건조 속도를 조금 향상합니다."
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING1.NAME"
-msgid "Skilled: <link=\"JUNIORBUILDER\">Improved Construction I</link>"
-msgstr "숙련: <link=\"JUNIORBUILDER\">개선된 건조 I</link>"
+msgid "Skilled: <link=\"BUILDING1\">Improved Construction I</link>"
+msgstr "숙련: <link=\"BUILDING1\">개선된 건조 I</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING1.SHORT_DESC"
@@ -38256,8 +38471,8 @@ msgstr "복제체의 건조 속도를 더 증가합니다."
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING2.NAME"
-msgid "Skilled: <link=\"BUILDER\">Improved Construction II</link>"
-msgstr "숙련: <link=\"BUILDER\">개선된 건조 II</link>"
+msgid "Skilled: <link=\"BUILDING2\">Improved Construction II</link>"
+msgstr "숙련: <link=\"BUILDING2\">개선된 건조 II</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING2.SHORT_DESC"
@@ -38276,8 +38491,8 @@ msgstr "복제체가 그라비타스 건조물을 해체할 수 있습니다."
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING3.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING3.NAME"
-msgid "Skilled: <link=\"SENIORBUILDER\">Demolition</link>"
-msgstr "숙련: <link=\"SENIORBUILDER\">파괴</link>"
+msgid "Skilled: <link=\"BUILDING3\">Demolition</link>"
+msgstr "숙련: <link=\"BUILDING3\">파괴</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING3.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_BUILDING3.SHORT_DESC"
@@ -38296,8 +38511,8 @@ msgstr "복제체가 <link=\"COOKINGSTATION\">전기 그릴</link>을 사용할 
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_COOKING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_COOKING1.NAME"
-msgid "Skilled: <link=\"JUNIORCOOK\">Grilling</link>"
-msgstr "숙련: <link=\"JUNIORCOOK\">그릴</link>"
+msgid "Skilled: <link=\"COOKING1\">Grilling</link>"
+msgstr "숙련: <link=\"COOKING1\">그릴</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_COOKING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_COOKING1.SHORT_DESC"
@@ -38316,8 +38531,8 @@ msgstr "복제체의 조리 속도를 향상시킵니다."
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_COOKING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_COOKING2.NAME"
-msgid "Skilled: <link=\"COOK\">Grilling II</link>"
-msgstr "숙련: <link=\"COOK\">그릴 II</link>"
+msgid "Skilled: <link=\"COOKING2\">Grilling II</link>"
+msgstr "숙련: <link=\"COOKING2\">그릴 II</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_COOKING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_COOKING2.SHORT_DESC"
@@ -38336,8 +38551,8 @@ msgstr "<link=\"SOLIDCONDUIT\">컨베이어 레일</link> 시스템을 건조 �
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ENGINEERING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ENGINEERING1.NAME"
-msgid "Skilled: <link=\"MECHATRONICENGINEER\">Mechatronics Engineering</link>"
-msgstr "숙련: <link=\"MECHATRONICENGINEER\">메카트로닉스 엔지니어링</link>"
+msgid "Skilled: <link=\"ENGINEERING1\">Mechatronics Engineering</link>"
+msgstr "숙련: <link=\"ENGINEERING1\">메카트로닉스 엔지니어링</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ENGINEERING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_ENGINEERING1.SHORT_DESC"
@@ -38356,8 +38571,8 @@ msgstr "복제체의 재배 기술을 약간 증가하여 새로운 식물 <styl
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING1.NAME"
-msgid "Skilled: <link=\"JUNIORFARMER\">Improved Farming I</link>"
-msgstr "숙련: <link=\"JUNIORFARMER\">개선된 재배 I</link>"
+msgid "Skilled: <link=\"FARMING1\">Improved Farming I</link>"
+msgstr "숙련: <link=\"FARMING1\">개선된 재배 I</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING1.SHORT_DESC"
@@ -38376,8 +38591,8 @@ msgstr "<style=\"KKeyword\">식물</style> 경작을 가능하게 하여 생장 
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING2.NAME"
-msgid "Skilled: <link=\"FARMER\">Crop Tending</link>"
-msgstr "숙련: <link=\"FARMER\">작물 경작</link>"
+msgid "Skilled: <link=\"FARMING2\">Crop Tending</link>"
+msgstr "숙련: <link=\"FARMING2\">작물 경작</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING2.SHORT_DESC"
@@ -38396,8 +38611,8 @@ msgstr "복제체의 재배 기술을 더 향상시킵니다."
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING3.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING3.NAME"
-msgid "Skilled: <link=\"SENIORFARMER\">Improved Farming II</link>"
-msgstr "숙련: <link=\"SENIORFARMER\">개선된 재배 II</link>"
+msgid "Skilled: <link=\"FARMING3\">Improved Farming II</link>"
+msgstr "숙련: <link=\"FARMING3\">개선된 재배 II</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING3.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_FARMING3.SHORT_DESC"
@@ -38416,8 +38631,8 @@ msgstr "복제체의 힘과 운반 용량을 조금 증가합니다."
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_HAULING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_HAULING1.NAME"
-msgid "Skilled: <link=\"HAULER\">Improved Carrying I</link>"
-msgstr "숙련: <link=\"HAULER\">개선된 운반 I</link>"
+msgid "Skilled: <link=\"HAULING1\">Improved Carrying I</link>"
+msgstr "숙련: <link=\"HAULING1\">개선된 운반 I</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_HAULING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_HAULING1.SHORT_DESC"
@@ -38436,8 +38651,8 @@ msgstr "복제체의 힘과 운반 용량이 더 늘어나서 배달이 더 빨�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_HAULING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_HAULING2.NAME"
-msgid "Skilled: <link=\"MATERIALSMANAGER\">Improved Carrying II</link>"
-msgstr "숙련: <link=\"MATERIALSMANAGER\">개선된 운반 II</link>"
+msgid "Skilled: <link=\"HAULING2\">Improved Carrying II</link>"
+msgstr "숙련: <link=\"HAULING2\">개선된 운반 II</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_HAULING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_HAULING2.SHORT_DESC"
@@ -38456,8 +38671,8 @@ msgstr "복제체가 <link=\"APOTHECARY\">약제대</link>에서 약을 만들 �
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE1.NAME"
-msgid "Skilled: <link=\"MEDIC\">Medicine Compounding</link>"
-msgstr "숙련: <link=\"MEDIC\">약품 합성</link>"
+msgid "Skilled: <link=\"MEDICINE1\">Medicine Compounding</link>"
+msgstr "숙련: <link=\"MEDICINE1\">약품 합성</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE1.SHORT_DESC"
@@ -38476,8 +38691,8 @@ msgstr "복제체가 <link=\"DOCTORSTATION\">병실</link>에서 투약할 수 �
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE2.NAME"
-msgid "Skilled: <link=\"MEDIC\">Bedside Manner</link>"
-msgstr "숙련: <link=\"MEDIC\">환자를 대하는 태도</link>"
+msgid "Skilled: <link=\"MEDICINE2\">Bedside Manner</link>"
+msgstr "숙련: <link=\"MEDICINE2\">환자를 대하는 태도</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE2.SHORT_DESC"
@@ -38496,8 +38711,8 @@ msgstr "복제체가 <link=\"ADVANCEDDOCTORSTATION\">질병 진료소</link>를 
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE3.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE3.NAME"
-msgid "Skilled: <link=\"MEDIC\">Advanced Medical Care</link>"
-msgstr "숙련: <link=\"MEDIC\">고급 의료</link>"
+msgid "Skilled: <link=\"MEDICINE3\">Advanced Medical Care</link>"
+msgstr "숙련: <link=\"MEDICINE3\">고급 의료</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE3.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MEDICINE3.SHORT_DESC"
@@ -38516,8 +38731,8 @@ msgstr "<link=\"GRANITE\">화강암</link>과 같이 <style=\"KKeyword\">매우 
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING1.NAME"
-msgid "Skilled: <link=\"JUNIORMINER\">Hard Digging</link>"
-msgstr "숙련: <link=\"JUNIORMINER\">경도 굴착</link>"
+msgid "Skilled: <link=\"MINING1\">Hard Digging</link>"
+msgstr "숙련: <link=\"MINING1\">경도 굴착</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING1.SHORT_DESC"
@@ -38536,8 +38751,8 @@ msgstr "<link=\"KATAIRITE\">심성석</link> 원소의 굴착을 가능하게 �
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING2.NAME"
-msgid "Skilled: <link=\"MINER\">Superhard Digging</link>"
-msgstr "숙련: <link=\"MINER\">초경도 굴착</link>"
+msgid "Skilled: <link=\"MINING2\">Superhard Digging</link>"
+msgstr "숙련: <link=\"MINING2\">초경도 굴착</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING2.SHORT_DESC"
@@ -38556,8 +38771,8 @@ msgstr "<link=\"DIAMOND\">다이아몬드</link>와 <link=\"OBSIDIAN\">흑요석
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING3.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING3.NAME"
-msgid "Skilled: <link=\"SENIORMINER\">Super-Duperhard Digging</link>"
-msgstr "숙련: <link=\"SENIORMINER\">초특경도 굴착</link>"
+msgid "Skilled: <link=\"MINING3\">Super-Duperhard Digging</link>"
+msgstr "숙련: <link=\"MINING3\">초특경도 굴착</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING3.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING3.SHORT_DESC"
@@ -38576,8 +38791,8 @@ msgstr "<link=\"CORIUM\">코륨</link>과 같은 위험 물질의 굴착을 가�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING4.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING4.NAME"
-msgid "Skilled: <link=\"MASTERMINER\">Hazmat Digging</link>"
-msgstr "숙련: <link=\"MASTERMINER\">위험 물질 굴착</link>"
+msgid "Skilled: <link=\"MINING4\">Hazmat Digging</link>"
+msgstr "숙련: <link=\"MINING4\">위험 물질 굴착</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING4.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_MINING4.SHORT_DESC"
@@ -38596,8 +38811,8 @@ msgstr "복제체가 <link=\"CREATURES\">크리터</link>를 다루고 돌볼 �
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RANCHING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RANCHING1.NAME"
-msgid "Skilled: <link=\"RANCHER\">Critter Ranching I</link>"
-msgstr "숙련: <link=\"RANCHER\">크리터 사육 I</link>"
+msgid "Skilled: <link=\"RANCHING1\">Critter Ranching I</link>"
+msgstr "숙련: <link=\"RANCHING1\">크리터 사육 I</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RANCHING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RANCHING1.SHORT_DESC"
@@ -38616,8 +38831,8 @@ msgstr "복제체의 <style=\"KKeyword\">사육</style> 기술을 향상시킵�
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RANCHING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RANCHING2.NAME"
-msgid "Skilled: <link=\"SENIORRANCHER\">Critter Ranching II</link>"
-msgstr "숙련: <link=\"SENIORRANCHER\">크리터 사육 II</link>"
+msgid "Skilled: <link=\"RANCHING2\">Critter Ranching II</link>"
+msgstr "숙련: <link=\"RANCHING2\">크리터 사육 II</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RANCHING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RANCHING2.SHORT_DESC"
@@ -38636,8 +38851,8 @@ msgstr "복제체가 <link=\"ADVANCEDRESEARCHCENTER\">슈퍼 컴퓨터</link>를
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING1.NAME"
-msgid "Skilled: <link=\"JUNIORRESEARCHER\">Advanced Research</link>"
-msgstr "숙련: <link=\"JUNIORRESEARCHER\">고급 연구</link>"
+msgid "Skilled: <link=\"RESEARCHING1\">Advanced Research</link>"
+msgstr "숙련: <link=\"RESEARCHING1\">고급 연구</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING1.SHORT_DESC"
@@ -38656,8 +38871,8 @@ msgstr "복제체는 <style=\"KKeyword\">분출구</style>, 미행성, 기타 �
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING2.NAME"
-msgid "Skilled: <link=\"RESEARCHER\">Field Research</link>"
-msgstr "숙련: <link=\"RESEARCHER\">현장 연구</link>"
+msgid "Skilled: <link=\"RESEARCHING2\">Field Research</link>"
+msgstr "숙련: <link=\"RESEARCHING2\">현장 연구</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING2.SHORT_DESC"
@@ -38676,8 +38891,8 @@ msgstr "<link=\"TELESCOPE\"></link>으로 복제체가 우주를 연구할 수 �
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING3.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING3.NAME"
-msgid "Skilled: <link=\"SENIORRESEARCHER\">Astronomy</link>"
-msgstr "숙련: <link=\"SENIORRESEARCHER\">천문학</link>"
+msgid "Skilled: <link=\"ASTRONOMY\">Astronomy</link>"
+msgstr "숙련: <link=\"ASTRONOMY\">천문학</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING3.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING3.SHORT_DESC"
@@ -38691,13 +38906,13 @@ msgstr "이 복제체는 <style=\"KKeyword\">사기 요건</style> 증가의 단
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.DESC"
-msgid "Enables Duplicants to study matter using the <link=\"NUCLEARLABORATORY\">Materials Study Terminal</link>"
-msgstr "복제체가 <link=\"NUCLEARLABORATORY\">재료 연구 터미널</link>을 사용하여 물질을 연구할 수 있습니다."
+msgid "Enables Duplicants to study matter using the <link=\"NUCLEARRESEARCHCENTER\">Materials Study Terminal</link>"
+msgstr "복제체가 <link=\"NUCLEARRESEARCHCENTER\">재료 연구 터미널</link>을 사용하여 물질을 연구할 수 있습니다."
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.NAME"
-msgid "Skilled: <link=\"NUCLEARRESEARCHER\">Materials Science Research</link>"
-msgstr "숙련: <link=\"NUCLEARRESEARCHER\">재료 과학 연구</link>"
+msgid "Skilled: <link=\"ATOMICRESEARCH\">Materials Science Research</link>"
+msgstr "숙련: <link=\"ATOMICRESEARCH\">재료 과학 연구</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING4.SHORT_DESC"
@@ -38716,8 +38931,8 @@ msgstr "특수복 착용 시 달리기 속도 손실을 제거합니다."
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_SUITS1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_SUITS1.NAME"
-msgid "Skilled: <link=\"SUITEXPERT\">Exosuit Training</link>"
-msgstr "숙련: <link=\"SUITEXPERT\">외부특수복 훈련</link>"
+msgid "Skilled: <link=\"SUITS1\">Exosuit Training</link>"
+msgstr "숙련: <link=\"SUITS1\">특수복 훈련</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_SUITS1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_SUITS1.SHORT_DESC"
@@ -38736,8 +38951,8 @@ msgstr "복제체의 땜질 속도가 조금 향상됩니다."
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_TECHNICALS1.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_TECHNICALS1.NAME"
-msgid "Skilled: <link=\"MACHINETECHNICIAN\">Improved Tinkering</link>"
-msgstr "숙련: <link=\"MACHINETECHNICIAN\">땜질 향상</link>"
+msgid "Skilled: <link=\"TECHNICALS1\">Improved Tinkering</link>"
+msgstr "숙련: <link=\"TECHNICALS1\">땜질 향상</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_TECHNICALS1.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_TECHNICALS1.SHORT_DESC"
@@ -38756,8 +38971,8 @@ msgstr "일시적으로 향상된 <style=\"KKeyword\">전력</style> 출력을 �
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_TECHNICALS2.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_TECHNICALS2.NAME"
-msgid "Skilled: <link=\"POWERTECHNICIAN\">Electrical Engineering</link>"
-msgstr "숙련: <link=\"POWERTECHNICIAN\">전기 엔지니어링</link>"
+msgid "Skilled: <link=\"TECHNICALS2\">Electrical Engineering</link>"
+msgstr "숙련: <link=\"TECHNICALS2\">전기 엔지니어링</link>"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_TECHNICALS2.SHORT_DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_TECHNICALS2.SHORT_DESC"
@@ -38848,6 +39063,26 @@ msgstr "이 복제체는 \"일보기\" 위해 시간이 조금 더 필요합니�
 msgctxt "STRINGS.DUPLICANTS.TRAITS.IRRITABLEBOWEL.NAME"
 msgid "Irritable Bowel"
 msgstr "과민성 대장"
+
+#. STRINGS.DUPLICANTS.TRAITS.LONER.DESC
+msgctxt "STRINGS.DUPLICANTS.TRAITS.LONER.DESC"
+msgid "This Duplicant prefers solitary pursuits"
+msgstr "이 복제체는 고독한 추구를 선호합니다."
+
+#. STRINGS.DUPLICANTS.TRAITS.LONER.NAME
+msgctxt "STRINGS.DUPLICANTS.TRAITS.LONER.NAME"
+msgid "Loner"
+msgstr "외톨이"
+
+#. STRINGS.DUPLICANTS.TRAITS.LONER.SHORT_DESC
+msgctxt "STRINGS.DUPLICANTS.TRAITS.LONER.SHORT_DESC"
+msgid "Attribute bonuses while <style=\"KKeyword\">Alone</style>"
+msgstr "<style=\"KKeyword\">혼자</style> 있는 동안 속성 보너스"
+
+#. STRINGS.DUPLICANTS.TRAITS.LONER.SHORT_DESC_TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.TRAITS.LONER.SHORT_DESC_TOOLTIP"
+msgid "Only duplicant on a world: <b>+4</b> bonus to all <style=\"KKeyword\">Attributes</style>"
+msgstr "세계의 유일한 복제체: 모든 <style=\"KKeyword\">속성</style>에 <b>+4</b> 보너스"
 
 #. STRINGS.DUPLICANTS.TRAITS.MACHINERYDOWN.DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.MACHINERYDOWN.DESC"
@@ -39042,6 +39277,26 @@ msgctxt "STRINGS.DUPLICANTS.TRAITS.NOODLEARMS.NAME"
 msgid "Noodle Arms"
 msgstr "면 팔"
 
+#. STRINGS.DUPLICANTS.TRAITS.RADIATIONEATER.DESC
+msgctxt "STRINGS.DUPLICANTS.TRAITS.RADIATIONEATER.DESC"
+msgid "This Duplicant can convert Radiation exposure into Calories."
+msgstr "이 복제체는 방사선 노출을 칼로리로 변환할 수 있습니다."
+
+#. STRINGS.DUPLICANTS.TRAITS.RADIATIONEATER.NAME
+msgctxt "STRINGS.DUPLICANTS.TRAITS.RADIATIONEATER.NAME"
+msgid "Radiation Eater"
+msgstr "방사선을 먹는 자"
+
+#. STRINGS.DUPLICANTS.TRAITS.RADIATIONEATER.SHORT_DESC
+msgctxt "STRINGS.DUPLICANTS.TRAITS.RADIATIONEATER.SHORT_DESC"
+msgid "Converts Radiation exposure into Calories"
+msgstr "방사선 노출을 칼로리로 변환"
+
+#. STRINGS.DUPLICANTS.TRAITS.RADIATIONEATER.SHORT_DESC_TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.TRAITS.RADIATIONEATER.SHORT_DESC_TOOLTIP"
+msgid "Converts Radiation exposure into Calories"
+msgstr "방사선 노출을 칼로리로 변환"
+
 #. STRINGS.DUPLICANTS.TRAITS.RANCHINGDOWN.DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.RANCHINGDOWN.DESC"
 msgid "This Duplicant just doesn't trust those beady little eyes"
@@ -39156,6 +39411,26 @@ msgstr "이 복제체는 <style=\"KKeyword\">넘치는 기쁨</style> 상태일 
 msgctxt "STRINGS.DUPLICANTS.TRAITS.SPARKLESTREAKER.NAME"
 msgid "Sparkle Streaker"
 msgstr "스파클 스트리커"
+
+#. STRINGS.DUPLICANTS.TRAITS.STARRYEYED.DESC
+msgctxt "STRINGS.DUPLICANTS.TRAITS.STARRYEYED.DESC"
+msgid "This Duplicant likes being in space"
+msgstr "이 복제체는 우주에 있는 것을 좋아합니다."
+
+#. STRINGS.DUPLICANTS.TRAITS.STARRYEYED.NAME
+msgctxt "STRINGS.DUPLICANTS.TRAITS.STARRYEYED.NAME"
+msgid "Starry Eyed"
+msgstr "별이 빛나는 눈"
+
+#. STRINGS.DUPLICANTS.TRAITS.STARRYEYED.SHORT_DESC
+msgctxt "STRINGS.DUPLICANTS.TRAITS.STARRYEYED.SHORT_DESC"
+msgid "Morale bonus while in space"
+msgstr "우주에 있는 동안 사기 보너스"
+
+#. STRINGS.DUPLICANTS.TRAITS.STARRYEYED.SHORT_DESC_TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.TRAITS.STARRYEYED.SHORT_DESC_TOOLTIP"
+msgid "In outer space: <b>+10</b> <style=\"KKeyword\">Morale</style>"
+msgstr "우주에서: <b>+10</b> <style=\"KKeyword\">사기</style>"
 
 #. STRINGS.DUPLICANTS.TRAITS.STICKERBOMBER.DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.STICKERBOMBER.DESC"
@@ -44841,11 +45116,11 @@ msgstr "알 껍질"
 #. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.FARM_STATION_TOOLS.DESC
 msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.FARM_STATION_TOOLS.DESC"
 msgid ""
-"Specialized <link=\"FERTILIZER\">Fertilizer</link> mixed by a Duplicant with the <link=\"FARMER\">Crop Tending</link> Skill.\n"
+"Specialized <link=\"FERTILIZER\">Fertilizer</link> mixed by a Duplicant with the <link=\"FARMING2\">Crop Tending</link> Skill.\n"
 "\n"
 "Increases the <style=\"KKeyword\">Growth Rate</style> of one <link=\"PLANTS\">Plant</link>."
 msgstr ""
-"<link=\"FARMER\">작물 경작<style=\"KKeyword\"> 기술이 있는 복제체가 섞은 특수 <link=\"FERTILIZER\">비료</link>.\n"
+"<link=\"FARMING2\">작물 경작<style=\"KKeyword\"> 기술이 있는 복제체가 섞은 특수 <link=\"FERTILIZER\">비료</link>.\n"
 "\n"
 "한 <link=\"PLANTS\">식물</link>의 </style>생장률</link>을 높입니다."
 
@@ -44908,13 +45183,13 @@ msgstr "기계 건조물 <style=\"KKeyword\">개조</style> 업그레이드에 �
 
 #. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.MACHINE_PARTS.TINKER_REQUIREMENT_NAME
 msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.MACHINE_PARTS.TINKER_REQUIREMENT_NAME"
-msgid "Job: <link=\"MECHATRONICENGINEER\">Mechatronics Engineering</link>"
-msgstr "직무: <link=\"MECHATRONICENGINEER\">메커트로닉스 엔지니어링</link>"
+msgid "Job: <link=\"ENGINEERING1\">Mechatronics Engineering</link>"
+msgstr "직무: <link=\"ENGINEERING1\">메커트로닉스 엔지니어링</link>"
 
 #. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.MACHINE_PARTS.TINKER_REQUIREMENT_TOOLTIP
 msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.MACHINE_PARTS.TINKER_REQUIREMENT_TOOLTIP"
-msgid "Can only be used by a Duplicant with <link=\"MECHATRONICENGINEER\">Mechatronics Engineering</link> to apply a <style=\"KKeyword\">Jerry Rig</style>."
-msgstr "<link=\"MECHATRONICENGINEER\">메커트로닉스 엔지니어링</link>이 있는 복제체만 <style=\"KKeyword\">개조</style>에 사용할 수 있습니다."
+msgid "Can only be used by a Duplicant with <link=\"ENGINEERING1\">Mechatronics Engineering</link> to apply a <style=\"KKeyword\">Jerry Rig</style>."
+msgstr "<link=\"ENGINEERING1\">메커트로닉스 엔지니어링</link>이 있는 복제체만 <style=\"KKeyword\">개조</style>에 사용할 수 있습니다."
 
 #. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.POWER_STATION_TOOLS.DESC
 msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.POWER_STATION_TOOLS.DESC"
@@ -44944,13 +45219,13 @@ msgstr "발전기 <style=\"KKeyword\">튠업</style>에 사용하여 {0}을(를)
 
 #. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.POWER_STATION_TOOLS.TINKER_REQUIREMENT_NAME
 msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.POWER_STATION_TOOLS.TINKER_REQUIREMENT_NAME"
-msgid "Skill: <link=\"POWERTECHNICIAN\">Electrical Engineering</link>"
-msgstr "기술: <link=\"POWERTECHNICIAN\">전기 엔지니어링</link>"
+msgid "Skill: <link=\"TECHNICALS2\">Electrical Engineering</link>"
+msgstr "숙련: <link=\"TECHNICALS2\">전기 엔지니어링</link>"
 
 #. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.POWER_STATION_TOOLS.TINKER_REQUIREMENT_TOOLTIP
 msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.POWER_STATION_TOOLS.TINKER_REQUIREMENT_TOOLTIP"
-msgid "Can only be used by a Duplicant with <link=\"POWERTECHNICIAN\">Electrical Engineering</link> to apply a <style=\"KKeyword\">Tune Up</style>."
-msgstr "<link=\"POWERTECHNICIAN\">전기 엔지니어링</link>이 있는 복제체만 <style=\"KKeyword\">튠업</style>에 사용할 수 있습니다."
+msgid "Can only be used by a Duplicant with <link=\"TECHNICALS2\">Electrical Engineering</link> to apply a <style=\"KKeyword\">Tune Up</style>."
+msgstr "<link=\"TECHNICALS2\">전기 엔지니어링</link>이 있는 복제체만 <style=\"KKeyword\">튠업</style>에 사용할 수 있습니다."
 
 #. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.REFINED_SUGAR.DESC
 msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.REFINED_SUGAR.DESC"
@@ -45053,11 +45328,11 @@ msgctxt "STRINGS.ITEMS.PILLS.ADVANCEDCURE.RECIPEDESC"
 msgid ""
 "An extremely powerful medication created to treat severe <link=\"DISEASE\">Diseases</link>. Serum Vial is very effective against <link=\"SLIMESICKNESS\">Slimelung</link>.\n"
 "\n"
-"Must be administered by a Duplicant with the <link=\"MEDIC\">Advanced Medical Care</link> Skill."
+"Must be administered by a Duplicant with the <link=\"MEDICINE3\">Advanced Medical Care</link> Skill."
 msgstr ""
 "중증 <link=\"DISEASE\">질병</link>을 치료하기 위해 만들어진 매우 강력한 약물. 세럼 바이알은 <link=\"SLIMESICKNESS\">는지렁이허파</link>에 대해 매우 효과적입니다.\n"
 "\n"
-"<link=\"MEDIC\">고급 의료</link> 기술을 가진 복제체가 투여해야 합니다."
+"<link=\"MEDICINE3\">고급 의료</link> 기술을 가진 복제체가 투여해야 합니다."
 
 #. STRINGS.ITEMS.PILLS.ANTIHISTAMINE.DESC
 msgctxt "STRINGS.ITEMS.PILLS.ANTIHISTAMINE.DESC"
@@ -45173,11 +45448,11 @@ msgctxt "STRINGS.ITEMS.PILLS.INTERMEDIATECURE.RECIPEDESC"
 msgid ""
 "A doctor-administered cure for moderate <link=\"DISEASE\">Diseases</link>. Medical Packs are very effective against <link=\"SLIMESICKNESS\">Slimelung</link>.\n"
 "\n"
-"Must be administered by a Duplicant with the <link=\"MEDIC\">Bedside Manner</link> Skill."
+"Must be administered by a Duplicant with the <link=\"MEDICINE2\">Bedside Manner</link> Skill."
 msgstr ""
 "중등도 <link=\"DISEASE\">질병</link>에 대하여 의사가 투여하는 치료책. 의료 팩은  <link=\"SLIMESICKNESS\">는지렁이허파</link>에 대해 매우 효과적입니다.\n"
 "\n"
-"<link=\"MEDIC\">환자를 대하는 태도</link> 기술을 가진 복제체가 투여해야 합니다."
+"<link=\"MEDICINE2\">환자를 대하는 태도</link> 기술을 가진 복제체가 투여해야 합니다."
 
 #. STRINGS.ITEMS.PILLS.INTERMEDIATERADPILL.DESC
 msgctxt "STRINGS.ITEMS.PILLS.INTERMEDIATERADPILL.DESC"
@@ -47224,11 +47499,11 @@ msgctxt "STRINGS.MISC.STATUSITEMS.ORDERCAPTURE.TOOLTIP"
 msgid ""
 "Waiting for a Duplicant to capture this <style=\"KKeyword\">Critter</style>\n"
 "------------------\n"
-"Only Duplicants with the <link=\"RANCHER\">Critter Ranching I</link> Skill can catch critters without traps"
+"Only Duplicants with the <link=\"RANCHING1\">Critter Ranching I</link> Skill can catch critters without traps"
 msgstr ""
 "복제체가 이 <style=\"KKeyword\">크리터</style>를 포획할 때까지 기다리는 중입니다.\n"
 "------------------\n"
-"<link=\"RANCHER\">사육 기술 I</link>이 있는 복제체만 덫 없이 크리터를 잡을 수 있습니다."
+"<link=\"RANCHING1\">사육 기술 I</link>이 있는 복제체만 덫 없이 크리터를 잡을 수 있습니다."
 
 #. STRINGS.MISC.STATUSITEMS.OREMASS.NAME
 msgctxt "STRINGS.MISC.STATUSITEMS.OREMASS.NAME"
@@ -47640,8 +47915,8 @@ msgstr "가연성 기체"
 
 #. STRINGS.MISC.TAGS.COMBUSTIBLELIQUID
 msgctxt "STRINGS.MISC.TAGS.COMBUSTIBLELIQUID"
-msgid "Combustible Liquid"
-msgstr "가연성 액체"
+msgid "<link=\"COMBUSTIBLELIQUID\">Combustible Liquid</link>"
+msgstr "<link=\"COMBUSTIBLELIQUID\">가연성 액체</link>"
 
 #. STRINGS.MISC.TAGS.COMBUSTIBLESOLID
 msgctxt "STRINGS.MISC.TAGS.COMBUSTIBLESOLID"
@@ -47660,8 +47935,8 @@ msgstr "{Item}"
 
 #. STRINGS.MISC.TAGS.COMPOSTABLE
 msgctxt "STRINGS.MISC.TAGS.COMPOSTABLE"
-msgid "Compostable"
-msgstr "퇴비 가능"
+msgid "<link=\"COMPOSTABLE\">Compostable</link>"
+msgstr "<link=\"COMPOSTABLE\">퇴비</link>"
 
 #. STRINGS.MISC.TAGS.COMPOSTBASICPLANTFOOD
 msgctxt "STRINGS.MISC.TAGS.COMPOSTBASICPLANTFOOD"
@@ -47760,8 +48035,8 @@ msgstr "재배 스테이션"
 
 #. STRINGS.MISC.TAGS.FILTER
 msgctxt "STRINGS.MISC.TAGS.FILTER"
-msgid "Filtration Medium"
-msgstr "여과 매질"
+msgid "<link=\"FILTER\">Filtration Medium</link>"
+msgstr "<link=\"FILTER\">여과</link>"
 
 #. STRINGS.MISC.TAGS.FLYINGCRITTEREDIBLE
 msgctxt "STRINGS.MISC.TAGS.FLYINGCRITTEREDIBLE"
@@ -47785,8 +48060,8 @@ msgstr "서식지 모듈"
 
 #. STRINGS.MISC.TAGS.ICEORE
 msgctxt "STRINGS.MISC.TAGS.ICEORE"
-msgid "Ice"
-msgstr "얼음"
+msgid "<link=\"ICEORE\">Ice</link>"
+msgstr "<link=\"ICEORE\">얼음</link>"
 
 #. STRINGS.MISC.TAGS.INDUSTRIALINGREDIENT
 msgctxt "STRINGS.MISC.TAGS.INDUSTRIALINGREDIENT"
@@ -47872,6 +48147,11 @@ msgstr "혼합물"
 msgctxt "STRINGS.MISC.TAGS.MULTITOOL"
 msgid "Multitool"
 msgstr "멀티툴"
+
+#. STRINGS.MISC.TAGS.NONCRUSHABLE
+msgctxt "STRINGS.MISC.TAGS.NONCRUSHABLE"
+msgid "Uncrushable"
+msgstr "부술 수 없음"
 
 #. STRINGS.MISC.TAGS.OIL
 msgctxt "STRINGS.MISC.TAGS.OIL"
@@ -47960,8 +48240,8 @@ msgstr "귀한 금속 광석"
 
 #. STRINGS.MISC.TAGS.REFINEDMETAL
 msgctxt "STRINGS.MISC.TAGS.REFINEDMETAL"
-msgid "Refined Metal"
-msgstr "제련된 금속"
+msgid "<link=\"REFINEDMETAL\">Refined Metal</link>"
+msgstr "<link=\"REFINEDMETAL\">제련된 금속</link>"
 
 #. STRINGS.MISC.TAGS.RELAXATION_POINT
 msgctxt "STRINGS.MISC.TAGS.RELAXATION_POINT"
@@ -52322,10 +52602,10 @@ msgstr "향상된 테크놀로지를 배울 수 있습니다."
 msgctxt "STRINGS.RESEARCH.TYPES.DELTA.DESC"
 msgid ""
 "<link=\"RESEARCH\">Materials Science Research</link> is required to unlock materials science technologies.\n"
-"It can be conducted at a <link=\"NUCLEARLABORATORY\">Materials Study Terminal</link>."
+"It can be conducted at a <link=\"NUCLEARRESEARCHCENTER\">Materials Study Terminal</link>."
 msgstr ""
 "재료 과학 테크놀로지를 잠금 해제하려면 <link=\"RESEARCH\">재료 과학 연구</link>가 필요합니다.\n"
-"<link=\"NUCLEARLABORATORY\">재료 연구 터미널</link>에서 실시할 수 있습니다."
+"<link=\"NUCLEARRESEARCHCENTER\">재료 연구 터미널</link>에서 실시할 수 있습니다."
 
 #. STRINGS.RESEARCH.TYPES.DELTA.NAME
 msgctxt "STRINGS.RESEARCH.TYPES.DELTA.NAME"
@@ -54877,7 +55157,7 @@ msgstr ""
 
 #. STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.GASCOOLING
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.GASCOOLING"
-msgid "Reduces the <style=\"KKeyword\">Temperature</style> of piped <style=\"KKeyword\">Gases</style>by <b>{0}</b>"
+msgid "Reduces the <style=\"KKeyword\">Temperature</style> of piped <style=\"KKeyword\">Gases</style> by <b>{0}</b>"
 msgstr "배관된 <style=\"KKeyword\">기체</style>의 <style=\"KKeyword\">온도</style>를 <b>{0}</b> 감소합니다."
 
 #. STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.GEYSER_DISEASE
@@ -54973,7 +55253,7 @@ msgctxt "STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.HEATGENERATED_AIRCONDITIONER"
 msgid ""
 "Generates <style=\"KKeyword\">Heat</style> based on the <style=\"KKeyword\">Volume</style> and <style=\"KKeyword\">Specific Heat Capacity</style> of the pumped <style=\"KKeyword\">Gas</style>\n"
 "\n"
-"Cooling 1  kg of <link=\"OXYGEN\">Oxygen</link> the entire <b>{1}</b> will output <b>{0}</b>"
+"Cooling 1 kg of <link=\"OXYGEN\">Oxygen</link> the entire <b>{1}</b> will output <b>{0}</b>"
 msgstr ""
 "펌프로 보낸 <style=\"KKeyword\">기체</style>의 <style=\"KKeyword\">양</style>, <style=\"KKeyword\">비열용량</style>을 기반으로 <style=\"KKeyword\">열</style>을 생성합니다.\n"
 "\n"
@@ -54984,7 +55264,7 @@ msgctxt "STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.HEATGENERATED_LIQUIDCONDITIONER"
 msgid ""
 "Generates <style=\"KKeyword\">Heat</style> based on the <style=\"KKeyword\">Volume</style> and <style=\"KKeyword\">Specific Heat Capacity</style> of the pumped <style=\"KKeyword\">Liquid</style>\n"
 "\n"
-"Cooling 10  kg of <link=\"WATER\">Water</link> the entire <b>{1}</b> will output <b>{0}</b>"
+"Cooling 10 kg of <link=\"WATER\">Water</link> the entire <b>{1}</b> will output <b>{0}</b>"
 msgstr ""
 "펌프로 보낸 <style=\"KKeyword\">액체</style>의 <style=\"KKeyword\">양</style>, <style=\"KKeyword\">비열용량</style>을 기반으로 <style=\"KKeyword\">열</style>을 생성합니다.\n"
 "\n"
@@ -55489,7 +55769,7 @@ msgstr "관심지점"
 #. STRINGS.UI.CLUSTERMAP.ROCKETS.ARTIFACT_MODULE.EMPTY
 msgctxt "STRINGS.UI.CLUSTERMAP.ROCKETS.ARTIFACT_MODULE.EMPTY"
 msgid "Empty"
-msgstr "비우기"
+msgstr "비어있음"
 
 #. STRINGS.UI.CLUSTERMAP.ROCKETS.BURDEN_MODULE.NAME
 msgctxt "STRINGS.UI.CLUSTERMAP.ROCKETS.BURDEN_MODULE.NAME"
@@ -55780,6 +56060,11 @@ msgstr "<link=\"DISEASE\">질병</link>"
 msgctxt "STRINGS.UI.CODEX.CATEGORYNAMES.ELEMENTS"
 msgid "<link=\"ELEMENTS\">Elements</link>"
 msgstr "<link=\"ELEMENTS\">원소</link>"
+
+#. STRINGS.UI.CODEX.CATEGORYNAMES.ELEMENTSCLASSES
+msgctxt "STRINGS.UI.CODEX.CATEGORYNAMES.ELEMENTSCLASSES"
+msgid "<link=\"ELEMENTSCLASSES\">Classes</link>"
+msgstr "<link=\"ELEMENTSCLASSES\">계열</link>"
 
 #. STRINGS.UI.CODEX.CATEGORYNAMES.ELEMENTSGAS
 msgctxt "STRINGS.UI.CODEX.CATEGORYNAMES.ELEMENTSGAS"
@@ -58121,6 +58406,11 @@ msgstr "로켓공학"
 msgctxt "STRINGS.UI.DETAILTABS.SIMPLEINFO.GROUPNAME_STATUS"
 msgid "STATUS"
 msgstr "상태"
+
+#. STRINGS.UI.DETAILTABS.SIMPLEINFO.GROUPNAME_WORLDTRAITS
+msgctxt "STRINGS.UI.DETAILTABS.SIMPLEINFO.GROUPNAME_WORLDTRAITS"
+msgid "WORLD TRAITS"
+msgstr "세계 특성"
 
 #. STRINGS.UI.DETAILTABS.SIMPLEINFO.NAME
 msgctxt "STRINGS.UI.DETAILTABS.SIMPLEINFO.NAME"
@@ -61452,8 +61742,8 @@ msgstr "Steam 창작마당"
 
 #. STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER
 msgctxt "STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER"
-msgid "COSMIC CALLING"
-msgstr "COSMIC CALLING"
+msgid "UNEXPLAINED TRAITS"
+msgstr "UNEXPLAINED TRAITS"
 
 #. STRINGS.UI.FRONTEND.MOTD.NEWS_BODY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.NEWS_BODY"
@@ -61468,25 +61758,25 @@ msgstr "토론에 참여하기"
 #. STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY"
 msgid ""
-"Welcome to the <b>COSMIC CALLING UPDATE</b>\n"
+"Welcome to the <b>UNEXPLAINED TRAITS UPDATE</b>\n"
 "\n"
 "<b><i>Spaced Out!</i></b>\n"
-"•<indent=20px>New buildings allow automation signals to be broadcast between asteroids.</indent>\n"
-"•<indent=20px>Duplicants can boost their morale by having a chat on the new Party Line Phone.</indent>\n"
-"•<indent=20px>Radbolts can pass through a new special type of wall tile.</indent>\n"
-"•<indent=20px>Rocket engine speeds and ranges have been rebalanced.</indent>\n"
+"•<indent=20px>New world traits added to world generation system and old traits made compatible with Spaced Out!</indent>\n"
+"•<indent=20px>New traits related to space travel and radiation added for Duplicants.</indent>\n"
+"•<indent=20px>Added Spaced Out! specific Achievements.</indent>\n"
+"•<indent=20px>Changes and improvements to codex categories.</indent>\n"
 "\n"
 "   Check out the full patch notes for more details!"
 msgstr ""
-"<b>COSMIC CALLING 업데이트</b>를 이용해 주셔서 감사합니다.\n"
+"<b>UNEXPLAINED TRAITS 업데이트</b>에 오신 것을 환영합니다.\n"
 "\n"
 "<b><i>Spaced Out!</i></b>\n"
-"•<indent=20px>새 건조물을 통해 소행성 간에 자동화 신호를 전달할 수 있습니다.</indent>\n"
-"•<indent=20px>복제체는 새로운 파티 라인 전화로 대화를 하여 사기를 높일 수 있습니다.</indent>\n"
-"•<indent=20px>래드볼트는 새로운 특수 유형의 벽 타일을 통과할 수 있습니다.</indent>\n"
-"•<indent=20px>로켓 엔진 속도와 범위가 재조정되었습니다.</indent>\n"
+"•<indent=20px>세계 생성 시스템에 새로운 세계 특성이 추가되고 기존 특성이 Spaced Out!과 호환되도록 했습니다.</indent>\n"
+"•<indent=20px>복제체에 대한 우주 여행 및 방사선과 관련된 새로운 특성이 추가되었습니다.</indent>\n"
+"•<indent=20px>Spaced Out! 특정 업적 추가.</indent>\n"
+"•<indent=20px>코덱스 카테고리 변경 및 개선</indent>\n"
 "\n"
-"   자세한 내용은 패치 노트 전문을 참조하세요!"
+"    자세한 내용은 패치 전문을 확인하세요!"
 
 #. STRINGS.UI.FRONTEND.MOTD.UPDATE_TEXT
 msgctxt "STRINGS.UI.FRONTEND.MOTD.UPDATE_TEXT"
@@ -66900,8 +67190,8 @@ msgstr "이 직무는 훈련이 필요 없습니다."
 
 #. STRINGS.UI.ROLES_SCREEN.PERKS.NUCLEAR_RESEARCH.DESCRIPTION
 msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.NUCLEAR_RESEARCH.DESCRIPTION"
-msgid "<link=\"NUCLEARLABORATORY\">Materials Study Terminal</link> Usage"
-msgstr "<link=\"NUCLEARLABORATORY\">재료 연구 터미널</link> 사용"
+msgid "<link=\"NUCLEARRESEARCHCENTER\">Materials Study Terminal</link> Usage"
+msgstr "<link=\"NUCLEARRESEARCHCENTER\">재료 연구 터미널</link> 사용"
 
 #. STRINGS.UI.ROLES_SCREEN.PERKS.ORBITAL_RESEARCH.DESCRIPTION
 msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.ORBITAL_RESEARCH.DESCRIPTION"
@@ -69080,11 +69370,11 @@ msgstr "희미하게 빛나는 소행성 필드"
 #. STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.HELIUMCLOUD.DESC
 msgctxt "STRINGS.UI.SPACEDESTINATIONS.HARVESTABLE_POI.HELIUMCLOUD.DESC"
 msgid ""
-"A cloud of resources containing <link=\"WATER\">Water</link>, <link=\"HYDROGEN\">Hydrogen</link>, and <link=\"NIOBIUM\">Niobium</link>.\n"
+"A cloud of resources containing <link=\"WATER\">Water</link> and <link=\"HYDROGEN\">Hydrogen</link>.\n"
 "\n"
 "Harvesting resources requires a rocket equipped with a <link=\"NOSECONEHARVEST\">Drillcone</link>."
 msgstr ""
-"<link=\"WATER\">물</link>, <link=\"HYDROGEN\">수소</link>, <link=\"NIOBIUM\">나이오븀</link>을 포함하는 자원의 구름.\n"
+"<link=\"WATER\">물</link>, <link=\"HYDROGEN\">수소</link> 등의 자원을 포함하는 구름.\n"
 "\n"
 "자원을 수확하려면 <link=\"NOSECONEHARVEST\">드릴콘</link>이 장착된 로켓이 필요합니다."
 
@@ -70307,18 +70597,18 @@ msgstr "조종사 탑승함"
 #. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.PILOT_BOARDED.TOOLTIP.FAILURE
 msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.PILOT_BOARDED.TOOLTIP.FAILURE"
 msgid ""
-"At least one crew member aboard the rocket must possess the <link=\"PILOT\">Rocket Piloting</link> skill to launch\n"
+"At least one crew member aboard the rocket must possess the <link=\"ROCKETPILOTING1\">Rocket Piloting</link> skill to launch\n"
 "------------------\n"
 "Qualified Duplicants must be assigned to the rocket crew, and have access to the module's hatch"
 msgstr ""
-"로켓에 탑승한 승무원 최소 한 명이 <link=\"PILOT\">로켓 조종</link> 기술을 가지고 있어야 발사할 수 있습니다.\n"
+"로켓에 탑승한 승무원 최소 한 명이 <link=\"ROCKETPILOTING1\">로켓 조종</link> 기술을 가지고 있어야 발사할 수 있습니다.\n"
 "------------------\n"
 "자격을 갖춘 복제체가 로켓 승무원으로 할당되어야 하며 모듈의 해치에 액세스할 수 있어야 합니다."
 
 #. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.PILOT_BOARDED.TOOLTIP.READY
 msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.PILOT_BOARDED.TOOLTIP.READY"
-msgid "A Duplicant with the <link=\"PILOT\">Rocket Piloting</link> skill is currently onboard"
-msgstr "<link=\"PILOT\">로켓 조종</link> 기술을 가진 복제체가 현재 탑승 중입니다."
+msgid "A Duplicant with the <link=\"ROCKETPILOTING1\">Rocket Piloting</link> skill is currently onboard"
+msgstr "<link=\"ROCKETPILOTING1\">로켓 조종</link> 기술을 가진 복제체가 현재 탑승 중입니다."
 
 #. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.PILOT_BOARDED.TOOLTIP.WARNING
 msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.PILOT_BOARDED.TOOLTIP.WARNING"
@@ -72743,7 +73033,7 @@ msgstr "목적지점"
 #. STRINGS.UI.UISIDESCREENS.CLUSTERLOCATIONFILTERSIDESCREEN.EMPTY_SPACE_ROW
 msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERLOCATIONFILTERSIDESCREEN.EMPTY_SPACE_ROW"
 msgid "In Space"
-msgstr "우주에 있음"
+msgstr "우주에서"
 
 #. STRINGS.UI.UISIDESCREENS.CLUSTERLOCATIONFILTERSIDESCREEN.HEADER
 msgctxt "STRINGS.UI.UISIDESCREENS.CLUSTERLOCATIONFILTERSIDESCREEN.HEADER"
@@ -72868,7 +73158,7 @@ msgstr "{0} % "
 #. STRINGS.UI.UISIDESCREENS.COUNTER_SIDE_SCREEN.CURRENT_COUNT_SIMPLE
 msgctxt "STRINGS.UI.UISIDESCREENS.COUNTER_SIDE_SCREEN.CURRENT_COUNT_SIMPLE"
 msgid "{0} of "
-msgstr "{0} / "
+msgstr "{0} /"
 
 #. STRINGS.UI.UISIDESCREENS.COUNTER_SIDE_SCREEN.DECREMENT_MODE
 msgctxt "STRINGS.UI.UISIDESCREENS.COUNTER_SIDE_SCREEN.DECREMENT_MODE"
@@ -73494,6 +73784,11 @@ msgstr "드릴하고 있지 않음"
 msgctxt "STRINGS.UI.UISIDESCREENS.HARVESTMODULESIDESCREEN.TITLE"
 msgid "Resource Gathering"
 msgstr "자원 수집 중"
+
+#. STRINGS.UI.UISIDESCREENS.HEPSWITCHSIDESCREEN.TITLE
+msgctxt "STRINGS.UI.UISIDESCREENS.HEPSWITCHSIDESCREEN.TITLE"
+msgid "Radbolt Threshold"
+msgstr "래드볼트 임계값"
 
 #. STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_E
 msgctxt "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLEDIRECTIONSIDESCREEN.DIRECTION_E"
@@ -74929,6 +75224,11 @@ msgctxt "STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.MAX_HEIGHT.
 msgid "    • Engine's height limit reached or exceeded"
 msgstr "    • 엔진 높이 제한 도달 또는 초과"
 
+#. STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.MAX_HEIGHT.FAILED_NO_ENGINE
+msgctxt "STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.MAX_HEIGHT.FAILED_NO_ENGINE"
+msgid "    • Rocket requires space for an engine"
+msgstr "    • 로켓에는 엔진을 위한 공간이 필요함"
+
 #. STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.MAX_MODULES.COMPLETE
 msgctxt "STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.MAX_MODULES.COMPLETE"
 msgid ""
@@ -74937,7 +75237,7 @@ msgstr ""
 #. STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.MAX_MODULES.FAILED
 msgctxt "STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.MAX_MODULES.FAILED"
 msgid "    • Max module limit of engine reached"
-msgstr "    • 엔진의 최대 모듈 한계에 도달했습니다."
+msgstr "    • 엔진의 최대 모듈 한계에 도달했음"
 
 #. STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.ONE_COMMAND_PER_ROCKET.COMPLETE
 msgctxt "STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.ONE_COMMAND_PER_ROCKET.COMPLETE"
@@ -74997,7 +75297,7 @@ msgstr ""
 #. STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.TOP_ONLY.FAILED
 msgctxt "STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.CONSTRAINTS.TOP_ONLY.FAILED"
 msgid "    • Must install at top of rocket"
-msgstr "    • 로켓 상단에 설치해야 합니다."
+msgstr "    • 로켓 상단에 설치해야 함"
 
 #. STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.TITLE
 msgctxt "STRINGS.UI.UISIDESCREENS.SELECTMODULESIDESCREEN.TITLE"
@@ -75305,6 +75605,21 @@ msgstr "<style=\"KKeyword\">세균</style> 수가 <b>{0}</b> 미만이면 <b><st
 msgctxt "STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.DISEASE_UNITS"
 msgid ""
 msgstr ""
+
+#. STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.HEPS
+msgctxt "STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.HEPS"
+msgid "Radbolt Reading"
+msgstr "래드볼트 판독치"
+
+#. STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.HEPS_TOOLTIP_ABOVE
+msgctxt "STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.HEPS_TOOLTIP_ABOVE"
+msgid "Will send a <b><style=\"logic_on\">Green Signal</style></b> if the <style=\"KKeyword\">Radbolts</style> is above <b>{0}</b>"
+msgstr "<style=\"KKeyword\">래드볼트</style>이 <b>{0}</b> 초과이면 <b><style=\"logic_on\">녹색 신호</style></b>를 보냅니다."
+
+#. STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.HEPS_TOOLTIP_BELOW
+msgctxt "STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.HEPS_TOOLTIP_BELOW"
+msgid "Will send a <b><style=\"logic_on\">Green Signal</style></b> if the <style=\"KKeyword\">Radbolts</style> is below <b>{0}</b>"
+msgstr "<style=\"KKeyword\">래드볼트</style>이 <b>{0}</b> 미만이면 <b><style=\"logic_on\">녹색 신호</style></b>를 보냅니다."
 
 #. STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.PRESSURE
 msgctxt "STRINGS.UI.UISIDESCREENS.THRESHOLD_SWITCH_SIDESCREEN.PRESSURE"
@@ -76226,7 +76541,7 @@ msgstr "이 복제체의 도달 범위 안에 있는 영역을 숨깁니다."
 #. STRINGS.UI.USERMENUACTIONS.DUMP.NAME
 msgctxt "STRINGS.UI.USERMENUACTIONS.DUMP.NAME"
 msgid "Empty"
-msgstr "비우기"
+msgstr "비어있음"
 
 #. STRINGS.UI.USERMENUACTIONS.DUMP.NAME_OFF
 msgctxt "STRINGS.UI.USERMENUACTIONS.DUMP.NAME_OFF"
@@ -78003,6 +78318,16 @@ msgctxt "STRINGS.WORLD_TRAITS.IRREGULAR_OIL.NAME"
 msgid "Irregular Oil"
 msgstr "비정규 석유"
 
+#. STRINGS.WORLD_TRAITS.LUSH_CORE.DESCRIPTION
+msgctxt "STRINGS.WORLD_TRAITS.LUSH_CORE.DESCRIPTION"
+msgid "This world has a lush forest core."
+msgstr "이 세계에는 울창한 숲 코어가 있습니다."
+
+#. STRINGS.WORLD_TRAITS.LUSH_CORE.NAME
+msgctxt "STRINGS.WORLD_TRAITS.LUSH_CORE.NAME"
+msgid "Lush Core"
+msgstr "울창한 코어"
+
 #. STRINGS.WORLD_TRAITS.MAGMA_VENTS.DESCRIPTION
 msgctxt "STRINGS.WORLD_TRAITS.MAGMA_VENTS.DESCRIPTION"
 msgid "The <link=\"MAGMA\">Magma</link> from this world's core has leaked into the mantle and crust"
@@ -78012,6 +78337,16 @@ msgstr "이 세계의 핵의 <link=\"MAGMA\">마그마</link>가 맨틀과 지�
 msgctxt "STRINGS.WORLD_TRAITS.MAGMA_VENTS.NAME"
 msgid "Magma Channels"
 msgstr "마그마 채널"
+
+#. STRINGS.WORLD_TRAITS.METAL_CAVES.DESCRIPTION
+msgctxt "STRINGS.WORLD_TRAITS.METAL_CAVES.DESCRIPTION"
+msgid "Metallic caves description"
+msgstr "금속 동굴 설명"
+
+#. STRINGS.WORLD_TRAITS.METAL_CAVES.NAME
+msgctxt "STRINGS.WORLD_TRAITS.METAL_CAVES.NAME"
+msgid "Metallic Caves"
+msgstr "금속 동굴"
 
 #. STRINGS.WORLD_TRAITS.METAL_POOR.DESCRIPTION
 msgctxt "STRINGS.WORLD_TRAITS.METAL_POOR.DESCRIPTION"
@@ -78057,6 +78392,21 @@ msgstr "이 세계는 조우할 때마다 특히 안정적인 구성으로 존�
 msgctxt "STRINGS.WORLD_TRAITS.NO_TRAITS.NAME"
 msgid "<i>This world is stable and has no unusual features.</i>"
 msgstr "<i>이 세계는 안정적이고 별다른 특징이 없습니다.</i>"
+
+#. STRINGS.WORLD_TRAITS.NO_TRAITS.NAME_SHORTHAND
+msgctxt "STRINGS.WORLD_TRAITS.NO_TRAITS.NAME_SHORTHAND"
+msgid "No unusal features"
+msgstr "특이한 특징 없음"
+
+#. STRINGS.WORLD_TRAITS.RADIOACTIVE_CRUST.DESCRIPTION
+msgctxt "STRINGS.WORLD_TRAITS.RADIOACTIVE_CRUST.DESCRIPTION"
+msgid "Deposits of <link=\"URANIUMORE\">Uranium Ore</link> are found in this world's crust."
+msgstr "이 세계의 지각에는 <link=\"URANIUMORE\">우라늄 광물</link>이 매장되어 있습니다."
+
+#. STRINGS.WORLD_TRAITS.RADIOACTIVE_CRUST.NAME
+msgctxt "STRINGS.WORLD_TRAITS.RADIOACTIVE_CRUST.NAME"
+msgid "Radioactive Crust"
+msgstr "방사성 크러스트"
 
 #. STRINGS.WORLD_TRAITS.SLIME_SPLATS.DESCRIPTION
 msgctxt "STRINGS.WORLD_TRAITS.SLIME_SPLATS.DESCRIPTION"

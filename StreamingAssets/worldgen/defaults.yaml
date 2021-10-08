@@ -33,7 +33,7 @@ data:
   OverworldMinNodes: 5
   OverworldMaxNodes: 200
   DrawWorldBorder: true
-  DrawWorldBorderOverVacuum: false
+  DrawWorldBorderForce: false
   WorldBorderThickness: 10
   WorldBorderRange: 6
   CloudDaysUntilFirst: 12

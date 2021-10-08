@@ -2,7 +2,7 @@ name: STRINGS.CLUSTER_NAMES.VANILLA_SWAMP_CLUSTER.NAME
 description: STRINGS.CLUSTER_NAMES.VANILLA_SWAMP_CLUSTER.DESCRIPTION
 requiredDlcId: EXPANSION1_ID
 coordinatePrefix: V-SWMP-C
-menuOrder: 2
+menuOrder: 3
 clusterCategory: 1
 
 startWorldIndex: 0

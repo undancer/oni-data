@@ -1,6 +1,7 @@
 biomeNoise: noise/Generic
 borderOverride: sandyCrust
 temperatureRange: VeryCold
+singleChildCount: true
 minChildCount: 1
 density:
   min: 35
@@ -13,4 +14,5 @@ biomes:
 tags:
   - IgnoreCaveOverride
   - NoGlobalFeatureSpawning
+  - RemoveWorldBorderOverVacuum
 zoneType: Space

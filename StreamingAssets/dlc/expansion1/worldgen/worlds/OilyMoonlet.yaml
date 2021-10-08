@@ -5,6 +5,7 @@ nameTable: OILY
 asteroidIcon: asteroid_oil_planet_kanim
 disableWorldTraits: true
 
+worldTraitScale: 0.06 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 64
   Y: 96
@@ -12,7 +13,7 @@ layoutMethod: PowerTree
 
 defaultsOverrides:
   data:
-    DrawWorldBorderOverVacuum: false
+    DrawWorldBorderForce: false
     DrawWorldBorder: true
     WorldBorderThickness: 4
     WorldBorderRange: 2

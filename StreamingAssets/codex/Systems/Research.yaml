@@ -1,6 +1,7 @@
 id: "Research"
 title: STRINGS.CODEX.RESEARCH.TITLE
-
+forbiddenDLCIds:
+  - "EXPANSION1_ID"
 contentContainers:
 #-----------------------------
   - contentLayout: Vertical

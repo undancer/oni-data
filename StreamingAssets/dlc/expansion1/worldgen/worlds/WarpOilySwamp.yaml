@@ -1,29 +1,38 @@
-name: STRINGS.WORLDS.WARPOILYSWAMP.NAME
+name: STRINGS.WORLDS.WARPOILYSWAMP.NAME # Oily Swamp Asteroid
 description: STRINGS.WORLDS.WARPOILYSWAMP.DESCRIPTION
 nameTable: SWAMP
 asteroidIcon: asteroid_swamp_oil_kanim
-disableWorldTraits: true
 
+worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 128
   Y: 153
 layoutMethod: PowerTree
 
-fixedTraits:
-  - sunlightMedLow
-  - cosmicRadiationLow
-
 defaultsOverrides:
   data:
-    DrawWorldBorderOverVacuum: false
+    DrawWorldBorderForce: false
     DrawWorldBorder: true
-    WorldBorderThickness: 6
+    WorldBorderThickness: 4
     WorldBorderRange: 2
     OverworldDensityMin: 18
     OverworldDensityMax: 18
     OverworldAvoidRadius: 5
     OverworldSampleBehaviour: PoissonDisk
-    # POIPadding: 1
+    POIPadding: 1
+
+worldTraitRules:
+  - min: 1
+    max: 2
+    forbiddenTags:
+      - GenericGeysers
+      - StartWorldOnly
+      - LargeWorld
+      - Challenge
+
+fixedTraits:
+  - sunlightMedLow
+  - cosmicRadiationLow
 
 startSubworldName: expansion1::subworlds/swamp/SwampWarpStart
 startingBaseTemplate:  expansion1::bases/warpworldSwampBase
@@ -161,6 +170,11 @@ worldTemplateRules:
         maxDistance: 3
       - command: IntersectWith
         zoneTypes: [ Rust, FrozenWastes ]
+      - command: ExceptWith
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 0
+        maxDistance: 1
   - names:
     - expansion1::poi/boon/bedroom
     - expansion1::poi/boon/washroom
@@ -184,9 +198,13 @@ worldTemplateRules:
     - expansion1::geysers/liquid_sulfur
     listRule: GuaranteeAll
     priority: 200
+    allowExtremeTemperatureOverlap: true # Make compatible with Frozen Core trait
     allowedCellsFilter:
       - command: Replace
-        zoneTypes: [ Barren ]
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 0
+        maxDistance: 1
   # Curated geysers
   - names: 
     - geysers/chlorine_gas

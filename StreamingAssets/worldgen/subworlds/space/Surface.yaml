@@ -18,4 +18,5 @@ tags:
 # - ErodePointToBorderInv
   - ErodePointToWorldTop
   - NoGlobalFeatureSpawning
+  - RemoveWorldBorderOverVacuum
 zoneType: Space

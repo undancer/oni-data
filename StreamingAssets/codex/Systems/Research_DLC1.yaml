@@ -1,0 +1,27 @@
+id: "ResearchDLC1"
+title: STRINGS.CODEX.RESEARCHDLC1.TITLE
+dlcIds:
+  - "EXPANSION1_ID"
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID:
+    content:    
+      - !CodexText
+          stringKey: STRINGS.CODEX.RESEARCHDLC1.HEADER_1
+          style: Subtitle
+      - !CodexText
+          stringKey: STRINGS.CODEX.RESEARCHDLC1.PARAGRAPH_1
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.RESEARCHDLC1.HEADER_2
+          style: Subtitle
+      - !CodexText
+          stringKey: STRINGS.CODEX.RESEARCHDLC1.PARAGRAPH_2
+          style: Body
+      - !CodexText
+          stringKey: STRINGS.CODEX.RESEARCHDLC1.HEADER_3
+          style: Subtitle
+      - !CodexText
+          stringKey: STRINGS.CODEX.RESEARCHDLC1.PARAGRAPH_3
+          style: Body

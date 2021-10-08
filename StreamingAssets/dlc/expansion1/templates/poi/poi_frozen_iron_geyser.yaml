@@ -1,15 +1,12 @@
-name: poi_frozen_iron_geyser
 info:
   size:
-    X: 9
-    Y: 9
-  area: 69
+    X: 8
+    Y: 8
+  area: 61
 cells:
 - element: Granite
   mass: 1840
   temperature: 237.248413
-  diseaseName: FoodPoisoning
-  diseaseCount: -1
   location_x: -1
   location_y: -3
 - element: DirtyIce
@@ -24,81 +21,41 @@ cells:
 - element: Granite
   mass: 1840
   temperature: 237.247406
-  diseaseName: FoodPoisoning
-  diseaseCount: -1
   location_x: 2
   location_y: -3
 - element: Granite
   mass: 1840
-  temperature: 237.247345
-  diseaseName: FoodPoisoning
-  diseaseCount: -1
+  temperature: 237.24707
   location_x: 3
-  location_y: -3
-- element: Granite
-  mass: 1840
-  temperature: 237.247681
-  diseaseName: FoodPoisoning
-  diseaseCount: -1
-  location_x: 4
-  location_y: -3
-- element: Granite
-  mass: 1840
-  temperature: 237.3452
-  diseaseName: FoodPoisoning
-  diseaseCount: -1
-  location_x: 5
   location_y: -3
 - element: DirtyIce
   mass: 295.322205
-  temperature: 235.466675
+  temperature: 235.467392
   location_x: -2
   location_y: -2
 - element: Unobtanium
   mass: 9999
   temperature: 296.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: -1
   location_x: -1
   location_y: -2
 - element: Unobtanium
   mass: 9999
   temperature: 296.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: -1
   location_y: -2
 - element: Unobtanium
   mass: 9999
   temperature: 296.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: -1
   location_x: 1
   location_y: -2
 - element: Unobtanium
   mass: 9999
   temperature: 296.149994
-  diseaseName: FoodPoisoning
-  diseaseCount: -1
   location_x: 2
   location_y: -2
 - element: DirtyIce
   mass: 500
-  temperature: 236.149994
-  diseaseName: FoodPoisoning
+  temperature: 236.150253
   location_x: 3
-  location_y: -2
-- element: DirtyIce
-  mass: 500
-  temperature: 236.149994
-  diseaseName: FoodPoisoning
-  location_x: 4
-  location_y: -2
-- element: Granite
-  mass: 1840
-  temperature: 237.247681
-  diseaseName: FoodPoisoning
-  diseaseCount: -1
-  location_x: 5
   location_y: -2
 - element: DirtyIce
   mass: 300.086029
@@ -112,42 +69,27 @@ cells:
   location_y: -1
 - element: Ice
   mass: 597.640015
-  temperature: 235.149994
-  diseaseName: FoodPoisoning
+  temperature: 235.150238
   location_x: -1
   location_y: -1
 - element: DirtyIce
   mass: 500
-  temperature: 236.149994
-  diseaseName: FoodPoisoning
+  temperature: 236.149597
   location_y: -1
 - element: DirtyIce
   mass: 500
   temperature: 236.149994
-  diseaseName: FoodPoisoning
   location_x: 1
   location_y: -1
 - element: DirtyIce
   mass: 500
   temperature: 236.149994
-  diseaseName: FoodPoisoning
   location_x: 2
   location_y: -1
 - element: DirtyIce
   mass: 500
   temperature: 236.149994
-  diseaseName: FoodPoisoning
   location_x: 3
-  location_y: -1
-- element: Granite
-  mass: 1103.27698
-  temperature: 236.468201
-  location_x: 4
-  location_y: -1
-- element: DirtyIce
-  mass: 500
-  temperature: 236.634903
-  location_x: 5
   location_y: -1
 - element: Ice
   mass: 600.80481
@@ -160,33 +102,25 @@ cells:
 - element: Ice
   mass: 597.640015
   temperature: 235.149994
-  diseaseName: FoodPoisoning
   location_x: -1
 - element: Ice
   mass: 597.640015
   temperature: 235.149994
-  diseaseName: FoodPoisoning
 - element: DirtyIce
   mass: 500
-  temperature: 236.149994
-  diseaseName: FoodPoisoning
+  temperature: 236.149597
   location_x: 1
 - element: DirtyIce
   mass: 500
-  temperature: 236.149994
-  diseaseName: FoodPoisoning
+  temperature: 236.149796
   location_x: 2
 - element: CarbonDioxide
-  mass: 0.733347237
+  mass: 0.64167881
   temperature: 236.105087
   location_x: 3
 - element: Ice
-  mass: 597.830017
-  temperature: 236.159256
-  location_x: 4
-- element: Ice
   mass: 604.581726
-  temperature: 235.309219
+  temperature: 235.312302
   location_x: -3
   location_y: 1
 - element: Ice
@@ -202,23 +136,20 @@ cells:
 - element: Ice
   mass: 597.640015
   temperature: 235.149994
-  diseaseName: FoodPoisoning
   location_y: 1
 - element: Ice
   mass: 597.640015
-  temperature: 235.149994
-  diseaseName: FoodPoisoning
+  temperature: 235.150238
   location_x: 1
   location_y: 1
 - element: Ice
   mass: 597.640015
-  temperature: 235.149994
-  diseaseName: FoodPoisoning
+  temperature: 235.150238
   location_x: 2
   location_y: 1
-- element: Oxygen
-  mass: 0.155883983
-  temperature: 235.567444
+- element: CarbonDioxide
+  mass: 0.0916684046
+  temperature: 236.105087
   location_x: 3
   location_y: 1
 - element: DirtyIce
@@ -227,13 +158,13 @@ cells:
   location_x: 4
   location_y: 1
 - element: CarbonDioxide
-  mass: 1
-  temperature: 253.388031
+  mass: 0.899999976
+  temperature: 239.877472
   location_x: -3
   location_y: 2
 - element: Ice
   mass: 604.529053
-  temperature: 235.275757
+  temperature: 235.278854
   location_x: -2
   location_y: 2
 - element: CarbonDioxide
@@ -242,66 +173,66 @@ cells:
   location_x: -1
   location_y: 2
 - element: Oxygen
-  mass: 0.91289258
-  temperature: 235.468658
+  mass: 0.898225963
+  temperature: 235.468903
   location_y: 2
 - element: Oxygen
-  mass: 0.766875088
-  temperature: 235.607513
+  mass: 0.840686738
+  temperature: 235.601608
   location_x: 1
   location_y: 2
 - element: Oxygen
-  mass: 0.994617879
-  temperature: 235.567444
+  mass: 0.959562957
+  temperature: 235.565277
   location_x: 2
   location_y: 2
 - element: Oxygen
-  mass: 0.986770511
-  temperature: 235.590744
+  mass: 1.14359617
+  temperature: 235.587524
   location_x: 3
   location_y: 2
 - element: Granite
   mass: 1840
-  temperature: 236.292999
+  temperature: 236.299988
   location_x: 4
   location_y: 2
 - element: Ice
   mass: 611.854431
-  temperature: 235.536804
+  temperature: 235.53981
   location_x: -3
   location_y: 3
 - element: Oxygen
-  mass: 1.01075017
+  mass: 1.00168383
   temperature: 235.849716
   location_x: -2
   location_y: 3
 - element: Oxygen
-  mass: 0.92423898
-  temperature: 235.541748
+  mass: 0.948880672
+  temperature: 235.549225
   location_x: -1
   location_y: 3
 - element: Oxygen
-  mass: 0.925341904
-  temperature: 235.549667
+  mass: 0.899466634
+  temperature: 235.549942
   location_y: 3
 - element: Oxygen
-  mass: 0.849745154
-  temperature: 235.574417
+  mass: 1.04437053
+  temperature: 235.367569
   location_x: 1
   location_y: 3
 - element: Oxygen
-  mass: 1.08295655
-  temperature: 235.367569
+  mass: 0.919784844
+  temperature: 235.574432
   location_x: 2
   location_y: 3
 - element: DirtyIce
   mass: 500
-  temperature: 236.08316
+  temperature: 236.086884
   location_x: 3
   location_y: 3
 - element: Wolframite
   mass: 600
-  temperature: 243.420074
+  temperature: 243.223114
   location_x: 4
   location_y: 3
 - element: Ice
@@ -309,23 +240,23 @@ cells:
   temperature: 235.699753
   location_x: -3
   location_y: 4
-- element: Oxygen
-  mass: 1.02170813
-  temperature: 235.853958
+- element: Ice
+  mass: 614.289978
+  temperature: 235.149994
   location_x: -2
   location_y: 4
-- element: Oxygen
-  mass: 0.955849588
-  temperature: 235.602402
+- element: Ice
+  mass: 614.289978
+  temperature: 235.149994
   location_x: -1
   location_y: 4
-- element: Oxygen
-  mass: 0.926822603
-  temperature: 235.793762
+- element: Ice
+  mass: 614.289978
+  temperature: 235.149994
   location_y: 4
-- element: Oxygen
-  mass: 0.985520899
-  temperature: 235.828445
+- element: Granite
+  mass: 1124.23999
+  temperature: 236.149994
   location_x: 1
   location_y: 4
 - element: Ice
@@ -333,35 +264,14 @@ cells:
   temperature: 235.977371
   location_x: 2
   location_y: 4
-- element: Ice
-  mass: 617.348267
-  temperature: 235.30188
-  location_x: -2
-  location_y: 5
-- element: Ice
-  mass: 614.287903
-  temperature: 235.034714
-  location_x: -1
-  location_y: 5
-- element: Ice
-  mass: 613.257446
-  temperature: 235.152328
-  location_y: 5
-- element: Granite
-  mass: 1124.23535
-  temperature: 235.772324
-  location_x: 1
-  location_y: 5
 - element: Granite
   mass: 1840
-  temperature: 237.221893
-  diseaseName: FoodPoisoning
-  diseaseCount: -1
+  temperature: 237.220718
   location_x: -2
   location_y: -3
 - element: Granite
   mass: 1113.99951
-  temperature: 235.662994
+  temperature: 235.6642
   location_x: -3
   location_y: -3
 - element: Granite
@@ -369,10 +279,24 @@ cells:
   temperature: 235.478531
   location_x: -3
   location_y: -2
+- element: DirtyIce
+  mass: 500
+  temperature: 236.150513
+  location_x: 4
+  location_y: -2
+- element: Granite
+  mass: 1103.27698
+  temperature: 236.468201
+  location_x: 4
+  location_y: -1
+- element: Ice
+  mass: 597.830017
+  temperature: 236.159256
+  location_x: 4
 otherEntities:
 - id: GeyserGeneric_molten_iron
   location_y: -1
   element: Katairite
-  temperature: 372.149994
+  temperature: 99
   units: 1
   type: Other

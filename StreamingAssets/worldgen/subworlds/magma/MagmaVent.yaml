@@ -8,6 +8,7 @@ density:
 avoidRadius: 50.0
 sampleBehaviour: PoissonDisk
 borderOverride: hardToDig
+borderOverridePriority: 10 # must be guaranteed
 biomes:
   - name: biomes/Magma/MagmaVent
     weight: 1
@@ -17,4 +18,5 @@ tags:
   - IgnoreCaveOverride
   - ErodePointToBorderWeak
   - NoGlobalFeatureSpawning
+  - NoGravitasFeatures
 zoneType: MagmaCore

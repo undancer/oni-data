@@ -14,7 +14,7 @@ defaultsOverrides:
     OverworldDensityMin: 16
     OverworldDensityMax: 16
     DrawWorldBorder: true
-    DrawWorldBorderOverVacuum: true
+    DrawWorldBorderForce: true
     WorldBorderThickness: 1
     WorldBorderRange: 0
     OverworldMinNodes: 1

@@ -2,13 +2,20 @@ name: STRINGS.WORLDS.VANILLAFORESTDEFAULT.NAME # Verdante
 description: STRINGS.WORLDS.VANILLAFORESTDEFAULT.DESCRIPTION
 nameTable: FOREST
 asteroidIcon: asteroid_vanilla_forest_start_kanim
-disableWorldTraits: true
 
+worldTraitScale: 0.9 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 240
   Y: 380
 layoutMethod: PowerTree # Note: We need to add weights to the items in the layer
 #                                in order to use this.
+
+worldTraitRules:
+  - min: 2
+    max: 4
+    forbiddenTags:
+      - Surface # due to classic worlds having a different surface location
+      - NonStartWorld
 
 fixedTraits:
   - sunlightMed
@@ -40,7 +47,6 @@ subworldFiles:
   - name: subworlds/magma/Bottom
   - name: subworlds/oil/OilPockets
     weight: 0.7
-    minCount: 5
   - name: subworlds/ocean/Ocean
     minCount: 5
   - name: subworlds/rust/Rust
@@ -57,9 +63,6 @@ subworldFiles:
 
 startSubworldName: subworlds/forest/ForestStart
 startingBaseTemplate: bases/forestBase
-
-#seasons:
-#  - MeteorShowers
 
 # Specify where subworlds can spawn. These rules are processed in order and their effects are cumulative.
 unknownCellsAllowedSubworlds: 
@@ -188,6 +191,20 @@ worldTemplateRules:
     allowedCellsFilter:
       - command: Replace
         zoneTypes: [Ocean]
+  # Frozen
+  - names:
+      - poi/frozen/heatsink_a
+      - poi/frozen/heatsink_b
+      - poi/frozen/heatsink_c
+      - poi/frozen/heatsink_d
+    listRule: GuaranteeSomeTryMore
+    someCount: 2
+    moreCount: 2
+    priority: 100 
+    allowedCellsFilter:
+      - command: Replace
+        subworldNames:
+          - subworlds/rust/RustFrozen
   # Oil
   - names:
     - poi/oil/small_oilpockets_geyser_a
@@ -246,126 +263,14 @@ worldTemplateRules:
         tag: AtSurface
         minDistance: 0
         maxDistance: 2
-
-# Curated Geysers
-  - names: 
-    - expansion1::geysers/liquid_sulfur
-    - geysers/liquid_co2
-    - geysers/small_volcano
-    listRule: TrySome
-    someCount: 2
-    priority: 50
-    allowedCellsFilter:
-    - command: Replace
-      tagcommand: DistanceFromTag
-      tag: AtStart
-      minDistance: 3
-      maxDistance: 99
-    - command: ExceptWith
-      tagcommand: DistanceFromTag
-      tag: AtDepths
-      minDistance: 0
-      maxDistance: 2
-    - command: ExceptWith
-      tagcommand: DistanceFromTag
-      tag: AtSurface
-      minDistance: 0
-      maxDistance: 2
-  # Curated metal geysers
+  # Generic Geysers
   - names:
-    - expansion1::geysers/molten_aluminum
-    - expansion1::geysers/molten_cobalt
-    - geysers/molten_copper
-    - geysers/molten_gold
-    - geysers/molten_iron
+    - geysers/generic
     listRule: TryOne
-    times: 3
+    times: 12
+    ruleId: GenericGeysers
     allowDuplicates: true
-    priority: 50
-    allowedCellsFilter:
-    - command: Replace
-      tagcommand: DistanceFromTag
-      tag: AtStart
-      minDistance: 3
-      maxDistance: 99
-    - command: ExceptWith 
-      tagcommand: DistanceFromTag
-      tag: AtDepths
-      minDistance: 0
-      maxDistance: 2
-    - command: ExceptWith
-      tagcommand: DistanceFromTag
-      tag: AtSurface
-      minDistance: 0
-      maxDistance: 2
-  # Curated water geyser
-  - names:
-    - geysers/steam
-    - geysers/hot_steam
-    - geysers/hot_water
-    - geysers/filthy_water
-    - geysers/salt_water
-    - geysers/slush_water
-    - expansion1::geysers/slush_salt_water
-    listRule: TryOne
-    times: 3
-    allowDuplicates: true
-    priority: 50
-    allowedCellsFilter:
-    - command: Replace
-      tagcommand: DistanceFromTag
-      tag: AtStart
-      minDistance: 3
-      maxDistance: 99
-    - command: ExceptWith
-      tagcommand: DistanceFromTag
-      tag: AtDepths
-      minDistance: 0
-      maxDistance: 2
-    - command: ExceptWith
-      tagcommand: DistanceFromTag
-      tag: AtSurface
-      minDistance: 0
-      maxDistance: 2
-  # Curated gas geyser
-  - names:
-    - geysers/slimy_po2
-    - geysers/methane
-    - geysers/chlorine_gas
-    - geysers/hot_co2
-    - geysers/hot_hydrogen
-    - geysers/hot_po2
-    listRule: TryOne
-    times: 4
-    allowDuplicates: true
-    priority: 50
-    allowedCellsFilter:
-    - command: Replace
-      tagcommand: DistanceFromTag
-      tag: AtStart
-      minDistance: 3
-      maxDistance: 99
-    - command: ExceptWith
-      tagcommand: DistanceFromTag
-      tag: AtDepths
-      minDistance: 0
-      maxDistance: 2
-    - command: ExceptWith
-      tagcommand: DistanceFromTag
-      tag: AtSurface
-      minDistance: 0
-      maxDistance: 2
-# Frozen
-  - names:
-      - poi/frozen/heatsink_a
-      - poi/frozen/heatsink_b
-      - poi/frozen/heatsink_c
-      - poi/frozen/heatsink_d
-    listRule: GuaranteeSomeTryMore
-    someCount: 2
-    moreCount: 2
-    priority: 100 
     allowedCellsFilter:
       - command: Replace
-        subworldNames:
-          - subworlds/rust/RustFrozen
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning

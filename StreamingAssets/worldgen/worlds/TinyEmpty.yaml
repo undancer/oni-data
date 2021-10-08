@@ -2,6 +2,7 @@ name: STRINGS.WORLDS.TINYEMPTY.NAME
 description: STRINGS.WORLDS.TINYEMPTY.DESCRIPTION
 disableWorldTraits: true
 
+worldTraitScale: 1 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 32
   Y: 32
@@ -14,7 +15,7 @@ defaultsOverrides:
     OverworldDensityMin: 16
     OverworldDensityMax: 16
     DrawWorldBorder: true
-    DrawWorldBorderOverVacuum: true
+    DrawWorldBorderForce: true
     WorldBorderThickness: 1
     WorldBorderRange: 0
     OverworldMinNodes: 1

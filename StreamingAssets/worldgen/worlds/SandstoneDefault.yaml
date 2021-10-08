@@ -1,8 +1,9 @@
 name: STRINGS.WORLDS.SANDSTONE_DEFAULT.NAME
 description: STRINGS.WORLDS.SANDSTONE_DEFAULT.DESCRIPTION
-disableWorldTraits: true
 asteroidIcon: Asteroid_sandstone
+disableWorldTraits: true
 
+worldTraitScale: 1 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 256
   Y: 384
