@@ -64,9 +64,9 @@ namespace STRINGS
 
 			public class ORBITAL
 			{
-				public static LocString NAME = "Orbital Research";
+				public static LocString NAME = "Data Analysis Research";
 
-				public static LocString DESC = UI.FormatAsLink("Orbital Research", "RESEARCH") + " is required to unlock orbital technologies.\nIt can be conducted at a " + UI.FormatAsLink("Orbital Microlab", "ORBITALRESEARCHCENTER") + ".";
+				public static LocString DESC = UI.FormatAsLink("Data Analysis Research", "RESEARCH") + " is required to unlock Data Analysis technologies.\nIt can be conducted at a " + UI.FormatAsLink("Orbital Data Collection Lab", "ORBITALRESEARCHCENTER") + ".";
 
 				public static LocString RECIPEDESC = "Unlocks out-of-this-world technologies.";
 			}
@@ -141,9 +141,9 @@ namespace STRINGS
 
 			public class ORBITAL_RESEARCH_POINT
 			{
-				public static LocString NAME = UI.PRE_KEYWORD + "Orbital Research" + UI.PST_KEYWORD + " Capability";
+				public static LocString NAME = UI.PRE_KEYWORD + "Data Analysis Research" + UI.PST_KEYWORD + " Capability";
 
-				public static LocString DESC = "Allows " + UI.PRE_KEYWORD + "Orbital Research" + UI.PST_KEYWORD + " points to be accumulated, unlocking higher technology tiers.";
+				public static LocString DESC = "Allows " + UI.PRE_KEYWORD + "Data Analysis Research" + UI.PST_KEYWORD + " points to be accumulated, unlocking higher technology tiers.";
 			}
 
 			public class CONVEYOR_OVERLAY
@@ -858,6 +858,13 @@ namespace STRINGS
 				public static LocString NAME = UI.FormatAsLink("Materials Science Research", "ATOMIC");
 
 				public static LocString DESC = "Harness sub-atomic particles to study the properties of matter.";
+			}
+
+			public class ADVANCEDNUCLEARRESEARCH
+			{
+				public static LocString NAME = UI.FormatAsLink("More Materials Science Research", "ATOMIC");
+
+				public static LocString DESC = "Harness sub-atomic particles to study the properties of matter, but more.";
 			}
 
 			public class SOLIDSPACE

@@ -72,6 +72,12 @@ public class TransformingPlant : KMonoBehaviour
 		{
 			component8.SetHarvestWhenReady(component7.HarvestWhenReady);
 		}
+		Prioritizable component9 = GetComponent<Prioritizable>();
+		Prioritizable component10 = gameObject.GetComponent<Prioritizable>();
+		if (component9 != null && component10 != null)
+		{
+			component10.SetMasterPriority(component9.GetMasterPriority());
+		}
 		PlantablePlot receptacle = GetComponent<ReceptacleMonitor>().GetReceptacle();
 		if (receptacle != null)
 		{

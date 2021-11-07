@@ -1,0 +1,19 @@
+biomeNoise: expansion1::noise/Metallic
+temperatureRange: Chilly
+density:
+  min: 10
+  max: 15
+avoidRadius: 20.0
+extraBiomeChildren: 4
+# borderOverride: rocky
+sampleBehaviour: PoissonDisk
+biomes:
+  - name: expansion1::biomes/Metallic/Golden
+    weight: 2
+    tags:
+  - name: expansion1::biomes/Metallic/Cobaltite
+    weight: 1
+    tags:
+tags:
+  - IgnoreCaveOverride
+zoneType: Metallic

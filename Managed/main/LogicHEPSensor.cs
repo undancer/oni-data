@@ -1,3 +1,4 @@
+using System;
 using KSerialization;
 using STRINGS;
 using UnityEngine;
@@ -19,6 +20,8 @@ public class LogicHEPSensor : Switch, ISaveLoadable, IThresholdSwitch, ISimEvery
 	private readonly float maxPayload = 500f;
 
 	private float foundPayload;
+
+	private bool waitForLogicTick;
 
 	private bool wasOn;
 
@@ -104,10 +107,23 @@ public class LogicHEPSensor : Switch, ISaveLoadable, IThresholdSwitch, ISimEvery
 		UpdateLogicCircuit();
 		UpdateVisualState(force: true);
 		wasOn = switchedOn;
+		LogicCircuitManager logicCircuitManager = Game.Instance.logicCircuitManager;
+		logicCircuitManager.onLogicTick = (System.Action)Delegate.Combine(logicCircuitManager.onLogicTick, new System.Action(LogicTick));
+	}
+
+	protected override void OnCleanUp()
+	{
+		LogicCircuitManager logicCircuitManager = Game.Instance.logicCircuitManager;
+		logicCircuitManager.onLogicTick = (System.Action)Delegate.Remove(logicCircuitManager.onLogicTick, new System.Action(LogicTick));
+		base.OnCleanUp();
 	}
 
 	public void SimEveryTick(float dt)
 	{
+		if (waitForLogicTick)
+		{
+			return;
+		}
 		Vector2I vector2I = Grid.CellToXY(Grid.PosToCell(this));
 		ListPool<ScenePartitionerEntry, LogicHEPSensor>.PooledList pooledList = ListPool<ScenePartitionerEntry, LogicHEPSensor>.Allocate();
 		GameScenePartitioner.Instance.GatherEntries(vector2I.x, vector2I.y, 1, 1, GameScenePartitioner.Instance.collisionLayer, pooledList);
@@ -123,10 +139,16 @@ public class LogicHEPSensor : Switch, ISaveLoadable, IThresholdSwitch, ISimEvery
 		pooledList.Recycle();
 		foundPayload = num;
 		bool flag = (activateOnHigherThan && num > thresholdPayload) || (!activateOnHigherThan && num < thresholdPayload);
-		if (base.IsSwitchedOn != flag)
+		if (flag != switchedOn)
 		{
-			Toggle();
+			waitForLogicTick = true;
 		}
+		SetState(flag);
+	}
+
+	private void LogicTick()
+	{
+		waitForLogicTick = false;
 	}
 
 	private void OnSwitchToggled(bool toggled_on)

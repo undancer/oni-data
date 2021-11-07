@@ -13,6 +13,7 @@ public class RefrigeratorConfig : IBuildingConfig
 	{
 		BuildingDef obj = BuildingTemplates.CreateBuildingDef("Refrigerator", 1, 2, "fridge_kanim", 30, 10f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.RAW_MINERALS, 800f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER0, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER1);
 		obj.RequiresPowerInput = true;
+		obj.AddLogicPowerPort = false;
 		obj.EnergyConsumptionWhenActive = 120f;
 		obj.SelfHeatKilowattsWhenActive = 0.125f;
 		obj.ExhaustKilowattsWhenActive = 0f;

@@ -6723,9 +6723,9 @@ namespace STRINGS
 
 			public class SPACE_RESEARCHER
 			{
-				public static LocString NAME = UI.FormatAsLink("Orbital Researcher", "SPACERESEARCH");
+				public static LocString NAME = UI.FormatAsLink("Data Analysis Researcher", "SPACERESEARCH");
 
-				public static LocString DESCRIPTION = "Enables Duplicants to conduct research from within a rocket using the " + BUILDINGS.PREFABS.ORBITALRESEARCHCENTER.NAME;
+				public static LocString DESCRIPTION = "Enables Duplicants to conduct research using the " + BUILDINGS.PREFABS.ORBITALRESEARCHCENTER.NAME;
 			}
 
 			public class JUNIOR_COOK

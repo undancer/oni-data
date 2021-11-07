@@ -159,6 +159,7 @@ public class PinnedResourcesPanel : KScreen, IRender1000ms
 			row2.Value.GetComponent<HierarchyReferences>().GetReference<MultiToggle>("PinToggle").gameObject.SetActive(worldInventory.pinnedResources.Contains(row2.Key));
 		}
 		SortRows();
+		rowContainer.GetComponent<QuickLayout>().ForceUpdate();
 	}
 
 	private void SortRows()

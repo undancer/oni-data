@@ -1,6 +1,7 @@
 name: STRINGS.WORLDS.SPACESHIPINTERIOR.NAME
 description: STRINGS.WORLDS.SPACESHIPINTERIOR.DESCRIPTION
-nameTable: TERRA
+nameTables:
+  - TERRA
 disableWorldTraits: true
 moduleInterior: true
 

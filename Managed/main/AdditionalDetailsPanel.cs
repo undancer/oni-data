@@ -190,13 +190,18 @@ public class AdditionalDetailsPanel : TargetScreen
 		{
 			drawer.NewLabel(drawer.Format(UI.ELEMENTAL.DEWPOINT.NAME, GameUtil.GetFormattedTemperature(lowTemp))).Tooltip(drawer.Format(UI.ELEMENTAL.DEWPOINT.TOOLTIP, GameUtil.GetFormattedTemperature(lowTemp)));
 		}
+		if (DlcManager.FeatureRadiationEnabled())
+		{
+			string formattedPercent = GameUtil.GetFormattedPercent(GameUtil.GetRadiationAbsorptionPercentage(Grid.PosToCell(selectedTarget)) * 100f);
+			drawer.NewLabel(drawer.Format(UI.DETAILTABS.DETAILS.RADIATIONABSORPTIONFACTOR.NAME, formattedPercent)).Tooltip(drawer.Format(UI.DETAILTABS.DETAILS.RADIATIONABSORPTIONFACTOR.TOOLTIP, formattedPercent));
+		}
 		Attributes attributes = selectedTarget.GetAttributes();
 		if (attributes != null)
 		{
 			for (int i = 0; i < attributes.Count; i++)
 			{
 				AttributeInstance attributeInstance = attributes.AttributeTable[i];
-				if (attributeInstance.Attribute.ShowInUI == Attribute.Display.Details || attributeInstance.Attribute.ShowInUI == Attribute.Display.Expectation)
+				if (DlcManager.IsDlcListValidForCurrentContent(attributeInstance.Attribute.DLCIds) && (attributeInstance.Attribute.ShowInUI == Attribute.Display.Details || attributeInstance.Attribute.ShowInUI == Attribute.Display.Expectation))
 				{
 					drawer.NewLabel(attributeInstance.modifier.Name + ": " + attributeInstance.GetFormattedValue()).Tooltip(attributeInstance.GetAttributeValueTooltip());
 				}

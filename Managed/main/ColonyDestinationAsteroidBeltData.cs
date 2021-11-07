@@ -13,7 +13,7 @@ public class ColonyDestinationAsteroidBeltData
 
 	private List<AsteroidDescriptor> traitDescriptors = new List<AsteroidDescriptor>();
 
-	private static List<Tuple<string, string, string>> survivalOptions = new List<Tuple<string, string, string>>
+	public static List<Tuple<string, string, string>> survivalOptions = new List<Tuple<string, string, string>>
 	{
 		new Tuple<string, string, string>(WORLDS.SURVIVAL_CHANCE.MOSTHOSPITABLE, "", "D2F40C"),
 		new Tuple<string, string, string>(WORLDS.SURVIVAL_CHANCE.VERYHIGH, "", "7DE419"),
@@ -63,6 +63,8 @@ public class ColonyDestinationAsteroidBeltData
 	}
 
 	public List<ProcGen.World> worlds { get; private set; }
+
+	public ClusterLayout Layout => cluster;
 
 	public ProcGen.World GetStartWorld => startWorld;
 
@@ -132,21 +134,21 @@ public class ColonyDestinationAsteroidBeltData
 		List<AsteroidDescriptor> list = new List<AsteroidDescriptor>();
 		if (cluster != null && DlcManager.FeatureClusterSpaceEnabled())
 		{
-			list.Add(new AsteroidDescriptor(string.Format(WORLDS.SURVIVAL_CHANCE.CLUSTERNAME, Strings.Get(cluster.name)), Strings.Get(cluster.description)));
+			list.Add(new AsteroidDescriptor(string.Format(WORLDS.SURVIVAL_CHANCE.CLUSTERNAME, Strings.Get(cluster.name)), Strings.Get(cluster.description), Color.white));
 		}
-		list.Add(new AsteroidDescriptor(string.Format(WORLDS.SURVIVAL_CHANCE.PLANETNAME, startWorldName), null));
-		list.Add(new AsteroidDescriptor(Strings.Get(startWorld.description), null));
+		list.Add(new AsteroidDescriptor(string.Format(WORLDS.SURVIVAL_CHANCE.PLANETNAME, startWorldName), null, Color.white));
+		list.Add(new AsteroidDescriptor(Strings.Get(startWorld.description), null, Color.white));
 		if (DlcManager.FeatureClusterSpaceEnabled())
 		{
-			list.Add(new AsteroidDescriptor(string.Format(WORLDS.SURVIVAL_CHANCE.MOONNAMES), null));
+			list.Add(new AsteroidDescriptor(string.Format(WORLDS.SURVIVAL_CHANCE.MOONNAMES), null, Color.white));
 			foreach (ProcGen.World world in worlds)
 			{
-				list.Add(new AsteroidDescriptor($"{Strings.Get(world.name)}", Strings.Get(world.description)));
+				list.Add(new AsteroidDescriptor($"{Strings.Get(world.name)}", Strings.Get(world.description), Color.white));
 			}
 		}
 		int index = Mathf.Clamp(difficulty, 0, survivalOptions.Count - 1);
 		Tuple<string, string, string> tuple = survivalOptions[index];
-		list.Add(new AsteroidDescriptor(string.Format(WORLDS.SURVIVAL_CHANCE.TITLE, tuple.first, tuple.third), null));
+		list.Add(new AsteroidDescriptor(string.Format(WORLDS.SURVIVAL_CHANCE.TITLE, tuple.first, tuple.third), null, Color.white));
 		return list;
 	}
 
@@ -163,17 +165,74 @@ public class ColonyDestinationAsteroidBeltData
 			List<string> randomTraits = SettingsCache.GetRandomTraits(num, world);
 			if (DlcManager.IsExpansion1Active())
 			{
-				list.Add(new AsteroidDescriptor("", null));
-				list.Add(new AsteroidDescriptor($"<b>{Strings.Get(world.name)}</b>", null));
+				list.Add(new AsteroidDescriptor("", null, Color.white));
+				list.Add(new AsteroidDescriptor($"<b>{Strings.Get(world.name)}</b>", null, Color.white));
 			}
 			foreach (string item in randomTraits)
 			{
 				WorldTrait cachedTrait = SettingsCache.GetCachedTrait(item, assertMissingTrait: true);
-				list.Add(new AsteroidDescriptor(string.Format("<color=#{1}>{0}</color>", Strings.Get(cachedTrait.name), cachedTrait.colorHex), Strings.Get(cachedTrait.description)));
+				list.Add(new AsteroidDescriptor(string.Format("<color=#{1}>{0}</color>", Strings.Get(cachedTrait.name), cachedTrait.colorHex), Strings.Get(cachedTrait.description), Util.ColorFromHex(cachedTrait.colorHex)));
 			}
 			if (randomTraits.Count == 0)
 			{
-				list.Add(new AsteroidDescriptor(WORLD_TRAITS.NO_TRAITS.NAME, WORLD_TRAITS.NO_TRAITS.DESCRIPTION));
+				list.Add(new AsteroidDescriptor(WORLD_TRAITS.NO_TRAITS.NAME, WORLD_TRAITS.NO_TRAITS.DESCRIPTION, Color.white));
+			}
+			if (num > 0)
+			{
+				num++;
+			}
+		}
+		return list;
+	}
+
+	public List<AsteroidDescriptor> GenerateTraitDescriptors(ProcGen.World singleWorld)
+	{
+		List<AsteroidDescriptor> list = new List<AsteroidDescriptor>();
+		List<ProcGen.World> list2 = new List<ProcGen.World>();
+		list2.Add(startWorld);
+		list2.AddRange(worlds);
+		int num = seed;
+		for (int i = 0; i < list2.Count; i++)
+		{
+			if (list2[i] == singleWorld)
+			{
+				ProcGen.World world = list2[i];
+				List<string> randomTraits = SettingsCache.GetRandomTraits(num, world);
+				foreach (string item in randomTraits)
+				{
+					WorldTrait cachedTrait = SettingsCache.GetCachedTrait(item, assertMissingTrait: true);
+					list.Add(new AsteroidDescriptor(string.Format("<color=#{1}>{0}</color>", Strings.Get(cachedTrait.name), cachedTrait.colorHex), Strings.Get(cachedTrait.description), Util.ColorFromHex(cachedTrait.colorHex)));
+				}
+				if (randomTraits.Count == 0)
+				{
+					list.Add(new AsteroidDescriptor(WORLD_TRAITS.NO_TRAITS.NAME, WORLD_TRAITS.NO_TRAITS.DESCRIPTION, Color.white));
+				}
+			}
+			if (num > 0)
+			{
+				num++;
+			}
+		}
+		return list;
+	}
+
+	public List<WorldTrait> GetWorldTraits(ProcGen.World singleWorld)
+	{
+		List<WorldTrait> list = new List<WorldTrait>();
+		List<ProcGen.World> list2 = new List<ProcGen.World>();
+		list2.Add(startWorld);
+		list2.AddRange(worlds);
+		int num = seed;
+		for (int i = 0; i < list2.Count; i++)
+		{
+			if (list2[i] == singleWorld)
+			{
+				ProcGen.World world = list2[i];
+				foreach (string randomTrait in SettingsCache.GetRandomTraits(num, world))
+				{
+					WorldTrait cachedTrait = SettingsCache.GetCachedTrait(randomTrait, assertMissingTrait: true);
+					list.Add(cachedTrait);
+				}
 			}
 			if (num > 0)
 			{

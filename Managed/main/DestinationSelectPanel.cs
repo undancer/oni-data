@@ -294,7 +294,7 @@ public class DestinationSelectPanel : KMonoBehaviour
 		}
 	}
 
-	public ColonyDestinationAsteroidBeltData SelectAsteroid(string name, int seed)
+	public ColonyDestinationAsteroidBeltData SelectCluster(string name, int seed)
 	{
 		selectedIndex = clusterKeys.IndexOf(name);
 		asteroidData[name].ReInitialize(seed);

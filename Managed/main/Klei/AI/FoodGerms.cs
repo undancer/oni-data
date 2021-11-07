@@ -9,7 +9,7 @@ namespace Klei.AI
 		private const float VOMIT_FREQUENCY = 200f;
 
 		public FoodGerms(bool statsOnly)
-			: base("FoodPoisoning", 10, new RangeInfo(248.15f, 278.15f, 313.15f, 348.15f), new RangeInfo(10f, 1200f, 1200f, 10f), new RangeInfo(0f, 0f, 1000f, 1000f), RangeInfo.Idempotent(), statsOnly)
+			: base("FoodPoisoning", 10, new RangeInfo(248.15f, 278.15f, 313.15f, 348.15f), new RangeInfo(10f, 1200f, 1200f, 10f), new RangeInfo(0f, 0f, 1000f, 1000f), RangeInfo.Idempotent(), 1f, statsOnly)
 		{
 		}
 

@@ -44,10 +44,18 @@ public class QuickLayout : KMonoBehaviour
 		Run();
 	}
 
-	private void Run()
+	public void ForceUpdate()
 	{
-		bool flag = false || _elementSize != elementSize || _spacing != spacing || _layoutDirection != layoutDirection || _offset != offset;
-		if (flag)
+		Run(forceUpdate: true);
+	}
+
+	private void Run(bool forceUpdate = false)
+	{
+		forceUpdate = forceUpdate || _elementSize != elementSize;
+		forceUpdate = forceUpdate || _spacing != spacing;
+		forceUpdate = forceUpdate || _layoutDirection != layoutDirection;
+		forceUpdate = forceUpdate || _offset != offset;
+		if (forceUpdate)
 		{
 			_elementSize = elementSize;
 			_spacing = spacing;
@@ -62,7 +70,7 @@ public class QuickLayout : KMonoBehaviour
 				num++;
 			}
 		}
-		if (num != oldActiveChildCount || flag)
+		if (num != oldActiveChildCount || forceUpdate)
 		{
 			Layout();
 			oldActiveChildCount = num;

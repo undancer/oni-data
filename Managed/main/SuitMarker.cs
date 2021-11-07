@@ -36,7 +36,7 @@ public class SuitMarker : KMonoBehaviour
 			int x = transition.navGridTransition.x;
 			if (x == 0)
 			{
-				return false;
+				return IsRocketDoorExitEquip(new_reactor, transition);
 			}
 			if (new_reactor.GetComponent<MinionIdentity>().GetEquipment().IsSlotOccupied(Db.Get().AssignableSlots.Suit))
 			{
@@ -55,6 +55,23 @@ public class SuitMarker : KMonoBehaviour
 				return false;
 			}
 			if (x < 0 && !suitMarker.isRotated)
+			{
+				return false;
+			}
+			return Grid.HasSuit(Grid.PosToCell(suitMarker), new_reactor.GetComponent<KPrefabID>().InstanceID);
+		}
+
+		private bool IsRocketDoorExitEquip(GameObject new_reactor, Navigator.ActiveTransition transition)
+		{
+			if (!new_reactor.GetMyWorld().IsModuleInterior)
+			{
+				return false;
+			}
+			if (new_reactor.GetComponent<MinionIdentity>().GetEquipment().IsSlotOccupied(Db.Get().AssignableSlots.Suit))
+			{
+				return false;
+			}
+			if (transition.end != NavType.Teleport && transition.start != NavType.Teleport)
 			{
 				return false;
 			}

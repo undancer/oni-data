@@ -7,7 +7,7 @@ public class HighEnergyParticleConfig : IEntityConfig
 
 	public const float PARTICLE_COLLISION_SIZE = 0.2f;
 
-	public const int PER_CELL_FALLOFF = 1;
+	public const float PER_CELL_FALLOFF = 0.1f;
 
 	public const float FALLOUT_RATIO = 0.5f;
 
@@ -39,7 +39,7 @@ public class HighEnergyParticleConfig : IEntityConfig
 		radiationEmitter.radiusProportionalToRads = false;
 		radiationEmitter.emitRadiusX = 3;
 		radiationEmitter.emitRadiusY = 3;
-		radiationEmitter.emitRads = 4f * ((float)radiationEmitter.emitRadiusX / 6f);
+		radiationEmitter.emitRads = 0.4f * ((float)radiationEmitter.emitRadiusX / 6f);
 		gameObject.AddComponent<HighEnergyParticle>().speed = 8f;
 		return gameObject;
 	}

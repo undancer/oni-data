@@ -2417,7 +2417,7 @@ namespace STRINGS
 				{
 					public static LocString NAME = "Babbling to no one.";
 
-					public static LocString TOOLTIP = "{Duplicant} just needed to vent to no one.";
+					public static LocString TOOLTIP = "{Duplicant} just needed to vent to into the void.";
 				}
 
 				public class CONVERSATION

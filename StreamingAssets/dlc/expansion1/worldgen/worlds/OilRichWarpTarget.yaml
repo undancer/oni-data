@@ -1,6 +1,7 @@
 name: STRINGS.WORLDS.OILRICHWARPTARGET.NAME
 description: STRINGS.WORLDS.OILRICHWARPTARGET.DESCRIPTION
-nameTable: SANDSTONE
+nameTables:
+  - TERRA
 asteroidIcon: asteroid_swamp_teleport_kanim
 
 worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.
@@ -56,6 +57,7 @@ subworldFiles:
   - name: expansion1::subworlds/oil/OilSparse
   - name: expansion1::subworlds/oil/OilWells
   - name: expansion1::subworlds/rust/med_Rust
+    maxCount: 2
   - name: expansion1::subworlds/ocean/med_OceanSurface
     minCount: 4
 

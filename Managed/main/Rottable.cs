@@ -121,9 +121,22 @@ public class Rottable : GameStateMachine<Rottable, Rottable.Instance, IStateMach
 			}
 		}
 
+		public bool IsRottableInSpace()
+		{
+			if (base.gameObject.GetMyWorld() == null)
+			{
+				Pickupable component = GetComponent<Pickupable>();
+				if (component != null && (bool)component.storage && ((bool)component.storage.GetComponent<RocketModuleCluster>() || (bool)component.storage.GetComponent<ClusterTraveler>()))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
 		public void RefreshModifiers(float dt)
 		{
-			if (GetMaster().isNull || !Grid.IsValidCell(Grid.PosToCell(base.gameObject)))
+			if (GetMaster().isNull || (!Grid.IsValidCell(Grid.PosToCell(base.gameObject)) && !IsRottableInSpace()))
 			{
 				return;
 			}
@@ -417,12 +430,22 @@ public class Rottable : GameStateMachine<Rottable, Rottable.Instance, IStateMach
 	public static RotRefrigerationLevel RefrigerationLevel(IRottable rottable)
 	{
 		int num = Grid.PosToCell(rottable.gameObject);
+		Instance sMI = rottable.gameObject.GetSMI<Instance>();
+		PrimaryElement component = rottable.gameObject.GetComponent<PrimaryElement>();
+		float num2 = component.Temperature;
+		bool flag = false;
 		if (!Grid.IsValidCell(num))
 		{
-			return RotRefrigerationLevel.Normal;
+			if (!sMI.IsRottableInSpace())
+			{
+				return RotRefrigerationLevel.Normal;
+			}
+			flag = true;
 		}
-		PrimaryElement component = rottable.gameObject.GetComponent<PrimaryElement>();
-		float num2 = ((Grid.Element[num].id != SimHashes.Vacuum) ? Mathf.Min(Grid.Temperature[num], component.Temperature) : component.Temperature);
+		if (!flag && Grid.Element[num].id != SimHashes.Vacuum)
+		{
+			num2 = Mathf.Min(Grid.Temperature[num], component.Temperature);
+		}
 		if (num2 < rottable.PreserveTemperature)
 		{
 			return RotRefrigerationLevel.Frozen;
@@ -438,6 +461,14 @@ public class Rottable : GameStateMachine<Rottable, Rottable.Instance, IStateMach
 	{
 		int num = Grid.PosToCell(rottable.gameObject);
 		int num2 = Grid.CellAbove(num);
+		if (!Grid.IsValidCell(num))
+		{
+			if (rottable.gameObject.GetSMI<Instance>().IsRottableInSpace())
+			{
+				return RotAtmosphereQuality.Sterilizing;
+			}
+			return RotAtmosphereQuality.Normal;
+		}
 		SimHashes id = Grid.Element[num].id;
 		RotAtmosphereQuality value = RotAtmosphereQuality.Normal;
 		AtmosphereModifier.TryGetValue((int)id, out value);

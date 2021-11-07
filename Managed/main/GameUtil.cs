@@ -1047,6 +1047,22 @@ public static class GameUtil
 		return FloodCollectCells(startCell, (int cell) => Grid.Element[cell].IsVacuum || Grid.Element[cell].IsGas);
 	}
 
+	public static float GetRadiationAbsorptionPercentage(int cell)
+	{
+		return GetRadiationAbsorptionPercentage(Grid.Element[cell], Grid.Mass[cell], Grid.IsSolidCell(cell) && (Grid.Properties[cell] & 0x80) == 128);
+	}
+
+	public static float GetRadiationAbsorptionPercentage(Element elem, float mass, bool isConstructed)
+	{
+		float num = 0f;
+		float num2 = 2000f;
+		float num3 = 0.3f;
+		float num4 = 0.7f;
+		float num5 = 0.8f;
+		num = ((!isConstructed) ? (elem.radiationAbsorptionFactor * num3 + mass / num2 * elem.radiationAbsorptionFactor * num4) : (elem.radiationAbsorptionFactor * num5));
+		return Mathf.Clamp(num, 0f, 1f);
+	}
+
 	public static HashSet<int> FloodCollectCells(int start_cell, Func<int, bool> is_valid, int maxSize = 300, HashSet<int> AddInvalidCellsToSet = null, bool clearOversizedResults = true)
 	{
 		HashSet<int> hashSet = new HashSet<int>();
@@ -1695,7 +1711,11 @@ public static class GameUtil
 		{
 			if (item.GetMyWorldId() == ClusterManager.Instance.activeWorldId)
 			{
-				num = Mathf.Max(num, Db.Get().Amounts.Stress.Lookup(item).value);
+				AmountInstance amountInstance = Db.Get().Amounts.Stress.Lookup(item);
+				if (amountInstance != null)
+				{
+					num = Mathf.Max(num, amountInstance.value);
+				}
 			}
 		}
 		return num;
@@ -2064,7 +2084,7 @@ public static class GameUtil
 		GameObject telepad = GetTelepad(ClusterManager.Instance.activeWorldId);
 		if (telepad == null)
 		{
-			telepad = GetTelepad(0);
+			telepad = GetTelepad(ClusterManager.Instance.GetStartWorld().id);
 		}
 		return telepad;
 	}
@@ -2297,20 +2317,26 @@ public static class GameUtil
 			.Replace("{Suffix}", newValue3);
 	}
 
-	public static string GenerateRandomWorldName(string worldType)
+	public static string GenerateRandomWorldName(string[] nameTables)
 	{
-		if (string.IsNullOrEmpty(worldType))
+		if (nameTables == null)
 		{
-			Debug.LogWarning("No name table provided to generate world name. Using GENERIC");
-			worldType = "GENERIC";
+			Debug.LogWarning("No name tables provided to generate world name. Using GENERIC");
+			nameTables = new string[1] { "GENERIC" };
 		}
-		string text = RandomValueFromSeparatedString(Strings.Get("STRINGS.NAMEGEN.WORLD.ROOTS." + worldType.ToUpper()));
-		if (string.IsNullOrEmpty(text))
+		string text = "";
+		string[] array = nameTables;
+		foreach (string text2 in array)
 		{
-			text = RandomValueFromSeparatedString(Strings.Get(NAMEGEN.WORLD.ROOTS.GENERIC));
+			text += Strings.Get("STRINGS.NAMEGEN.WORLD.ROOTS." + text2.ToUpper());
 		}
-		string text2 = RandomValueFromSeparatedString(NAMEGEN.WORLD.SUFFIXES.GENERICLIST);
-		return text + text2;
+		string text3 = RandomValueFromSeparatedString(text);
+		if (string.IsNullOrEmpty(text3))
+		{
+			text3 = RandomValueFromSeparatedString(Strings.Get(NAMEGEN.WORLD.ROOTS.GENERIC));
+		}
+		string text4 = RandomValueFromSeparatedString(NAMEGEN.WORLD.SUFFIXES.GENERICLIST);
+		return text3 + text4;
 	}
 
 	public static float GetThermalComfort(int cell, float tolerance = -0.08368001f)
@@ -2499,6 +2525,13 @@ public static class GameUtil
 			item4.SetupDescriptor(ELEMENTS.MATERIAL_MODIFIERS.HIGH_SPECIFIC_HEAT_CAPACITY, string.Format(ELEMENTS.MATERIAL_MODIFIERS.TOOLTIP.HIGH_SPECIFIC_HEAT_CAPACITY, element.name, element.specificHeatCapacity * 1f));
 			item4.IncreaseIndent();
 			list.Add(item4);
+		}
+		if (element.radiationAbsorptionFactor >= 0.8f)
+		{
+			Descriptor item5 = default(Descriptor);
+			item5.SetupDescriptor(ELEMENTS.MATERIAL_MODIFIERS.EXCELLENT_RADIATION_SHIELD, string.Format(ELEMENTS.MATERIAL_MODIFIERS.TOOLTIP.EXCELLENT_RADIATION_SHIELD, element.name, element.radiationAbsorptionFactor));
+			item5.IncreaseIndent();
+			list.Add(item5);
 		}
 		return list;
 	}

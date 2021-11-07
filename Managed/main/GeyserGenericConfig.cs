@@ -133,6 +133,8 @@ public class GeyserGenericConfig : IMultiEntityConfig
 		}
 	}
 
+	public const string ID = "GeyserGeneric";
+
 	public const string Steam = "steam";
 
 	public const string HotSteam = "hot_steam";

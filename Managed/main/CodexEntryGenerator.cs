@@ -73,11 +73,14 @@ public static class CodexEntryGenerator
 					dictionary2.Add(codexEntry.id, codexEntry);
 				}
 			}
-			CategoryEntry categoryEntry = GenerateCategoryEntry(CodexCache.FormatLinkID(text3), Strings.Get("STRINGS.UI.BUILDCATEGORIES." + text2.ToUpper() + ".NAME"), dictionary2);
-			categoryEntry.parentId = "BUILDINGS";
-			categoryEntry.category = "BUILDINGS";
-			categoryEntry.icon = Assets.GetSprite(PlanScreen.IconNameMap[text2]);
-			dictionary.Add(text3, categoryEntry);
+			if (dictionary2.Count != 0)
+			{
+				CategoryEntry categoryEntry = GenerateCategoryEntry(CodexCache.FormatLinkID(text3), Strings.Get("STRINGS.UI.BUILDCATEGORIES." + text2.ToUpper() + ".NAME"), dictionary2);
+				categoryEntry.parentId = "BUILDINGS";
+				categoryEntry.category = "BUILDINGS";
+				categoryEntry.icon = Assets.GetSprite(PlanScreen.IconNameMap[text2]);
+				dictionary.Add(text3, categoryEntry);
+			}
 		}
 		PopulateCategoryEntries(dictionary);
 		return dictionary;
@@ -940,38 +943,43 @@ public static class CodexEntryGenerator
 		codexEntry2.parentId = text;
 		codexEntry2.category = text;
 		dictionary.Add(text7, codexEntry2);
-		Tuple<Sprite, Color> uISprite = Def.GetUISprite("ui_elements-other");
+		Sprite sprite = Assets.GetSprite("ui_elements_classes");
 		var obj = new[]
 		{
 			new
 			{
 				tag = GameTags.IceOre,
 				checkPrefabs = false,
-				solidOnly = false
+				solidOnly = false,
+				spriteName = "ui_ice"
 			},
 			new
 			{
 				tag = GameTags.RefinedMetal,
 				checkPrefabs = false,
-				solidOnly = true
+				solidOnly = true,
+				spriteName = "ui_refined_metal"
 			},
 			new
 			{
 				tag = GameTags.Filter,
 				checkPrefabs = false,
-				solidOnly = false
+				solidOnly = false,
+				spriteName = "ui_filtration_medium"
 			},
 			new
 			{
 				tag = GameTags.Compostable,
 				checkPrefabs = true,
-				solidOnly = false
+				solidOnly = false,
+				spriteName = "ui_compostable"
 			},
 			new
 			{
 				tag = GameTags.CombustibleLiquid,
 				checkPrefabs = false,
-				solidOnly = false
+				solidOnly = false,
+				spriteName = "ui_combustible_liquids"
 			}
 		};
 		Dictionary<string, CodexEntry> dictionary7 = new Dictionary<string, CodexEntry>();
@@ -982,6 +990,12 @@ public static class CodexEntryGenerator
 			string name2 = Strings.Get("STRINGS.MISC.TAGS." + text9.ToUpper());
 			List<ContentContainer> list2 = new List<ContentContainer>();
 			GenerateTitleContainers(name2, list2);
+			list2.Add(new ContentContainer(new List<ICodexWidget>
+			{
+				new CodexSpacer(),
+				new CodexText(Strings.Get("STRINGS.MISC.TAGS." + text9.ToUpper() + "_DESC")),
+				new CodexSpacer()
+			}, ContentContainer.ContentLayout.Vertical));
 			List<ICodexWidget> list3 = new List<ICodexWidget>();
 			if (anon.checkPrefabs)
 			{
@@ -1020,12 +1034,11 @@ public static class CodexEntryGenerator
 			list2.Add(new ContentContainer(list3, ContentContainer.ContentLayout.GridTwoColumn));
 			CodexEntry codexEntry3 = new CodexEntry(text6, list2, name2);
 			codexEntry3.parentId = text6;
-			codexEntry3.icon = uISprite.first;
-			codexEntry3.iconColor = uISprite.second;
+			codexEntry3.icon = Assets.GetSprite(anon.spriteName);
 			CodexCache.AddEntry(CodexCache.FormatLinkID(text9), codexEntry3);
 			dictionary7.Add(text9, codexEntry3);
 		}
-		codexEntry2 = GenerateCategoryEntry(text6, UI.CODEX.CATEGORYNAMES.ELEMENTSCLASSES, dictionary7, uISprite.first);
+		codexEntry2 = GenerateCategoryEntry(text6, UI.CODEX.CATEGORYNAMES.ELEMENTSCLASSES, dictionary7, sprite);
 		codexEntry2.parentId = text;
 		codexEntry2.category = text;
 		dictionary.Add(text6, codexEntry2);
@@ -1084,7 +1097,7 @@ public static class CodexEntryGenerator
 		for (int i = 0; i < 20; i++)
 		{
 			TutorialMessage tutorialMessage = (TutorialMessage)Tutorial.Instance.TutorialMessage((Tutorial.TutorialMessages)i, queueMessage: false);
-			if (tutorialMessage != null)
+			if (tutorialMessage != null && DlcManager.IsDlcListValidForCurrentContent(tutorialMessage.DLCIDs))
 			{
 				if (!string.IsNullOrEmpty(tutorialMessage.videoClipId))
 				{

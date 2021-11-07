@@ -192,6 +192,21 @@ public class Studyable : Workable, ISidescreenButtonControl
 		chore = null;
 		Refresh();
 		Trigger(-1436775550);
+		if (DlcManager.IsExpansion1Active())
+		{
+			DropDatabanks();
+		}
+	}
+
+	private void DropDatabanks()
+	{
+		int num = UnityEngine.Random.Range(7, 13);
+		for (int i = 0; i <= num; i++)
+		{
+			GameObject obj = GameUtil.KInstantiate(Assets.GetPrefab("OrbitalResearchDatabank"), base.transform.position + new Vector3(0f, 1f, 0f), Grid.SceneLayer.Ore);
+			obj.GetComponent<PrimaryElement>().Temperature = 298.15f;
+			obj.SetActive(value: true);
+		}
 	}
 
 	public void OnSidescreenButtonPressed()

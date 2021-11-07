@@ -1,7 +1,8 @@
 # Unused - Was used for VanillaSandstoneCluster
 name: STRINGS.WORLDS.IDEALLANDINGSITE.NAME
 description: STRINGS.WORLDS.IDEALLANDINGSITE.DESCRIPTION
-nameTable: FOREST
+nameTables:
+  - FOREST
 asteroidIcon: asteroid_swamp_rocket_kanim
 disableWorldTraits: true
 

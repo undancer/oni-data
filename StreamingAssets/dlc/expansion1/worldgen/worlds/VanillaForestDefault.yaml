@@ -1,6 +1,7 @@
-name: STRINGS.WORLDS.VANILLAFORESTDEFAULT.NAME # Verdante
+name: STRINGS.WORLDS.VANILLAFORESTDEFAULT.NAME # Verdante (base game calls this file ForestLush)
 description: STRINGS.WORLDS.VANILLAFORESTDEFAULT.DESCRIPTION
-nameTable: FOREST
+nameTables:
+  - FOREST
 asteroidIcon: asteroid_vanilla_forest_start_kanim
 
 worldTraitScale: 0.9 # Adjust with worldSize. Traits are tuned to base game world sizes.
@@ -46,7 +47,6 @@ subworldFiles:
     minCount: 5
   - name: subworlds/magma/Bottom
   - name: subworlds/oil/OilPockets
-    weight: 0.7
   - name: subworlds/ocean/Ocean
     minCount: 5
   - name: subworlds/rust/Rust
@@ -233,8 +233,8 @@ worldTemplateRules:
       - command: Replace
         tagcommand: DistanceFromTag
         tag: AtStart
-        minDistance: 2
-        maxDistance: 3
+        minDistance: 3
+        maxDistance: 4
       - command: IntersectWith
         zoneTypes: [ Ocean, BoggyMarsh, ToxicJungle, Swamp, Rust ]
       - command: ExceptWith
@@ -274,3 +274,16 @@ worldTemplateRules:
       - command: Replace
         tagcommand: NotAtTag
         tag: NoGlobalFeatureSpawning
+  # Uranium Geode
+  - names:
+    - expansion1::poi/radioactive/uranium_geode1
+    listRule: GuaranteeOne
+    useRelaxedFiltering: true
+    allowExtremeTemperatureOverlap: true # has Abyssalite border
+    priority: 200
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 1
+        maxDistance: 1

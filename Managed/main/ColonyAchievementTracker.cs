@@ -155,14 +155,14 @@ public class ColonyAchievementTracker : KMonoBehaviour, ISaveLoadableDetails, IR
 			return;
 		}
 		ColonyAchievement colonyAchievement = Db.Get().ColonyAchievements.Get(achievement_id);
-		if (colonyAchievement != null && !string.IsNullOrEmpty(colonyAchievement.steamAchievementId))
+		if (colonyAchievement != null && !string.IsNullOrEmpty(colonyAchievement.platformAchievementId))
 		{
 			if ((bool)SteamAchievementService.Instance)
 			{
-				SteamAchievementService.Instance.Unlock(colonyAchievement.steamAchievementId);
+				SteamAchievementService.Instance.Unlock(colonyAchievement.platformAchievementId);
 				return;
 			}
-			Debug.LogWarningFormat("Steam achievement [{0}] was achieved, but achievement service was null", colonyAchievement.steamAchievementId);
+			Debug.LogWarningFormat("Steam achievement [{0}] was achieved, but achievement service was null", colonyAchievement.platformAchievementId);
 		}
 	}
 
@@ -426,10 +426,11 @@ public class ColonyAchievementTracker : KMonoBehaviour, ISaveLoadableDetails, IR
 			}
 			if (worldContainer.GetComponent<Clustercraft>().Status != 0)
 			{
-				bool flag = true;
-				foreach (MinionIdentity worldItem in Components.MinionIdentities.GetWorldItems(worldContainer.id))
+				List<MinionIdentity> worldItems = Components.MinionIdentities.GetWorldItems(worldContainer.id);
+				bool flag = worldItems.Count > 0;
+				foreach (MinionIdentity item2 in worldItems)
 				{
-					if (Db.Get().Attributes.QualityOfLife.Lookup(worldItem).GetTotalValue() < minimumMorale)
+					if (Db.Get().Attributes.QualityOfLife.Lookup(item2).GetTotalValue() < minimumMorale)
 					{
 						flag = false;
 						break;

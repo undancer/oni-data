@@ -258,7 +258,7 @@ public class Timelapser : KMonoBehaviour
 		}
 		if (world.IsStartWorld)
 		{
-			GameObject telepad = GameUtil.GetTelepad(0);
+			GameObject telepad = GameUtil.GetTelepad(world.id);
 			if (telepad == null)
 			{
 				Debug.Log("No telepad present, aborting screenshot.");
@@ -275,13 +275,13 @@ public class Timelapser : KMonoBehaviour
 		RenderTexture active = RenderTexture.active;
 		RenderTexture.active = bufferRenderTexture;
 		CameraController.Instance.RenderForTimelapser(ref bufferRenderTexture);
-		WriteToPng(bufferRenderTexture, world.GetComponent<ClusterGridEntity>().Name);
+		WriteToPng(bufferRenderTexture, world_id);
 		CameraController.Instance.SetOrthographicsSize(camSize);
 		CameraController.Instance.SetPosition(camPosition);
 		RenderTexture.active = active;
 	}
 
-	public void WriteToPng(RenderTexture renderTex, string world_name = "")
+	public void WriteToPng(RenderTexture renderTex, int world_id = -1)
 	{
 		Texture2D texture2D = new Texture2D(renderTex.width, renderTex.height, TextureFormat.ARGB32, mipChain: false);
 		texture2D.ReadPixels(new Rect(0f, 0f, renderTex.width, renderTex.height), 0, 0);
@@ -306,14 +306,15 @@ public class Timelapser : KMonoBehaviour
 				Directory.CreateDirectory(text2);
 			}
 			string path2 = text2;
-			if (!world_name.IsNullOrWhiteSpace())
+			if (world_id >= 0)
 			{
-				path2 = Path.Combine(path2, world_name);
+				string path3 = ClusterManager.Instance.GetWorld(world_id).GetComponent<ClusterGridEntity>().Name;
+				path2 = Path.Combine(path2, world_id.ToString("D5"));
 				if (!Directory.Exists(path2))
 				{
 					Directory.CreateDirectory(path2);
 				}
-				path2 = Path.Combine(path2, world_name);
+				path2 = Path.Combine(path2, path3);
 			}
 			else
 			{
@@ -330,10 +331,10 @@ public class Timelapser : KMonoBehaviour
 		}
 		else
 		{
-			string path3 = previewSaveGamePath;
-			path3 = Path.ChangeExtension(path3, ".png");
-			DebugUtil.LogArgs("Saving screenshot to", path3);
-			File.WriteAllBytes(path3, bytes);
+			string path4 = previewSaveGamePath;
+			path4 = Path.ChangeExtension(path4, ".png");
+			DebugUtil.LogArgs("Saving screenshot to", path4);
+			File.WriteAllBytes(path4, bytes);
 		}
 	}
 }

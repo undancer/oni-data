@@ -204,6 +204,10 @@ public class Element : IComparable<Element>
 		text2 = text2.Replace("{SPECIFIC_HEAT_CAPACITY}", GameUtil.GetFormattedSHC(specificHeatCapacity));
 		text2 = text2.Replace("{THERMAL_CONDUCTIVITY}", GameUtil.GetFormattedThermalConductivity(thermalConductivity));
 		text = text + "\n" + text2;
+		if (DlcManager.FeatureRadiationEnabled())
+		{
+			text = text + "\n" + string.Format(ELEMENTS.RADIATIONPROPERTIES, radiationAbsorptionFactor, GameUtil.GetFormattedRads(radiationPer1000Mass * 1.1f / 600f, GameUtil.TimeSlice.PerCycle));
+		}
 		if (oreTags.Length != 0 && !IsVacuum)
 		{
 			text += "\n\n";

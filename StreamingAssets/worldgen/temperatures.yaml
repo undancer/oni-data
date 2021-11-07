@@ -3,38 +3,38 @@ remove: []
 # elements to add from in-memory structure when this file is loaded
 add:
   ExtremelyCold:
-    min: 60.0
-    max: 200.0
+    min: 60.0 # -213.15 C
+    max: 200.0 # -73.15 C
   VeryCold:
-    min: 200.0
-    max: 227.0
+    min: 200.0 # -73.15 C
+    max: 227.0 # -46.15 C
   Cold:
-    min: 227.0
-    max: 240.0
+    min: 227.0 # -46.15 C
+    max: 240.0 # -33.15 C
   Chilly:
-    min: 240.0
-    max: 257.0
+    min: 240.0 # -33.15 C
+    max: 257.0 # -16.15 C
   Cool:
-    min: 257.0
-    max: 280.0
+    min: 257.0 # -16.15 C
+    max: 280.0 # 6.85 C
   Mild:
-    min: 280.0
-    max: 293.0
+    min: 280.0 # 6.85 C
+    max: 293.0 # 19.85 C
   Room:
-    min: 293.0
-    max: 298.0
+    min: 293.0 # 19.85 C
+    max: 298.0 # 24.85 C
   HumanWarm:
-    min: 298.0
-    max: 313.0
+    min: 298.0 # 24.85 C
+    max: 313.0 # 39.85 C
   HumanHot:
-    min: 313.0
-    max: 323.0
+    min: 313.0 # 39.85 C
+    max: 323.0 # 49.85 C
   Hot:
-    min: 323.0
-    max: 373.0
+    min: 323.0 # 49.85 C
+    max: 373.0 # 99.85 C
   VeryHot:
-    min: 373.0
-    max: 570.0
+    min: 373.0 # 99.85 C
+    max: 570.0 # 296.85 C
   ExtremelyHot:
-    min: 1500.0
-    max: 1800.0
+    min: 1500.0 # 1226.85 C
+    max: 1800.0 # 1526.85 C

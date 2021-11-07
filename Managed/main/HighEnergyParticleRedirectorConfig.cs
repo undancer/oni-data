@@ -9,7 +9,7 @@ public class HighEnergyParticleRedirectorConfig : IBuildingConfig
 
 	public const float TRAVEL_DELAY = 0.5f;
 
-	public const float REDIRECT_PARTICLE_COST = 1f;
+	public const float REDIRECT_PARTICLE_COST = 0.1f;
 
 	public override string[] GetDlcIds()
 	{

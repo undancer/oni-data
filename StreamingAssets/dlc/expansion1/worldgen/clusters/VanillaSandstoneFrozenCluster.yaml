@@ -2,7 +2,8 @@ name: STRINGS.CLUSTER_NAMES.VANILLA_SANDSTONE_FROZEN_CLUSTER.NAME
 description: STRINGS.CLUSTER_NAMES.VANILLA_SANDSTONE_FROZEN_CLUSTER.DESCRIPTION
 requiredDlcId: EXPANSION1_ID
 coordinatePrefix: V-SFRZ-C
-menuOrder: 1
+menuOrder: 4
+difficulty: 2
 clusterCategory: 1
 
 startWorldIndex: 0
@@ -10,11 +11,13 @@ numRings: 12
 worldPlacements:
 - world: expansion1::worlds/VanillaSandstoneFrozen
   buffer: 2
+  locationType: StartWorld
   allowedRings:
     min: 0
     max: 0
 - world: expansion1::worlds/MediumSwampy # Rocket world
   buffer: 2
+  locationType: InnerCluster
   allowedRings:
     min: 3
     max: 3

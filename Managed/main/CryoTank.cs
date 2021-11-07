@@ -90,11 +90,7 @@ public class CryoTank : StateMachineComponent<CryoTank.StatesInstance>, ISidescr
 
 	public bool SidescreenButtonInteractable()
 	{
-		if (base.smi.IsInsideState(base.smi.sm.closed))
-		{
-			return chore == null;
-		}
-		return false;
+		return HasDefrostedFriend();
 	}
 
 	public int ButtonSideScreenSortOrder()
@@ -106,6 +102,20 @@ public class CryoTank : StateMachineComponent<CryoTank.StatesInstance>, ISidescr
 	{
 		base.OnSpawn();
 		base.smi.StartSM();
+		Demolishable component = GetComponent<Demolishable>();
+		if (component != null)
+		{
+			component.allowDemolition = !HasDefrostedFriend();
+		}
+	}
+
+	public bool HasDefrostedFriend()
+	{
+		if (base.smi.IsInsideState(base.smi.sm.closed))
+		{
+			return chore == null;
+		}
+		return false;
 	}
 
 	public void DropContents()
@@ -173,6 +183,11 @@ public class CryoTank : StateMachineComponent<CryoTank.StatesInstance>, ISidescr
 		opener = chore.driver.gameObject;
 		base.smi.GoTo(base.smi.sm.open);
 		chore = null;
+		Demolishable component = base.smi.GetComponent<Demolishable>();
+		if (component != null)
+		{
+			component.allowDemolition = true;
+		}
 		Game.Instance.userMenu.Refresh(base.gameObject);
 	}
 }

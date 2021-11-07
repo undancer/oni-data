@@ -35,6 +35,7 @@ public class NewBaseScreen : KScreen
 	public static Vector2I SetInitialCamera()
 	{
 		Vector2I baseStartPos = SaveLoader.Instance.cachedGSD.baseStartPos;
+		baseStartPos += ClusterManager.Instance.GetStartWorld().WorldOffset;
 		Vector3 pos = Grid.CellToPosCCC(Grid.OffsetCell(Grid.OffsetCell(0, baseStartPos.x, baseStartPos.y), 0, -2), Grid.SceneLayer.Background);
 		CameraController.Instance.SetMaxOrthographicSize(40f);
 		CameraController.Instance.SnapTo(pos);
@@ -108,10 +109,10 @@ public class NewBaseScreen : KScreen
 	private void Final()
 	{
 		SpeedControlScreen.Instance.Unpause(playSound: false);
-		Telepad telepad = Object.FindObjectOfType<Telepad>();
+		GameObject telepad = GameUtil.GetTelepad(ClusterManager.Instance.GetStartWorld().id);
 		if ((bool)telepad)
 		{
-			SpawnMinions(Grid.PosToCell(telepad.gameObject));
+			SpawnMinions(Grid.PosToCell(telepad));
 		}
 		Game.Instance.baseAlreadyCreated = true;
 		Deactivate();

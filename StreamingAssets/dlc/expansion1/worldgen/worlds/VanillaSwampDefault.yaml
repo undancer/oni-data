@@ -1,6 +1,7 @@
 name: STRINGS.WORLDS.VANILLASWAMPDEFAULT.NAME
 description: STRINGS.WORLDS.VANILLASWAMPDEFAULT.DESCRIPTION
-nameTable: SWAMP
+nameTables:
+  - SWAMP
 asteroidIcon: asteroid_vanilla_swamp_start_kanim
 
 worldTraitScale: 0.9 # Adjust with worldSize. Traits are tuned to base game world sizes.
@@ -43,8 +44,7 @@ subworldFiles:
     minCount: 5
   - name: subworlds/frozen/Frozen
   - name: subworlds/magma/Bottom
-  - name: expansion1::subworlds/oil/OilWells
-  - name: expansion1::subworlds/oil/OilSparse
+  - name: subworlds/oil/OilPockets
   - name: expansion1::subworlds/space/SpaceWithNoBorder
   - name: expansion1::subworlds/space/HospitableClassicSurface
   - name: expansion1::subworlds/wasteland/WastelandBeetle
@@ -131,8 +131,7 @@ unknownCellsAllowedSubworlds:
     maxDistance: 1
     command: Replace
     subworldNames:
-      - expansion1::subworlds/oil/OilWells
-      - expansion1::subworlds/oil/OilSparse
+      - subworlds/oil/OilPockets
   # Space
   - tagcommand: DistanceFromTag
     tag: AtSurface
@@ -242,8 +241,8 @@ worldTemplateRules:
       - command: Replace
         tagcommand: DistanceFromTag
         tag: AtStart
-        minDistance: 2
-        maxDistance: 3
+        minDistance: 3
+        maxDistance: 4
       - command: IntersectWith
         zoneTypes: [ Sandstone, BoggyMarsh, ToxicJungle, Wasteland, FrozenWastes ]
       - command: ExceptWith
@@ -380,3 +379,16 @@ worldTemplateRules:
       tag: AtSurface
       minDistance: 0
       maxDistance: 2
+  # Uranium Geode
+  - names:
+    - expansion1::poi/radioactive/uranium_geode1
+    listRule: GuaranteeOne
+    useRelaxedFiltering: true
+    allowExtremeTemperatureOverlap: true # has Abyssalite border
+    priority: 200
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 1
+        maxDistance: 1

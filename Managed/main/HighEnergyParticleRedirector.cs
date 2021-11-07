@@ -158,7 +158,7 @@ public class HighEnergyParticleRedirector : StateMachineComponent<HighEnergyPart
 
 	private void LaunchParticle()
 	{
-		if (base.smi.master.storage.Particles < 1f)
+		if (base.smi.master.storage.Particles < 0.1f)
 		{
 			base.smi.master.storage.ConsumeAll();
 			return;
@@ -170,7 +170,7 @@ public class HighEnergyParticleRedirector : StateMachineComponent<HighEnergyPart
 		{
 			HighEnergyParticle component = gameObject.GetComponent<HighEnergyParticle>();
 			component.payload = base.smi.master.storage.ConsumeAll();
-			component.payload -= 1f;
+			component.payload -= 0.1f;
 			component.capturedBy = port;
 			component.SetDirection(Direction);
 			directionController.PlayAnim("redirector_send");

@@ -1,6 +1,7 @@
 name: STRINGS.WORLDS.MEDIUMRADIOACTIVEVANILLAWARPPLANET.NAME # Radioactive Swamp Asteroid
 description: STRINGS.WORLDS.MEDIUMRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION
-nameTable: SWAMP
+nameTables:
+  - SWAMP
 asteroidIcon: asteroid_vanilla_sandstone_warp_kanim
 
 worldTraitScale: 0.3 # Adjust with worldSize. Traits are tuned to base game world sizes.

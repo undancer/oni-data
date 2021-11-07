@@ -405,6 +405,15 @@ MobLookupTable:
         max: 0.09
       width: 1
       height: 1
+    med_BeanPlantSeedSparse:
+      prefabName: BeanPlantSeed
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.010
+        max: 0.015
+      width: 1
+      height: 1
     med_SpiceVine:
       prefabName: SpiceVine
       location: Ceiling
@@ -423,6 +432,15 @@ MobLookupTable:
         max: 0.04
       width: 1
       height: 1
+    med_SpiceVineSeedSparse:
+      prefabName: SpiceVineSeed
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.01
+        max: 0.02
+      width: 1
+      height: 1      
     med_ColdWheat:
       prefabName: ColdWheat
       location: Floor
@@ -730,6 +748,15 @@ MobLookupTable:
         max: 0.24
       width: 1
       height: 1
+    med_OxyfernSeed:
+      prefabName: OxyfernSeed
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.01
+        max: 0.02
+      width: 1
+      height: 1  
     med_SaltPlant:
       prefabName: SaltPlant
       location: Ceiling
@@ -748,6 +775,15 @@ MobLookupTable:
         max: 0.05
       width: 1
       height: 1
+    med_SaltPlantSeedSparse:
+      prefabName: SaltPlantSeed
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.008
+        max: 0.012
+      width: 1
+      height: 1      
     Moo:
       prefabName: Moo
       location: Air
@@ -782,5 +818,14 @@ MobLookupTable:
       density:
         min: 0.03
         max: 0.05
+      width: 1
+      height: 1
+    med_ColdBreatherSparse: # tuned for med_RustFrozen
+      prefabName: ColdBreather
+      location: Floor
+      selectMethod: Centroid
+      density:
+        min: 0.10
+        max: 0.2
       width: 1
       height: 1

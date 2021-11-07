@@ -212,21 +212,33 @@ public class ColonyDestinationSelectScreen : NewGameFlowScreen
 		ColonyDestinationAsteroidBeltData colonyDestinationAsteroidBeltData;
 		try
 		{
-			colonyDestinationAsteroidBeltData = destinationMapPanel.SelectAsteroid(setting, result);
+			colonyDestinationAsteroidBeltData = destinationMapPanel.SelectCluster(setting, result);
 		}
 		catch
 		{
 			string defaultAsteroid = destinationMapPanel.GetDefaultAsteroid();
 			newGameSettings.SetSetting(CustomGameSettingConfigs.ClusterLayout, defaultAsteroid);
-			colonyDestinationAsteroidBeltData = destinationMapPanel.SelectAsteroid(defaultAsteroid, result);
+			colonyDestinationAsteroidBeltData = destinationMapPanel.SelectCluster(defaultAsteroid, result);
 		}
-		destinationProperties.SetDescriptors(colonyDestinationAsteroidBeltData.GetParamDescriptors());
-		startLocationProperties.SetDescriptors(colonyDestinationAsteroidBeltData.GetTraitDescriptors());
+		if (DlcManager.IsContentActive("EXPANSION1_ID"))
+		{
+			destinationProperties.EnableClusterLocationLabels(enable: true);
+			destinationProperties.RefreshAsteroidLines(colonyDestinationAsteroidBeltData, startLocationProperties);
+			destinationProperties.EnableClusterDetails(setActive: true);
+			destinationProperties.SetClusterDetailLabels(colonyDestinationAsteroidBeltData);
+		}
+		else
+		{
+			destinationProperties.EnableClusterDetails(setActive: false);
+			destinationProperties.EnableClusterLocationLabels(enable: false);
+			destinationProperties.SetParameterDescriptors(colonyDestinationAsteroidBeltData.GetParamDescriptors());
+			startLocationProperties.SetTraitDescriptors(colonyDestinationAsteroidBeltData.GetTraitDescriptors());
+		}
 	}
 
-	private void OnAsteroidClicked(ColonyDestinationAsteroidBeltData asteroid)
+	private void OnAsteroidClicked(ColonyDestinationAsteroidBeltData cluster)
 	{
-		newGameSettings.SetSetting(CustomGameSettingConfigs.ClusterLayout, asteroid.beltPath);
+		newGameSettings.SetSetting(CustomGameSettingConfigs.ClusterLayout, cluster.beltPath);
 		ShuffleClicked();
 	}
 

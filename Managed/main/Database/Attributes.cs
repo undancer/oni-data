@@ -128,9 +128,9 @@ namespace Database
 			GeneratorOutput.SetFormatter(new StandardAttributeFormatter(GameUtil.UnitClass.Percent, GameUtil.TimeSlice.None));
 			MachinerySpeed = Add(new Attribute("MachinerySpeed", is_trainable: false, Attribute.Display.General, is_profession: false, 1f));
 			MachinerySpeed.SetFormatter(new PercentAttributeFormatter());
-			RadiationResistance = Add(new Attribute("RadiationResistance", is_trainable: false, Attribute.Display.Details, is_profession: false));
+			RadiationResistance = Add(new Attribute("RadiationResistance", is_trainable: false, Attribute.Display.Details, is_profession: false, 0f, null, null, null, DlcManager.AVAILABLE_EXPANSION1_ONLY));
 			RadiationResistance.SetFormatter(new PercentAttributeFormatter());
-			RadiationRecovery = Add(new Attribute("RadiationRecovery", is_trainable: false, Attribute.Display.Details, is_profession: false));
+			RadiationRecovery = Add(new Attribute("RadiationRecovery", is_trainable: false, Attribute.Display.Details, is_profession: false, 0f, null, null, null, DlcManager.AVAILABLE_EXPANSION1_ONLY));
 			RadiationRecovery.SetFormatter(new StandardAttributeFormatter(GameUtil.UnitClass.Radiation, GameUtil.TimeSlice.PerCycle));
 			DecorExpectation = Add(new Attribute("DecorExpectation", is_trainable: false, Attribute.Display.Expectation, is_profession: false));
 			DecorExpectation.SetFormatter(new StandardAttributeFormatter(GameUtil.UnitClass.SimpleInteger, GameUtil.TimeSlice.None));

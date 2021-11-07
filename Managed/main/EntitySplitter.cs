@@ -65,7 +65,7 @@ public class EntitySplitter : KMonoBehaviour
 				return false;
 			}
 		}
-		if (pickupable.HasTag(GameTags.Seed) || pickupable.HasTag(GameTags.CropSeed))
+		if (pickupable.HasTag(GameTags.Seed) || pickupable.HasTag(GameTags.CropSeed) || pickupable.HasTag(GameTags.Compostable))
 		{
 			MutantPlant component3 = pickupable.GetComponent<MutantPlant>();
 			MutantPlant component4 = other.GetComponent<MutantPlant>();

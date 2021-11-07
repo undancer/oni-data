@@ -403,6 +403,7 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 		{
 			fuelDelivery.refillMass = -1f;
 			fuelDeliveryEnabled = false;
+			fuelDelivery.AbortDelivery("AutomationDisabled");
 		}
 		else if (num == 1 && (!fuelDeliveryEnabled || onLoad))
 		{

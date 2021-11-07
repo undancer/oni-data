@@ -64,9 +64,9 @@ public class WorldInventory : KMonoBehaviour, ISaveLoadable
 	{
 		int num = 0;
 		int num2 = 0;
-		foreach (object brain in Components.Brains)
+		foreach (Brain worldItem in Components.Brains.GetWorldItems(worldId))
 		{
-			CreatureBrain creatureBrain = brain as CreatureBrain;
+			CreatureBrain creatureBrain = worldItem as CreatureBrain;
 			if (creatureBrain != null)
 			{
 				if (creatureBrain.HasTag(GameTags.Creatures.Wild))
@@ -80,6 +80,19 @@ public class WorldInventory : KMonoBehaviour, ISaveLoadable
 					ReportManager.Instance.ReportValue(ReportManager.ReportType.DomesticatedCritters, 1f, creatureBrain.GetProperName(), creatureBrain.GetProperName());
 				}
 			}
+		}
+		if (DlcManager.IsExpansion1Active())
+		{
+			WorldContainer component = GetComponent<WorldContainer>();
+			if (component != null && component.IsModuleInterior)
+			{
+				Clustercraft clustercraft = component.GetComponent<ClusterGridEntity>() as Clustercraft;
+				if (clustercraft != null && clustercraft.Status != 0)
+				{
+					ReportManager.Instance.ReportValue(ReportManager.ReportType.RocketsInFlight, 1f, clustercraft.Name);
+				}
+			}
+			return;
 		}
 		foreach (Spacecraft item in SpacecraftManager.instance.GetSpacecraft())
 		{

@@ -44,5 +44,7 @@ public class MassiveHeatSinkConfig : IBuildingConfig
 			new ElementConverter.ConsumedElement(ElementLoader.FindElementByHash(SimHashes.Hydrogen).tag, 0.01f)
 		};
 		go.AddOrGetDef<PoweredActiveController.Def>();
+		go.GetComponent<Deconstructable>().allowDeconstruction = false;
+		go.AddOrGet<Demolishable>();
 	}
 }

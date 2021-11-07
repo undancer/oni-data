@@ -61,6 +61,8 @@ public class SetLocker : StateMachineComponent<SetLocker.StatesInstance>, ISides
 
 	public Vector2I dropOffset = Vector2I.zero;
 
+	public int[] numDataBanks;
+
 	[Serialize]
 	private string[] contents;
 
@@ -91,15 +93,25 @@ public class SetLocker : StateMachineComponent<SetLocker.StatesInstance>, ISides
 
 	public void DropContents()
 	{
-		if (contents != null)
+		if (contents == null)
 		{
-			for (int i = 0; i < contents.Length; i++)
-			{
-				Scenario.SpawnPrefab(Grid.PosToCell(base.gameObject), dropOffset.x, dropOffset.y, contents[i], Grid.SceneLayer.Front).SetActive(value: true);
-				PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Plus, Assets.GetPrefab(contents[i].ToTag()).GetProperName(), base.smi.master.transform);
-			}
-			base.gameObject.Trigger(-372600542, this);
+			return;
 		}
+		for (int i = 0; i < contents.Length; i++)
+		{
+			Scenario.SpawnPrefab(Grid.PosToCell(base.gameObject), dropOffset.x, dropOffset.y, contents[i], Grid.SceneLayer.Front).SetActive(value: true);
+			PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Plus, Assets.GetPrefab(contents[i].ToTag()).GetProperName(), base.smi.master.transform);
+		}
+		if (DlcManager.IsExpansion1Active() && numDataBanks.Length >= 2)
+		{
+			int num = Random.Range(numDataBanks[0], numDataBanks[1]);
+			for (int j = 0; j <= num; j++)
+			{
+				Scenario.SpawnPrefab(Grid.PosToCell(base.gameObject), dropOffset.x, dropOffset.y, "OrbitalResearchDatabank", Grid.SceneLayer.Front).SetActive(value: true);
+				PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Plus, Assets.GetPrefab("OrbitalResearchDatabank".ToTag()).GetProperName(), base.smi.master.transform);
+			}
+		}
+		base.gameObject.Trigger(-372600542, this);
 	}
 
 	private void OnClickOpen()

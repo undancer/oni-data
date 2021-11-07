@@ -1,6 +1,7 @@
 name: STRINGS.WORLDS.REGOLITHMOONLET.NAME
 description: STRINGS.WORLDS.REGOLITHMOONLET.DESCRIPTION
-nameTable: REGOLITH
+nameTables:
+  - REGOLITH
 asteroidIcon: asteroid_regolith_moonlet_kanim
 disableWorldTraits: true
 

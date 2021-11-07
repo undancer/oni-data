@@ -170,6 +170,7 @@ public class FuelTank : KMonoBehaviour, IUserControlledCapacity, IFuelTank
 				{
 					storage.AddOre(element.id, targetFillMass - storage.MassStored(), element.defaultValues.temperature, 0, 0);
 				}
+				rocketEngineCluster.GetComponent<RocketModuleCluster>().CraftInterface.GetComponent<Clustercraft>().UpdateStatusItem();
 			}
 			else
 			{

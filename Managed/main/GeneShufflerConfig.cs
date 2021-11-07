@@ -23,6 +23,7 @@ public class GeneShufflerConfig : IEntityConfig
 		obj.AddOrGet<LoopingSounds>();
 		obj.AddOrGet<Ownable>();
 		obj.AddOrGet<Prioritizable>();
+		obj.AddOrGet<Demolishable>();
 		Storage storage = obj.AddOrGet<Storage>();
 		storage.dropOnLoad = true;
 		ManualDeliveryKG manualDeliveryKG = obj.AddOrGet<ManualDeliveryKG>();

@@ -843,16 +843,32 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 			}
 			geyserRows[item].SetActive(value: true);
 		}
-		Tag key = "NoGeysers";
-		if (!geyserRows.ContainsKey(key))
+		int count = SaveGame.Instance.worldGenSpawner.GetSpawnersWithTag("GeyserGeneric", worldContainer.id).Count;
+		if (count > 0)
 		{
-			geyserRows.Add(key, Util.KInstantiateUI(iconLabelRow, worldGeysersPanel.Content.gameObject, force_active: true));
-			HierarchyReferences component3 = geyserRows[key].GetComponent<HierarchyReferences>();
-			component3.GetReference<Image>("Icon").sprite = Assets.GetSprite("icon_action_cancel");
-			component3.GetReference<LocText>("NameLabel").SetText(UI.DETAILTABS.SIMPLEINFO.NO_GEYSERS);
-			component3.GetReference<LocText>("ValueLabel").gameObject.SetActive(value: false);
+			Tuple<Sprite, Color> uISprite2 = Def.GetUISprite("GeyserGeneric");
+			Tag key = "GeyserGeneric";
+			if (!geyserRows.ContainsKey(key))
+			{
+				geyserRows.Add(key, Util.KInstantiateUI(iconLabelRow, worldGeysersPanel.Content.gameObject, force_active: true));
+				HierarchyReferences component3 = geyserRows[key].GetComponent<HierarchyReferences>();
+				component3.GetReference<Image>("Icon").sprite = uISprite2.first;
+				component3.GetReference<Image>("Icon").color = uISprite2.second;
+				component3.GetReference<LocText>("NameLabel").SetText(UI.DETAILTABS.SIMPLEINFO.UNKNOWN_GEYSERS.Replace("{num}", count.ToString()));
+				component3.GetReference<LocText>("ValueLabel").gameObject.SetActive(value: false);
+			}
+			geyserRows[key].SetActive(value: true);
 		}
-		geyserRows[key].gameObject.SetActive(list.Count == 0);
+		Tag key2 = "NoGeysers";
+		if (!geyserRows.ContainsKey(key2))
+		{
+			geyserRows.Add(key2, Util.KInstantiateUI(iconLabelRow, worldGeysersPanel.Content.gameObject, force_active: true));
+			HierarchyReferences component4 = geyserRows[key2].GetComponent<HierarchyReferences>();
+			component4.GetReference<Image>("Icon").sprite = Assets.GetSprite("icon_action_cancel");
+			component4.GetReference<LocText>("NameLabel").SetText(UI.DETAILTABS.SIMPLEINFO.NO_GEYSERS);
+			component4.GetReference<LocText>("ValueLabel").gameObject.SetActive(value: false);
+		}
+		geyserRows[key2].gameObject.SetActive(list.Count == 0);
 		List<string> worldTraitIds = worldContainer.WorldTraitIds;
 		if (worldTraitIds == null)
 		{

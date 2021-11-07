@@ -10,16 +10,19 @@ numRings: 12
 worldPlacements:
 - world: expansion1::worlds/SwampMoonlet
   buffer: 2
+  locationType: StartWorld
   allowedRings:
     min: 0
     max: 0
 - world: expansion1::worlds/MetalHeavyLandingSite #rocket destination
   buffer: 2
+  locationType: InnerCluster
   allowedRings:
     min: 3
     max: 3
 - world: expansion1::worlds/OilRichWarpTarget #portal destination
   buffer: 3
+  locationType: InnerCluster
   allowedRings:
     min: 4
     max: 4
@@ -65,7 +68,7 @@ poiPlacements:
       max: 11
       
   - pois: # spawn all of these
-      - HarvestableSpacePOI_SwampyOreField # specific to a sandstone start asteroid!
+      - HarvestableSpacePOI_SwampyOreField # specific to a swamp start asteroid!
     numToSpawn: 1
     allowedRings:
       min: 2

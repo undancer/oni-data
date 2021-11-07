@@ -1,0 +1,222 @@
+name: STRINGS.WORLDS.MINIBADLANDS.NAME
+description: STRINGS.WORLDS.MINIBADLANDS.DESCRIPTION
+nameTables:
+  - REGOLITH
+asteroidIcon: asteroid_mini_badlands_kanim
+
+worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.
+worldsize:
+  X: 128
+  Y: 153
+layoutMethod: PowerTree
+
+defaultsOverrides:
+  data:
+    DrawWorldBorderForce: false
+    DrawWorldBorder: true
+    WorldBorderThickness: 5
+    WorldBorderRange: 2
+    OverworldDensityMin: 18
+    OverworldDensityMax: 18
+    OverworldAvoidRadius: 5
+    OverworldSampleBehaviour: PoissonDisk
+    poiPadding: 1
+  startingWorldElements: [] # remove the algae check
+
+# startSubworldName: expansion1::subworlds/sandstone/SandstoneStart
+# startingBaseTemplate: expansion1::bases/warpworldSandstoneBase
+# startingBasePositionHorizontal:
+#   min: 0.5
+#   max: 0.5
+# startingBasePositionVertical:
+#   min: 0.46
+#   max: 0.46
+
+disableWorldTraits: true
+worldTraitRules: # TODO
+  - min: 1
+    max: 2
+    forbiddenTags:
+      - StartWorldOnly
+      - GenericGeysers
+      - Oil
+      - LargeWorld
+      - Surface
+      - Crust
+      - Challenge
+      - StartChange
+
+fixedTraits:
+  - sunlightLow
+  - cosmicRadiationMedLow
+
+#------------------------------------------------------------------------------
+
+# List all the subworld files to load
+subworldFiles:
+  # START --------
+  # - name: expansion1::subworlds/sandstone/SandstoneStart
+  #   overridePower: 5
+  # - name: expansion1::subworlds/sandstone/SandstoneMiniWater
+  #   maxCount: 3
+  # START --------
+  # NON-START --------
+  - name: expansion1::subworlds/sandstone/med_SandstoneWarp
+    minCount: 4
+  # NON-START --------
+  - name: subworlds/barren/BarrenGranite
+    minCount: 3
+    maxCount: 5
+    overridePower: 1.25 # Reset their pdWeight
+  - name: subworlds/jungle/Jungle
+  - name: expansion1::subworlds/oil/OilSparse
+    overridePower: 1.25 # Reset their pdWeight
+    minCount: 2
+    maxCount: 4
+  - name: expansion1::subworlds/oil/OilWells
+    overridePower: 1.25 # Reset their pdWeight
+    minCount: 2
+    maxCount: 4
+  - name: subworlds/space/Space
+  - name: expansion1::subworlds/space/SpaceWithSandyBorder
+
+    
+unknownCellsAllowedSubworlds: 
+  # Fill
+  - tagcommand: Default
+    command: Replace
+    subworldNames:
+      - subworlds/barren/BarrenGranite
+      - subworlds/jungle/Jungle
+      - expansion1::subworlds/oil/OilSparse
+      - expansion1::subworlds/oil/OilWells
+      - expansion1::subworlds/sandstone/med_SandstoneWarp
+  # # Ring-1
+  # - tagcommand: DistanceFromTag
+  #   tag: AtStart
+  #   minDistance: 1
+  #   maxDistance: 2
+  #   command: Replace
+  #   subworldNames:
+  #     - expansion1::subworlds/sandstone/SandstoneMiniWater
+  #     - subworlds/barren/BarrenGranite
+  #     - subworlds/jungle/Jungle
+  # - tagcommand: DistanceFromTag
+  #   tag: AtStart
+  #   minDistance: 2
+  #   maxDistance: 2
+  #   command: UnionWith
+  #   subworldNames:
+  #     - expansion1::subworlds/oil/OilWells
+  # Space
+  - tagcommand: AtTag
+    tag: AtSurface
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
+  # Crust
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/space/SpaceWithSandyBorder
+  # Surface Jungle
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 2
+    maxDistance: 2
+    command: Replace
+    subworldNames:
+      - subworlds/jungle/Jungle
+  # # Above Core
+  # - tagcommand: DistanceFromTag
+  #   tag: AtDepths
+  #   minDistance: 0
+  #   maxDistance: 0
+  #   command: Replace
+  #   subworldNames:
+  #     - expansion1::subworlds/oil/OilSparse
+  #     - expansion1::subworlds/oil/OilWells
+
+worldTemplateRules:
+  # Jungle
+  - names:
+      - poi/jungle/geyser_steam
+    listRule: TryOne
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [ToxicJungle]
+  - names:
+      - poi/jungle/geyser_methane
+      - poi/jungle/geyser_chlorine
+    listRule: TryOne
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [ToxicJungle]
+  # Oil
+  - names:
+    - poi/oil/small_oilpockets_geyser_a
+    - poi/oil/small_oilpockets_geyser_b
+    - poi/oil/small_oilpockets_geyser_c
+    - poi/oil/small_oilpockets_geyser_d
+    - poi/oil/small_oilpockets_geyser_e
+    - poi/oil/small_oilpockets_geyser_f
+    - poi/oil/small_oilpockets_geyser_g
+    - poi/oil/small_oilpockets_geyser_h
+    listRule: GuaranteeSomeTryMore
+    someCount: 2
+    moreCount: 3
+    priority: 105
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [ OilField ]
+             
+  # Gravitas
+  # - names:
+  #   - expansion1::poi/warp/sender_mini
+  #   - expansion1::poi/warp/receiver_mini
+  #   #- expansion1::poi/warp/teleporter_mini # START
+  #   listRule: GuaranteeAll
+  #   priority: 90
+  #   allowedCellsFilter:
+  #     - command: Replace
+  #       tagcommand: DistanceFromTag
+  #       tag: AtStart
+  #       minDistance: 1
+  #       maxDistance: 2
+  #     - command: ExceptWith
+  #       tagcommand: DistanceFromTag
+  #       tag: AtDepths
+  #       minDistance: 0
+  #       maxDistance: 0        
+  #     - command: ExceptWith
+  #       zoneTypes: [ Space, MagmaCore ]
+  #     - command: ExceptWith
+  #       tagcommand: AtTag
+  #       tag: NoGravitasFeatures
+
+  # Curated geysers (no duplicates)
+  - names: 
+    - geysers/big_volcano
+    - geysers/chlorine_gas
+    - geysers/filthy_water
+    - geysers/hot_co2
+    - geysers/hot_hydrogen
+    - geysers/hot_po2
+    - geysers/liquid_co2
+    - geysers/methane
+    - geysers/oil_drip    
+    - geysers/slimy_po2
+    - geysers/small_volcano
+    listRule: TryOne
+    times: 3
+    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    priority: 10
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning      

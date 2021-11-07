@@ -14,6 +14,7 @@ public class CometDetectorConfig : IBuildingConfig
 		obj.Floodable = true;
 		obj.Entombable = true;
 		obj.RequiresPowerInput = true;
+		obj.AddLogicPowerPort = false;
 		obj.EnergyConsumptionWhenActive = 120f;
 		obj.ViewMode = OverlayModes.Logic.ID;
 		obj.AudioCategory = "Metal";

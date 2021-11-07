@@ -131,7 +131,7 @@ public class OrbitalMechanics : KMonoBehaviour
 		WorldContainer component = GetComponent<WorldContainer>();
 		GameObject obj = Util.KInstantiate(Assets.GetPrefab(OrbitalBGConfig.ID), base.gameObject);
 		OrbitalObject component2 = obj.GetComponent<OrbitalObject>();
-		component2.Init(orbit_db_name, component);
+		component2.Init(orbit_db_name, component, orbitingObjects);
 		obj.SetActive(value: true);
 		orbitingObjects.Add(new Ref<OrbitalObject>(component2));
 	}

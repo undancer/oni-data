@@ -30,6 +30,8 @@ namespace STRINGS
 				public static LocString LOW_SPECIFIC_HEAT_CAPACITY = UI.PRE_KEYWORD + "Thermally Reactive" + UI.PST_KEYWORD + " materials require little energy to raise in " + UI.PRE_KEYWORD + "Temperature" + UI.PST_KEYWORD + ", and therefore heat and cool quickly\n\nSpecific Heat Capacity: {1} DTU to raise 1g by 1K";
 
 				public static LocString HIGH_SPECIFIC_HEAT_CAPACITY = UI.PRE_KEYWORD + "Slow Heating" + UI.PST_KEYWORD + " materials require a large amount of energy to raise in " + UI.PRE_KEYWORD + "Temperature" + UI.PST_KEYWORD + ", and therefore heat and cool slowly\n\nSpecific Heat Capacity: {1} DTU to raise 1g by 1K";
+
+				public static LocString EXCELLENT_RADIATION_SHIELD = UI.PRE_KEYWORD + "Excellent Radiation Shield" + UI.PST_KEYWORD + " radiation has a hard time passing through materials with a high " + UI.PRE_KEYWORD + "Radiation Absorption Factor" + UI.PST_KEYWORD + " value. \n\nRadiation Absorption Factor: {1}";
 			}
 
 			public static LocString EFFECTS_HEADER = "<b>Resource Effects:</b>";
@@ -45,6 +47,8 @@ namespace STRINGS
 			public static LocString LOW_SPECIFIC_HEAT_CAPACITY = UI.FormatAsLink("Thermally Reactive", "HEAT");
 
 			public static LocString HIGH_SPECIFIC_HEAT_CAPACITY = UI.FormatAsLink("Slow Heating", "HEAT");
+
+			public static LocString EXCELLENT_RADIATION_SHIELD = UI.FormatAsLink("Excellent Radiation Shield", "RADIATION");
 		}
 
 		public class HARDNESS
@@ -1279,6 +1283,8 @@ namespace STRINGS
 		public static LocString BREATHABLEDESC = "<color=#{0}>({1})</color>";
 
 		public static LocString THERMALPROPERTIES = "\nSpecific Heat Capacity: {SPECIFIC_HEAT_CAPACITY}\nThermal Conductivity: {THERMAL_CONDUCTIVITY}";
+
+		public static LocString RADIATIONPROPERTIES = "Radiation Absorption Factor: {0}\nRadiation Emission/1000kg: {1}";
 
 		public static LocString ELEMENTPROPERTIES = "Properties: {0}";
 	}

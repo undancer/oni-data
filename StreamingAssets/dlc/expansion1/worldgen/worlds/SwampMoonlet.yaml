@@ -1,6 +1,7 @@
 name: STRINGS.WORLDS.SWAMPMOONLET.NAME
 description: STRINGS.WORLDS.SWAMPMOONLET.DESCRIPTION
-nameTable: SWAMP
+nameTables:
+  - SWAMP
 asteroidIcon: asteroid_swamp_start_kanim
 
 worldTraitScale: 0.44 # Adjust with worldSize. Traits are tuned to base game world sizes.
@@ -167,10 +168,7 @@ worldTemplateRules:
         minDistance: 1
         maxDistance: 1
       - command: IntersectWith
-        zoneTypes: [ Barren ]
-      - command: ExceptWith
-        tagcommand: AtTag
-        tag: NoGravitasFeatures
+        zoneTypes: [ Barren, MagmaCore ]
   # Curated Geysers
   - names: 
     - geysers/steam
@@ -242,3 +240,16 @@ worldTemplateRules:
         tag: AtSurface
         minDistance: 0
         maxDistance: 2
+  # Uranium Geode
+  - names:
+    - expansion1::poi/radioactive/uranium_geode1
+    listRule: GuaranteeOne
+    useRelaxedFiltering: true
+    allowExtremeTemperatureOverlap: true # has Abyssalite border
+    priority: 200
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 1
+        maxDistance: 1

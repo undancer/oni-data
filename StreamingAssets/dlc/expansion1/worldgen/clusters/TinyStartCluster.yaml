@@ -10,6 +10,7 @@ numRings: 12
 startWorldIndex: 0 
 worldPlacements:
 - world: expansion1::worlds/TinyStart
+  locationType: StartWorld
   allowedRings:
     min: 0
     max: 0

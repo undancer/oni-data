@@ -5,11 +5,20 @@ namespace ProcGen
 	[DebuggerDisplay("{world} ({x}, {y})")]
 	public class WorldPlacement
 	{
+		public enum LocationType
+		{
+			Cluster,
+			Startworld,
+			InnerCluster
+		}
+
 		public string world { get; set; }
 
 		public MinMaxI allowedRings { get; set; }
 
 		public int buffer { get; set; }
+
+		public LocationType locationType { get; set; }
 
 		public int x { get; private set; }
 
@@ -25,6 +34,7 @@ namespace ProcGen
 		{
 			allowedRings = new MinMaxI(0, 9999);
 			buffer = 2;
+			locationType = LocationType.Cluster;
 		}
 
 		public void SetPosition(Vector2I pos)

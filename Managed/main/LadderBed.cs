@@ -65,7 +65,7 @@ public class LadderBed : GameStateMachine<LadderBed, LadderBed.Instance, IStateM
 		private void OnMoverChanged(object obj)
 		{
 			Pickupable pickupable = obj as Pickupable;
-			if (pickupable != null && pickupable.gameObject != null && pickupable.HasTag(GameTags.Minion))
+			if (pickupable != null && pickupable.gameObject != null && pickupable.HasTag(GameTags.Minion) && pickupable.GetComponent<Navigator>().CurrentNavType == NavType.Ladder)
 			{
 				if (m_sleepable.worker == null)
 				{
@@ -74,7 +74,7 @@ public class LadderBed : GameStateMachine<LadderBed, LadderBed.Instance, IStateM
 					instance.setParameterByName(LADDER_BED_COUNT_BELOW_PARAMETER, numBelow);
 					SoundEvent.EndOneShot(instance);
 				}
-				else if (pickupable.gameObject != m_sleepable.worker.gameObject && pickupable.GetComponent<Navigator>().CurrentNavType == NavType.Ladder)
+				else if (pickupable.gameObject != m_sleepable.worker.gameObject)
 				{
 					m_sleepable.worker.Trigger(-717201811);
 				}

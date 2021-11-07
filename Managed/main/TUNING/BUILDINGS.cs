@@ -719,9 +719,9 @@ namespace TUNING
 			}),
 			new PlanScreen.PlanInfo(new HashedString("Equipment"), hideIfNotResearched: false, new List<string>
 			{
-				"ResearchCenter", "AdvancedResearchCenter", "NuclearResearchCenter", "OrbitalResearchCenter", "CosmicResearchCenter", "Telescope", "PowerControlStation", "FarmStation", "GeneticAnalysisStation", "RanchStation",
-				"ShearingStation", "RoleStation", "ResetSkillsStation", "ArtifactAnalysisStation", "CraftingTable", "ClothingFabricator", "SuitFabricator", "OxygenMaskMarker", "OxygenMaskLocker", "SuitMarker",
-				"SuitLocker", "JetSuitMarker", "JetSuitLocker", "LeadSuitMarker", "LeadSuitLocker", "AstronautTrainingCenter"
+				"ResearchCenter", "AdvancedResearchCenter", "NuclearResearchCenter", "OrbitalResearchCenter", "CosmicResearchCenter", "DLC1CosmicResearchCenter", "Telescope", "PowerControlStation", "FarmStation", "GeneticAnalysisStation",
+				"RanchStation", "ShearingStation", "RoleStation", "ResetSkillsStation", "ArtifactAnalysisStation", "CraftingTable", "ClothingFabricator", "SuitFabricator", "OxygenMaskMarker", "OxygenMaskLocker",
+				"SuitMarker", "SuitLocker", "JetSuitMarker", "JetSuitLocker", "LeadSuitMarker", "LeadSuitLocker", "AstronautTrainingCenter"
 			}),
 			new PlanScreen.PlanInfo(new HashedString("Utilities"), hideIfNotResearched: true, new List<string>
 			{
@@ -818,7 +818,7 @@ namespace TUNING
 				"RailGunPayloadOpener",
 				"LandingBeacon"
 			}),
-			new PlanScreen.PlanInfo(new HashedString("HEP"), hideIfNotResearched: true, new List<string> { "NuclearReactor", "UraniumCentrifuge", "HighEnergyParticleSpawner", "HighEnergyParticleRedirector", "HEPBridgeTile", "DevRadiationGenerator" }, "EXPANSION1_ID")
+			new PlanScreen.PlanInfo(new HashedString("HEP"), hideIfNotResearched: true, new List<string> { "RadiationLight", "ManualHighEnergyParticleSpawner", "NuclearReactor", "UraniumCentrifuge", "HighEnergyParticleSpawner", "HighEnergyParticleRedirector", "HEPBridgeTile", "DevRadiationGenerator" }, "EXPANSION1_ID")
 		};
 
 		public static List<Type> COMPONENT_DESCRIPTION_ORDER = new List<Type>

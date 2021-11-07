@@ -19,7 +19,7 @@ public class PedestalArtifactSpawner : KMonoBehaviour
 		{
 			GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(ArtifactSelector.Instance.GetUniqueArtifactID()), base.transform.position);
 			gameObject.SetActive(value: true);
-			gameObject.AddTag(GameTags.TerrestrialArtifact);
+			gameObject.GetComponent<KPrefabID>().AddTag(GameTags.TerrestrialArtifact, serialize: true);
 			storage.Store(gameObject);
 			receptacle.ForceDeposit(gameObject);
 			artifactSpawned = true;

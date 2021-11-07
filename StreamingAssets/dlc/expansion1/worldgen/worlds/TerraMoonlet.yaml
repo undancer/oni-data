@@ -1,6 +1,7 @@
 name: STRINGS.WORLDS.TERRAMOONLET.NAME
 description: STRINGS.WORLDS.TERRAMOONLET.DESCRIPTION
-nameTable: TERRA
+nameTables:
+  - TERRA
 asteroidIcon: asteroid_sandstone_start_kanim
 disableWorldTraits: true
 
@@ -168,10 +169,7 @@ worldTemplateRules:
         minDistance: 1
         maxDistance: 1
       - command: IntersectWith
-        zoneTypes: [ Barren ]
-      - command: ExceptWith
-        tagcommand: AtTag
-        tag: NoGravitasFeatures
+        zoneTypes: [ Barren, MagmaCore ]
   # Curated Geysers
   - names: 
     - geysers/steam
@@ -238,3 +236,16 @@ worldTemplateRules:
         tag: AtSurface
         minDistance: 0
         maxDistance: 2
+  # Uranium Geode
+  - names:
+    - expansion1::poi/radioactive/uranium_geode1
+    listRule: GuaranteeOne
+    useRelaxedFiltering: true
+    allowExtremeTemperatureOverlap: true # has Abyssalite border
+    priority: 200
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 1
+        maxDistance: 1

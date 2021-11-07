@@ -5,6 +5,8 @@ density:
   min: 5
   max: 15
 avoidRadius: 8.0
+borderOverride: hardToDig
+borderOverridePriority: 10 # must be guaranteed
 sampleBehaviour: PoissonDisk
 biomes:
   - name: biomes/Magma/MagmaBed

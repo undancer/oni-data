@@ -2221,7 +2221,7 @@ elements:
     defaultTemperature: 300
     defaultMass: 100
     maxMass: 200
-    hardness: 250
+    hardness: 150
     molarMass: 120
     lightAbsorptionFactor: 1
     radiationAbsorptionFactor: 0.3

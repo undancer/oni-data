@@ -1,0 +1,221 @@
+name: STRINGS.WORLDS.MINIFLIPPED.NAME
+description: STRINGS.WORLDS.MINIFLIPPED.DESCRIPTION
+nameTables:
+  - REGOLITH
+asteroidIcon: asteroid_mini_flipped_kanim
+
+worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.
+worldsize:
+  X: 128
+  Y: 153
+layoutMethod: PowerTree
+
+defaultsOverrides:
+  data:
+    DrawWorldBorderForce: false
+    DrawWorldBorder: true
+    WorldBorderThickness: 5
+    WorldBorderRange: 2
+    OverworldDensityMin: 18
+    OverworldDensityMax: 18
+    OverworldAvoidRadius: 5
+    OverworldSampleBehaviour: PoissonDisk
+    poiPadding: 1
+  startingWorldElements: [] # remove the algae check
+
+#startSubworldName: expansion1::subworlds/sandstone/SandstoneStart
+#startingBaseTemplate: expansion1::bases/warpworldSandstoneBase
+# startingBasePositionHorizontal:
+#   min: 0.5
+#   max: 0.5
+# startingBasePositionVertical:
+#   min: 0.2
+#   max: 0.2
+
+disableWorldTraits: true
+worldTraitRules: # TODO
+  - min: 1
+    max: 2
+    forbiddenTags:
+      - StartWorldOnly
+      - GenericGeysers
+      - Oil
+      - LargeWorld
+      - Surface
+      - Crust
+      - Challenge
+      - StartChange
+
+fixedTraits:
+  - sunlightLow
+  - cosmicRadiationMedLow
+
+#------------------------------------------------------------------------------
+
+# List all the subworld files to load
+subworldFiles:
+# Start ----------
+  # - name: expansion1::subworlds/sandstone/SandstoneStart
+  #  overridePower: 1.5
+  # - name: expansion1::subworlds/sandstone/SandstoneMiniWater
+  #   maxCount: 3
+# Start ----------    
+  - name: expansion1::subworlds/sandstone/med_SandstoneResourceful
+  - name: expansion1::subworlds/wasteland/WastelandBeetle
+    minCount: 4
+  - name: expansion1::subworlds/wasteland/WastelandWorm    
+  - name: expansion1::subworlds/frozen/FrozenMedium
+  - name: subworlds/space/Space
+  - name: expansion1::subworlds/space/SpaceWithAbyssaliteBorder
+  - name: expansion1::subworlds/magma/BottomSmallNoUnobtanium
+    overridePower: 1.5
+    
+unknownCellsAllowedSubworlds: 
+  # Fill
+  - tagcommand: Default
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/wasteland/WastelandBeetle
+      - expansion1::subworlds/frozen/FrozenMedium
+  # START ----------
+  # # Ring-1
+  # - tagcommand: DistanceFromTag
+  #   tag: AtStart
+  #   minDistance: 1
+  #   maxDistance: 1
+  #   command: Replace
+  #   subworldNames:
+  #     - expansion1::subworlds/sandstone/SandstoneMiniWater
+  # START ----------
+  # Space
+  - tagcommand: AtTag
+    tag: AtSurface
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
+  # Crust
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/space/SpaceWithAbyssaliteBorder
+  # Surface Magma
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 2
+    maxDistance: 2
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/magma/BottomSmallNoUnobtanium
+  # Wasteland Layer
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 3
+    maxDistance: 3
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/wasteland/WastelandBeetle
+      - expansion1::subworlds/wasteland/WastelandWorm    
+  # Frozen Layer
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/frozen/FrozenMedium
+  # Core Sandstone
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 0
+    maxDistance: 0
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/sandstone/med_SandstoneResourceful
+
+worldTemplateRules:
+  # Gravitas
+  # - names:
+  #   - expansion1::poi/warp/sender_mini
+  #   - expansion1::poi/warp/receiver_mini
+  #   #- expansion1::poi/warp/teleporter_mini # START
+  #   listRule: GuaranteeAll
+  #   priority: 90
+  #   allowedCellsFilter:
+  #     - command: Replace
+  #       tagcommand: DistanceFromTag
+  #       tag: AtStart
+  #       minDistance: 1
+  #       maxDistance: 2
+  #     - command: ExceptWith
+  #       tagcommand: DistanceFromTag
+  #       tag: AtDepths
+  #       minDistance: 0
+  #       maxDistance: 0        
+  #     - command: ExceptWith
+  #       zoneTypes: [ Space, MagmaCore ]
+  #     - command: ExceptWith
+  #       tagcommand: AtTag
+  #       tag: NoGravitasFeatures
+  # Frozen
+  - names:
+      - poi/frozen/heatsink_a
+      - poi/frozen/heatsink_b
+      - poi/frozen/heatsink_c
+      - poi/frozen/heatsink_d
+    listRule: GuaranteeSomeTryMore
+    someCount: 1
+    moreCount: 2
+    priority: 100 
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [FrozenWastes]
+  # Guaranteed geyser
+  - names:
+    - expansion1::geysers/liquid_sulfur
+    listRule: GuaranteeAll
+    priority: 200
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [ MagmaCore ]
+  # Magma Passage landmark
+  - names:
+    - expansion1::poi/mini/magma_passage
+    listRule: GuaranteeAll
+    priority: 200
+    allowExtremeTemperatureOverlap: true
+    useRelaxedFiltering: true
+    overrideOffset:
+       X: 0
+       Y: -24
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtSurface
+        minDistance: 1
+        maxDistance: 1        
+  # Curated geysers (no duplicates)
+  - names: 
+    - geysers/big_volcano
+    - geysers/hot_co2
+    - geysers/hot_hydrogen
+    - geysers/hot_po2
+    - geysers/hot_steam
+    - geysers/liquid_co2
+    - geysers/methane
+    - geysers/slimy_po2
+    - geysers/small_volcano
+    - geysers/steam
+    - expansion1::geysers/liquid_sulfur
+    listRule: TryOne
+    times: 3
+    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    priority: 10
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning      
+      - command: ExceptWith
+        zoneTypes: [ Sandstone ]

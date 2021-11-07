@@ -166,6 +166,7 @@ public class BuildMenu : KScreen
 				new BuildingInfo("ResearchCenter", Action.BuildMenuKeyR),
 				new BuildingInfo("AdvancedResearchCenter", Action.BuildMenuKeyS),
 				new BuildingInfo("CosmicResearchCenter", Action.BuildMenuKeyC),
+				new BuildingInfo("DLC1CosmicResearchCenter", Action.BuildMenuKeyC),
 				new BuildingInfo("NuclearResearchCenter", Action.BuildMenuKeyN),
 				new BuildingInfo("Telescope", Action.BuildMenuKeyT)
 			})
@@ -231,7 +232,8 @@ public class BuildMenu : KScreen
 				new BuildingInfo("DiningTable", Action.BuildMenuKeyD),
 				new BuildingInfo("FloorLamp", Action.BuildMenuKeyF),
 				new BuildingInfo("CeilingLight", Action.BuildMenuKeyT),
-				new BuildingInfo("SunLamp", Action.BuildMenuKeyS)
+				new BuildingInfo("SunLamp", Action.BuildMenuKeyS),
+				new BuildingInfo("RadiationLight", Action.BuildMenuKeyR)
 			}),
 			new DisplayInfo(CacheHashString("Decor"), "icon_category_furniture", Action.BuildCategoryDecor, KKeyCode.D, new List<BuildingInfo>
 			{

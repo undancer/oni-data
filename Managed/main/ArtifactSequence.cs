@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class ArtifactSequence
@@ -19,7 +20,6 @@ public static class ArtifactSequence
 		AudioMixer.instance.Stop(AudioMixerSnapshots.Get().VictoryMessageSnapshot);
 		AudioMixer.instance.Start(Db.Get().ColonyAchievements.CollectedArtifacts.victoryNISSnapshot);
 		MusicManager.instance.PlaySong("Music_Victory_02_NIS");
-		Vector3 cameraBiasUp = Vector3.up * 5f;
 		GameObject cameraTaget = null;
 		foreach (Telepad telepad in Components.Telepads)
 		{
@@ -32,7 +32,7 @@ public static class ArtifactSequence
 		yield return new WaitForSecondsRealtime(1f);
 		CameraController.Instance.SetTargetPos(cameraTaget.transform.position, 10f, playSound: false);
 		CameraController.Instance.SetOverrideZoomSpeed(10f);
-		yield return new WaitForSecondsRealtime(0.4f);
+		yield return new WaitForSecondsRealtime(0.6f);
 		if (SpeedControlScreen.Instance.IsPaused)
 		{
 			SpeedControlScreen.Instance.Unpause(playSound: false);
@@ -46,63 +46,102 @@ public static class ArtifactSequence
 			if (liveMinionIdentity != null)
 			{
 				liveMinionIdentity.GetComponent<Facing>().Face(cameraTaget.transform.position.x);
-				new EmoteChore(liveMinionIdentity.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_cheer_kanim", new HashedString[6] { "cheer_pre", "cheer_loop", "cheer_pst", "cheer_pre", "cheer_loop", "cheer_pst" }, null);
+				new EmoteChore(liveMinionIdentity.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_cheer_kanim", new HashedString[12]
+				{
+					"cheer_pre", "cheer_loop", "cheer_pst", "cheer_pre", "cheer_loop", "cheer_pst", "cheer_pre", "cheer_loop", "cheer_pst", "cheer_pre",
+					"cheer_loop", "cheer_pst"
+				}, null);
 			}
 		}
 		yield return new WaitForSecondsRealtime(0.5f);
 		yield return new WaitForSecondsRealtime(3f);
-		cameraTaget = null;
-		foreach (ArtifactAnalysisStationWorkable artifactAnalysisStation in Components.ArtifactAnalysisStations)
+		List<SpaceArtifact> list = new List<SpaceArtifact>();
+		foreach (SpaceArtifact spaceArtifact3 in Components.SpaceArtifacts)
 		{
-			cameraTaget = artifactAnalysisStation.gameObject;
+			if (spaceArtifact3 != null && spaceArtifact3.HasTag(GameTags.Stored) && !spaceArtifact3.HasTag(GameTags.CharmedArtifact))
+			{
+				bool flag = true;
+				foreach (SpaceArtifact item in list)
+				{
+					if (!(item == spaceArtifact3) && (spaceArtifact3.GetMyWorld() == item.GetMyWorld() || Grid.GetCellDistance(Grid.PosToCell(spaceArtifact3), Grid.PosToCell(item)) < 10))
+					{
+						flag = false;
+						break;
+					}
+				}
+				if (flag)
+				{
+					list.Add(spaceArtifact3);
+				}
+			}
+			if (list.Count >= 3)
+			{
+				break;
+			}
 		}
-		if (cameraTaget != null)
+		if (list.Count < 3)
 		{
+			foreach (SpaceArtifact spaceArtifact4 in Components.SpaceArtifacts)
+			{
+				if (list.Contains(spaceArtifact4))
+				{
+					continue;
+				}
+				if (spaceArtifact4 != null && !spaceArtifact4.HasTag(GameTags.CharmedArtifact))
+				{
+					if (list.Count == 0)
+					{
+						list.Add(spaceArtifact4);
+					}
+					else
+					{
+						bool flag2 = true;
+						foreach (SpaceArtifact item2 in list)
+						{
+							if (!(item2 == spaceArtifact4) && Grid.GetCellDistance(Grid.PosToCell(spaceArtifact4), Grid.PosToCell(item2)) < 10)
+							{
+								flag2 = false;
+								break;
+							}
+						}
+						if (flag2)
+						{
+							list.Add(spaceArtifact4);
+						}
+					}
+				}
+				if (list.Count >= 3)
+				{
+					break;
+				}
+			}
+		}
+		foreach (SpaceArtifact item3 in list)
+		{
+			cameraTaget = item3.gameObject;
 			CameraController.Instance.FadeOut(1f, 2f);
 			yield return new WaitForSecondsRealtime(1f);
-			CameraController.Instance.SetTargetPos(cameraTaget.transform.position + cameraBiasUp, 10f, playSound: false);
+			CameraController.Instance.SetTargetPos(cameraTaget.transform.position, 4f, playSound: false);
 			CameraController.Instance.SetOverrideZoomSpeed(10f);
-			yield return new WaitForSecondsRealtime(0.4f);
-			CameraController.Instance.SetOverrideZoomSpeed(0.1f);
-			CameraController.Instance.SetTargetPos(cameraTaget.transform.position + cameraBiasUp, 20f, playSound: false);
+			yield return new WaitForSecondsRealtime(0.5f);
 			CameraController.Instance.FadeIn(0f, 2f);
 			foreach (MinionIdentity liveMinionIdentity2 in Components.LiveMinionIdentities)
 			{
 				if (liveMinionIdentity2 != null)
 				{
 					liveMinionIdentity2.GetComponent<Facing>().Face(cameraTaget.transform.position.x);
-					new EmoteChore(liveMinionIdentity2.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_cheer_kanim", new HashedString[6] { "cheer_pre", "cheer_loop", "cheer_pst", "cheer_pre", "cheer_loop", "cheer_pst" }, null);
+					new EmoteChore(liveMinionIdentity2.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_cheer_kanim", new HashedString[12]
+					{
+						"cheer_pre", "cheer_loop", "cheer_pst", "cheer_pre", "cheer_loop", "cheer_pst", "cheer_pre", "cheer_loop", "cheer_pst", "cheer_pre",
+						"cheer_loop", "cheer_pst"
+					}, null);
 				}
 			}
 			yield return new WaitForSecondsRealtime(0.5f);
+			CameraController.Instance.SetOverrideZoomSpeed(0.04f);
+			CameraController.Instance.SetTargetPos(cameraTaget.transform.position, 8f, playSound: false);
 			yield return new WaitForSecondsRealtime(3f);
 		}
-		cameraTaget = null;
-		foreach (SpaceArtifact spaceArtifact in Components.SpaceArtifacts)
-		{
-			if (spaceArtifact != null && spaceArtifact.HasTag(GameTags.CharmedArtifact))
-			{
-				cameraTaget = spaceArtifact.gameObject;
-			}
-		}
-		CameraController.Instance.FadeOut(1f, 2f);
-		yield return new WaitForSecondsRealtime(1f);
-		CameraController.Instance.SetTargetPos(cameraTaget.transform.position, 15f, playSound: false);
-		CameraController.Instance.SetOverrideZoomSpeed(10f);
-		yield return new WaitForSecondsRealtime(0.4f);
-		CameraController.Instance.FadeIn(0f, 2f);
-		foreach (MinionIdentity liveMinionIdentity3 in Components.LiveMinionIdentities)
-		{
-			if (liveMinionIdentity3 != null)
-			{
-				liveMinionIdentity3.GetComponent<Facing>().Face(cameraTaget.transform.position.x);
-				new EmoteChore(liveMinionIdentity3.GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_cheer_kanim", new HashedString[6] { "cheer_pre", "cheer_loop", "cheer_pst", "cheer_pre", "cheer_loop", "cheer_pst" }, null);
-			}
-		}
-		yield return new WaitForSecondsRealtime(0.5f);
-		CameraController.Instance.SetOverrideZoomSpeed(0.075f);
-		CameraController.Instance.SetTargetPos(cameraTaget.transform.position, 25f, playSound: false);
-		yield return new WaitForSecondsRealtime(5f);
 		CameraController.Instance.FadeOut();
 		MusicManager.instance.StopSong("Music_Victory_02_NIS");
 		AudioMixer.instance.Stop(Db.Get().ColonyAchievements.CollectedArtifacts.victoryNISSnapshot);

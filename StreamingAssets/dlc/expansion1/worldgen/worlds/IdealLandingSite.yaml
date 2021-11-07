@@ -1,6 +1,7 @@
 name: STRINGS.WORLDS.IDEALLANDINGSITE.NAME
 description: STRINGS.WORLDS.IDEALLANDINGSITE.DESCRIPTION
-nameTable: FOREST
+nameTables: 
+ - FOREST
 asteroidIcon: asteroid_swamp_rocket_kanim
 
 worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.

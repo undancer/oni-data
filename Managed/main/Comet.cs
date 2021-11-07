@@ -162,6 +162,7 @@ public class Comet : KMonoBehaviour, ISim33ms
 	[ContextMenu("Explode")]
 	private void Explode(Vector3 pos, int cell, int prev_cell, Element element)
 	{
+		int world = Grid.WorldIdx[cell];
 		PlayImpactSound(pos);
 		Vector3 pos2 = pos;
 		pos2.z = Grid.GetLayerZ(Grid.SceneLayer.FXFront2);
@@ -198,7 +199,7 @@ public class Comet : KMonoBehaviour, ISim33ms
 			for (int j = -num2; j <= num2; j++)
 			{
 				int num3 = Grid.OffsetCell(cell, j, i);
-				if (Grid.IsValidCell(num3) && !destroyedCells.Contains(num3))
+				if (Grid.IsValidCellInWorld(num3, world) && !destroyedCells.Contains(num3))
 				{
 					float num4 = (1f - (float)Mathf.Abs(j) / (float)num2) * (1f - (float)Mathf.Abs(i) / (float)num2);
 					if (num4 > 0f)
@@ -226,7 +227,7 @@ public class Comet : KMonoBehaviour, ISim33ms
 		}
 		if (addTiles > 0)
 		{
-			int depthOfElement = GetDepthOfElement(cell, element);
+			int depthOfElement = GetDepthOfElement(cell, element, world);
 			float num5 = 1f;
 			float num6 = (float)(depthOfElement - addTilesMinHeight) / (float)(addTilesMaxHeight - addTilesMinHeight);
 			if (!float.IsNaN(num6))
@@ -262,7 +263,8 @@ public class Comet : KMonoBehaviour, ISim33ms
 				depth = 0
 			};
 			pooledQueue.Enqueue(item);
-			GameUtil.FloodFillConditional(pooledQueue, SpawnTilesCellTest, pooledHashSet2, pooledHashSet, 10);
+			Func<int, bool> condition = (int cell) => Grid.IsValidCellInWorld(cell, world) && !Grid.Solid[cell];
+			GameUtil.FloodFillConditional(pooledQueue, condition, pooledHashSet2, pooledHashSet, 10);
 			float mass2 = ((num7 > 0) ? (addTileMass / (float)addTiles) : 1f);
 			int disease_count = addDiseaseCount / num7;
 			if (element.HasTag(GameTags.Unstable))
@@ -311,25 +313,16 @@ public class Comet : KMonoBehaviour, ISim33ms
 		}
 	}
 
-	private int GetDepthOfElement(int cell, Element element)
+	private int GetDepthOfElement(int cell, Element element, int world)
 	{
 		int num = 0;
 		int num2 = Grid.CellBelow(cell);
-		while (Grid.IsValidCell(num2) && Grid.Element[num2] == element)
+		while (Grid.IsValidCellInWorld(num2, world) && Grid.Element[num2] == element)
 		{
 			num++;
 			num2 = Grid.CellBelow(num2);
 		}
 		return num;
-	}
-
-	private bool SpawnTilesCellTest(int cell)
-	{
-		if (Grid.IsValidCell(cell))
-		{
-			return !Grid.Solid[cell];
-		}
-		return false;
 	}
 
 	[ContextMenu("DamageTiles")]

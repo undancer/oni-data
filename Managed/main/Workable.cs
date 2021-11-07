@@ -318,6 +318,7 @@ public class Workable : KMonoBehaviour, ISaveLoadable, IApproachable
 				base.gameObject.GetComponent<LoopingSounds>().UpdateObjectSelection(selected: true);
 			}
 		}
+		base.gameObject.Trigger(853695848, this);
 	}
 
 	public bool WorkTick(Worker worker, float dt)
@@ -442,6 +443,7 @@ public class Workable : KMonoBehaviour, ISaveLoadable, IApproachable
 			workerToStop.gameObject.GetComponent<LoopingSounds>().UpdateObjectSelection(selected: false);
 		}
 		worker = null;
+		base.gameObject.Trigger(679550494, this);
 		UpdateStatusItem();
 	}
 
@@ -472,6 +474,7 @@ public class Workable : KMonoBehaviour, ISaveLoadable, IApproachable
 		}
 		workTimeRemaining = GetWorkTime();
 		ShowProgressBar(show: false);
+		base.gameObject.Trigger(-2011693419, this);
 	}
 
 	public void SetReportType(ReportManager.ReportType report_type)

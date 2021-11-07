@@ -14,18 +14,20 @@ public class PropSurfaceSatellite3Config : IEntityConfig
 
 	public GameObject CreatePrefab()
 	{
-		GameObject obj = EntityTemplates.CreatePlacedEntity(ID, STRINGS.BUILDINGS.PREFABS.PROPSURFACESATELLITE3.NAME, STRINGS.BUILDINGS.PREFABS.PROPSURFACESATELLITE3.DESC, 50f, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER0, noise: NOISE_POLLUTION.NOISY.TIER0, anim: Assets.GetAnim("satellite3_kanim"), initialAnim: "off", sceneLayer: Grid.SceneLayer.Building, width: 6, height: 6, element: SimHashes.Creature, additionalTags: new List<Tag> { GameTags.Gravitas });
-		PrimaryElement component = obj.GetComponent<PrimaryElement>();
+		GameObject gameObject = EntityTemplates.CreatePlacedEntity(ID, STRINGS.BUILDINGS.PREFABS.PROPSURFACESATELLITE3.NAME, STRINGS.BUILDINGS.PREFABS.PROPSURFACESATELLITE3.DESC, 50f, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER0, noise: NOISE_POLLUTION.NOISY.TIER0, anim: Assets.GetAnim("satellite3_kanim"), initialAnim: "off", sceneLayer: Grid.SceneLayer.Building, width: 6, height: 6, element: SimHashes.Creature, additionalTags: new List<Tag> { GameTags.Gravitas });
+		PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
 		component.SetElement(SimHashes.Unobtanium);
 		component.Temperature = 294.15f;
-		Workable workable = obj.AddOrGet<Workable>();
+		Workable workable = gameObject.AddOrGet<Workable>();
 		workable.synchronizeAnims = false;
 		workable.resetProgressOnStop = true;
-		SetLocker setLocker = obj.AddOrGet<SetLocker>();
+		SetLocker setLocker = gameObject.AddOrGet<SetLocker>();
 		setLocker.overrideAnim = "anim_interacts_clothingfactory_kanim";
 		setLocker.dropOffset = new Vector2I(0, 1);
-		obj.AddOrGet<LoreBearer>();
-		return obj;
+		setLocker.numDataBanks = new int[2] { 4, 9 };
+		gameObject.AddOrGet<LoreBearer>();
+		gameObject.AddOrGet<Demolishable>();
+		return gameObject;
 	}
 
 	public void OnPrefabInit(GameObject inst)
@@ -70,7 +72,7 @@ public class PropSurfaceSatellite3Config : IEntityConfig
 	private void OnLockerLooted(GameObject inst)
 	{
 		GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(ArtifactSelector.Instance.GetUniqueArtifactID()), inst.transform.position);
-		gameObject.AddTag(GameTags.TerrestrialArtifact);
+		gameObject.GetComponent<KPrefabID>().AddTag(GameTags.TerrestrialArtifact, serialize: true);
 		gameObject.SetActive(value: true);
 	}
 }

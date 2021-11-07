@@ -22,7 +22,7 @@ public class SaltPlantConfig : IEntityConfig
 	{
 		GameObject gameObject = EntityTemplates.CreatePlacedEntity("SaltPlant", STRINGS.CREATURES.SPECIES.SALTPLANT.NAME, STRINGS.CREATURES.SPECIES.SALTPLANT.DESC, 2f, decor: DECOR.PENALTY.TIER1, anim: Assets.GetAnim("saltplant_kanim"), initialAnim: "idle_empty", sceneLayer: Grid.SceneLayer.BuildingFront, width: 1, height: 2, noise: default(EffectorValues), element: SimHashes.Creature, additionalTags: new List<Tag> { GameTags.Hanging }, defaultTemperature: 258.15f);
 		EntityTemplates.MakeHangingOffsets(gameObject, 1, 2);
-		EntityTemplates.ExtendEntityToBasicPlant(gameObject, 198.15f, 248.15f, 323.15f, 393.15f, null, pressure_sensitive: true, 0f, 0.15f, SimHashes.Salt.ToString(), can_drown: true, can_tinker: true, require_solid_tile: true, should_grow_old: true, 2400f, 0f, 740f, "SaltPlantOriginal", STRINGS.CREATURES.SPECIES.SALTPLANT.NAME);
+		EntityTemplates.ExtendEntityToBasicPlant(gameObject, 198.15f, 248.15f, 323.15f, 393.15f, crop_id: SimHashes.Salt.ToString(), baseTraitName: STRINGS.CREATURES.SPECIES.SALTPLANT.NAME, safe_elements: new SimHashes[1] { SimHashes.ChlorineGas }, pressure_sensitive: true, pressure_lethal_low: 0f, pressure_warning_low: 0.025f, can_drown: true, can_tinker: true, require_solid_tile: true, should_grow_old: true, max_age: 2400f, min_radiation: 0f, max_radiation: 740f, baseTraitId: "SaltPlantOriginal");
 		gameObject.AddOrGet<SaltPlant>();
 		EntityTemplates.ExtendPlantToFertilizable(gameObject, new PlantElementAbsorber.ConsumeInfo[1]
 		{
@@ -32,11 +32,6 @@ public class SaltPlantConfig : IEntityConfig
 				massConsumptionRate = 7f / 600f
 			}
 		});
-		gameObject.AddOrGet<PressureVulnerable>().Configure(0.025f, 0f, 10f, 30f, new SimHashes[1] { SimHashes.ChlorineGas });
-		gameObject.GetComponent<KPrefabID>().prefabInitFn += delegate(GameObject inst)
-		{
-			inst.GetComponent<PressureVulnerable>().safe_atmospheres.Add(ElementLoader.FindElementByHash(SimHashes.ChlorineGas));
-		};
 		Storage storage = gameObject.AddOrGet<Storage>();
 		storage.showInUI = false;
 		storage.capacityKg = 1f;

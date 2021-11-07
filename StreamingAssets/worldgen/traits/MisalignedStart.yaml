@@ -4,6 +4,7 @@ colorHex: 8494A1
 
 traitTags:
   - StartChange
+  - StartWorldOnly
 
 startingBasePositionHorizontalMod:
   min: -.2

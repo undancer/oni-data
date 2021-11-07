@@ -1,6 +1,7 @@
 name: STRINGS.WORLDS.FORESTMOONLET.NAME # Forest Cluster starting asteroid
 description: STRINGS.WORLDS.FORESTMOONLET.DESCRIPTION
-nameTable: FOREST
+nameTables: 
+  - FOREST
 asteroidIcon: asteroid_forest_start_kanim
 
 worldTraitScale: 0.44 # Adjust with worldSize. Traits are tuned to base game world sizes.
@@ -187,10 +188,7 @@ worldTemplateRules:
         minDistance: 1
         maxDistance: 1
       - command: IntersectWith
-        zoneTypes: [ Barren ]
-      - command: ExceptWith
-        tagcommand: AtTag
-        tag: NoGravitasFeatures
+        zoneTypes: [ Barren, MagmaCore ]
   # Gravitas
   - names:
     - expansion1::poi/warp/sender
@@ -232,3 +230,16 @@ worldTemplateRules:
         tag: AtSurface
         minDistance: 0
         maxDistance: 2
+  # Uranium Geode
+  - names:
+    - expansion1::poi/radioactive/uranium_geode1
+    listRule: GuaranteeOne
+    useRelaxedFiltering: true
+    allowExtremeTemperatureOverlap: true # has Abyssalite border
+    priority: 200
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 1
+        maxDistance: 1

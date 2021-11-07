@@ -414,6 +414,14 @@ MobLookupTable:
         max: 0.12
       width: 1
       height: 1
+    OxyfernSeed:
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.01
+        max: 0.02
+      width: 1
+      height: 1   
     EvilFlower:
       location: Floor
       selectMethod: Centroid

@@ -14,18 +14,20 @@ public class PropSurfaceSatellite1Config : IEntityConfig
 
 	public GameObject CreatePrefab()
 	{
-		GameObject obj = EntityTemplates.CreatePlacedEntity("PropSurfaceSatellite1", STRINGS.BUILDINGS.PREFABS.PROPSURFACESATELLITE1.NAME, STRINGS.BUILDINGS.PREFABS.PROPSURFACESATELLITE1.DESC, 50f, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER0, noise: NOISE_POLLUTION.NOISY.TIER0, anim: Assets.GetAnim("satellite1_kanim"), initialAnim: "off", sceneLayer: Grid.SceneLayer.Building, width: 3, height: 3, element: SimHashes.Creature, additionalTags: new List<Tag> { GameTags.Gravitas });
-		PrimaryElement component = obj.GetComponent<PrimaryElement>();
+		GameObject gameObject = EntityTemplates.CreatePlacedEntity("PropSurfaceSatellite1", STRINGS.BUILDINGS.PREFABS.PROPSURFACESATELLITE1.NAME, STRINGS.BUILDINGS.PREFABS.PROPSURFACESATELLITE1.DESC, 50f, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER0, noise: NOISE_POLLUTION.NOISY.TIER0, anim: Assets.GetAnim("satellite1_kanim"), initialAnim: "off", sceneLayer: Grid.SceneLayer.Building, width: 3, height: 3, element: SimHashes.Creature, additionalTags: new List<Tag> { GameTags.Gravitas });
+		PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
 		component.SetElement(SimHashes.Unobtanium);
 		component.Temperature = 294.15f;
-		Workable workable = obj.AddOrGet<Workable>();
+		Workable workable = gameObject.AddOrGet<Workable>();
 		workable.synchronizeAnims = false;
 		workable.resetProgressOnStop = true;
-		SetLocker setLocker = obj.AddOrGet<SetLocker>();
+		SetLocker setLocker = gameObject.AddOrGet<SetLocker>();
 		setLocker.overrideAnim = "anim_interacts_clothingfactory_kanim";
 		setLocker.dropOffset = new Vector2I(0, 1);
-		obj.AddOrGet<LoreBearer>();
-		return obj;
+		setLocker.numDataBanks = new int[2] { 4, 9 };
+		gameObject.AddOrGet<Demolishable>();
+		gameObject.AddOrGet<LoreBearer>();
+		return gameObject;
 	}
 
 	public void OnPrefabInit(GameObject inst)

@@ -1,0 +1,198 @@
+name: STRINGS.WORLDS.MINIFORESTFROZEN.NAME
+description: STRINGS.WORLDS.MINIFORESTFROZEN.DESCRIPTION
+nameTables:
+  - FOREST
+asteroidIcon: asteroid_mini_forestfrozen_kanim
+
+worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.
+worldsize:
+  X: 128
+  Y: 153
+layoutMethod: PowerTree
+
+defaultsOverrides:
+  data:
+    DrawWorldBorderForce: false
+    DrawWorldBorder: true
+    WorldBorderThickness: 5
+    WorldBorderRange: 2
+    OverworldDensityMin: 18
+    OverworldDensityMax: 18
+    OverworldAvoidRadius: 5
+    OverworldSampleBehaviour: PoissonDisk
+    poiPadding: 1
+  startingWorldElements: [] # remove the algae check
+
+startSubworldName: expansion1::subworlds/forest/med_ForestStartCold
+startingBaseTemplate: bases/forestBase
+startingBasePositionHorizontal:
+  min: 0.5
+  max: 0.5
+startingBasePositionVertical:
+  min: 0.50
+  max: 0.50
+
+disableWorldTraits: true
+worldTraitRules: # TODO
+  - min: 1
+    max: 2
+    forbiddenTags:
+      - StartWorldOnly
+      - GenericGeysers
+      - Oil
+      - LargeWorld
+      - Surface
+      - Crust
+      - Challenge
+      - StartChange
+
+fixedTraits:
+  - sunlightLow
+  - cosmicRadiationMedLow
+
+#------------------------------------------------------------------------------
+
+# List all the subworld files to load
+subworldFiles:
+  - name: expansion1::subworlds/forest/med_ForestStartCold
+    overridePower: 5
+  - name: expansion1::subworlds/forest/ForestMiniWaterCold
+    minCount: 2
+    maxCount: 3
+  - name: expansion1::subworlds/rust/med_RustFrozen
+    minCount: 3
+  - name: expansion1::subworlds/jungle/med_JungleFrozen
+    minCount: 3
+  - name: subworlds/space/Space
+  - name: expansion1::subworlds/space/SpaceWithFrozenRustBorder
+  - name: subworlds/magma/SolidMagma
+  - name: expansion1::subworlds/magma/BottomSmall
+    
+unknownCellsAllowedSubworlds: 
+  # Fill
+  - tagcommand: Default
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/jungle/med_JungleFrozen
+      - expansion1::subworlds/rust/med_RustFrozen
+  # Ring-1
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/rust/med_RustFrozen
+      - expansion1::subworlds/forest/ForestMiniWaterCold
+  # Space
+  - tagcommand: AtTag
+    tag: AtSurface
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
+  # Crust
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/space/SpaceWithFrozenRustBorder
+  # Core
+  - tagcommand: AtTag
+    tag: AtDepths
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/magma/BottomSmall
+      - subworlds/magma/SolidMagma
+
+worldTemplateRules:
+  # Jungle
+  # - names:
+  #     - poi/jungle/geyser_steam
+  #     - poi/jungle/geyser_methane # moved from rule below
+  #   listRule: TryOne
+  #   priority: 100
+  #   allowedCellsFilter:
+  #     - command: Replace
+  #       zoneTypes: [ToxicJungle]
+  - names:
+      - poi/jungle/geyser_chlorine
+    listRule: GuaranteeOne
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [ToxicJungle]
+  # Curated geyser (specific to this world)
+  - names:
+    - expansion1::poi/rust/dirty_slush_geyser
+    listRule: GuaranteeAll
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [Rust]
+      - command: IntersectWith
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 1
+        maxDistance: 99                
+  # Gravitas
+  - names:
+    - expansion1::poi/warp/sender_mini
+    - expansion1::poi/warp/receiver_mini
+    - expansion1::poi/warp/teleporter_mini # DIFF
+    listRule: GuaranteeAll
+    priority: 90
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 1
+        maxDistance: 2
+      - command: ExceptWith
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 0
+        maxDistance: 0        
+      - command: ExceptWith
+        zoneTypes: [ Space, MagmaCore, OilField ]
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGravitasFeatures
+  # Satellite landmark
+  - names:
+    - poi/poi_satellite_3_a
+    listRule: GuaranteeAll
+    priority: 200
+    allowExtremeTemperatureOverlap: true
+    useRelaxedFiltering: true
+    overrideOffset:
+       X: 0
+       Y: -15
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtSurface
+        minDistance: 1
+        maxDistance: 1
+  # Curated geysers (no duplicates)
+  - names: 
+    #- geysers/big_volcano
+    - geysers/chlorine_gas
+    - geysers/hot_co2
+    - geysers/hot_hydrogen
+    - geysers/hot_po2
+    - geysers/liquid_co2
+    - geysers/methane
+    - geysers/salt_water
+    - geysers/slimy_po2
+    - geysers/small_volcano
+    - expansion1::geysers/liquid_sulfur
+    listRule: TryOne
+    times: 3
+    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    priority: 10
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning        

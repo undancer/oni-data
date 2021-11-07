@@ -814,11 +814,11 @@ public class RetiredColonyInfoScreen : KModalScreen
 		{
 			return;
 		}
-		foreach (Tuple<string, string> worldPair in data.worldIdentities)
+		foreach (KeyValuePair<string, string> worldPair in data.worldIdentities)
 		{
 			GameObject obj = Util.KInstantiateUI(worldPrefab, container, force_active: true);
 			HierarchyReferences component = obj.GetComponent<HierarchyReferences>();
-			ProcGen.World worldData = SettingsCache.worlds.GetWorldData(worldPair.second);
+			ProcGen.World worldData = SettingsCache.worlds.GetWorldData(worldPair.Value);
 			Sprite sprite = ((worldData != null) ? ColonyDestinationAsteroidBeltData.GetUISprite(worldData.asteroidIcon) : null);
 			if (sprite != null)
 			{
@@ -826,7 +826,7 @@ public class RetiredColonyInfoScreen : KModalScreen
 			}
 			obj.GetComponent<KButton>().onClick += delegate
 			{
-				focusedWorld = worldPair.first;
+				focusedWorld = worldPair.Key;
 				LoadScreenshot(data, focusedWorld);
 			};
 		}

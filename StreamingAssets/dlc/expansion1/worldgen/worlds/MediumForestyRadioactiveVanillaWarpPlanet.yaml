@@ -1,6 +1,7 @@
 name: STRINGS.WORLDS.MEDIUMFORESTYRADIOACTIVEVANILLAWARPPLANET.NAME
 description: STRINGS.WORLDS.MEDIUMFORESTYRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION
-nameTable: FOREST
+nameTables:
+  - FOREST
 asteroidIcon: asteroid_vanilla_swamp_warp_kanim
 
 worldTraitScale: 0.3 # Adjust with worldSize. Traits are tuned to base game world sizes.

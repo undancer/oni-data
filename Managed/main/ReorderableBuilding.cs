@@ -438,7 +438,7 @@ public class ReorderableBuilding : KMonoBehaviour
 		return true;
 	}
 
-	public bool CanSwapUp()
+	public bool CanSwapUp(bool alsoCheckAboveCanSwapDown = true)
 	{
 		BuildingAttachPoint component = GetComponent<BuildingAttachPoint>();
 		if (component == null)
@@ -449,18 +449,27 @@ public class ReorderableBuilding : KMonoBehaviour
 		{
 			return false;
 		}
-		if (component.points[0].attachedBuilding == null)
+		AttachableBuilding attachedBuilding = component.points[0].attachedBuilding;
+		if (attachedBuilding == null)
 		{
 			return false;
 		}
-		if (component.points[0].attachedBuilding.GetComponent<BuildingAttachPoint>() == null || component.points[0].attachedBuilding.HasTag(GameTags.NoseRocketModule))
+		if (attachedBuilding.GetComponent<BuildingAttachPoint>() == null || attachedBuilding.HasTag(GameTags.NoseRocketModule))
+		{
+			return false;
+		}
+		if (!CanMoveVertically(attachedBuilding.GetComponent<Building>().Def.HeightInCells, attachedBuilding.gameObject))
+		{
+			return false;
+		}
+		if (alsoCheckAboveCanSwapDown && !attachedBuilding.GetComponent<ReorderableBuilding>().CanSwapDown(alsoCheckBelowCanSwapUp: false))
 		{
 			return false;
 		}
 		return true;
 	}
 
-	public bool CanSwapDown()
+	public bool CanSwapDown(bool alsoCheckBelowCanSwapUp = true)
 	{
 		if (base.gameObject.HasTag(GameTags.NoseRocketModule))
 		{
@@ -471,7 +480,8 @@ public class ReorderableBuilding : KMonoBehaviour
 		{
 			return false;
 		}
-		if (component.GetAttachedTo() == null)
+		BuildingAttachPoint attachedTo = component.GetAttachedTo();
+		if (attachedTo == null)
 		{
 			return false;
 		}
@@ -479,7 +489,15 @@ public class ReorderableBuilding : KMonoBehaviour
 		{
 			return false;
 		}
-		if (component.GetAttachedTo().GetComponent<AttachableBuilding>() == null || component.GetAttachedTo().GetComponent<RocketEngineCluster>() != null)
+		if (attachedTo.GetComponent<AttachableBuilding>() == null || attachedTo.GetComponent<RocketEngineCluster>() != null)
+		{
+			return false;
+		}
+		if (!CanMoveVertically(attachedTo.GetComponent<Building>().Def.HeightInCells * -1, attachedTo.gameObject))
+		{
+			return false;
+		}
+		if (alsoCheckBelowCanSwapUp && !attachedTo.GetComponent<ReorderableBuilding>().CanSwapUp(alsoCheckAboveCanSwapDown: false))
 		{
 			return false;
 		}

@@ -1,6 +1,7 @@
 name: STRINGS.WORLDS.SWAMPYLANDINGSITE.NAME
 description: STRINGS.WORLDS.SWAMPYLANDINGSITE.DESCRIPTION
-nameTable: SWAMP
+nameTables:
+  - SWAMP
 asteroidIcon: asteroid_forest_rocket_kanim
 
 worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.

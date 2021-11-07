@@ -17,7 +17,7 @@ namespace Database
 
 		public string loopVideoName;
 
-		public string steamAchievementId;
+		public string platformAchievementId;
 
 		public string icon;
 
@@ -27,11 +27,11 @@ namespace Database
 
 		public string victoryNISSnapshot { get; private set; }
 
-		public ColonyAchievement(string Id, string steamAchievementId, string Name, string description, bool isVictoryCondition, List<ColonyAchievementRequirement> requirementChecklist, string messageTitle = "", string messageBody = "", string videoDataName = "", string victoryLoopVideo = "", Action<KMonoBehaviour> VictorySequence = null, string victorySnapshot = "", string icon = "")
+		public ColonyAchievement(string Id, string platformAchievementId, string Name, string description, bool isVictoryCondition, List<ColonyAchievementRequirement> requirementChecklist, string messageTitle = "", string messageBody = "", string videoDataName = "", string victoryLoopVideo = "", Action<KMonoBehaviour> VictorySequence = null, string victorySnapshot = "", string icon = "")
 			: base(Id, Name)
 		{
 			base.Id = Id;
-			this.steamAchievementId = steamAchievementId;
+			this.platformAchievementId = platformAchievementId;
 			base.Name = Name;
 			this.description = description;
 			this.isVictoryCondition = isVictoryCondition;

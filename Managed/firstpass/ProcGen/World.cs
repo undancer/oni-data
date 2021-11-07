@@ -100,6 +100,8 @@ namespace ProcGen
 
 			public bool useRelaxedFiltering { get; private set; }
 
+			public Vector2I overrideOffset { get; set; }
+
 			public List<AllowedCellsFilter> allowedCellsFilter { get; private set; }
 
 			public TemplateSpawnRules()
@@ -108,6 +110,7 @@ namespace ProcGen
 				allowedCellsFilter = new List<AllowedCellsFilter>();
 				allowDuplicates = false;
 				useRelaxedFiltering = false;
+				overrideOffset = Vector2I.zero;
 			}
 
 			public bool IsGuaranteeRule()
@@ -189,7 +192,7 @@ namespace ProcGen
 
 		public string description { get; private set; }
 
-		public string nameTable { get; private set; }
+		public string[] nameTables { get; private set; }
 
 		public string asteroidIcon { get; private set; }
 
@@ -282,7 +285,7 @@ namespace ProcGen
 				usedSubworldFiles.Remove(startSubworldName);
 				if (usedSubworldFiles.Count > 0)
 				{
-					DebugUtil.LogWarningArgs("World " + name + ": defines subworldNames that are not used in unknownCellsAllowedSubworlds: \n" + string.Join(", ", usedSubworldFiles));
+					DebugUtil.LogWarningArgs("World " + filePath + ": defines subworldNames that are not used in unknownCellsAllowedSubworlds: \n" + string.Join(", ", usedSubworldFiles));
 				}
 			}
 			if (worldTraitRules == null)

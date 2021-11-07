@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using KSerialization;
+using UnityEngine;
 
 public abstract class Assignable : KMonoBehaviour, ISaveLoadable
 {
@@ -80,7 +81,11 @@ public abstract class Assignable : KMonoBehaviour, ISaveLoadable
 		{
 			Assign(Game.Instance.assignmentManager.assignment_groups["public"]);
 		}
-		assignmentPreconditions.Add((MinionAssignablesProxy proxy) => (!(proxy.GetTargetGameObject().GetComponent<KMonoBehaviour>().GetMyWorld() != this.GetMyWorld())) ? true : false);
+		assignmentPreconditions.Add(delegate(MinionAssignablesProxy proxy)
+		{
+			GameObject targetGameObject = proxy.GetTargetGameObject();
+			return (targetGameObject.GetComponent<KMonoBehaviour>().GetMyWorldId() == this.GetMyWorldId() || targetGameObject.IsMyParentWorld(base.gameObject)) ? true : false;
+		});
 	}
 
 	protected override void OnCleanUp()

@@ -1,6 +1,7 @@
 name: STRINGS.WORLDS.WATERMOONLET.NAME
 description: STRINGS.WORLDS.WATERMOONLET.DESCRIPTION
-nameTable: WATER
+nameTables:
+  - WATER
 asteroidIcon: asteroid_water_moonlet_kanim
 
 worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.

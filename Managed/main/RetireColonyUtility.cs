@@ -38,15 +38,56 @@ public static class RetireColonyUtility
 		}
 		string path = Path.Combine(text3, text2 + ".json");
 		string s = JsonConvert.SerializeObject(GetCurrentColonyRetiredColonyData());
-		bool flag = false;
+		if (DlcManager.IsExpansion1Active())
+		{
+			foreach (WorldContainer worldContainer in ClusterManager.Instance.WorldContainers)
+			{
+				if (!worldContainer.IsDiscovered || worldContainer.IsModuleInterior)
+				{
+					continue;
+				}
+				string name = worldContainer.GetComponent<ClusterGridEntity>().Name;
+				string text4 = Path.Combine(text3, name);
+				string text5 = Path.Combine(text3, worldContainer.id.ToString("D5"));
+				if (!Directory.Exists(text4))
+				{
+					continue;
+				}
+				bool flag = Directory.GetFiles(text4).Length != 0;
+				if (!Directory.Exists(text5))
+				{
+					Directory.CreateDirectory(text5);
+				}
+				string[] files = Directory.GetFiles(text4);
+				foreach (string text6 in files)
+				{
+					try
+					{
+						File.Copy(text6, text6.Replace(text4, text5), overwrite: true);
+						File.Delete(text6);
+					}
+					catch (Exception obj)
+					{
+						flag = false;
+						Debug.LogWarning("Error occurred trying to migrate screenshot: " + text6);
+						Debug.LogWarning(obj);
+					}
+				}
+				if (flag)
+				{
+					Directory.Delete(text4);
+				}
+			}
+		}
+		bool flag2 = false;
 		int num = 0;
-		while (!flag && num < 5)
+		while (!flag2 && num < 5)
 		{
 			try
 			{
 				Thread.Sleep(num * 100);
 				using FileStream fileStream = File.Open(path, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
-				flag = true;
+				flag2 = true;
 				byte[] bytes = Encoding.UTF8.GetBytes(s);
 				fileStream.Write(bytes, 0, bytes.Length);
 			}
@@ -56,7 +97,7 @@ public static class RetireColonyUtility
 			}
 			num++;
 		}
-		return flag;
+		return flag2;
 	}
 
 	public static RetiredColonyData GetCurrentColonyRetiredColonyData()
@@ -80,19 +121,19 @@ public static class RetireColonyUtility
 			array2[j] = Components.BuildingCompletes[j];
 		}
 		string startWorld = null;
-		List<Tuple<string, string>> list2 = new List<Tuple<string, string>>();
+		Dictionary<string, string> dictionary = new Dictionary<string, string>();
 		foreach (WorldContainer worldContainer in ClusterManager.Instance.WorldContainers)
 		{
 			if (worldContainer.IsDiscovered && !worldContainer.IsModuleInterior)
 			{
-				list2.Add(new Tuple<string, string>(worldContainer.GetComponent<ClusterGridEntity>().Name, worldContainer.worldName));
+				dictionary.Add(worldContainer.id.ToString("D5"), worldContainer.worldName);
 				if (worldContainer.IsStartWorld)
 				{
-					startWorld = worldContainer.GetComponent<ClusterGridEntity>().Name;
+					startWorld = worldContainer.id.ToString("D5");
 				}
 			}
 		}
-		return new RetiredColonyData(SaveGame.Instance.BaseName, GameClock.Instance.GetCycle(), System.DateTime.Now.ToShortDateString(), list.ToArray(), array, array2, startWorld, list2);
+		return new RetiredColonyData(SaveGame.Instance.BaseName, GameClock.Instance.GetCycle(), System.DateTime.Now.ToShortDateString(), list.ToArray(), array, array2, startWorld, dictionary);
 	}
 
 	private static RetiredColonyData LoadRetiredColony(string file, bool skipStats, Encoding enc)
@@ -106,7 +147,7 @@ public static class RetireColonyUtility
 		List<Tuple<string, int>> list2 = new List<Tuple<string, int>>();
 		List<RetiredColonyData.RetiredDuplicantData> list3 = new List<RetiredColonyData.RetiredDuplicantData>();
 		List<RetiredColonyData.RetiredColonyStatistic> list4 = new List<RetiredColonyData.RetiredColonyStatistic>();
-		List<Tuple<string, string>> list5 = new List<Tuple<string, string>>();
+		Dictionary<string, string> dictionary = new Dictionary<string, string>();
 		while (jsonReader.Read())
 		{
 			JsonToken tokenType = jsonReader.TokenType;
@@ -219,7 +260,7 @@ public static class RetireColonyUtility
 				}
 				string text5 = null;
 				RetiredColonyData.RetiredColonyStatistic retiredColonyStatistic = new RetiredColonyData.RetiredColonyStatistic();
-				List<Tuple<float, float>> list6 = new List<Tuple<float, float>>();
+				List<Tuple<float, float>> list5 = new List<Tuple<float, float>>();
 				while (jsonReader.Read())
 				{
 					tokenType = jsonReader.TokenType;
@@ -275,9 +316,9 @@ public static class RetireColonyUtility
 						}
 					}
 					Tuple<float, float> item2 = new Tuple<float, float>(a2, b2);
-					list6.Add(item2);
+					list5.Add(item2);
 				}
-				retiredColonyStatistic.value = list6.ToArray();
+				retiredColonyStatistic.value = list5.ToArray();
 				list4.Add(retiredColonyStatistic);
 			}
 			if (tokenType == JsonToken.StartObject && text == "worldIdentities")
@@ -296,8 +337,8 @@ public static class RetireColonyUtility
 					}
 					if (text7 != null && jsonReader.Value != null && tokenType == JsonToken.String)
 					{
-						string b3 = jsonReader.Value.ToString();
-						list5.Add(new Tuple<string, string>(text7, b3));
+						string value2 = jsonReader.Value.ToString();
+						dictionary.Add(text7, value2);
 					}
 				}
 			}
@@ -310,7 +351,7 @@ public static class RetireColonyUtility
 		retiredColonyData.Stats = list4.ToArray();
 		retiredColonyData.achievements = list.ToArray();
 		retiredColonyData.buildings = list2;
-		retiredColonyData.worldIdentities = list5;
+		retiredColonyData.worldIdentities = dictionary;
 		return retiredColonyData;
 	}
 

@@ -163,18 +163,8 @@ public class KCrashReporter : MonoBehaviour
 			DebugUtil.DevLogError("Turning off logging to avoid increasing the file to an unreasonable size, please review the logs as they probably contain spam");
 			Debug.DisableLogging();
 		}
-		if (ignoreAll || Array.IndexOf(IgnoreStrings, msg) != -1 || (msg != null && msg.StartsWith("<RI.Hid>")))
+		if (ignoreAll || Array.IndexOf(IgnoreStrings, msg) != -1 || (msg != null && msg.StartsWith("<RI.Hid>")) || (msg != null && msg.StartsWith("Failed to load cursor")) || (msg != null && msg.StartsWith("Failed to save a temporary cursor")))
 		{
-			return;
-		}
-		if (msg != null && msg.StartsWith("Failed to load cursor"))
-		{
-			ReportErrorDevNotification("Cursor load failed", Environment.StackTrace, $"LogType: '{type}' message='{msg}'");
-			return;
-		}
-		if (msg != null && msg.StartsWith("Failed to save a temporary cursor"))
-		{
-			ReportErrorDevNotification("Cursor save failed", Environment.StackTrace, $"LogType: '{type}' message='{msg}'");
 			return;
 		}
 		if (type == LogType.Exception)
@@ -461,7 +451,7 @@ public class KCrashReporter : MonoBehaviour
 				error.callstack = error.callstack + "\n" + Guid.NewGuid().ToString();
 			}
 			error.fullstack = $"{msg}\n\n{stack_trace}";
-			error.build = 481873;
+			error.build = 484114;
 			error.log = GetLogContents();
 			error.summaryline = string.Join("\n", list.ToArray());
 			error.user_message = userMessage;

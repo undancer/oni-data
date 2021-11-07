@@ -35,7 +35,7 @@ public class ResearchTypes
 		Types.Add(item3);
 		ResearchType item4 = new ResearchType("nuclear", RESEARCH.TYPES.DELTA.NAME, RESEARCH.TYPES.DELTA.DESC, Assets.GetSprite("research_type_delta_icon"), new Color32(231, 210, 17, byte.MaxValue), null, 2400f, "research_center_kanim", new string[1] { "NuclearResearchCenter" }, RESEARCH.TYPES.DELTA.RECIPEDESC);
 		Types.Add(item4);
-		ResearchType item5 = new ResearchType("orbital", RESEARCH.TYPES.ORBITAL.NAME, RESEARCH.TYPES.ORBITAL.DESC, Assets.GetSprite("research_type_orbital_icon"), new Color32(240, 141, 44, byte.MaxValue), null, 2400f, "research_center_kanim", new string[1] { "CosmicResearchCenter" }, RESEARCH.TYPES.ORBITAL.RECIPEDESC);
+		ResearchType item5 = new ResearchType("orbital", RESEARCH.TYPES.ORBITAL.NAME, RESEARCH.TYPES.ORBITAL.DESC, Assets.GetSprite("research_type_orbital_icon"), new Color32(240, 141, 44, byte.MaxValue), null, 2400f, "research_center_kanim", new string[2] { "OrbitalResearchCenter", "DLC1CosmicResearchCenter" }, RESEARCH.TYPES.ORBITAL.RECIPEDESC);
 		Types.Add(item5);
 	}
 

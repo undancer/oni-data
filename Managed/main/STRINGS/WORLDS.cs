@@ -146,6 +146,27 @@ namespace STRINGS
 			public static LocString DESCRIPTION = "A large, polluted swamp world.\n\n<smallcaps>Swampy Asteroids are a great mass of frozen slush and wasteland. With a short distance to the surface, inter-world travel can be achieved quickly.</smallcaps>";
 		}
 
+		public class VANILLASANDSTONEFROZEN
+		{
+			public static LocString NAME = "Rime Asteroid";
+
+			public static LocString DESCRIPTION = "A frigid location marked by inhospitably low temperatures throughout.\n\n<smallcaps>Rime's low temperatures will make finding water and establishing farms or ranches problematic. However, the wide spectrum of minerals and cool environment could lead to thriving industry.</smallcaps>";
+		}
+
+		public static class VANILLAOASIS
+		{
+			public static LocString NAME = "Oasisse Asteroid";
+
+			public static LocString DESCRIPTION = "A desolate location with a cache of life-sustaining water trapped beneath the surface.\n\n<smallcaps>A wide underground desert will pose temperature threats and strain the resources of a colony on Oasisse. However, surviving the challenge should present great industrial opportunities.</smallcaps>";
+		}
+
+		public static class VANILLAOCEANIA
+		{
+			public static LocString NAME = "Oceania Asteroid";
+
+			public static LocString DESCRIPTION = "A location with vast quantities of unpotable salt water.\n\n<smallcaps>Oceania is quite stable and resource rich, but the majority of the area is covered in a saltwater ocean. Careful expansion and resource usage should lead to a successful colony.</smallcaps>";
+		}
+
 		public class SWAMPYLANDINGSITE
 		{
 			public static LocString NAME = "Irradiated Swampy Asteroid";
@@ -155,9 +176,9 @@ namespace STRINGS
 
 		public class FORESTMOONLET
 		{
-			public static LocString NAME = "Forest Moonlet";
+			public static LocString NAME = "Forest Asteroid";
 
-			public static LocString DESCRIPTION = "A small moon with a forest start.\n\n<smallcaps>Forest Moonlets have plenty of organic material but Duplicants will have to venture outside their starting biome quickly to find any metal.</smallcaps>";
+			public static LocString DESCRIPTION = "A small moon with a forest start.\n\n<smallcaps>Forest Asteroids have plenty of organic material but Duplicants will have to venture outside their starting biome quickly to find any metal.</smallcaps>";
 		}
 
 		public class TERRAMOONLET
@@ -277,6 +298,41 @@ namespace STRINGS
 			public static LocString NAME = "Regolith Asteroid";
 
 			public static LocString DESCRIPTION = "A small, cold world with plenty of craters.\n\n<smallcaps>Regolith Asteroids have frequent meteor showers and are chalk full of Regolith, an incredibly useful filtration material. </smallcaps>";
+		}
+
+		public class MINIMETALLICSWAMPY
+		{
+			public static LocString NAME = "Metallic Swampy Asteroid (experimental)";
+
+			public static LocString DESCRIPTION = "A small swampy world with an abudnance of renewable metal.\n\n<smallcaps>Metallic Swampy Asteroids have a high concentration of metal mixed with a swampy polluted atmosphere.</smallcaps>";
+		}
+
+		public class MINIFORESTFROZEN
+		{
+			public static LocString NAME = "Frozen Forest Asteroid (experimental)";
+
+			public static LocString DESCRIPTION = "A frigid location marked by inhospitably low temperatures throughout.\n\n<smallcaps>Frozen Forest's low temperatures will make finding water and establishing farms or ranches problematic.</smallcaps>\n\n";
+		}
+
+		public class MINIBADLANDS
+		{
+			public static LocString NAME = "The Badlands Asteroid (experimental)";
+
+			public static LocString DESCRIPTION = "A barren location with an overabundance of mineral resources and oil.\n\n<smallcaps>The rocky terrain of The Badlands poses no immediate threats, but sparse resource availability will make expansion and technological progress challenging.</smallcaps>\n\n";
+		}
+
+		public class MINIFLIPPED
+		{
+			public static LocString NAME = "Flipped Asteroid (experimental)";
+
+			public static LocString DESCRIPTION = "An asteroid in which the surface is molten hot lava and the core is livable.\n\n<smallcaps>The lava surface of the Flipped Asteroid will make it challenging to start a rocketry program.</smallcaps>\n\n";
+		}
+
+		public class MINIRADIOACTIVEOCEAN
+		{
+			public static LocString NAME = "Radioactive Ocean Asteroid (experimental)";
+
+			public static LocString DESCRIPTION = "An irradiated world with renewable water sources.\n\n<smallcaps>Both the radioactive biome and the ocean biome present unique challenges yet considerable payoffs.</smallcaps>\n\n";
 		}
 
 		public class TINYSTART

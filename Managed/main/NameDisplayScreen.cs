@@ -17,6 +17,10 @@ public class NameDisplayScreen : KScreen
 
 		public GameObject bars_go;
 
+		public KAnimControllerBase world_go_anim_controller;
+
+		public RectTransform display_go_rect;
+
 		public HealthBar healthBar;
 
 		public ProgressBar breathBar;
@@ -74,6 +78,14 @@ public class NameDisplayScreen : KScreen
 
 	public bool worldSpace = true;
 
+	private int updateSectionIndex;
+
+	private List<System.Action> lateUpdateSections = new List<System.Action>();
+
+	private bool isOverlayChangeBound;
+
+	private HashedString lastKnownOverlayID = OverlayModes.None.ID;
+
 	private List<KCollider2D> workingList = new List<KCollider2D>();
 
 	public static void DestroyInstance()
@@ -93,6 +105,50 @@ public class NameDisplayScreen : KScreen
 		UIRegistry.nameDisplayScreen = this;
 		Components.Health.Register(OnHealthAdded, null);
 		Components.Equipment.Register(OnEquipmentAdded, null);
+		updateSectionIndex = 0;
+		lateUpdateSections = new List<System.Action> { LateUpdatePart0, LateUpdatePart1, LateUpdatePart2 };
+		bindOnOverlayChange();
+	}
+
+	protected override void OnCleanUp()
+	{
+		base.OnCleanUp();
+		if (isOverlayChangeBound && OverlayScreen.Instance != null)
+		{
+			OverlayScreen instance = OverlayScreen.Instance;
+			instance.OnOverlayChanged = (Action<HashedString>)Delegate.Remove(instance.OnOverlayChanged, new Action<HashedString>(OnOverlayChanged));
+			isOverlayChangeBound = false;
+		}
+	}
+
+	private void bindOnOverlayChange()
+	{
+		if (!isOverlayChangeBound && OverlayScreen.Instance != null)
+		{
+			OverlayScreen instance = OverlayScreen.Instance;
+			instance.OnOverlayChanged = (Action<HashedString>)Delegate.Combine(instance.OnOverlayChanged, new Action<HashedString>(OnOverlayChanged));
+			isOverlayChangeBound = true;
+		}
+	}
+
+	private void OnOverlayChanged(HashedString new_mode)
+	{
+		HashedString hashedString = lastKnownOverlayID;
+		lastKnownOverlayID = new_mode;
+		if (hashedString != OverlayModes.None.ID && new_mode != OverlayModes.None.ID)
+		{
+			return;
+		}
+		bool active = new_mode == OverlayModes.None.ID;
+		int count = entries.Count;
+		for (int i = 0; i < count; i++)
+		{
+			Entry entry = entries[i];
+			if (!(entry.world_go == null))
+			{
+				entry.display_go.SetActive(active);
+			}
+		}
 	}
 
 	private void OnHealthAdded(Health health)
@@ -167,7 +223,9 @@ public class NameDisplayScreen : KScreen
 	{
 		Entry entry = new Entry();
 		entry.world_go = representedObject;
+		entry.world_go_anim_controller = representedObject.GetComponent<KAnimControllerBase>();
 		GameObject gameObject = (entry.display_go = Util.KInstantiateUI(ShouldShowName(representedObject) ? nameAndBarsPrefab : barsPrefab, base.gameObject, force_active: true));
+		entry.display_go_rect = gameObject.GetComponent<RectTransform>();
 		if (worldSpace)
 		{
 			entry.display_go.transform.localScale = Vector3.one * 0.01f;
@@ -324,67 +382,101 @@ public class NameDisplayScreen : KScreen
 
 	private void LateUpdate()
 	{
-		if (App.isLoading || App.IsExiting)
+		if (!App.isLoading && !App.IsExiting)
 		{
-			return;
+			bindOnOverlayChange();
+			Camera main = Camera.main;
+			if (!(main == null) && !(lastKnownOverlayID != OverlayModes.None.ID))
+			{
+				_ = entries.Count;
+				LateUpdatePos(main.orthographicSize < HideDistance);
+				lateUpdateSections[updateSectionIndex]();
+				updateSectionIndex = (updateSectionIndex + 1) % lateUpdateSections.Count;
+			}
 		}
-		HashedString hashedString = OverlayModes.None.ID;
-		if (OverlayScreen.Instance != null)
+	}
+
+	private void LateUpdatePos(bool visibleToZoom)
+	{
+		CameraController instance = CameraController.Instance;
+		Transform followTarget = instance.followTarget;
+		int count = entries.Count;
+		for (int i = 0; i < count; i++)
 		{
-			hashedString = OverlayScreen.Instance.GetMode();
+			Entry entry = entries[i];
+			GameObject world_go = entry.world_go;
+			if (world_go == null)
+			{
+				continue;
+			}
+			Vector3 vector = world_go.transform.GetPosition();
+			if (visibleToZoom && CameraController.Instance.IsVisiblePos(vector))
+			{
+				if (instance != null && followTarget == world_go.transform)
+				{
+					vector = instance.followTargetPos;
+				}
+				else if (entry.world_go_anim_controller != null)
+				{
+					vector = entry.world_go_anim_controller.GetWorldPivot();
+				}
+				entry.display_go_rect.anchoredPosition = (worldSpace ? vector : WorldToScreen(vector));
+				entry.display_go.SetActive(value: true);
+			}
+			else if (entry.display_go.activeSelf)
+			{
+				entry.display_go.SetActive(value: false);
+			}
 		}
-		bool flag = !(Camera.main == null) && Camera.main.orthographicSize < HideDistance && hashedString == OverlayModes.None.ID;
+	}
+
+	private void LateUpdatePart0()
+	{
 		int num = entries.Count;
 		int num2 = 0;
 		while (num2 < num)
 		{
-			if (entries[num2].world_go != null)
-			{
-				Vector3 vector = entries[num2].world_go.transform.GetPosition();
-				if (flag && CameraController.Instance.IsVisiblePos(vector))
-				{
-					RectTransform component = entries[num2].display_go.GetComponent<RectTransform>();
-					if (CameraController.Instance != null && CameraController.Instance.followTarget == entries[num2].world_go.transform)
-					{
-						vector = CameraController.Instance.followTargetPos;
-					}
-					else
-					{
-						KAnimControllerBase component2 = entries[num2].world_go.GetComponent<KAnimControllerBase>();
-						if (component2 != null)
-						{
-							vector = component2.GetWorldPivot();
-						}
-					}
-					component.anchoredPosition = (worldSpace ? vector : WorldToScreen(vector));
-					entries[num2].display_go.SetActive(value: true);
-				}
-				else if (entries[num2].display_go.activeSelf)
-				{
-					entries[num2].display_go.SetActive(value: false);
-				}
-				if (entries[num2].world_go.HasTag(GameTags.Dead))
-				{
-					entries[num2].bars_go.SetActive(value: false);
-				}
-				if (entries[num2].bars_go != null)
-				{
-					entries[num2].bars_go.GetComponentsInChildren(includeInactive: false, workingList);
-					foreach (KCollider2D working in workingList)
-					{
-						working.MarkDirty();
-					}
-				}
-				num2++;
-			}
-			else
+			if (entries[num2].world_go == null)
 			{
 				UnityEngine.Object.Destroy(entries[num2].display_go);
 				num--;
 				entries[num2] = entries[num];
 			}
+			else
+			{
+				num2++;
+			}
 		}
 		entries.RemoveRange(num, entries.Count - num);
+	}
+
+	private void LateUpdatePart1()
+	{
+		int count = entries.Count;
+		for (int i = 0; i < count; i++)
+		{
+			if (!(entries[i].world_go == null) && entries[i].world_go.HasTag(GameTags.Dead))
+			{
+				entries[i].bars_go.SetActive(value: false);
+			}
+		}
+	}
+
+	private void LateUpdatePart2()
+	{
+		int count = entries.Count;
+		for (int i = 0; i < count; i++)
+		{
+			if (!(entries[i].bars_go != null))
+			{
+				continue;
+			}
+			entries[i].bars_go.GetComponentsInChildren(includeInactive: false, workingList);
+			foreach (KCollider2D working in workingList)
+			{
+				working.MarkDirty();
+			}
+		}
 	}
 
 	public void UpdateName(GameObject representedObject)

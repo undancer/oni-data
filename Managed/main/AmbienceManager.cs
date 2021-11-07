@@ -23,6 +23,8 @@ public class AmbienceManager : KMonoBehaviour
 
 		private const string AVERAGE_TEMPERATURE_ID = "averageTemperature";
 
+		private const string AVERAGE_RADIATION_ID = "averageRadiation";
+
 		public string sound;
 
 		public string oneShotSound;
@@ -39,6 +41,8 @@ public class AmbienceManager : KMonoBehaviour
 
 		public float averageTemperature;
 
+		public float averageRadiation;
+
 		public Layer(string sound, string one_shot_sound)
 		{
 			this.sound = sound;
@@ -49,6 +53,7 @@ public class AmbienceManager : KMonoBehaviour
 		{
 			tileCount = 0;
 			averageTemperature = 0f;
+			averageRadiation = 0f;
 		}
 
 		public void UpdatePercentage(int cell_count)
@@ -59,6 +64,13 @@ public class AmbienceManager : KMonoBehaviour
 		public void UpdateAverageTemperature()
 		{
 			averageTemperature /= tileCount;
+			soundEvent.setParameterByName("averageTemperature", averageTemperature);
+		}
+
+		public void UpdateAverageRadiation()
+		{
+			averageRadiation = ((tileCount > 0) ? (averageRadiation / (float)tileCount) : 0f);
+			soundEvent.setParameterByName("averageRadiation", averageRadiation);
 		}
 
 		public void UpdateParameters(Vector3 emitter_position)
@@ -68,7 +80,6 @@ public class AmbienceManager : KMonoBehaviour
 				Vector3 pos = new Vector3(emitter_position.x, emitter_position.y, 0f);
 				soundEvent.set3DAttributes(pos.To3DAttributes());
 				soundEvent.setParameterByName("tilePercentage", tilePercentage);
-				soundEvent.setParameterByName("averageTemperature", averageTemperature);
 			}
 		}
 
@@ -141,6 +152,9 @@ public class AmbienceManager : KMonoBehaviour
 
 		[EventRef]
 		public string facilitySound;
+
+		[EventRef]
+		public string radiationSound;
 	}
 
 	public class Quadrant
@@ -183,6 +197,8 @@ public class AmbienceManager : KMonoBehaviour
 
 		public Layer facilityLayer;
 
+		public Layer radiationLayer;
+
 		public Layer[] solidLayers = new Layer[16];
 
 		private List<Layer> allLayers = new List<Layer>();
@@ -211,6 +227,8 @@ public class AmbienceManager : KMonoBehaviour
 			facilityLayer = new Layer(def.facilitySound, null);
 			allLayers.Add(facilityLayer);
 			loopingLayers.Add(facilityLayer);
+			radiationLayer = new Layer(def.radiationSound, null);
+			allLayers.Add(radiationLayer);
 			for (int i = 0; i < 4; i++)
 			{
 				gasLayers[i] = new Layer(def.gasSounds[i], null);
@@ -269,62 +287,68 @@ public class AmbienceManager : KMonoBehaviour
 						if (Grid.GravitasFacility[num])
 						{
 							facilityLayer.tileCount += 8;
-							continue;
 						}
-						Element element = Grid.Element[num];
-						if (element == null)
+						else
 						{
-							continue;
+							Element element = Grid.Element[num];
+							if (element != null)
+							{
+								if (element.IsLiquid && Grid.IsSubstantialLiquid(num))
+								{
+									AmbienceType ambience = element.substance.GetAmbience();
+									if (ambience != AmbienceType.None)
+									{
+										liquidLayers[(int)ambience].tileCount++;
+										liquidLayers[(int)ambience].averageTemperature += Grid.Temperature[num];
+									}
+								}
+								else if (element.IsGas)
+								{
+									AmbienceType ambience2 = element.substance.GetAmbience();
+									if (ambience2 != AmbienceType.None)
+									{
+										gasLayers[(int)ambience2].tileCount++;
+										gasLayers[(int)ambience2].averageTemperature += Grid.Temperature[num];
+									}
+								}
+								else if (element.IsSolid)
+								{
+									SolidAmbienceType solidAmbience = element.substance.GetSolidAmbience();
+									if (Grid.Foundation[num])
+									{
+										solidAmbience = SolidAmbienceType.Tile;
+										solidLayers[(int)solidAmbience].tileCount += TuningData<Tuning>.Get().foundationTileValue;
+										spaceLayer.tileCount -= TuningData<Tuning>.Get().foundationTileValue;
+									}
+									else if (Grid.Objects[num, 2] != null)
+									{
+										solidAmbience = SolidAmbienceType.Tile;
+										solidLayers[(int)solidAmbience].tileCount += TuningData<Tuning>.Get().backwallTileValue;
+										spaceLayer.tileCount -= TuningData<Tuning>.Get().backwallTileValue;
+									}
+									else if (solidAmbience != SolidAmbienceType.None)
+									{
+										solidLayers[(int)solidAmbience].tileCount++;
+									}
+									else if (element.id == SimHashes.Regolith || element.id == SimHashes.MaficRock)
+									{
+										spaceLayer.tileCount++;
+									}
+								}
+								else if (element.id == SimHashes.Vacuum && CellSelectionObject.IsExposedToSpace(num))
+								{
+									if (Grid.Objects[num, 1] != null)
+									{
+										spaceLayer.tileCount -= TuningData<Tuning>.Get().buildingTileValue;
+									}
+									spaceLayer.tileCount++;
+								}
+							}
 						}
-						if (element.IsLiquid && Grid.IsSubstantialLiquid(num))
+						if (Grid.Radiation[num] > 0f)
 						{
-							AmbienceType ambience = element.substance.GetAmbience();
-							if (ambience != AmbienceType.None)
-							{
-								liquidLayers[(int)ambience].tileCount++;
-								liquidLayers[(int)ambience].averageTemperature += Grid.Temperature[num];
-							}
-						}
-						else if (element.IsGas)
-						{
-							AmbienceType ambience2 = element.substance.GetAmbience();
-							if (ambience2 != AmbienceType.None)
-							{
-								gasLayers[(int)ambience2].tileCount++;
-								gasLayers[(int)ambience2].averageTemperature += Grid.Temperature[num];
-							}
-						}
-						else if (element.IsSolid)
-						{
-							SolidAmbienceType solidAmbience = element.substance.GetSolidAmbience();
-							if (Grid.Foundation[num])
-							{
-								solidAmbience = SolidAmbienceType.Tile;
-								solidLayers[(int)solidAmbience].tileCount += TuningData<Tuning>.Get().foundationTileValue;
-								spaceLayer.tileCount -= TuningData<Tuning>.Get().foundationTileValue;
-							}
-							else if (Grid.Objects[num, 2] != null)
-							{
-								solidAmbience = SolidAmbienceType.Tile;
-								solidLayers[(int)solidAmbience].tileCount += TuningData<Tuning>.Get().backwallTileValue;
-								spaceLayer.tileCount -= TuningData<Tuning>.Get().backwallTileValue;
-							}
-							else if (solidAmbience != SolidAmbienceType.None)
-							{
-								solidLayers[(int)solidAmbience].tileCount++;
-							}
-							else if (element.id == SimHashes.Regolith || element.id == SimHashes.MaficRock)
-							{
-								spaceLayer.tileCount++;
-							}
-						}
-						else if (element.id == SimHashes.Vacuum && CellSelectionObject.IsExposedToSpace(num))
-						{
-							if (Grid.Objects[num, 1] != null)
-							{
-								spaceLayer.tileCount -= TuningData<Tuning>.Get().buildingTileValue;
-							}
-							spaceLayer.tileCount++;
+							radiationLayer.averageRadiation += Grid.Radiation[num];
+							radiationLayer.tileCount++;
 						}
 					}
 					else
@@ -356,6 +380,9 @@ public class AmbienceManager : KMonoBehaviour
 					layer.Stop();
 				}
 			}
+			radiationLayer.Start(emitter_position);
+			radiationLayer.UpdateAverageRadiation();
+			radiationLayer.UpdateParameters(emitter_position);
 			oneShotLayers.Sort();
 			for (int n = 0; n < activeSolidLayerCount; n++)
 			{

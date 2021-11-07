@@ -26,7 +26,7 @@ biomes:
   - name: biomes/Forest/Basic
     weight: 2
     tags:
-      - Oxyfern
+      - med_Oxyfern
       - med_ForestTree     
       - med_BasicSingleHarvestPlant
       - forestCluster_BasicSingleHarvestPlantSeed
@@ -38,7 +38,7 @@ biomes:
   - name: biomes/Forest/Metal
     weight: 2
     tags:
-      - Oxyfern
+      - med_Oxyfern
       - LeafyPlant        
       - LeafyPlantSeed
       - forestCluster_BasicSingleHarvestPlantSeed

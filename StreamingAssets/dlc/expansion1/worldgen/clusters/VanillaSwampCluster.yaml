@@ -4,17 +4,20 @@ requiredDlcId: EXPANSION1_ID
 coordinatePrefix: V-SWMP-C
 menuOrder: 3
 clusterCategory: 1
+difficulty: 2
 
 startWorldIndex: 0
 numRings: 12
 worldPlacements:
 - world: expansion1::worlds/VanillaSwampDefault
   buffer: 2
+  locationType: StartWorld
   allowedRings:
     min: 0
     max: 0
 - world: expansion1::worlds/MediumForestyRadioactiveVanillaWarpPlanet # Rocket world
   buffer: 2
+  locationType: InnerCluster
   allowedRings:
     min: 3
     max: 3
@@ -60,7 +63,7 @@ poiPlacements:
       max: 11
       
   - pois: # spawn all of these
-      - HarvestableSpacePOI_SwampyOreField # specific to a sandstone start asteroid!
+      - HarvestableSpacePOI_SwampyOreField # specific to a swamp start asteroid!
     numToSpawn: 1
     allowedRings:
       min: 2

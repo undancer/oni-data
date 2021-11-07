@@ -53,7 +53,7 @@ namespace STRINGS
 
 		public static class VANILLA_FOREST_CLUSTER
 		{
-			public static LocString NAME = "Large Forest Cluster";
+			public static LocString NAME = "Verdante Cluster";
 
 			public static LocString DESCRIPTION = "A cluster of planets with a larger foresty planetoid to start on.";
 		}
@@ -70,6 +70,55 @@ namespace STRINGS
 			public static LocString NAME = "Rime Cluster";
 
 			public static LocString DESCRIPTION = "A cluster of planets with a frozen planetoid to start on.";
+		}
+
+		public static class VANILLA_OCEANIA_CLUSTER
+		{
+			public static LocString NAME = "Oceania Cluster";
+
+			public static LocString DESCRIPTION = "A cluster of planets with a salty planetoid to start on.";
+		}
+
+		public static class VANILLA_OASIS_CLUSTER
+		{
+			public static LocString NAME = "Oasisse Cluster";
+
+			public static LocString DESCRIPTION = "A cluster of planets with a larger desolate planetoid to start on.";
+		}
+
+		public static class MINICLUSTER_METALLICSWAMPYSTART
+		{
+			public static LocString NAME = "Moonlet Cluster - Metallic Swampy (experimental)";
+
+			public static LocString DESCRIPTION = "A cluster of visitable planetoids with a Metallic Swampy starting world.";
+		}
+
+		public static class MINICLUSTER_FORESTFROZENSTART
+		{
+			public static LocString NAME = "Moonlet Cluster - Frozen Forest (experimental)";
+
+			public static LocString DESCRIPTION = "A cluster of visitable planetoids with a Frozen Forest starting world.";
+		}
+
+		public static class MINICLUSTER_BADLANDSSTART
+		{
+			public static LocString NAME = "Moonlet Cluster - The Badlands (experimental)";
+
+			public static LocString DESCRIPTION = "A cluster of visitable planetoids with a Badlands starting world.";
+		}
+
+		public static class MINICLUSTER_FLIPPEDSTART
+		{
+			public static LocString NAME = "Moonlet Cluster - Flipped (experimental)";
+
+			public static LocString DESCRIPTION = "A cluster of visitable planetoids with an inverted starting world";
+		}
+
+		public static class MINICLUSTER_RADIOACTIVEOCEANSTART
+		{
+			public static LocString NAME = "Moonlet Cluster - Radioactive Ocean (experimental)";
+
+			public static LocString DESCRIPTION = "A cluster of visitable planetoids with a Radioactive Ocean starting world";
 		}
 	}
 }

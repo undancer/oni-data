@@ -1,6 +1,7 @@
 name: STRINGS.WORLDS.TWINMOONLET.NAME
 description: STRINGS.WORLDS.TWINMOONLET.DESCRIPTION
-nameTable: TERRA
+nameTables:
+  - TERRA
 disableWorldTraits: true
 
 worldTraitScale: 0.15 # Adjust with worldSize. Traits are tuned to base game world sizes.

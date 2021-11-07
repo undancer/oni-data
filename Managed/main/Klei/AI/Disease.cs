@@ -81,6 +81,8 @@ namespace Klei.AI
 
 		public string overlayLegendHovertext;
 
+		public float radiationKillRate;
+
 		public Amount amount;
 
 		public Attribute amountDeltaAttribute;
@@ -106,7 +108,7 @@ namespace Klei.AI
 
 		public new string Name => Strings.Get(name);
 
-		public Disease(string id, byte strength, RangeInfo temperature_range, RangeInfo temperature_half_lives, RangeInfo pressure_range, RangeInfo pressure_half_lives, bool statsOnly)
+		public Disease(string id, byte strength, RangeInfo temperature_range, RangeInfo temperature_half_lives, RangeInfo pressure_range, RangeInfo pressure_half_lives, float radiation_kill_rate, bool statsOnly)
 			: base(id)
 		{
 			name = new StringKey("STRINGS.DUPLICANTS.DISEASES." + id.ToUpper() + ".NAME");
@@ -115,6 +117,7 @@ namespace Klei.AI
 			temperatureHalfLives = temperature_half_lives;
 			pressureRange = pressure_range;
 			pressureHalfLives = pressure_half_lives;
+			radiationKillRate = radiation_kill_rate;
 			PopulateElemGrowthInfo();
 			ApplyRules();
 			if (!statsOnly)

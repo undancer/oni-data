@@ -1,6 +1,7 @@
 name: STRINGS.WORLDS.MEDIUMSANDYRADIOACTIVEVANILLAWARPPLANET.NAME
 description: STRINGS.WORLDS.MEDIUMSANDYRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION
-nameTable: TERRA
+nameTables:
+  - TERRA
 asteroidIcon: asteroid_vanilla_forest_warp_kanim
 
 worldTraitScale: 0.3 # Adjust with worldSize. Traits are tuned to base game world sizes.

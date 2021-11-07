@@ -139,6 +139,10 @@ namespace STRINGS
 
 			public static LocString WINCONDITION_STAY_DESCRIPTION = "Establish your permanent home by fulfilling the requirements of the Colonize Imperative.";
 
+			public static LocString WINCONDITION_ARTIFACTS = "Cosmic Archaeology";
+
+			public static LocString WINCONDITION_ARTIFACTS_DESCRIPTION = "Uncover the past to secure your future by fullfilling the requirements of the Exploration Imperative.";
+
 			public static LocString NO_PLANTERBOX = "Locavore";
 
 			public static LocString NO_PLANTERBOX_DESCRIPTION = "Have Duplicants consume 400,000kcal of food without planting any seeds in Planter Boxes, Farm Tiles, or Hydroponic Farms.";
@@ -305,7 +309,7 @@ namespace STRINGS
 
 			public static LocString SURVIVE_IN_A_ROCKET = "Morale High Ground";
 
-			public static LocString SURVIVE_IN_A_ROCKET_DESCRIPTION = "Have all Duplicants in a rocket survive in space for {0} cycles in a row with a morale of {1} or higher.";
+			public static LocString SURVIVE_IN_A_ROCKET_DESCRIPTION = "Have the Duplicants in one rocket survive in space for {0} cycles in a row with a morale of {1} or higher.";
 		}
 
 		public class THRIVING

@@ -71,6 +71,17 @@ add:
       weight: 1
     - element: MaficRock
       weight: 0.5
+  frozenRustCrust:
+    - element: Rust
+      weight: 1
+      overrides:
+        temperatureOverride: 240
+    - element: Ice
+      weight: 1
+    - element: MaficRock
+      weight: 0.5    
+      overrides:
+        temperatureOverride: 243  
   seaBed:
     - element: Lime
       weight: 0.4

@@ -34,6 +34,14 @@ public class Unsealable : Workable
 	{
 		base.OnSpawn();
 		SetWorkTime(3f);
+		if (unsealed)
+		{
+			Deconstructable component = GetComponent<Deconstructable>();
+			if (component != null)
+			{
+				component.allowDeconstruction = true;
+			}
+		}
 	}
 
 	protected override void OnStartWork(Worker worker)

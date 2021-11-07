@@ -25,24 +25,24 @@ namespace Database
 			Dictionary<int, int> fetchAutomatedChoreDeliveries = SaveGame.Instance.GetComponent<ColonyAchievementTracker>().fetchAutomatedChoreDeliveries;
 			int num = 0;
 			currentCycleCount = 0;
-			for (int i = GameClock.Instance.GetCycle() - numCycles; i < GameClock.Instance.GetCycle(); i++)
+			for (int num2 = GameClock.Instance.GetCycle() - 1; num2 >= GameClock.Instance.GetCycle() - numCycles; num2--)
 			{
-				if (fetchAutomatedChoreDeliveries.ContainsKey(i) && (!fetchDupeChoreDeliveries.ContainsKey(i) || (float)fetchDupeChoreDeliveries[i] < (float)fetchAutomatedChoreDeliveries[i] * percentage))
+				if (fetchAutomatedChoreDeliveries.ContainsKey(num2))
 				{
-					num++;
-					if (num >= numCycles)
+					if (fetchDupeChoreDeliveries.ContainsKey(num2) && !((float)fetchDupeChoreDeliveries[num2] < (float)fetchAutomatedChoreDeliveries[num2] * percentage))
 					{
-						currentCycleCount = numCycles;
-						return true;
+						break;
 					}
+					num++;
 				}
-				else
+				else if (fetchDupeChoreDeliveries.ContainsKey(num2))
 				{
-					currentCycleCount = Math.Max(currentCycleCount, num);
 					num = 0;
+					break;
 				}
 			}
-			return false;
+			currentCycleCount = Math.Max(currentCycleCount, num);
+			return num >= numCycles;
 		}
 
 		public void Deserialize(IReader reader)

@@ -49,6 +49,11 @@ public class LoreBearer : KMonoBehaviour, ISidescreenButtonControl
 			return;
 		}
 		BeenClicked = true;
+		if (DlcManager.IsExpansion1Active())
+		{
+			Scenario.SpawnPrefab(Grid.PosToCell(base.gameObject), 0, 1, "OrbitalResearchDatabank", Grid.SceneLayer.Front).SetActive(value: true);
+			PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Plus, Assets.GetPrefab("OrbitalResearchDatabank".ToTag()).GetProperName(), base.gameObject.transform);
+		}
 		if (base.gameObject.name == "GeneShuffler")
 		{
 			Game.Instance.unlocks.Unlock("neuralvacillator");

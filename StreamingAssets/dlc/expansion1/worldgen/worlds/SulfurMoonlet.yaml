@@ -1,6 +1,7 @@
 name: STRINGS.WORLDS.SULFURMOONLET.NAME
 description: STRINGS.WORLDS.SULFURMOONLET.DESCRIPTION
-nameTable: SULFUR
+nameTables:
+  - SULFUR
 asteroidIcon: asteroid_sandstone_start_kanim #placeholder
 disableWorldTraits: true
 

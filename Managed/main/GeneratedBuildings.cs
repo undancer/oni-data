@@ -80,11 +80,13 @@ public class GeneratedBuildings
 		{
 			MakeBuildingAlwaysOperationalImpl(go);
 		}
-		if (def.LogicInputPorts != null || def.LogicOutputPorts != null)
+		if (def.LogicInputPorts != null)
 		{
-			LogicPorts logicPorts = go.AddOrGet<LogicPorts>();
-			logicPorts.inputPortInfo = ((def.LogicInputPorts != null) ? def.LogicInputPorts.ToArray() : null);
-			logicPorts.outputPortInfo = ((def.LogicOutputPorts != null) ? def.LogicOutputPorts.ToArray() : null);
+			go.AddOrGet<LogicPorts>().inputPortInfo = def.LogicInputPorts.ToArray();
+		}
+		if (def.LogicOutputPorts != null)
+		{
+			go.AddOrGet<LogicPorts>().outputPortInfo = def.LogicOutputPorts.ToArray();
 		}
 	}
 

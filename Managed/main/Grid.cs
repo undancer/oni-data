@@ -1318,6 +1318,15 @@ public class Grid
 		return false;
 	}
 
+	public static bool IsValidCellInWorld(int cell, int world)
+	{
+		if (cell >= 0 && cell < CellCount)
+		{
+			return WorldIdx[cell] == world;
+		}
+		return false;
+	}
+
 	public static bool IsActiveWorld(int cell)
 	{
 		if (ClusterManager.Instance != null)

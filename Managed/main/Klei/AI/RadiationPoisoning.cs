@@ -7,7 +7,7 @@ namespace Klei.AI
 		public const string ID = "RadiationSickness";
 
 		public RadiationPoisoning(bool statsOnly)
-			: base("RadiationSickness", 100, RangeInfo.Idempotent(), RangeInfo.Idempotent(), RangeInfo.Idempotent(), RangeInfo.Idempotent(), statsOnly)
+			: base("RadiationSickness", 100, RangeInfo.Idempotent(), RangeInfo.Idempotent(), RangeInfo.Idempotent(), RangeInfo.Idempotent(), 0f, statsOnly)
 		{
 		}
 

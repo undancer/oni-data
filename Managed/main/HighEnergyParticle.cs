@@ -380,9 +380,9 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 		}
 		if (num != num2)
 		{
-			payload -= 1f;
+			payload -= 0.1f;
 			byte index = Db.Get().Diseases.GetIndex(Db.Get().Diseases.RadiationPoisoning.Id);
-			int disease_delta = Mathf.FloorToInt(499.99997f);
+			int disease_delta = Mathf.FloorToInt(50f);
 			SimMessages.ModifyDiseaseOnCell(num2, index, disease_delta);
 		}
 		if (!(payload > 0f))

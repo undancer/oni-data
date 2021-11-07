@@ -1,6 +1,7 @@
 name: STRINGS.WORLDS.MEDIUMSWAMPY.NAME
 description: STRINGS.WORLDS.MEDIUMSWAMPY.DESCRIPTION
-nameTable: SWAMP
+nameTables:
+  - SWAMP
 asteroidIcon: asteroid_vanilla_mediumswampy_kanim
 
 worldTraitScale: 0.3 # Adjust with worldSize. Traits are tuned to base game world sizes.

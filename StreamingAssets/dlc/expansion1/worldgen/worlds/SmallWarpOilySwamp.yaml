@@ -1,7 +1,8 @@
 # Unused - Was used for VanillaSandstoneCluster
 name: STRINGS.WORLDS.WARPOILYSWAMP.NAME
 description: STRINGS.WORLDS.WARPOILYSWAMP.DESCRIPTION
-nameTable: SWAMP
+nameTables:
+  - SWAMP
 asteroidIcon: asteroid_swamp_oil_kanim
 disableWorldTraits: true
 

@@ -8,7 +8,11 @@ namespace STRINGS
 
 			public static LocString FILTER = UI.FormatAsLink("Filtration Medium", "FILTER");
 
+			public static LocString FILTER_DESC = "Filtration Mediums are materials which are supplied to some filtration buildings that are used in separating purified " + UI.FormatAsLink("gases", "ELEMENTS_GASSES") + " or " + UI.FormatAsLink("liquids", "ELEMENTS_LIQUID") + " from their polluted forms.\n\nExamples include filtering " + UI.FormatAsLink("Water", "WATER") + " from " + UI.FormatAsLink("Polluted Water", "DIRTYWATER") + " using a " + UI.FormatAsLink("Water Sieve", "WATERPURIFIER") + ", or a " + UI.FormatAsLink("Deodorizer", "AIRFILTER") + " purifying " + UI.FormatAsLink("Oxygen", "OXYGEN") + " from " + UI.FormatAsLink("Polluted Oxygen", "CONTAMINATEDOXYGEN") + ".\n\nFiltration Mediums are a consumable that will be transformed by the filtering process to generate a by-product, like when " + UI.FormatAsLink("Polluted Dirt", "TOXICSAND") + " is the result after " + UI.FormatAsLink("Sand", "SAND") + " has been used to filter polluted water. The filtering building will cease to function once the filtering material has been consumed. Once the Filtering Material has been resupplied to the filtering building it will start working again.";
+
 			public static LocString ICEORE = UI.FormatAsLink("Ice", "ICEORE");
+
+			public static LocString ICEORE_DESC = "Ice is a class of materials made up mostly (if not completely) of " + UI.FormatAsLink("Water", "WATER") + " in a frozen or partially frozen form.\n\nAs a material in a frigid solid or semi-solid state, these elements are very useful as a low-cost way to cool the environment around them.\n\nWhen heated, ice will melt into its original liquified form (ie." + UI.FormatAsLink("Brine Ice", "BRINEICE") + " will liquify into " + UI.FormatAsLink("Brine", "BRINE") + "). Each ice element has a different freezing and melting point based upon their composition and state.";
 
 			public static LocString PHOSPHORUS = "Phosphorus";
 
@@ -19,6 +23,8 @@ namespace STRINGS
 			public static LocString BUILDABLEANY = "Generic Buildable";
 
 			public static LocString REFINEDMETAL = UI.FormatAsLink("Refined Metal", "REFINEDMETAL");
+
+			public static LocString REFINEDMETAL_DESC = "Refined metals are purified forms of metal often used in higher tier electronics due to their tendency to be able to withstand higher temperatures when they are made into wires. Other benefits include the higher decor value for some metals which can greatly increase the wellbeing of a colony.\n\nMetal ore can be refined in either the " + UI.FormatAsLink("Rock Crusher", "ROCKCRUSHER") + " or the " + UI.FormatAsLink("Metal Refinery", "METALREFINERY") + ".";
 
 			public static LocString METAL = "Metal Ore";
 
@@ -112,6 +118,8 @@ namespace STRINGS
 
 			public static LocString COMPOSTABLE = UI.FormatAsLink("Compostable", "COMPOSTABLE");
 
+			public static LocString COMPOSTABLE_DESC = "Compostables are biological materials which can be put into a " + UI.FormatAsLink("Compost", "COMPOST") + " to generate clean " + UI.FormatAsLink("Dirt", "DIRT") + ".\n\nThe act of composting also generates a small amount of " + UI.FormatAsLink("Heat", "HEAT") + ".\n\nOnce it starts to rot, consumable food should be composted to prevent " + UI.FormatAsLink("Food Poisoning", "FOODSICKNESS") + ".";
+
 			public static LocString COMPOSTBASICPLANTFOOD = "Compost Muckroot";
 
 			public static LocString EDIBLE = "Edible";
@@ -183,6 +191,8 @@ namespace STRINGS
 			public static LocString COMBUSTIBLEGAS = "Combustible Gas";
 
 			public static LocString COMBUSTIBLELIQUID = UI.FormatAsLink("Combustible Liquid", "COMBUSTIBLELIQUID");
+
+			public static LocString COMBUSTIBLELIQUID_DESC = "Combustible Liquids are liquids that are able to be burned as fuel to be used in energy production such as in a " + UI.FormatAsLink("Petroleum Generator", "PETROLEUMGENERATOR") + " or a " + UI.FormatAsLink("Petroleum Engine", "KEROSENEENGINE") + ".\n\nThough these liquids have other uses, such as fertilizer for growing a " + UI.FormatAsLink("Nosh Bean", "BEANPLANTSEED") + " their primary usefulness lies in their ability to be burned for " + UI.FormatAsLink("power", "POWER") + ".";
 
 			public static LocString COMBUSTIBLESOLID = "Combustible Solid";
 
