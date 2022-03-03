@@ -29,7 +29,7 @@ public class WarpPortal : Workable
 			{
 				if (base.master.worker != null)
 				{
-					return new Notification(MISC.NOTIFICATIONS.WARP_PORTAL_DUPE_READY.NAME.Replace("{dupe}", base.master.worker.name), NotificationType.Neutral, (List<Notification> notificationList, object data) => MISC.NOTIFICATIONS.WARP_PORTAL_DUPE_READY.TOOLTIP.Replace("{dupe}", base.master.worker.name), null, expires: false, 0f, null, null, base.master.worker.transform);
+					return new Notification(MISC.NOTIFICATIONS.WARP_PORTAL_DUPE_READY.NAME.Replace("{dupe}", base.master.worker.name), NotificationType.Neutral, (List<Notification> notificationList, object data) => MISC.NOTIFICATIONS.WARP_PORTAL_DUPE_READY.TOOLTIP.Replace("{dupe}", base.master.worker.name), null, expires: false, 0f, null, null, base.master.transform);
 				}
 				return null;
 			}
@@ -51,8 +51,14 @@ public class WarpPortal : Workable
 
 		public override void InitializeStates(out BaseState default_state)
 		{
-			default_state = idle;
-			base.serializable = SerializeType.Both_DEPRECATED;
+			default_state = root;
+			root.Enter(delegate(Instance smi)
+			{
+				if (smi.master.rechargeProgress != 0f)
+				{
+					smi.GoTo(recharging);
+				}
+			}).DefaultState(idle);
 			idle.PlayAnim("idle", KAnim.PlayMode.Loop).Enter(delegate(Instance smi)
 			{
 				smi.master.IsConsumed = false;

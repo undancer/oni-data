@@ -104,7 +104,7 @@ public class ColonyDiagnosticUtility : KMonoBehaviour, ISim1000ms
 				break;
 			}
 		}
-		if (colonyDiagnostic.LatestResult.opinion == ColonyDiagnostic.DiagnosticResult.Opinion.Normal)
+		if (colonyDiagnostic == null || colonyDiagnostic.LatestResult.opinion == ColonyDiagnostic.DiagnosticResult.Opinion.Normal)
 		{
 			return "";
 		}
@@ -294,13 +294,7 @@ public class ColonyDiagnosticUtility : KMonoBehaviour, ISim1000ms
 			TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new TrappedDuplicantDiagnostic(worldID));
 			TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new FarmDiagnostic(worldID));
 			TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new EntombedDiagnostic(worldID));
-			for (int i = 0; i < Db.Get().ChoreGroups.Count; i++)
-			{
-				TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new ChoreGroupDiagnostic(worldID, Db.Get().ChoreGroups[i]));
-				TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new WorkTimeDiagnostic(worldID, Db.Get().ChoreGroups[i]));
-			}
-			TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new AllChoresDiagnostic(worldID));
-			TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new AllWorkTimeDiagnostic(worldID));
+			TryAddDiagnosticToWorldCollection(ref newWorldDiagnostics, new RocketsInOrbitDiagnostic(worldID));
 		}
 		worldDiagnostics.Add(worldID, newWorldDiagnostics);
 		foreach (ColonyDiagnostic item in newWorldDiagnostics)

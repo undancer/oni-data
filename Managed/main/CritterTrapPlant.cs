@@ -99,10 +99,15 @@ public class CritterTrapPlant : StateMachineComponent<CritterTrapPlant.StatesIns
 			base.serializable = SerializeType.Both_DEPRECATED;
 			default_state = trap;
 			trap.DefaultState(trap.open);
-			trap.open.ToggleComponent<TrapTrigger>().EventHandler(GameHashes.TrapTriggered, delegate(StatesInstance smi, object data)
+			trap.open.ToggleComponent<TrapTrigger>().Enter(delegate(StatesInstance smi)
+			{
+				smi.VentGas();
+				smi.master.storage.ConsumeAllIgnoringDisease();
+			}).EventHandler(GameHashes.TrapTriggered, delegate(StatesInstance smi, object data)
 			{
 				smi.OnTrapTriggered(data);
-			}).OnSignal(trapTriggered, trap.trigger)
+			})
+				.OnSignal(trapTriggered, trap.trigger)
 				.ParamTransition(hasEatenCreature, trap.digesting, GameStateMachine<States, StatesInstance, CritterTrapPlant, object>.IsTrue)
 				.PlayAnim("idle_open", KAnim.PlayMode.Loop)
 				.EventTransition(GameHashes.Wilt, trap.wilting);

@@ -261,6 +261,8 @@ public class LightingSettings : ScriptableObject
 
 	public Texture2D Radiation4Tex;
 
+	public Texture2D NoiseTex;
+
 	public Color RadColor;
 
 	public Vector2 Rad1UVOffset;
@@ -272,4 +274,12 @@ public class LightingSettings : ScriptableObject
 	public Vector2 Rad4UVOffset;
 
 	public Vector4 RadUVScales;
+
+	public Vector2 Rad1Range;
+
+	public Vector2 Rad2Range;
+
+	public Vector2 Rad3Range;
+
+	public Vector2 Rad4Range;
 }

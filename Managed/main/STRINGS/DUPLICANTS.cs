@@ -1,3 +1,5 @@
+using TUNING;
+
 namespace STRINGS
 {
 	public class DUPLICANTS
@@ -93,7 +95,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Decor";
 
-				public static LocString TOOLTIP = "Duplicants become stressed in areas with " + UI.PRE_KEYWORD + "Decor" + UI.PST_KEYWORD + " lower than their expectations\n\nOpen the " + UI.FormatAsOverlay("Decor Overlay", "[F8]") + " to view current " + UI.PRE_KEYWORD + "Decor" + UI.PST_KEYWORD + " values";
+				public static LocString TOOLTIP = "Duplicants become stressed in areas with " + UI.PRE_KEYWORD + "Decor" + UI.PST_KEYWORD + " lower than their expectations\n\nOpen the " + UI.FormatAsOverlay("Decor Overlay", Action.Overlay8) + " to view current " + UI.PRE_KEYWORD + "Decor" + UI.PST_KEYWORD + " values";
 
 				public static LocString TOOLTIP_CURRENT = "\n\nCurrent Environmental Decor: <b>{0}</b>";
 
@@ -113,9 +115,9 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Absorbed Rad Dose";
 
-				public static LocString TOOLTIP = "Duplicants accumulate Rads in areas with " + UI.PRE_KEYWORD + "Radiation" + UI.PST_KEYWORD + " and recover when using the toilet\n\nOpen the " + UI.FormatAsOverlay("Radiation Overlay", "[L-SHIFT + F4]") + " to view current " + UI.PRE_KEYWORD + "Rad" + UI.PST_KEYWORD + " readings";
+				public static LocString TOOLTIP = "Duplicants accumulate Rads in areas with " + UI.PRE_KEYWORD + "Radiation" + UI.PST_KEYWORD + " and recover when using the toilet\n\nOpen the " + UI.FormatAsOverlay("Radiation Overlay", Action.Overlay15) + " to view current " + UI.PRE_KEYWORD + "Rad" + UI.PST_KEYWORD + " readings";
 
-				public static LocString TOOLTIP_CURRENT_BALANCE = "Duplicants accumulate Rads in areas with " + UI.PRE_KEYWORD + "Radiation" + UI.PST_KEYWORD + " and recover when using the toilet\n\nOpen the " + UI.FormatAsOverlay("Radiation Overlay", "[L-SHIFT + F4]") + " to view current " + UI.PRE_KEYWORD + "Rad" + UI.PST_KEYWORD + " readings";
+				public static LocString TOOLTIP_CURRENT_BALANCE = "Duplicants accumulate Rads in areas with " + UI.PRE_KEYWORD + "Radiation" + UI.PST_KEYWORD + " and recover when using the toilet\n\nOpen the " + UI.FormatAsOverlay("Radiation Overlay", Action.Overlay15) + " to view current " + UI.PRE_KEYWORD + "Rad" + UI.PST_KEYWORD + " readings";
 
 				public static LocString CURRENT_EXPOSURE = "Current Exposure: {0}/cycle";
 
@@ -1230,7 +1232,7 @@ namespace STRINGS
 
 				public static LocString STATUS = "Ranching";
 
-				public static LocString TOOLTIP = "This Duplicant is tending to a " + UI.PRE_KEYWORD + "Critter" + UI.PST_KEYWORD + "'s wellbeing";
+				public static LocString TOOLTIP = "This Duplicant is tending to a " + UI.PRE_KEYWORD + "Critter" + UI.PST_KEYWORD + "'s well-being";
 
 				public static LocString REPORT_NAME = "Deliver to {0}";
 			}
@@ -2133,11 +2135,11 @@ namespace STRINGS
 			{
 				public static LocString NAME = "No Outhouses";
 
-				public static LocString TOOLTIP = "There are no " + UI.FormatAsLink("Outhouses", "OUTHOUSE") + " available for this Duplicant" + UI.HORIZONTAL_BR_RULE + UI.FormatAsLink("Outhouses", "OUTHOUSE") + " can be built from the " + UI.FormatAsBuildMenuTab("Plumbing Tab", "[5]");
+				public static LocString TOOLTIP = "There are no " + UI.FormatAsLink("Outhouses", "OUTHOUSE") + " available for this Duplicant" + UI.HORIZONTAL_BR_RULE + UI.FormatAsLink("Outhouses", "OUTHOUSE") + " can be built from the " + UI.FormatAsBuildMenuTab("Plumbing Tab", Action.Plan5);
 
 				public static LocString NOTIFICATION_NAME = "No Outhouses built";
 
-				public static LocString NOTIFICATION_TOOLTIP = UI.FormatAsLink("Outhouses", "OUTHOUSE") + " can be built from the " + UI.FormatAsBuildMenuTab("Plumbing Tab", "[5]") + "." + UI.HORIZONTAL_BR_RULE + "These Duplicants are in need of an " + UI.FormatAsLink("Outhouse", "OUTHOUSE") + ":";
+				public static LocString NOTIFICATION_TOOLTIP = UI.FormatAsLink("Outhouses", "OUTHOUSE") + " can be built from the " + UI.FormatAsBuildMenuTab("Plumbing Tab", Action.Plan5) + "." + UI.HORIZONTAL_BR_RULE + "These Duplicants are in need of an " + UI.FormatAsLink("Outhouse", "OUTHOUSE") + ":";
 			}
 
 			public class FULLBLADDER
@@ -2151,11 +2153,11 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Making a mess";
 
-				public static LocString TOOLTIP = "This poor Duplicant couldn't find an " + UI.FormatAsLink("Outhouse", "OUTHOUSE") + " in time and is super embarrassed" + UI.HORIZONTAL_BR_RULE + UI.FormatAsLink("Outhouses", "OUTHOUSE") + " can be built from the " + UI.FormatAsBuildMenuTab("Plumbing Tab", "[5]");
+				public static LocString TOOLTIP = "This poor Duplicant couldn't find an " + UI.FormatAsLink("Outhouse", "OUTHOUSE") + " in time and is super embarrassed" + UI.HORIZONTAL_BR_RULE + UI.FormatAsLink("Outhouses", "OUTHOUSE") + " can be built from the " + UI.FormatAsBuildMenuTab("Plumbing Tab", Action.Plan5);
 
 				public static LocString NOTIFICATION_NAME = "Made a mess";
 
-				public static LocString NOTIFICATION_TOOLTIP = "The " + UI.FormatAsTool("Mop Tool", "[M]") + " can be used to clean up Duplicant-related \"spills\"" + UI.HORIZONTAL_BR_RULE + "These Duplicants made messes that require cleaning up:\n";
+				public static LocString NOTIFICATION_TOOLTIP = "The " + UI.FormatAsTool("Mop Tool", Action.Mop) + " can be used to clean up Duplicant-related \"spills\"" + UI.HORIZONTAL_BR_RULE + "These Duplicants made messes that require cleaning up:\n";
 			}
 
 			public class WASHINGHANDS
@@ -2183,33 +2185,33 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Throwing up";
 
-				public static LocString TOOLTIP = "This Duplicant has unceremoniously hurled as the result of a " + UI.FormatAsLink("Disease", "DISEASE") + UI.HORIZONTAL_BR_RULE + "Duplicant-related \"spills\" can be cleaned up using the " + UI.PRE_KEYWORD + "Mop Tool" + UI.PST_KEYWORD + " " + UI.FormatAsHotkey("[M]");
+				public static LocString TOOLTIP = "This Duplicant has unceremoniously hurled as the result of a " + UI.FormatAsLink("Disease", "DISEASE") + UI.HORIZONTAL_BR_RULE + "Duplicant-related \"spills\" can be cleaned up using the " + UI.PRE_KEYWORD + "Mop Tool" + UI.PST_KEYWORD + " " + UI.FormatAsHotKey(Action.Mop);
 
 				public static LocString NOTIFICATION_NAME = "Throwing up";
 
-				public static LocString NOTIFICATION_TOOLTIP = "The " + UI.FormatAsTool("Mop Tool", "[M]") + " can be used to clean up Duplicant-related \"spills\"" + UI.HORIZONTAL_BR_RULE + "A " + UI.PRE_KEYWORD + "Disease" + UI.PST_KEYWORD + " has caused these Duplicants to throw up:";
+				public static LocString NOTIFICATION_TOOLTIP = "The " + UI.FormatAsTool("Mop Tool", Action.Mop) + " can be used to clean up Duplicant-related \"spills\"" + UI.HORIZONTAL_BR_RULE + "A " + UI.PRE_KEYWORD + "Disease" + UI.PST_KEYWORD + " has caused these Duplicants to throw up:";
 			}
 
 			public class STRESSVOMITING
 			{
 				public static LocString NAME = "Stress vomiting";
 
-				public static LocString TOOLTIP = "This Duplicant is relieving their " + UI.PRE_KEYWORD + "Stress" + UI.PST_KEYWORD + " all over the floor" + UI.HORIZONTAL_BR_RULE + "Duplicant-related \"spills\" can be cleaned up using the " + UI.PRE_KEYWORD + "Mop Tool" + UI.PST_KEYWORD + " " + UI.FormatAsHotkey("[M]");
+				public static LocString TOOLTIP = "This Duplicant is relieving their " + UI.PRE_KEYWORD + "Stress" + UI.PST_KEYWORD + " all over the floor" + UI.HORIZONTAL_BR_RULE + "Duplicant-related \"spills\" can be cleaned up using the " + UI.PRE_KEYWORD + "Mop Tool" + UI.PST_KEYWORD + " " + UI.FormatAsHotKey(Action.Mop);
 
 				public static LocString NOTIFICATION_NAME = "Stress vomiting";
 
-				public static LocString NOTIFICATION_TOOLTIP = "The " + UI.FormatAsTool("Mop Tool", "[M]") + " can used to clean up Duplicant-related \"spills\"" + UI.HORIZONTAL_BR_RULE + "These Duplicants became so " + UI.PRE_KEYWORD + "Stressed" + UI.PST_KEYWORD + " they threw up:";
+				public static LocString NOTIFICATION_TOOLTIP = "The " + UI.FormatAsTool("Mop Tool", Action.Mop) + " can used to clean up Duplicant-related \"spills\"" + UI.HORIZONTAL_BR_RULE + "These Duplicants became so " + UI.PRE_KEYWORD + "Stressed" + UI.PST_KEYWORD + " they threw up:";
 			}
 
 			public class RADIATIONVOMITING
 			{
 				public static LocString NAME = "Radiation vomiting";
 
-				public static LocString TOOLTIP = "This Duplicant is sick due to Radiation poisoning. Duplicant-related \"spills\" can be cleaned up using the " + UI.PRE_KEYWORD + "Mop Tool" + UI.PST_KEYWORD + " " + UI.FormatAsHotkey("[M]");
+				public static LocString TOOLTIP = "This Duplicant is sick due to " + UI.PRE_KEYWORD + "Radiation" + UI.PST_KEYWORD + " poisoning." + UI.HORIZONTAL_BR_RULE + "Duplicant-related \"spills\" can be cleaned up using the " + UI.PRE_KEYWORD + "Mop Tool" + UI.PST_KEYWORD + " " + UI.FormatAsHotKey(Action.Mop);
 
 				public static LocString NOTIFICATION_NAME = "Radiation vomiting";
 
-				public static LocString NOTIFICATION_TOOLTIP = "The " + UI.FormatAsTool("Mop Tool", "[M]") + " can clean up Duplicant-related \"spills\"" + UI.HORIZONTAL_BR_RULE + "Radiation sickness caused these Duplicants to throw up:";
+				public static LocString NOTIFICATION_TOOLTIP = "The " + UI.FormatAsTool("Mop Tool", Action.Mop) + " can clean up Duplicant-related \"spills\"" + UI.HORIZONTAL_BR_RULE + "Radiation sickness caused these Duplicants to throw up:";
 			}
 
 			public class HASDISEASE
@@ -3432,18 +3434,18 @@ namespace STRINGS
 
 			public class MINORIRRITATION
 			{
-				public static LocString NAME = "Minor Skin Irritation";
+				public static LocString NAME = "Minor Eye Irritation";
 
-				public static LocString TOOLTIP = "A gas or liquid caused this Duplicant bit of redness and itching";
+				public static LocString TOOLTIP = "A gas or liquid made this Duplicant's eyes sting a little";
 
 				public static LocString CAUSE = "Obtained by exposure to a harsh liquid or gas";
 			}
 
 			public class MAJORIRRITATION
 			{
-				public static LocString NAME = "Major Skin Irritation";
+				public static LocString NAME = "Major Eye Irritation";
 
-				public static LocString TOOLTIP = "Woah, something really messed up this Duplicant's face!\n\nCaused by exposure to a harsh liquid or gas";
+				public static LocString TOOLTIP = "Woah, something really messed up this Duplicant's eyes!\n\nCaused by exposure to a harsh liquid or gas";
 
 				public static LocString CAUSE = "Obtained by exposure to a harsh liquid or gas";
 			}
@@ -3786,6 +3788,13 @@ namespace STRINGS
 				public static LocString NAME = "Severe Wounds";
 
 				public static LocString TOOLTIP = "This Duplicant sustained serious injuries that are impacting their work and well-being";
+			}
+
+			public class SANDBOXMORALEADJUSTMENT
+			{
+				public static LocString NAME = "Sandbox Morale Adjustment";
+
+				public static LocString TOOLTIP = "This Duplicant has had their " + UI.PRE_KEYWORD + "Morale" + UI.PST_KEYWORD + " temporarily adjusted using the Sandbox tools";
 			}
 
 			public class ROTTEMPERATURE
@@ -4528,21 +4537,28 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Minor Radiation Sickness";
 
-				public static LocString TOOLTIP = "Previous small-scale Radiation exposure is making this Duplicant slightly tired";
+				public static LocString TOOLTIP = "A bit of " + UI.PRE_KEYWORD + "Radiation" + UI.PST_KEYWORD + " exposure has made this Duplicant feel sluggish";
 			}
 
 			public class RADIATIONEXPOSUREMAJOR
 			{
 				public static LocString NAME = "Major Radiation Sickness";
 
-				public static LocString TOOLTIP = "Previous large-scale Radiation exposure is making this Duplicant very tired";
+				public static LocString TOOLTIP = "Significant " + UI.PRE_KEYWORD + "Radiation" + UI.PST_KEYWORD + " exposure has left this Duplicant totally exhausted";
 			}
 
 			public class RADIATIONEXPOSUREEXTREME
 			{
 				public static LocString NAME = "Extreme Radiation Sickness";
 
-				public static LocString TOOLTIP = "Extreme Radiation exposure is hurting this Duplicant";
+				public static LocString TOOLTIP = "Dangerously high " + UI.PRE_KEYWORD + "Radiation" + UI.PST_KEYWORD + " exposure is making this Duplicant wish they'd never been printed";
+			}
+
+			public class RADIATIONEXPOSUREDEADLY
+			{
+				public static LocString NAME = "Deadly Radiation Sickness";
+
+				public static LocString TOOLTIP = "Extreme " + UI.PRE_KEYWORD + "Radiation" + UI.PST_KEYWORD + " exposure has incapacitated this Duplicant";
 			}
 
 			public class CHARGING
@@ -6237,7 +6253,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Absorbed Radiation Dose";
 
-				public static LocString TOOLTIP = "Duplicants accumulate Rads in areas with " + UI.PRE_KEYWORD + "Radiation" + UI.PST_KEYWORD + " and recover at very slow rates\n\nOpen the " + UI.FormatAsOverlay("Radiation Overlay", "[L-SHIFT + F4]") + " to view current " + UI.PRE_KEYWORD + "Rad" + UI.PST_KEYWORD + " readings";
+				public static LocString TOOLTIP = "Duplicants accumulate Rads in areas with " + UI.PRE_KEYWORD + "Radiation" + UI.PST_KEYWORD + " and recover at very slow rates\n\nOpen the " + UI.FormatAsOverlay("Radiation Overlay", Action.Overlay15) + " to view current " + UI.PRE_KEYWORD + "Rad" + UI.PST_KEYWORD + " readings";
 			}
 
 			public class INSULATION
@@ -6376,6 +6392,10 @@ namespace STRINGS
 				public static LocString NAME = "Piloting";
 
 				public static LocString DESC = "Determines how long it takes a Duplicant to complete a space mission.";
+
+				public static LocString DLC1_DESC = "Determines how much of a speed bonus a Duplicant provides to a rocket they are piloting.";
+
+				public static LocString SPEED_MODIFIER = "{0} Rocket Speed";
 			}
 
 			public class QUALITYOFLIFE
@@ -6725,7 +6745,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = UI.FormatAsLink("Data Analysis Researcher", "SPACERESEARCH");
 
-				public static LocString DESCRIPTION = "Enables Duplicants to conduct research using the " + BUILDINGS.PREFABS.ORBITALRESEARCHCENTER.NAME;
+				public static LocString DESCRIPTION = "Enables Duplicants to conduct research using the " + BUILDINGS.PREFABS.DLC1COSMICRESEARCHCENTER.NAME;
 			}
 
 			public class JUNIOR_COOK
@@ -6840,11 +6860,11 @@ namespace STRINGS
 				public static LocString DESCRIPTION = "Allows the excavation of dangerous materials like " + ELEMENTS.CORIUM.NAME;
 			}
 
-			public class THERMAL_SUIT_WEARER
+			public class SUIT_DURABILITY
 			{
-				public static LocString NAME = "W.I.P. Skill";
+				public static LocString NAME = UI.FormatAsLink("Suit Sustainability Training", "SUITDURABILITY");
 
-				public static LocString DESCRIPTION = "Work in progress skill";
+				public static LocString DESCRIPTION = "Suits equipped by this Duplicant lose durability " + GameUtil.GetFormattedPercent(TUNING.EQUIPMENT.SUITS.SUIT_DURABILITY_SKILL_BONUS * 100f) + " slower.";
 			}
 
 			public class SUIT_EXPERT

@@ -20,6 +20,8 @@ public class TableScreen : KScreen
 
 	protected bool has_default_duplicant_row = true;
 
+	protected bool useWorldDividers = true;
+
 	private bool rows_dirty;
 
 	protected Comparison<IAssignableIdentity> active_sort_method;
@@ -76,6 +78,10 @@ public class TableScreen : KScreen
 	public Transform scroller_borders_transform;
 
 	public Dictionary<int, GameObject> worldDividers = new Dictionary<int, GameObject>();
+
+	private bool scrollersDirty;
+
+	private float targetScrollerPosition;
 
 	protected override void OnPrefabInit()
 	{
@@ -136,9 +142,53 @@ public class TableScreen : KScreen
 		{
 			foreach (TableRow row in rows)
 			{
-				row.GetScroller(column_scroller).transform.parent.GetComponent<KScrollRect>().horizontalNormalizedPosition = 0f;
+				row.GetScroller(column_scroller).transform.parent.GetComponent<ScrollRect>().horizontalNormalizedPosition = 0f;
 			}
 		}
+		foreach (KeyValuePair<int, GameObject> worldDivider in worldDividers)
+		{
+			ScrollRect componentInChildren = worldDivider.Value.GetComponentInChildren<ScrollRect>();
+			if (componentInChildren != null)
+			{
+				componentInChildren.horizontalNormalizedPosition = 0f;
+			}
+		}
+	}
+
+	public bool CheckScrollersDirty()
+	{
+		return scrollersDirty;
+	}
+
+	public void SetScrollersDirty(float position)
+	{
+		targetScrollerPosition = position;
+		scrollersDirty = true;
+		PositionScrollers();
+	}
+
+	public void PositionScrollers()
+	{
+		foreach (TableRow row in rows)
+		{
+			ScrollRect componentInChildren = row.GetComponentInChildren<ScrollRect>();
+			if (componentInChildren != null)
+			{
+				componentInChildren.horizontalNormalizedPosition = targetScrollerPosition;
+			}
+		}
+		foreach (KeyValuePair<int, GameObject> worldDivider in worldDividers)
+		{
+			if (worldDivider.Value.activeInHierarchy)
+			{
+				ScrollRect componentInChildren2 = worldDivider.Value.GetComponentInChildren<ScrollRect>();
+				if (componentInChildren2 != null)
+				{
+					componentInChildren2.horizontalNormalizedPosition = targetScrollerPosition;
+				}
+			}
+		}
+		scrollersDirty = false;
 	}
 
 	public override void ScreenUpdate(bool topLevel)
@@ -187,7 +237,10 @@ public class TableScreen : KScreen
 		}
 		for (int i = 0; i < Components.LiveMinionIdentities.Count; i++)
 		{
-			AddRow(Components.LiveMinionIdentities[i]);
+			if (Components.LiveMinionIdentities[i] != null)
+			{
+				AddRow(Components.LiveMinionIdentities[i]);
+			}
 		}
 		foreach (MinionStorage item in Components.MinionStorages.Items)
 		{
@@ -210,8 +263,7 @@ public class TableScreen : KScreen
 			reference.gameObject.SetActive(value: true);
 			foreach (MinionAssignablesProxy item4 in Components.MinionAssignablesProxy)
 			{
-				if (item4.GetTargetGameObject().GetComponent<KMonoBehaviour>().GetMyWorld()
-					.id == worldDivider.Key)
+				if (item4 != null && item4.GetTargetGameObject() != null && item4.GetTargetGameObject().GetMyWorld().id == worldDivider.Key)
 				{
 					reference.gameObject.SetActive(value: false);
 					break;
@@ -364,6 +416,16 @@ public class TableScreen : KScreen
 		}
 		rows.Clear();
 		all_sortable_rows.Clear();
+		List<int> list = new List<int>();
+		foreach (KeyValuePair<int, GameObject> worldDivider in worldDividers)
+		{
+			list.Add(worldDivider.Key);
+		}
+		for (int num2 = list.Count - 1; num2 >= 0; num2--)
+		{
+			RemoveWorldDivider(list[num2]);
+		}
+		worldDividers.Clear();
 	}
 
 	protected void AddRow(IAssignableIdentity minion)
@@ -373,7 +435,7 @@ public class TableScreen : KScreen
 		TableRow component = gameObject.GetComponent<TableRow>();
 		component.rowType = ((!flag) ? ((minion as MinionIdentity != null) ? TableRow.RowType.Minion : TableRow.RowType.StoredMinon) : TableRow.RowType.Header);
 		rows.Add(component);
-		component.ConfigureContent(minion, columns);
+		component.ConfigureContent(minion, columns, this);
 		if (!flag)
 		{
 			all_sortable_rows.Add(component);
@@ -390,7 +452,7 @@ public class TableScreen : KScreen
 		component.rowType = TableRow.RowType.Default;
 		component.isDefault = true;
 		rows.Add(component);
-		component.ConfigureContent(null, columns);
+		component.ConfigureContent(null, columns, this);
 	}
 
 	protected void AddWorldDivider(int worldId)
@@ -407,6 +469,7 @@ public class TableScreen : KScreen
 			gameObject.GetComponentInChildren<ToolTip>().SetSimpleTooltip(string.Format(NAMEGEN.WORLD.WORLDDIVIDER_TOOLTIP, component2.Name));
 			gameObject.GetComponent<HierarchyReferences>().GetReference<Image>("Icon").sprite = component2.GetUISprite();
 			worldDividers.Add(worldId, gameObject);
+			gameObject.GetComponent<TableRow>().ConfigureAsWorldDivider(columns, this);
 		}
 	}
 
@@ -414,6 +477,7 @@ public class TableScreen : KScreen
 	{
 		if (worldDividers.ContainsKey((int)worldId))
 		{
+			rows.Remove(worldDividers[(int)worldId].GetComponent<TableRow>());
 			Util.KDestroyGameObject(worldDividers[(int)worldId]);
 			worldDividers.Remove((int)worldId);
 		}
@@ -432,7 +496,7 @@ public class TableScreen : KScreen
 		}
 		foreach (TableRow row in rows)
 		{
-			if (row.ContainsWidget(widget_go))
+			if (row.rowType != TableRow.RowType.WorldDivider && row.ContainsWidget(widget_go))
 			{
 				known_widget_rows.Add(widget_go, row);
 				return row;

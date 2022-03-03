@@ -21,9 +21,31 @@ public class HealthyGameMessageScreen : KMonoBehaviour
 		base.OnPrefabInit();
 		confirmButton.onClick += delegate
 		{
-			UnityEngine.Object.Destroy(base.gameObject);
+			PlayIntroShort();
 		};
 		confirmButton.gameObject.SetActive(value: false);
+	}
+
+	private void PlayIntroShort()
+	{
+		string @string = KPlayerPrefs.GetString("PlayShortOnLaunch", "");
+		if (!string.IsNullOrEmpty(MainMenu.Instance.IntroShortName) && @string != MainMenu.Instance.IntroShortName)
+		{
+			VideoScreen component = KScreenManager.AddChild(FrontEndManager.Instance.gameObject, ScreenPrefabs.Instance.VideoScreen.gameObject).GetComponent<VideoScreen>();
+			component.PlayVideo(Assets.GetVideo(MainMenu.Instance.IntroShortName), unskippable: false, AudioMixerSnapshots.Get().MainMenuVideoPlayingSnapshot);
+			component.OnStop = (System.Action)Delegate.Combine(component.OnStop, (System.Action)delegate
+			{
+				KPlayerPrefs.SetString("PlayShortOnLaunch", MainMenu.Instance.IntroShortName);
+				if (base.gameObject != null)
+				{
+					UnityEngine.Object.Destroy(base.gameObject);
+				}
+			});
+		}
+		else
+		{
+			UnityEngine.Object.Destroy(base.gameObject);
+		}
 	}
 
 	protected override void OnSpawn()
@@ -34,6 +56,10 @@ public class HealthyGameMessageScreen : KMonoBehaviour
 
 	private void Update()
 	{
+		if (!DistributionPlatform.Inst.IsDLCStatusReady())
+		{
+			return;
+		}
 		if (isFirstUpdate)
 		{
 			isFirstUpdate = false;
@@ -48,7 +74,8 @@ public class HealthyGameMessageScreen : KMonoBehaviour
 		}
 		else if (num2 >= totalTime + 0.75f)
 		{
-			UnityEngine.Object.Destroy(base.gameObject);
+			canvasGroup.alpha = 1f;
+			confirmButton.gameObject.SetActive(value: true);
 		}
 		else if (num2 >= totalTime - fadeTime)
 		{

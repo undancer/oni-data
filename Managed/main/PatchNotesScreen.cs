@@ -34,7 +34,7 @@ public class PatchNotesScreen : KModalScreen
 		okButton.onClick += MarkAsReadAndClose;
 		previousVersion.onClick += delegate
 		{
-			Application.OpenURL("http://support.kleientertainment.com/customer/portal/articles/2776550");
+			App.OpenWebURL("http://support.kleientertainment.com/customer/portal/articles/2776550");
 		};
 		fullPatchNotes.onClick += OnPatchNotesClick;
 		instance = this;
@@ -68,7 +68,7 @@ public class PatchNotesScreen : KModalScreen
 
 	private void OnPatchNotesClick()
 	{
-		Application.OpenURL(m_patchNotesUrl);
+		App.OpenWebURL(m_patchNotesUrl);
 	}
 
 	public override void OnKeyDown(KButtonEvent e)

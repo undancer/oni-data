@@ -206,13 +206,18 @@ public class ClusterMapVisualizer : KMonoBehaviour
 		entity.Subscribe(543433792, OnClusterDestinationChanged);
 	}
 
-	protected override void OnSpawn()
+	protected override void OnPrefabInit()
 	{
-		base.OnSpawn();
+		base.OnPrefabInit();
 		if (doesTransitionAnimation)
 		{
 			new ClusterMapTravelAnimator.StatesInstance(this, entity).StartSM();
 		}
+	}
+
+	protected override void OnSpawn()
+	{
+		base.OnSpawn();
 		if (entity != null)
 		{
 			if (entity is Clustercraft)

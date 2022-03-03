@@ -193,6 +193,16 @@ public class ScenePartitioner : ISim1000ms
 		Insert(entry);
 	}
 
+	public void UpdatePosition(Extents e, ScenePartitionerEntry entry)
+	{
+		Widthdraw(entry);
+		entry.x = e.x;
+		entry.y = e.y;
+		entry.width = e.width;
+		entry.height = e.height;
+		Insert(entry);
+	}
+
 	public void Remove(ScenePartitionerEntry entry)
 	{
 		Extents nodeExtents = GetNodeExtents(entry);

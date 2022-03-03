@@ -49,7 +49,7 @@ public class SelectModuleSideScreen : KScreen
 
 	private List<int> gameSubscriptionHandles = new List<int>();
 
-	private List<string> moduleButtonSortOrder = new List<string>
+	public static List<string> moduleButtonSortOrder = new List<string>
 	{
 		"CO2Engine", "SugarEngine", "SteamEngineCluster", "KeroseneEngineClusterSmall", "KeroseneEngineCluster", "HEPEngine", "HydrogenEngineCluster", "HabitatModuleSmall", "HabitatModuleMedium", "NoseconeBasic",
 		"NoseconeHarvest", "OrbitalCargoModule", "ScoutModule", "PioneerModule", "LiquidFuelTankCluster", "SmallOxidizerTank", "OxidizerTankCluster", "OxidizerTankLiquidCluster", "SolidCargoBaySmall", "LiquidCargoBaySmall",
@@ -487,14 +487,15 @@ public class SelectModuleSideScreen : KScreen
 		}
 		if (gameObject != null)
 		{
-			SelectTool.Instance.StartCoroutine(SelectNextFrame(gameObject.GetComponent<KSelectable>(), previousSelectedDef));
+			Vector2 anchoredPosition = mainContents.GetComponent<KScrollRect>().content.anchoredPosition;
+			SelectTool.Instance.StartCoroutine(SelectNextFrame(gameObject.GetComponent<KSelectable>(), previousSelectedDef, anchoredPosition.y));
 		}
 	}
 
-	private IEnumerator SelectNextFrame(KSelectable selectable, BuildingDef previousSelectedDef)
+	private IEnumerator SelectNextFrame(KSelectable selectable, BuildingDef previousSelectedDef, float scrollPosition)
 	{
 		yield return 0;
 		SelectTool.Instance.Select(selectable);
-		RocketModuleSideScreen.instance.ClickAddNew(previousSelectedDef);
+		RocketModuleSideScreen.instance.ClickAddNew(scrollPosition, previousSelectedDef);
 	}
 }

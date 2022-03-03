@@ -1,7 +1,6 @@
 name: STRINGS.WORLDS.METALHEAVYLANDINGSITE.NAME
 description: STRINGS.WORLDS.METALHEAVYLANDINGSITE.DESCRIPTION
-nameTables:
-  - FOREST
+nameTables: [ FOREST, RADIOACTIVE ]
 asteroidIcon: asteroid_swamp_rocket_kanim
 
 worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.
@@ -47,7 +46,7 @@ worldTraitRules:
 
 fixedTraits:
   - sunlightLow
-  - cosmicRadiationMedLow
+  - cosmicRadiationVeryLow
 
 # List all the subworld files to load
 subworldFiles:
@@ -197,6 +196,7 @@ worldTemplateRules:
     - geysers/small_volcano
     - geysers/hot_hydrogen
     - geysers/filthy_water
+    - geysers/molten_copper
     listRule: TryOne
     times: 3
     allowDuplicates: true

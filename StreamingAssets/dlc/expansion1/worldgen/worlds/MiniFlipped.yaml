@@ -1,7 +1,6 @@
 name: STRINGS.WORLDS.MINIFLIPPED.NAME
 description: STRINGS.WORLDS.MINIFLIPPED.DESCRIPTION
-nameTables:
-  - REGOLITH
+nameTables: [ FLIPPED ]
 asteroidIcon: asteroid_mini_flipped_kanim
 
 worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.
@@ -23,17 +22,7 @@ defaultsOverrides:
     poiPadding: 1
   startingWorldElements: [] # remove the algae check
 
-#startSubworldName: expansion1::subworlds/sandstone/SandstoneStart
-#startingBaseTemplate: expansion1::bases/warpworldSandstoneBase
-# startingBasePositionHorizontal:
-#   min: 0.5
-#   max: 0.5
-# startingBasePositionVertical:
-#   min: 0.2
-#   max: 0.2
-
-disableWorldTraits: true
-worldTraitRules: # TODO
+worldTraitRules:
   - min: 1
     max: 2
     forbiddenTags:
@@ -41,10 +30,14 @@ worldTraitRules: # TODO
       - GenericGeysers
       - Oil
       - LargeWorld
+      - StartChange
+      - Core
+      - AboveCore
       - Surface
       - Crust
-      - Challenge
-      - StartChange
+    forbiddenTraits:
+      - expansion1::traits/CrashedSatellites
+      - expansion1::traits/Volcanoes
 
 fixedTraits:
   - sunlightLow

@@ -68,12 +68,13 @@ public class HEPEngineConfig : IBuildingConfig
 		radiationEmitter.emitType = RadiationEmitter.RadiationEmitterType.Constant;
 		radiationEmitter.emitRadiusX = 10;
 		radiationEmitter.emitRadiusY = 10;
-		radiationEmitter.emitRads = 840f / ((float)radiationEmitter.emitRadiusX / 6f);
+		radiationEmitter.emitRads = 8400f / ((float)radiationEmitter.emitRadiusX / 6f);
 		radiationEmitter.emissionOffset = new Vector3(0f, 3f, 0f);
 		HighEnergyParticleStorage highEnergyParticleStorage = go.AddOrGet<HighEnergyParticleStorage>();
 		highEnergyParticleStorage.capacity = 4000f;
 		highEnergyParticleStorage.autoStore = true;
 		highEnergyParticleStorage.PORT_ID = "HEP_STORAGE";
+		highEnergyParticleStorage.showCapacityStatusItem = true;
 		go.AddOrGet<HEPFuelTank>().physicalFuelCapacity = 4000f;
 		RocketEngineCluster rocketEngineCluster = go.AddOrGet<RocketEngineCluster>();
 		rocketEngineCluster.maxModules = 4;

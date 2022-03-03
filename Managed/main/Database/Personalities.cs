@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Klei.AI;
 
 namespace Database
@@ -44,6 +45,8 @@ namespace Database
 			public string CongenitalTrait;
 
 			public string Design;
+
+			public bool ValidStarter;
 		}
 
 		public Personalities()
@@ -51,7 +54,7 @@ namespace Database
 			PersonalityInfo[] entries = AsyncLoadManager<IGlobalAsyncLoader>.AsyncLoader<PersonalityLoader>.Get().entries;
 			foreach (PersonalityInfo personalityInfo in entries)
 			{
-				Personality resource = new Personality(personalityInfo.Name.ToUpper(), Strings.Get($"STRINGS.DUPLICANTS.PERSONALITIES.{personalityInfo.Name.ToUpper()}.NAME"), personalityInfo.Gender.ToUpper(), personalityInfo.PersonalityType, personalityInfo.StressTrait, personalityInfo.JoyTrait, personalityInfo.StickerType, personalityInfo.CongenitalTrait, personalityInfo.HeadShape, personalityInfo.Mouth, personalityInfo.Neck, personalityInfo.Eyes, personalityInfo.Hair, personalityInfo.Body, Strings.Get($"STRINGS.DUPLICANTS.PERSONALITIES.{personalityInfo.Name.ToUpper()}.DESC"));
+				Personality resource = new Personality(personalityInfo.Name.ToUpper(), Strings.Get($"STRINGS.DUPLICANTS.PERSONALITIES.{personalityInfo.Name.ToUpper()}.NAME"), personalityInfo.Gender.ToUpper(), personalityInfo.PersonalityType, personalityInfo.StressTrait, personalityInfo.JoyTrait, personalityInfo.StickerType, personalityInfo.CongenitalTrait, personalityInfo.HeadShape, personalityInfo.Mouth, personalityInfo.Neck, personalityInfo.Eyes, personalityInfo.Hair, personalityInfo.Body, Strings.Get($"STRINGS.DUPLICANTS.PERSONALITIES.{personalityInfo.Name.ToUpper()}.DESC"), personalityInfo.ValidStarter);
 				Add(resource);
 			}
 		}
@@ -76,6 +79,11 @@ namespace Database
 			{
 				personality.SetAttribute(attribute, value);
 			}
+		}
+
+		public List<Personality> GetStartingPersonalities()
+		{
+			return resources.FindAll((Personality x) => x.startingMinion);
 		}
 	}
 }

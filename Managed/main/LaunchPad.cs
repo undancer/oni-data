@@ -119,7 +119,11 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 
 	public HashedString statusPort;
 
+	public HashedString landedRocketPort;
+
 	private CellOffset baseModulePosition = new CellOffset(0, 2);
+
+	private SchedulerHandle RebuildLaunchTowerHeightHandler;
 
 	private AttachableBuilding lastBaseAttachable;
 
@@ -210,6 +214,7 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 			attachableBuilding.onAttachmentNetworkChanged = (Action<object>)Delegate.Remove(attachableBuilding.onAttachmentNetworkChanged, new Action<object>(OnRocketLayoutChanged));
 			lastBaseAttachable = null;
 		}
+		RebuildLaunchTowerHeightHandler.ClearScheduler();
 		base.OnCleanUp();
 	}
 
@@ -263,6 +268,7 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 			}
 		}
 		CheckLandedRocketPassengerModuleStatus();
+		component.SendSignal(landedRocketPort, (landedRocket != null) ? 1 : 0);
 		if (landedRocket != null)
 		{
 			component.SendSignal(statusPort, (landedRocket.CraftInterface.CheckReadyForAutomatedLaunch() || landedRocket.CraftInterface.HasTag(GameTags.RocketNotOnGround)) ? 1 : 0);
@@ -287,6 +293,7 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 		{
 			OnRocketBuildingChanged(gameObject);
 		}
+		Trigger(374403796);
 		return gameObject;
 	}
 
@@ -359,7 +366,10 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 		if (!dirtyTowerHeight)
 		{
 			dirtyTowerHeight = true;
-			GameScheduler.Instance.ScheduleNextFrame("RebuildLaunchTowerHeight", RebuildLaunchTowerHeight);
+			if (!RebuildLaunchTowerHeightHandler.IsValid)
+			{
+				RebuildLaunchTowerHeightHandler = GameScheduler.Instance.ScheduleNextFrame("RebuildLaunchTowerHeight", RebuildLaunchTowerHeight);
+			}
 		}
 	}
 
@@ -371,6 +381,7 @@ public class LaunchPad : KMonoBehaviour, ISim1000ms, IListableOption, IProcessCo
 			tower.SetTowerHeight(landedRocket.CraftInterface.MaxHeight);
 		}
 		dirtyTowerHeight = false;
+		RebuildLaunchTowerHeightHandler.ClearScheduler();
 	}
 
 	public string GetProperName()

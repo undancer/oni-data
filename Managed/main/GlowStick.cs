@@ -26,7 +26,7 @@ public class GlowStick : StateMachineComponent<GlowStick.StatesInstance>
 			_light2D.Offset = new Vector2(0.05f, 0.5f);
 			_light2D.shape = LightShape.Circle;
 			_light2D.Lux = 500;
-			_radiationEmitter.emitRads = 120f;
+			_radiationEmitter.emitRads = 100f;
 			_radiationEmitter.emitType = RadiationEmitter.RadiationEmitterType.Constant;
 			_radiationEmitter.emitRate = 0.5f;
 			_radiationEmitter.emitRadiusX = 3;

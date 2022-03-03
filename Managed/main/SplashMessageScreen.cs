@@ -18,7 +18,7 @@ public class SplashMessageScreen : KMonoBehaviour
 		base.OnPrefabInit();
 		forumButton.onClick += delegate
 		{
-			Application.OpenURL("https://forums.kleientertainment.com/forums/forum/118-oxygen-not-included/");
+			App.OpenWebURL("https://forums.kleientertainment.com/forums/forum/118-oxygen-not-included/");
 		};
 		confirmButton.onClick += delegate
 		{

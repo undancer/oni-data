@@ -9,6 +9,8 @@ public class PlayerController : KMonoBehaviour, IInputHandler
 
 	private InterfaceTool activeTool;
 
+	public VirtualInputModule vim;
+
 	private bool DebugHidingCursor;
 
 	private Vector3 prevMousePos = new Vector3(float.PositiveInfinity, 0f, 0f);
@@ -49,6 +51,7 @@ public class PlayerController : KMonoBehaviour, IInputHandler
 	protected override void OnPrefabInit()
 	{
 		Instance = this;
+		vim = Object.FindObjectOfType<VirtualInputModule>(includeInactive: true);
 		for (int i = 0; i < tools.Length; i++)
 		{
 			if (DlcManager.IsDlcListValidForCurrentContent(tools[i].DlcIDs))
@@ -122,6 +125,11 @@ public class PlayerController : KMonoBehaviour, IInputHandler
 			Cursor.visible = !DebugHidingCursor;
 			HoverTextScreen.Instance.Show(!DebugHidingCursor);
 		}
+	}
+
+	private void OnCleanup()
+	{
+		Global.Instance.GetInputManager().usedMenus.Remove(this);
 	}
 
 	private void LateUpdate()
@@ -293,7 +301,11 @@ public class PlayerController : KMonoBehaviour, IInputHandler
 		{
 			StopDrag(Action.MouseMiddle);
 		}
-		if (!(activeTool == null) && activeTool.enabled && activeTool.hasFocus)
+		if (activeTool == null || !activeTool.enabled || !activeTool.hasFocus)
+		{
+			return;
+		}
+		if (!KInputManager.currentControllerIsGamepad)
 		{
 			if (e.TryConsume(Action.MouseLeft) || e.TryConsume(Action.ShiftMouseLeft))
 			{
@@ -307,6 +319,18 @@ public class PlayerController : KMonoBehaviour, IInputHandler
 			{
 				activeTool.OnKeyUp(e);
 			}
+		}
+		else if (e.IsAction(Action.MouseLeft) || e.IsAction(Action.ShiftMouseLeft))
+		{
+			activeTool.OnLeftClickUp(GetCursorPos());
+		}
+		else if (e.IsAction(Action.MouseRight))
+		{
+			activeTool.OnRightClickUp(GetCursorPos());
+		}
+		else
+		{
+			activeTool.OnKeyUp(e);
 		}
 	}
 

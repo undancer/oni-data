@@ -440,6 +440,13 @@ public static class GameUtil
 		return f.ToString(format);
 	}
 
+	public static string GetFloatWithDecimalPoint(float f)
+	{
+		string text = "";
+		text = ((f == 0f) ? "0" : ((!(Mathf.Abs(f) < 1f)) ? "#,###.#" : "#,##0.#"));
+		return FloatToString(f, text);
+	}
+
 	public static string GetStandardFloat(float f)
 	{
 		string text = "";
@@ -608,7 +615,7 @@ public static class GameUtil
 	{
 		string text = ((units == 1f) ? UI.UNITSUFFIXES.HIGHENERGYPARTICLES.PARTRICLE : UI.UNITSUFFIXES.HIGHENERGYPARTICLES.PARTRICLES);
 		units = ApplyTimeSlice(units, timeSlice);
-		return AddTimeSliceText(displayUnits ? (GetStandardFloat(units) + text) : GetStandardFloat(units), timeSlice);
+		return AddTimeSliceText(displayUnits ? (GetFloatWithDecimalPoint(units) + text) : GetFloatWithDecimalPoint(units), timeSlice);
 	}
 
 	public static string GetFormattedWattage(float watts, WattageFormatterUnit unit = WattageFormatterUnit.Automatic, bool displayUnits = true)
@@ -755,23 +762,23 @@ public static class GameUtil
 		{
 			return UI.OVERLAYS.RADIATION.RANGES.NONE;
 		}
-		if (radsPerCycle < 50f)
+		if (radsPerCycle < 100f)
 		{
 			return UI.OVERLAYS.RADIATION.RANGES.VERY_LOW;
 		}
-		if (radsPerCycle < 100f)
+		if (radsPerCycle < 200f)
 		{
 			return UI.OVERLAYS.RADIATION.RANGES.LOW;
 		}
-		if (radsPerCycle < 200f)
+		if (radsPerCycle < 400f)
 		{
 			return UI.OVERLAYS.RADIATION.RANGES.MEDIUM;
 		}
-		if (radsPerCycle < 1000f)
+		if (radsPerCycle < 2000f)
 		{
 			return UI.OVERLAYS.RADIATION.RANGES.HIGH;
 		}
-		if (radsPerCycle < 2000f)
+		if (radsPerCycle < 4000f)
 		{
 			return UI.OVERLAYS.RADIATION.RANGES.VERY_HIGH;
 		}
@@ -1440,16 +1447,28 @@ public static class GameUtil
 
 	public static string AppendHotkeyString(string template, Action action)
 	{
+		if (KInputManager.currentControllerIsGamepad)
+		{
+			return template + UI.FormatAsHotkey(GetActionString(action));
+		}
 		return template + UI.FormatAsHotkey("[" + GetActionString(action) + "]");
 	}
 
 	public static string ReplaceHotkeyString(string template, Action action)
 	{
+		if (KInputManager.currentControllerIsGamepad)
+		{
+			return template.Replace("{Hotkey}", UI.FormatAsHotkey(GetActionString(action)));
+		}
 		return template.Replace("{Hotkey}", UI.FormatAsHotkey("[" + GetActionString(action) + "]"));
 	}
 
 	public static string ReplaceHotkeyString(string template, Action action1, Action action2)
 	{
+		if (KInputManager.currentControllerIsGamepad)
+		{
+			return template.Replace("{Hotkey}", UI.FormatAsHotkey(GetActionString(action1)) + UI.FormatAsHotkey(GetActionString(action2)));
+		}
 		return template.Replace("{Hotkey}", UI.FormatAsHotkey("[" + GetActionString(action1) + "]") + UI.FormatAsHotkey("[" + GetActionString(action2) + "]"));
 	}
 
@@ -1638,6 +1657,10 @@ public static class GameUtil
 		}
 		BindingEntry bindingEntry = ActionToBinding(action);
 		KKeyCode mKeyCode = bindingEntry.mKeyCode;
+		if (KInputManager.currentControllerIsGamepad)
+		{
+			return KInputManager.steamInputInterpreter.GetActionGlyph(action);
+		}
 		if (bindingEntry.mModifier == Modifier.None)
 		{
 			return GetKeycodeLocalized(mKeyCode).ToUpper();
@@ -1700,7 +1723,7 @@ public static class GameUtil
 		GetNonSolidCells(x, y, cells, x - radius, y - radius, x + radius, y + radius);
 	}
 
-	public static float GetMaxSressInActiveWorld()
+	public static float GetMaxStressInActiveWorld()
 	{
 		if (Components.LiveMinionIdentities.Count <= 0)
 		{
@@ -1709,7 +1732,7 @@ public static class GameUtil
 		float num = 0f;
 		foreach (MinionIdentity item in Components.LiveMinionIdentities.Items)
 		{
-			if (item.GetMyWorldId() == ClusterManager.Instance.activeWorldId)
+			if (!item.IsNullOrDestroyed() && item.GetMyWorldId() == ClusterManager.Instance.activeWorldId)
 			{
 				AmountInstance amountInstance = Db.Get().Amounts.Stress.Lookup(item);
 				if (amountInstance != null)
@@ -1731,7 +1754,7 @@ public static class GameUtil
 		int num2 = 0;
 		foreach (MinionIdentity item in Components.LiveMinionIdentities.Items)
 		{
-			if (item.GetMyWorldId() == ClusterManager.Instance.activeWorldId)
+			if (!item.IsNullOrDestroyed() && item.GetMyWorldId() == ClusterManager.Instance.activeWorldId)
 			{
 				num += Db.Get().Amounts.Stress.Lookup(item).value;
 				num2++;
@@ -2526,7 +2549,7 @@ public static class GameUtil
 			item4.IncreaseIndent();
 			list.Add(item4);
 		}
-		if (element.radiationAbsorptionFactor >= 0.8f)
+		if (Sim.IsRadiationEnabled() && element.radiationAbsorptionFactor >= 0.8f)
 		{
 			Descriptor item5 = default(Descriptor);
 			item5.SetupDescriptor(ELEMENTS.MATERIAL_MODIFIERS.EXCELLENT_RADIATION_SHIELD, string.Format(ELEMENTS.MATERIAL_MODIFIERS.TOOLTIP.EXCELLENT_RADIATION_SHIELD, element.name, element.radiationAbsorptionFactor));

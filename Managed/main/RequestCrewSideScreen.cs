@@ -25,6 +25,7 @@ public class RequestCrewSideScreen : SideScreenContent
 		crewRequestButton.onClick += CrewRequest;
 		toggleMap.Add(crewReleaseButton, PassengerRocketModule.RequestCrewState.Release);
 		toggleMap.Add(crewRequestButton, PassengerRocketModule.RequestCrewState.Request);
+		Refresh();
 	}
 
 	public override int GetSideScreenSortOrder()

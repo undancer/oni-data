@@ -568,6 +568,10 @@ public class PathFinder
 
 	public static void AddPotentials(PotentialScratchPad potential_scratch_pad, PotentialPath potential, int cost, int underwater_cost, ref PathFinderAbilities abilities, PathFinderQuery query, int max_links_per_cell, NavGrid.Link[] links, PotentialList potentials, PathGrid path_grid, int parent_cell, NavType parent_nav_type)
 	{
+		if (!Grid.IsValidCell(potential.cell))
+		{
+			return;
+		}
 		int num = 0;
 		NavGrid.Link[] linksWithCorrectNavType = potential_scratch_pad.linksWithCorrectNavType;
 		int num2 = potential.cell * max_links_per_cell;

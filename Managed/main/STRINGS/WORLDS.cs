@@ -80,7 +80,7 @@ namespace STRINGS
 		{
 			public static LocString NAME = "Oceania";
 
-			public static LocString DESCRIPTION = "A location with vast quantities of unpotable salt water.\n\n<smallcaps>Oceania is quite stable and resource rich, but the majority of the area is covered in a saltwater ocean. Careful expansion and resource usage should lead to a successful colony.</smallcaps>\n\n";
+			public static LocString DESCRIPTION = "A location with vast quantities of undrinkable salt water.\n\n<smallcaps>Oceania is quite stable and resource rich, but the majority of the area is covered in a saltwater ocean. Careful expansion and resource usage should lead to a successful colony.</smallcaps>\n\n";
 		}
 
 		public static class VOLCANIC
@@ -127,23 +127,44 @@ namespace STRINGS
 
 		public class VANILLASANDSTONEDEFAULT
 		{
-			public static LocString NAME = "Terra";
+			public static LocString NAME = "Terra Asteroid";
 
 			public static LocString DESCRIPTION = "A promising location with a balanced variety of resources.\n\n<smallcaps>Terra meets all the requirements for Duplicant life and holds no surprises. It's an ideal location for a first attempt at establishing a colony.</smallcaps>\n\n";
 		}
 
 		public class VANILLAFORESTDEFAULT
 		{
-			public static LocString NAME = "Verdante";
+			public static LocString NAME = "Verdante Asteroid";
 
 			public static LocString DESCRIPTION = "A lush location rich in wildlife and life-sustaining resources.\n\n<smallcaps>Establishing a foothold on Verdante will be challenging due to reduced food and oxygen options. However, abundant biological and mineral resources should afford excellent long-term growth.</smallcaps>\n\n";
 		}
 
 		public class VANILLASWAMPDEFAULT
 		{
-			public static LocString NAME = "Swampy Asteroid";
+			public static LocString NAME = "Squelchy Asteroid";
 
-			public static LocString DESCRIPTION = "A large, polluted swamp world.\n\n<smallcaps>Swampy Asteroids are a great mass of frozen slush and wasteland. With a short distance to the surface, inter-world travel can be achieved quickly.</smallcaps>";
+			public static LocString DESCRIPTION = "A large, polluted swamp world.\n\n<smallcaps>Squelchy Asteroids are a great mass of frozen slush and wasteland. With a short distance to the surface, inter-world travel can be achieved quickly.</smallcaps>";
+		}
+
+		public static class VANILLAVOLCANIC
+		{
+			public static LocString NAME = "Volcanea Asteroid";
+
+			public static LocString DESCRIPTION = "A location rife with molten lava pockets and intense heat.\n\n<smallcaps>Volcanea would be perfect if it wasn't for the volcanoes. Digging carefully and managing the temperatures in our colony will be essential to success.</smallcaps>";
+		}
+
+		public static class VANILLAARBORIA
+		{
+			public static LocString NAME = "Arboria Asteroid";
+
+			public static LocString DESCRIPTION = "A location with a natural abundance of trees.\n\n<smallcaps>Colonizing Arboria will require careful planning right from the start. Because of its lack of metals, finding biological solutions to problems is a must.</smallcaps>";
+		}
+
+		public static class VANILLAARIDIO
+		{
+			public static LocString NAME = "Aridio Asteroid";
+
+			public static LocString DESCRIPTION = "A location with oppressively hot temperatures.\n\n<smallcaps>Temperatures on Aridio are much higher than expected. While resources are abundant, maintaining food and infrastructure could be difficult as our colony warms.</smallcaps>";
 		}
 
 		public class VANILLASANDSTONEFROZEN
@@ -167,6 +188,13 @@ namespace STRINGS
 			public static LocString DESCRIPTION = "A location with vast quantities of unpotable salt water.\n\n<smallcaps>Oceania is quite stable and resource rich, but the majority of the area is covered in a saltwater ocean. Careful expansion and resource usage should lead to a successful colony.</smallcaps>";
 		}
 
+		public static class VANILLABADLANDS
+		{
+			public static LocString NAME = "The Badlands Asteroid";
+
+			public static LocString DESCRIPTION = "A barren location with an overabundance of mineral resources.\n\n<smallcaps>The rocky terrain of The Badlands poses no immediate threats, but sparse resource availability will make expansion and technological progress challenging.</smallcaps>";
+		}
+
 		public class SWAMPYLANDINGSITE
 		{
 			public static LocString NAME = "Irradiated Swampy Asteroid";
@@ -176,16 +204,16 @@ namespace STRINGS
 
 		public class FORESTMOONLET
 		{
-			public static LocString NAME = "Forest Asteroid";
+			public static LocString NAME = "Folia Asteroid";
 
-			public static LocString DESCRIPTION = "A small moon with a forest start.\n\n<smallcaps>Forest Asteroids have plenty of organic material but Duplicants will have to venture outside their starting biome quickly to find any metal.</smallcaps>";
+			public static LocString DESCRIPTION = "A small moon with a forest start.\n\n<smallcaps>Folia Asteroids have plenty of organic material but Duplicants will have to venture outside their starting biome quickly to find any metal.</smallcaps>";
 		}
 
 		public class TERRAMOONLET
 		{
-			public static LocString NAME = "Sandstone Asteroid";
+			public static LocString NAME = "Terrania Asteroid";
 
-			public static LocString DESCRIPTION = "A balanced variety of resources on a smaller world.\n\n<smallcaps>Terra Asteroids have everything needed to start a colony in a compact area. With a short distance to the surface, inter-world travel can be achieved quickly.</smallcaps>";
+			public static LocString DESCRIPTION = "A balanced variety of resources on a smaller sandstone world.\n\n<smallcaps>Terrania Asteroids have everything needed to start a colony in a compact area. With a short distance to the surface, inter-world travel can be achieved quickly.</smallcaps>";
 		}
 
 		public class WARPOILYSWAMP
@@ -225,9 +253,23 @@ namespace STRINGS
 
 		public class MEDIUMSWAMPY
 		{
-			public static LocString NAME = "Mid-Sized Swampy Asteroid";
+			public static LocString NAME = "Stinko Swamp Asteroid";
 
-			public static LocString DESCRIPTION = "A large-ish, polluted swamp world.\n\n<smallcaps>Mid-sized Swampy Asteroids are full of swampy and marshy areas, but also contain a variety of other biomes diverse enough to keep a determined colony supplied with essentials.</smallcaps>";
+			public static LocString DESCRIPTION = "A large-ish, polluted swamp world.\n\n<smallcaps>Stinko Swamp Asteroids are full of swampy and marshy areas, but also contain a variety of other biomes diverse enough to keep a determined colony supplied with essentials.</smallcaps>";
+		}
+
+		public class MEDIUMSANDYSWAMP
+		{
+			public static LocString NAME = "Radioactive Terrabog Asteroid";
+
+			public static LocString DESCRIPTION = "A mid-sized terra world with a radioactive core.\n\n<smallcaps>The Radioactive Terrabog Asteroid is fairly dry and sandy, but does contain swampy areas with a partially frozen surface.</smallcaps>";
+		}
+
+		public class MEDIUMFORESTYWASTELAND
+		{
+			public static LocString NAME = "Glowood Wasteland Asteroid";
+
+			public static LocString DESCRIPTION = "A large-ish forested asteroid with a frozen radioactive core.\n\n<smallcaps>While Glowood Wasteland Asteroids are largely foresty, they also contain a great deal of rust and wasteland.</smallcaps>";
 		}
 
 		public class STRANGERICHSANDSTONE
@@ -274,9 +316,9 @@ namespace STRINGS
 
 		public class SWAMPMOONLET
 		{
-			public static LocString NAME = "Swampy Asteroid";
+			public static LocString NAME = "Quagmiris Asteroid";
 
-			public static LocString DESCRIPTION = "A large, polluted swamp world.\n\n<smallcaps>Swampy Asteroids are a great mass of frozen slush and wasteland. With a short distance to the surface, inter-world travel can be achieved quickly.</smallcaps>";
+			public static LocString DESCRIPTION = "A large, polluted swamp world.\n\n<smallcaps>Quagmiris Asteroids are a great mass of frozen slush and wasteland. With a short distance to the surface, inter-world travel can be achieved quickly.</smallcaps>";
 		}
 
 		public class MOOMOONLET
@@ -302,35 +344,35 @@ namespace STRINGS
 
 		public class MINIMETALLICSWAMPY
 		{
-			public static LocString NAME = "Metallic Swampy Asteroid (experimental)";
+			public static LocString NAME = "Metallic Swampy Asteroid";
 
-			public static LocString DESCRIPTION = "A small swampy world with an abudnance of renewable metal.\n\n<smallcaps>Metallic Swampy Asteroids have a high concentration of metal mixed with a swampy polluted atmosphere.</smallcaps>";
+			public static LocString DESCRIPTION = "A small swampy world with an abundance of renewable metal.\n\n<smallcaps>Metallic Swampy Asteroids have a high concentration of metal and a swampy, polluted atmosphere.</smallcaps>";
 		}
 
 		public class MINIFORESTFROZEN
 		{
-			public static LocString NAME = "Frozen Forest Asteroid (experimental)";
+			public static LocString NAME = "Frozen Forest Asteroid";
 
-			public static LocString DESCRIPTION = "A frigid location marked by inhospitably low temperatures throughout.\n\n<smallcaps>Frozen Forest's low temperatures will make finding water and establishing farms or ranches problematic.</smallcaps>\n\n";
+			public static LocString DESCRIPTION = "A frigid location marked by inhospitably low temperatures throughout.\n\n<smallcaps>The Frozen Forest Asteroid's low temperatures will make finding water and establishing farms or ranches problematic.</smallcaps>\n\n";
 		}
 
 		public class MINIBADLANDS
 		{
-			public static LocString NAME = "The Badlands Asteroid (experimental)";
+			public static LocString NAME = "The Desolands Asteroid";
 
-			public static LocString DESCRIPTION = "A barren location with an overabundance of mineral resources and oil.\n\n<smallcaps>The rocky terrain of The Badlands poses no immediate threats, but sparse resource availability will make expansion and technological progress challenging.</smallcaps>\n\n";
+			public static LocString DESCRIPTION = "A barren location with an overabundance of mineral resources and oil.\n\n<smallcaps>The rocky terrain of The Desolands poses no immediate threats, but the limited variety of resources will make expansion and technological progress challenging.</smallcaps>\n\n";
 		}
 
 		public class MINIFLIPPED
 		{
-			public static LocString NAME = "Flipped Asteroid (experimental)";
+			public static LocString NAME = "Flipped Asteroid";
 
 			public static LocString DESCRIPTION = "An asteroid in which the surface is molten hot lava and the core is livable.\n\n<smallcaps>The lava surface of the Flipped Asteroid will make it challenging to start a rocketry program.</smallcaps>\n\n";
 		}
 
 		public class MINIRADIOACTIVEOCEAN
 		{
-			public static LocString NAME = "Radioactive Ocean Asteroid (experimental)";
+			public static LocString NAME = "Radioactive Ocean Asteroid";
 
 			public static LocString DESCRIPTION = "An irradiated world with renewable water sources.\n\n<smallcaps>Both the radioactive biome and the ocean biome present unique challenges yet considerable payoffs.</smallcaps>\n\n";
 		}

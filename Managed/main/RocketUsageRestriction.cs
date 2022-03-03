@@ -144,25 +144,24 @@ public class RocketUsageRestriction : GameStateMachine<RocketUsageRestriction, R
 		smi.operational.SetFlag(rocketUsageAllowed, !smi.def.restrictOperational || !restrict);
 		smi.master.GetComponent<KSelectable>().ToggleStatusItem(Db.Get().BuildingStatusItems.RocketRestrictionActive, restrict);
 		Storage[] components = smi.master.gameObject.GetComponents<Storage>();
-		if (components == null || components.Length == 0)
+		if (components != null && components.Length != 0)
 		{
-			return;
-		}
-		for (int i = 0; i < components.Length; i++)
-		{
-			if (restrict)
+			for (int i = 0; i < components.Length; i++)
 			{
-				smi.previousStorageAllowItemRemovalStates = new bool[components.Length];
-				smi.previousStorageAllowItemRemovalStates[i] = components[i].allowItemRemoval;
-				components[i].allowItemRemoval = false;
-			}
-			else if (smi.previousStorageAllowItemRemovalStates != null && i < smi.previousStorageAllowItemRemovalStates.Length)
-			{
-				components[i].allowItemRemoval = smi.previousStorageAllowItemRemovalStates[i];
-			}
-			foreach (GameObject item in components[i].items)
-			{
-				item.Trigger(-778359855, components[i]);
+				if (restrict)
+				{
+					smi.previousStorageAllowItemRemovalStates = new bool[components.Length];
+					smi.previousStorageAllowItemRemovalStates[i] = components[i].allowItemRemoval;
+					components[i].allowItemRemoval = false;
+				}
+				else if (smi.previousStorageAllowItemRemovalStates != null && i < smi.previousStorageAllowItemRemovalStates.Length)
+				{
+					components[i].allowItemRemoval = smi.previousStorageAllowItemRemovalStates[i];
+				}
+				foreach (GameObject item in components[i].items)
+				{
+					item.Trigger(-778359855, components[i]);
+				}
 			}
 		}
 		Ownable component = smi.master.GetComponent<Ownable>();

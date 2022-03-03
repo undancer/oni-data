@@ -60,6 +60,8 @@ public class OrbitalDeployCargoModule : GameStateMachine<OrbitalDeployCargoModul
 			}
 		}
 
+		public bool ModuleDeployed => false;
+
 		public StatesInstance(IStateMachineTarget master, Def def)
 			: base(master, def)
 		{

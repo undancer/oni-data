@@ -13,20 +13,23 @@ public struct GravityComponent
 
 	public bool landOnFakeFloors;
 
+	public bool mayLeaveWorld;
+
 	public Vector2 extents;
 
-	public float yOffset;
+	public float bottomYOffset;
 
-	public GravityComponent(Transform transform, System.Action on_landed, Vector2 initial_velocity, bool land_on_fake_floors)
+	public GravityComponent(Transform transform, System.Action on_landed, Vector2 initial_velocity, bool land_on_fake_floors, bool mayLeaveWorld)
 	{
 		this.transform = transform;
 		elapsedTime = 0f;
 		velocity = initial_velocity;
 		onLanded = on_landed;
 		landOnFakeFloors = land_on_fake_floors;
+		this.mayLeaveWorld = mayLeaveWorld;
 		KCollider2D component = transform.GetComponent<KCollider2D>();
 		extents = GetExtents(component);
-		yOffset = GetOffset(component).y;
+		bottomYOffset = GetGroundOffset(component);
 	}
 
 	public static float GetGroundOffset(KCollider2D collider)

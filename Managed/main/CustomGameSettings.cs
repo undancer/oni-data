@@ -107,6 +107,7 @@ public class CustomGameSettings : KMonoBehaviour
 
 	protected override void OnPrefabInit()
 	{
+		bool num = DlcManager.IsExpansion1Active();
 		instance = this;
 		AddSettingConfig(CustomGameSettingConfigs.ClusterLayout);
 		AddSettingConfig(CustomGameSettingConfigs.WorldgenSeed);
@@ -114,6 +115,10 @@ public class CustomGameSettings : KMonoBehaviour
 		AddSettingConfig(CustomGameSettingConfigs.CalorieBurn);
 		AddSettingConfig(CustomGameSettingConfigs.Morale);
 		AddSettingConfig(CustomGameSettingConfigs.Durability);
+		if (num)
+		{
+			AddSettingConfig(CustomGameSettingConfigs.Radiation);
+		}
 		AddSettingConfig(CustomGameSettingConfigs.Stress);
 		AddSettingConfig(CustomGameSettingConfigs.StressBreaks);
 		AddSettingConfig(CustomGameSettingConfigs.CarePackages);
@@ -123,7 +128,7 @@ public class CustomGameSettings : KMonoBehaviour
 		{
 			AddSettingConfig(CustomGameSettingConfigs.SaveToCloud);
 		}
-		if (DlcManager.IsExpansion1Active())
+		if (num)
 		{
 			AddSettingConfig(CustomGameSettingConfigs.Teleporters);
 		}

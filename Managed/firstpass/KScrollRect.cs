@@ -44,6 +44,13 @@ public class KScrollRect : ScrollRect
 	[SerializeField]
 	public bool allowRightMouseScroll;
 
+	[SerializeField]
+	public bool scrollIsHorizontalOnly;
+
+	public float panSpeed = 20f;
+
+	public bool mouseIsOver;
+
 	private bool panUp;
 
 	private bool panDown;
@@ -51,6 +58,10 @@ public class KScrollRect : ScrollRect
 	private bool panRight;
 
 	private bool panLeft;
+
+	private bool zoomInPan;
+
+	private bool zoomOutPan;
 
 	private Vector3 keyboardScrollDelta;
 
@@ -173,24 +184,54 @@ public class KScrollRect : ScrollRect
 			if (panUp)
 			{
 				keyboardScrollDelta.y -= keyboardScrollSpeed;
+				keyboardScrollDelta.y = Mathf.Clamp(keyboardScrollDelta.y, -25f, 25f);
 			}
 			if (panDown)
 			{
 				keyboardScrollDelta.y += keyboardScrollSpeed;
+				keyboardScrollDelta.y = Mathf.Clamp(keyboardScrollDelta.y, -25f, 25f);
 			}
 			if (panLeft)
 			{
 				keyboardScrollDelta.x += keyboardScrollSpeed;
+				keyboardScrollDelta.x = Mathf.Clamp(keyboardScrollDelta.x, -25f, 25f);
 			}
 			if (panRight)
 			{
 				keyboardScrollDelta.x -= keyboardScrollSpeed;
+				keyboardScrollDelta.x = Mathf.Clamp(keyboardScrollDelta.x, -25f, 25f);
 			}
 			if (panUp || panDown || panLeft || panRight)
 			{
 				base.content.localPosition = base.content.localPosition + keyboardScrollDelta;
 				base.normalizedPosition = new Vector2(Mathf.Clamp(base.normalizedPosition.x, 0f, 1f), Mathf.Clamp(base.normalizedPosition.y, 0f, 1f));
 			}
+			else
+			{
+				keyboardScrollDelta = Vector3.zero;
+			}
+		}
+		if (KInputManager.currentControllerIsGamepad)
+		{
+			if (!mouseIsOver)
+			{
+				zoomInPan = (zoomOutPan = false);
+			}
+			if (!base.vertical || !base.horizontal)
+			{
+				if (zoomInPan)
+				{
+					scrollVelocity = 0f - panSpeed;
+				}
+				if (zoomOutPan)
+				{
+					scrollVelocity = panSpeed;
+				}
+			}
+		}
+		else
+		{
+			zoomInPan = (zoomOutPan = false);
 		}
 		if (startDrag)
 		{
@@ -211,6 +252,27 @@ public class KScrollRect : ScrollRect
 			}
 		}
 		base.LateUpdate();
+	}
+
+	public void AnalogUpdate(Vector2 analogValue)
+	{
+		panRight = (panLeft = (panUp = (panDown = false)));
+		if (analogValue.x > 0.25f)
+		{
+			panRight = true;
+		}
+		if (analogValue.x < -0.25f)
+		{
+			panLeft = true;
+		}
+		if (analogValue.y > 0.25f)
+		{
+			panUp = true;
+		}
+		if (analogValue.y < -0.25f)
+		{
+			panDown = true;
+		}
 	}
 
 	protected override void OnRectTransformDimensionsChange()
@@ -265,6 +327,19 @@ public class KScrollRect : ScrollRect
 
 	public void OnKeyDown(KButtonEvent e)
 	{
+		if (KInputManager.currentControllerIsGamepad && mouseIsOver)
+		{
+			if (e.TryConsume(Action.ZoomIn))
+			{
+				zoomInPan = true;
+				return;
+			}
+			if (e.TryConsume(Action.ZoomOut))
+			{
+				zoomOutPan = true;
+				return;
+			}
+		}
 		if (allowRightMouseScroll)
 		{
 			if (e.TryConsume(Action.PanLeft))
@@ -288,6 +363,19 @@ public class KScrollRect : ScrollRect
 
 	public void OnKeyUp(KButtonEvent e)
 	{
+		if (KInputManager.currentControllerIsGamepad && mouseIsOver)
+		{
+			if (zoomInPan && e.TryConsume(Action.ZoomIn))
+			{
+				zoomInPan = false;
+				return;
+			}
+			if (zoomOutPan && e.TryConsume(Action.ZoomOut))
+			{
+				zoomOutPan = false;
+				return;
+			}
+		}
 		if (allowRightMouseScroll)
 		{
 			if (panUp && e.TryConsume(Action.PanUp))

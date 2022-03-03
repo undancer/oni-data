@@ -95,7 +95,7 @@ public class Navigator : StateMachineComponent<Navigator.StatesInstance>, ISaveL
 			normal.arrived.TriggerOnEnter(GameHashes.DestinationReached).GoTo(normal.stopped);
 			normal.failed.TriggerOnEnter(GameHashes.NavigationFailed).GoTo(normal.stopped);
 			normal.stopped.DoNothing();
-			paused.ParamTransition(isPaused, paused, GameStateMachine<States, StatesInstance, Navigator, object>.IsFalse);
+			paused.ParamTransition(isPaused, normal, GameStateMachine<States, StatesInstance, Navigator, object>.IsFalse);
 		}
 	}
 
@@ -130,6 +130,9 @@ public class Navigator : StateMachineComponent<Navigator.StatesInstance>, ISaveL
 
 	[MyCmpAdd]
 	private Facing facing;
+
+	[MyCmpGet]
+	public AnimEventHandler animEventHandler;
 
 	public float defaultSpeed = 1f;
 

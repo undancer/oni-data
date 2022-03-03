@@ -329,13 +329,9 @@ public static class CodexCache
 				Debug.LogWarningFormat("Unable to get icon for prefabID {0}", entry.iconPrefabID);
 			}
 		}
-		if (categoryEntries != null)
+		if (!entry.parentId.IsNullOrWhiteSpace() && entries.ContainsKey(entry.parentId))
 		{
-			CodexEntry codexEntry = categoryEntries.Find((CategoryEntry group) => group.id == entry.parentId);
-			if (codexEntry != null)
-			{
-				(codexEntry as CategoryEntry).entriesInCategory.Add(entry);
-			}
+			(entries[entry.parentId] as CategoryEntry).entriesInCategory.Add(entry);
 		}
 		foreach (ContentContainer contentContainer in entry.contentContainers)
 		{

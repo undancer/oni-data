@@ -20,7 +20,7 @@ public class CargoLander : GameStateMachine<CargoLander, CargoLander.StatesInsta
 		public State empty;
 	}
 
-	public class StatesInstance : GameInstance, ISidescreenButtonControl
+	public class StatesInstance : GameInstance
 	{
 		[Serialize]
 		public float flightAnimOffset = 50f;
@@ -34,10 +34,6 @@ public class CargoLander : GameStateMachine<CargoLander, CargoLander.StatesInsta
 		public float topSpeed = 5f;
 
 		private GameObject landingPreview;
-
-		public string SidescreenButtonText => "_Cargo Lander";
-
-		public string SidescreenButtonTooltip => "_Cargo Lander tooltip";
 
 		public StatesInstance(IStateMachineTarget master, Def def)
 			: base(master, def)
@@ -112,26 +108,6 @@ public class CargoLander : GameStateMachine<CargoLander, CargoLander.StatesInsta
 				base.sm.hasCargo.Set(flag, this);
 			}
 			return flag;
-		}
-
-		public bool SidescreenEnabled()
-		{
-			return true;
-		}
-
-		public void OnSidescreenButtonPressed()
-		{
-			base.sm.emptyCargo.Trigger(this);
-		}
-
-		public bool SidescreenButtonInteractable()
-		{
-			return IsInsideState(base.sm.grounded.loaded);
-		}
-
-		public int ButtonSideScreenSortOrder()
-		{
-			return 20;
 		}
 	}
 

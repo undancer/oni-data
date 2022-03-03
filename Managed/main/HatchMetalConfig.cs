@@ -33,7 +33,7 @@ public class HatchMetalConfig : IEntityConfig
 				SimHashes.Wolframite.CreateTag(),
 				SimHashes.AluminumOre.CreateTag()
 			});
-			if (ElementLoader.FindElementByHash(SimHashes.Cobaltite) != null)
+			if (DlcManager.IsExpansion1Active())
 			{
 				result.SetTag(SimHashes.Cobaltite.CreateTag());
 			}

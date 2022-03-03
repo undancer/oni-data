@@ -10,7 +10,8 @@ public class TableRow : KMonoBehaviour
 		Header,
 		Default,
 		Minion,
-		StoredMinon
+		StoredMinon,
+		WorldDivider
 	}
 
 	public RowType rowType;
@@ -77,7 +78,28 @@ public class TableRow : KMonoBehaviour
 		}
 	}
 
-	public void ConfigureContent(IAssignableIdentity minion, Dictionary<string, TableColumn> columns)
+	public void ConfigureAsWorldDivider(Dictionary<string, TableColumn> columns, TableScreen screen)
+	{
+		ScrollRect scroll_rect = base.gameObject.GetComponentInChildren<ScrollRect>();
+		rowType = RowType.WorldDivider;
+		foreach (KeyValuePair<string, TableColumn> column in columns)
+		{
+			if (column.Value.scrollerID != "")
+			{
+				_ = column.Value;
+				break;
+			}
+		}
+		scroll_rect.onValueChanged.AddListener(delegate
+		{
+			if (!screen.CheckScrollersDirty())
+			{
+				screen.SetScrollersDirty(scroll_rect.horizontalNormalizedPosition);
+			}
+		});
+	}
+
+	public void ConfigureContent(IAssignableIdentity minion, Dictionary<string, TableColumn> columns, TableScreen screen)
 	{
 		this.minion = minion;
 		KImage componentInChildren = GetComponentInChildren<KImage>(includeInactive: true);
@@ -94,33 +116,25 @@ public class TableRow : KMonoBehaviour
 			gameObject = ((minion != null) ? column.Value.GetMinionWidget(base.gameObject) : ((!isDefault) ? column.Value.GetHeaderWidget(base.gameObject) : column.Value.GetDefaultWidget(base.gameObject)));
 			widgets.Add(column.Value, gameObject);
 			column.Value.widgets_by_row.Add(this, gameObject);
-			if (column.Key.Contains("scroller_spacer_") && (minion != null || isDefault))
-			{
-				gameObject.GetComponentInChildren<LayoutElement>().minWidth += 3f;
-			}
 			if (!(column.Value.scrollerID != ""))
 			{
 				continue;
 			}
 			foreach (string column_scroller in column.Value.screen.column_scrollers)
 			{
-				if (!(column_scroller == column.Value.scrollerID))
+				if (column_scroller != column.Value.scrollerID)
 				{
 					continue;
 				}
 				if (!scrollers.ContainsKey(column_scroller))
 				{
 					GameObject gameObject2 = Util.KInstantiateUI(scrollerPrefab, base.gameObject, force_active: true);
-					KScrollRect scroll_rect = gameObject2.GetComponent<KScrollRect>();
+					ScrollRect scroll_rect = gameObject2.GetComponent<ScrollRect>();
 					scroll_rect.onValueChanged.AddListener(delegate
 					{
-						foreach (TableRow row in column.Value.screen.rows)
+						if (!screen.CheckScrollersDirty())
 						{
-							KScrollRect componentInChildren2 = row.GetComponentInChildren<KScrollRect>();
-							if (componentInChildren2 != null)
-							{
-								componentInChildren2.horizontalNormalizedPosition = scroll_rect.horizontalNormalizedPosition;
-							}
+							screen.SetScrollersDirty(scroll_rect.horizontalNormalizedPosition);
 						}
 					});
 					scrollers.Add(column_scroller, scroll_rect.content.gameObject);
@@ -130,7 +144,7 @@ public class TableRow : KMonoBehaviour
 					}
 				}
 				gameObject.transform.SetParent(scrollers[column_scroller].transform);
-				scrollers[column_scroller].transform.parent.GetComponent<KScrollRect>().horizontalNormalizedPosition = 0f;
+				scrollers[column_scroller].transform.parent.GetComponent<ScrollRect>().horizontalNormalizedPosition = 0f;
 			}
 		}
 		foreach (KeyValuePair<string, TableColumn> column2 in columns)
@@ -171,7 +185,7 @@ public class TableRow : KMonoBehaviour
 	{
 		foreach (KeyValuePair<string, GameObject> scroller in scrollers)
 		{
-			KScrollRect component = scroller.Value.transform.parent.GetComponent<KScrollRect>();
+			ScrollRect component = scroller.Value.transform.parent.GetComponent<ScrollRect>();
 			component.GetComponent<LayoutElement>().minWidth = Mathf.Min(768f, component.content.sizeDelta.x);
 		}
 		foreach (KeyValuePair<string, GameObject> scrollerBorder in scrollerBorders)

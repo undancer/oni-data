@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using STRINGS;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,7 +21,7 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 	public bool allowRefresh = true;
 
 	[SerializeField]
-	private TMP_InputField searchInputField;
+	private KInputTextField searchInputField;
 
 	[SerializeField]
 	private KButton clearSearchButton;
@@ -33,10 +32,33 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 
 	public Dictionary<Tag, bool> subrowContainerOpen = new Dictionary<Tag, bool>();
 
+	[SerializeField]
+	private RectTransform debugNotificationToggleCotainer;
+
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
 		Instance = this;
+		ConfigureDebugToggle();
+	}
+
+	private void ConfigureDebugToggle()
+	{
+		Game.Instance.Subscribe(1557339983, DebugToggleRefresh);
+		MultiToggle toggle = debugNotificationToggleCotainer.GetComponentInChildren<MultiToggle>();
+		MultiToggle multiToggle = toggle;
+		multiToggle.onClick = (System.Action)Delegate.Combine(multiToggle.onClick, (System.Action)delegate
+		{
+			DebugHandler.ToggleDisableNotifications();
+			toggle.ChangeState(DebugHandler.NotificationsDisabled ? 1 : 0);
+		});
+		DebugToggleRefresh();
+		toggle.ChangeState(DebugHandler.NotificationsDisabled ? 1 : 0);
+	}
+
+	private void DebugToggleRefresh(object data = null)
+	{
+		debugNotificationToggleCotainer.gameObject.SetActive(DebugHandler.InstantBuildMode);
 	}
 
 	protected override void OnSpawn()
@@ -58,8 +80,8 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 		{
 			SearchFilter(value);
 		});
-		TMP_InputField tMP_InputField = searchInputField;
-		tMP_InputField.onFocus = (System.Action)Delegate.Combine(tMP_InputField.onFocus, (System.Action)delegate
+		KInputTextField kInputTextField = searchInputField;
+		kInputTextField.onFocus = (System.Action)Delegate.Combine(kInputTextField.onFocus, (System.Action)delegate
 		{
 			base.isEditing = true;
 		});
@@ -156,7 +178,7 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 		{
 			list.Add(diagnosticRow.Key);
 		}
-		list.Sort((string a, string b) => ColonyDiagnosticUtility.Instance.GetDiagnosticName(a).CompareTo(ColonyDiagnosticUtility.Instance.GetDiagnosticName(b)));
+		list.Sort((string a, string b) => UI.StripLinkFormatting(ColonyDiagnosticUtility.Instance.GetDiagnosticName(a)).CompareTo(UI.StripLinkFormatting(ColonyDiagnosticUtility.Instance.GetDiagnosticName(b))));
 		foreach (string item2 in list)
 		{
 			diagnosticRows[item2].transform.SetAsLastSibling();
@@ -362,7 +384,6 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 	{
 		foreach (KeyValuePair<string, GameObject> diagnosticRow in diagnosticRows)
 		{
-			DebugUtil.DevAssert(subrowContainerOpen.ContainsKey(diagnosticRow.Key), "AllDiagnosticsScreen subrowContainerOpen does not contain key " + diagnosticRow.Key + " - it should have been added in SpawnRows");
 			HierarchyReferences component = diagnosticRow.Value.GetComponent<HierarchyReferences>();
 			component.GetReference<MultiToggle>("SubrowToggle").ChangeState(subrowContainerOpen[diagnosticRow.Key] ? 1 : 0);
 			component.GetReference<RectTransform>("SubRows").gameObject.SetActive(subrowContainerOpen[diagnosticRow.Key]);

@@ -331,8 +331,9 @@ namespace ProcGen
 			}
 			case World.AllowedCellsFilter.TagCommand.DistanceFromTag:
 			{
-				Debug.Assert(vn.minDistanceToTag.ContainsKey(filter.tag.ToTag()), filter.tag);
-				if (vn.minDistanceToTag[filter.tag.ToTag()] < filter.minDistance || vn.minDistanceToTag[filter.tag.ToTag()] > filter.maxDistance)
+				bool num = vn.minDistanceToTag.ContainsKey(filter.tag.ToTag());
+				Debug.Assert(num || filter.optional, "DistanceFromTag is missing tag " + filter.tag + ", consider marking the filter optional.");
+				if (!num || vn.minDistanceToTag[filter.tag.ToTag()] < filter.minDistance || vn.minDistanceToTag[filter.tag.ToTag()] > filter.maxDistance)
 				{
 					break;
 				}

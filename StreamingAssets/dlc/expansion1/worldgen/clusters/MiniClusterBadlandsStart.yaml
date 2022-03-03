@@ -2,7 +2,7 @@ name: STRINGS.CLUSTER_NAMES.MINICLUSTER_BADLANDSSTART.NAME
 description: STRINGS.CLUSTER_NAMES.MINICLUSTER_BADLANDSSTART.DESCRIPTION
 requiredDlcId: EXPANSION1_ID
 coordinatePrefix: M-BAD-C
-menuOrder: 5
+menuOrder: 4
 clusterCategory: 2
 difficulty: 3
 
@@ -10,7 +10,7 @@ startWorldIndex: 0
 numRings: 14
 worldPlacements:
 - world: expansion1::worlds/MiniBadlandsStart # start
-  buffer: 1
+  buffer: 2
   locationType: StartWorld
   allowedRings:
     min: 0
@@ -22,13 +22,13 @@ worldPlacements:
     min: 2
     max: 4
 - world: expansion1::worlds/MiniMetallicSwampy
-  buffer: 1
+  buffer: 2
   locationType: InnerCluster
   allowedRings:
     min: 1
     max: 3
 - world: expansion1::worlds/MiniForestFrozen
-  buffer: 1
+  buffer: 2
   locationType: InnerCluster
   allowedRings:
     min: 1

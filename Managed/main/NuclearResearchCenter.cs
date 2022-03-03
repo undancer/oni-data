@@ -72,7 +72,9 @@ public class NuclearResearchCenter : StateMachineComponent<NuclearResearchCenter
 			TechInstance activeResearch = Research.Instance.GetActiveResearch();
 			if (activeResearch != null && activeResearch.tech.costsByResearchTypeID.ContainsKey(smi.master.researchTypeID))
 			{
-				return activeResearch.progressInventory.PointsByTypeID[smi.master.researchTypeID] < activeResearch.tech.costsByResearchTypeID[smi.master.researchTypeID];
+				float num = activeResearch.progressInventory.PointsByTypeID[smi.master.researchTypeID];
+				float num2 = activeResearch.tech.costsByResearchTypeID[smi.master.researchTypeID];
+				return num < num2;
 			}
 			return false;
 		}
@@ -110,7 +112,21 @@ public class NuclearResearchCenter : StateMachineComponent<NuclearResearchCenter
 			Worker component = context.chore.driver.GetComponent<Worker>();
 			float num = Db.Get().AttributeConverters.ResearchSpeed.Lookup(component).Evaluate();
 			Worker worker = context.consumerState.worker;
-			return Db.Get().AttributeConverters.ResearchSpeed.Lookup(worker).Evaluate() > num;
+			float num2 = Db.Get().AttributeConverters.ResearchSpeed.Lookup(worker).Evaluate();
+			TechInstance activeResearch = Research.Instance.GetActiveResearch();
+			if (activeResearch != null)
+			{
+				StatesInstance sMI = context.chore.gameObject.GetSMI<StatesInstance>();
+				if (sMI != null)
+				{
+					if (num2 > num)
+					{
+						return activeResearch.PercentageCompleteResearchType(sMI.master.researchTypeID) < 1f;
+					}
+					return false;
+				}
+			}
+			return false;
 		}
 	}
 
@@ -145,6 +161,7 @@ public class NuclearResearchCenter : StateMachineComponent<NuclearResearchCenter
 		Subscribe(-1837862626, OnStorageChangeDelegate);
 		RefreshMeter();
 		base.smi.StartSM();
+		Tutorial.Instance.TutorialMessage(Tutorial.TutorialMessages.TM_Radiation);
 	}
 
 	protected override void OnCleanUp()

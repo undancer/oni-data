@@ -23,6 +23,8 @@ public class DropDown : KMonoBehaviour
 
 	public bool addEmptyRow = true;
 
+	private static Vector2 edgePadding = new Vector2(8f, 8f);
+
 	public object targetData;
 
 	private List<IListableOption> entries = new List<IListableOption>();
@@ -99,7 +101,7 @@ public class DropDown : KMonoBehaviour
 
 	private void Update()
 	{
-		if (open && (Input.GetMouseButtonDown(0) || Input.GetAxis("Mouse ScrollWheel") != 0f))
+		if (open && (Input.GetMouseButtonDown(0) || Input.GetAxis("Mouse ScrollWheel") != 0f || KInputManager.steamInputInterpreter.GetSteamInputActionIsDown(Action.MouseLeft)))
 		{
 			float canvasScale = canvasScaler.GetCanvasScale();
 			if (scrollRect.rectTransform().GetPosition().x + scrollRect.rectTransform().sizeDelta.x * canvasScale < KInputManager.GetMousePos().x || scrollRect.rectTransform().GetPosition().x > KInputManager.GetMousePos().x || scrollRect.rectTransform().GetPosition().y - scrollRect.rectTransform().sizeDelta.y * canvasScale > KInputManager.GetMousePos().y || scrollRect.rectTransform().GetPosition().y < KInputManager.GetMousePos().y)
@@ -221,7 +223,7 @@ public class DropDown : KMonoBehaviour
 		}
 		scrollRect.rectTransform().sizeDelta = new Vector2(scrollRect.rectTransform().sizeDelta.x, 32f * (float)Mathf.Min(contentContainer.childCount, 8));
 		Vector3 position = dropdownAlignmentTarget.TransformPoint(dropdownAlignmentTarget.rect.x, dropdownAlignmentTarget.rect.y, 0f);
-		Vector2 vector = new Vector2(Mathf.Min(0f, (float)Screen.width - (position.x + rowEntryPrefab.GetComponent<LayoutElement>().minWidth)), 0f - Mathf.Min(0f, position.y - scrollRect.rectTransform().sizeDelta.y));
+		Vector2 vector = new Vector2(Mathf.Min(0f, (float)Screen.width - (position.x + (rowEntryPrefab.GetComponent<LayoutElement>().minWidth * canvasScaler.GetCanvasScale() + edgePadding.x))), 0f - Mathf.Min(0f, position.y - (scrollRect.rectTransform().sizeDelta.y * canvasScaler.GetCanvasScale() + edgePadding.y)));
 		position += (Vector3)vector;
 		scrollRect.rectTransform().SetPosition(position);
 	}

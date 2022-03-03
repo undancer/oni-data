@@ -12,6 +12,8 @@ additionalWorldTemplateRules:
       - expansion1::poi/traits/crashed_satellite3
       - expansion1::poi/traits/crashed_satellite4
     listRule: GuaranteeSomeTryMore
+    useRelaxedFiltering: true
+    allowExtremeTemperatureOverlap: true # should be fine near the surface
     someCount: 1
     moreCount: 2
     allowedCellsFilter:

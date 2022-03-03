@@ -32,7 +32,7 @@ public class DetectorNetwork : GameStateMachine<DetectorNetwork, DetectorNetwork
 		{
 			DefaultState(poor);
 			poor.ToggleStatusItem(BUILDING.STATUSITEMS.NETWORKQUALITY.NAME, BUILDING.STATUSITEMS.NETWORKQUALITY.TOOLTIP, "", StatusItem.IconType.Exclamation, NotificationType.BadMinor, allow_multiples: false, default(HashedString), 129022, StringCallback).ParamTransition(parent.networkQuality, good, (Instance smi, float p) => (double)p >= 0.8);
-			good.ToggleStatusItem(BUILDING.STATUSITEMS.NETWORKQUALITY.NAME, BUILDING.STATUSITEMS.NETWORKQUALITY.TOOLTIP, "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, default(HashedString), 129022, StringCallback).ParamTransition(parent.networkQuality, good, (Instance smi, float p) => (double)p < 0.8);
+			good.ToggleStatusItem(BUILDING.STATUSITEMS.NETWORKQUALITY.NAME, BUILDING.STATUSITEMS.NETWORKQUALITY.TOOLTIP, "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, default(HashedString), 129022, StringCallback).ParamTransition(parent.networkQuality, poor, (Instance smi, float p) => (double)p < 0.8);
 			return this;
 		}
 

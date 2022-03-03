@@ -1,14 +1,13 @@
 using System;
 using System.Collections;
-using TMPro;
 using UnityEngine;
 
 public class KInputField : KScreen
 {
 	[SerializeField]
-	private TMP_InputField inputField;
+	private KInputTextField inputField;
 
-	public TMP_InputField field => inputField;
+	public KInputTextField field => inputField;
 
 	public event System.Action onStartEdit;
 
@@ -17,8 +16,8 @@ public class KInputField : KScreen
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		TMP_InputField tMP_InputField = inputField;
-		tMP_InputField.onFocus = (System.Action)Delegate.Combine(tMP_InputField.onFocus, new System.Action(OnEditStart));
+		KInputTextField kInputTextField = inputField;
+		kInputTextField.onFocus = (System.Action)Delegate.Combine(kInputTextField.onFocus, new System.Action(OnEditStart));
 		inputField.onEndEdit.AddListener(delegate
 		{
 			OnEditEnd(inputField.text);

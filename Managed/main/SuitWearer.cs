@@ -40,6 +40,7 @@ public class SuitWearer : GameStateMachine<SuitWearer, SuitWearer.Instance>
 			}
 			bool flag = (navigator.flags & PathFinder.PotentialPath.Flags.HasAtmoSuit) != 0;
 			bool flag2 = (navigator.flags & PathFinder.PotentialPath.Flags.HasJetPack) != 0;
+			bool flag3 = (navigator.flags & PathFinder.PotentialPath.Flags.HasOxygenMask) != 0;
 			for (int i = 0; i < path.nodes.Count - 1; i++)
 			{
 				int cell = path.nodes[i].cell;
@@ -49,35 +50,44 @@ public class SuitWearer : GameStateMachine<SuitWearer, SuitWearer.Instance>
 				{
 					continue;
 				}
-				bool flag3 = (pathFlags & PathFinder.PotentialPath.Flags.HasAtmoSuit) != 0;
-				bool flag4 = (pathFlags & PathFinder.PotentialPath.Flags.HasJetPack) != 0;
-				bool flag5 = flag2 || flag;
-				bool flag6 = flag3 == flag && flag4 == flag2;
-				bool flag7 = SuitMarker.DoesTraversalDirectionRequireSuit(cell, path.nodes[i + 1].cell, flags);
-				if (flag7 && !flag5)
+				bool flag4 = (pathFlags & PathFinder.PotentialPath.Flags.HasAtmoSuit) != 0;
+				bool flag5 = (pathFlags & PathFinder.PotentialPath.Flags.HasJetPack) != 0;
+				bool flag6 = (pathFlags & PathFinder.PotentialPath.Flags.HasOxygenMask) != 0;
+				bool flag7 = flag2 || flag || flag3;
+				bool flag8 = flag4 == flag && flag5 == flag2 && flag6 == flag3;
+				bool flag9 = SuitMarker.DoesTraversalDirectionRequireSuit(cell, path.nodes[i + 1].cell, flags);
+				if (flag9 && !flag7)
 				{
 					Grid.ReserveSuit(cell, prefabInstanceID, reserve: true);
 					suitReservations.Add(cell);
-					if (flag3)
+					if (flag4)
 					{
 						flag = true;
 					}
-					if (flag4)
+					if (flag5)
 					{
 						flag2 = true;
 					}
+					if (flag6)
+					{
+						flag3 = true;
+					}
 				}
-				else if (!flag7 && flag6 && Grid.HasEmptyLocker(cell, prefabInstanceID))
+				else if (!flag9 && flag8 && Grid.HasEmptyLocker(cell, prefabInstanceID))
 				{
 					Grid.ReserveEmptyLocker(cell, prefabInstanceID, reserve: true);
 					emptyLockerReservations.Add(cell);
-					if (flag3)
+					if (flag4)
 					{
 						flag = false;
 					}
-					if (flag4)
+					if (flag5)
 					{
 						flag2 = false;
+					}
+					if (flag6)
+					{
+						flag3 = false;
 					}
 				}
 			}

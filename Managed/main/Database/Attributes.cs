@@ -111,8 +111,16 @@ namespace Database
 			PowerTinker.SetFormatter(new StandardAttributeFormatter(GameUtil.UnitClass.SimpleInteger, GameUtil.TimeSlice.None));
 			FarmTinker = Add(new Attribute("FarmTinker", is_trainable: true, Attribute.Display.Normal, is_profession: true));
 			FarmTinker.SetFormatter(new StandardAttributeFormatter(GameUtil.UnitClass.SimpleInteger, GameUtil.TimeSlice.None));
-			SpaceNavigation = Add(new Attribute("SpaceNavigation", is_trainable: true, Attribute.Display.Normal, is_profession: true));
-			SpaceNavigation.SetFormatter(new PercentAttributeFormatter());
+			if (DlcManager.IsExpansion1Active())
+			{
+				SpaceNavigation = Add(new Attribute("SpaceNavigation", is_trainable: true, Attribute.Display.Skill, is_profession: true));
+				SpaceNavigation.SetFormatter(new StandardAttributeFormatter(GameUtil.UnitClass.SimpleInteger, GameUtil.TimeSlice.None));
+			}
+			else
+			{
+				SpaceNavigation = Add(new Attribute("SpaceNavigation", is_trainable: true, Attribute.Display.Normal, is_profession: true));
+				SpaceNavigation.SetFormatter(new PercentAttributeFormatter());
+			}
 			Immunity = Add(new Attribute("Immunity", is_trainable: true, Attribute.Display.Details, is_profession: false));
 			Immunity.SetFormatter(new StandardAttributeFormatter(GameUtil.UnitClass.SimpleInteger, GameUtil.TimeSlice.None));
 			ThermalConductivityBarrier = Add(new Attribute("ThermalConductivityBarrier", is_trainable: false, Attribute.Display.Details, is_profession: false));

@@ -150,8 +150,12 @@ public class ClusterMapHex : MultiToggle, ICanvasRaycastFilter
 			text = UI.CLUSTERMAP.TOOLTIP_HIDDEN_HEX;
 			break;
 		case ClusterRevealLevel.Peeked:
-			text = ((ClusterGrid.Instance.GetEntitiesOnCell(location).Count > 0) ? UI.CLUSTERMAP.TOOLTIP_PEEKED_HEX_WITH_OBJECT : UI.CLUSTERMAP.TOOLTIP_HIDDEN_HEX);
+		{
+			List<ClusterGridEntity> hiddenEntitiesOfLayerAtCell = ClusterGrid.Instance.GetHiddenEntitiesOfLayerAtCell(location, EntityLayer.Asteroid);
+			List<ClusterGridEntity> hiddenEntitiesOfLayerAtCell2 = ClusterGrid.Instance.GetHiddenEntitiesOfLayerAtCell(location, EntityLayer.POI);
+			text = ((hiddenEntitiesOfLayerAtCell.Count > 0 || hiddenEntitiesOfLayerAtCell2.Count > 0) ? UI.CLUSTERMAP.TOOLTIP_PEEKED_HEX_WITH_OBJECT : UI.CLUSTERMAP.TOOLTIP_HIDDEN_HEX);
 			break;
+		}
 		case ClusterRevealLevel.Visible:
 			if (ClusterGrid.Instance.GetEntitiesOnCell(location).Count == 0)
 			{

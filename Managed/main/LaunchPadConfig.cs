@@ -13,6 +13,8 @@ public class LaunchPadConfig : IBuildingConfig
 
 	private const string LAUNCH_READY_PORT_ID = "LaunchReady";
 
+	private const string LANDED_ROCKET_ID = "LandedRocket";
+
 	public override string[] GetDlcIds()
 	{
 		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
@@ -32,7 +34,11 @@ public class LaunchPadConfig : IBuildingConfig
 		obj.DefaultAnimState = "idle";
 		obj.CanMove = false;
 		obj.LogicInputPorts = new List<LogicPorts.Port> { LogicPorts.Port.InputPort("TriggerLaunch", new CellOffset(-1, 0), STRINGS.BUILDINGS.PREFABS.LAUNCHPAD.LOGIC_PORT_LAUNCH, STRINGS.BUILDINGS.PREFABS.LAUNCHPAD.LOGIC_PORT_LAUNCH_ACTIVE, STRINGS.BUILDINGS.PREFABS.LAUNCHPAD.LOGIC_PORT_LAUNCH_INACTIVE) };
-		obj.LogicOutputPorts = new List<LogicPorts.Port> { LogicPorts.Port.OutputPort("LaunchReady", new CellOffset(1, 0), STRINGS.BUILDINGS.PREFABS.LAUNCHPAD.LOGIC_PORT_READY, STRINGS.BUILDINGS.PREFABS.LAUNCHPAD.LOGIC_PORT_READY_ACTIVE, STRINGS.BUILDINGS.PREFABS.LAUNCHPAD.LOGIC_PORT_READY_INACTIVE) };
+		obj.LogicOutputPorts = new List<LogicPorts.Port>
+		{
+			LogicPorts.Port.OutputPort("LaunchReady", new CellOffset(1, 0), STRINGS.BUILDINGS.PREFABS.LAUNCHPAD.LOGIC_PORT_READY, STRINGS.BUILDINGS.PREFABS.LAUNCHPAD.LOGIC_PORT_READY_ACTIVE, STRINGS.BUILDINGS.PREFABS.LAUNCHPAD.LOGIC_PORT_READY_INACTIVE),
+			LogicPorts.Port.OutputPort("LandedRocket", new CellOffset(0, 1), STRINGS.BUILDINGS.PREFABS.LAUNCHPAD.LOGIC_PORT_LANDED_ROCKET, STRINGS.BUILDINGS.PREFABS.LAUNCHPAD.LOGIC_PORT_LANDED_ROCKET_ACTIVE, STRINGS.BUILDINGS.PREFABS.LAUNCHPAD.LOGIC_PORT_LANDED_ROCKET_INACTIVE)
+		};
 		return obj;
 	}
 
@@ -51,6 +57,7 @@ public class LaunchPadConfig : IBuildingConfig
 		LaunchPad launchPad = go.AddOrGet<LaunchPad>();
 		launchPad.triggerPort = "TriggerLaunch";
 		launchPad.statusPort = "LaunchReady";
+		launchPad.landedRocketPort = "LandedRocket";
 		FakeFloorAdder fakeFloorAdder = go.AddOrGet<FakeFloorAdder>();
 		fakeFloorAdder.floorOffsets = new CellOffset[7];
 		for (int i = 0; i < 7; i++)

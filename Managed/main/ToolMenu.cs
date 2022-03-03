@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using STRINGS;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Experimental.Rendering;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
@@ -150,6 +151,10 @@ public class ToolMenu : KScreen
 
 	private HashSet<Action> boundSubgroupActions = new HashSet<Action>();
 
+	private UnityAction inputChangeReceiver;
+
+	private int refreshScaleHandle = -1;
+
 	[SerializeField]
 	public TextStyleSetting ToggleToolTipTextStyleSetting;
 
@@ -185,6 +190,7 @@ public class ToolMenu : KScreen
 	{
 		base.OnCleanUp();
 		Game.Instance.Unsubscribe(1798162660, OnOverlayChanged);
+		Game.Instance.Unsubscribe(refreshScaleHandle);
 	}
 
 	private void OnOverlayChanged(object overlay_data)
@@ -220,8 +226,46 @@ public class ToolMenu : KScreen
 		ChooseCollection(null);
 		priorityScreen.gameObject.SetActive(value: false);
 		ToggleSandboxUI();
+		inputChangeReceiver = (UnityAction)Delegate.Combine(inputChangeReceiver, new UnityAction(OnInputChange));
+		KInputManager.InputChange.AddListener(inputChangeReceiver);
 		Game.Instance.Subscribe(-1948169901, ToggleSandboxUI);
 		ResetToolDisplayPlane();
+		refreshScaleHandle = Game.Instance.Subscribe(-442024484, RefreshScale);
+		RefreshScale();
+	}
+
+	private void RefreshScale(object data = null)
+	{
+		int num = 14;
+		int num2 = 16;
+		foreach (ToolCollection sandboxTool in sandboxTools)
+		{
+			LocText componentInChildren = sandboxTool.toggle.GetComponentInChildren<LocText>();
+			if (componentInChildren != null)
+			{
+				componentInChildren.fontSize = (ScreenResolutionMonitor.UsingGamepadUIMode() ? num2 : num);
+			}
+		}
+		foreach (ToolCollection basicTool in basicTools)
+		{
+			LocText componentInChildren2 = basicTool.toggle.GetComponentInChildren<LocText>();
+			if (componentInChildren2 != null)
+			{
+				componentInChildren2.fontSize = (ScreenResolutionMonitor.UsingGamepadUIMode() ? num2 : num);
+			}
+		}
+	}
+
+	public void OnInputChange()
+	{
+		rows.ForEach(delegate(List<ToolCollection> row)
+		{
+			BuildRowToggles(row);
+		});
+		rows.ForEach(delegate(List<ToolCollection> row)
+		{
+			BuildToolToggles(row);
+		});
 	}
 
 	private void ResetToolDisplayPlane()
@@ -322,10 +366,7 @@ public class ToolMenu : KScreen
 		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.FLOOD.NAME, "flood", Action.SandboxFlood, "SandboxFloodTool", UI.SANDBOXTOOLS.SETTINGS.FLOOD.TOOLTIP, largeIcon: false));
 		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.SAMPLE.NAME, "sample", Action.SandboxSample, "SandboxSampleTool", UI.SANDBOXTOOLS.SETTINGS.SAMPLE.TOOLTIP, largeIcon: false));
 		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.HEATGUN.NAME, "temperature", Action.SandboxHeatGun, "SandboxHeatTool", UI.SANDBOXTOOLS.SETTINGS.HEATGUN.TOOLTIP, largeIcon: false));
-		if (DlcManager.FeatureRadiationEnabled())
-		{
-			sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.RADSTOOL.NAME, "radiation", Action.SandboxRadsTool, "SandboxRadsTool", UI.SANDBOXTOOLS.SETTINGS.RADSTOOL.TOOLTIP, largeIcon: false));
-		}
+		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.STRESSTOOL.NAME, "crew_state_happy", Action.SandboxStressTool, "SandboxStressTool", UI.SANDBOXTOOLS.SETTINGS.STRESS.TOOLTIP, largeIcon: false));
 		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.SPAWNER.NAME, "spawn", Action.SandboxSpawnEntity, "SandboxSpawnerTool", UI.SANDBOXTOOLS.SETTINGS.SPAWNER.TOOLTIP, largeIcon: false));
 		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.CLEAR_FLOOR.NAME, "clear_floor", Action.SandboxClearFloor, "SandboxClearFloorTool", UI.SANDBOXTOOLS.SETTINGS.CLEAR_FLOOR.TOOLTIP, largeIcon: false));
 		sandboxTools.Add(CreateToolCollection(UI.TOOLS.SANDBOX.DESTROY.NAME, "destroy", Action.SandboxDestroy, "SandboxDestroyerTool", UI.SANDBOXTOOLS.SETTINGS.DESTROY.TOOLTIP, largeIcon: false));
@@ -791,6 +832,7 @@ public class ToolMenu : KScreen
 			if (row[i].tools.Count == 1)
 			{
 				string newString = GameUtil.ReplaceHotkeyString(row[i].tools[0].tooltip, row[i].tools[0].hotkey);
+				component2.ClearMultiStringTooltip();
 				component2.AddMultiStringTooltip(newString, ToggleToolTipTextStyleSetting);
 				continue;
 			}
@@ -799,6 +841,7 @@ public class ToolMenu : KScreen
 			{
 				text = GameUtil.ReplaceHotkeyString(text, row[i].hotkey);
 			}
+			component2.ClearMultiStringTooltip();
 			component2.AddMultiStringTooltip(text, ToggleToolTipTextStyleSetting);
 		}
 	}
@@ -833,6 +876,7 @@ public class ToolMenu : KScreen
 				if ((bool)component2)
 				{
 					string newString = ((toolCollection.tools.Count > 1) ? GameUtil.ReplaceHotkeyString(toolCollection.tools[j].tooltip, toolCollection.hotkey, toolCollection.tools[j].hotkey) : GameUtil.ReplaceHotkeyString(toolCollection.tools[j].tooltip, toolCollection.tools[j].hotkey));
+					component2.ClearMultiStringTooltip();
 					component2.AddMultiStringTooltip(newString, ToggleToolTipTextStyleSetting);
 				}
 			}

@@ -335,7 +335,7 @@ public class OfflineWorldGen : KMonoBehaviour
 		SettingLevel currentQualitySetting = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.WorldgenSeed);
 		seed = int.Parse(currentQualitySetting.id);
 		text = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.ClusterLayout).id;
-		clusterLayout = new Cluster(text, seed, assertMissingTraits: true);
+		clusterLayout = new Cluster(text, seed, assertMissingTraits: true, skipWorldTraits: false);
 		clusterLayout.ShouldSkipWorldCallback = shouldSkipWorldCallback;
 		clusterLayout.Generate(UpdateProgress, OnError, seed, seed, seed, seed);
 	}

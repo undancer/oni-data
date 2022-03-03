@@ -58,6 +58,11 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 
 	private List<int> openOrderCounts = new List<int>();
 
+	[Serialize]
+	private bool forbidMutantSeeds;
+
+	private Tag[] forbiddenMutantTags = new Tag[1] { GameTags.MutatedSeed };
+
 	private bool queueDirty = true;
 
 	private bool hasOpenOrders;
@@ -117,7 +122,38 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 		component.OnCopySettings(data);
 	});
 
+	private static readonly EventSystem.IntraObjectHandler<ComplexFabricator> OnRefreshUserMenuDelegate = new EventSystem.IntraObjectHandler<ComplexFabricator>(delegate(ComplexFabricator component, object data)
+	{
+		component.OnRefreshUserMenu(data);
+	});
+
 	public ComplexFabricatorWorkable Workable => workable;
+
+	public bool ForbidMutantSeeds
+	{
+		get
+		{
+			return forbidMutantSeeds;
+		}
+		set
+		{
+			forbidMutantSeeds = value;
+			ToggleMutantSeedFetches();
+			UpdateMutantSeedStatusItem();
+		}
+	}
+
+	public Tag[] ForbiddenTags
+	{
+		get
+		{
+			if (!forbidMutantSeeds)
+			{
+				return null;
+			}
+			return forbiddenMutantTags;
+		}
+	}
 
 	public int CurrentOrderIdx => nextOrderIdx;
 
@@ -228,6 +264,7 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 		Subscribe(-1837862626, OnParticleStorageChangedDelegate);
 		workable = GetComponent<ComplexFabricatorWorkable>();
 		Components.ComplexFabricators.Add(this);
+		Subscribe(493375141, OnRefreshUserMenuDelegate);
 	}
 
 	protected override void OnSpawn()
@@ -248,6 +285,7 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 		{
 			nextOrderIdx = num;
 		}
+		UpdateMutantSeedStatusItem();
 	}
 
 	protected override void OnCleanUp()
@@ -256,6 +294,43 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 		CancelChore();
 		Components.ComplexFabricators.Remove(this);
 		base.OnCleanUp();
+	}
+
+	private void OnRefreshUserMenu(object data)
+	{
+		if (DlcManager.IsContentActive("EXPANSION1_ID") && HasRecipiesWithSeeds())
+		{
+			Game.Instance.userMenu.AddButton(base.gameObject, new KIconButtonMenu.ButtonInfo("action_switch_toggle", ForbidMutantSeeds ? UI.USERMENUACTIONS.ACCEPT_MUTANT_SEEDS.ACCEPT : UI.USERMENUACTIONS.ACCEPT_MUTANT_SEEDS.REJECT, delegate
+			{
+				ForbidMutantSeeds = !ForbidMutantSeeds;
+				OnRefreshUserMenu(null);
+			}, Action.NumActions, null, null, null, UI.USERMENUACTIONS.ACCEPT_MUTANT_SEEDS.TOOLTIP));
+		}
+	}
+
+	private bool HasRecipiesWithSeeds()
+	{
+		bool result = false;
+		ComplexRecipe[] array = recipe_list;
+		for (int i = 0; i < array.Length; i++)
+		{
+			ComplexRecipe.RecipeElement[] ingredients = array[i].ingredients;
+			for (int j = 0; j < ingredients.Length; j++)
+			{
+				GameObject prefab = Assets.GetPrefab(ingredients[j].material);
+				if (prefab != null && prefab.GetComponent<PlantableSeed>() != null)
+				{
+					result = true;
+					break;
+				}
+			}
+		}
+		return result;
+	}
+
+	private void UpdateMutantSeedStatusItem()
+	{
+		base.gameObject.GetComponent<KSelectable>().ToggleStatusItem(Db.Get().BuildingStatusItems.FabricatorAcceptsMutantSeeds, DlcManager.IsContentActive("EXPANSION1_ID") && HasRecipiesWithSeeds() && !forbidMutantSeeds);
 	}
 
 	private void OnOperationalChanged(object data)
@@ -623,6 +698,7 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 		{
 			return;
 		}
+		ForbidMutantSeeds = component.ForbidMutantSeeds;
 		ComplexRecipe[] array = recipe_list;
 		foreach (ComplexRecipe complexRecipe in array)
 		{
@@ -829,7 +905,7 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 			if (missingAmount.Value >= PICKUPABLETUNING.MINIMUM_PICKABLE_AMOUNT && !HasPendingFetch(missingAmount.Key))
 			{
 				FetchList2 fetchList = new FetchList2(inStorage, byHash);
-				fetchList.Add(missingAmount.Key, null, null, missingAmount.Value);
+				fetchList.Add(missingAmount.Key, null, amount: missingAmount.Value, forbidden_tags: ForbiddenTags);
 				fetchList.ShowStatusItem = false;
 				fetchList.Submit(OnFetchComplete, check_storage_contents: false);
 				fetchListList.Add(fetchList);
@@ -902,6 +978,48 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 			}
 		}
 		return true;
+	}
+
+	private void ToggleMutantSeedFetches()
+	{
+		if (!HasAnyOrder)
+		{
+			return;
+		}
+		ChoreType byHash = Db.Get().ChoreTypes.GetByHash(fetchChoreTypeIdHash);
+		List<FetchList2> list = new List<FetchList2>();
+		foreach (FetchList2 fetchList2 in fetchListList)
+		{
+			foreach (FetchOrder2 fetchOrder in fetchList2.FetchOrders)
+			{
+				Tag[] tags = fetchOrder.Tags;
+				for (int i = 0; i < tags.Length; i++)
+				{
+					GameObject prefab = Assets.GetPrefab(tags[i]);
+					if (prefab != null && prefab.GetComponent<PlantableSeed>() != null)
+					{
+						fetchList2.Cancel("MutantSeedTagChanged");
+						list.Add(fetchList2);
+					}
+				}
+			}
+		}
+		foreach (FetchList2 item in list)
+		{
+			fetchListList.Remove(item);
+			foreach (FetchOrder2 fetchOrder2 in item.FetchOrders)
+			{
+				Tag[] tags = fetchOrder2.Tags;
+				foreach (Tag tag in tags)
+				{
+					FetchList2 fetchList = new FetchList2(inStorage, byHash);
+					fetchList.Add(tag, null, amount: fetchOrder2.TotalAmount, forbidden_tags: ForbiddenTags);
+					fetchList.ShowStatusItem = false;
+					fetchList.Submit(OnFetchComplete, check_storage_contents: false);
+					fetchListList.Add(fetchList);
+				}
+			}
+		}
 	}
 
 	protected virtual List<GameObject> SpawnOrderProduct(ComplexRecipe recipe)

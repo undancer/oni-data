@@ -2,7 +2,7 @@ name: STRINGS.WORLD_TRAITS.IRREGULAR_OIL.NAME
 description: STRINGS.WORLD_TRAITS.IRREGULAR_OIL.DESCRIPTION
 colorHex: 6C6C6C
 
-# Base game trait reimplemented; space is now two subworlds tall
+# Base game trait reimplemented; space is now two subworlds tall and can be on a world with no start
 
 traitTags:
   - AboveCore
@@ -15,16 +15,17 @@ additionalSubworldFiles:
 
 additionalUnknownCellFilters:
   - tagcommand: DistanceFromTag
-    tag: AtStart
-    minDistance: 2 # to work with smaller worlds
+    tag: AtSurface
+    minDistance: 3
     maxDistance: 999
     command: UnionWith
     subworldNames:
       - subworlds/oil/OilPatch
   - tagcommand: DistanceFromTag
-    tag: AtSurface
+    tag: AtStart
     minDistance: 0
-    maxDistance: 2
+    maxDistance: 1
+    optional: true
     command: ExceptWith
     subworldNames:
       - subworlds/oil/OilPatch

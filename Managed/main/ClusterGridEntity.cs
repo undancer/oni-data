@@ -23,6 +23,8 @@ public abstract class ClusterGridEntity : KMonoBehaviour
 	[Serialize]
 	protected AxialI m_location;
 
+	public bool positionDirty;
+
 	[MyCmpGet]
 	protected KSelectable m_selectable;
 
@@ -53,6 +55,10 @@ public abstract class ClusterGridEntity : KMonoBehaviour
 			{
 				AxialI location = m_location;
 				m_location = value;
+				if (base.gameObject.GetSMI<StateMachine.Instance>() == null)
+				{
+					positionDirty = true;
+				}
 				SendClusterLocationChangedEvent(location, m_location);
 			}
 		}

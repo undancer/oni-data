@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Database;
 using KSerialization;
@@ -79,7 +78,7 @@ public class SpacecraftManager : KMonoBehaviour, ISim1000ms
 
 	private void GenerateRandomDestinations()
 	{
-		System.Random random = new System.Random(SaveLoader.Instance.clusterDetailSave.globalWorldSeed);
+		KRandom kRandom = new KRandom(SaveLoader.Instance.clusterDetailSave.globalWorldSeed);
 		SpaceDestinationTypes spaceDestinationTypes = Db.Get().SpaceDestinationTypes;
 		List<List<string>> list = new List<List<string>>
 		{
@@ -199,14 +198,14 @@ public class SpacecraftManager : KMonoBehaviour, ISim1000ms
 				}
 			}
 		}
-		int num2 = random.Next(minValue, maxValue);
+		int num2 = kRandom.Next(minValue, maxValue);
 		for (int k = 0; k < num2; k++)
 		{
-			int index = random.Next(0, list2.Count - 1);
+			int index = kRandom.Next(0, list2.Count - 1);
 			int num3 = list2[index];
 			list2.RemoveAt(index);
 			List<string> list3 = list[num3];
-			string type = list3[random.Next(0, list3.Count)];
+			string type = list3[kRandom.Next(0, list3.Count)];
 			SpaceDestination item = new SpaceDestination(destinations.Count, type, num3);
 			destinations.Add(item);
 		}

@@ -273,6 +273,14 @@ public class GameScenePartitioner : KMonoBehaviour
 		}
 	}
 
+	public void UpdatePosition(HandleVector<int>.Handle handle, Extents ext)
+	{
+		if (handle.IsValid())
+		{
+			scenePartitionerEntries.GetData(handle).UpdatePosition(ext);
+		}
+	}
+
 	public void Free(ref HandleVector<int>.Handle handle)
 	{
 		if (handle.IsValid())

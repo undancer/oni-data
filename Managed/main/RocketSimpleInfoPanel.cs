@@ -94,11 +94,16 @@ public class RocketSimpleInfoPanel : SimpleInfoPanel
 						}
 						num2++;
 						gameObject2.GetComponentInChildren<LocText>().text = text3;
-						gameObject2.GetComponentInChildren<ToolTip>().ClearMultiStringTooltip();
-						foreach (Tuple<string, TextStyleSetting> item3 in pooledList)
+						string text4 = "";
+						for (int i = 0; i < pooledList.Count; i++)
 						{
-							gameObject2.GetComponentInChildren<ToolTip>().AddMultiStringTooltip(item3.first, item3.second);
+							text4 += pooledList[i].first;
+							if (i != pooledList.Count - 1)
+							{
+								text4 += "\n";
+							}
 						}
+						gameObject2.GetComponentInChildren<ToolTip>().SetSimpleTooltip(text4);
 					}
 					pooledList.Recycle();
 				}
@@ -129,6 +134,10 @@ public class RocketSimpleInfoPanel : SimpleInfoPanel
 		if (rocketModuleCluster != null)
 		{
 			craftModuleInterface = rocketModuleCluster.CraftInterface;
+			if (clusterCraft == null)
+			{
+				clusterCraft = craftModuleInterface.GetComponent<Clustercraft>();
+			}
 		}
 		else if (clusterCraft != null)
 		{

@@ -192,7 +192,11 @@ public class LaunchPadMaterialDistributor : GameStateMachine<LaunchPadMaterialDi
 		}).EventHandler(GameHashes.RocketLanded, delegate(Instance smi, object data)
 		{
 			SetAttachedRocket(smi.GetLandedRocketFromPad(), smi);
-		}).ParamTransition(attachedRocket, operational.rocketLanding, (Instance smi, GameObject p) => p != null);
+		}).EventHandler(GameHashes.RocketCreated, delegate(Instance smi, object data)
+		{
+			SetAttachedRocket(smi.GetLandedRocketFromPad(), smi);
+		})
+			.ParamTransition(attachedRocket, operational.rocketLanding, (Instance smi, GameObject p) => p != null);
 		operational.rocketLanding.EventTransition(GameHashes.RocketLaunched, operational.rocketLost).OnTargetLost(attachedRocket, operational.rocketLost).Target(attachedRocket)
 			.TagTransition(GameTags.RocketOnGround, operational.hasRocket)
 			.Target(masterTarget);

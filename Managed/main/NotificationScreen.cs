@@ -274,6 +274,10 @@ public class NotificationScreen : KScreen
 
 	private void AddNotification(Notification notification)
 	{
+		if (DebugHandler.NotificationsDisabled)
+		{
+			return;
+		}
 		notifications.Add(notification);
 		Entry entry = null;
 		entriesByMessage.TryGetValue(notification.titleText, out entry);

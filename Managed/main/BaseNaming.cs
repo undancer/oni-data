@@ -1,14 +1,13 @@
 using System;
 using System.IO;
 using STRINGS;
-using TMPro;
 using UnityEngine;
 
 [AddComponentMenu("KMonoBehaviour/scripts/BaseNaming")]
 public class BaseNaming : KMonoBehaviour
 {
 	[SerializeField]
-	private TMP_InputField inputField;
+	private KInputTextField inputField;
 
 	[SerializeField]
 	private KButton shuffleBaseNameButton;

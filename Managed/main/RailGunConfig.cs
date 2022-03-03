@@ -11,11 +11,11 @@ public class RailGunConfig : IBuildingConfig
 
 	public const int RANGE = 20;
 
-	public const float BASE_PARTICLE_COST = 10f;
+	public const float BASE_PARTICLE_COST = 0f;
 
 	public const float HEX_PARTICLE_COST = 10f;
 
-	public const float HEP_CAPACITY = 210f;
+	public const float HEP_CAPACITY = 200f;
 
 	public const float TAKEOFF_VELOCITY = 35f;
 
@@ -67,8 +67,6 @@ public class RailGunConfig : IBuildingConfig
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
 		RailGun railGun = go.AddOrGet<RailGun>();
-		railGun.FreeStartHex = true;
-		railGun.FreeDestinationHex = true;
 		go.AddOrGet<LoopingSounds>();
 		ClusterDestinationSelector clusterDestinationSelector = go.AddOrGet<ClusterDestinationSelector>();
 		clusterDestinationSelector.assignable = true;
@@ -77,10 +75,11 @@ public class RailGunConfig : IBuildingConfig
 		railGun.gasPortInfo = gasInputPort;
 		railGun.solidPortInfo = solidInputPort;
 		HighEnergyParticleStorage highEnergyParticleStorage = go.AddOrGet<HighEnergyParticleStorage>();
-		highEnergyParticleStorage.capacity = 210f;
+		highEnergyParticleStorage.capacity = 200f;
 		highEnergyParticleStorage.autoStore = true;
 		highEnergyParticleStorage.showInUI = false;
 		highEnergyParticleStorage.PORT_ID = "HEP_STORAGE";
+		highEnergyParticleStorage.showCapacityStatusItem = true;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

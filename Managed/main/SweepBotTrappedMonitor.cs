@@ -68,6 +68,7 @@ public class SweepBotTrappedMonitor : GameStateMachine<SweepBotTrappedMonitor, S
 		}, UpdateRate.SIM_1000ms);
 		death.Enter(delegate(Instance smi)
 		{
+			smi.master.gameObject.GetComponent<OrnamentReceptacle>().OrderRemoveOccupant();
 			smi.master.gameObject.GetSMI<AnimInterruptMonitor.Instance>().PlayAnim("death");
 		}).OnAnimQueueComplete(destroySelf);
 		destroySelf.Enter(delegate(Instance smi)

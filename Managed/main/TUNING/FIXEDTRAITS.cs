@@ -85,7 +85,7 @@ namespace TUNING
 				public static string DEFAULT = MED;
 			}
 
-			public static int BASELINE = 25;
+			public static int BASELINE = 250;
 
 			public static int NONE = 0;
 
@@ -108,6 +108,8 @@ namespace TUNING
 			public static int VERY_VERY_HIGH = BASELINE * 3;
 
 			public static int DEFAULT_VALUE = MED;
+
+			public static float TELESCOPE_RADIATION_SHIELDING = 0.5f;
 		}
 	}
 }

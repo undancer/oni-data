@@ -4,8 +4,6 @@ public class RailGunPayloadOpener : StateMachineComponent<RailGunPayloadOpener.S
 {
 	public class StatesInstance : GameStateMachine<States, StatesInstance, RailGunPayloadOpener, object>.GameInstance
 	{
-		private FetchChore chore;
-
 		public StatesInstance(RailGunPayloadOpener master)
 			: base(master)
 		{
@@ -24,24 +22,51 @@ public class RailGunPayloadOpener : StateMachineComponent<RailGunPayloadOpener.S
 
 	public class States : GameStateMachine<States, StatesInstance, RailGunPayloadOpener>
 	{
-		public State waiting;
+		public class OperationalStates : State
+		{
+			public State idle;
 
-		public State working;
+			public State pre;
+
+			public State loop;
+
+			public State pst;
+		}
+
+		public State unoperational;
+
+		public OperationalStates operational;
 
 		public override void InitializeStates(out BaseState default_state)
 		{
-			default_state = waiting;
+			default_state = unoperational;
 			base.serializable = SerializeType.Both_DEPRECATED;
-			waiting.PlayAnim("on").EventTransition(GameHashes.OnStorageChange, working, (StatesInstance smi) => smi.HasPayload());
-			working.Enter(delegate(StatesInstance smi)
+			unoperational.PlayAnim("off").EventTransition(GameHashes.OperationalFlagChanged, operational, (StatesInstance smi) => smi.master.PowerOperationalChanged()).Enter(delegate(StatesInstance smi)
+			{
+				smi.GetComponent<Operational>().SetActive(value: false, force_ignore: true);
+				smi.GetComponent<ManualDeliveryKG>().Pause(pause: true, "no_power");
+			});
+			operational.Enter(delegate(StatesInstance smi)
+			{
+				smi.GetComponent<ManualDeliveryKG>().Pause(pause: false, "power");
+			}).EventTransition(GameHashes.OperationalFlagChanged, unoperational, (StatesInstance smi) => !smi.master.PowerOperationalChanged()).DefaultState(operational.idle)
+				.EventHandler(GameHashes.OnStorageChange, delegate(StatesInstance smi)
+				{
+					smi.master.payloadMeter.SetPositionPercent(Mathf.Clamp01((float)smi.master.payloadStorage.items.Count / smi.master.payloadStorage.capacityKg));
+				});
+			operational.idle.PlayAnim("on").EventTransition(GameHashes.OnStorageChange, operational.pre, (StatesInstance smi) => smi.HasPayload());
+			operational.pre.Enter(delegate(StatesInstance smi)
+			{
+				smi.GetComponent<Operational>().SetActive(value: true, force_ignore: true);
+			}).PlayAnim("working_pre").OnAnimQueueComplete(operational.loop);
+			operational.loop.PlayAnim("working_loop", KAnim.PlayMode.Loop).ScheduleGoTo(10f, operational.pst);
+			operational.pst.PlayAnim("working_pst").Exit(delegate(StatesInstance smi)
 			{
 				smi.master.EmptyPayload();
-				smi.GoTo(waiting);
-			});
+				smi.GetComponent<Operational>().SetActive(value: false, force_ignore: true);
+			}).OnAnimQueueComplete(operational.idle);
 		}
 	}
-
-	private static readonly CellOffset[] delivery_offset = new CellOffset[1];
 
 	public static float delivery_time = 10f;
 
@@ -78,6 +103,8 @@ public class RailGunPayloadOpener : StateMachineComponent<RailGunPayloadOpener.S
 
 	private ManualDeliveryKG[] deliveryComponents;
 
+	private MeterController payloadMeter;
+
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
@@ -88,13 +115,8 @@ public class RailGunPayloadOpener : StateMachineComponent<RailGunPayloadOpener.S
 		solidOutputCell = Grid.OffsetCell(Grid.PosToCell(this), solidPortInfo.offset);
 		solidDispenser = CreateSolidConduitDispenser(solidOutputCell, out solidNetworkItem);
 		deliveryComponents = GetComponents<ManualDeliveryKG>();
-		payloadStorage.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interact_railgun_emptier_kanim") };
-		payloadStorage.useGunForDelivery = false;
-		payloadStorage.synchronizeAnims = true;
-		payloadStorage.workAnims = new HashedString[2] { "working_pre", "working_loop" };
-		payloadStorage.storageWorkTime = delivery_time;
-		payloadStorage.workingPstComplete = new HashedString[1] { "working_pst" };
-		payloadStorage.SetOffsets(delivery_offset);
+		payloadStorage.gunTargetOffset = new Vector2(-1f, 1.5f);
+		payloadMeter = new MeterController(GetComponent<KBatchedAnimController>(), "meter_storage_target", "meter_storage", Meter.Offset.Infront, Grid.SceneLayer.NoLayer);
 		base.smi.StartSM();
 	}
 
@@ -141,6 +163,16 @@ public class RailGunPayloadOpener : StateMachineComponent<RailGunPayloadOpener.S
 			Util.KDestroyGameObject(obj);
 			component.ConsumeIgnoringDisease(payloadStorage.items[0]);
 		}
+	}
+
+	public bool PowerOperationalChanged()
+	{
+		EnergyConsumer component = GetComponent<EnergyConsumer>();
+		if (component != null)
+		{
+			return component.IsPowered;
+		}
+		return false;
 	}
 
 	bool ISecondaryOutput.HasSecondaryConduitType(ConduitType type)

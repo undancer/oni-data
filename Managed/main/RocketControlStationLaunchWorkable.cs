@@ -1,3 +1,4 @@
+using TUNING;
 using UnityEngine;
 
 [AddComponentMenu("KMonoBehaviour/Workable/RocketControlStationLaunchWorkable")]
@@ -13,12 +14,21 @@ public class RocketControlStationLaunchWorkable : Workable
 		showProgressBar = true;
 		resetProgressOnStop = true;
 		synchronizeAnims = true;
+		attributeConverter = Db.Get().AttributeConverters.PilotingSpeed;
+		attributeExperienceMultiplier = DUPLICANTSTATS.ATTRIBUTE_LEVELING.BARELY_EVER_EXPERIENCE;
+		skillExperienceSkillGroup = Db.Get().SkillGroups.Rocketry.Id;
+		skillExperienceMultiplier = SKILLS.BARELY_EVER_EXPERIENCE;
 		SetWorkTime(30f);
 	}
 
 	protected override void OnStartWork(Worker worker)
 	{
 		base.OnStartWork(worker);
-		this.GetSMI<RocketControlStation.StatesInstance>()?.LaunchRocket();
+		RocketControlStation.StatesInstance sMI = this.GetSMI<RocketControlStation.StatesInstance>();
+		if (sMI != null)
+		{
+			sMI.SetPilotSpeedMult(worker);
+			sMI.LaunchRocket();
+		}
 	}
 }

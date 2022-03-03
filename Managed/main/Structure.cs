@@ -55,9 +55,9 @@ public class Structure : KMonoBehaviour
 		Subscribe(-887025858, RocketLandedDelegate);
 	}
 
-	public void UpdatePosition(int cell)
+	public void UpdatePosition()
 	{
-		GameScenePartitioner.Instance.UpdatePosition(partitionerEntry, cell);
+		GameScenePartitioner.Instance.UpdatePosition(partitionerEntry, building.GetExtents());
 	}
 
 	private void RocketChanged(object data)

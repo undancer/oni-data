@@ -19,6 +19,8 @@ public class Deconstructable : Workable
 	[Serialize]
 	public Tag[] constructionElements;
 
+	public bool looseEntityDeconstructable;
+
 	private static readonly EventSystem.IntraObjectHandler<Deconstructable> OnRefreshUserMenuDelegate = new EventSystem.IntraObjectHandler<Deconstructable>(delegate(Deconstructable component, object data)
 	{
 		component.OnRefreshUserMenu(data);
@@ -51,6 +53,13 @@ public class Deconstructable : Workable
 			if (component2 != null)
 			{
 				return component2.OccupiedCellsOffsets;
+			}
+			if (looseEntityDeconstructable)
+			{
+				return new CellOffset[1]
+				{
+					new CellOffset(0, 0)
+				};
 			}
 			Debug.Assert(condition: false, "Ack! We put a Deconstructable on something that's neither a Building nor OccupyArea!", this);
 			return null;

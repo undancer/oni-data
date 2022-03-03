@@ -31,7 +31,7 @@ public static class BaseLightBugConfig
 			radiationEmitter.radiusProportionalToRads = false;
 			radiationEmitter.emitRadiusX = 6;
 			radiationEmitter.emitRadiusY = radiationEmitter.emitRadiusX;
-			radiationEmitter.emitRads = 12f;
+			radiationEmitter.emitRads = 60f;
 			radiationEmitter.emissionOffset = new Vector3(0f, 0f, 0f);
 			component.prefabSpawnFn += delegate(GameObject inst)
 			{

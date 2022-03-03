@@ -97,7 +97,7 @@ public class DestinationSelectPanel : KMonoBehaviour
 
 	private void BeginDrag()
 	{
-		dragStartPos = Input.mousePosition;
+		dragStartPos = KInputManager.GetMousePos();
 		dragLastPos = dragStartPos;
 		isDragging = true;
 		KFMOD.PlayUISound(GlobalAssets.GetSound("DestinationSelect_Scroll_Start"));
@@ -105,7 +105,7 @@ public class DestinationSelectPanel : KMonoBehaviour
 
 	private void Drag()
 	{
-		Vector2 vector = Input.mousePosition;
+		Vector2 vector = KInputManager.GetMousePos();
 		float num = vector.x - dragLastPos.x;
 		dragLastPos = vector;
 		offset += num;
@@ -206,7 +206,9 @@ public class DestinationSelectPanel : KMonoBehaviour
 		for (int i = 0; i < clusterKeys.Count; i++)
 		{
 			float x = offset + (float)i * asteroidXSeparation;
-			GetAsteroid(clusterKeys[i], (i == selectedIndex) ? asteroidFocusScale : 1f).transform.SetLocalPosition(new Vector3(x, (i == selectedIndex) ? (5f + 10f * Mathf.Sin(Time.realtimeSinceStartup * 1f)) : 0f, 0f));
+			string key = clusterKeys[i];
+			float iconScale = asteroidData[key].GetStartWorld.iconScale;
+			GetAsteroid(key, (i == selectedIndex) ? (asteroidFocusScale * iconScale) : iconScale).transform.SetLocalPosition(new Vector3(x, (i == selectedIndex) ? (5f + 10f * Mathf.Sin(Time.realtimeSinceStartup * 1f)) : 0f, 0f));
 		}
 		EndAsteroidDrawing();
 	}
@@ -298,7 +300,6 @@ public class DestinationSelectPanel : KMonoBehaviour
 	{
 		selectedIndex = clusterKeys.IndexOf(name);
 		asteroidData[name].ReInitialize(seed);
-		ShowMoons(asteroidData[name]);
 		return asteroidData[name];
 	}
 
@@ -312,7 +313,6 @@ public class DestinationSelectPanel : KMonoBehaviour
 		selectedIndex = 0;
 		string key = asteroidData.Keys.First();
 		asteroidData[key].ReInitialize(seed);
-		ShowMoons(asteroidData[key]);
 		return asteroidData[key];
 	}
 

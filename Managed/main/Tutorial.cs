@@ -165,7 +165,7 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 			{
 				PlanScreen.Instance.OpenCategoryByName("Food");
 			}),
-			requirementSatisfied = FoodSourceExists
+			requirementSatisfied = FoodSourceExistsOnStartingWorld
 		});
 		list2.Add(new Item
 		{
@@ -233,6 +233,21 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 			minTimeToNotify = 1f,
 			lastNotifyTime = 0f
 		});
+		DiscoveredResources.Instance.OnDiscover += OnDiscover;
+	}
+
+	protected override void OnCleanUp()
+	{
+		DiscoveredResources.Instance.OnDiscover -= OnDiscover;
+	}
+
+	private void OnDiscover(Tag category_tag, Tag tag)
+	{
+		Element element = ElementLoader.FindElementByHash(SimHashes.UraniumOre);
+		if (element != null && tag == element.tag)
+		{
+			TutorialMessage(TutorialMessages.TM_Radiation);
+		}
 	}
 
 	public Message TutorialMessage(TutorialMessages tm, bool queueMessage = true)
@@ -302,10 +317,10 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 			message = new TutorialMessage(TutorialMessages.TM_Radiation, MISC.NOTIFICATIONS.RADIATION.NAME, MISC.NOTIFICATIONS.RADIATION.MESSAGEBODY, MISC.NOTIFICATIONS.RADIATION.TOOLTIP, null, null, null, "icon_category_radiation", DlcManager.AVAILABLE_EXPANSION1_ONLY);
 			break;
 		}
-		Debug.Assert(message != null || flag, $"No Tutorial message: {tm.ToString()}");
+		DebugUtil.AssertArgs(message != null || flag, "No tutorial message:", tm);
 		if (queueMessage)
 		{
-			Debug.Assert(!flag, "Attempted to queue deprecated Tutorial Message " + tm);
+			DebugUtil.AssertArgs(!flag, "Attempted to queue deprecated Tutorial Message", tm);
 			if (!tutorialMessagesRemaining.Contains(tm))
 			{
 				return null;
@@ -567,7 +582,7 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 		return num / num2 <= 0.4f;
 	}
 
-	private bool FoodSourceExists()
+	private bool FoodSourceExistsOnStartingWorld()
 	{
 		foreach (ComplexFabricator item in Components.ComplexFabricators.Items)
 		{
@@ -576,7 +591,7 @@ public class Tutorial : KMonoBehaviour, IRender1000ms
 				return true;
 			}
 		}
-		return Components.PlantablePlots.Count > 0;
+		return Components.PlantablePlots.GetItems(ClusterManager.Instance.GetStartWorld().id).Count > 0;
 	}
 
 	private bool HygeneExists()

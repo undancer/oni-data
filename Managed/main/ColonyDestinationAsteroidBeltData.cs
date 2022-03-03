@@ -70,9 +70,8 @@ public class ColonyDestinationAsteroidBeltData
 
 	public ColonyDestinationAsteroidBeltData(string staringWorldName, int seed, string clusterPath)
 	{
-		Scale = 1f;
-		TargetScale = 1f;
 		startWorld = SettingsCache.worlds.GetWorldData(staringWorldName);
+		Scale = (TargetScale = startWorld.iconScale);
 		worlds = new List<ProcGen.World>();
 		if (clusterPath != null)
 		{
@@ -158,59 +157,50 @@ public class ColonyDestinationAsteroidBeltData
 		List<ProcGen.World> list2 = new List<ProcGen.World>();
 		list2.Add(startWorld);
 		list2.AddRange(worlds);
-		int num = seed;
 		for (int i = 0; i < list2.Count; i++)
 		{
 			ProcGen.World world = list2[i];
-			List<string> randomTraits = SettingsCache.GetRandomTraits(num, world);
 			if (DlcManager.IsExpansion1Active())
 			{
 				list.Add(new AsteroidDescriptor("", null, Color.white));
 				list.Add(new AsteroidDescriptor($"<b>{Strings.Get(world.name)}</b>", null, Color.white));
 			}
-			foreach (string item in randomTraits)
+			List<WorldTrait> worldTraits = GetWorldTraits(world);
+			foreach (WorldTrait item in worldTraits)
 			{
-				WorldTrait cachedTrait = SettingsCache.GetCachedTrait(item, assertMissingTrait: true);
-				list.Add(new AsteroidDescriptor(string.Format("<color=#{1}>{0}</color>", Strings.Get(cachedTrait.name), cachedTrait.colorHex), Strings.Get(cachedTrait.description), Util.ColorFromHex(cachedTrait.colorHex)));
+				string associatedIcon = item.filePath.Substring(item.filePath.LastIndexOf("/") + 1);
+				list.Add(new AsteroidDescriptor(string.Format("<color=#{1}>{0}</color>", Strings.Get(item.name), item.colorHex), Strings.Get(item.description), Util.ColorFromHex(item.colorHex), null, associatedIcon));
 			}
-			if (randomTraits.Count == 0)
+			if (worldTraits.Count == 0)
 			{
-				list.Add(new AsteroidDescriptor(WORLD_TRAITS.NO_TRAITS.NAME, WORLD_TRAITS.NO_TRAITS.DESCRIPTION, Color.white));
-			}
-			if (num > 0)
-			{
-				num++;
+				list.Add(new AsteroidDescriptor(WORLD_TRAITS.NO_TRAITS.NAME, WORLD_TRAITS.NO_TRAITS.DESCRIPTION, Color.white, null, "NoTraits"));
 			}
 		}
 		return list;
 	}
 
-	public List<AsteroidDescriptor> GenerateTraitDescriptors(ProcGen.World singleWorld)
+	public List<AsteroidDescriptor> GenerateTraitDescriptors(ProcGen.World singleWorld, bool includeDefaultTrait = true)
 	{
 		List<AsteroidDescriptor> list = new List<AsteroidDescriptor>();
 		List<ProcGen.World> list2 = new List<ProcGen.World>();
 		list2.Add(startWorld);
 		list2.AddRange(worlds);
-		int num = seed;
 		for (int i = 0; i < list2.Count; i++)
 		{
-			if (list2[i] == singleWorld)
+			if (list2[i] != singleWorld)
 			{
-				ProcGen.World world = list2[i];
-				List<string> randomTraits = SettingsCache.GetRandomTraits(num, world);
-				foreach (string item in randomTraits)
-				{
-					WorldTrait cachedTrait = SettingsCache.GetCachedTrait(item, assertMissingTrait: true);
-					list.Add(new AsteroidDescriptor(string.Format("<color=#{1}>{0}</color>", Strings.Get(cachedTrait.name), cachedTrait.colorHex), Strings.Get(cachedTrait.description), Util.ColorFromHex(cachedTrait.colorHex)));
-				}
-				if (randomTraits.Count == 0)
-				{
-					list.Add(new AsteroidDescriptor(WORLD_TRAITS.NO_TRAITS.NAME, WORLD_TRAITS.NO_TRAITS.DESCRIPTION, Color.white));
-				}
+				continue;
 			}
-			if (num > 0)
+			ProcGen.World singleWorld2 = list2[i];
+			List<WorldTrait> worldTraits = GetWorldTraits(singleWorld2);
+			foreach (WorldTrait item in worldTraits)
 			{
-				num++;
+				string associatedIcon = item.filePath.Substring(item.filePath.LastIndexOf("/") + 1);
+				list.Add(new AsteroidDescriptor(string.Format("<color=#{1}>{0}</color>", Strings.Get(item.name), item.colorHex), Strings.Get(item.description), Util.ColorFromHex(item.colorHex), null, associatedIcon));
+			}
+			if (worldTraits.Count == 0 && includeDefaultTrait)
+			{
+				list.Add(new AsteroidDescriptor(WORLD_TRAITS.NO_TRAITS.NAME, WORLD_TRAITS.NO_TRAITS.DESCRIPTION, Color.white, null, "NoTraits"));
 			}
 		}
 		return list;
@@ -222,21 +212,22 @@ public class ColonyDestinationAsteroidBeltData
 		List<ProcGen.World> list2 = new List<ProcGen.World>();
 		list2.Add(startWorld);
 		list2.AddRange(worlds);
-		int num = seed;
 		for (int i = 0; i < list2.Count; i++)
 		{
-			if (list2[i] == singleWorld)
+			if (list2[i] != singleWorld)
 			{
-				ProcGen.World world = list2[i];
-				foreach (string randomTrait in SettingsCache.GetRandomTraits(num, world))
-				{
-					WorldTrait cachedTrait = SettingsCache.GetCachedTrait(randomTrait, assertMissingTrait: true);
-					list.Add(cachedTrait);
-				}
+				continue;
 			}
+			ProcGen.World world = list2[i];
+			int num = seed;
 			if (num > 0)
 			{
-				num++;
+				num += cluster.worldPlacements.FindIndex((WorldPlacement x) => x.world == world.filePath);
+			}
+			foreach (string randomTrait in SettingsCache.GetRandomTraits(num, world))
+			{
+				WorldTrait cachedTrait = SettingsCache.GetCachedTrait(randomTrait, assertMissingTrait: true);
+				list.Add(cachedTrait);
 			}
 		}
 		return list;

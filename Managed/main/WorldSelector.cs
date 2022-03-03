@@ -195,7 +195,14 @@ public class WorldSelector : KScreen, ISim4000ms
 					if (num2 != -1 && num2 <= 9)
 					{
 						component2.AddMultiStringTooltip(" ", bodyTextSetting);
-						component2.AddMultiStringTooltip(UI.FormatAsHotkey("[" + GameUtil.GetActionString(IdxToHotkeyAction(num2)) + "]"), bodyTextSetting);
+						if (KInputManager.currentControllerIsGamepad)
+						{
+							component2.AddMultiStringTooltip(UI.FormatAsHotkey(GameUtil.GetActionString(IdxToHotkeyAction(num2))), bodyTextSetting);
+						}
+						else
+						{
+							component2.AddMultiStringTooltip(UI.FormatAsHotkey("[" + GameUtil.GetActionString(IdxToHotkeyAction(num2)) + "]"), bodyTextSetting);
+						}
 					}
 				}
 			}

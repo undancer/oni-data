@@ -1,7 +1,6 @@
 name: STRINGS.WORLDS.VANILLAFORESTDEFAULT.NAME # Verdante (base game calls this file ForestLush)
 description: STRINGS.WORLDS.VANILLAFORESTDEFAULT.DESCRIPTION
-nameTables:
-  - FOREST
+nameTables: [ FOREST ]
 asteroidIcon: asteroid_vanilla_forest_start_kanim
 
 worldTraitScale: 0.9 # Adjust with worldSize. Traits are tuned to base game world sizes.
@@ -20,7 +19,7 @@ worldTraitRules:
 
 fixedTraits:
   - sunlightMed
-  - cosmicRadiationMed
+  - cosmicRadiationVeryLow
 
 defaultsOverrides:
   startingWorldElements: [] # remove the algae check
@@ -46,20 +45,21 @@ subworldFiles:
   - name: subworlds/jungle/Jungle
     minCount: 5
   - name: subworlds/magma/Bottom
-  - name: subworlds/oil/OilPockets
+  - name: subworlds/oil/OilPatch
+    weight: 0.7
+    minCount: 5
   - name: subworlds/ocean/Ocean
     minCount: 5
   - name: subworlds/rust/Rust
     minCount: 5
   - name: expansion1::subworlds/space/SpaceWithNoBorder
   - name: expansion1::subworlds/space/HospitableClassicSurface
+  # Spaced Out biomes
   - name: expansion1::subworlds/radioactive/UraniumSprinkles
+    minCount: 2
     maxCount: 4
   - name: expansion1::subworlds/swamp/Swamp
     minCount: 5
-  - name: subworlds/rust/RustFrozen
-    minCount: 2
-    maxCount: 4
 
 startSubworldName: subworlds/forest/ForestStart
 startingBaseTemplate: bases/forestBase
@@ -96,6 +96,7 @@ unknownCellsAllowedSubworlds:
     command: Replace
     subworldNames:
       - subworlds/jungle/Jungle
+      - subworlds/oil/OilPatch
       - expansion1::subworlds/swamp/Swamp
       - subworlds/rust/Rust
   # Ring-3
@@ -107,6 +108,7 @@ unknownCellsAllowedSubworlds:
     subworldNames:
       - subworlds/marsh/HotMarsh
       - subworlds/ocean/Ocean
+      - subworlds/oil/OilPatch
       - expansion1::subworlds/radioactive/UraniumSprinkles
       - expansion1::subworlds/swamp/Swamp
   - tagcommand: DistanceFromTag
@@ -115,8 +117,12 @@ unknownCellsAllowedSubworlds:
     maxDistance: 999
     command: Replace
     subworldNames:
-      - subworlds/rust/RustFrozen
+      - subworlds/marsh/HotMarsh
+      - subworlds/jungle/Jungle
       - subworlds/ocean/Ocean
+      - subworlds/rust/Rust
+      - subworlds/forest/Forest
+      - subworlds/oil/OilPatch
       - expansion1::subworlds/radioactive/UraniumSprinkles
   # Core
   - tagcommand: AtTag
@@ -124,14 +130,6 @@ unknownCellsAllowedSubworlds:
     command: Replace
     subworldNames:
       - subworlds/magma/Bottom
-  # Above Core
-  - tagcommand: DistanceFromTag
-    tag: AtDepths
-    minDistance: 1
-    maxDistance: 1
-    command: Replace
-    subworldNames:
-      - subworlds/oil/OilPockets
   # Space
   - tagcommand: DistanceFromTag
     tag: AtSurface
@@ -191,20 +189,6 @@ worldTemplateRules:
     allowedCellsFilter:
       - command: Replace
         zoneTypes: [Ocean]
-  # Frozen
-  - names:
-      - poi/frozen/heatsink_a
-      - poi/frozen/heatsink_b
-      - poi/frozen/heatsink_c
-      - poi/frozen/heatsink_d
-    listRule: GuaranteeSomeTryMore
-    someCount: 2
-    moreCount: 2
-    priority: 100 
-    allowedCellsFilter:
-      - command: Replace
-        subworldNames:
-          - subworlds/rust/RustFrozen
   # Oil
   - names:
     - poi/oil/small_oilpockets_geyser_a
@@ -226,7 +210,7 @@ worldTemplateRules:
   - names:
     - expansion1::poi/warp/sender
     - expansion1::poi/warp/receiver
-    - expansion1::poi/warp/teleporter
+    - expansion1::poi/warp/teleporter_no_oil
     listRule: GuaranteeAll
     priority: 500
     allowedCellsFilter:

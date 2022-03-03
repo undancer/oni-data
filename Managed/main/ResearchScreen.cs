@@ -174,7 +174,7 @@ public class ResearchScreen : KModalScreen
 		{
 			isDragging = true;
 		}
-		if (isDragging && !Input.GetMouseButton(0) && !Input.GetMouseButton(1))
+		if (isDragging && !leftMouseDown && !rightMouseDown)
 		{
 			leftMouseDown = false;
 			rightMouseDown = false;
@@ -203,6 +203,12 @@ public class ResearchScreen : KModalScreen
 		else if (panRight)
 		{
 			keyPanDelta -= Vector2.right * Time.unscaledDeltaTime * num;
+		}
+		if (KInputManager.currentControllerIsGamepad)
+		{
+			Vector2 steamCameraMovement = KInputManager.steamInputInterpreter.GetSteamCameraMovement();
+			steamCameraMovement *= -1f;
+			keyPanDelta = steamCameraMovement * Time.unscaledDeltaTime * num * 5f;
 		}
 		Vector2 vector3 = new Vector2(Mathf.Lerp(0f, keyPanDelta.x, Time.unscaledDeltaTime * keyPanEasing), Mathf.Lerp(0f, keyPanDelta.y, Time.unscaledDeltaTime * keyPanEasing));
 		keyPanDelta -= vector3;

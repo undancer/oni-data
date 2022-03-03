@@ -406,7 +406,7 @@ namespace STRINGS
 		{
 			public static LocString NAME = UI.FormatAsLink("Nuclear Fallout", "FALLOUT");
 
-			public static LocString DESC = "TBD";
+			public static LocString DESC = "Nuclear Fallout is a highly toxic gas full of " + UI.FormatAsLink("Radioactive Contaminants", "RADIATION") + ". Formed in a " + UI.FormatAsLink("Reactor meltdown", "NUCLEARREACTOR") + ".";
 		}
 
 		public class FOOLSGOLD
@@ -469,7 +469,7 @@ namespace STRINGS
 		{
 			public static LocString NAME = UI.FormatAsLink("Solid Nuclear Waste", "SOLIDNUCLEARWASTE");
 
-			public static LocString DESC = "Highly toxic liquid full of " + UI.FormatAsLink("Radioactive Contaminants", "RADIATION") + ". Formed in an " + UI.FormatAsLink("Nuclear Meltdown", "MELTDOWN") + ".";
+			public static LocString DESC = "Highly toxic liquid full of " + UI.FormatAsLink("Radioactive Contaminants", "RADIATION") + ". Formed in a " + UI.FormatAsLink("Reactor meltdown", "NUCLEARREACTOR") + ".";
 		}
 
 		public class HELIUM
@@ -798,7 +798,7 @@ namespace STRINGS
 		{
 			public static LocString NAME = UI.FormatAsLink("Nuclear Waste", "NUCLEARWASTE");
 
-			public static LocString DESC = "Highly toxic liquid full of " + UI.FormatAsLink("Radioactive Contaminants", "RADIATION") + ". Formed in an " + UI.FormatAsLink("Nuclear Meltdown", "MELTDOWN") + ".";
+			public static LocString DESC = "Highly toxic liquid full of " + UI.FormatAsLink("Radioactive Contaminants", "RADIATION") + ". Formed in a " + UI.FormatAsLink("Reactor meltdown", "NUCLEARREACTOR") + ".";
 		}
 
 		public class OBSIDIAN
@@ -889,7 +889,7 @@ namespace STRINGS
 		{
 			public static LocString NAME = UI.FormatAsLink("Regolith", "REGOLITH");
 
-			public static LocString DESC = "Regolith is a sandy substance composed of the various particles that collect atop terrestrial objects.\n\nIt is useful as a " + UI.PRE_KEYWORD + "Filtration Medium" + UI.PST_KEYWORD + ".";
+			public static LocString DESC = "Regolith is a sandy substance composed of the various particles that collect atop terrestrial objects.\n\nIt is useful as a " + UI.FormatAsLink("Filtration Medium", "REGOLITH") + ".";
 		}
 
 		public class SALTGAS
@@ -924,7 +924,7 @@ namespace STRINGS
 		{
 			public static LocString NAME = UI.FormatAsLink("Sand", "SAND");
 
-			public static LocString DESC = "Sand is a composite of granular rock.\n\nIt is useful as a " + UI.PRE_KEYWORD + "Filtration Medium" + UI.PST_KEYWORD + ".";
+			public static LocString DESC = "Sand is a composite of granular rock.\n\nIt is useful as a " + UI.FormatAsLink("Filtration Medium", "FILTER") + ".";
 		}
 
 		public class SANDCEMENT

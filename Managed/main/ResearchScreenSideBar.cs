@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -53,7 +52,7 @@ public class ResearchScreenSideBar : KScreen
 
 	[Header("Other references")]
 	[SerializeField]
-	private TMP_InputField searchBox;
+	private KInputTextField searchBox;
 
 	[SerializeField]
 	private MultiToggle allFilter;
@@ -163,8 +162,8 @@ public class ResearchScreenSideBar : KScreen
 		RefreshCategoriesContentExpanded();
 		RefreshWidgets();
 		searchBox.onValueChanged.AddListener(UpdateCurrentSearch);
-		TMP_InputField tMP_InputField = searchBox;
-		tMP_InputField.onFocus = (System.Action)Delegate.Combine(tMP_InputField.onFocus, (System.Action)delegate
+		KInputTextField kInputTextField = searchBox;
+		kInputTextField.onFocus = (System.Action)Delegate.Combine(kInputTextField.onFocus, (System.Action)delegate
 		{
 			base.isEditing = true;
 		});
@@ -251,7 +250,7 @@ public class ResearchScreenSideBar : KScreen
 		else if (!e.Consumed)
 		{
 			Vector2 vector = base.transform.rectTransform().InverseTransformPoint(KInputManager.GetMousePos());
-			if (vector.x >= 0f && vector.x <= base.transform.rectTransform().rect.width && !e.TryConsume(Action.MouseRight) && !e.TryConsume(Action.MouseLeft) && !e.TryConsume(Action.ZoomIn))
+			if (vector.x >= 0f && vector.x <= base.transform.rectTransform().rect.width && !e.TryConsume(Action.MouseRight) && !e.TryConsume(Action.MouseLeft) && !KInputManager.currentControllerIsGamepad && !e.TryConsume(Action.ZoomIn))
 			{
 				e.TryConsume(Action.ZoomOut);
 			}
@@ -399,7 +398,8 @@ public class ResearchScreenSideBar : KScreen
 				toggle.ChangeState(filterStates[kvp.Key] ? 1 : 0);
 				if (filterStates[kvp.Key])
 				{
-					searchBox.text = kvp.Key;
+					StringEntry stringEntry = Strings.Get("STRINGS.UI.RESEARCHSCREEN.FILTER_BUTTONS." + kvp.Key.ToUpper());
+					searchBox.text = stringEntry.String;
 				}
 				else
 				{

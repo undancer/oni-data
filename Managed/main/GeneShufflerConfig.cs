@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using STRINGS;
 using TUNING;
 using UnityEngine;
@@ -11,7 +12,7 @@ public class GeneShufflerConfig : IEntityConfig
 
 	public GameObject CreatePrefab()
 	{
-		GameObject obj = EntityTemplates.CreatePlacedEntity("GeneShuffler", STRINGS.BUILDINGS.PREFABS.GENESHUFFLER.NAME, STRINGS.BUILDINGS.PREFABS.GENESHUFFLER.DESC, 2000f, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER0, noise: NOISE_POLLUTION.NOISY.TIER0, anim: Assets.GetAnim("geneshuffler_kanim"), initialAnim: "on", sceneLayer: Grid.SceneLayer.Building, width: 4, height: 3);
+		GameObject obj = EntityTemplates.CreatePlacedEntity("GeneShuffler", STRINGS.BUILDINGS.PREFABS.GENESHUFFLER.NAME, STRINGS.BUILDINGS.PREFABS.GENESHUFFLER.DESC, 2000f, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER0, noise: NOISE_POLLUTION.NOISY.TIER0, anim: Assets.GetAnim("geneshuffler_kanim"), initialAnim: "on", sceneLayer: Grid.SceneLayer.Building, width: 4, height: 3, element: SimHashes.Creature, additionalTags: new List<Tag> { GameTags.Gravitas });
 		obj.AddTag(GameTags.NotRoomAssignable);
 		PrimaryElement component = obj.GetComponent<PrimaryElement>();
 		component.SetElement(SimHashes.Unobtanium);

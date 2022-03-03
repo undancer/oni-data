@@ -121,7 +121,7 @@ namespace Database
 				{
 					new CollectedArtifacts(),
 					new CollectedSpaceArtifacts()
-				}, COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_TITLE, COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_BODY, "victoryShorts/Artifact", "victoryLoops/Artifact_loop", ArtifactSequence.Start, AudioMixerSnapshots.Get().VictoryNISGenericSnapshot, "cosmic_archaeology");
+				}, COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_TITLE, COLONY_ACHIEVEMENTS.STUDY_ARTIFACTS.MESSAGE_BODY, "victoryShorts/Artifact", "victoryLoops/Artifact_loop", ArtifactSequence.Start, AudioMixerSnapshots.Get().VictoryNISGenericSnapshot, "cosmic_archaeology", DlcManager.AVAILABLE_EXPANSION1_ONLY);
 				Add(CollectedArtifacts);
 			}
 			Survived100Cycles = Add(new ColonyAchievement("Survived100Cycles", "SURVIVE_HUNDRED_CYCLES", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SURVIVE_HUNDRED_CYCLES, COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SURVIVE_HUNDRED_CYCLES_DESCRIPTION, isVictoryCondition: false, new List<ColonyAchievementRequirement>
@@ -292,11 +292,11 @@ namespace Database
 				{
 					new TeleportDuplicant(),
 					new DefrostDuplicant()
-				}, "", "", "", "", null, "", "first_teleport_of_call"));
+				}, "", "", "", "", null, "", "first_teleport_of_call", DlcManager.AVAILABLE_EXPANSION1_ONLY));
 				SoftLaunch = Add(new ColonyAchievement("SoftLaunch", "SOFT_LAUNCH", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SOFT_LAUNCH, COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SOFT_LAUNCH_DESCRIPTION, isVictoryCondition: false, new List<ColonyAchievementRequirement>
 				{
 					new BuildALaunchPad()
-				}, "", "", "", "", null, "", "soft_launch"));
+				}, "", "", "", "", null, "", "soft_launch", DlcManager.AVAILABLE_EXPANSION1_ONLY));
 				GMOOK = Add(new ColonyAchievement("GMOOK", "GMO_OK", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.GMO_OK, COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.GMO_OK_DESCRIPTION, isVictoryCondition: false, new List<ColonyAchievementRequirement>
 				{
 					new AnalyzeSeed(BasicFabricMaterialPlantConfig.ID),
@@ -312,31 +312,31 @@ namespace Database
 					new AnalyzeSeed("WormPlant"),
 					new AnalyzeSeed("ColdWheat"),
 					new AnalyzeSeed("BeanPlant")
-				}, "", "", "", "", null, "", "gmo_ok"));
+				}, "", "", "", "", null, "", "gmo_ok", DlcManager.AVAILABLE_EXPANSION1_ONLY));
 				MineTheGap = Add(new ColonyAchievement("MineTheGap", "MINE_THE_GAP", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.MINE_THE_GAP, COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.MINE_THE_GAP_DESCRIPTION, isVictoryCondition: false, new List<ColonyAchievementRequirement>
 				{
 					new HarvestAmountFromSpacePOI(1000000f)
-				}, "", "", "", "", null, "", "mine_the_gap"));
+				}, "", "", "", "", null, "", "mine_the_gap", DlcManager.AVAILABLE_EXPANSION1_ONLY));
 				LandedOnAllWorlds = Add(new ColonyAchievement("LandedOnAllWorlds", "LANDED_ON_ALL_WORLDS", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.LAND_ON_ALL_WORLDS, COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.LAND_ON_ALL_WORLDS_DESCRIPTION, isVictoryCondition: false, new List<ColonyAchievementRequirement>
 				{
 					new LandOnAllWorlds()
-				}, "", "", "", "", null, "", "land_on_all_worlds"));
+				}, "", "", "", "", null, "", "land_on_all_worlds", DlcManager.AVAILABLE_EXPANSION1_ONLY));
 				RadicalTrip = Add(new ColonyAchievement("RadicalTrip", "RADICAL_TRIP", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.RADICAL_TRIP, string.Format(COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.RADICAL_TRIP_DESCRIPTION, 10), isVictoryCondition: false, new List<ColonyAchievementRequirement>
 				{
 					new RadBoltTravelDistance(10000)
-				}, "", "", "", "", null, "", "radical_trip"));
+				}, "", "", "", "", null, "", "radical_trip", DlcManager.AVAILABLE_EXPANSION1_ONLY));
 				SweeterThanHoney = Add(new ColonyAchievement("SweeterThanHoney", "SWEETER_THAN_HONEY", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SWEETER_THAN_HONEY, COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SWEETER_THAN_HONEY_DESCRIPTION, isVictoryCondition: false, new List<ColonyAchievementRequirement>
 				{
 					new HarvestAHiveWithoutBeingStung()
-				}, "", "", "", "", null, "", "sweeter_than_honey"));
+				}, "", "", "", "", null, "", "sweeter_than_honey", DlcManager.AVAILABLE_EXPANSION1_ONLY));
 				SurviveInARocket = Add(new ColonyAchievement("SurviveInARocket", "SURVIVE_IN_A_ROCKET", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SURVIVE_IN_A_ROCKET, string.Format(COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.SURVIVE_IN_A_ROCKET_DESCRIPTION, 10, 25), isVictoryCondition: false, new List<ColonyAchievementRequirement>
 				{
 					new SurviveARocketWithMinimumMorale(25f, 10)
-				}, "", "", "", "", null, "", "survive_a_rocket"));
+				}, "", "", "", "", null, "", "survive_a_rocket", DlcManager.AVAILABLE_EXPANSION1_ONLY));
 				RunAReactor = Add(new ColonyAchievement("RunAReactor", "REACTOR_USAGE", COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.REACTOR_USAGE, string.Format(COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.REACTOR_USAGE_DESCRIPTION, 5), isVictoryCondition: false, new List<ColonyAchievementRequirement>
 				{
 					new RunReactorForXDays(5)
-				}, "", "", "", "", null, "", "thats_rad"));
+				}, "", "", "", "", null, "", "thats_rad", DlcManager.AVAILABLE_EXPANSION1_ONLY));
 			}
 		}
 	}

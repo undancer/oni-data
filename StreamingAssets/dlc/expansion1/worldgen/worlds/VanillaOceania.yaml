@@ -1,7 +1,6 @@
 name: STRINGS.WORLDS.VANILLAOCEANIA.NAME # Oceania
 description: STRINGS.WORLDS.VANILLAOCEANIA.DESCRIPTION
-nameTables:
-  - WATER
+nameTables: [ WATER ]
 asteroidIcon: asteroid_vanilla_oceania_kanim
 
 worldTraitScale: 0.9 # Adjust with worldSize. Traits are tuned to base game world sizes.
@@ -40,6 +39,7 @@ subworldFiles:
   - name: expansion1::subworlds/swamp/Swamp
     minCount: 5
   - name: expansion1::subworlds/radioactive/UraniumSprinkles
+    minCount: 2
     maxCount: 4
 
 startSubworldName: subworlds/sandstone/SandstoneStart
@@ -60,7 +60,7 @@ worldTraitRules:
 
 fixedTraits:
   - sunlightMed
-  - cosmicRadiationMed
+  - cosmicRadiationVeryLow
 
 # Specify where subworlds can spawn. These rules are processed in order and their effects are cumulative.
 unknownCellsAllowedSubworlds: 
@@ -232,7 +232,7 @@ worldTemplateRules:
   - names:
     - expansion1::poi/warp/sender
     - expansion1::poi/warp/receiver
-    - expansion1::poi/warp/teleporter
+    - expansion1::poi/warp/teleporter_no_oil
     listRule: GuaranteeAll
     priority: 90
     allowedCellsFilter:

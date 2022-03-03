@@ -1,8 +1,8 @@
 name: STRINGS.WORLDS.MINIRADIOACTIVEOCEAN.NAME
 description: STRINGS.WORLDS.MINIRADIOACTIVEOCEAN.DESCRIPTION
-nameTables:
-  - REGOLITH
+nameTables: [ WATER, RADIOACTIVE ]
 asteroidIcon: asteroid_mini_radiation_kanim
+iconScale: 0.6
 
 worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
@@ -32,23 +32,20 @@ startingBasePositionVertical:
   min: 0.5
   max: 0.5
 
-disableWorldTraits: true
-worldTraitRules: # TODO
+worldTraitRules:
   - min: 1
     max: 2
     forbiddenTags:
-      - StartWorldOnly
       - GenericGeysers
       - Oil
       - LargeWorld
       - Surface
-      - Crust
-      - Challenge
       - StartChange
+      - AboveCore
 
 fixedTraits:
   - sunlightLow
-  - cosmicRadiationMedLow
+  - cosmicRadiationHigh
 
 #------------------------------------------------------------------------------
 
@@ -230,3 +227,18 @@ worldTemplateRules:
       - command: Replace
         tagcommand: NotAtTag
         tag: NoGlobalFeatureSpawning      
+  # Gravitas Artifact POI
+  - names:
+    - expansion1::poi/genericGravitas/monument_room
+    listRule: GuaranteeAll
+    priority: 90
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning
+      - command: ExceptWith
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        optional: true
+        minDistance: 0
+        maxDistance: 1

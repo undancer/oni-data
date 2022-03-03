@@ -25,6 +25,10 @@ public class RailGunPayloadOpenerConfig : IBuildingConfig
 		obj.Overheatable = false;
 		obj.AudioCategory = "Metal";
 		obj.DefaultAnimState = "on";
+		obj.RequiresPowerInput = true;
+		obj.PowerInputOffset = new CellOffset(0, 0);
+		obj.EnergyConsumptionWhenActive = 120f;
+		obj.SelfHeatKilowattsWhenActive = 0.5f;
 		return obj;
 	}
 
@@ -42,9 +46,10 @@ public class RailGunPayloadOpenerConfig : IBuildingConfig
 		railGunPayloadOpener.gasPortInfo = gasOutputPort;
 		railGunPayloadOpener.solidPortInfo = solidOutputPort;
 		railGunPayloadOpener.payloadStorage = go.AddComponent<Storage>();
-		railGunPayloadOpener.payloadStorage.showInUI = false;
+		railGunPayloadOpener.payloadStorage.showInUI = true;
 		railGunPayloadOpener.payloadStorage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
 		railGunPayloadOpener.payloadStorage.storageFilters = new List<Tag> { GameTags.RailGunPayloadEmptyable };
+		railGunPayloadOpener.payloadStorage.capacityKg = 10f;
 		railGunPayloadOpener.resourceStorage = go.AddComponent<Storage>();
 		railGunPayloadOpener.resourceStorage.showInUI = true;
 		railGunPayloadOpener.resourceStorage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
@@ -55,15 +60,22 @@ public class RailGunPayloadOpenerConfig : IBuildingConfig
 		ManualDeliveryKG manualDeliveryKG = go.AddComponent<ManualDeliveryKG>();
 		manualDeliveryKG.SetStorage(railGunPayloadOpener.payloadStorage);
 		manualDeliveryKG.requestedItemTag = GameTags.RailGunPayloadEmptyable;
-		manualDeliveryKG.capacity = 2f;
+		manualDeliveryKG.capacity = 10f;
 		manualDeliveryKG.refillMass = 1f;
-		manualDeliveryKG.choreTypeIDHash = Db.Get().ChoreTypes.FetchCritical.IdHash;
+		manualDeliveryKG.choreTypeIDHash = Db.Get().ChoreTypes.MachineFetch.IdHash;
 		manualDeliveryKG.operationalRequirement = FetchOrder2.OperationalRequirement.None;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
 		go.AddOrGet<BuildingCellVisualizer>();
+		DropAllWorkable dropAllWorkable = go.AddOrGet<DropAllWorkable>();
+		dropAllWorkable.dropWorkTime = 90f;
+		dropAllWorkable.choreTypeID = Db.Get().ChoreTypes.Fetch.Id;
+		dropAllWorkable.ConfigureMultitoolContext("build", EffectConfigs.BuildSplashId);
+		RequireInputs component = go.GetComponent<RequireInputs>();
+		component.SetRequirements(power: true, conduit: false);
+		component.requireConduitHasMass = false;
 	}
 
 	public override void DoPostConfigurePreview(BuildingDef def, GameObject go)

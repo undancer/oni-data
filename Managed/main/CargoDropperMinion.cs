@@ -49,6 +49,7 @@ public class CargoDropperMinion : GameStateMachine<CargoDropperMinion, CargoDrop
 					Vector3 position = gameObject.transform.GetPosition();
 					position.z = Grid.GetLayerZ(base.def.animLayer);
 					gameObject.transform.SetPosition(position);
+					gameObject.GetMyWorld().SetDupeVisited();
 				}
 				if (base.def.notifyOnJettison)
 				{

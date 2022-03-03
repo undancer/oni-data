@@ -22,7 +22,6 @@ public static class BaseBeeConfig
 			gameObject.AddOrGet<SymbolOverrideController>().ApplySymbolOverridesByAffix(Assets.GetAnim(anim_file), symbolOverridePrefix);
 		}
 		KPrefabID component = gameObject.GetComponent<KPrefabID>();
-		component.AddTag(GameTags.Creatures.Flyer);
 		component.prefabInitFn += delegate(GameObject inst)
 		{
 			inst.GetAttributes().Add(Db.Get().Attributes.MaxUnderwaterTravelCost);
@@ -36,7 +35,8 @@ public static class BaseBeeConfig
 		radiationEmitter.emitRate = 0.1f;
 		if (!is_baby)
 		{
-			bee.radiationOutputAmount = 24f;
+			component.AddTag(GameTags.Creatures.Flyer);
+			bee.radiationOutputAmount = 240f;
 			radiationEmitter.radiusProportionalToRads = false;
 			radiationEmitter.emitRadiusX = 3;
 			radiationEmitter.emitRadiusY = 3;
@@ -46,13 +46,14 @@ public static class BaseBeeConfig
 		}
 		else
 		{
-			bee.radiationOutputAmount = 12f;
+			bee.radiationOutputAmount = 120f;
 			radiationEmitter.radiusProportionalToRads = false;
 			radiationEmitter.emitRadiusX = 2;
 			radiationEmitter.emitRadiusY = 2;
 			radiationEmitter.emitType = RadiationEmitter.RadiationEmitterType.Constant;
 			gameObject.AddOrGetDef<CreatureFallMonitor.Def>();
 			gameObject.AddOrGetDef<BeeHiveMonitor.Def>();
+			gameObject.AddOrGet<Trappable>();
 			EntityTemplates.CreateAndRegisterBaggedCreature(gameObject, must_stand_on_top_for_pickup: true, allow_mark_for_capture: true);
 		}
 		gameObject.AddOrGetDef<OvercrowdingMonitor.Def>().spaceRequiredPerCreature = CREATURES.SPACE_REQUIREMENTS.TIER1;

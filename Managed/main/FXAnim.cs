@@ -46,6 +46,8 @@ public class FXAnim : GameStateMachine<FXAnim, FXAnim.Instance>
 
 	public State loop;
 
+	public State restart;
+
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = loop;
@@ -53,9 +55,10 @@ public class FXAnim : GameStateMachine<FXAnim, FXAnim.Instance>
 		loop.Enter(delegate(Instance smi)
 		{
 			smi.Enter();
-		}).EventTransition(GameHashes.AnimQueueComplete, loop).Exit("Post", delegate(Instance smi)
+		}).EventTransition(GameHashes.AnimQueueComplete, restart).Exit("Post", delegate(Instance smi)
 		{
 			smi.Exit();
 		});
+		restart.GoTo(loop);
 	}
 }

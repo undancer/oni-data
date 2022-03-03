@@ -573,6 +573,454 @@ namespace TUNING
 
 		public const int REPAIR_EFFECTIVENESS_BASE = 10;
 
+		public static Dictionary<string, string> PLANSUBCATEGORYSORTING = new Dictionary<string, string>
+		{
+			{ "Ladder", "ladders" },
+			{ "FirePole", "ladders" },
+			{ "LadderFast", "ladders" },
+			{ "Tile", "tiles" },
+			{ "GasPermeableMembrane", "tiles" },
+			{ "MeshTile", "tiles" },
+			{ "InsulationTile", "tiles" },
+			{ "PlasticTile", "tiles" },
+			{ "MetalTile", "tiles" },
+			{ "GlassTile", "tiles" },
+			{ "BunkerTile", "tiles" },
+			{ "CarpetTile", "tiles" },
+			{ "ExobaseHeadquarters", "printing pods" },
+			{ "Door", "doors" },
+			{ "ManualPressureDoor", "doors" },
+			{ "PressureDoor", "doors" },
+			{ "BunkerDoor", "doors" },
+			{ "StorageLocker", "storage" },
+			{ "StorageLockerSmart", "storage" },
+			{ "LiquidReservoir", "storage" },
+			{ "GasReservoir", "storage" },
+			{ "ObjectDispenser", "storage" },
+			{ "TravelTube", "tubes" },
+			{ "TravelTubeEntrance", "tubes" },
+			{ "TravelTubeWallBridge", "tubes" },
+			{ "MineralDeoxidizer", "producers" },
+			{ "SublimationStation", "producers" },
+			{ "Electrolyzer", "producers" },
+			{ "RustDeoxidizer", "producers" },
+			{ "AirFilter", "scrubbers" },
+			{ "CO2Scrubber", "scrubbers" },
+			{ "AlgaeHabitat", "scrubbers" },
+			{ "DevGenerator", "generators" },
+			{ "ManualGenerator", "generators" },
+			{ "Generator", "generators" },
+			{ "WoodGasGenerator", "generators" },
+			{ "HydrogenGenerator", "generators" },
+			{ "MethaneGenerator", "generators" },
+			{ "PetroleumGenerator", "generators" },
+			{ "SteamTurbine", "generators" },
+			{ "SteamTurbine2", "generators" },
+			{ "SolarPanel", "generators" },
+			{ "Wire", "wires" },
+			{ "WireBridge", "wires" },
+			{ "HighWattageWire", "wires" },
+			{ "WireBridgeHighWattage", "wires" },
+			{ "WireRefined", "wires" },
+			{ "WireRefinedBridge", "wires" },
+			{ "WireRefinedHighWattage", "wires" },
+			{ "WireRefinedBridgeHighWattage", "wires" },
+			{ "Battery", "batteries" },
+			{ "BatteryMedium", "batteries" },
+			{ "BatterySmart", "batteries" },
+			{ "PowerTransformerSmall", "transformers" },
+			{ "PowerTransformer", "transformers" },
+			{
+				SwitchConfig.ID,
+				"switches"
+			},
+			{
+				LogicPowerRelayConfig.ID,
+				"switches"
+			},
+			{
+				TemperatureControlledSwitchConfig.ID,
+				"switches"
+			},
+			{
+				PressureSwitchLiquidConfig.ID,
+				"switches"
+			},
+			{
+				PressureSwitchGasConfig.ID,
+				"switches"
+			},
+			{ "MicrobeMusher", "cooking" },
+			{ "CookingStation", "cooking" },
+			{ "GourmetCookingStation", "cooking" },
+			{ "PlanterBox", "farming" },
+			{ "FarmTile", "farming" },
+			{ "HydroponicFarm", "farming" },
+			{ "RationBox", "storage" },
+			{ "Refrigerator", "storage" },
+			{ "CreatureDeliveryPoint", "ranching" },
+			{ "FishDeliveryPoint", "ranching" },
+			{ "CreatureFeeder", "ranching" },
+			{ "FishFeeder", "ranching" },
+			{ "EggIncubator", "ranching" },
+			{ "EggCracker", "ranching" },
+			{ "CreatureTrap", "ranching" },
+			{ "FishTrap", "ranching" },
+			{ "AirborneCreatureLure", "ranching" },
+			{ "FlyingCreatureBait", "ranching" },
+			{ "Outhouse", "bathroom" },
+			{ "FlushToilet", "bathroom" },
+			{ "WallToilet", "bathroom" },
+			{
+				ShowerConfig.ID,
+				"bathroom"
+			},
+			{ "LiquidConduit", "pipes" },
+			{ "InsulatedLiquidConduit", "pipes" },
+			{ "LiquidConduitRadiant", "pipes" },
+			{ "LiquidConduitBridge", "pipes" },
+			{ "LiquidVent", "pipes" },
+			{ "LiquidPump", "pumps" },
+			{ "LiquidMiniPump", "pumps" },
+			{ "DevPumpLiquid", "pumps" },
+			{ "LiquidPumpingStation", "valves" },
+			{ "BottleEmptier", "valves" },
+			{ "LiquidFilter", "valves" },
+			{ "LiquidConduitPreferentialFlow", "valves" },
+			{ "LiquidConduitOverflow", "valves" },
+			{ "LiquidValve", "valves" },
+			{ "LiquidLogicValve", "valves" },
+			{ "LiquidLimitValve", "valves" },
+			{
+				LiquidConduitElementSensorConfig.ID,
+				"sensors"
+			},
+			{
+				LiquidConduitDiseaseSensorConfig.ID,
+				"sensors"
+			},
+			{
+				LiquidConduitTemperatureSensorConfig.ID,
+				"sensors"
+			},
+			{ "ModularLaunchpadPortLiquid", "launch pad" },
+			{ "ModularLaunchpadPortLiquidUnloader", "launch pad" },
+			{ "GasConduit", "pipes" },
+			{ "InsulatedGasConduit", "pipes" },
+			{ "GasConduitRadiant", "pipes" },
+			{ "GasConduitBridge", "pipes" },
+			{ "GasVent", "pipes" },
+			{ "GasVentHighPressure", "pipes" },
+			{ "GasPump", "pumps" },
+			{ "GasMiniPump", "pumps" },
+			{ "DevPumpGas", "pumps" },
+			{ "GasBottler", "valves" },
+			{ "BottleEmptierGas", "valves" },
+			{ "GasFilter", "valves" },
+			{ "GasConduitPreferentialFlow", "valves" },
+			{ "GasConduitOverflow", "valves" },
+			{ "GasValve", "valves" },
+			{ "GasLogicValve", "valves" },
+			{ "GasLimitValve", "valves" },
+			{
+				GasConduitElementSensorConfig.ID,
+				"sensors"
+			},
+			{
+				GasConduitDiseaseSensorConfig.ID,
+				"sensors"
+			},
+			{
+				GasConduitTemperatureSensorConfig.ID,
+				"sensors"
+			},
+			{ "ModularLaunchpadPortGas", "launch pad" },
+			{ "ModularLaunchpadPortGasUnloader", "launch pad" },
+			{ "Compost", "materials" },
+			{ "WaterPurifier", "materials" },
+			{ "Desalinator", "materials" },
+			{ "FertilizerMaker", "materials" },
+			{ "AlgaeDistillery", "materials" },
+			{ "EthanolDistillery", "materials" },
+			{ "RockCrusher", "materials" },
+			{ "Kiln", "materials" },
+			{ "SludgePress", "materials" },
+			{ "MetalRefinery", "materials" },
+			{ "GlassForge", "materials" },
+			{ "OilRefinery", "oil" },
+			{ "Polymerizer", "oil" },
+			{ "OxyliteRefinery", "advanced" },
+			{ "SupermaterialRefinery", "advanced" },
+			{ "DiamondPress", "advanced" },
+			{ "WashBasin", "cleaning" },
+			{ "WashSink", "cleaning" },
+			{ "HandSanitizer", "cleaning" },
+			{ "DecontaminationShower", "cleaning" },
+			{ "Apothecary", "hospital" },
+			{ "DoctorStation", "hospital" },
+			{ "AdvancedDoctorStation", "hospital" },
+			{ "MedicalCot", "hospital" },
+			{ "MassageTable", "wellness" },
+			{ "Grave", "wellness" },
+			{
+				BedConfig.ID,
+				"beds"
+			},
+			{
+				LuxuryBedConfig.ID,
+				"beds"
+			},
+			{
+				LadderBedConfig.ID,
+				"beds"
+			},
+			{ "FloorLamp", "lights" },
+			{ "CeilingLight", "lights" },
+			{ "SunLamp", "lights" },
+			{ "DiningTable", "dining" },
+			{ "WaterCooler", "recreation" },
+			{ "Phonobox", "recreation" },
+			{ "ArcadeMachine", "recreation" },
+			{ "EspressoMachine", "recreation" },
+			{ "HotTub", "recreation" },
+			{ "MechanicalSurfboard", "recreation" },
+			{ "Sauna", "recreation" },
+			{ "Juicer", "recreation" },
+			{ "SodaFountain", "recreation" },
+			{ "BeachChair", "recreation" },
+			{ "VerticalWindTunnel", "recreation" },
+			{ "Telephone", "recreation" },
+			{ "FlowerVase", "pots" },
+			{ "FlowerVaseWall", "pots" },
+			{ "FlowerVaseHanging", "pots" },
+			{ "FlowerVaseHangingFancy", "pots" },
+			{
+				PixelPackConfig.ID,
+				"electronic decor"
+			},
+			{ "SmallSculpture", "sculpture" },
+			{ "Sculpture", "sculpture" },
+			{ "IceSculpture", "sculpture" },
+			{ "MarbleSculpture", "sculpture" },
+			{ "MetalSculpture", "sculpture" },
+			{ "CrownMoulding", "moulding" },
+			{ "CornerMoulding", "moulding" },
+			{ "Canvas", "canvas" },
+			{ "CanvasWide", "canvas" },
+			{ "CanvasTall", "canvas" },
+			{ "ItemPedestal", "display" },
+			{ "ParkSign", "signs" },
+			{ "MonumentBottom", "monument" },
+			{ "MonumentMiddle", "monument" },
+			{ "MonumentTop", "monument" },
+			{ "ResearchCenter", "research" },
+			{ "AdvancedResearchCenter", "research" },
+			{ "NuclearResearchCenter", "research" },
+			{ "OrbitalResearchCenter", "research" },
+			{ "CosmicResearchCenter", "research" },
+			{ "DLC1CosmicResearchCenter", "research" },
+			{ "Telescope", "exploration" },
+			{ "ArtifactAnalysisStation", "exploration" },
+			{ "AstronautTrainingCenter", "exploration" },
+			{ "PowerControlStation", "work stations" },
+			{ "FarmStation", "work stations" },
+			{ "GeneticAnalysisStation", "work stations" },
+			{ "RanchStation", "work stations" },
+			{ "ShearingStation", "work stations" },
+			{ "RoleStation", "work stations" },
+			{ "ResetSkillsStation", "work stations" },
+			{ "CraftingTable", "suits general" },
+			{ "ClothingFabricator", "suits general" },
+			{ "SuitFabricator", "suits general" },
+			{ "OxygenMaskMarker", "oxygen masks" },
+			{ "OxygenMaskLocker", "oxygen masks" },
+			{ "SuitMarker", "atmo suits" },
+			{ "SuitLocker", "atmo suits" },
+			{ "JetSuitMarker", "jet suits" },
+			{ "JetSuitLocker", "jet suits" },
+			{ "LeadSuitMarker", "lead suits" },
+			{ "LeadSuitLocker", "lead suits" },
+			{ "SpaceHeater", "temperature" },
+			{ "LiquidHeater", "temperature" },
+			{ "LiquidConditioner", "temperature" },
+			{ "LiquidCooledFan", "temperature" },
+			{ "IceCooledFan", "temperature" },
+			{ "IceMachine", "temperature" },
+			{ "AirConditioner", "temperature" },
+			{ "ThermalBlock", "temperature" },
+			{ "OreScrubber", "other utilities" },
+			{ "OilWellCap", "other utilities" },
+			{ "ExteriorWall", "other utilities" },
+			{ "SweepBotStation", "other utilities" },
+			{ "DevLifeSupport", "special" },
+			{ "LogicWire", "wires" },
+			{ "LogicWireBridge", "wires" },
+			{ "LogicRibbon", "wires" },
+			{ "LogicRibbonBridge", "wires" },
+			{
+				LogicRibbonReaderConfig.ID,
+				"wires"
+			},
+			{
+				LogicRibbonWriterConfig.ID,
+				"wires"
+			},
+			{ "LogicDuplicantSensor", "sensors" },
+			{
+				LogicPressureSensorGasConfig.ID,
+				"sensors"
+			},
+			{
+				LogicPressureSensorLiquidConfig.ID,
+				"sensors"
+			},
+			{
+				LogicTemperatureSensorConfig.ID,
+				"sensors"
+			},
+			{
+				LogicWattageSensorConfig.ID,
+				"sensors"
+			},
+			{
+				LogicTimeOfDaySensorConfig.ID,
+				"sensors"
+			},
+			{
+				LogicTimerSensorConfig.ID,
+				"sensors"
+			},
+			{
+				LogicDiseaseSensorConfig.ID,
+				"sensors"
+			},
+			{
+				LogicElementSensorGasConfig.ID,
+				"sensors"
+			},
+			{
+				LogicElementSensorLiquidConfig.ID,
+				"sensors"
+			},
+			{
+				LogicCritterCountSensorConfig.ID,
+				"sensors"
+			},
+			{
+				LogicRadiationSensorConfig.ID,
+				"sensors"
+			},
+			{
+				LogicHEPSensorConfig.ID,
+				"sensors"
+			},
+			{
+				CometDetectorConfig.ID,
+				"sensors"
+			},
+			{
+				LogicSwitchConfig.ID,
+				"switches"
+			},
+			{
+				LogicCounterConfig.ID,
+				"default"
+			},
+			{
+				LogicAlarmConfig.ID,
+				"default"
+			},
+			{ "FloorSwitch", "default" },
+			{ "LogicGateNOT", "logic gates" },
+			{ "LogicGateAND", "logic gates" },
+			{ "LogicGateOR", "logic gates" },
+			{ "LogicGateBUFFER", "logic gates" },
+			{ "LogicGateFILTER", "logic gates" },
+			{ "LogicGateXOR", "logic gates" },
+			{
+				LogicMemoryConfig.ID,
+				"logic gates"
+			},
+			{ "LogicGateMultiplexer", "logic gates" },
+			{ "LogicGateDemultiplexer", "logic gates" },
+			{ "LogicInterasteroidSender", "default" },
+			{ "LogicInterasteroidReceiver", "default" },
+			{ "Checkpoint", "utilities" },
+			{
+				LogicHammerConfig.ID,
+				"utilities"
+			},
+			{ "SolidTransferArm", "conduit" },
+			{ "SolidConduit", "conduit" },
+			{ "SolidConduitBridge", "conduit" },
+			{ "SolidConduitInbox", "conduit" },
+			{ "SolidConduitOutbox", "conduit" },
+			{ "SolidFilter", "conduit" },
+			{ "SolidVent", "conduit" },
+			{ "SolidLogicValve", "valves" },
+			{ "SolidLimitValve", "valves" },
+			{
+				SolidConduitDiseaseSensorConfig.ID,
+				"valves"
+			},
+			{
+				SolidConduitElementSensorConfig.ID,
+				"valves"
+			},
+			{
+				SolidConduitTemperatureSensorConfig.ID,
+				"valves"
+			},
+			{ "AutoMiner", "utilities" },
+			{ "ModularLaunchpadPortSolid", "launch pad" },
+			{ "ModularLaunchpadPortSolidUnloader", "launch pad" },
+			{ "ClusterTelescope", "telescopes" },
+			{ "ClusterTelescopeEnclosed", "telescopes" },
+			{ "LaunchPad", "launch pad" },
+			{ "Gantry", "launch pad" },
+			{ "RailGun", "railguns" },
+			{ "RailGunPayloadOpener", "railguns" },
+			{ "LandingBeacon", "railguns" },
+			{ "SteamEngine", "engines" },
+			{ "KeroseneEngine", "engines" },
+			{ "HydrogenEngine", "engines" },
+			{ "SolidBooster", "engines" },
+			{ "LiquidFuelTank", "fuel and oxidizer" },
+			{ "OxidizerTank", "fuel and oxidizer" },
+			{ "OxidizerTankLiquid", "fuel and oxidizer" },
+			{ "CargoBay", "cargo" },
+			{ "GasCargoBay", "cargo" },
+			{ "LiquidCargoBay", "cargo" },
+			{ "SpecialCargoBay", "utility" },
+			{ "CommandModule", "command" },
+			{
+				RocketControlStationConfig.ID,
+				"command"
+			},
+			{
+				LogicClusterLocationSensorConfig.ID,
+				"utility"
+			},
+			{ "TouristModule", "utility" },
+			{ "ResearchModule", "utility" },
+			{ "RocketInteriorPowerPlug", "fittings" },
+			{ "RocketInteriorLiquidInput", "fittings" },
+			{ "RocketInteriorLiquidOutput", "fittings" },
+			{ "RocketInteriorGasInput", "fittings" },
+			{ "RocketInteriorGasOutput", "fittings" },
+			{ "RocketInteriorSolidInput", "fittings" },
+			{ "RocketInteriorSolidOutput", "fittings" },
+			{ "ManualHighEnergyParticleSpawner", "HEP" },
+			{ "HighEnergyParticleSpawner", "HEP" },
+			{ "HighEnergyParticleRedirector", "HEP" },
+			{ "HEPBattery", "HEP" },
+			{ "HEPBridgeTile", "HEP" },
+			{ "NuclearReactor", "uranium" },
+			{ "UraniumCentrifuge", "uranium" },
+			{ "RadiationLight", "radiation" },
+			{ "DevRadiationGenerator", "radiation" }
+		};
+
 		public static List<PlanScreen.PlanInfo> PLANORDER = new List<PlanScreen.PlanInfo>
 		{
 			new PlanScreen.PlanInfo(new HashedString("Base"), hideIfNotResearched: false, new List<string>
@@ -620,6 +1068,7 @@ namespace TUNING
 			}),
 			new PlanScreen.PlanInfo(new HashedString("Plumbing"), hideIfNotResearched: false, new List<string>
 			{
+				"DevPumpLiquid",
 				"Outhouse",
 				"FlushToilet",
 				"WallToilet",
@@ -647,6 +1096,7 @@ namespace TUNING
 			}),
 			new PlanScreen.PlanInfo(new HashedString("HVAC"), hideIfNotResearched: false, new List<string>
 			{
+				"DevPumpGas",
 				"GasConduit",
 				"InsulatedGasConduit",
 				"GasConduitRadiant",
@@ -789,6 +1239,7 @@ namespace TUNING
 			new PlanScreen.PlanInfo(new HashedString("Rocketry"), hideIfNotResearched: true, new List<string>
 			{
 				"ClusterTelescope",
+				"ClusterTelescopeEnclosed",
 				"LaunchPad",
 				"Gantry",
 				"SteamEngine",
@@ -818,7 +1269,7 @@ namespace TUNING
 				"RailGunPayloadOpener",
 				"LandingBeacon"
 			}),
-			new PlanScreen.PlanInfo(new HashedString("HEP"), hideIfNotResearched: true, new List<string> { "RadiationLight", "ManualHighEnergyParticleSpawner", "NuclearReactor", "UraniumCentrifuge", "HighEnergyParticleSpawner", "HighEnergyParticleRedirector", "HEPBridgeTile", "DevRadiationGenerator" }, "EXPANSION1_ID")
+			new PlanScreen.PlanInfo(new HashedString("HEP"), hideIfNotResearched: true, new List<string> { "RadiationLight", "ManualHighEnergyParticleSpawner", "NuclearReactor", "UraniumCentrifuge", "HighEnergyParticleSpawner", "HighEnergyParticleRedirector", "HEPBattery", "HEPBridgeTile", "DevRadiationGenerator" }, "EXPANSION1_ID")
 		};
 
 		public static List<Type> COMPONENT_DESCRIPTION_ORDER = new List<Type>

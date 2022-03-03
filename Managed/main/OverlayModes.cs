@@ -2787,6 +2787,16 @@ public abstract class OverlayModes
 		{
 			return "Radiation";
 		}
+
+		public override void Enable()
+		{
+			AudioMixer.instance.Start(AudioMixerSnapshots.Get().TechFilterRadiationOn);
+		}
+
+		public override void Disable()
+		{
+			AudioMixer.instance.Stop(AudioMixerSnapshots.Get().TechFilterRadiationOn);
+		}
 	}
 
 	public class SolidConveyor : Mode

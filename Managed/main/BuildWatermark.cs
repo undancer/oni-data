@@ -37,7 +37,7 @@ public class BuildWatermark : KScreen
 		}
 		else
 		{
-			text += 484114u;
+			text += 497575u;
 			text = ((!DistributionPlatform.Initialized) ? (text + "-?") : (text + "-" + DlcManager.GetActiveContentLetters()));
 			if (DebugHandler.enabled)
 			{
@@ -77,7 +77,7 @@ public class BuildWatermark : KScreen
 	{
 		Util.KInstantiateUI<ConfirmDialogScreen>(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, Global.Instance.globalCanvas, force_active: true).PopupConfirmDialog(UI.DEVELOPMENTBUILDS.TESTING_MESSAGE, delegate
 		{
-			Application.OpenURL("https://forums.kleientertainment.com/klei-bug-tracker/oni/");
+			App.OpenWebURL("https://forums.kleientertainment.com/klei-bug-tracker/oni/");
 		}, delegate
 		{
 		}, null, null, UI.DEVELOPMENTBUILDS.TESTING_MESSAGE_TITLE, UI.DEVELOPMENTBUILDS.TESTING_MORE_INFO);

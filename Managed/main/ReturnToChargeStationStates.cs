@@ -61,18 +61,22 @@ public class ReturnToChargeStationStates : GameStateMachine<ReturnToChargeStatio
 		idle.ToggleStatusItem(Db.Get().RobotStatusItems.MovingToChargeStation, (Instance smi) => smi.gameObject, Db.Get().StatusItemCategories.Main).ScheduleGoTo(1f, movingToChargingStation);
 		movingToChargingStation.ToggleStatusItem(Db.Get().RobotStatusItems.MovingToChargeStation, (Instance smi) => smi.gameObject, Db.Get().StatusItemCategories.Main).MoveTo(delegate(Instance smi)
 		{
-			Storage sweepLocker = GetSweepLocker(smi);
-			return (!(sweepLocker == null)) ? Grid.PosToCell(sweepLocker) : Grid.InvalidCell;
+			Storage sweepLocker2 = GetSweepLocker(smi);
+			return (!(sweepLocker2 == null)) ? Grid.PosToCell(sweepLocker2) : Grid.InvalidCell;
 		}, chargingstates.waitingForCharging, idle);
 		chargingstates.Enter(delegate(Instance smi)
 		{
-			smi.master.GetComponent<Facing>().Face(GetSweepLocker(smi).gameObject.transform.position + Vector3.right);
-			Vector3 position2 = smi.transform.GetPosition();
-			position2.z = Grid.GetLayerZ(Grid.SceneLayer.BuildingUse);
-			smi.transform.SetPosition(position2);
-			KBatchedAnimController component2 = smi.GetComponent<KBatchedAnimController>();
-			component2.enabled = false;
-			component2.enabled = true;
+			Storage sweepLocker = GetSweepLocker(smi);
+			if (sweepLocker != null)
+			{
+				smi.master.GetComponent<Facing>().Face(sweepLocker.gameObject.transform.position + Vector3.right);
+				Vector3 position2 = smi.transform.GetPosition();
+				position2.z = Grid.GetLayerZ(Grid.SceneLayer.BuildingUse);
+				smi.transform.SetPosition(position2);
+				KBatchedAnimController component2 = smi.GetComponent<KBatchedAnimController>();
+				component2.enabled = false;
+				component2.enabled = true;
+			}
 		}).Exit(delegate(Instance smi)
 		{
 			Vector3 position = smi.transform.GetPosition();

@@ -65,6 +65,10 @@ public class Clustercraft : ClusterGridEntity, IClusterRange
 	public float AutoPilotMultiplier = 1f;
 
 	[Serialize]
+	[Range(0f, 2f)]
+	public float PilotSkillMultiplier = 1f;
+
+	[Serialize]
 	private bool m_launchRequested;
 
 	[Serialize]
@@ -108,7 +112,7 @@ public class Clustercraft : ClusterGridEntity, IClusterRange
 
 	public AxialI Destination => m_moduleInterface.GetClusterDestinationSelector().GetDestination();
 
-	public float Speed => EnginePower / TotalBurden * AutoPilotMultiplier;
+	public float Speed => EnginePower / TotalBurden * AutoPilotMultiplier * PilotSkillMultiplier;
 
 	public float EnginePower
 	{
@@ -167,7 +171,7 @@ public class Clustercraft : ClusterGridEntity, IClusterRange
 
 	public override Sprite GetUISprite()
 	{
-		return Assets.GetSprite("ic_rocket");
+		return Def.GetUISprite(m_moduleInterface.GetPassengerModule().gameObject).first;
 	}
 
 	public override bool SpaceOutInSameHex()
@@ -340,6 +344,11 @@ public class Clustercraft : ClusterGridEntity, IClusterRange
 		{
 			return null;
 		}
+		return ClusterGrid.Instance.GetVisibleEntityOfLayerAtAdjacentCell(m_location, EntityLayer.Asteroid);
+	}
+
+	public ClusterGridEntity GetAdjacentAsteroid()
+	{
 		return ClusterGrid.Instance.GetVisibleEntityOfLayerAtAdjacentCell(m_location, EntityLayer.Asteroid);
 	}
 
@@ -597,6 +606,11 @@ public class Clustercraft : ClusterGridEntity, IClusterRange
 			failReason = string.Format(UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_PATH_OBSTRUCTED, pad.GetProperName());
 			return PadLandingStatus.CanNeverLand;
 		}
+		if (!pad.GetComponent<Operational>().IsOperational)
+		{
+			failReason = UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_PAD_DISABLED;
+			return PadLandingStatus.CanNeverLand;
+		}
 		int rocketBottomPosition = pad.RocketBottomPosition;
 		foreach (Ref<RocketModuleCluster> clusterModule in ModuleInterface.ClusterModules)
 		{
@@ -627,12 +641,18 @@ public class Clustercraft : ClusterGridEntity, IClusterRange
 	private LaunchPad FindValidLandingPad(AxialI location, bool mustLandImmediately)
 	{
 		LaunchPad result = null;
+		int asteroidWorldIdAtLocation = ClusterUtil.GetAsteroidWorldIdAtLocation(location);
+		LaunchPad preferredLaunchPadForWorld = m_moduleInterface.GetPreferredLaunchPadForWorld(asteroidWorldIdAtLocation);
+		if (preferredLaunchPadForWorld != null && CanLandAtPad(preferredLaunchPadForWorld, out var _) == PadLandingStatus.CanLandImmediately)
+		{
+			return preferredLaunchPadForWorld;
+		}
 		foreach (LaunchPad launchPad in Components.LaunchPads)
 		{
 			if (launchPad.GetMyWorldLocation() == location)
 			{
-				string failReason;
-				PadLandingStatus padLandingStatus = CanLandAtPad(launchPad, out failReason);
+				string failReason2;
+				PadLandingStatus padLandingStatus = CanLandAtPad(launchPad, out failReason2);
 				if (padLandingStatus == PadLandingStatus.CanLandImmediately)
 				{
 					return launchPad;
@@ -646,7 +666,7 @@ public class Clustercraft : ClusterGridEntity, IClusterRange
 		return result;
 	}
 
-	private bool CanLandAtAsteroid(AxialI location, bool mustLandImmediately)
+	public bool CanLandAtAsteroid(AxialI location, bool mustLandImmediately)
 	{
 		LaunchPad destinationPad = m_moduleInterface.GetClusterDestinationSelector().GetDestinationPad();
 		Debug.Assert(destinationPad == null || destinationPad.GetMyWorldLocation() == location, "A rocket is trying to travel to an asteroid but has selected a landing pad at a different asteroid!");
@@ -691,6 +711,10 @@ public class Clustercraft : ClusterGridEntity, IClusterRange
 
 	public void UpdateStatusItem()
 	{
+		if (ClusterGrid.Instance == null)
+		{
+			return;
+		}
 		KSelectable component = GetComponent<KSelectable>();
 		if (mainStatusHandle != Guid.Empty)
 		{

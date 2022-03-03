@@ -149,6 +149,7 @@ public class HighEnergyParticleRedirector : StateMachineComponent<HighEnergyPart
 		directionController = new EightDirectionController(GetComponent<KBatchedAnimController>(), "redirector_target", "redirector", EightDirectionController.Offset.Infront);
 		Direction = Direction;
 		base.smi.StartSM();
+		Tutorial.Instance.TutorialMessage(Tutorial.TutorialMessages.TM_Radiation);
 	}
 
 	private bool OnParticleCaptureAllowed(HighEnergyParticle particle)

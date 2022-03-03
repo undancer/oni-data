@@ -88,7 +88,7 @@ namespace TUNING
 
 		public static float RADIATION_EATER_RECOVERY = -0.25f;
 
-		public static float RADS_TO_CALS = 3333f;
+		public static float RADS_TO_CALS = 333.33f;
 
 		public static readonly List<System.Action> TRAIT_CREATORS = new List<System.Action>
 		{

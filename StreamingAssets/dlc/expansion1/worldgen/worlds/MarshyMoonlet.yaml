@@ -1,7 +1,6 @@
 name: STRINGS.WORLDS.MARSHYMOONLET.NAME
 description: STRINGS.WORLDS.MARSHYMOONLET.DESCRIPTION
-nameTables:
-  - SWAMP
+nameTables: [ SWAMP ]
 asteroidIcon: asteroid_marshy_moonlet_kanim
 
 # Notes:
@@ -28,8 +27,8 @@ defaultsOverrides:
 startSubworldName: expansion1::subworlds/marsh/med_HotMarshStart
 startingBaseTemplate: expansion1::poi/sap_tree_room
 startingBasePositionHorizontal:
-  min: 0.35
-  max: 0.65
+  min: 0.45
+  max: 0.55
 startingBasePositionVertical:
   min: 0.50
   max: 0.55
@@ -49,10 +48,11 @@ worldTraitRules:
       - expansion1::traits/Volcanoes
       - traits/SlimeSplats
       - expansion1::traits/LushCore # excluded by design
+      - expansion1::traits/MetalCaves
 
 fixedTraits:
   - sunlightMedHigh
-  - cosmicRadiationMed
+  - cosmicRadiationMedLow
 
 # List all the subworld files to load
 subworldFiles:

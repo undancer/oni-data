@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using STRINGS;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ClusterMapScreen : KScreen
 {
@@ -198,10 +199,44 @@ public class ClusterMapScreen : KScreen
 
 	public override void OnKeyDown(KButtonEvent e)
 	{
-		if (!e.Consumed && (e.TryConsume(Action.ZoomIn) || e.TryConsume(Action.ZoomOut)))
+		if (!e.Consumed && (e.IsAction(Action.ZoomIn) || e.IsAction(Action.ZoomOut)))
 		{
-			float num = Input.mouseScrollDelta.y * 25f;
-			m_targetZoomScale = Mathf.Clamp(m_targetZoomScale + num, 50f, 150f);
+			List<RaycastResult> list = new List<RaycastResult>();
+			PointerEventData pointerEventData = new PointerEventData(UnityEngine.EventSystems.EventSystem.current);
+			pointerEventData.position = KInputManager.GetMousePos();
+			UnityEngine.EventSystems.EventSystem current = UnityEngine.EventSystems.EventSystem.current;
+			if (current != null)
+			{
+				current.RaycastAll(pointerEventData, list);
+				bool flag = false;
+				foreach (RaycastResult item in list)
+				{
+					if (!item.gameObject.transform.IsChildOf(base.transform))
+					{
+						flag = true;
+						break;
+					}
+				}
+				if (!flag)
+				{
+					float num = 0f;
+					if (KInputManager.currentControllerIsGamepad)
+					{
+						num = 25f;
+						num *= (float)(e.IsAction(Action.ZoomIn) ? 1 : (-1));
+					}
+					else
+					{
+						num = Input.mouseScrollDelta.y * 25f;
+					}
+					m_targetZoomScale = Mathf.Clamp(m_targetZoomScale + num, 50f, 150f);
+					e.TryConsume(Action.ZoomIn);
+					if (!e.Consumed)
+					{
+						e.TryConsume(Action.ZoomOut);
+					}
+				}
+			}
 		}
 		CameraController.Instance.ChangeWorldInput(e);
 		base.OnKeyDown(e);
@@ -366,15 +401,29 @@ public class ClusterMapScreen : KScreen
 		UpdateVis();
 	}
 
+	private void Update()
+	{
+		if (KInputManager.currentControllerIsGamepad)
+		{
+			mapScrollRect.AnalogUpdate(KInputManager.steamInputInterpreter.GetSteamCameraMovement());
+		}
+	}
+
 	private void TrySelectDefault()
 	{
 		if (m_selectedHex != null && m_selectedEntity != null)
 		{
 			UpdateVis();
+			return;
 		}
-		else if (m_cellVisByLocation.Count > 0 && ClusterGrid.Instance.cellContents[AxialI.ZERO].Count > 0)
+		WorldContainer activeWorld = ClusterManager.Instance.activeWorld;
+		if (!(activeWorld == null))
 		{
-			SelectHex(m_cellVisByLocation[AxialI.ZERO].GetComponent<ClusterMapHex>());
+			ClusterGridEntity component = activeWorld.GetComponent<ClusterGridEntity>();
+			if (!(component == null))
+			{
+				SelectEntity(component);
+			}
 		}
 	}
 
@@ -410,7 +459,7 @@ public class ClusterMapScreen : KScreen
 		return null;
 	}
 
-	private void Update()
+	public override void ScreenUpdate(bool topLevel)
 	{
 		float t = Mathf.Min(4f * Time.unscaledDeltaTime, 0.9f);
 		m_currentZoomScale = Mathf.Lerp(m_currentZoomScale, m_targetZoomScale, t);
@@ -482,8 +531,10 @@ public class ClusterMapScreen : KScreen
 					ClusterNameDisplayScreen.Instance.AddNewEntry(item);
 					ClusterMapVisualizer clusterMapVisualizer = UnityEngine.Object.Instantiate(original, gameObject.transform);
 					clusterMapVisualizer.Init(item, pathDrawer);
+					clusterMapVisualizer.gameObject.SetActive(value: true);
 					m_gridEntityAnims.Add(item, clusterMapVisualizer);
 					m_gridEntityVis.Add(item, clusterMapVisualizer);
+					item.positionDirty = false;
 					item.Subscribe(1502190696, RemoveDeletedEntities);
 				}
 			}
@@ -540,6 +591,12 @@ public class ClusterMapScreen : KScreen
 			gridEntityAnim.Value.Show(revealLevel);
 			bool selected = m_selectedEntity == gridEntityAnim.Key;
 			gridEntityAnim.Value.Select(selected);
+			if (gridEntityAnim.Key.positionDirty)
+			{
+				Vector3 position = ClusterGrid.Instance.GetPosition(gridEntityAnim.Key);
+				gridEntityAnim.Value.rectTransform().SetLocalPosition(position);
+				gridEntityAnim.Key.positionDirty = false;
+			}
 		}
 		if (m_selectedEntity != null && m_gridEntityVis.ContainsKey(m_selectedEntity))
 		{
@@ -725,8 +782,12 @@ public class ClusterMapScreen : KScreen
 		{
 			return component;
 		}
-		component = ClusterGrid.Instance.GetVisibleEntityOfLayerAtCell(selector.GetMyWorldLocation(), EntityLayer.Asteroid);
-		Debug.Assert(component != null, $"{selector} has no grid entity and isn't located at a visible asteroid at {selector.GetMyWorldLocation()}");
+		ClusterGridEntity visibleEntityOfLayerAtCell = ClusterGrid.Instance.GetVisibleEntityOfLayerAtCell(selector.GetMyWorldLocation(), EntityLayer.Asteroid);
+		Debug.Assert(component != null || visibleEntityOfLayerAtCell != null, $"{selector} has no grid entity and isn't located at a visible asteroid at {selector.GetMyWorldLocation()}");
+		if ((bool)visibleEntityOfLayerAtCell)
+		{
+			return visibleEntityOfLayerAtCell;
+		}
 		return component;
 	}
 

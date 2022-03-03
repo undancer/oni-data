@@ -29,6 +29,9 @@ public class ModularConduitPortController : GameStateMachine<ModularConduitPortC
 
 	public new class Instance : GameInstance
 	{
+		[MyCmpGet]
+		public Operational operational;
+
 		public Mode SelectedMode => base.def.mode;
 
 		public Instance(IStateMachineTarget master, Def def)
@@ -90,11 +93,27 @@ public class ModularConduitPortController : GameStateMachine<ModularConduitPortC
 		on.finished.PlayAnim("finished", KAnim.PlayMode.Loop).ParamTransition(hasRocket, on.idle, GameStateMachine<ModularConduitPortController, Instance, IStateMachineTarget, Def>.IsFalse).ParamTransition(isUnloading, on.unloading, GameStateMachine<ModularConduitPortController, Instance, IStateMachineTarget, Def>.IsTrue)
 			.ParamTransition(isLoading, on.loading, GameStateMachine<ModularConduitPortController, Instance, IStateMachineTarget, Def>.IsTrue)
 			.ToggleStatusItem(loadedStatusItem);
-		on.unloading.PlayAnim("unloading_pre").QueueAnim("unloading_loop", loop: true).ParamTransition(isUnloading, on.unloading_pst, GameStateMachine<ModularConduitPortController, Instance, IStateMachineTarget, Def>.IsFalse)
+		on.unloading.Enter("SetActive(true)", delegate(Instance smi)
+		{
+			smi.operational.SetActive(value: true);
+		}).Exit("SetActive(false)", delegate(Instance smi)
+		{
+			smi.operational.SetActive(value: false);
+		}).PlayAnim("unloading_pre")
+			.QueueAnim("unloading_loop", loop: true)
+			.ParamTransition(isUnloading, on.unloading_pst, GameStateMachine<ModularConduitPortController, Instance, IStateMachineTarget, Def>.IsFalse)
 			.ParamTransition(hasRocket, on.unloading_pst, GameStateMachine<ModularConduitPortController, Instance, IStateMachineTarget, Def>.IsFalse)
 			.ToggleStatusItem(unloadingStatusItem);
 		on.unloading_pst.PlayAnim("unloading_pst").OnAnimQueueComplete(on.finished);
-		on.loading.PlayAnim("loading_pre").QueueAnim("loading_loop", loop: true).ParamTransition(isLoading, on.loading_pst, GameStateMachine<ModularConduitPortController, Instance, IStateMachineTarget, Def>.IsFalse)
+		on.loading.Enter("SetActive(true)", delegate(Instance smi)
+		{
+			smi.operational.SetActive(value: true);
+		}).Exit("SetActive(false)", delegate(Instance smi)
+		{
+			smi.operational.SetActive(value: false);
+		}).PlayAnim("loading_pre")
+			.QueueAnim("loading_loop", loop: true)
+			.ParamTransition(isLoading, on.loading_pst, GameStateMachine<ModularConduitPortController, Instance, IStateMachineTarget, Def>.IsFalse)
 			.ParamTransition(hasRocket, on.loading_pst, GameStateMachine<ModularConduitPortController, Instance, IStateMachineTarget, Def>.IsFalse)
 			.ToggleStatusItem(loadingStatusItem);
 		on.loading_pst.PlayAnim("loading_pst").OnAnimQueueComplete(on.finished);

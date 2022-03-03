@@ -1,8 +1,7 @@
 # unused
 name: STRINGS.WORLDS.OILYMOONLET.NAME
 description: STRINGS.WORLDS.OILYMOONLET.DESCRIPTION
-nameTables:
-  - OILY
+nameTables: [ OILY ]
 asteroidIcon: asteroid_oil_planet_kanim
 disableWorldTraits: true
 

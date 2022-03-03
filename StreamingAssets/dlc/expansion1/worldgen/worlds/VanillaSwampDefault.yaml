@@ -1,7 +1,6 @@
 name: STRINGS.WORLDS.VANILLASWAMPDEFAULT.NAME
 description: STRINGS.WORLDS.VANILLASWAMPDEFAULT.DESCRIPTION
-nameTables:
-  - SWAMP
+nameTables: [ SWAMP ]
 asteroidIcon: asteroid_vanilla_swamp_start_kanim
 
 worldTraitScale: 0.9 # Adjust with worldSize. Traits are tuned to base game world sizes.
@@ -27,7 +26,7 @@ worldTraitRules:
 
 fixedTraits:
   - sunlightMed
-  - cosmicRadiationMed
+  - cosmicRadiationVeryLow
 
 # List all the subworld files to load
 subworldFiles:
@@ -50,6 +49,8 @@ subworldFiles:
   - name: expansion1::subworlds/wasteland/WastelandBeetle
   - name: expansion1::subworlds/wasteland/WastelandWorm
   - name: expansion1::subworlds/radioactive/UraniumSprinkles
+    minCount: 2
+    maxCount: 4
   - name: expansion1::subworlds/sandstone/Sandstone
 
 startSubworldName: expansion1::subworlds/swamp/SwampStart
@@ -234,7 +235,7 @@ worldTemplateRules:
   - names:
     - expansion1::poi/warp/sender
     - expansion1::poi/warp/receiver
-    - expansion1::poi/warp/teleporter
+    - expansion1::poi/warp/teleporter_no_oil
     listRule: GuaranteeAll
     priority: 90
     allowedCellsFilter:

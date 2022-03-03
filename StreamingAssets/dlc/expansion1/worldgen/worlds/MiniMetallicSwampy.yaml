@@ -1,7 +1,6 @@
 name: STRINGS.WORLDS.MINIMETALLICSWAMPY.NAME
 description: STRINGS.WORLDS.MINIMETALLICSWAMPY.DESCRIPTION
-nameTables:
-  - SWAMP
+nameTables: [ SWAMP ]
 asteroidIcon: asteroid_mini_metallicswampy_kanim
 
 worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.
@@ -23,31 +22,18 @@ defaultsOverrides:
     poiPadding: 1
   startingWorldElements: [] # remove the algae check
 
-# startSubworldName: expansion1::subworlds/swamp/SwampStartDense
-# startingBaseTemplate: expansion1::bases/swampBase
-# startingBasePositionHorizontal:
-#   min: 0.5
-#   max: 0.5
-# startingBasePositionVertical:
-#   min: 0.46
-#   max: 0.46
-
-worldTraitRules: 
-  - specificTraits:
-     - traits/MetalRich
-  # - min: 1 # TODO
-  #   max: 2
-  #   forbiddenTags:
-  #     - StartWorldOnly
-  #     - GenericGeysers
-  #     - Oil
-  #     - Surface
-  #     - Crust
-  #     - Challenge
+worldTraitRules:
+  - min: 1
+    max: 2
+    forbiddenTags:
+      - StartWorldOnly
+      - GenericGeysers
+      - LargeWorld
+      - Oil
 
 fixedTraits:
   - sunlightLow
-  - cosmicRadiationMedLow
+  - cosmicRadiationVeryLow
 
 #------------------------------------------------------------------------------
 
@@ -243,4 +229,12 @@ worldTemplateRules:
       - command: Replace
         tagcommand: NotAtTag
         tag: NoGlobalFeatureSpawning
-
+  # Gravitas Artifact POI
+  - names:
+    - expansion1::poi/genericGravitas/poi_office
+    listRule: GuaranteeAll
+    priority: 90
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning

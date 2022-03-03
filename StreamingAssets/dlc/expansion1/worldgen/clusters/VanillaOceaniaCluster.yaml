@@ -15,7 +15,7 @@ worldPlacements:
   allowedRings:
     min: 0
     max: 0
-- world: expansion1::worlds/MediumSandyRadioactiveVanillaWarpPlanet # Rocket world
+- world: expansion1::worlds/MediumForestyWasteland # Rocket world
   buffer: 2
   locationType: InnerCluster
   allowedRings:

@@ -34,7 +34,7 @@ public class RadiationBalanceDisplayer : StandardAmountDisplayer
 				text += DUPLICANTS.STATS.RADIATIONBALANCE.TOOLTIP_CURRENT_BALANCE;
 			}
 			text += "\n\n";
-			float num2 = 1f - Db.Get().Attributes.RadiationResistance.Lookup(instance.gameObject).GetTotalValue();
+			float num2 = Mathf.Clamp01(1f - Db.Get().Attributes.RadiationResistance.Lookup(instance.gameObject).GetTotalValue());
 			text += string.Format(DUPLICANTS.STATS.RADIATIONBALANCE.CURRENT_EXPOSURE, Mathf.RoundToInt(Grid.Radiation[num] * num2));
 			text += "\n";
 			text += string.Format(DUPLICANTS.STATS.RADIATIONBALANCE.CURRENT_REJUVENATION, Mathf.RoundToInt(Db.Get().Attributes.RadiationRecovery.Lookup(instance.gameObject).GetTotalValue() * 600f));

@@ -143,7 +143,7 @@ public class ColonyDiagnosticScreen : KScreen, ISim1000ms
 
 		public void TriggerVisualNotification()
 		{
-			if (activeRoutine == null)
+			if (!DebugHandler.NotificationsDisabled && activeRoutine == null)
 			{
 				timeOfLastNotification = GameClock.Instance.GetTime();
 				KFMOD.PlayUISound(GlobalAssets.GetSound(notificationSoundsActive[currentDisplayedResult]));
@@ -312,6 +312,7 @@ public class ColonyDiagnosticScreen : KScreen, ISim1000ms
 		AddDiagnostic<EntombedDiagnostic>(world, contentContainer, diagnosticRows);
 		AddDiagnostic<PowerUseDiagnostic>(world, contentContainer, diagnosticRows);
 		AddDiagnostic<BatteryDiagnostic>(world, contentContainer, diagnosticRows);
+		AddDiagnostic<RocketsInOrbitDiagnostic>(world, contentContainer, diagnosticRows);
 		List<DiagnosticRow> list = new List<DiagnosticRow>();
 		foreach (DiagnosticRow diagnosticRow in diagnosticRows)
 		{

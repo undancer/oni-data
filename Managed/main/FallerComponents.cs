@@ -13,14 +13,14 @@ public class FallerComponents : KGameObjectComponentManager<FallerComponent>
 	{
 		HandleVector<int>.Handle handle = GetHandle(go);
 		OnCleanUpImmediate(handle);
-		CleanupInfo cleanupInfo = new CleanupInfo(go, handle);
+		CleanupInfo info = new CleanupInfo(go, handle);
 		if (!KComponentCleanUp.InCleanUpPhase)
 		{
-			cleanupList.Add(cleanupInfo);
+			AddToCleanupList(info);
 		}
 		else
 		{
-			InternalRemoveComponent(cleanupInfo);
+			InternalRemoveComponent(info);
 		}
 	}
 

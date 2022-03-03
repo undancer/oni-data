@@ -57,12 +57,11 @@ public class ExobaseHeadquartersConfig : IBuildingConfig
 		roleStation.workingPstComplete = null;
 		roleStation.workingPstFailed = null;
 		Activatable activatable = go.AddOrGet<Activatable>();
-		activatable.synchronizeAnims = false;
-		activatable.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_warp_conduit_sender_kanim") };
-		activatable.workAnims = new HashedString[2] { "sending_pre", "sending_loop" };
-		activatable.workingPstComplete = new HashedString[1] { "sending_pst" };
-		activatable.workingPstFailed = new HashedString[1] { "sending_pre" };
-		activatable.SetWorkTime(30f);
+		activatable.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_porta_pod_kanim") };
+		activatable.workAnims = new HashedString[2] { "activate_pre", "activate_loop" };
+		activatable.workingPstComplete = new HashedString[1] { "activate_pst" };
+		activatable.workingPstFailed = new HashedString[1] { "activate_pre" };
+		activatable.SetWorkTime(15f);
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

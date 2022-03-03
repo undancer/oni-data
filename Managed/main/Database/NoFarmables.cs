@@ -6,18 +6,21 @@ namespace Database
 	{
 		public override bool Success()
 		{
-			foreach (PlantablePlot item in Components.PlantablePlots.Items)
+			foreach (WorldContainer worldContainer in ClusterManager.Instance.WorldContainers)
 			{
-				if (!(item.Occupant != null))
+				foreach (PlantablePlot item in Components.PlantablePlots.GetItems(worldContainer.id))
 				{
-					continue;
-				}
-				Tag[] possibleDepositObjectTags = item.possibleDepositObjectTags;
-				for (int i = 0; i < possibleDepositObjectTags.Length; i++)
-				{
-					if (possibleDepositObjectTags[i] != GameTags.DecorSeed)
+					if (!(item.Occupant != null))
 					{
-						return false;
+						continue;
+					}
+					Tag[] possibleDepositObjectTags = item.possibleDepositObjectTags;
+					for (int i = 0; i < possibleDepositObjectTags.Length; i++)
+					{
+						if (possibleDepositObjectTags[i] != GameTags.DecorSeed)
+						{
+							return false;
+						}
 					}
 				}
 			}

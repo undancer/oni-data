@@ -8,6 +8,8 @@ public interface IEmptyableCargo
 
 	bool ChooseDuplicant { get; }
 
+	bool ModuleDeployed { get; }
+
 	MinionIdentity ChosenDuplicant { get; set; }
 
 	bool CanEmptyCargo();

@@ -30,7 +30,31 @@ public class GeneratedBuildings
 		}
 		foreach (PlanScreen.PlanInfo item2 in BUILDINGS.PLANORDER)
 		{
-			item2.data.RemoveAll((string prefabId) => Assets.GetBuildingDef(prefabId) == null);
+			List<string> list2 = new List<string>();
+			foreach (KeyValuePair<string, string> buildingAndSubcategoryDatum in item2.buildingAndSubcategoryData)
+			{
+				if (Assets.GetBuildingDef(buildingAndSubcategoryDatum.Key) == null)
+				{
+					list2.Add(buildingAndSubcategoryDatum.Key);
+				}
+			}
+			foreach (string entry2 in list2)
+			{
+				item2.buildingAndSubcategoryData.RemoveAll((KeyValuePair<string, string> match) => match.Key == entry2);
+			}
+			List<string> list3 = new List<string>();
+			foreach (string entry in item2.data)
+			{
+				if (item2.buildingAndSubcategoryData.FindIndex((KeyValuePair<string, string> x) => x.Key == entry) == -1 && Assets.GetBuildingDef(entry) != null)
+				{
+					Debug.LogWarning("Mod: Building '" + entry + "' was not added properly to PlanInfo, use ModUtil.AddBuildingToPlanScreen instead.");
+					list3.Add(entry);
+				}
+			}
+			foreach (string item3 in list3)
+			{
+				ModUtil.AddBuildingToPlanScreen(item2.category, item3, "uncategorized");
+			}
 		}
 	}
 

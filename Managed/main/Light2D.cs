@@ -191,20 +191,26 @@ public class Light2D : KMonoBehaviour, IGameObjectEffectDescriptor
 		}
 	}
 
-	private HandleVector<int>.Handle AddToLayer(Vector2I xy_min, int width, int height, ScenePartitionerLayer layer)
+	private HandleVector<int>.Handle AddToLayer(Extents ext, ScenePartitionerLayer layer)
 	{
-		return GameScenePartitioner.Instance.Add("Light2D", base.gameObject, xy_min.x, xy_min.y, width, height, layer, OnWorldChanged);
+		return GameScenePartitioner.Instance.Add("Light2D", base.gameObject, ext, layer, OnWorldChanged);
+	}
+
+	private Extents ComputeExtents()
+	{
+		Vector2I vector2I = Grid.CellToXY(origin);
+		int num = (int)Range;
+		Vector2I vector2I2 = new Vector2I(vector2I.x - num, vector2I.y - num);
+		int width = 2 * num;
+		int height = ((shape == LightShape.Circle) ? (2 * num) : num);
+		return new Extents(vector2I2.x, vector2I2.y, width, height);
 	}
 
 	private void AddToScenePartitioner()
 	{
-		Vector2I vector2I = Grid.CellToXY(origin);
-		int num = (int)Range;
-		Vector2I xy_min = new Vector2I(vector2I.x - num, vector2I.y - num);
-		int width = 2 * num;
-		int height = ((shape == LightShape.Circle) ? (2 * num) : num);
-		solidPartitionerEntry = AddToLayer(xy_min, width, height, GameScenePartitioner.Instance.solidChangedLayer);
-		liquidPartitionerEntry = AddToLayer(xy_min, width, height, GameScenePartitioner.Instance.liquidChangedLayer);
+		Extents ext = ComputeExtents();
+		solidPartitionerEntry = AddToLayer(ext, GameScenePartitioner.Instance.solidChangedLayer);
+		liquidPartitionerEntry = AddToLayer(ext, GameScenePartitioner.Instance.liquidChangedLayer);
 	}
 
 	private void RemoveFromScenePartitioner()
@@ -218,8 +224,8 @@ public class Light2D : KMonoBehaviour, IGameObjectEffectDescriptor
 
 	private void MoveInScenePartitioner()
 	{
-		GameScenePartitioner.Instance.UpdatePosition(solidPartitionerEntry, origin);
-		GameScenePartitioner.Instance.UpdatePosition(liquidPartitionerEntry, origin);
+		GameScenePartitioner.Instance.UpdatePosition(solidPartitionerEntry, ComputeExtents());
+		GameScenePartitioner.Instance.UpdatePosition(liquidPartitionerEntry, ComputeExtents());
 	}
 
 	[ContextMenu("Refresh")]

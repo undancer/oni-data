@@ -19,7 +19,7 @@ public class MushroomPlantConfig : IEntityConfig
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreatePlacedEntity("MushroomPlant", STRINGS.CREATURES.SPECIES.MUSHROOMPLANT.NAME, STRINGS.CREATURES.SPECIES.MUSHROOMPLANT.DESC, 1f, decor: DECOR.BONUS.TIER1, anim: Assets.GetAnim("fungusplant_kanim"), initialAnim: "idle_empty", sceneLayer: Grid.SceneLayer.BuildingFront, width: 1, height: 2);
-		EntityTemplates.ExtendEntityToBasicPlant(gameObject, 228.15f, 278.15f, 308.15f, 398.15f, new SimHashes[1] { SimHashes.CarbonDioxide }, pressure_sensitive: true, 0f, 0.15f, MushroomConfig.ID, can_drown: true, can_tinker: true, require_solid_tile: true, should_grow_old: true, 2400f, 0f, 460f, "MushroomPlantOriginal", STRINGS.CREATURES.SPECIES.MUSHROOMPLANT.NAME);
+		EntityTemplates.ExtendEntityToBasicPlant(gameObject, 228.15f, 278.15f, 308.15f, 398.15f, new SimHashes[1] { SimHashes.CarbonDioxide }, pressure_sensitive: true, 0f, 0.15f, MushroomConfig.ID, can_drown: true, can_tinker: true, require_solid_tile: true, should_grow_old: true, 2400f, 0f, 4600f, "MushroomPlantOriginal", STRINGS.CREATURES.SPECIES.MUSHROOMPLANT.NAME);
 		EntityTemplates.ExtendPlantToFertilizable(gameObject, new PlantElementAbsorber.ConsumeInfo[1]
 		{
 			new PlantElementAbsorber.ConsumeInfo

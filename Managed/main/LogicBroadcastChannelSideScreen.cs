@@ -16,6 +16,9 @@ public class LogicBroadcastChannelSideScreen : SideScreenContent
 	[SerializeField]
 	private LocText headerLabel;
 
+	[SerializeField]
+	private GameObject noChannelRow;
+
 	private Dictionary<LogicBroadcaster, GameObject> broadcasterRows = new Dictionary<LogicBroadcaster, GameObject>();
 
 	private GameObject emptySpaceRow;
@@ -51,12 +54,16 @@ public class LogicBroadcastChannelSideScreen : SideScreenContent
 		ClearRows();
 		foreach (LogicBroadcaster logicBroadcaster in Components.LogicBroadcasters)
 		{
-			GameObject gameObject = Util.KInstantiateUI(rowPrefab, listContainer);
-			gameObject.gameObject.name = logicBroadcaster.gameObject.GetProperName();
-			Debug.Assert(!broadcasterRows.ContainsKey(logicBroadcaster), "Adding two of the same broadcaster to LogicBroadcastChannelSideScreen UI: " + logicBroadcaster.gameObject.GetProperName());
-			broadcasterRows.Add(logicBroadcaster, gameObject);
-			gameObject.SetActive(value: true);
+			if (!logicBroadcaster.IsNullOrDestroyed())
+			{
+				GameObject gameObject = Util.KInstantiateUI(rowPrefab, listContainer);
+				gameObject.gameObject.name = logicBroadcaster.gameObject.GetProperName();
+				Debug.Assert(!broadcasterRows.ContainsKey(logicBroadcaster), "Adding two of the same broadcaster to LogicBroadcastChannelSideScreen UI: " + logicBroadcaster.gameObject.GetProperName());
+				broadcasterRows.Add(logicBroadcaster, gameObject);
+				gameObject.SetActive(value: true);
+			}
 		}
+		noChannelRow.SetActive(Components.LogicBroadcasters.Count == 0);
 		Refresh();
 	}
 

@@ -201,18 +201,23 @@ public class InterfaceTool : KMonoBehaviour
 
 	protected void SetCursor(Texture2D new_cursor, Vector2 offset, CursorMode mode)
 	{
-		if (new_cursor != activeCursor)
+		if (!(new_cursor != activeCursor) || !(new_cursor != null))
 		{
-			activeCursor = new_cursor;
-			try
+			return;
+		}
+		activeCursor = new_cursor;
+		try
+		{
+			Cursor.SetCursor(new_cursor, offset, mode);
+			if (PlayerController.Instance.vim != null)
 			{
-				Cursor.SetCursor(new_cursor, offset, mode);
+				PlayerController.Instance.vim.SetCursor(new_cursor);
 			}
-			catch (Exception ex)
-			{
-				string details = $"SetCursor Failed new_cursor={new_cursor} offset={offset} mode={mode}";
-				KCrashReporter.ReportErrorDevNotification("SetCursor Failed", ex.StackTrace, details);
-			}
+		}
+		catch (Exception ex)
+		{
+			string details = $"SetCursor Failed new_cursor={new_cursor} offset={offset} mode={mode}";
+			KCrashReporter.ReportErrorDevNotification("SetCursor Failed", ex.StackTrace, details);
 		}
 	}
 

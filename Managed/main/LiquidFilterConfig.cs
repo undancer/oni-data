@@ -48,7 +48,6 @@ public class LiquidFilterConfig : IBuildingConfig
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
-		go.AddOrGet<Structure>();
 		go.AddOrGet<ElementFilter>().portInfo = secondaryPort;
 		go.AddOrGet<Filterable>().filterElementState = Filterable.ElementState.Liquid;
 	}

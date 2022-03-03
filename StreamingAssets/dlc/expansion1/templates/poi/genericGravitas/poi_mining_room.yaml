@@ -1643,16 +1643,6 @@ buildings:
   element: SandStone
   temperature: 293.149994
   storage:
-  - id: artifact_honeyjar
-    element: Creature
-    units: 1
-    temperature: 293.000092
-    rottable: {}
-  - id: artifact_honeyjar
-    element: Creature
-    units: 1
-    temperature: 293.000061
-    rottable: {}
 otherEntities:
 - id: PropClock
   location_y: -2

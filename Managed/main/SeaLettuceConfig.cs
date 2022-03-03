@@ -24,7 +24,7 @@ public class SeaLettuceConfig : IEntityConfig
 			SimHashes.Water,
 			SimHashes.SaltWater,
 			SimHashes.Brine
-		}, pressure_sensitive: false, 0f, 0.15f, "Lettuce", can_drown: true, can_tinker: true, require_solid_tile: true, should_grow_old: true, 2400f, 0f, 740f, ID + "Original", STRINGS.CREATURES.SPECIES.SEALETTUCE.NAME);
+		}, pressure_sensitive: false, 0f, 0.15f, "Lettuce", can_drown: true, can_tinker: true, require_solid_tile: true, should_grow_old: true, 2400f, 0f, 7400f, ID + "Original", STRINGS.CREATURES.SPECIES.SEALETTUCE.NAME);
 		PlantElementAbsorber.ConsumeInfo[] array = new PlantElementAbsorber.ConsumeInfo[1];
 		PlantElementAbsorber.ConsumeInfo consumeInfo = new PlantElementAbsorber.ConsumeInfo
 		{

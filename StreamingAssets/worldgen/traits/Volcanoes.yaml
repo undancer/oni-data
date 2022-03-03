@@ -1,6 +1,6 @@
 name: STRINGS.WORLD_TRAITS.VOLCANOES.NAME
 description: STRINGS.WORLD_TRAITS.VOLCANOES.DESCRIPTION
-colorHex: BF1C1C
+colorHex: FA4545
 
 forbiddenDLCIds:
   - EXPANSION1_ID # reimplemented in DLC

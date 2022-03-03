@@ -26,6 +26,8 @@ public class AccessControl : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDes
 
 	private bool isTeleporter;
 
+	private int[] registeredBuildingCells;
+
 	[Serialize]
 	private List<KeyValuePair<Ref<KPrefabID>, Permission>> savedPermissions = new List<KeyValuePair<Ref<KPrefabID>, Permission>>();
 
@@ -79,10 +81,30 @@ public class AccessControl : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDes
 		Subscribe(-905833192, OnCopySettingsDelegate);
 	}
 
+	private void CheckForBadData()
+	{
+		List<KeyValuePair<Ref<KPrefabID>, Permission>> list = new List<KeyValuePair<Ref<KPrefabID>, Permission>>();
+		foreach (KeyValuePair<Ref<KPrefabID>, Permission> savedPermission in savedPermissions)
+		{
+			if (savedPermission.Key.Get() == null)
+			{
+				list.Add(savedPermission);
+			}
+		}
+		foreach (KeyValuePair<Ref<KPrefabID>, Permission> item in list)
+		{
+			savedPermissions.Remove(item);
+		}
+	}
+
 	protected override void OnSpawn()
 	{
 		isTeleporter = GetComponent<NavTeleporter>() != null;
 		base.OnSpawn();
+		if (savedPermissions.Count > 0)
+		{
+			CheckForBadData();
+		}
 		if (registered)
 		{
 			RegisterInGrid(register: true);
@@ -185,6 +207,11 @@ public class AccessControl : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDes
 		SetGridRestrictions(null, DefaultPermission);
 		foreach (KeyValuePair<Ref<KPrefabID>, Permission> savedPermission in savedPermissions)
 		{
+			KPrefabID kPrefabID = savedPermission.Key.Get();
+			if (kPrefabID == null)
+			{
+				DebugUtil.Assert(kPrefabID == null, "Tried to set a duplicant-specific access restriction with a null key! This will result in an invisible default permission!");
+			}
 			SetGridRestrictions(savedPermission.Key.Get(), savedPermission.Value);
 		}
 	}
@@ -203,10 +230,11 @@ public class AccessControl : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDes
 			Grid.Restriction.Orientation orientation = (isTeleporter ? Grid.Restriction.Orientation.SingleCell : ((!(component3 == null) && component3.GetOrientation() != 0) ? Grid.Restriction.Orientation.Horizontal : Grid.Restriction.Orientation.Vertical));
 			if (component != null)
 			{
-				int[] placementCells = component.PlacementCells;
-				for (int i = 0; i < placementCells.Length; i++)
+				registeredBuildingCells = component.PlacementCells;
+				int[] array = registeredBuildingCells;
+				for (int i = 0; i < array.Length; i++)
 				{
-					Grid.RegisterRestriction(placementCells[i], orientation);
+					Grid.RegisterRestriction(array[i], orientation);
 				}
 			}
 			else
@@ -226,13 +254,14 @@ public class AccessControl : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDes
 		{
 			if (component != null)
 			{
-				if (component.GetMyWorldId() != ClusterManager.INVALID_WORLD_IDX)
+				if (component.GetMyWorldId() != ClusterManager.INVALID_WORLD_IDX && registeredBuildingCells != null)
 				{
-					int[] placementCells = component.PlacementCells;
-					for (int i = 0; i < placementCells.Length; i++)
+					int[] array = registeredBuildingCells;
+					for (int i = 0; i < array.Length; i++)
 					{
-						Grid.UnregisterRestriction(placementCells[i]);
+						Grid.UnregisterRestriction(array[i]);
 					}
+					registeredBuildingCells = null;
 				}
 			}
 			else
@@ -290,10 +319,10 @@ public class AccessControl : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDes
 		}
 		if (component != null)
 		{
-			int[] placementCells = component.PlacementCells;
-			for (int i = 0; i < placementCells.Length; i++)
+			int[] array = registeredBuildingCells;
+			for (int i = 0; i < array.Length; i++)
 			{
-				Grid.SetRestriction(placementCells[i], minionInstanceID, directions);
+				Grid.SetRestriction(array[i], minionInstanceID, directions);
 			}
 		}
 		else
@@ -321,10 +350,10 @@ public class AccessControl : KMonoBehaviour, ISaveLoadable, IGameObjectEffectDes
 		int minionInstanceID = ((kpid != null) ? kpid.InstanceID : (-1));
 		if (component != null)
 		{
-			int[] placementCells = component.PlacementCells;
-			for (int i = 0; i < placementCells.Length; i++)
+			int[] array = registeredBuildingCells;
+			for (int i = 0; i < array.Length; i++)
 			{
-				Grid.ClearRestriction(placementCells[i], minionInstanceID);
+				Grid.ClearRestriction(array[i], minionInstanceID);
 			}
 			return;
 		}

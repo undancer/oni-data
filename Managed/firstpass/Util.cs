@@ -5,7 +5,6 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using KSerialization;
-using TMPro;
 using UnityEngine;
 
 public static class Util
@@ -14,7 +13,7 @@ public static class Util
 
 	private static HashSet<char> additionalInvalidUserInputChars = new HashSet<char>(new char[10] { '<', '>', ':', '"', '/', '?', '*', '\\', '!', '.' });
 
-	private static System.Random random = new System.Random();
+	private static KRandom random = new KRandom();
 
 	private static string defaultRootFolder = Application.persistentDataPath;
 
@@ -335,8 +334,12 @@ public static class Util
 		return $"{value:0}";
 	}
 
-	public static bool IsInputCharacterValid(char _char, bool isPath = false)
+	public static bool IsInputCharacterValid(char _char, bool isPath = false, bool allowNewLine = false)
 	{
+		if (!isPath && allowNewLine && _char == '\n')
+		{
+			return true;
+		}
 		if (defaultInvalidUserInputChars.Contains(_char))
 		{
 			return false;
@@ -348,11 +351,23 @@ public static class Util
 		return true;
 	}
 
-	public static void ScrubInputField(TMP_InputField inputField, bool isPath = false)
+	public static bool IsInputStringValid(string input, bool isPath = false, bool allowNewLine = false)
+	{
+		for (int i = 0; i < input.Length; i++)
+		{
+			if (!IsInputCharacterValid(input[i], isPath, allowNewLine))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static void ScrubInputField(KInputTextField inputField, bool isPath = false, bool allowNewLine = false)
 	{
 		for (int num = inputField.text.Length - 1; num >= 0; num--)
 		{
-			if (num < inputField.text.Length && !IsInputCharacterValid(inputField.text[num], isPath))
+			if (num < inputField.text.Length && !IsInputCharacterValid(inputField.text[num], isPath, allowNewLine))
 			{
 				inputField.text = inputField.text.Remove(num, 1);
 			}

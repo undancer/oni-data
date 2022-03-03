@@ -51,6 +51,7 @@ public class PioneerModuleConfig : IBuildingConfig
 		{
 			new BuildingAttachPoint.HardPoint(new CellOffset(0, 3), GameTags.Rocket, null)
 		};
+		go.AddOrGet<NavTeleporter>();
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

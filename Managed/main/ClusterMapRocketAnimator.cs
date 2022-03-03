@@ -97,7 +97,7 @@ public class ClusterMapRocketAnimator : GameStateMachine<ClusterMapRocketAnimato
 	public override void InitializeStates(out BaseState defaultState)
 	{
 		defaultState = idle;
-		root.OnTargetLost(entityTarget, null).Target(entityTarget).EventHandlerTransition(GameHashes.RocketSelfDestructRequested, exploding, (StatesInstance smi, object data) => true)
+		root.Transition(null, entityTarget.IsNull).Target(entityTarget).EventHandlerTransition(GameHashes.RocketSelfDestructRequested, exploding, (StatesInstance smi, object data) => true)
 			.EventHandlerTransition(GameHashes.StartMining, utility.mining, (StatesInstance smi, object data) => true)
 			.EventHandlerTransition(GameHashes.RocketLaunched, moving.takeoff, (StatesInstance smi, object data) => true);
 		idle.Target(masterTarget).Enter(delegate(StatesInstance smi)
@@ -227,12 +227,15 @@ public class ClusterMapRocketAnimator : GameStateMachine<ClusterMapRocketAnimato
 
 	private void ToggleSelectable(bool isSelectable, StatesInstance smi)
 	{
-		KSelectable component = smi.entity.GetComponent<KSelectable>();
-		component.IsSelectable = isSelectable;
-		if (!isSelectable && component.IsSelected && ClusterMapScreen.Instance.GetMode() != ClusterMapScreen.Mode.SelectDestination)
+		if (!smi.entity.IsNullOrDestroyed())
 		{
-			ClusterMapSelectTool.Instance.Select(null, skipSound: true);
-			SelectTool.Instance.Select(null, skipSound: true);
+			KSelectable component = smi.entity.GetComponent<KSelectable>();
+			component.IsSelectable = isSelectable;
+			if (!isSelectable && component.IsSelected && ClusterMapScreen.Instance.GetMode() != ClusterMapScreen.Mode.SelectDestination)
+			{
+				ClusterMapSelectTool.Instance.Select(null, skipSound: true);
+				SelectTool.Instance.Select(null, skipSound: true);
+			}
 		}
 	}
 }

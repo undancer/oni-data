@@ -42,11 +42,12 @@ public class EquippableWorkable : Workable, ISaveLoadable
 		chore = new EquipChore(this);
 	}
 
-	public void CancelChore()
+	public void CancelChore(string reason = "")
 	{
 		if (chore != null)
 		{
-			chore.Cancel("Manual equip");
+			chore.Cancel(reason);
+			Prioritizable.RemoveRef(equippable.gameObject);
 			chore = null;
 		}
 	}
@@ -55,8 +56,7 @@ public class EquippableWorkable : Workable, ISaveLoadable
 	{
 		if (chore != null)
 		{
-			chore.Cancel("Equipment Reassigned");
-			chore = null;
+			CancelChore("Equipment Reassigned");
 		}
 		if (target != null && !target.GetSoleOwner().GetComponent<Equipment>().IsEquipped(equippable))
 		{

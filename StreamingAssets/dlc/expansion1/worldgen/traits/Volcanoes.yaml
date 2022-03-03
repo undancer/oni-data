@@ -1,10 +1,8 @@
 name: STRINGS.WORLD_TRAITS.VOLCANOES.NAME
 description: STRINGS.WORLD_TRAITS.VOLCANOES.DESCRIPTION
-colorHex: BF1C1C
+colorHex: FA4545
 
 # Base game trait reimplemented; space is now two subworlds tall
-
-# Note: Requires a start subworld defined
 
 traitTags:
   - VeryHot
@@ -12,20 +10,22 @@ traitTags:
 
 additionalSubworldFiles:
   - name: expansion1::subworlds/magma/VolcanoBiome
+    minCount: 2
 
 additionalUnknownCellFilters:
   - tagcommand: DistanceFromTag
-    tag: AtStart
-    minDistance: 2 # spaced out worlds are smaller (3 in base trait)
+    tag: AtSurface
+    minDistance: 3
     maxDistance: 999
     command: UnionWith
     subworldNames:
       - expansion1::subworlds/magma/VolcanoBiome
   - tagcommand: DistanceFromTag
-    tag: AtSurface
+    tag: AtStart
     minDistance: 0
-    maxDistance: 2
+    maxDistance: 1 # smaller worlds mean it's acceptable to spawn closer
     command: ExceptWith
+    optional: true # skip if no AtStart tag exists
     subworldNames:
       - expansion1::subworlds/magma/VolcanoBiome
   - tagcommand: DistanceFromTag
@@ -35,6 +35,11 @@ additionalUnknownCellFilters:
     command: ExceptWith
     subworldNames:
       - expansion1::subworlds/magma/VolcanoBiome
+  # - tagcommand: DistanceFromTag # too close to the edge on small worlds to spawn.
+  #   tag: AtEdge
+  #   command: ExceptWith
+  #   subworldNames:
+  #     - expansion1::subworlds/magma/VolcanoBiome
 
 additionalWorldTemplateRules:
   - names:

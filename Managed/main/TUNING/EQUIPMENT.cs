@@ -48,6 +48,8 @@ namespace TUNING
 
 			public static string SNAPON = "snapTo_neck";
 
+			public static float SUIT_DURABILITY_SKILL_BONUS = 0.25f;
+
 			public static int OXYMASK_FABTIME = 20;
 
 			public static int ATMOSUIT_FABTIME = 40;

@@ -205,21 +205,25 @@ namespace Database
 			}, new List<string> { Hauling1.Id }));
 			if (DlcManager.IsExpansion1Active())
 			{
-				ThermalSuits = AddSkill(new Skill("ThermalSuits", DUPLICANTS.ROLES.THERMAL_SUIT_WEARER.NAME, DUPLICANTS.ROLES.THERMAL_SUIT_WEARER.DESCRIPTION, "EXPANSION1_ID", 1, "hat_role_suits1", "skillbadge_role_suits2", Db.Get().SkillGroups.Suits.Id, new List<SkillPerk> { Db.Get().SkillPerks.IncreaseAthleticsLarge }, new List<string> { Hauling1.Id, RocketPiloting1.Id }));
-				Suits1 = AddSkill(new Skill("Suits1", DUPLICANTS.ROLES.SUIT_EXPERT.NAME, DUPLICANTS.ROLES.SUIT_EXPERT.DESCRIPTION, "EXPANSION1_ID", 2, "hat_role_suits1", "skillbadge_role_suits3", Db.Get().SkillGroups.Suits.Id, new List<SkillPerk>
+				ThermalSuits = AddSkill(new Skill("ThermalSuits", DUPLICANTS.ROLES.SUIT_DURABILITY.NAME, DUPLICANTS.ROLES.SUIT_DURABILITY.DESCRIPTION, "EXPANSION1_ID", 1, "hat_role_suits1", "skillbadge_role_suits2", Db.Get().SkillGroups.Suits.Id, new List<SkillPerk>
 				{
-					Db.Get().SkillPerks.ExosuitExpertise,
-					Db.Get().SkillPerks.IncreaseAthleticsMedium
-				}, new List<string> { DlcManager.IsExpansion1Active() ? ThermalSuits.Id : Hauling2.Id }));
+					Db.Get().SkillPerks.IncreaseAthleticsLarge,
+					Db.Get().SkillPerks.ExosuitDurability
+				}, new List<string> { Hauling1.Id, RocketPiloting1.Id }));
 			}
 			else
 			{
-				Suits1 = AddSkill(new Skill("Suits1", DUPLICANTS.ROLES.SUIT_EXPERT.NAME, DUPLICANTS.ROLES.SUIT_EXPERT.DESCRIPTION, "", 2, "hat_role_suits1", "skillbadge_role_suits3", Db.Get().SkillGroups.Suits.Id, new List<SkillPerk>
+				ThermalSuits = AddSkill(new Skill("ThermalSuits", DUPLICANTS.ROLES.SUIT_DURABILITY.NAME, DUPLICANTS.ROLES.SUIT_DURABILITY.DESCRIPTION, "", 1, "hat_role_suits1", "skillbadge_role_suits2", Db.Get().SkillGroups.Suits.Id, new List<SkillPerk>
 				{
-					Db.Get().SkillPerks.ExosuitExpertise,
-					Db.Get().SkillPerks.IncreaseAthleticsMedium
-				}, new List<string> { Hauling2.Id }));
+					Db.Get().SkillPerks.IncreaseAthleticsLarge,
+					Db.Get().SkillPerks.ExosuitDurability
+				}, new List<string> { Hauling1.Id }));
 			}
+			Suits1 = AddSkill(new Skill("Suits1", DUPLICANTS.ROLES.SUIT_EXPERT.NAME, DUPLICANTS.ROLES.SUIT_EXPERT.DESCRIPTION, "", 2, "hat_role_suits2", "skillbadge_role_suits3", Db.Get().SkillGroups.Suits.Id, new List<SkillPerk>
+			{
+				Db.Get().SkillPerks.ExosuitExpertise,
+				Db.Get().SkillPerks.IncreaseAthleticsMedium
+			}, new List<string> { ThermalSuits.Id }));
 			Technicals1 = AddSkill(new Skill("Technicals1", DUPLICANTS.ROLES.MACHINE_TECHNICIAN.NAME, DUPLICANTS.ROLES.MACHINE_TECHNICIAN.DESCRIPTION, "", 0, "hat_role_technicals1", "skillbadge_role_technicals1", Db.Get().SkillGroups.Technicals.Id, new List<SkillPerk> { Db.Get().SkillPerks.IncreaseMachinerySmall }));
 			Technicals2 = AddSkill(new Skill("Technicals2", DUPLICANTS.ROLES.POWER_TECHNICIAN.NAME, DUPLICANTS.ROLES.POWER_TECHNICIAN.DESCRIPTION, "", 1, "hat_role_technicals2", "skillbadge_role_technicals2", Db.Get().SkillGroups.Technicals.Id, new List<SkillPerk>
 			{

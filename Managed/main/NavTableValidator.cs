@@ -24,8 +24,8 @@ public class NavTableValidator
 
 	protected static bool IsCellPassable(int cell, bool is_dupe)
 	{
-		Grid.BuildFlags buildFlags = Grid.BuildMasks[cell] & (Grid.BuildFlags.Solid | Grid.BuildFlags.DupePassable | Grid.BuildFlags.DupeImpassable | Grid.BuildFlags.CritterImpassable);
-		if (buildFlags == (Grid.BuildFlags)0)
+		Grid.BuildFlags buildFlags = Grid.BuildMasks[cell] & ~(Grid.BuildFlags.FakeFloor | Grid.BuildFlags.Foundation | Grid.BuildFlags.Door);
+		if (buildFlags == ~(Grid.BuildFlags.FakeFloor | Grid.BuildFlags.Solid | Grid.BuildFlags.Foundation | Grid.BuildFlags.Door | Grid.BuildFlags.DupePassable | Grid.BuildFlags.DupeImpassable | Grid.BuildFlags.CritterImpassable))
 		{
 			return true;
 		}

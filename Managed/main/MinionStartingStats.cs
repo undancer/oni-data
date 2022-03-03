@@ -41,13 +41,13 @@ public class MinionStartingStats : ITelepadDeliverable
 	{
 		if (is_starter_minion)
 		{
-			int idx = UnityEngine.Random.Range(0, 29);
-			personality = Db.Get().Personalities[idx];
+			int index = UnityEngine.Random.Range(0, Db.Get().Personalities.GetStartingPersonalities().Count);
+			personality = Db.Get().Personalities.GetStartingPersonalities()[index];
 		}
 		else
 		{
-			int idx2 = UnityEngine.Random.Range(0, 35);
-			personality = Db.Get().Personalities[idx2];
+			int idx = UnityEngine.Random.Range(0, Db.Get().Personalities.Count);
+			personality = Db.Get().Personalities[idx];
 		}
 		voiceIdx = UnityEngine.Random.Range(0, 4);
 		Name = personality.Name;
@@ -126,7 +126,7 @@ public class MinionStartingStats : ITelepadDeliverable
 	{
 		int statDelta = 0;
 		List<string> selectedTraits = new List<string>();
-		System.Random randSeed = new System.Random();
+		KRandom randSeed = new KRandom();
 		Trait trait = (stressTrait = Db.Get().traits.Get(personality.stresstrait));
 		Trait trait2 = (joyTrait = Db.Get().traits.Get(personality.joyTrait));
 		stickerType = personality.stickerType;

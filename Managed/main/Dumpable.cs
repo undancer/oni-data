@@ -27,7 +27,7 @@ public class Dumpable : Workable
 		base.OnSpawn();
 		if (isMarkedForDumping)
 		{
-			chore = new WorkChore<Dumpable>(Db.Get().ChoreTypes.EmptyStorage, this);
+			CreateChore();
 		}
 		SetWorkTime(0.1f);
 	}
@@ -42,12 +42,22 @@ public class Dumpable : Workable
 		{
 			isMarkedForDumping = false;
 			chore.Cancel("Cancel Dumping!");
+			Prioritizable.RemoveRef(base.gameObject);
 			chore = null;
 			ShowProgressBar(show: false);
 		}
 		else
 		{
 			isMarkedForDumping = true;
+			CreateChore();
+		}
+	}
+
+	private void CreateChore()
+	{
+		if (chore == null)
+		{
+			Prioritizable.AddRef(base.gameObject);
 			chore = new WorkChore<Dumpable>(Db.Get().ChoreTypes.EmptyStorage, this);
 		}
 	}
@@ -57,6 +67,7 @@ public class Dumpable : Workable
 		isMarkedForDumping = false;
 		chore = null;
 		Dump();
+		Prioritizable.RemoveRef(base.gameObject);
 	}
 
 	public void Dump()

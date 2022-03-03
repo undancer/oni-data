@@ -192,6 +192,11 @@ public class MinionResume : KMonoBehaviour, ISaveLoadable, ISim200ms
 	protected override void OnCleanUp()
 	{
 		Components.MinionResumes.Remove(this);
+		if (lastSkillNotification != null)
+		{
+			Game.Instance.GetComponent<Notifier>().Remove(lastSkillNotification);
+			lastSkillNotification = null;
+		}
 		base.OnCleanUp();
 	}
 

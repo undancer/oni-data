@@ -17,11 +17,11 @@ namespace STRINGS
 
 			public static LocString NO_RESEARCHER_SKILL = "No Researchers assigned";
 
-			public static LocString NO_RESEARCHER_SKILL_TOOLTIP = "The selected research focus requires {ResearchType} to complete\n\nOpen the " + UI.FormatAsManagementMenu("Skills Panel", "[L]") + " and teach a Duplicant the {ResearchType} Skill to use this building";
+			public static LocString NO_RESEARCHER_SKILL_TOOLTIP = "The selected research focus requires {ResearchType} to complete\n\nOpen the " + UI.FormatAsManagementMenu("Skills Panel", Action.ManageSkills) + " and teach a Duplicant the {ResearchType} Skill to use this building";
 
 			public static LocString MISSING_RESEARCH_STATION = "Missing Research Station";
 
-			public static LocString MISSING_RESEARCH_STATION_TOOLTIP = "The selected research focus requires a {0} to perform\n\nOpen the " + UI.FormatAsBuildMenuTab("Stations Tab") + " " + UI.FormatAsHotkey("[0]") + " of the Build Menu to construct one";
+			public static LocString MISSING_RESEARCH_STATION_TOOLTIP = "The selected research focus requires a {0} to perform\n\nOpen the " + UI.FormatAsBuildMenuTab("Stations Tab", Action.Plan10) + " of the Build Menu to construct one";
 		}
 
 		public class TYPES
@@ -163,6 +163,8 @@ namespace STRINGS
 			public static LocString TITLE_SOLIDS = "Solid Material";
 
 			public static LocString TITLE_COLONYDEVELOPMENT = "Colony Development";
+
+			public static LocString TITLE_RADIATIONTECH = "Radiation Technologies";
 
 			public static LocString TITLE_MEDICINE = "Medicine";
 
@@ -864,7 +866,14 @@ namespace STRINGS
 			{
 				public static LocString NAME = UI.FormatAsLink("More Materials Science Research", "ATOMIC");
 
-				public static LocString DESC = "Harness sub-atomic particles to study the properties of matter, but more.";
+				public static LocString DESC = "Harness sub-atomic particles to study the properties of matter even more.";
+			}
+
+			public class NUCLEARSTORAGE
+			{
+				public static LocString NAME = UI.FormatAsLink("Radbolt Containment", "ATOMIC");
+
+				public static LocString DESC = "Build a quality cache of radbolts.";
 			}
 
 			public class SOLIDSPACE

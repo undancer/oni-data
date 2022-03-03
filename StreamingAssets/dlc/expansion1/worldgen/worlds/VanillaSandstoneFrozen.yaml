@@ -1,7 +1,6 @@
 name: STRINGS.WORLDS.VANILLASANDSTONEFROZEN.NAME # Rime
 description: STRINGS.WORLDS.VANILLASANDSTONEFROZEN.DESCRIPTION
-nameTables:
-  - TUNDRA
+nameTables: [ TUNDRA ]
 asteroidIcon: asteroid_vanilla_sandstonefrozen_kanim
 
 worldTraitScale: 0.9 # Adjust with worldSize. Traits are tuned to base game world sizes.
@@ -13,7 +12,7 @@ layoutMethod: PowerTree # Note: We need to add weights to the items in the layer
 
 fixedTraits:
   - sunlightMed
-  - cosmicRadiationMed
+  - cosmicRadiationVeryLow
 
 startSubworldName: subworlds/sandstone/SandstoneStartCold
 startingBaseTemplate: bases/sandstoneBase
@@ -256,7 +255,7 @@ worldTemplateRules:
   - names:
     - expansion1::poi/warp/sender
     - expansion1::poi/warp/receiver
-    - expansion1::poi/warp/teleporter
+    - expansion1::poi/warp/teleporter_no_oil
     listRule: GuaranteeAll
     priority: 90
     allowedCellsFilter:

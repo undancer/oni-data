@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Klei.AI;
 using ProcGen;
 using STRINGS;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -246,6 +247,8 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 	private Dictionary<Tag, GameObject> geyserRows = new Dictionary<Tag, GameObject>();
 
 	private List<GameObject> worldTraitRows = new List<GameObject>();
+
+	private List<GameObject> surfaceConditionRows = new List<GameObject>();
 
 	[SerializeField]
 	public GameObject spacerRow;
@@ -870,42 +873,74 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 		}
 		geyserRows[key2].gameObject.SetActive(list.Count == 0);
 		List<string> worldTraitIds = worldContainer.WorldTraitIds;
-		if (worldTraitIds == null)
+		if (worldTraitIds != null)
 		{
-			return;
+			for (int j = 0; j < worldTraitIds.Count; j++)
+			{
+				if (j > worldTraitRows.Count - 1)
+				{
+					CreateWorldTraitRow();
+				}
+				WorldTrait cachedTrait = SettingsCache.GetCachedTrait(worldTraitIds[j], assertMissingTrait: false);
+				Image reference = worldTraitRows[j].GetComponent<HierarchyReferences>().GetReference<Image>("Icon");
+				if (cachedTrait != null)
+				{
+					Sprite sprite = Assets.GetSprite(cachedTrait.filePath.Substring(cachedTrait.filePath.LastIndexOf("/") + 1));
+					reference.gameObject.SetActive(value: true);
+					reference.sprite = ((sprite == null) ? Assets.GetSprite("unknown") : sprite);
+					reference.color = Util.ColorFromHex(cachedTrait.colorHex);
+					worldTraitRows[j].GetComponent<HierarchyReferences>().GetReference<LocText>("NameLabel").SetText(Strings.Get(cachedTrait.name));
+					worldTraitRows[j].AddOrGet<ToolTip>().SetSimpleTooltip(Strings.Get(cachedTrait.description));
+				}
+				else
+				{
+					Sprite sprite2 = Assets.GetSprite("NoTraits");
+					reference.gameObject.SetActive(value: true);
+					reference.sprite = sprite2;
+					reference.color = Color.white;
+					worldTraitRows[j].GetComponent<HierarchyReferences>().GetReference<LocText>("NameLabel").SetText(WORLD_TRAITS.MISSING_TRAIT);
+					worldTraitRows[j].AddOrGet<ToolTip>().SetSimpleTooltip("");
+				}
+			}
+			for (int k = 0; k < worldTraitRows.Count; k++)
+			{
+				worldTraitRows[k].SetActive(k < worldTraitIds.Count);
+			}
+			if (worldTraitIds.Count == 0)
+			{
+				if (worldTraitRows.Count < 1)
+				{
+					CreateWorldTraitRow();
+				}
+				Image reference2 = worldTraitRows[0].GetComponent<HierarchyReferences>().GetReference<Image>("Icon");
+				Sprite sprite3 = Assets.GetSprite("NoTraits");
+				reference2.gameObject.SetActive(value: true);
+				reference2.sprite = sprite3;
+				reference2.color = Color.black;
+				worldTraitRows[0].GetComponent<HierarchyReferences>().GetReference<LocText>("NameLabel").SetText(WORLD_TRAITS.NO_TRAITS.NAME_SHORTHAND);
+				worldTraitRows[0].AddOrGet<ToolTip>().SetSimpleTooltip(WORLD_TRAITS.NO_TRAITS.DESCRIPTION);
+				worldTraitRows[0].SetActive(value: true);
+			}
 		}
-		for (int j = 0; j < worldTraitIds.Count; j++)
+		for (int num = surfaceConditionRows.Count - 1; num >= 0; num--)
 		{
-			if (j > worldTraitRows.Count - 1)
-			{
-				CreateWorldTraitRow();
-			}
-			WorldTrait cachedTrait = SettingsCache.GetCachedTrait(worldTraitIds[j], assertMissingTrait: false);
-			if (cachedTrait != null)
-			{
-				worldTraitRows[j].GetComponent<HierarchyReferences>().GetReference<LocText>("NameLabel").SetText(Strings.Get(cachedTrait.name));
-				worldTraitRows[j].AddOrGet<ToolTip>().SetSimpleTooltip(Strings.Get(cachedTrait.description));
-			}
-			else
-			{
-				worldTraitRows[j].GetComponent<HierarchyReferences>().GetReference<LocText>("NameLabel").SetText(WORLD_TRAITS.MISSING_TRAIT);
-				worldTraitRows[j].AddOrGet<ToolTip>().SetSimpleTooltip("");
-			}
+			Util.KDestroyGameObject(surfaceConditionRows[num]);
 		}
-		for (int k = 0; k < worldTraitRows.Count; k++)
-		{
-			worldTraitRows[k].SetActive(k < worldTraitIds.Count);
-		}
-		if (worldTraitIds.Count == 0)
-		{
-			if (worldTraitRows.Count < 1)
-			{
-				CreateWorldTraitRow();
-			}
-			worldTraitRows[0].GetComponent<HierarchyReferences>().GetReference<LocText>("NameLabel").SetText(WORLD_TRAITS.NO_TRAITS.NAME_SHORTHAND);
-			worldTraitRows[0].AddOrGet<ToolTip>().SetSimpleTooltip(WORLD_TRAITS.NO_TRAITS.DESCRIPTION);
-			worldTraitRows[0].SetActive(value: true);
-		}
+		surfaceConditionRows.Clear();
+		GameObject gameObject = Util.KInstantiateUI(iconLabelRow, worldTraitsPanel.Content.gameObject, force_active: true);
+		HierarchyReferences component5 = gameObject.GetComponent<HierarchyReferences>();
+		component5.GetReference<Image>("Icon").sprite = Assets.GetSprite("overlay_lights");
+		component5.GetReference<LocText>("NameLabel").SetText(UI.CLUSTERMAP.ASTEROIDS.SURFACE_CONDITIONS.LIGHT);
+		component5.GetReference<LocText>("ValueLabel").SetText(GameUtil.GetFormattedLux(worldContainer.SunlightFixedTraits[worldContainer.sunlightFixedTrait]));
+		component5.GetReference<LocText>("ValueLabel").alignment = TextAlignmentOptions.MidlineRight;
+		surfaceConditionRows.Add(gameObject);
+		GameObject gameObject2 = Util.KInstantiateUI(iconLabelRow, worldTraitsPanel.Content.gameObject, force_active: true);
+		HierarchyReferences component6 = gameObject2.GetComponent<HierarchyReferences>();
+		component6.GetReference<Image>("Icon").sprite = Assets.GetSprite("overlay_radiation");
+		component6.GetReference<LocText>("NameLabel").SetText(UI.CLUSTERMAP.ASTEROIDS.SURFACE_CONDITIONS.RADIATION);
+		component6.GetReference<LocText>("ValueLabel").SetText(GameUtil.GetFormattedRads(worldContainer.CosmicRadiationFixedTraits[worldContainer.cosmicRadiationFixedTrait]));
+		component6.GetReference<LocText>("ValueLabel").alignment = TextAlignmentOptions.MidlineRight;
+		surfaceConditionRows.Add(gameObject2);
 	}
 
 	private void RefreshProcessConditions()

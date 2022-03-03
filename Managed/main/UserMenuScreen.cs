@@ -35,6 +35,7 @@ public class UserMenuScreen : KIconButtonMenu
 	{
 		base.OnSpawn();
 		Game.Instance.Subscribe(1980521255, OnUIRefresh);
+		KInputManager.InputChange.AddListener(base.RefreshButtonTooltip);
 	}
 
 	public void SetSelected(GameObject go)

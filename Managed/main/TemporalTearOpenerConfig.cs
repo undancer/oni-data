@@ -22,7 +22,7 @@ public class TemporalTearOpenerConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("TemporalTearOpener", 5, 4, "temporal_tear_opener_kanim", 100, 120f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.RAW_METALS, 2400f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER6, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER2);
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("TemporalTearOpener", 3, 4, "temporal_tear_opener_kanim", 100, 120f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.RAW_METALS, 2400f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER6, decor: TUNING.BUILDINGS.DECOR.BONUS.TIER2);
 		obj.DefaultAnimState = "off";
 		obj.Entombable = false;
 		obj.Invincible = true;
@@ -42,6 +42,7 @@ public class TemporalTearOpenerConfig : IBuildingConfig
 		highEnergyParticleStorage.autoStore = true;
 		highEnergyParticleStorage.capacity = 1000f;
 		highEnergyParticleStorage.PORT_ID = "HEP_STORAGE";
+		highEnergyParticleStorage.showCapacityStatusItem = true;
 		TemporalTearOpener.Def def = go.AddOrGetDef<TemporalTearOpener.Def>();
 		def.numParticlesToOpen = 10000f;
 		def.consumeRate = 5f;

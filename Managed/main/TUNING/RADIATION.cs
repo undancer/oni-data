@@ -13,44 +13,48 @@ namespace TUNING
 
 		public class RADIATION_PER_SECOND
 		{
-			public const float TRIVIAL = 6f;
+			public const float TRIVIAL = 60f;
 
-			public const float VERY_LOW = 12f;
+			public const float VERY_LOW = 120f;
 
-			public const float LOW = 24f;
+			public const float LOW = 240f;
 
-			public const float MODERATE = 60f;
+			public const float MODERATE = 600f;
 
-			public const float HIGH = 180f;
+			public const float HIGH = 1800f;
 
-			public const float VERY_HIGH = 420f;
+			public const float VERY_HIGH = 4800f;
 
-			public const int EXTREME = 840;
+			public const int EXTREME = 9600;
 		}
 
 		public class RADIATION_CONSTANT_RADS_PER_CYCLE
 		{
-			public const float TRIVIAL = 12f;
+			public const float LESS_THAN_TRIVIAL = 60f;
 
-			public const float VERY_LOW = 24f;
+			public const float TRIVIAL = 120f;
 
-			public const float LOW = 48f;
+			public const float VERY_LOW = 240f;
 
-			public const float MODERATE = 120f;
+			public const float LOW = 480f;
 
-			public const float MODERATE_PLUS = 240f;
+			public const float MODERATE = 1200f;
 
-			public const float HIGH = 360f;
+			public const float MODERATE_PLUS = 2400f;
 
-			public const float VERY_HIGH = 840f;
+			public const float HIGH = 3600f;
 
-			public const int EXTREME = 1680;
+			public const float VERY_HIGH = 8400f;
+
+			public const int EXTREME = 16800;
 		}
 
-		public const float GERM_RAD_SCALE = 0.001f;
+		public const float GERM_RAD_SCALE = 0.01f;
 
-		public const float STANDARD_DAILY_RECOVERY = 60f;
+		public const float STANDARD_DAILY_RECOVERY = 100f;
 
 		public const float EXTRA_VOMIT_RECOVERY = 20f;
+
+		public const float REACT_THRESHOLD = 133f;
 	}
 }

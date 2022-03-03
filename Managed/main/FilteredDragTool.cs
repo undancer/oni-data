@@ -128,6 +128,7 @@ public class FilteredDragTool : DragTool
 		switch (gamer_layer)
 		{
 		case ObjectLayer.Building:
+		case ObjectLayer.Gantry:
 			return "Buildings";
 		case ObjectLayer.Wire:
 		case ObjectLayer.WireConnectors:

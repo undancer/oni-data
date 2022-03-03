@@ -64,8 +64,13 @@ public class HoverTextHelper
 				num = Mathf.Floor(num);
 			}
 			int num2 = Mathf.FloorToInt(num);
+			int num3 = Mathf.RoundToInt(10f * (num - (float)num2));
+			if (num3 == 10)
+			{
+				num2++;
+				num3 = 0;
+			}
 			massStrings[0] = num2.ToString();
-			float num3 = Mathf.RoundToInt(10f * (num - (float)num2));
 			massStrings[1] = "." + num3;
 		}
 		return massStrings;

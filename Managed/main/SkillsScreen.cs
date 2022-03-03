@@ -575,15 +575,18 @@ public class SkillsScreen : KModalScreen
 		{
 			RefreshAll();
 		}
-		if (!linesPending)
+		if (linesPending)
 		{
-			return;
+			foreach (GameObject value in skillWidgets.Values)
+			{
+				value.GetComponent<SkillWidget>().RefreshLines();
+			}
+			linesPending = false;
 		}
-		foreach (GameObject value in skillWidgets.Values)
+		if (KInputManager.currentControllerIsGamepad)
 		{
-			value.GetComponent<SkillWidget>().RefreshLines();
+			scrollRect.AnalogUpdate(KInputManager.steamInputInterpreter.GetSteamCameraMovement());
 		}
-		linesPending = false;
 	}
 
 	private void RefreshSkillWidgets()

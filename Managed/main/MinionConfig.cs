@@ -111,7 +111,7 @@ public class MinionConfig : IEntityConfig
 			Assets.GetAnim("anim_construction_jetsuit_kanim")
 		};
 		KBoxCollider2D kBoxCollider2D = gameObject.AddOrGet<KBoxCollider2D>();
-		kBoxCollider2D.offset = new Vector2(0f, 0.8f);
+		kBoxCollider2D.offset = new Vector2(0f, 0.75f);
 		kBoxCollider2D.size = new Vector2(1f, 1.5f);
 		gameObject.AddOrGet<SnapOn>().snapPoints = new List<SnapOn.SnapPoint>(new SnapOn.SnapPoint[19]
 		{
@@ -547,7 +547,10 @@ public class MinionConfig : IEntityConfig
 		trait.Add(new AttributeModifier(Db.Get().Attributes.RoomTemperaturePreference.Id, 0f, name));
 		trait.Add(new AttributeModifier(Db.Get().Attributes.CarryAmount.Id, 200f, name));
 		trait.Add(new AttributeModifier(Db.Get().Attributes.QualityOfLife.Id, 1f, name));
-		trait.Add(new AttributeModifier(Db.Get().Attributes.SpaceNavigation.Id, 1f, name));
+		if (!DlcManager.IsExpansion1Active())
+		{
+			trait.Add(new AttributeModifier(Db.Get().Attributes.SpaceNavigation.Id, 1f, name));
+		}
 		trait.Add(new AttributeModifier(Db.Get().Attributes.Sneezyness.Id, 0f, name));
 		trait.Add(new AttributeModifier(Db.Get().Attributes.RadiationResistance.Id, 0f, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Stamina.deltaAttribute.Id, -7f / 60f, name));

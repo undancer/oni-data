@@ -34,6 +34,17 @@ namespace TUNING
 			public const float FAST_3 = 0.125f;
 		}
 
+		public class RADIATION_KILL_RATE
+		{
+			public const float NO_EFFECT = 0f;
+
+			public const float SLOW = 1f;
+
+			public const float NORMAL = 2.5f;
+
+			public const float FAST = 5f;
+		}
+
 		public static class GROWTH_FACTOR
 		{
 			public const float NONE = float.PositiveInfinity;

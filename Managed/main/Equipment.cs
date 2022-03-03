@@ -1,6 +1,7 @@
 using Klei;
 using Klei.AI;
 using KSerialization;
+using TUNING;
 using UnityEngine;
 
 [SerializationConfig(MemberSerialization.OptIn)]
@@ -132,19 +133,26 @@ public class Equipment : Assignables
 	{
 		AssignableSlotInstance slot = GetSlot(equippable.slot);
 		slot.Unassign();
-		equippable.Trigger(-170173755, this);
 		GameObject targetGameObject = GetTargetGameObject();
+		MinionResume minionResume = ((targetGameObject != null) ? targetGameObject.GetComponent<MinionResume>() : null);
+		Durability component = equippable.GetComponent<Durability>();
+		if ((bool)component && (bool)minionResume && !slot.IsUnassigning() && minionResume.HasPerk(Db.Get().SkillPerks.ExosuitDurability.Id))
+		{
+			float num = (GameClock.Instance.GetTimeInCycles() - component.TimeEquipped) * EQUIPMENT.SUITS.SUIT_DURABILITY_SKILL_BONUS;
+			component.TimeEquipped += num;
+		}
+		equippable.Trigger(-170173755, this);
 		if (!targetGameObject)
 		{
 			return;
 		}
 		targetGameObject.Trigger(-1285462312, equippable.GetComponent<KPrefabID>());
-		KBatchedAnimController component = targetGameObject.GetComponent<KBatchedAnimController>();
+		KBatchedAnimController component2 = targetGameObject.GetComponent<KBatchedAnimController>();
 		if (!destroyed)
 		{
-			if (equippable.def.BuildOverride != null && component != null)
+			if (equippable.def.BuildOverride != null && component2 != null)
 			{
-				component.GetComponent<SymbolOverrideController>().TryRemoveBuildOverride(equippable.def.BuildOverride.GetData(), equippable.def.BuildOverridePriority);
+				component2.GetComponent<SymbolOverrideController>().TryRemoveBuildOverride(equippable.def.BuildOverride.GetData(), equippable.def.BuildOverridePriority);
 			}
 			Attributes attributes = targetGameObject.GetAttributes();
 			if (attributes != null)
@@ -156,33 +164,33 @@ public class Equipment : Assignables
 			}
 			if (!equippable.def.IsBody)
 			{
-				SnapOn component2 = targetGameObject.GetComponent<SnapOn>();
+				SnapOn component3 = targetGameObject.GetComponent<SnapOn>();
 				if (equippable.def.SnapOn != null)
 				{
-					component2.DetachSnapOnByName(equippable.def.SnapOn);
+					component3.DetachSnapOnByName(equippable.def.SnapOn);
 				}
 				if (equippable.def.SnapOn1 != null)
 				{
-					component2.DetachSnapOnByName(equippable.def.SnapOn1);
+					component3.DetachSnapOnByName(equippable.def.SnapOn1);
 				}
 			}
 			if ((bool)equippable.transform.parent)
 			{
-				Storage component3 = equippable.transform.parent.GetComponent<Storage>();
-				if ((bool)component3)
+				Storage component4 = equippable.transform.parent.GetComponent<Storage>();
+				if ((bool)component4)
 				{
-					component3.Drop(equippable.gameObject);
+					component4.Drop(equippable.gameObject);
 				}
 			}
 			SetEquippableStoredModifiers(equippable, isStoring: false);
 			equippable.transform.parent = null;
 			equippable.transform.SetPosition(targetGameObject.transform.GetPosition() + Vector3.up / 2f);
-			KBatchedAnimController component4 = equippable.GetComponent<KBatchedAnimController>();
-			if ((bool)component4)
+			KBatchedAnimController component5 = equippable.GetComponent<KBatchedAnimController>();
+			if ((bool)component5)
 			{
-				component4.SetSceneLayer(Grid.SceneLayer.Ore);
+				component5.SetSceneLayer(Grid.SceneLayer.Ore);
 			}
-			if (!(component == null))
+			if (!(component2 == null))
 			{
 				if (refreshHandle.TimeRemaining > 0f)
 				{
@@ -204,30 +212,29 @@ public class Equipment : Assignables
 			}
 			if (!slot.IsUnassigning())
 			{
-				PrimaryElement component5 = equippable.GetComponent<PrimaryElement>();
-				PrimaryElement component6 = targetGameObject.GetComponent<PrimaryElement>();
-				if (component5 != null && component6 != null)
+				PrimaryElement component6 = equippable.GetComponent<PrimaryElement>();
+				PrimaryElement component7 = targetGameObject.GetComponent<PrimaryElement>();
+				if (component6 != null && component7 != null)
 				{
 					SimUtil.DiseaseInfo invalid = SimUtil.DiseaseInfo.Invalid;
-					invalid.idx = component5.DiseaseIdx;
-					invalid.count = (int)((float)component5.DiseaseCount * 0.33f);
+					invalid.idx = component6.DiseaseIdx;
+					invalid.count = (int)((float)component6.DiseaseCount * 0.33f);
 					SimUtil.DiseaseInfo invalid2 = SimUtil.DiseaseInfo.Invalid;
-					invalid2.idx = component6.DiseaseIdx;
-					invalid2.count = (int)((float)component6.DiseaseCount * 0.33f);
-					component6.ModifyDiseaseCount(-invalid2.count, "Equipment.Unequip");
-					component5.ModifyDiseaseCount(-invalid.count, "Equipment.Unequip");
+					invalid2.idx = component7.DiseaseIdx;
+					invalid2.count = (int)((float)component7.DiseaseCount * 0.33f);
+					component7.ModifyDiseaseCount(-invalid2.count, "Equipment.Unequip");
+					component6.ModifyDiseaseCount(-invalid.count, "Equipment.Unequip");
 					if (invalid2.count > 0)
 					{
-						component5.AddDisease(invalid2.idx, invalid2.count, "Equipment.Unequip");
+						component6.AddDisease(invalid2.idx, invalid2.count, "Equipment.Unequip");
 					}
 					if (invalid.count > 0)
 					{
-						component6.AddDisease(invalid.idx, invalid.count, "Equipment.Unequip");
+						component7.AddDisease(invalid.idx, invalid.count, "Equipment.Unequip");
 					}
-					Durability component7 = equippable.GetComponent<Durability>();
-					if (component7 != null && component7.IsWornOut())
+					if (component != null && component.IsWornOut())
 					{
-						component7.ConvertToWornObject();
+						component.ConvertToWornObject();
 					}
 				}
 			}

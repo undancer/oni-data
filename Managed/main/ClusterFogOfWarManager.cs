@@ -76,6 +76,10 @@ public class ClusterFogOfWarManager : GameStateMachine<ClusterFogOfWarManager, C
 
 		public void RevealLocation(AxialI location, int radius = 0)
 		{
+			if (ClusterGrid.Instance.GetHiddenEntitiesOfLayerAtCell(location, EntityLayer.Asteroid).Count > 0 || ClusterGrid.Instance.GetVisibleEntityOfLayerAtCell(location, EntityLayer.Asteroid) != null)
+			{
+				radius = Mathf.Max(radius, 1);
+			}
 			bool flag = false;
 			foreach (AxialI item in AxialUtil.GetAllPointsWithinRadius(location, radius))
 			{
@@ -103,6 +107,7 @@ public class ClusterFogOfWarManager : GameStateMachine<ClusterFogOfWarManager, C
 				}
 				if (IsLocationRevealed(location))
 				{
+					RevealLocation(location);
 					PeekLocation(location, 2);
 					Game.Instance.Trigger(-1991583975, location);
 				}
@@ -111,7 +116,10 @@ public class ClusterFogOfWarManager : GameStateMachine<ClusterFogOfWarManager, C
 
 		public float GetRevealCompleteFraction(AxialI location)
 		{
-			Debug.Assert(ClusterGrid.Instance.IsValidCell(location), $"GetRevealCompleteFraction called with invalid location: {location}");
+			if (!ClusterGrid.Instance.IsValidCell(location))
+			{
+				Debug.LogError($"GetRevealCompleteFraction called with invalid location: {location.r}, {location.q}");
+			}
 			if (DebugHandler.RevealFogOfWar)
 			{
 				return 1f;

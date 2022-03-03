@@ -27,6 +27,10 @@ public class ClusterTraveler : KMonoBehaviour, ISim200ms
 
 	private List<AxialI> m_cachedPath;
 
+	private bool m_isPathDirty;
+
+	public bool stopAndNotifyWhenPathChanges;
+
 	private static EventSystem.IntraObjectHandler<ClusterTraveler> ClusterDestinationChangedHandler = new EventSystem.IntraObjectHandler<ClusterTraveler>(delegate(ClusterTraveler cmp, object data)
 	{
 		cmp.OnClusterDestinationChanged(data);
@@ -45,10 +49,45 @@ public class ClusterTraveler : KMonoBehaviour, ISim200ms
 		}
 	}
 
+	protected override void OnPrefabInit()
+	{
+		base.OnPrefabInit();
+		Components.ClusterTravelers.Add(this);
+	}
+
+	protected override void OnCleanUp()
+	{
+		Components.ClusterTravelers.Remove(this);
+		Game.Instance.Unsubscribe(-1991583975, OnClusterFogOfWarRevealed);
+		base.OnCleanUp();
+	}
+
+	private void ForceRevealLocation(AxialI location)
+	{
+		if (!ClusterGrid.Instance.IsCellVisible(location))
+		{
+			SaveGame.Instance.GetSMI<ClusterFogOfWarManager.Instance>().RevealLocation(location);
+		}
+	}
+
 	protected override void OnSpawn()
 	{
 		Subscribe(543433792, ClusterDestinationChangedHandler);
+		Game.Instance.Subscribe(-1991583975, OnClusterFogOfWarRevealed);
 		UpdateAnimationTags();
+		MarkPathDirty();
+		RevalidatePath();
+		ForceRevealLocation(m_clusterGridEntity.Location);
+	}
+
+	private void MarkPathDirty()
+	{
+		m_isPathDirty = true;
+	}
+
+	private void OnClusterFogOfWarRevealed(object data)
+	{
+		MarkPathDirty();
 	}
 
 	private void OnClusterDestinationChanged(object data)
@@ -56,13 +95,22 @@ public class ClusterTraveler : KMonoBehaviour, ISim200ms
 		if (m_destinationSelector.IsAtDestination())
 		{
 			m_movePotential = 0f;
-			CurrentPath.Clear();
+			if (CurrentPath != null)
+			{
+				CurrentPath.Clear();
+			}
 		}
+		MarkPathDirty();
+	}
+
+	public int GetDestinationWorldID()
+	{
+		return m_destinationSelector.GetDestinationWorld();
 	}
 
 	public float TravelETA()
 	{
-		if (!IsTraveling())
+		if (!IsTraveling() || getSpeedCB == null)
 		{
 			return 0f;
 		}
@@ -71,7 +119,13 @@ public class ClusterTraveler : KMonoBehaviour, ISim200ms
 
 	public float RemainingTravelDistance()
 	{
-		return (float)RemainingTravelNodes() * 600f - m_movePotential;
+		int num = RemainingTravelNodes();
+		if (GetDestinationWorldID() >= 0)
+		{
+			num--;
+			num = Mathf.Max(num, 0);
+		}
+		return (float)num * 600f - m_movePotential;
 	}
 
 	public int RemainingTravelNodes()
@@ -146,6 +200,7 @@ public class ClusterTraveler : KMonoBehaviour, ISim200ms
 		}
 		AxialI location = CurrentPath[0];
 		CurrentPath.RemoveAt(0);
+		ForceRevealLocation(location);
 		m_clusterGridEntity.Location = location;
 		UpdateAnimationTags();
 		return true;
@@ -182,31 +237,46 @@ public class ClusterTraveler : KMonoBehaviour, ISim200ms
 		}
 	}
 
-	private void RevalidatePath()
+	public void RevalidatePath()
 	{
-		if (HasCurrentPathChanged(out var reason))
+		if (!HasCurrentPathChanged(out var reason, out var updatedPath))
+		{
+			return;
+		}
+		if (stopAndNotifyWhenPathChanges)
 		{
 			m_destinationSelector.SetDestination(m_destinationSelector.GetMyWorldLocation());
 			string message = MISC.NOTIFICATIONS.BADROCKETPATH.TOOLTIP;
 			Notification notification = new Notification(MISC.NOTIFICATIONS.BADROCKETPATH.NAME, NotificationType.BadMinor, (List<Notification> notificationList, object data) => message + notificationList.ReduceMessages(countNames: false) + "\n\n" + reason);
 			GetComponent<Notifier>().Add(notification);
 		}
+		else
+		{
+			m_cachedPath = updatedPath;
+		}
 	}
 
-	private bool HasCurrentPathChanged(out string reason)
+	private bool HasCurrentPathChanged(out string reason, out List<AxialI> updatedPath)
 	{
-		List<AxialI> path = ClusterGrid.Instance.GetPath(m_clusterGridEntity.Location, m_cachedPathDestination, m_destinationSelector, out reason);
-		if (path == null)
+		if (!m_isPathDirty)
+		{
+			reason = null;
+			updatedPath = null;
+			return false;
+		}
+		m_isPathDirty = false;
+		updatedPath = ClusterGrid.Instance.GetPath(m_clusterGridEntity.Location, m_cachedPathDestination, m_destinationSelector, out reason);
+		if (updatedPath == null)
 		{
 			return true;
 		}
-		if (path.Count != m_cachedPath.Count)
+		if (updatedPath.Count != m_cachedPath.Count)
 		{
 			return true;
 		}
 		for (int i = 0; i < m_cachedPath.Count; i++)
 		{
-			if (m_cachedPath[i] != path[i])
+			if (m_cachedPath[i] != updatedPath[i])
 			{
 				return true;
 			}

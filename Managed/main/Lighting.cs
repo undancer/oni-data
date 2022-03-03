@@ -113,6 +113,8 @@ public class Lighting : MonoBehaviour
 		Shader.SetGlobalVector("_RadUVOffset1", new Vector4(Settings.Rad1UVOffset.x, Settings.Rad1UVOffset.y, Settings.Rad2UVOffset.x, Settings.Rad2UVOffset.y));
 		Shader.SetGlobalVector("_RadUVOffset2", new Vector4(Settings.Rad3UVOffset.x, Settings.Rad3UVOffset.y, Settings.Rad4UVOffset.x, Settings.Rad4UVOffset.y));
 		Shader.SetGlobalVector("_RadUVScales", new Vector4(1f / Settings.RadUVScales.x, 1f / Settings.RadUVScales.y, 1f / Settings.RadUVScales.z, 1f / Settings.RadUVScales.w));
+		Shader.SetGlobalVector("_RadRange1", new Vector4(Settings.Rad1Range.x, Settings.Rad1Range.y, Settings.Rad2Range.x, Settings.Rad2Range.y));
+		Shader.SetGlobalVector("_RadRange2", new Vector4(Settings.Rad3Range.x, Settings.Rad3Range.y, Settings.Rad4Range.x, Settings.Rad4Range.y));
 		if (LightBuffer.Instance != null && LightBuffer.Instance.Texture != null)
 		{
 			Shader.SetGlobalTexture("_LightBufferTex", LightBuffer.Instance.Texture);

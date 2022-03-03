@@ -41,6 +41,11 @@ public class ScenePartitionerEntry
 		partitioner.UpdatePosition(x, y, this);
 	}
 
+	public void UpdatePosition(Extents e)
+	{
+		partitioner.UpdatePosition(e, this);
+	}
+
 	public void Release()
 	{
 		if (partitioner != null)

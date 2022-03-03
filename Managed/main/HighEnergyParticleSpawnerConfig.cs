@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using STRINGS;
 using TUNING;
 using UnityEngine;
 
@@ -10,6 +8,8 @@ public class HighEnergyParticleSpawnerConfig : IBuildingConfig
 	public const float MIN_LAUNCH_INTERVAL = 2f;
 
 	public const float RADIATION_SAMPLE_RATE = 0.2f;
+
+	public const float HEP_PER_RAD = 0.1f;
 
 	public const int MIN_SLIDER = 50;
 
@@ -24,7 +24,7 @@ public class HighEnergyParticleSpawnerConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("HighEnergyParticleSpawner", 1, 2, "radiation_collector_kanim", 30, 10f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.RAW_MINERALS, 1600f, BuildLocationRule.NotInTiles, noise: NOISE_POLLUTION.NONE, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER1);
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("HighEnergyParticleSpawner", 1, 2, "radiation_collector_kanim", 30, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.RAW_MINERALS, 1600f, BuildLocationRule.NotInTiles, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER1);
 		obj.Floodable = false;
 		obj.AudioCategory = "Metal";
 		obj.Overheatable = false;
@@ -37,7 +37,6 @@ public class HighEnergyParticleSpawnerConfig : IBuildingConfig
 		obj.EnergyConsumptionWhenActive = 480f;
 		obj.ExhaustKilowattsWhenActive = 1f;
 		obj.SelfHeatKilowattsWhenActive = 4f;
-		obj.LogicInputPorts = new List<LogicPorts.Port> { LogicPorts.Port.InputPort(HighEnergyParticleSpawner.PORT_ID, new CellOffset(0, 0), STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLESPAWNER.LOGIC_PORT, STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLESPAWNER.LOGIC_PORT_ACTIVE, STRINGS.BUILDINGS.PREFABS.HIGHENERGYPARTICLESPAWNER.LOGIC_PORT_INACTIVE) };
 		GeneratedBuildings.RegisterWithOverlay(OverlayScreen.RadiationIDs, "HighEnergyParticleSpawner");
 		obj.Deprecated = !Sim.IsRadiationEnabled();
 		return obj;
@@ -47,7 +46,7 @@ public class HighEnergyParticleSpawnerConfig : IBuildingConfig
 	{
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);
 		Prioritizable.AddRef(go);
-		go.AddOrGet<HighEnergyParticleStorage>();
+		go.AddOrGet<HighEnergyParticleStorage>().capacity = 500f;
 		go.AddOrGet<LoopingSounds>();
 		HighEnergyParticleSpawner highEnergyParticleSpawner = go.AddOrGet<HighEnergyParticleSpawner>();
 		highEnergyParticleSpawner.minLaunchInterval = 2f;

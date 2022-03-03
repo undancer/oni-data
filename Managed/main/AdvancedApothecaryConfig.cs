@@ -32,6 +32,7 @@ public class AdvancedApothecaryConfig : IBuildingConfig
 		HighEnergyParticleStorage highEnergyParticleStorage = go.AddOrGet<HighEnergyParticleStorage>();
 		highEnergyParticleStorage.autoStore = true;
 		highEnergyParticleStorage.capacity = 400f;
+		highEnergyParticleStorage.showCapacityStatusItem = true;
 		go.AddOrGet<HighEnergyParticlePort>().requireOperational = false;
 		go.AddOrGet<DropAllWorkable>();
 		go.AddOrGet<BuildingComplete>().isManuallyOperated = true;

@@ -1776,6 +1776,7 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 
 		public State ParamTransition<ParameterType>(Parameter<ParameterType> parameter, State state, Parameter<ParameterType>.Callback callback)
 		{
+			DebugUtil.DevAssert(state != this, "Can't transition to self!");
 			if (parameterTransitions == null)
 			{
 				parameterTransitions = new List<StateMachine.ParameterTransition>();
@@ -1839,6 +1840,7 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 
 		public State GoTo(State state)
 		{
+			DebugUtil.DevAssert(state != this, "Can't transition to self");
 			string text = "(null)";
 			if (state != null)
 			{
@@ -1962,6 +1964,7 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 
 		public State TagTransition(Tag[] tags, State state, bool on_remove = false)
 		{
+			DebugUtil.DevAssert(state != this, "Can't transition to self!");
 			if (transitions == null)
 			{
 				transitions = new List<BaseTransition>();
@@ -1978,6 +1981,7 @@ public abstract class GameStateMachine<StateMachineType, StateMachineInstanceTyp
 
 		public State EventTransition(GameHashes evt, Func<StateMachineInstanceType, KMonoBehaviour> global_event_system_callback, State state, Transition.ConditionCallback condition = null)
 		{
+			DebugUtil.DevAssert(state != this, "Can't transition to self!");
 			if (transitions == null)
 			{
 				transitions = new List<BaseTransition>();

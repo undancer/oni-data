@@ -43,6 +43,8 @@ public class AchievementWidget : KMonoBehaviour
 
 	private int numRequirementsDisplayed;
 
+	public bool dlcAchievement;
+
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
@@ -213,6 +215,10 @@ public class AchievementWidget : KMonoBehaviour
 		if (SaveGame.Instance != null && !progressParent.gameObject.activeSelf)
 		{
 			tooltip.AddMultiStringTooltip(COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.EXPAND_TOOLTIP, null);
+		}
+		if (dlcAchievement)
+		{
+			tooltip.AddMultiStringTooltip(COLONY_ACHIEVEMENTS.DLC.EXPANSION1, null);
 		}
 	}
 

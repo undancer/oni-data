@@ -1,7 +1,6 @@
 name: STRINGS.WORLDS.MINIBADLANDS.NAME
 description: STRINGS.WORLDS.MINIBADLANDS.DESCRIPTION
-nameTables:
-  - REGOLITH
+nameTables: [ TERRA ]
 asteroidIcon: asteroid_mini_badlands_kanim
 
 worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.
@@ -23,28 +22,16 @@ defaultsOverrides:
     poiPadding: 1
   startingWorldElements: [] # remove the algae check
 
-# startSubworldName: expansion1::subworlds/sandstone/SandstoneStart
-# startingBaseTemplate: expansion1::bases/warpworldSandstoneBase
-# startingBasePositionHorizontal:
-#   min: 0.5
-#   max: 0.5
-# startingBasePositionVertical:
-#   min: 0.46
-#   max: 0.46
-
-disableWorldTraits: true
-worldTraitRules: # TODO
+worldTraitRules:
   - min: 1
     max: 2
     forbiddenTags:
       - StartWorldOnly
       - GenericGeysers
-      - Oil
       - LargeWorld
       - Surface
-      - Crust
-      - Challenge
-      - StartChange
+    forbiddenTraits:
+      - expansion1::traits/IrregularOil # already is "irregular"
 
 fixedTraits:
   - sunlightLow
@@ -68,7 +55,7 @@ subworldFiles:
     minCount: 3
     maxCount: 5
     overridePower: 1.25 # Reset their pdWeight
-  - name: subworlds/jungle/Jungle
+  - name: expansion1::subworlds/jungle/med_JungleInactive
   - name: expansion1::subworlds/oil/OilSparse
     overridePower: 1.25 # Reset their pdWeight
     minCount: 2
@@ -87,7 +74,7 @@ unknownCellsAllowedSubworlds:
     command: Replace
     subworldNames:
       - subworlds/barren/BarrenGranite
-      - subworlds/jungle/Jungle
+      - expansion1::subworlds/jungle/med_JungleInactive
       - expansion1::subworlds/oil/OilSparse
       - expansion1::subworlds/oil/OilWells
       - expansion1::subworlds/sandstone/med_SandstoneWarp
@@ -100,7 +87,7 @@ unknownCellsAllowedSubworlds:
   #   subworldNames:
   #     - expansion1::subworlds/sandstone/SandstoneMiniWater
   #     - subworlds/barren/BarrenGranite
-  #     - subworlds/jungle/Jungle
+  #     - expansion1::subworlds/jungle/med_JungleInactive
   # - tagcommand: DistanceFromTag
   #   tag: AtStart
   #   minDistance: 2
@@ -129,7 +116,7 @@ unknownCellsAllowedSubworlds:
     maxDistance: 2
     command: Replace
     subworldNames:
-      - subworlds/jungle/Jungle
+      - expansion1::subworlds/jungle/med_JungleInactive
   # # Above Core
   # - tagcommand: DistanceFromTag
   #   tag: AtDepths

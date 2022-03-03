@@ -98,7 +98,7 @@ public class LureableMonitor : GameStateMachine<LureableMonitor, LureableMonitor
 		{
 			smi.FindLure();
 		}, UpdateRate.SIM_1000ms).ParamTransition(targetLure, haslure, (Instance smi, GameObject p) => p != null);
-		haslure.ParamTransition(targetLure, haslure, (Instance smi, GameObject p) => p == null).Update("FindLure", delegate(Instance smi, float dt)
+		haslure.ParamTransition(targetLure, nolure, (Instance smi, GameObject p) => p == null).Update("FindLure", delegate(Instance smi, float dt)
 		{
 			smi.FindLure();
 		}, UpdateRate.SIM_1000ms).ToggleBehaviour(GameTags.Creatures.MoveToLure, (Instance smi) => smi.HasLure(), delegate(Instance smi)

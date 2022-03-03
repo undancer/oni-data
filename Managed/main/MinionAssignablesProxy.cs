@@ -18,6 +18,11 @@ public class MinionAssignablesProxy : KMonoBehaviour, IAssignableIdentity
 		component.OnAssignablesChanged(data);
 	});
 
+	private static readonly EventSystem.IntraObjectHandler<MinionAssignablesProxy> OnQueueDestroyObjectDelegate = new EventSystem.IntraObjectHandler<MinionAssignablesProxy>(delegate(MinionAssignablesProxy component, object data)
+	{
+		component.OnQueueDestroyObject(data);
+	});
+
 	public IAssignableIdentity target { get; private set; }
 
 	public bool IsConfigured => slotsConfigured;
@@ -84,6 +89,7 @@ public class MinionAssignablesProxy : KMonoBehaviour, IAssignableIdentity
 		base.OnPrefabInit();
 		ownables = new List<Ownables> { base.gameObject.AddOrGet<Ownables>() };
 		Components.MinionAssignablesProxy.Add(this);
+		Subscribe(1502190696, OnQueueDestroyObjectDelegate);
 		ConfigureAssignableSlots();
 	}
 
@@ -155,13 +161,17 @@ public class MinionAssignablesProxy : KMonoBehaviour, IAssignableIdentity
 		}
 	}
 
+	private void OnQueueDestroyObject(object data)
+	{
+		Components.MinionAssignablesProxy.Remove(this);
+	}
+
 	protected override void OnCleanUp()
 	{
 		base.OnCleanUp();
 		Game.Instance.assignmentManager.RemoveFromAllGroups(this);
 		GetComponent<Ownables>().UnassignAll();
 		GetComponent<Equipment>().UnequipAll();
-		Components.MinionAssignablesProxy.Remove(this);
 	}
 
 	private void OnAssignablesChanged(object data)

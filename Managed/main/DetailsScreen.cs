@@ -442,7 +442,7 @@ public class DetailsScreen : KTabMenu
 		string text = "";
 		Debug.Assert(target != null, "Details Screen has no target");
 		KSelectable component = target.GetComponent<KSelectable>();
-		Debug.Assert(component != null, $"Details Screen target is not a KSelectable {target}");
+		DebugUtil.AssertArgs(component != null, "Details Screen target is not a KSelectable", target);
 		CellSelectionObject component2 = component.GetComponent<CellSelectionObject>();
 		BuildingUnderConstruction component3 = component.GetComponent<BuildingUnderConstruction>();
 		CreatureBrain component4 = component.GetComponent<CreatureBrain>();

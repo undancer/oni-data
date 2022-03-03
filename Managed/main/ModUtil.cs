@@ -7,15 +7,51 @@ using UnityEngine;
 
 public static class ModUtil
 {
+	public enum BuildingOrdering
+	{
+		Before,
+		After
+	}
+
 	public static void AddBuildingToPlanScreen(HashedString category, string building_id)
 	{
+		AddBuildingToPlanScreen(category, building_id, "uncategorized");
+	}
+
+	public static void AddBuildingToPlanScreen(HashedString category, string building_id, string subcategoryID)
+	{
+		AddBuildingToPlanScreen(category, building_id, subcategoryID, null);
+	}
+
+	public static void AddBuildingToPlanScreen(HashedString category, string building_id, string subcategoryID, string relativeBuildingId, BuildingOrdering ordering = BuildingOrdering.After)
+	{
 		int num = BUILDINGS.PLANORDER.FindIndex((PlanScreen.PlanInfo x) => x.category == category);
-		if (num >= 0)
+		if (num < 0)
 		{
-			((ICollection<string>)BUILDINGS.PLANORDER[num].data).Add(building_id);
+			Debug.LogWarning($"Mod: Unable to add '{building_id}' as category '{category}' does not exist");
+			return;
+		}
+		List<KeyValuePair<string, string>> buildingAndSubcategoryData = BUILDINGS.PLANORDER[num].buildingAndSubcategoryData;
+		KeyValuePair<string, string> item = new KeyValuePair<string, string>(building_id, subcategoryID);
+		if (relativeBuildingId == null)
+		{
+			buildingAndSubcategoryData.Add(item);
+			return;
+		}
+		int num2 = buildingAndSubcategoryData.FindIndex((KeyValuePair<string, string> x) => x.Key == relativeBuildingId);
+		if (num2 == -1)
+		{
+			buildingAndSubcategoryData.Add(item);
+			Debug.LogWarning("Mod: Building '" + relativeBuildingId + "' doesn't exist, inserting '" + building_id + "' at the end of the list instead");
+		}
+		else
+		{
+			int index = ((ordering == BuildingOrdering.After) ? (num2 + 1) : Mathf.Max(num2 - 1, 0));
+			buildingAndSubcategoryData.Insert(index, item);
 		}
 	}
 
+	[Obsolete("Use PlanScreen instead")]
 	public static void AddBuildingToHotkeyBuildMenu(HashedString category, string building_id, Action hotkey)
 	{
 		BuildMenu.DisplayInfo info = BuildMenu.OrderedBuildings.GetInfo(category);

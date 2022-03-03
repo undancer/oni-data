@@ -1,0 +1,22 @@
+id: "SOLaunchTrailer"
+title: STRINGS.CODEX.SO_LAUNCH_TRAILER.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID:
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.SO_LAUNCH_TRAILER.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.SO_LAUNCH_TRAILER.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID:
+    content:
+      - !CodexVideo
+          name: intro\Spaced_Out_Intro

@@ -238,7 +238,7 @@ public class GeyserConfigurator : KMonoBehaviour
 
 	private GeyserInstanceConfiguration CreateRandomInstance(HashedString typeId, float min, float max)
 	{
-		System.Random randomSource = new System.Random(SaveLoader.Instance.clusterDetailSave.globalWorldSeed + (int)base.transform.GetPosition().x + (int)base.transform.GetPosition().y);
+		KRandom randomSource = new KRandom(SaveLoader.Instance.clusterDetailSave.globalWorldSeed + (int)base.transform.GetPosition().x + (int)base.transform.GetPosition().y);
 		return new GeyserInstanceConfiguration
 		{
 			typeId = typeId,
@@ -250,7 +250,7 @@ public class GeyserConfigurator : KMonoBehaviour
 		};
 	}
 
-	private float Roll(System.Random randomSource, float min, float max)
+	private float Roll(KRandom randomSource, float min, float max)
 	{
 		return (float)(randomSource.NextDouble() * (double)(max - min)) + min;
 	}

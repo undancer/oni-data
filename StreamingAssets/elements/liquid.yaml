@@ -789,7 +789,7 @@ elements:
     toxicity: 0
     lightAbsorptionFactor: 1
     radiationAbsorptionFactor: 0.3
-    radiationPer1000Mass: 15
+    radiationPer1000Mass: 150
     tags:
     - Metal
     - RefinedMetal
@@ -849,7 +849,7 @@ elements:
     toxicity: 0
     lightAbsorptionFactor: 1
     radiationAbsorptionFactor: 0.3
-    radiationPer1000Mass: 15
+    radiationPer1000Mass: 150
     tags:
     - EmitsLight
     isDisabled: false
@@ -1089,21 +1089,21 @@ elements:
     localizationID: STRINGS.ELEMENTS.MOLTENSYNGAS.NAME
     dlcId: ""
     
-  - elementId: MoltenSucrose # Caramel? - These values need tuning as they were copied from MoltenSalt
+  - elementId: MoltenSucrose
     maxMass: 740
     liquidCompression: 1.01
     speed: 50
     minHorizontalFlow: 0.1
     minVerticalFlow: 0.1
-    specificHeatCapacity: 0.7
-    thermalConductivity: 0.444
+    specificHeatCapacity: 1.255
+    thermalConductivity: 0.15
     solidSurfaceAreaMultiplier: 1
     liquidSurfaceAreaMultiplier: 25
     gasSurfaceAreaMultiplier: 1
     lowTemp: 459
-    highTemp: 1000 #??
-    lowTempTransitionTarget: Sucrose # transition to solid Caramel? 
-    #highTempTransitionTarget: SaltGas # carbon gas?
+    highTemp: 503.15
+    lowTempTransitionTarget: Sucrose
+    highTempTransitionTarget: CarbonDioxide
     defaultTemperature: 500
     defaultMass: 190
     molarMass: 32

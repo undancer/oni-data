@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class KComponentManager<T> : KCompactedVector<T>, IComponentManager where T : new()
 {
@@ -21,7 +22,9 @@ public abstract class KComponentManager<T> : KCompactedVector<T>, IComponentMana
 
 	private HashSet<HandleVector<int>.Handle> shadowSpawnList = new HashSet<HandleVector<int>.Handle>();
 
-	protected List<CleanupInfo> cleanupList = new List<CleanupInfo>();
+	private List<CleanupInfo> cleanupList = new List<CleanupInfo>();
+
+	private HashSet<object> cleanupMap = new HashSet<object>();
 
 	private List<CleanupInfo> shadowCleanupList = new List<CleanupInfo>();
 
@@ -33,9 +36,20 @@ public abstract class KComponentManager<T> : KCompactedVector<T>, IComponentMana
 		Name = GetType().Name;
 	}
 
+	protected void AddToCleanupList(CleanupInfo info)
+	{
+		cleanupMap.Add(info.instance);
+		cleanupList.Add(info);
+	}
+
+	protected bool IsInCleanupList(GameObject go)
+	{
+		return cleanupMap.Contains(go);
+	}
+
 	public bool Has(object go)
 	{
-		if (cleanupList.Exists((CleanupInfo x) => x.instance == go))
+		if (cleanupMap.Contains(go))
 		{
 			return false;
 		}
@@ -133,6 +147,7 @@ public abstract class KComponentManager<T> : KCompactedVector<T>, IComponentMana
 	{
 		shadowCleanupList.AddRange(cleanupList);
 		cleanupList.Clear();
+		cleanupMap.Clear();
 		foreach (CleanupInfo shadowCleanup in shadowCleanupList)
 		{
 			OnCleanUp(shadowCleanup.handle);
@@ -147,6 +162,7 @@ public abstract class KComponentManager<T> : KCompactedVector<T>, IComponentMana
 		{
 			if (cleanupList[i].instance == instance)
 			{
+				cleanupMap.Remove(instance);
 				cleanupList[i] = cleanupList[cleanupList.Count - 1];
 				cleanupList.RemoveAt(cleanupList.Count - 1);
 				break;
@@ -160,6 +176,7 @@ public abstract class KComponentManager<T> : KCompactedVector<T>, IComponentMana
 		spawnList.Clear();
 		shadowSpawnList.Clear();
 		cleanupList.Clear();
+		cleanupMap.Clear();
 		shadowCleanupList.Clear();
 		instanceHandleMap.Clear();
 	}

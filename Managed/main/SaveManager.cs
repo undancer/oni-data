@@ -59,7 +59,9 @@ public class SaveManager : KMonoBehaviour
 
 	public const int SAVE_MINOR_VERSION_ROCKET_RANGE_REBALANCE = 27;
 
-	public const int SAVE_MINOR_VERSION = 27;
+	public const int SAVE_MINOR_VERSION_ENTITIES_WRONG_LAYER = 28;
+
+	public const int SAVE_MINOR_VERSION = 28;
 
 	private Dictionary<Tag, GameObject> prefabMap = new Dictionary<Tag, GameObject>();
 
@@ -153,7 +155,7 @@ public class SaveManager : KMonoBehaviour
 	{
 		writer.Write(SAVE_HEADER);
 		writer.Write(7);
-		writer.Write(27);
+		writer.Write(28);
 		int num = 0;
 		foreach (KeyValuePair<Tag, List<SaveLoadRoot>> sceneObject in sceneObjects)
 		{
@@ -245,9 +247,9 @@ public class SaveManager : KMonoBehaviour
 		}
 		int num = reader.ReadInt32();
 		int num2 = reader.ReadInt32();
-		if (num != 7 || num2 > 27)
+		if (num != 7 || num2 > 28)
 		{
-			DebugUtil.LogWarningArgs($"SAVE FILE VERSION MISMATCH! Expected {7}.{27} but got {num}.{num2}");
+			DebugUtil.LogWarningArgs($"SAVE FILE VERSION MISMATCH! Expected {7}.{28} but got {num}.{num2}");
 			return false;
 		}
 		ClearScene();

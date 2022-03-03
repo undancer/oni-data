@@ -16,7 +16,7 @@ public class PassengerRocketModule : KMonoBehaviour
 
 	private static readonly EventSystem.IntraObjectHandler<PassengerRocketModule> OnRocketOnGroundTagDelegate = GameUtil.CreateHasTagHandler(GameTags.RocketOnGround, delegate(PassengerRocketModule component, object data)
 	{
-		component.RefreshOrders();
+		component.RequestCrewBoard(RequestCrewState.Release);
 	});
 
 	private static EventSystem.IntraObjectHandler<PassengerRocketModule> RefreshDelegate = new EventSystem.IntraObjectHandler<PassengerRocketModule>(delegate(PassengerRocketModule cmp, object data)

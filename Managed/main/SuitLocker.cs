@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using STRINGS;
 using TUNING;
 using UnityEngine;
@@ -128,27 +127,7 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 					{
 						return false;
 					}
-					bool num = slot.assignable.GetComponent<AtmoSuit>() != null;
-					bool flag = suitLocker.OutfitTags.Contains(GameTags.AtmoSuit);
-					if (num && flag)
-					{
-						return true;
-					}
-					bool num2 = slot.assignable.GetComponent<JetSuitTank>() != null;
-					bool flag2 = suitLocker.GetComponent<JetSuitLocker>() != null;
-					if (num2 && flag2)
-					{
-						return true;
-					}
-					bool num3 = slot.assignable.GetComponent<LeadSuitTank>() != null;
-					bool flag3 = suitLocker.GetComponent<LeadSuitLocker>() != null;
-					if (num3 && flag3)
-					{
-						return true;
-					}
-					bool num4 = slot.assignable.GetComponent<OxygenMask>() != null;
-					bool flag4 = suitLocker.OutfitTags.Contains(GameTags.OxygenMask);
-					return (num4 && flag4) ? true : false;
+					return slot.assignable.HasAnyTags(suitLocker.OutfitTags) ? true : false;
 				}
 			});
 			base._002Ector();
@@ -172,18 +151,23 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 					{
 						return false;
 					}
-					SuitTank component = slot2.assignable.GetComponent<SuitTank>();
-					if (component != null && component.NeedsRecharging())
+					Equippable component2 = slot2.assignable.GetComponent<Equippable>();
+					if (component2 == null || !component2.isEquipped)
+					{
+						return false;
+					}
+					SuitTank component3 = slot2.assignable.GetComponent<SuitTank>();
+					if (component3 != null && component3.NeedsRecharging())
 					{
 						return true;
 					}
-					JetSuitTank component2 = slot2.assignable.GetComponent<JetSuitTank>();
-					if (component2 != null && component2.NeedsRecharging())
+					JetSuitTank component4 = slot2.assignable.GetComponent<JetSuitTank>();
+					if (component4 != null && component4.NeedsRecharging())
 					{
 						return true;
 					}
-					LeadSuitTank component3 = slot2.assignable.GetComponent<LeadSuitTank>();
-					return (component3 != null && component3.NeedsRecharging()) ? true : false;
+					LeadSuitTank component5 = slot2.assignable.GetComponent<LeadSuitTank>();
+					return (component5 != null && component5.NeedsRecharging()) ? true : false;
 				}
 			};
 			DoesSuitNeedRechargingUrgent = precondition;
@@ -200,6 +184,11 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 					}
 					AssignableSlotInstance slot = equipment.GetSlot(Db.Get().AssignableSlots.Suit);
 					if (slot.assignable == null)
+					{
+						return false;
+					}
+					Equippable component = slot.assignable.GetComponent<Equippable>();
+					if (component == null || !component.isEquipped)
 					{
 						return false;
 					}
@@ -595,7 +584,7 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 		{
 			GetComponent<Storage>().Drop(storedOutfit.gameObject);
 			storedOutfit.GetComponent<Equippable>().Assign(equipment.GetComponent<IAssignableIdentity>());
-			storedOutfit.GetComponent<EquippableWorkable>().CancelChore();
+			storedOutfit.GetComponent<EquippableWorkable>().CancelChore("Manual equip");
 			equipment.Equip(storedOutfit.GetComponent<Equippable>());
 			returnSuitWorkable.CreateChore();
 		}

@@ -6,6 +6,8 @@ public class NavTeleporter : KMonoBehaviour
 
 	public CellOffset offset;
 
+	private int overrideCell = -1;
+
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
@@ -26,8 +28,17 @@ public class NavTeleporter : KMonoBehaviour
 		Components.NavTeleporters.Remove(this);
 	}
 
+	public void SetOverrideCell(int cell)
+	{
+		overrideCell = cell;
+	}
+
 	public int GetCell()
 	{
+		if (overrideCell >= 0)
+		{
+			return overrideCell;
+		}
 		return Grid.OffsetCell(Grid.PosToCell(this), offset);
 	}
 

@@ -85,7 +85,7 @@ public class OpenURLButtons : KMonoBehaviour
 
 	public void OpenURL(string URL)
 	{
-		Application.OpenURL(URL);
+		App.OpenWebURL(URL);
 	}
 
 	public void OpenPlatformURL(string URL)
@@ -95,13 +95,13 @@ public class OpenURLButtons : KMonoBehaviour
 			DistributionPlatform.Inst.GetAuthTicket(delegate(byte[] ticket)
 			{
 				string newValue = string.Concat(Array.ConvertAll(ticket, (byte x) => x.ToString("X2")));
-				Application.OpenURL(URL.Replace("{SteamID}", DistributionPlatform.Inst.LocalUser.Id.ToInt64().ToString()).Replace("{SteamTicket}", newValue));
+				App.OpenWebURL(URL.Replace("{SteamID}", DistributionPlatform.Inst.LocalUser.Id.ToInt64().ToString()).Replace("{SteamTicket}", newValue));
 			});
 		}
 		else
 		{
 			string value = URL.Replace("{SteamID}", "").Replace("{SteamTicket}", "");
-			Application.OpenURL("https://accounts.klei.com/login?goto={gotoUrl}".Replace("{gotoUrl}", WebUtility.HtmlEncode(value)));
+			App.OpenWebURL("https://accounts.klei.com/login?goto={gotoUrl}".Replace("{gotoUrl}", WebUtility.HtmlEncode(value)));
 		}
 	}
 }

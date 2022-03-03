@@ -44,7 +44,7 @@ public class KInputController : IInputHandler
 		{
 			mKeyCode = key_code;
 			mModifier = modifier;
-			mActionFlags = new bool[266];
+			mActionFlags = new bool[273];
 		}
 	}
 
@@ -106,7 +106,7 @@ public class KInputController : IInputHandler
 		IsGamepad = is_gamepad;
 		mAxis = new float[4];
 		mActiveModifiers = Modifier.None;
-		mActionState = new bool[266];
+		mActionState = new bool[273];
 		mScrollState = new bool[2];
 		inputHandler = new KInputHandler(this, this);
 	}
@@ -141,6 +141,18 @@ public class KInputController : IInputHandler
 		KButtonEvent item = new KButtonEvent(this, event_type, mActionFlags);
 		mEvents.Add(item);
 		KInputManager.SetUserActive();
+	}
+
+	public void QueueControllerEvent(Action action, bool is_down)
+	{
+		if (KInputManager.isFocused)
+		{
+			InputEventType event_type = ((!is_down) ? InputEventType.KeyUp : InputEventType.KeyDown);
+			mActionState[(int)action] = is_down;
+			KButtonEvent item = new KButtonEvent(this, event_type, action);
+			mEvents.Add(item);
+			KInputManager.SetUserActive();
+		}
 	}
 
 	private void GenerateActionFlagTable()
@@ -248,27 +260,43 @@ public class KInputController : IInputHandler
 			GenerateActionFlagTable();
 			mDirtyBindings = false;
 		}
-		if (IsGamepad)
+		if (!IsGamepad)
 		{
+			UpdateScrollStates();
+			UpdateAxis();
+			UpdateModifiers();
+			KeyDef[] array = mKeyDefs;
+			foreach (KeyDef keyDef in array)
+			{
+				int mKeyCode = (int)keyDef.mKeyCode;
+				if ((!mIgnoreKeyboard || mKeyCode >= 323) && (!mIgnoreMouse || ((mKeyCode < 323 || mKeyCode >= 330) && mKeyCode != 1001 && mKeyCode != 1002)))
+				{
+					if ((!keyDef.mIsDown || keyDef.mKeyCode == KKeyCode.MouseScrollDown || keyDef.mKeyCode == KKeyCode.MouseScrollUp) && GetKeyDown(keyDef.mKeyCode) && mActiveModifiers == keyDef.mModifier)
+					{
+						QueueButtonEvent(keyDef, is_down: true);
+					}
+					if (keyDef.mIsDown && GetKeyUp(keyDef.mKeyCode))
+					{
+						QueueButtonEvent(keyDef, is_down: false);
+					}
+				}
+			}
 			return;
 		}
 		UpdateScrollStates();
 		UpdateAxis();
 		UpdateModifiers();
-		KeyDef[] array = mKeyDefs;
-		foreach (KeyDef keyDef in array)
+		if (!KInputManager.currentControllerIsGamepad)
 		{
-			int mKeyCode = (int)keyDef.mKeyCode;
-			if ((!mIgnoreKeyboard || mKeyCode >= 323) && (!mIgnoreMouse || ((mKeyCode < 323 || mKeyCode >= 330) && mKeyCode != 1001 && mKeyCode != 1002)))
+			KInputManager.steamInputInterpreter.GetSteamCursorMovement();
+		}
+		for (int j = 0; j < 273; j++)
+		{
+			Action action = (Action)j;
+			bool steamInputActionIsDown = KInputManager.steamInputInterpreter.GetSteamInputActionIsDown(action);
+			if (mActionState[j] != steamInputActionIsDown)
 			{
-				if ((!keyDef.mIsDown || keyDef.mKeyCode == KKeyCode.MouseScrollDown || keyDef.mKeyCode == KKeyCode.MouseScrollUp) && GetKeyDown(keyDef.mKeyCode) && mActiveModifiers == keyDef.mModifier)
-				{
-					QueueButtonEvent(keyDef, is_down: true);
-				}
-				if (keyDef.mIsDown && GetKeyUp(keyDef.mKeyCode))
-				{
-					QueueButtonEvent(keyDef, is_down: false);
-				}
+				QueueControllerEvent(action, steamInputActionIsDown);
 			}
 		}
 	}
@@ -278,7 +306,14 @@ public class KInputController : IInputHandler
 		foreach (KInputEvent mEvent in mEvents)
 		{
 			inputHandler.HandleEvent(mEvent);
+			KInputManager.currentController = mEvent.Controller;
+			KInputManager.currentControllerIsGamepad = mEvent.Controller.IsGamepad;
 		}
+		if (KInputManager.currentController != KInputManager.prevController)
+		{
+			KInputManager.InputChange.Invoke();
+		}
+		KInputManager.prevController = KInputManager.currentController;
 		mEvents.Clear();
 	}
 

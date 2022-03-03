@@ -61,7 +61,7 @@ public class RadiationLightConfig : IBuildingConfig
 		radiationEmitter.emitType = RadiationEmitter.RadiationEmitterType.Constant;
 		radiationEmitter.emitRadiusX = 16;
 		radiationEmitter.emitRadiusY = 4;
-		radiationEmitter.emitRads = 24f;
+		radiationEmitter.emitRads = 240f;
 		ElementConverter elementConverter = go.AddOrGet<ElementConverter>();
 		elementConverter.consumedElements = new ElementConverter.ConsumedElement[1]
 		{

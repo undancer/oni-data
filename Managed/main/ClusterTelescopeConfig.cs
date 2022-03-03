@@ -27,7 +27,9 @@ public class ClusterTelescopeConfig : IBuildingConfig
 	{
 		go.AddOrGet<BuildingComplete>().isManuallyOperated = true;
 		Prioritizable.AddRef(go);
-		go.AddOrGetDef<ClusterTelescope.Def>().clearScanCellRadius = 5;
+		ClusterTelescope.Def def = go.AddOrGetDef<ClusterTelescope.Def>();
+		def.clearScanCellRadius = 5;
+		def.workableOverrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_telescope_low_kanim") };
 		Storage storage = go.AddOrGet<Storage>();
 		storage.capacityKg = 1000f;
 		storage.showInUI = true;

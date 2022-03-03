@@ -48,6 +48,7 @@ public class NuclearResearchCenterConfig : IBuildingConfig
 		highEnergyParticleStorage.autoStore = true;
 		highEnergyParticleStorage.capacity = 100f;
 		highEnergyParticleStorage.PORT_ID = "HEP_STORAGE";
+		highEnergyParticleStorage.showCapacityStatusItem = true;
 		NuclearResearchCenterWorkable nuclearResearchCenterWorkable = go.AddOrGet<NuclearResearchCenterWorkable>();
 		nuclearResearchCenterWorkable.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_material_research_centre_kanim") };
 		nuclearResearchCenterWorkable.requiredSkillPerk = Db.Get().SkillPerks.AllowNuclearResearch.Id;

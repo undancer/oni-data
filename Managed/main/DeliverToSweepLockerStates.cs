@@ -45,31 +45,42 @@ public class DeliverToSweepLockerStates : GameStateMachine<DeliverToSweepLockerS
 		unloading.Enter(delegate(Instance smi)
 		{
 			Storage sweepLocker = GetSweepLocker(smi);
-			Storage storage = smi.master.gameObject.GetComponents<Storage>()[1];
-			float num = Mathf.Max(0f, Mathf.Min(storage.MassStored(), sweepLocker.RemainingCapacity()));
-			for (int num2 = storage.items.Count - 1; num2 >= 0; num2--)
+			if (sweepLocker == null)
 			{
-				float num3 = Mathf.Min(storage.items[num2].GetComponent<PrimaryElement>().Mass, num);
-				if (num3 != 0f)
-				{
-					storage.Transfer(sweepLocker, storage.items[num2].GetComponent<KPrefabID>().PrefabTag, num3);
-				}
-				num -= num3;
-				if (num <= 0f)
-				{
-					break;
-				}
-			}
-			smi.master.GetComponent<KBatchedAnimController>().Play("dropoff");
-			smi.master.GetComponent<KBatchedAnimController>().FlipX = false;
-			sweepLocker.GetComponent<KBatchedAnimController>().Play("dropoff");
-			if (storage.MassStored() > 0f)
-			{
-				smi.ScheduleGoTo(2f, lockerFull);
+				smi.GoTo(behaviourcomplete);
 			}
 			else
 			{
-				smi.ScheduleGoTo(2f, behaviourcomplete);
+				Storage storage = smi.master.gameObject.GetComponents<Storage>()[1];
+				float num = Mathf.Max(0f, Mathf.Min(storage.MassStored(), sweepLocker.RemainingCapacity()));
+				for (int num2 = storage.items.Count - 1; num2 >= 0; num2--)
+				{
+					GameObject gameObject = storage.items[num2];
+					if (!(gameObject == null))
+					{
+						float num3 = Mathf.Min(gameObject.GetComponent<PrimaryElement>().Mass, num);
+						if (num3 != 0f)
+						{
+							storage.Transfer(sweepLocker, gameObject.GetComponent<KPrefabID>().PrefabTag, num3);
+						}
+						num -= num3;
+						if (num <= 0f)
+						{
+							break;
+						}
+					}
+				}
+				smi.master.GetComponent<KBatchedAnimController>().Play("dropoff");
+				smi.master.GetComponent<KBatchedAnimController>().FlipX = false;
+				sweepLocker.GetComponent<KBatchedAnimController>().Play("dropoff");
+				if (storage.MassStored() > 0f)
+				{
+					smi.ScheduleGoTo(2f, lockerFull);
+				}
+				else
+				{
+					smi.ScheduleGoTo(2f, behaviourcomplete);
+				}
 			}
 		});
 		lockerFull.PlayAnim("react_bored", KAnim.PlayMode.Once).OnAnimQueueComplete(movingToStorage);

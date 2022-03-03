@@ -63,6 +63,7 @@ public class ManualHighEnergyParticleSpawnerConfig : IBuildingConfig
 		ComplexFabricatorWorkable complexFabricatorWorkable = go.AddOrGet<ComplexFabricatorWorkable>();
 		BuildingTemplates.CreateComplexFabricatorStorage(go, complexFabricator);
 		complexFabricatorWorkable.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_manual_radbolt_generator_kanim") };
+		complexFabricatorWorkable.workLayer = Grid.SceneLayer.BuildingUse;
 		ComplexRecipe.RecipeElement[] array = new ComplexRecipe.RecipeElement[1]
 		{
 			new ComplexRecipe.RecipeElement(SimHashes.UraniumOre.CreateTag(), 1f)
@@ -99,7 +100,7 @@ public class ManualHighEnergyParticleSpawnerConfig : IBuildingConfig
 		radiationEmitter.emitType = RadiationEmitter.RadiationEmitterType.Constant;
 		radiationEmitter.emitRadiusX = RAD_LIGHT_SIZE;
 		radiationEmitter.emitRadiusY = RAD_LIGHT_SIZE;
-		radiationEmitter.emitRads = 12f;
+		radiationEmitter.emitRads = 120f;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

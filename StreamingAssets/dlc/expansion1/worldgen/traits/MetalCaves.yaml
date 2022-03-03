@@ -4,7 +4,6 @@ colorHex: DAA932
 
 traitTags:
   - Metal
-  - LargeWorld
 
 globalFeatureMods:
   expansion1::features/traits/MetalCavesSmall: 12

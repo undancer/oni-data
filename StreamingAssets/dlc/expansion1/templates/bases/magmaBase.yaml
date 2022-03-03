@@ -1,518 +1,313 @@
 info:
   size:
     X: 15
-    Y: 24
-  area: 261
+    Y: 12
+  area: 122
 cells:
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.15002
-  location_x: -4
-  location_y: -6
-- element: Obsidian
-  mass: 947.440002
-  temperature: 1847.15002
-  location_x: -4
-  location_y: -5
-- element: Vacuum
-  location_x: -4
-  location_y: -4
-- element: Obsidian
-  mass: 947.440002
-  temperature: 1847.15002
-  location_x: -5
-  location_y: -6
-- element: Obsidian
-  mass: 947.440002
-  temperature: 1847.15002
-  location_x: -5
-  location_y: -5
+  location_x: -3
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.15002
   location_x: -3
-  location_y: -6
+  location_y: 1
+- element: Vacuum
+  location_x: -3
+  location_y: 2
+- element: Obsidian
+  mass: 947.440002
+  temperature: 1847.15417
+  location_x: -4
+- element: Obsidian
+  mass: 947.440002
+  temperature: 1847.15417
+  location_x: -4
+  location_y: 1
+- element: Obsidian
+  mass: 947.440002
+  temperature: 1847.15002
+  location_x: -2
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.67981
-  location_x: -2
-  location_y: -6
+  location_x: -1
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.68005
-  location_x: -1
-  location_y: -6
-- element: Obsidian
-  mass: 947.440002
-  temperature: 1847.67981
-  location_y: -6
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.67981
   location_x: 1
-  location_y: -6
 - element: Obsidian
   mass: 947.440002
-  temperature: 1847.15002
+  temperature: 1847.67981
   location_x: 2
-  location_y: -6
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.15002
   location_x: 3
-  location_y: -6
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.15002
   location_x: 4
-  location_y: -6
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.15002
   location_x: 5
-  location_y: -6
-- element: Obsidian
-  mass: 947.440002
-  temperature: 1847.15002
-  location_x: -3
-  location_y: -5
-- element: Obsidian
-  mass: 947.440002
-  temperature: 1847.15002
-  location_x: -2
-  location_y: -5
-- element: Obsidian
-  mass: 947.440002
-  temperature: 1847.15002
-  location_x: -1
-  location_y: -5
-- element: Obsidian
-  mass: 947.440002
-  temperature: 1847.15002
-  location_y: -5
-- element: Obsidian
-  mass: 947.440002
-  temperature: 1847.15002
-  location_x: 1
-  location_y: -5
-- element: Obsidian
-  mass: 947.440002
-  temperature: 1847.15002
-  location_x: 2
-  location_y: -5
-- element: Obsidian
-  mass: 947.440002
-  temperature: 1847.15002
-  location_x: 3
-  location_y: -5
-- element: Obsidian
-  mass: 947.440002
-  temperature: 1847.15002
-  location_x: 4
-  location_y: -5
-- element: Obsidian
-  mass: 947.440002
-  temperature: 1847.15002
-  location_x: 5
-  location_y: -5
-- element: Obsidian
-  mass: 947.440002
-  temperature: 1847.15002
-  location_x: 4
-  location_y: -4
-- element: Obsidian
-  mass: 947.440002
-  temperature: 1847.15002
-  location_x: 5
-  location_y: -4
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.15002
   location_x: 6
-  location_y: -4
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.15002
-  location_x: 6
-  location_y: -5
+  location_x: -2
+  location_y: 1
 - element: Obsidian
   mass: 947.440002
-  temperature: 1847.67981
+  temperature: 1847.15002
+  location_x: -1
+  location_y: 1
+- element: Obsidian
+  mass: 947.440002
+  temperature: 1847.15002
+  location_y: 1
+- element: Obsidian
+  mass: 947.440002
+  temperature: 1847.15002
+  location_x: 1
+  location_y: 1
+- element: Obsidian
+  mass: 947.440002
+  temperature: 1847.15002
   location_x: 2
-  location_y: -7
+  location_y: 1
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.15002
   location_x: 3
-  location_y: -7
+  location_y: 1
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.15002
   location_x: 4
-  location_y: -7
+  location_y: 1
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.15002
   location_x: 5
-  location_y: -7
+  location_y: 1
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.15002
-  location_x: -4
-  location_y: -8
+  location_x: 6
+  location_y: 1
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.15002
-  location_x: -3
-  location_y: -8
+  location_x: 5
+  location_y: 2
 - element: Obsidian
   mass: 947.440002
-  temperature: 1848.20569
-  location_x: -2
-  location_y: -8
+  temperature: 1847.15002
+  location_x: 6
+  location_y: 2
 - element: Obsidian
   mass: 947.440002
-  temperature: 1848.15002
-  location_x: -1
-  location_y: -8
+  temperature: 1847.15002
+  location_x: 7
+  location_y: 2
 - element: Obsidian
   mass: 947.440002
-  temperature: 1848.20569
-  location_y: -8
+  temperature: 1847.15002
+  location_x: 7
+  location_y: 1
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.67981
-  location_x: 1
-  location_y: -8
-- element: Obsidian
-  mass: 947.440002
-  temperature: 1847.15002
-  location_x: 2
-  location_y: -8
-- element: Obsidian
-  mass: 947.440002
-  temperature: 1847.15002
   location_x: 3
-  location_y: -8
+  location_y: -1
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.15002
   location_x: 4
-  location_y: -8
+  location_y: -1
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.15002
-  location_x: -4
-  location_y: -7
+  location_x: 5
+  location_y: -1
 - element: Obsidian
   mass: 947.440002
-  temperature: 1847.67981
+  temperature: 1847.15002
+  location_x: 6
+  location_y: -1
+- element: Obsidian
+  mass: 947.440002
+  temperature: 1847.15002
   location_x: -3
-  location_y: -7
+  location_y: -2
+- element: Obsidian
+  mass: 947.440002
+  temperature: 1847.16956
+  location_x: -2
+  location_y: -2
+- element: Obsidian
+  mass: 947.440002
+  temperature: 1848.16663
+  location_x: -1
+  location_y: -2
 - element: Obsidian
   mass: 947.440002
   temperature: 1848.15002
+  location_y: -2
+- element: Obsidian
+  mass: 947.440002
+  temperature: 1848.20569
+  location_x: 1
+  location_y: -2
+- element: Obsidian
+  mass: 947.440002
+  temperature: 1847.67981
+  location_x: 2
+  location_y: -2
+- element: Obsidian
+  mass: 947.440002
+  temperature: 1847.15002
+  location_x: 3
+  location_y: -2
+- element: Obsidian
+  mass: 947.440002
+  temperature: 1847.15002
+  location_x: 4
+  location_y: -2
+- element: Obsidian
+  mass: 947.440002
+  temperature: 1847.15002
+  location_x: 5
+  location_y: -2
+- element: Obsidian
+  mass: 947.440002
+  temperature: 1847.1521
+  location_x: -3
+  location_y: -1
+- element: Obsidian
+  mass: 947.440002
+  temperature: 1847.67981
   location_x: -2
-  location_y: -7
+  location_y: -1
 - element: Obsidian
   mass: 947.440002
   temperature: 1848.15002
   location_x: -1
-  location_y: -7
+  location_y: -1
 - element: Obsidian
   mass: 947.440002
   temperature: 1848.15002
-  location_y: -7
+  location_y: -1
 - element: Obsidian
   mass: 947.440002
   temperature: 1848.15002
   location_x: 1
-  location_y: -7
+  location_y: -1
+- element: Obsidian
+  mass: 947.440002
+  temperature: 1848.15002
+  location_x: 2
+  location_y: -1
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.37659
-  location_x: -5
-  location_y: -9
+  location_x: -4
+  location_y: -3
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.27014
-  location_x: -4
-  location_y: -9
-- element: Obsidian
-  mass: 947.440002
-  temperature: 1847.15002
   location_x: -3
-  location_y: -9
+  location_y: -3
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.15002
   location_x: -2
-  location_y: -9
+  location_y: -3
+- element: Obsidian
+  mass: 947.440002
+  temperature: 1847.16956
+  location_x: -1
+  location_y: -3
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.67981
-  location_x: -1
-  location_y: -9
+  location_y: -3
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.28284
-  location_y: -9
+  location_x: 1
+  location_y: -3
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.2843
-  location_x: 1
-  location_y: -9
-- element: Obsidian
-  mass: 947.440002
-  temperature: 1847.15002
   location_x: 2
-  location_y: -9
+  location_y: -3
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.15002
   location_x: 3
-  location_y: -9
+  location_y: -3
+- element: Obsidian
+  mass: 947.440002
+  temperature: 1847.15002
+  location_x: 4
+  location_y: -3
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.41492
-  location_x: 4
-  location_y: -9
+  location_x: 5
+  location_y: -3
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.39343
-  location_x: -3
-  location_y: -10
+  location_x: -2
+  location_y: -4
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.15002
-  location_x: -2
-  location_y: -10
+  location_x: -1
+  location_y: -4
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.28284
-  location_x: -1
-  location_y: -10
+  location_y: -4
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.83545
-  location_x: -2
-  location_y: -12
+  location_x: -1
+  location_y: -6
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.27332
-  location_x: -2
-  location_y: -11
+  location_x: -1
+  location_y: -5
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.5116
-  location_x: -1
-  location_y: -11
+  location_y: -5
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.41992
-  location_x: 2
-  location_y: -10
+  location_x: 3
+  location_y: -4
 - element: Obsidian
   mass: 947.440002
   temperature: 1847.42236
-  location_x: 3
-  location_y: -10
+  location_x: 4
+  location_y: -4
 - element: Obsidian
   mass: 947.440002
-  temperature: 1848.15002
-  location_x: -5
-  location_y: -4
-- element: Vacuum
-  location_x: -3
-  location_y: -4
-- element: Vacuum
-  location_x: -2
-  location_y: -4
-- element: Vacuum
-  location_x: -1
-  location_y: -4
-- element: Vacuum
-  location_y: -4
-- element: Vacuum
-  location_x: 1
-  location_y: -4
-- element: Vacuum
-  location_x: 2
-  location_y: -4
-- element: Vacuum
-  location_x: 3
-  location_y: -4
-- element: Vacuum
-  location_x: -5
-  location_y: -3
-- element: Vacuum
+  temperature: 1848.14795
   location_x: -4
-  location_y: -3
-- element: Vacuum
-  location_x: -3
-  location_y: -3
-- element: Vacuum
-  location_x: -2
-  location_y: -3
-- element: Vacuum
-  location_x: -1
-  location_y: -3
-- element: Vacuum
-  location_y: -3
-- element: Vacuum
-  location_x: 1
-  location_y: -3
-- element: Vacuum
-  location_x: 2
-  location_y: -3
-- element: Vacuum
-  location_x: 3
-  location_y: -3
-- element: Vacuum
-  location_x: 4
-  location_y: -3
-- element: Vacuum
-  location_x: 5
-  location_y: -3
-- element: Vacuum
-  location_x: 6
-  location_y: -3
-- element: Vacuum
-  location_x: -5
-  location_y: -2
-- element: Vacuum
-  location_x: -4
-  location_y: -2
-- element: Vacuum
-  location_x: -3
-  location_y: -2
-- element: Vacuum
-  location_x: -2
-  location_y: -2
-- element: Vacuum
-  location_x: -1
-  location_y: -2
-- element: Vacuum
-  location_y: -2
-- element: Vacuum
-  location_x: 1
-  location_y: -2
-- element: Vacuum
-  location_x: 2
-  location_y: -2
-- element: Vacuum
-  location_x: 3
-  location_y: -2
-- element: Vacuum
-  location_x: 4
-  location_y: -2
-- element: Vacuum
-  location_x: 5
-  location_y: -2
-- element: Vacuum
-  location_x: 6
-  location_y: -2
-- element: Vacuum
-  location_x: -5
-  location_y: -1
-- element: Vacuum
-  location_x: -4
-  location_y: -1
-- element: Vacuum
-  location_x: -3
-  location_y: -1
-- element: Vacuum
-  location_x: -2
-  location_y: -1
-- element: Vacuum
-  location_x: -1
-  location_y: -1
-- element: Vacuum
-  location_y: -1
-- element: Vacuum
-  location_x: 1
-  location_y: -1
-- element: Vacuum
-  location_x: 2
-  location_y: -1
-- element: Vacuum
-  location_x: 3
-  location_y: -1
-- element: Vacuum
-  location_x: 4
-  location_y: -1
-- element: Vacuum
-  location_x: 5
-  location_y: -1
-- element: Vacuum
-  location_x: 6
-  location_y: -1
-- element: Vacuum
-  location_x: -5
-- element: Vacuum
-  location_x: -4
-- element: Vacuum
-  location_x: -3
-- element: Vacuum
-  location_x: -2
-- element: Vacuum
-  location_x: -1
-- element: Vacuum
-- element: Vacuum
-  location_x: 1
-- element: Vacuum
-  location_x: 2
-- element: Vacuum
-  location_x: 3
-- element: Vacuum
-  location_x: 4
-- element: Vacuum
-  location_x: 5
-- element: Vacuum
-  location_x: 6
-- element: Vacuum
-  location_x: -5
-  location_y: 1
-- element: Vacuum
-  location_x: -4
-  location_y: 1
-- element: Vacuum
-  location_x: -3
-  location_y: 1
-- element: Vacuum
-  location_x: -2
-  location_y: 1
-- element: Vacuum
-  location_x: -1
-  location_y: 1
-- element: Vacuum
-  location_y: 1
-- element: Vacuum
-  location_x: 1
-  location_y: 1
-- element: Vacuum
-  location_x: 2
-  location_y: 1
-- element: Vacuum
-  location_x: 3
-  location_y: 1
-- element: Vacuum
-  location_x: 4
-  location_y: 1
-- element: Vacuum
-  location_x: 5
-  location_y: 1
-- element: Vacuum
-  location_x: 6
-  location_y: 1
-- element: Vacuum
-  location_x: -5
-  location_y: 2
-- element: Vacuum
-  location_x: -4
-  location_y: 2
-- element: Vacuum
-  location_x: -3
   location_y: 2
 - element: Vacuum
   location_x: -2
@@ -534,15 +329,6 @@ cells:
 - element: Vacuum
   location_x: 4
   location_y: 2
-- element: Vacuum
-  location_x: 5
-  location_y: 2
-- element: Vacuum
-  location_x: 6
-  location_y: 2
-- element: Vacuum
-  location_x: -5
-  location_y: 3
 - element: Vacuum
   location_x: -4
   location_y: 3
@@ -576,8 +362,8 @@ cells:
   location_x: 6
   location_y: 3
 - element: Vacuum
-  location_x: -5
-  location_y: 4
+  location_x: 7
+  location_y: 3
 - element: Vacuum
   location_x: -4
   location_y: 4
@@ -611,8 +397,8 @@ cells:
   location_x: 6
   location_y: 4
 - element: Vacuum
-  location_x: -5
-  location_y: 5
+  location_x: 7
+  location_y: 4
 - element: Vacuum
   location_x: -4
   location_y: 5
@@ -646,257 +432,62 @@ cells:
   location_x: 6
   location_y: 5
 - element: Vacuum
-  location_x: -5
-  location_y: 6
-- element: Vacuum
-  location_x: -4
-  location_y: 6
-- element: Vacuum
-  location_x: -3
-  location_y: 6
-- element: Vacuum
-  location_x: -2
-  location_y: 6
-- element: Vacuum
-  location_x: -1
-  location_y: 6
-- element: Vacuum
-  location_y: 6
-- element: Vacuum
-  location_x: 1
-  location_y: 6
-- element: Vacuum
-  location_x: 2
-  location_y: 6
-- element: Vacuum
-  location_x: 3
-  location_y: 6
-- element: Vacuum
-  location_x: 4
-  location_y: 6
-- element: Vacuum
-  location_x: 5
-  location_y: 6
-- element: Vacuum
-  location_x: 6
-  location_y: 6
-- element: Vacuum
-  location_x: -5
-  location_y: 7
-- element: Vacuum
-  location_x: -4
-  location_y: 7
-- element: Vacuum
-  location_x: -3
-  location_y: 7
-- element: Vacuum
-  location_x: -2
-  location_y: 7
-- element: Vacuum
-  location_x: -1
-  location_y: 7
-- element: Vacuum
-  location_y: 7
-- element: Vacuum
-  location_x: 1
-  location_y: 7
-- element: Vacuum
-  location_x: 2
-  location_y: 7
-- element: Vacuum
-  location_x: 3
-  location_y: 7
-- element: Vacuum
-  location_x: 4
-  location_y: 7
-- element: Vacuum
-  location_x: 5
-  location_y: 7
-- element: Vacuum
-  location_x: 6
-  location_y: 7
-- element: Vacuum
-  location_x: -5
-  location_y: 8
-- element: Vacuum
-  location_x: -4
-  location_y: 8
-- element: Vacuum
-  location_x: -3
-  location_y: 8
-- element: Vacuum
-  location_x: -2
-  location_y: 8
-- element: Vacuum
-  location_x: -1
-  location_y: 8
-- element: Vacuum
-  location_y: 8
-- element: Vacuum
-  location_x: 1
-  location_y: 8
-- element: Vacuum
-  location_x: 2
-  location_y: 8
-- element: Vacuum
-  location_x: 3
-  location_y: 8
-- element: Vacuum
-  location_x: 4
-  location_y: 8
-- element: Vacuum
-  location_x: 5
-  location_y: 8
-- element: Vacuum
-  location_x: 6
-  location_y: 8
-- element: Vacuum
-  location_x: -5
-  location_y: 9
-- element: Vacuum
-  location_x: -4
-  location_y: 9
-- element: Vacuum
-  location_x: -3
-  location_y: 9
-- element: Vacuum
-  location_x: -2
-  location_y: 9
-- element: Vacuum
-  location_x: -1
-  location_y: 9
-- element: Vacuum
-  location_y: 9
-- element: Vacuum
-  location_x: 1
-  location_y: 9
-- element: Vacuum
-  location_x: 2
-  location_y: 9
-- element: Vacuum
-  location_x: 3
-  location_y: 9
-- element: Vacuum
-  location_x: 4
-  location_y: 9
-- element: Vacuum
-  location_x: 5
-  location_y: 9
-- element: Vacuum
-  location_x: 6
-  location_y: 9
-- element: Vacuum
-  location_x: -5
-  location_y: 10
-- element: Vacuum
-  location_x: -4
-  location_y: 10
-- element: Vacuum
-  location_x: -3
-  location_y: 10
-- element: Vacuum
-  location_x: -2
-  location_y: 10
-- element: Vacuum
-  location_x: -1
-  location_y: 10
-- element: Vacuum
-  location_y: 10
-- element: Vacuum
-  location_x: 1
-  location_y: 10
-- element: Vacuum
-  location_x: 2
-  location_y: 10
-- element: Vacuum
-  location_x: 3
-  location_y: 10
-- element: Vacuum
-  location_x: 4
-  location_y: 10
-- element: Vacuum
-  location_x: 5
-  location_y: 10
-- element: Vacuum
-  location_x: 6
-  location_y: 10
-- element: Vacuum
-  location_x: -5
-  location_y: 11
-- element: Vacuum
-  location_x: -4
-  location_y: 11
-- element: Vacuum
-  location_x: -3
-  location_y: 11
-- element: Vacuum
-  location_x: -2
-  location_y: 11
-- element: Vacuum
-  location_x: -1
-  location_y: 11
-- element: Vacuum
-  location_y: 11
-- element: Vacuum
-  location_x: 1
-  location_y: 11
-- element: Vacuum
-  location_x: 2
-  location_y: 11
-- element: Vacuum
-  location_x: 3
-  location_y: 11
-- element: Vacuum
-  location_x: 4
-  location_y: 11
-- element: Vacuum
-  location_x: 5
-  location_y: 11
-- element: Vacuum
-  location_x: 6
-  location_y: 11
-- element: Obsidian
-  mass: 947.440002
-  temperature: 1848.15002
-  location_x: -8
-  location_y: -6
+  location_x: 7
+  location_y: 5
 - element: Obsidian
   mass: 947.440002
   temperature: 1848.15002
   location_x: -7
-  location_y: -6
 - element: Obsidian
   mass: 947.440002
   temperature: 1848.15002
   location_x: -6
-  location_y: -6
 - element: Obsidian
   mass: 947.440002
-  temperature: 1848.15002
-  location_x: -8
-  location_y: -5
+  temperature: 1848.14795
+  location_x: -5
 - element: Obsidian
   mass: 947.440002
   temperature: 1848.15002
   location_x: -7
-  location_y: -5
+  location_y: 1
 - element: Obsidian
   mass: 947.440002
   temperature: 1848.15002
   location_x: -6
-  location_y: -5
+  location_y: 1
 - element: Obsidian
   mass: 947.440002
-  temperature: 1848.15002
-  location_x: -7
-  location_y: -7
+  temperature: 1848.14795
+  location_x: -5
+  location_y: 1
 - element: Obsidian
   mass: 947.440002
   temperature: 1848.15002
   location_x: -6
-  location_y: -7
+  location_y: -1
 - element: Obsidian
   mass: 947.440002
   temperature: 1848.15002
   location_x: -5
-  location_y: -7
+  location_y: -1
+- element: Obsidian
+  mass: 947.440002
+  temperature: 1848.14587
+  location_x: -4
+  location_y: -1
+- element: Vacuum
+  location_x: -5
+  location_y: 3
+- element: Vacuum
+  location_x: -5
+  location_y: 4
+- element: Vacuum
+  location_x: -5
+  location_y: 2
+- element: Vacuum
+  location_x: -6
+  location_y: 2
+- element: Vacuum
+  location_x: -6
+  location_y: 3

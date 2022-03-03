@@ -9,32 +9,61 @@ public class MaterialSelectorSerializer : KMonoBehaviour
 	[Serialize]
 	private List<Dictionary<Tag, Tag>> previouslySelectedElements;
 
+	[Serialize]
+	private List<Dictionary<Tag, Tag>>[] previouslySelectedElementsPerWorld;
+
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
+		if (previouslySelectedElementsPerWorld != null)
+		{
+			return;
+		}
+		previouslySelectedElementsPerWorld = new List<Dictionary<Tag, Tag>>[ClusterManager.INVALID_WORLD_IDX];
 		if (previouslySelectedElements == null)
 		{
-			previouslySelectedElements = new List<Dictionary<Tag, Tag>>();
+			return;
 		}
-	}
-
-	public void SetSelectedElement(int selectorIndex, Tag recipe, Tag element)
-	{
-		while (previouslySelectedElements.Count <= selectorIndex)
+		foreach (WorldContainer worldContainer in ClusterManager.Instance.WorldContainers)
 		{
-			previouslySelectedElements.Add(new Dictionary<Tag, Tag>());
+			List<Dictionary<Tag, Tag>> list = previouslySelectedElements.ConvertAll((Dictionary<Tag, Tag> input) => new Dictionary<Tag, Tag>(input));
+			previouslySelectedElementsPerWorld[worldContainer.id] = list;
 		}
-		previouslySelectedElements[selectorIndex][recipe] = element;
+		previouslySelectedElements = null;
 	}
 
-	public Tag GetPreviousElement(int selectorIndex, Tag recipe)
+	public void WipeWorldSelectionData(int worldID)
+	{
+		previouslySelectedElementsPerWorld[worldID] = null;
+	}
+
+	public void SetSelectedElement(int worldID, int selectorIndex, Tag recipe, Tag element)
+	{
+		if (previouslySelectedElementsPerWorld[worldID] == null)
+		{
+			previouslySelectedElementsPerWorld[worldID] = new List<Dictionary<Tag, Tag>>();
+		}
+		List<Dictionary<Tag, Tag>> list = previouslySelectedElementsPerWorld[worldID];
+		while (list.Count <= selectorIndex)
+		{
+			list.Add(new Dictionary<Tag, Tag>());
+		}
+		list[selectorIndex][recipe] = element;
+	}
+
+	public Tag GetPreviousElement(int worldID, int selectorIndex, Tag recipe)
 	{
 		Tag value = Tag.Invalid;
-		if (previouslySelectedElements.Count <= selectorIndex)
+		if (previouslySelectedElementsPerWorld[worldID] == null)
 		{
 			return value;
 		}
-		previouslySelectedElements[selectorIndex].TryGetValue(recipe, out value);
+		List<Dictionary<Tag, Tag>> list = previouslySelectedElementsPerWorld[worldID];
+		if (list.Count <= selectorIndex)
+		{
+			return value;
+		}
+		list[selectorIndex].TryGetValue(recipe, out value);
 		return value;
 	}
 }

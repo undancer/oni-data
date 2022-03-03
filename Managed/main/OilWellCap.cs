@@ -45,9 +45,8 @@ public class OilWellCap : Workable, ISingleSliderControl, ISliderControl, IEleme
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = inoperational;
-			root.ToggleRecurringChore((StatesInstance smi) => smi.master.CreateWorkChore());
 			inoperational.PlayAnim("off").EventTransition(GameHashes.OperationalChanged, operational, IsOperational);
-			operational.DefaultState(operational.idle);
+			operational.ToggleRecurringChore((StatesInstance smi) => smi.master.CreateWorkChore()).DefaultState(operational.idle);
 			operational.idle.PlayAnim("off").ToggleStatusItem(Db.Get().BuildingStatusItems.WellPressurizing).ParamTransition(pressurePercent, operational.overpressure, GameStateMachine<States, StatesInstance, OilWellCap, object>.IsGTEOne)
 				.ParamTransition(working, operational.releasing_pressure, GameStateMachine<States, StatesInstance, OilWellCap, object>.IsTrue)
 				.EventTransition(GameHashes.OperationalChanged, inoperational, GameStateMachine<States, StatesInstance, OilWellCap, object>.Not(IsOperational))

@@ -168,7 +168,7 @@ public class SaveUpgradeWarning : KMonoBehaviour
 		SpriteListDialogScreen screen = Util.KInstantiateUI<SpriteListDialogScreen>(ScreenPrefabs.Instance.SpriteListDialogScreen.gameObject, GameScreenManager.Instance.ssOverlayCanvas.gameObject, force_active: true);
 		screen.AddOption(UI.DEVELOPMENTBUILDS.FULL_PATCH_NOTES, delegate
 		{
-			Application.OpenURL("https://forums.kleientertainment.com/game-updates/oni-alpha/");
+			App.OpenWebURL("https://forums.kleientertainment.com/game-updates/oni-alpha/");
 		});
 		screen.AddOption(UI.CONFIRMDIALOG.OK, delegate
 		{

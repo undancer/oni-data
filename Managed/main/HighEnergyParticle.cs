@@ -109,7 +109,7 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 			smi.master.emitter.emitRadiusY = 6;
 			smi.master.emitter.emitRads = smi.master.payload * 0.5f * 600f / 9f;
 			smi.master.emitter.Refresh();
-			SimMessages.AddRemoveSubstance(Grid.PosToCell(smi.master.gameObject), SimHashes.Fallout, CellEventLogger.Instance.ElementEmitted, smi.master.payload * 0.001f, 5000f, Db.Get().Diseases.GetIndex(Db.Get().Diseases.RadiationPoisoning.Id), Mathf.FloorToInt(smi.master.payload * 0.5f / 0.001f));
+			SimMessages.AddRemoveSubstance(Grid.PosToCell(smi.master.gameObject), SimHashes.Fallout, CellEventLogger.Instance.ElementEmitted, smi.master.payload * 0.001f, 5000f, Db.Get().Diseases.GetIndex(Db.Get().Diseases.RadiationPoisoning.Id), Mathf.FloorToInt(smi.master.payload * 0.5f / 0.01f));
 			smi.Schedule(1f, delegate
 			{
 				Object.Destroy(smi.master.gameObject);
@@ -293,7 +293,7 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 		int y = 0;
 		Grid.CellToXY(cell, out x, out y);
 		ListPool<ScenePartitionerEntry, HighEnergyParticle>.PooledList pooledList = ListPool<ScenePartitionerEntry, HighEnergyParticle>.Allocate();
-		GameScenePartitioner.Instance.GatherEntries(x - 1, y - 1, 2, 2, GameScenePartitioner.Instance.collisionLayer, pooledList);
+		GameScenePartitioner.Instance.GatherEntries(x - 1, y - 1, 3, 3, GameScenePartitioner.Instance.collisionLayer, pooledList);
 		foreach (ScenePartitionerEntry item in pooledList)
 		{
 			KCollider2D kCollider2D = item.obj as KCollider2D;
@@ -345,7 +345,7 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 				{
 					sMI.PlayKnockedOverImpactAnimation();
 				}
-				gameObject4.GetComponent<PrimaryElement>().AddDisease(Db.Get().Diseases.GetIndex(Db.Get().Diseases.RadiationPoisoning.Id), Mathf.FloorToInt(payload * 0.5f / 0.001f), "HEPImpact");
+				gameObject4.GetComponent<PrimaryElement>().AddDisease(Db.Get().Diseases.GetIndex(Db.Get().Diseases.RadiationPoisoning.Id), Mathf.FloorToInt(payload * 0.5f / 0.01f), "HEPImpact");
 				Collide(CollisionType.Minion);
 				return;
 			}
@@ -382,7 +382,7 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 		{
 			payload -= 0.1f;
 			byte index = Db.Get().Diseases.GetIndex(Db.Get().Diseases.RadiationPoisoning.Id);
-			int disease_delta = Mathf.FloorToInt(50f);
+			int disease_delta = Mathf.FloorToInt(5f);
 			SimMessages.ModifyDiseaseOnCell(num2, index, disease_delta);
 		}
 		if (!(payload > 0f))

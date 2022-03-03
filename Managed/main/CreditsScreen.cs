@@ -1,26 +1,28 @@
 using System.Collections.Generic;
 using Klei;
-using STRINGS;
 using UnityEngine;
 
 public class CreditsScreen : KModalScreen
 {
 	public GameObject entryPrefab;
 
+	public GameObject teamHeaderPrefab;
+
+	private Dictionary<string, GameObject> teamContainers = new Dictionary<string, GameObject>();
+
 	public Transform entryContainer;
 
 	public KButton CloseButton;
 
-	public TextAsset TeamCreditsFile;
+	public TextAsset[] creditsFiles;
 
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		AddCredits(TeamCreditsFile);
-		string[] strings = LocString.GetStrings(typeof(UI.CREDITSSCREEN.THIRD_PARTY));
-		foreach (string text in strings)
+		TextAsset[] array = creditsFiles;
+		foreach (TextAsset csv in array)
 		{
-			Util.KInstantiateUI(entryPrefab, entryContainer.gameObject, force_active: true).GetComponent<LocText>().text = text;
+			AddCredits(csv);
 		}
 		CloseButton.onClick += Close;
 	}
@@ -34,7 +36,7 @@ public class CreditsScreen : KModalScreen
 	{
 		string[,] array = CSVReader.SplitCsvGrid(csv.text, csv.name);
 		List<string> list = new List<string>();
-		for (int i = 0; i < array.GetLength(1); i++)
+		for (int i = 1; i < array.GetLength(1); i++)
 		{
 			string text = $"{array[0, i]} {array[1, i]}";
 			if (!(text == " "))
@@ -43,9 +45,13 @@ public class CreditsScreen : KModalScreen
 			}
 		}
 		list.Shuffle();
+		string text2 = array[0, 0];
+		GameObject gameObject = Util.KInstantiateUI(teamHeaderPrefab, entryContainer.gameObject, force_active: true);
+		gameObject.GetComponent<LocText>().text = text2;
+		teamContainers.Add(text2, gameObject);
 		foreach (string item in list)
 		{
-			Util.KInstantiateUI(entryPrefab, entryContainer.gameObject, force_active: true).GetComponent<LocText>().text = item;
+			Util.KInstantiateUI(entryPrefab, teamContainers[text2], force_active: true).GetComponent<LocText>().text = item;
 		}
 	}
 }

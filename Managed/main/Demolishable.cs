@@ -1,7 +1,9 @@
 using KSerialization;
 using STRINGS;
 using TUNING;
+using UnityEngine;
 
+[RequireComponent(typeof(Prioritizable))]
 public class Demolishable : Workable
 {
 	public Chore chore;

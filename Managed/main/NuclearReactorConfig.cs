@@ -21,9 +21,9 @@ public class NuclearReactorConfig : IBuildingConfig
 
 	public const int RADIATION_EMITTER_RANGE = 25;
 
-	public const float OPERATIONAL_RADIATOR_INTENSITY = 105f;
+	public const float OPERATIONAL_RADIATOR_INTENSITY = 2400f;
 
-	public const float MELT_DOWN_RADIATOR_INTENSITY = 210f;
+	public const float MELT_DOWN_RADIATOR_INTENSITY = 4800f;
 
 	public const float FUEL_CONSUMPTION_SPEED = 0.016666668f;
 
@@ -43,7 +43,7 @@ public class NuclearReactorConfig : IBuildingConfig
 
 	public const float MINIMUM_COOLANT_MASS = 30f;
 
-	public const float WASTE_GERMS_PER_KG = 499.99997f;
+	public const float WASTE_GERMS_PER_KG = 50f;
 
 	public const float PST_MELTDOWN_COOLING_TIME = 3000f;
 

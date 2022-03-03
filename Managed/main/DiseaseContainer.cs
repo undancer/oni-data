@@ -23,7 +23,7 @@ public struct DiseaseContainer
 	public DiseaseContainer(GameObject go, byte elemIdx)
 	{
 		this.elemIdx = elemIdx;
-		isContainer = go.GetComponent<IUserControlledCapacity>() != null;
+		isContainer = go.GetComponent<IUserControlledCapacity>() != null && go.GetComponent<Storage>() != null;
 		Conduit component = go.GetComponent<Conduit>();
 		if (component != null)
 		{

@@ -97,7 +97,15 @@ public class LaunchPadSideScreen : SideScreenContent
 			waitingToLandRows.Add(gameObject);
 			KButton componentInChildren = gameObject.GetComponentInChildren<KButton>();
 			componentInChildren.GetComponentInChildren<LocText>().SetText((craft.ModuleInterface.GetClusterDestinationSelector().GetDestinationPad() == selectedPad) ? UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.CANCEL_LAND_BUTTON : UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.LAND_BUTTON);
-			componentInChildren.isInteractable = craft.CanLandAtPad(selectedPad, out var _) != Clustercraft.PadLandingStatus.CanNeverLand;
+			componentInChildren.isInteractable = craft.CanLandAtPad(selectedPad, out var failReason) != Clustercraft.PadLandingStatus.CanNeverLand;
+			if (!componentInChildren.isInteractable)
+			{
+				componentInChildren.GetComponent<ToolTip>().SetSimpleTooltip(failReason);
+			}
+			else
+			{
+				componentInChildren.GetComponent<ToolTip>().ClearMultiStringTooltip();
+			}
 			componentInChildren.onClick += delegate
 			{
 				if (craft.ModuleInterface.GetClusterDestinationSelector().GetDestinationPad() == selectedPad)
@@ -121,7 +129,16 @@ public class LaunchPadSideScreen : SideScreenContent
 
 	private void RefreshRocketButton()
 	{
-		startNewRocketbutton.isInteractable = selectedPad.LandedRocket == null;
+		bool isOperational = selectedPad.GetComponent<Operational>().IsOperational;
+		startNewRocketbutton.isInteractable = selectedPad.LandedRocket == null && isOperational;
+		if (!isOperational)
+		{
+			startNewRocketbutton.GetComponent<ToolTip>().SetSimpleTooltip(UI.UISIDESCREENS.CLUSTERDESTINATIONSIDESCREEN.DROPDOWN_TOOLTIP_PAD_DISABLED);
+		}
+		else
+		{
+			startNewRocketbutton.GetComponent<ToolTip>().ClearMultiStringTooltip();
+		}
 		devAutoRocketButton.isInteractable = selectedPad.LandedRocket == null;
 		devAutoRocketButton.gameObject.SetActive(DebugHandler.InstantBuildMode);
 	}

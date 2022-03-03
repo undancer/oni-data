@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Runtime.Serialization;
 using FMOD.Studio;
@@ -307,6 +308,10 @@ public class Game : KMonoBehaviour
 		public bool advancedPersonalPriorities;
 
 		public SavedInfo savedInfo;
+
+		public string dateGenerated;
+
+		public List<uint> changelistsPlayedOn;
 	}
 
 	public delegate void CansaveCB();
@@ -490,6 +495,10 @@ public class Game : KMonoBehaviour
 	private bool hasFirstSimTickRun;
 
 	private float simDt;
+
+	public string dateGenerated;
+
+	public List<uint> changelistsPlayedOn;
 
 	[SerializeField]
 	public ConduitVisInfo liquidConduitVisInfo;
@@ -721,6 +730,9 @@ public class Game : KMonoBehaviour
 		ediblesManager = base.gameObject.AddComponent<EdiblesManager>();
 		Singleton<CellChangeMonitor>.Instance.SetGridSize(Grid.WidthInCells, Grid.HeightInCells);
 		unlocks = GetComponent<Unlocks>();
+		changelistsPlayedOn = new List<uint>();
+		changelistsPlayedOn.Add(497575u);
+		dateGenerated = System.DateTime.UtcNow.ToString("U", CultureInfo.InvariantCulture);
 	}
 
 	public void SetGameStarted()
@@ -887,9 +899,25 @@ public class Game : KMonoBehaviour
 		component.ScreenManager.StartScreen(ScreenPrefabs.Instance.ToolTipScreen.gameObject, null, GameScreenManager.UIRenderTarget.HoverTextScreen);
 		cameraController = Util.KInstantiate(cameraControllerPrefab).GetComponent<CameraController>();
 		component.CameraController = cameraController;
-		KInputHandler.Add(Global.Instance.GetInputManager().GetDefaultController(), cameraController, 1);
+		if (KInputManager.currentController != null)
+		{
+			KInputHandler.Add(KInputManager.currentController, cameraController, 1);
+		}
+		else
+		{
+			KInputHandler.Add(Global.Instance.GetInputManager().GetDefaultController(), cameraController, 1);
+		}
+		Global.Instance.GetInputManager().usedMenus.Add(cameraController);
 		playerController = component.GetComponent<PlayerController>();
-		KInputHandler.Add(Global.Instance.GetInputManager().GetDefaultController(), playerController, 20);
+		if (KInputManager.currentController != null)
+		{
+			KInputHandler.Add(KInputManager.currentController, playerController, 20);
+		}
+		else
+		{
+			KInputHandler.Add(Global.Instance.GetInputManager().GetDefaultController(), playerController, 20);
+		}
+		Global.Instance.GetInputManager().usedMenus.Add(playerController);
 		return component;
 	}
 
@@ -1438,7 +1466,7 @@ public class Game : KMonoBehaviour
 		{
 			return;
 		}
-		uint num = 484114u;
+		uint num = 497575u;
 		string text = System.DateTime.Now.ToShortDateString();
 		string text2 = System.DateTime.Now.ToShortTimeString();
 		string fileName = Path.GetFileName(GenericGameSettings.instance.performanceCapture.saveGame);
@@ -1639,6 +1667,12 @@ public class Game : KMonoBehaviour
 		gameSaveData.advancedPersonalPriorities = advancedPersonalPriorities;
 		gameSaveData.savedInfo = savedInfo;
 		Debug.Assert(gameSaveData.worldDetail != null, "World detail null");
+		gameSaveData.dateGenerated = dateGenerated;
+		if (!changelistsPlayedOn.Contains(497575u))
+		{
+			changelistsPlayedOn.Add(497575u);
+		}
+		gameSaveData.changelistsPlayedOn = changelistsPlayedOn;
 		if (OnSave != null)
 		{
 			OnSave(gameSaveData);
@@ -1661,6 +1695,15 @@ public class Game : KMonoBehaviour
 		debugWasUsed = gameSaveData.debugWasUsed;
 		autoPrioritizeRoles = gameSaveData.autoPrioritizeRoles;
 		advancedPersonalPriorities = gameSaveData.advancedPersonalPriorities;
+		dateGenerated = gameSaveData.dateGenerated;
+		changelistsPlayedOn = gameSaveData.changelistsPlayedOn ?? new List<uint>();
+		if (gameSaveData.dateGenerated.IsNullOrWhiteSpace())
+		{
+			dateGenerated = "Before U41 (Feb 2022)";
+		}
+		DebugUtil.LogArgs("SAVEINFO");
+		DebugUtil.LogArgs(" - Generated: " + dateGenerated);
+		DebugUtil.LogArgs(" - Played on: " + string.Join(", ", changelistsPlayedOn));
 		savedInfo = gameSaveData.savedInfo;
 		savedInfo.InitializeEmptyVariables();
 		CustomGameSettings.Instance.Print();
@@ -1844,7 +1887,7 @@ public class Game : KMonoBehaviour
 		{
 			loopingSoundManager.StopAllSounds();
 		}
-		MusicManager.instance.KillAllSongs(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+		MusicManager.instance.KillAllSongs(STOP_MODE.ALLOWFADEOUT);
 		AudioMixer.instance.StopPersistentSnapshots();
 		foreach (List<SaveLoadRoot> value in SaveLoader.Instance.saveManager.GetLists().Values)
 		{
@@ -1986,7 +2029,7 @@ public class Game : KMonoBehaviour
 		ChorePreconditions.DestroyInstance();
 		SandboxBrushTool.DestroyInstance();
 		SandboxHeatTool.DestroyInstance();
-		SandboxRadsTool.DestroyInstance();
+		SandboxStressTool.DestroyInstance();
 		SandboxCritterTool.DestroyInstance();
 		SandboxClearFloorTool.DestroyInstance();
 		GameScreenManager.DestroyInstance();

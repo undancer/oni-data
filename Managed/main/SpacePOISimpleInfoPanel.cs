@@ -204,7 +204,7 @@ public class SpacePOISimpleInfoPanel : SimpleInfoPanel
 		}
 		else
 		{
-			component.GetReference<LocText>("ValueLabel").text = UI.CLUSTERMAP.POI.ARTIFACTS_DEPLETED;
+			component.GetReference<LocText>("ValueLabel").text = string.Format(UI.CLUSTERMAP.POI.ARTIFACTS_DEPLETED, GameUtil.GetFormattedCycles(sMI.RechargeTimeRemaining(), "F1", forceCycles: true));
 		}
 	}
 }

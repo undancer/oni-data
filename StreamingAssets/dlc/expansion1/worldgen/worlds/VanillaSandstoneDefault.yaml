@@ -1,7 +1,6 @@
 name: STRINGS.WORLDS.VANILLASANDSTONEDEFAULT.NAME
 description: STRINGS.WORLDS.VANILLASANDSTONEDEFAULT.DESCRIPTION
-nameTables:
-  - TERRA
+nameTables: [ TERRA ]
 asteroidIcon: asteroid_vanilla_sandstone_start_kanim
 disableWorldTraits: true
 
@@ -14,7 +13,7 @@ layoutMethod: PowerTree # Note: We need to add weights to the items in the layer
 
 fixedTraits:
   - sunlightMed
-  - cosmicRadiationMed
+  - cosmicRadiationVeryLow
 
 defaultsOverrides:
   data:
@@ -42,9 +41,14 @@ subworldFiles:
   - name: subworlds/oil/OilPockets
   - name: expansion1::subworlds/space/SpaceWithNoBorder
   - name: expansion1::subworlds/space/HospitableClassicSurface
+  # Spaced Out biomes
   - name: expansion1::subworlds/wasteland/WastelandBeetle
+    minCount: 3
   - name: expansion1::subworlds/wasteland/WastelandWorm
+    minCount: 1
   - name: expansion1::subworlds/radioactive/UraniumSprinkles
+    minCount: 2
+    maxCount: 4
 
 startSubworldName: subworlds/sandstone/SandstoneStart
 startingBaseTemplate: bases/sandstoneBase
@@ -222,7 +226,7 @@ worldTemplateRules:
   - names:
     - expansion1::poi/warp/sender
     - expansion1::poi/warp/receiver
-    - expansion1::poi/warp/teleporter
+    - expansion1::poi/warp/teleporter_no_oil
     listRule: GuaranteeAll
     priority: 90
     allowedCellsFilter:

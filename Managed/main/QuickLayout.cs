@@ -23,6 +23,9 @@ public class QuickLayout : KMonoBehaviour
 	[SerializeField]
 	private Vector2 offset;
 
+	[SerializeField]
+	private RectTransform driveParentRectSize;
+
 	private int _elementSize;
 
 	private int _spacing;
@@ -36,10 +39,15 @@ public class QuickLayout : KMonoBehaviour
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		Run();
+		ForceUpdate();
 	}
 
-	private void Update()
+	private void OnEnable()
+	{
+		ForceUpdate();
+	}
+
+	private void LateUpdate()
 	{
 		Run();
 	}
@@ -80,13 +88,38 @@ public class QuickLayout : KMonoBehaviour
 	public void Layout()
 	{
 		Vector3 vector = _offset;
+		bool flag = false;
 		for (int i = 0; i < base.transform.childCount; i++)
 		{
 			if (base.transform.GetChild(i).gameObject.activeInHierarchy)
 			{
+				flag = true;
 				base.transform.GetChild(i).rectTransform().anchoredPosition = vector;
 				vector += (Vector3)((_elementSize + _spacing) * GetDirectionVector());
 			}
+		}
+		if (!(driveParentRectSize != null))
+		{
+			return;
+		}
+		if (!flag)
+		{
+			if (_layoutDirection == LayoutDirection.BottomToTop || _layoutDirection == LayoutDirection.TopToBottom)
+			{
+				driveParentRectSize.sizeDelta = new Vector2(Mathf.Abs(driveParentRectSize.sizeDelta.x), 0f);
+			}
+			else if (_layoutDirection == LayoutDirection.LeftToRight || _layoutDirection == LayoutDirection.LeftToRight)
+			{
+				driveParentRectSize.sizeDelta = new Vector2(0f, Mathf.Abs(driveParentRectSize.sizeDelta.y));
+			}
+		}
+		else if (_layoutDirection == LayoutDirection.BottomToTop || _layoutDirection == LayoutDirection.TopToBottom)
+		{
+			driveParentRectSize.sizeDelta = new Vector2(driveParentRectSize.sizeDelta.x, Mathf.Abs(vector.y));
+		}
+		else if (_layoutDirection == LayoutDirection.LeftToRight || _layoutDirection == LayoutDirection.LeftToRight)
+		{
+			driveParentRectSize.sizeDelta = new Vector2(Mathf.Abs(vector.x), driveParentRectSize.sizeDelta.y);
 		}
 	}
 

@@ -212,6 +212,18 @@ public class LanguageOptionsScreen : KModalScreen, SteamUGCService.IClient
 		return component.GetComponent<ConfirmDialogScreen>();
 	}
 
+	public override void OnKeyDown(KButtonEvent e)
+	{
+		if (!e.Consumed)
+		{
+			if (e.TryConsume(Action.MouseRight))
+			{
+				Deactivate();
+			}
+			base.OnKeyDown(e);
+		}
+	}
+
 	private void RebuildUGCButtons()
 	{
 		foreach (Mod mod in Global.Instance.modManager.mods)
@@ -258,7 +270,7 @@ public class LanguageOptionsScreen : KModalScreen, SteamUGCService.IClient
 
 	private void OnClickOpenWorkshop()
 	{
-		Application.OpenURL("http://steamcommunity.com/workshop/browse/?appid=457140&requiredtags[]=language");
+		App.OpenWebURL("http://steamcommunity.com/workshop/browse/?appid=457140&requiredtags[]=language");
 	}
 
 	public void UpdateMods(IEnumerable<PublishedFileId_t> added, IEnumerable<PublishedFileId_t> updated, IEnumerable<PublishedFileId_t> removed, IEnumerable<SteamUGCService.Mod> loaded_previews)

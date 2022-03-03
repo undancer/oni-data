@@ -192,9 +192,4 @@ public struct AxialI : IEquatable<AxialI>
 	{
 		return r ^ q;
 	}
-
-	public override string ToString()
-	{
-		return $"{r}, {q}";
-	}
 }

@@ -156,14 +156,10 @@ public class KIconToggleMenu : KScreen
 			{
 				OnClick(idx);
 			};
-			Transform transform2 = kToggle.transform.Find("Text");
-			if (transform2 != null)
+			LocText componentInChildren = kToggle.transform.GetComponentInChildren<LocText>();
+			if (componentInChildren != null)
 			{
-				LocText component = transform2.GetComponent<LocText>();
-				if (component != null)
-				{
-					component.text = toggleInfo.text;
-				}
+				componentInChildren.SetText(toggleInfo.text);
 			}
 			if (toggleInfo.getSpriteCB != null)
 			{

@@ -50,31 +50,43 @@ public class ArtifactPOIStates : GameStateMachine<ArtifactPOIStates, ArtifactPOI
 			}
 			else
 			{
-				artifactToHarvest = ArtifactSelector.Instance.GetUniqueArtifactID();
+				artifactToHarvest = ArtifactSelector.Instance.GetUniqueArtifactID(ArtifactType.Space);
 			}
 		}
 
 		public string GetArtifactToHarvest()
 		{
-			if (string.IsNullOrEmpty(artifactToHarvest))
+			if (CanHarvestArtifact())
 			{
-				PickNewArtifactToHarvest();
+				if (string.IsNullOrEmpty(artifactToHarvest))
+				{
+					PickNewArtifactToHarvest();
+				}
+				return artifactToHarvest;
 			}
-			return artifactToHarvest;
+			return null;
 		}
 
 		public void HarvestArtifact()
 		{
-			numHarvests++;
-			poiCharge = 0f;
-			artifactToHarvest = null;
-			PickNewArtifactToHarvest();
+			if (CanHarvestArtifact())
+			{
+				numHarvests++;
+				poiCharge = 0f;
+				artifactToHarvest = null;
+				PickNewArtifactToHarvest();
+			}
 		}
 
 		public void RechargePOI(float dt)
 		{
 			float delta = dt / configuration.GetRechargeTime();
 			DeltaPOICharge(delta);
+		}
+
+		public float RechargeTimeRemaining()
+		{
+			return (float)Mathf.CeilToInt((configuration.GetRechargeTime() - configuration.GetRechargeTime() * poiCharge) / 600f) * 600f;
 		}
 
 		public void DeltaPOICharge(float delta)

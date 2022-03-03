@@ -1,7 +1,6 @@
 name: STRINGS.WORLDS.MEDIUMRADIOACTIVEVANILLAWARPPLANET.NAME # Radioactive Swamp Asteroid
 description: STRINGS.WORLDS.MEDIUMRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION
-nameTables:
-  - SWAMP
+nameTables: [ SWAMP, RADIOACTIVE ]
 asteroidIcon: asteroid_vanilla_sandstone_warp_kanim
 
 worldTraitScale: 0.3 # Adjust with worldSize. Traits are tuned to base game world sizes.
@@ -35,7 +34,7 @@ worldTraitRules:
 
 fixedTraits:
   - sunlightMedLow
-  - cosmicRadiationMedHigh
+  - cosmicRadiationVeryLow
 
 startSubworldName: expansion1::subworlds/swamp/SwampWarpStart
 startingBaseTemplate:  expansion1::bases/warpworldSwampBase

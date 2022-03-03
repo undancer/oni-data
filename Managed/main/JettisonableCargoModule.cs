@@ -58,6 +58,8 @@ public class JettisonableCargoModule : GameStateMachine<JettisonableCargoModule,
 			}
 		}
 
+		public bool ModuleDeployed => landerPlaced;
+
 		public MinionIdentity ChosenDuplicant
 		{
 			get
@@ -94,11 +96,11 @@ public class JettisonableCargoModule : GameStateMachine<JettisonableCargoModule,
 		private void OnLanderPlaced(Placeable lander, int cell)
 		{
 			landerPlaced = true;
+			landerPlacementCell = cell;
 			if (lander.GetComponent<MinionStorage>() != null)
 			{
 				OpenMoveChoreForChosenDuplicant();
 			}
-			landerPlacementCell = cell;
 			ManagementMenu.Instance.ToggleClusterMap();
 			base.sm.emptyCargo.Trigger(base.smi);
 			ClusterMapScreen.Instance.SelectEntity(GetComponent<RocketModuleCluster>().CraftInterface.GetComponent<ClusterGridEntity>(), frameDelay: true);
@@ -108,15 +110,40 @@ public class JettisonableCargoModule : GameStateMachine<JettisonableCargoModule,
 		{
 			RocketModuleCluster component = base.master.GetComponent<RocketModuleCluster>();
 			Clustercraft craft = component.CraftInterface.GetComponent<Clustercraft>();
-			ClustercraftInteriorDoor interiorDoor = craft.ModuleInterface.GetPassengerModule().GetComponent<ClustercraftExteriorDoor>().GetInteriorDoor();
-			int cell = Grid.OffsetCell(Grid.PosToCell(interiorDoor), interiorDoor.GetComponent<NavTeleporter>().offset);
 			MinionStorage storage = landerContainer.FindFirst(base.def.landerPrefabID).GetComponent<MinionStorage>();
-			ChosenDuplicant.GetSMI<RocketPassengerMonitor.Instance>().SetModuleDeployChore(cell, delegate
+			EnableTeleport(enable: true);
+			ChosenDuplicant.GetSMI<RocketPassengerMonitor.Instance>().SetModuleDeployChore(landerPlacementCell, delegate
 			{
 				Game.Instance.assignmentManager.RemoveFromWorld(ChosenDuplicant.assignableProxy.Get(), craft.ModuleInterface.GetInteriorWorld().id);
 				craft.ModuleInterface.GetPassengerModule().RemoveRocketPassenger(ChosenDuplicant);
 				storage.SerializeMinion(ChosenDuplicant.gameObject);
+				EnableTeleport(enable: false);
 			});
+		}
+
+		private void EnableTeleport(bool enable)
+		{
+			ClustercraftExteriorDoor component = base.master.GetComponent<RocketModuleCluster>().CraftInterface.GetComponent<Clustercraft>().ModuleInterface.GetPassengerModule().GetComponent<ClustercraftExteriorDoor>();
+			ClustercraftInteriorDoor interiorDoor = component.GetInteriorDoor();
+			AccessControl component2 = component.GetInteriorDoor().GetComponent<AccessControl>();
+			NavTeleporter component3 = GetComponent<NavTeleporter>();
+			if (enable)
+			{
+				component3.SetOverrideCell(landerPlacementCell);
+				interiorDoor.GetComponent<NavTeleporter>().SetTarget(component3);
+				component3.SetTarget(interiorDoor.GetComponent<NavTeleporter>());
+				foreach (MinionIdentity worldItem in Components.MinionIdentities.GetWorldItems(interiorDoor.GetMyWorldId()))
+				{
+					component2.SetPermission(worldItem.assignableProxy.Get(), (!(worldItem == ChosenDuplicant)) ? AccessControl.Permission.Neither : AccessControl.Permission.Both);
+				}
+			}
+			else
+			{
+				component3.SetOverrideCell(-1);
+				interiorDoor.GetComponent<NavTeleporter>().SetTarget(null);
+				component3.SetTarget(null);
+				component2.SetPermission(ChosenDuplicant.assignableProxy.Get(), AccessControl.Permission.Neither);
+			}
 		}
 
 		public void FinalDeploy()

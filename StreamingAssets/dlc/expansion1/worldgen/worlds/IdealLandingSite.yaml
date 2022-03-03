@@ -1,7 +1,6 @@
 name: STRINGS.WORLDS.IDEALLANDINGSITE.NAME
 description: STRINGS.WORLDS.IDEALLANDINGSITE.DESCRIPTION
-nameTables: 
- - FOREST
+nameTables: [ FOREST, RADIOACTIVE ]
 asteroidIcon: asteroid_swamp_rocket_kanim
 
 worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.
@@ -37,7 +36,7 @@ worldTraitRules:
 
 fixedTraits:
   - sunlightLow
-  - cosmicRadiationMedLow
+  - cosmicRadiationVeryLow
 
 startSubworldName: expansion1::subworlds/barren/LargeChasmStart
 startingBaseTemplate:  poi/poi_satellite_3_a
@@ -137,6 +136,14 @@ unknownCellsAllowedSubworlds:
       - expansion1::subworlds/radioactive/med_FrozenUraniumFields
 
 worldTemplateRules:
+  # Ocean
+  - names:
+      - poi/poi_ocean_geyser_saltwater
+    listRule: TryOne
+    priority: 100 
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [Ocean]
   # Frozen Uranium
   - names:
       - expansion1::poi/radioactive/uranium_fields_liquid_co2_geyser
@@ -213,7 +220,7 @@ worldTemplateRules:
     - geysers/small_volcano
     - geysers/hot_hydrogen
     - geysers/filthy_water
-    - geysers/salt_water
+    - geysers/molten_copper
     listRule: TryOne
     allowDuplicates: true
     times: 3

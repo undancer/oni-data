@@ -115,7 +115,7 @@ public class ArtifactPOIConfigurator : KMonoBehaviour
 		int globalWorldSeed = SaveLoader.Instance.clusterDetailSave.globalWorldSeed;
 		ClusterGridEntity component = GetComponent<ClusterGridEntity>();
 		Vector3 position = ClusterGrid.Instance.GetPosition(component);
-		System.Random randomSource = new System.Random(globalWorldSeed + (int)position.x + (int)position.y);
+		KRandom randomSource = new KRandom(globalWorldSeed + (int)position.x + (int)position.y);
 		return new ArtifactPOIInstanceConfiguration
 		{
 			typeId = typeId,
@@ -123,7 +123,7 @@ public class ArtifactPOIConfigurator : KMonoBehaviour
 		};
 	}
 
-	private float Roll(System.Random randomSource, float min, float max)
+	private float Roll(KRandom randomSource, float min, float max)
 	{
 		return (float)(randomSource.NextDouble() * (double)(max - min)) + min;
 	}

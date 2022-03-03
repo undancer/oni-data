@@ -2,8 +2,8 @@ using System;
 using Klei.CustomSettings;
 using ProcGen;
 using STRINGS;
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ColonyDestinationSelectScreen : NewGameFlowScreen
 {
@@ -29,13 +29,27 @@ public class ColonyDestinationSelectScreen : NewGameFlowScreen
 	private HierarchyReferences locationIcons;
 
 	[SerializeField]
+	private RectTransform worldsScrollPanel;
+
+	private const int DESTINATION_HEADER_BUTTON_HEIGHT_CLUSTER = 134;
+
+	private const int DESTINATION_HEADER_BUTTON_HEIGHT_BASE = 76;
+
+	private const int WORLDS_SCROLL_PANEL_HEIGHT_CLUSTER = 466;
+
+	private const int WORLDS_SCROLL_PANEL_HEIGHT_BASE = 524;
+
+	[SerializeField]
 	private AsteroidDescriptorPanel destinationProperties;
 
 	[SerializeField]
-	private AsteroidDescriptorPanel startLocationProperties;
+	private AsteroidDescriptorPanel selectedLocationProperties;
 
 	[SerializeField]
-	private TMP_InputField coordinate;
+	private KInputTextField coordinate;
+
+	[SerializeField]
+	private RectTransform destinationInfoPanel;
 
 	[MyCmpReq]
 	private NewGameSettingsPanel newGameSettings;
@@ -43,7 +57,7 @@ public class ColonyDestinationSelectScreen : NewGameFlowScreen
 	[MyCmpReq]
 	private DestinationSelectPanel destinationMapPanel;
 
-	private System.Random random;
+	private KRandom random;
 
 	private bool isEditingCoordinate;
 
@@ -55,15 +69,15 @@ public class ColonyDestinationSelectScreen : NewGameFlowScreen
 		launchButton.onClick += LaunchClicked;
 		shuffleButton.onClick += ShuffleClicked;
 		destinationMapPanel.OnAsteroidClicked += OnAsteroidClicked;
-		TMP_InputField tMP_InputField = coordinate;
-		tMP_InputField.onFocus = (System.Action)Delegate.Combine(tMP_InputField.onFocus, new System.Action(CoordinateEditStarted));
+		KInputTextField kInputTextField = coordinate;
+		kInputTextField.onFocus = (System.Action)Delegate.Combine(kInputTextField.onFocus, new System.Action(CoordinateEditStarted));
 		coordinate.onEndEdit.AddListener(CoordinateEditFinished);
 		if (locationIcons != null)
 		{
 			bool cloudSavesAvailable = SaveLoader.GetCloudSavesAvailable();
 			locationIcons.gameObject.SetActive(cloudSavesAvailable);
 		}
-		random = new System.Random();
+		random = new KRandom();
 	}
 
 	protected override void OnSpawn()
@@ -76,6 +90,23 @@ public class ColonyDestinationSelectScreen : NewGameFlowScreen
 		destinationMapPanel.Init();
 		CustomGameSettings.Instance.OnSettingChanged += SettingChanged;
 		ShuffleClicked();
+		ResizeLayout();
+	}
+
+	private void ResizeLayout()
+	{
+		Vector2 sizeDelta = destinationProperties.clusterDetailsButton.rectTransform().sizeDelta;
+		destinationProperties.clusterDetailsButton.rectTransform().sizeDelta = new Vector2(sizeDelta.x, DlcManager.FeatureClusterSpaceEnabled() ? 134 : 76);
+		Vector2 sizeDelta2 = worldsScrollPanel.rectTransform().sizeDelta;
+		Vector2 anchoredPosition = worldsScrollPanel.rectTransform().anchoredPosition;
+		if (!DlcManager.FeatureClusterSpaceEnabled())
+		{
+			worldsScrollPanel.rectTransform().anchoredPosition = new Vector2(anchoredPosition.x, anchoredPosition.y + 58f);
+		}
+		float a = (DlcManager.FeatureClusterSpaceEnabled() ? 466 : 524);
+		LayoutRebuilder.ForceRebuildLayoutImmediate(base.gameObject.rectTransform());
+		a = Mathf.Min(a, destinationInfoPanel.sizeDelta.y - (float)(DlcManager.FeatureClusterSpaceEnabled() ? 134 : 76) - 22f);
+		worldsScrollPanel.rectTransform().sizeDelta = new Vector2(sizeDelta2.x, a);
 	}
 
 	protected override void OnCleanUp()
@@ -209,30 +240,35 @@ public class ColonyDestinationSelectScreen : NewGameFlowScreen
 		string setting2 = newGameSettings.GetSetting(CustomGameSettingConfigs.WorldgenSeed);
 		destinationMapPanel.UpdateDisplayedClusters();
 		int.TryParse(setting2, out var result);
-		ColonyDestinationAsteroidBeltData colonyDestinationAsteroidBeltData;
+		ColonyDestinationAsteroidBeltData cluster;
 		try
 		{
-			colonyDestinationAsteroidBeltData = destinationMapPanel.SelectCluster(setting, result);
+			cluster = destinationMapPanel.SelectCluster(setting, result);
 		}
 		catch
 		{
 			string defaultAsteroid = destinationMapPanel.GetDefaultAsteroid();
 			newGameSettings.SetSetting(CustomGameSettingConfigs.ClusterLayout, defaultAsteroid);
-			colonyDestinationAsteroidBeltData = destinationMapPanel.SelectCluster(defaultAsteroid, result);
+			cluster = destinationMapPanel.SelectCluster(defaultAsteroid, result);
 		}
 		if (DlcManager.IsContentActive("EXPANSION1_ID"))
 		{
 			destinationProperties.EnableClusterLocationLabels(enable: true);
-			destinationProperties.RefreshAsteroidLines(colonyDestinationAsteroidBeltData, startLocationProperties);
+			destinationProperties.RefreshAsteroidLines(cluster, selectedLocationProperties);
 			destinationProperties.EnableClusterDetails(setActive: true);
-			destinationProperties.SetClusterDetailLabels(colonyDestinationAsteroidBeltData);
+			destinationProperties.SetClusterDetailLabels(cluster);
+			selectedLocationProperties.headerLabel.SetText(UI.FRONTEND.COLONYDESTINATIONSCREEN.SELECTED_CLUSTER_TRAITS_HEADER);
+			destinationProperties.clusterDetailsButton.onClick = delegate
+			{
+				destinationProperties.SelectWholeClusterDetails(cluster, selectedLocationProperties);
+			};
 		}
 		else
 		{
 			destinationProperties.EnableClusterDetails(setActive: false);
 			destinationProperties.EnableClusterLocationLabels(enable: false);
-			destinationProperties.SetParameterDescriptors(colonyDestinationAsteroidBeltData.GetParamDescriptors());
-			startLocationProperties.SetTraitDescriptors(colonyDestinationAsteroidBeltData.GetTraitDescriptors());
+			destinationProperties.SetParameterDescriptors(cluster.GetParamDescriptors());
+			selectedLocationProperties.SetTraitDescriptors(cluster.GetTraitDescriptors());
 		}
 	}
 
@@ -254,7 +290,7 @@ public class ColonyDestinationSelectScreen : NewGameFlowScreen
 			{
 				destinationMapPanel.ScrollRight();
 			}
-			else if (customSettings.activeSelf && !e.Consumed && e.TryConsume(Action.Escape))
+			else if (customSettings.activeSelf && !e.Consumed && (e.TryConsume(Action.Escape) || e.TryConsume(Action.MouseRight)))
 			{
 				CustomizeClose();
 			}

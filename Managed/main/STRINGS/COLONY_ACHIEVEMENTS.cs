@@ -2,6 +2,11 @@ namespace STRINGS
 {
 	public class COLONY_ACHIEVEMENTS
 	{
+		public static class DLC
+		{
+			public static LocString EXPANSION1 = string.Concat(UI.PRE_KEYWORD, "\n\n<i>", UI.DLC1.NAME, "</i>", UI.PST_KEYWORD, " DLC Achievement");
+		}
+
 		public class MISC_REQUIREMENTS
 		{
 			public class STATUS
@@ -98,9 +103,9 @@ namespace STRINGS
 
 				public static LocString MORALE = "{0} morale: {1}";
 
-				public static LocString COLLECT_ARTIFACTS = "Study Terrestrial Artifacts at the Artifact Analysis Station.\nTerrestrial Artifacts studied: {collectedCount} / {neededCount}";
+				public static LocString COLLECT_ARTIFACTS = "Study different Terrestrial Artifacts at the Artifact Analysis Station.\nUnique Terrestrial Artifacts studied: {collectedCount} / {neededCount}";
 
-				public static LocString COLLECT_SPACE_ARTIFACTS = "Study Space Artifacts at the Artifact Analysis Station.\nSpace Artifacts studied: {collectedCount} / {neededCount}";
+				public static LocString COLLECT_SPACE_ARTIFACTS = "Study different Space Artifacts at the Artifact Analysis Station.\nUnique Space Artifacts studied: {collectedCount} / {neededCount}";
 
 				public static LocString ESTABLISH_COLONIES = "Establish colonies on {goalBaseCount} asteroids by building and activating Mini-Pods.\nColonies established: {baseCount} / {neededCount}.";
 
@@ -118,7 +123,7 @@ namespace STRINGS
 
 				public static LocString ANALYZE_SEED = "Analyze {0} mutant";
 
-				public static LocString GET_URANIUM_WITHOUT_STING = "Got uranium out of a beeta hive without getting stung";
+				public static LocString GET_URANIUM_WITHOUT_STING = "Got uranium out of a Beeta hive without getting stung";
 
 				public static LocString RADBOLT_TRAVEL = "Radbolts travelled: {0:n} m / {1:n} m";
 

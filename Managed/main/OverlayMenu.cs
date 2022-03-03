@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using STRINGS;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class OverlayMenu : KIconToggleMenu
 {
@@ -40,9 +42,13 @@ public class OverlayMenu : KIconToggleMenu
 
 		public string requiredTechItem;
 
+		public string originalToolTipText;
+
 		public OverlayToggleInfo(string text, string icon_name, HashedString sim_view, string required_tech_item = "", Action hotKey = Action.NumActions, string tooltip = "", string tooltip_header = "")
-			: base(text, icon_name, null, hotKey, GameUtil.ReplaceHotkeyString(tooltip, hotKey), tooltip_header)
+			: base(text, icon_name, null, hotKey, tooltip, tooltip_header)
 		{
+			originalToolTipText = tooltip;
+			tooltip = GameUtil.ReplaceHotkeyString(tooltip, hotKey);
 			simView = sim_view;
 			requiredTechItem = required_tech_item;
 		}
@@ -61,6 +67,8 @@ public class OverlayMenu : KIconToggleMenu
 
 	private List<ToggleInfo> overlayToggleInfos;
 
+	private UnityAction inputChangeReceiver;
+
 	public static void DestroyInstance()
 	{
 		Instance = null;
@@ -74,6 +82,8 @@ public class OverlayMenu : KIconToggleMenu
 		Setup(overlayToggleInfos);
 		Game.Instance.Subscribe(1798162660, OnOverlayChanged);
 		Game.Instance.Subscribe(-107300940, OnResearchComplete);
+		inputChangeReceiver = (UnityAction)Delegate.Combine(inputChangeReceiver, new UnityAction(Refresh));
+		KInputManager.InputChange.AddListener(inputChangeReceiver);
 		base.onSelect += OnToggleSelect;
 	}
 
@@ -99,6 +109,7 @@ public class OverlayMenu : KIconToggleMenu
 		{
 			OverlayToggleInfo overlayToggleInfo = (OverlayToggleInfo)overlayToggleInfo2;
 			overlayToggleInfo2.toggle.gameObject.SetActive(overlayToggleInfo.IsUnlocked());
+			overlayToggleInfo2.tooltip = GameUtil.ReplaceHotkeyString(overlayToggleInfo.originalToolTipText, overlayToggleInfo2.hotKey);
 		}
 	}
 

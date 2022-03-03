@@ -220,6 +220,10 @@ public class WorldContainer : KMonoBehaviour
 
 	public bool IsRoverVisted => isRoverVisited;
 
+	public Dictionary<string, int> SunlightFixedTraits => sunlightFixedTraits;
+
+	public Dictionary<string, int> CosmicRadiationFixedTraits => cosmicRadiationFixedTraits;
+
 	public List<string> Biomes => m_subworldNames;
 
 	public List<string> WorldTraitIds => m_worldTraitIds;
@@ -296,10 +300,16 @@ public class WorldContainer : KMonoBehaviour
 		RefreshHasTopPriorityChore();
 		UpgradeFixedTraits();
 		RefreshFixedTraits();
+		if (DlcManager.IsPureVanilla())
+		{
+			isStartWorld = true;
+			isDupeVisited = true;
+		}
 	}
 
 	protected override void OnCleanUp()
 	{
+		SaveGame.Instance.materialSelectorSerializer.WipeWorldSelectionData(id);
 		ClusterManager.Instance.UnregisterWorldContainer(this);
 		base.OnCleanUp();
 	}
@@ -404,9 +414,9 @@ public class WorldContainer : KMonoBehaviour
 		if (!isDupeVisited)
 		{
 			dupeVisitedTimestamp = GameUtil.GetCurrentTimeInCycles();
+			isDupeVisited = true;
+			Game.Instance.Trigger(-434755240, this);
 		}
-		isDupeVisited = true;
-		Game.Instance.Trigger(-434755240, this);
 	}
 
 	public void SetRoverLanded()
@@ -534,7 +544,7 @@ public class WorldContainer : KMonoBehaviour
 	{
 		if (cosmicRadiationFixedTrait == null)
 		{
-			sunlightFixedTrait = FIXEDTRAITS.COSMICRADIATION.NAME.DEFAULT;
+			cosmicRadiationFixedTrait = FIXEDTRAITS.COSMICRADIATION.NAME.DEFAULT;
 		}
 		if (cosmicRadiationFixedTraits.ContainsKey(cosmicRadiationFixedTrait))
 		{
@@ -580,6 +590,8 @@ public class WorldContainer : KMonoBehaviour
 			worldOffset = Vector2I.zero;
 			worldSize = new Vector2I(Grid.WidthInCells, Grid.HeightInCells);
 			isDiscovered = true;
+			isStartWorld = true;
+			isDupeVisited = true;
 			m_seasonIds = new List<string> { Db.Get().GameplaySeasons.MeteorShowers.Id };
 		}
 	}

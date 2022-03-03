@@ -1,7 +1,6 @@
 name: STRINGS.WORLDS.FORESTMOONLET.NAME # Forest Cluster starting asteroid
 description: STRINGS.WORLDS.FORESTMOONLET.DESCRIPTION
-nameTables: 
-  - FOREST
+nameTables: [ FOREST ]
 asteroidIcon: asteroid_forest_start_kanim
 
 worldTraitScale: 0.44 # Adjust with worldSize. Traits are tuned to base game world sizes.
@@ -36,7 +35,7 @@ worldTraitRules:
 
 fixedTraits:
   - sunlightVeryLow
-  - cosmicRadiationMed
+  - cosmicRadiationVeryLow
 
 # List all the subworld files to load
 subworldFiles:

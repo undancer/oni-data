@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using KSerialization;
+using STRINGS;
 using UnityEngine;
 
 public class HighEnergyParticleStorage : KMonoBehaviour, IStorage
@@ -9,9 +10,13 @@ public class HighEnergyParticleStorage : KMonoBehaviour, IStorage
 	[SerializeField]
 	private float particles;
 
-	public float capacity;
+	public float capacity = float.MaxValue;
 
 	public bool showInUI = true;
+
+	public bool showCapacityStatusItem;
+
+	public bool showCapacityAsMainStatus;
 
 	public bool autoStore;
 
@@ -22,6 +27,8 @@ public class HighEnergyParticleStorage : KMonoBehaviour, IStorage
 	private LogicPorts _logicPorts;
 
 	public string PORT_ID = "";
+
+	private static StatusItem capacityStatusItem;
 
 	public float Particles => particles;
 
@@ -36,6 +43,7 @@ public class HighEnergyParticleStorage : KMonoBehaviour, IStorage
 			component.onParticleCapture = (HighEnergyParticlePort.OnParticleCapture)Delegate.Combine(component.onParticleCapture, new HighEnergyParticlePort.OnParticleCapture(OnParticleCapture));
 			component.onParticleCaptureAllowed = (HighEnergyParticlePort.OnParticleCaptureAllowed)Delegate.Combine(component.onParticleCaptureAllowed, new HighEnergyParticlePort.OnParticleCaptureAllowed(OnParticleCaptureAllowed));
 		}
+		SetupStorageStatusItems();
 	}
 
 	protected override void OnSpawn()
@@ -83,7 +91,7 @@ public class HighEnergyParticleStorage : KMonoBehaviour, IStorage
 		return false;
 	}
 
-	public void DeltaParticles(float delta)
+	private void DeltaParticles(float delta)
 	{
 		particles += delta;
 		if (particles <= 0f)
@@ -94,10 +102,11 @@ public class HighEnergyParticleStorage : KMonoBehaviour, IStorage
 		UpdateLogicPorts();
 	}
 
-	public void Store(float amount)
+	public float Store(float amount)
 	{
-		DebugUtil.Assert(amount >= 0f, $"Storing negative amount ({amount}) of particles");
-		DeltaParticles(amount);
+		float num = Mathf.Min(amount, RemainingCapacity());
+		DeltaParticles(num);
+		return num;
 	}
 
 	public float ConsumeAndGet(float amount)
@@ -177,5 +186,34 @@ public class HighEnergyParticleStorage : KMonoBehaviour, IStorage
 	{
 		DebugUtil.DevAssert(tag == GameTags.HighEnergyParticle, "Consuming non-particle tag as amount");
 		ConsumeAndGet(amount);
+	}
+
+	private void SetupStorageStatusItems()
+	{
+		if (capacityStatusItem == null)
+		{
+			capacityStatusItem = new StatusItem("StorageLocker", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			capacityStatusItem.resolveStringCallback = delegate(string str, object data)
+			{
+				HighEnergyParticleStorage obj = (HighEnergyParticleStorage)data;
+				string newValue = Util.FormatWholeNumber(obj.particles);
+				string newValue2 = Util.FormatWholeNumber(obj.capacity);
+				str = str.Replace("{Stored}", newValue);
+				str = str.Replace("{Capacity}", newValue2);
+				str = str.Replace("{Units}", UI.UNITSUFFIXES.HIGHENERGYPARTICLES.PARTRICLES);
+				return str;
+			};
+		}
+		if (showCapacityStatusItem)
+		{
+			if (showCapacityAsMainStatus)
+			{
+				GetComponent<KSelectable>().SetStatusItem(Db.Get().StatusItemCategories.Main, capacityStatusItem, this);
+			}
+			else
+			{
+				GetComponent<KSelectable>().SetStatusItem(Db.Get().StatusItemCategories.Stored, capacityStatusItem, this);
+			}
+		}
 	}
 }

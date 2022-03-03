@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Klei.AI;
 using STRINGS;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -51,16 +50,16 @@ public class DebugPaintElementScreen : KScreen
 
 	[Header("Value Inputs")]
 	[SerializeField]
-	private TMP_InputField massPressureInput;
+	private KInputTextField massPressureInput;
 
 	[SerializeField]
-	private TMP_InputField temperatureInput;
+	private KInputTextField temperatureInput;
 
 	[SerializeField]
-	private TMP_InputField diseaseCountInput;
+	private KInputTextField diseaseCountInput;
 
 	[SerializeField]
-	private TMP_InputField filterInput;
+	private KInputTextField filterInput;
 
 	[Header("Tool Buttons")]
 	[SerializeField]
@@ -97,7 +96,7 @@ public class DebugPaintElementScreen : KScreen
 
 	public Toggle paintAllowFOWReveal;
 
-	private List<TMP_InputField> inputFields = new List<TMP_InputField>();
+	private List<KInputTextField> inputFields = new List<KInputTextField>();
 
 	private List<string> options_list = new List<string>();
 
@@ -119,7 +118,7 @@ public class DebugPaintElementScreen : KScreen
 		inputFields.Add(temperatureInput);
 		inputFields.Add(diseaseCountInput);
 		inputFields.Add(filterInput);
-		foreach (TMP_InputField inputField in inputFields)
+		foreach (KInputTextField inputField in inputFields)
 		{
 			inputField.onFocus = (System.Action)Delegate.Combine(inputField.onFocus, (System.Action)delegate
 			{

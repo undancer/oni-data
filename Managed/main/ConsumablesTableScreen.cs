@@ -107,7 +107,7 @@ public class ConsumablesTableScreen : TableScreen
 			GameObject scroller = row.GetScroller("consumableScroller");
 			if (scroller != null)
 			{
-				KScrollRect component = scroller.transform.parent.GetComponent<KScrollRect>();
+				ScrollRect component = scroller.transform.parent.GetComponent<ScrollRect>();
 				if (component.horizontalScrollbar != null)
 				{
 					component.horizontalScrollbar.gameObject.SetActive(num >= 12);

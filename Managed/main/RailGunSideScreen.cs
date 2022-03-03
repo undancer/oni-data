@@ -84,10 +84,6 @@ public class RailGunSideScreen : SideScreenContent
 			Debug.LogError("The gameObject received does not contain a RailGun component");
 			return;
 		}
-		if (targetRailgunHEPStorageSubHandle != -1)
-		{
-			Unsubscribe(targetRailgunHEPStorageSubHandle);
-		}
 		targetRailgunHEPStorageSubHandle = selectedGun.Subscribe(-1837862626, UpdateHEPLabels);
 		slider.minValue = selectedGun.MinLaunchMass;
 		slider.maxValue = selectedGun.MaxLaunchMass;
@@ -99,6 +95,16 @@ public class RailGunSideScreen : SideScreenContent
 		UpdateMaxCapacityLabel();
 		numberInput.Activate();
 		UpdateHEPLabels();
+	}
+
+	public override void ClearTarget()
+	{
+		if (targetRailgunHEPStorageSubHandle != -1 && selectedGun != null)
+		{
+			selectedGun.Unsubscribe(targetRailgunHEPStorageSubHandle);
+			targetRailgunHEPStorageSubHandle = -1;
+		}
+		selectedGun = null;
 	}
 
 	public void UpdateHEPLabels(object data = null)

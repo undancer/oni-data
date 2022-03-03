@@ -26,7 +26,7 @@ public class BasicFabricMaterialPlantConfig : IEntityConfig
 			SimHashes.CarbonDioxide,
 			SimHashes.DirtyWater,
 			SimHashes.Water
-		}, pressure_sensitive: false, pressure_lethal_low: 0f, pressure_warning_low: 0.15f, can_drown: false, can_tinker: true, require_solid_tile: true, should_grow_old: true, max_age: 2400f, min_radiation: 0f, max_radiation: 460f, baseTraitId: ID + "Original", baseTraitName: STRINGS.CREATURES.SPECIES.BASICFABRICMATERIALPLANT.NAME);
+		}, pressure_sensitive: false, pressure_lethal_low: 0f, pressure_warning_low: 0.15f, can_drown: false, can_tinker: true, require_solid_tile: true, should_grow_old: true, max_age: 2400f, min_radiation: 0f, max_radiation: 4600f, baseTraitId: ID + "Original", baseTraitName: STRINGS.CREATURES.SPECIES.BASICFABRICMATERIALPLANT.NAME);
 		EntityTemplates.ExtendPlantToIrrigated(gameObject, new PlantElementAbsorber.ConsumeInfo[1]
 		{
 			new PlantElementAbsorber.ConsumeInfo

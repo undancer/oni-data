@@ -42,6 +42,8 @@ public class DebugHandler : IInputHandler
 
 	private static int activeWorldBeforeOverride = -1;
 
+	public static bool NotificationsDisabled { get; private set; }
+
 	public static bool enabled { get; private set; }
 
 	public string handlerName => "DebugHandler";
@@ -100,7 +102,7 @@ public class DebugHandler : IInputHandler
 			gameObject.GetComponent<MinionIdentity>().ValidateProxy();
 			Equipment component3 = gameObject.GetComponent<MinionIdentity>().assignableProxy.Get().GetComponent<Equipment>();
 			component2.Assign(component3.GetComponent<IAssignableIdentity>());
-			gameObject2.GetComponent<EquippableWorkable>().CancelChore();
+			gameObject2.GetComponent<EquippableWorkable>().CancelChore("Debug Handler");
 			component3.Equip(component2);
 		}
 		gameObject.GetMyWorld().SetDupeVisited();
@@ -109,6 +111,20 @@ public class DebugHandler : IInputHandler
 	public static void SetDebugEnabled(bool debugEnabled)
 	{
 		enabled = debugEnabled;
+	}
+
+	public static void ToggleDisableNotifications()
+	{
+		NotificationsDisabled = !NotificationsDisabled;
+	}
+
+	private string GetScreenshotFileName()
+	{
+		string activeSaveFilePath = SaveLoader.GetActiveSaveFilePath();
+		string text = Path.Combine(Path.GetDirectoryName(activeSaveFilePath), "screenshot");
+		string fileName = Path.GetFileName(activeSaveFilePath);
+		Directory.CreateDirectory(text);
+		return Path.ChangeExtension(Path.Combine(text, fileName), ".png");
 	}
 
 	public unsafe void OnKeyDown(KButtonEvent e)
@@ -125,9 +141,17 @@ public class DebugHandler : IInputHandler
 		{
 			SpawnMinion(addAtmoSuit: true);
 		}
+		else if (e.TryConsume(Action.DebugCheerEmote))
+		{
+			for (int i = 0; i < Components.MinionIdentities.Count; i++)
+			{
+				new EmoteChore(Components.MinionIdentities[i].GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_cheer_kanim", new HashedString[3] { "cheer_pre", "cheer_loop", "cheer_pst" }, null);
+				new EmoteChore(Components.MinionIdentities[i].GetComponent<ChoreProvider>(), Db.Get().ChoreTypes.EmoteHighPriority, "anim_cheer_kanim", new HashedString[3] { "cheer_pre", "cheer_loop", "cheer_pst" }, null);
+			}
+		}
 		else if (e.TryConsume(Action.DebugSpawnStressTest))
 		{
-			for (int i = 0; i < 60; i++)
+			for (int j = 0; j < 60; j++)
 			{
 				SpawnMinion();
 			}
@@ -182,6 +206,7 @@ public class DebugHandler : IInputHandler
 		else if (e.TryConsume(Action.DebugInstantBuildMode))
 		{
 			InstantBuildMode = !InstantBuildMode;
+			Game.Instance.Trigger(1557339983);
 			if (Game.Instance == null)
 			{
 				return;
@@ -240,19 +265,19 @@ public class DebugHandler : IInputHandler
 		}
 		else if (e.TryConsume(Action.SreenShot1x))
 		{
-			ScreenCapture.CaptureScreenshot(Path.ChangeExtension(SaveLoader.GetActiveSaveFilePath(), ".png"), 1);
+			ScreenCapture.CaptureScreenshot(GetScreenshotFileName(), 1);
 		}
 		else if (e.TryConsume(Action.SreenShot2x))
 		{
-			ScreenCapture.CaptureScreenshot(Path.ChangeExtension(SaveLoader.GetActiveSaveFilePath(), ".png"), 2);
+			ScreenCapture.CaptureScreenshot(GetScreenshotFileName(), 2);
 		}
 		else if (e.TryConsume(Action.SreenShot8x))
 		{
-			ScreenCapture.CaptureScreenshot(Path.ChangeExtension(SaveLoader.GetActiveSaveFilePath(), ".png"), 8);
+			ScreenCapture.CaptureScreenshot(GetScreenshotFileName(), 8);
 		}
 		else if (e.TryConsume(Action.SreenShot32x))
 		{
-			ScreenCapture.CaptureScreenshot(Path.ChangeExtension(SaveLoader.GetActiveSaveFilePath(), ".png"), 32);
+			ScreenCapture.CaptureScreenshot(GetScreenshotFileName(), 32);
 		}
 		else if (e.TryConsume(Action.DebugCellInfo))
 		{

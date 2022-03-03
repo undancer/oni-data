@@ -81,14 +81,34 @@ public class ClusterGrid
 
 	public ClusterGridEntity GetVisibleEntityOfLayerAtCell(AxialI cell, EntityLayer entityLayer)
 	{
-		return GetVisibleEntitiesAtCell(cell).Find((ClusterGridEntity x) => x.Layer == entityLayer);
+		if (IsValidCell(cell) && GetFOWManager().IsLocationRevealed(cell))
+		{
+			foreach (ClusterGridEntity item in cellContents[cell])
+			{
+				if (item.IsVisible && item.Layer == entityLayer)
+				{
+					return item;
+				}
+			}
+		}
+		return null;
 	}
 
 	public ClusterGridEntity GetVisibleEntityOfLayerAtAdjacentCell(AxialI cell, EntityLayer entityLayer)
 	{
-		return (from entity in AxialUtil.GetRing(cell, 1).SelectMany((AxialI c) => GetVisibleEntitiesAtCell(c))
+		return AxialUtil.GetRing(cell, 1).SelectMany(GetVisibleEntitiesAtCell).FirstOrDefault((ClusterGridEntity entity) => entity.Layer == entityLayer);
+	}
+
+	public List<ClusterGridEntity> GetHiddenEntitiesOfLayerAtCell(AxialI cell, EntityLayer entityLayer)
+	{
+		return (from entity in AxialUtil.GetRing(cell, 0).SelectMany(GetHiddenEntitiesAtCell)
 			where entity.Layer == entityLayer
-			select entity).FirstOrDefault();
+			select entity).ToList();
+	}
+
+	public ClusterGridEntity GetEntityOfLayerAtCell(AxialI cell, EntityLayer entityLayer)
+	{
+		return AxialUtil.GetRing(cell, 0).SelectMany(GetEntitiesOnCell).FirstOrDefault((ClusterGridEntity entity) => entity.Layer == entityLayer);
 	}
 
 	public List<ClusterGridEntity> GetHiddenEntitiesAtCell(AxialI cell)
@@ -100,9 +120,14 @@ public class ClusterGrid
 		return new List<ClusterGridEntity>();
 	}
 
+	public List<ClusterGridEntity> GetNotVisibleEntitiesAtAdjacentCell(AxialI cell)
+	{
+		return AxialUtil.GetRing(cell, 1).SelectMany(GetHiddenEntitiesAtCell).ToList();
+	}
+
 	public List<ClusterGridEntity> GetNotVisibleEntitiesOfLayerAtAdjacentCell(AxialI cell, EntityLayer entityLayer)
 	{
-		return (from entity in AxialUtil.GetRing(cell, 1).SelectMany((AxialI c) => GetHiddenEntitiesAtCell(c))
+		return (from entity in AxialUtil.GetRing(cell, 1).SelectMany(GetHiddenEntitiesAtCell)
 			where entity.Layer == entityLayer
 			select entity).ToList();
 	}

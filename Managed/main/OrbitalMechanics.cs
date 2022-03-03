@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using KSerialization;
 using UnityEngine;
@@ -102,11 +101,11 @@ public class OrbitalMechanics : KMonoBehaviour
 			if (sMI2 != null && sMI2.configuration.poiType.orbitalObject != null)
 			{
 				List<string> orbitalObject = sMI2.configuration.poiType.orbitalObject;
-				System.Random random = new System.Random();
+				KRandom kRandom = new KRandom();
 				float num = sMI2.poiCapacity / sMI2.configuration.GetMaxCapacity() * (float)sMI2.configuration.poiType.maxNumOrbitingObjects;
 				for (int i = 0; (float)i < num; i++)
 				{
-					int index = random.Next(orbitalObject.Count);
+					int index = kRandom.Next(orbitalObject.Count);
 					CreateOrbitalObject(orbitalObject[index]);
 				}
 			}

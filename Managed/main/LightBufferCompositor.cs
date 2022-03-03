@@ -82,7 +82,7 @@ public class LightBufferCompositor : MonoBehaviour
 			material.SetTexture("_RadHaze1Tex", Lighting.Instance.Settings.Radiation1Tex);
 			material.SetTexture("_RadHaze2Tex", Lighting.Instance.Settings.Radiation2Tex);
 			material.SetTexture("_RadHaze3Tex", Lighting.Instance.Settings.Radiation3Tex);
-			material.SetTexture("_RadHaze4Tex", Lighting.Instance.Settings.Radiation4Tex);
+			material.SetTexture("_NoiseTex", Lighting.Instance.Settings.NoiseTex);
 		}
 	}
 }

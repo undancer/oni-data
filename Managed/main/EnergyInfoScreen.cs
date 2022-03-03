@@ -97,6 +97,11 @@ public class EnergyInfoScreen : TargetScreen
 		{
 			num = circuitManager.GetCircuitID(component);
 		}
+		else if (selectedTarget.GetComponent<Wire>() != null)
+		{
+			int cell = Grid.PosToCell(selectedTarget.transform.GetPosition());
+			num = Game.Instance.circuitManager.GetCircuitID(cell);
+		}
 		if (num != ushort.MaxValue)
 		{
 			overviewPanel.SetActive(value: true);

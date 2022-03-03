@@ -50,6 +50,11 @@ public class MainMenu : KScreen
 
 	private GameObject GameSettingsScreen;
 
+	private bool m_screenshotMode;
+
+	[SerializeField]
+	private CanvasGroup uiCanvas;
+
 	[SerializeField]
 	private KButton buttonPrefab;
 
@@ -103,6 +108,9 @@ public class MainMenu : KScreen
 	[SerializeField]
 	private BuildWatermark buildWatermark;
 
+	[SerializeField]
+	public string IntroShortName;
+
 	private static bool HasAutoresumedOnce = false;
 
 	private bool refreshResumeButton = true;
@@ -110,6 +118,8 @@ public class MainMenu : KScreen
 	private int m_cheatInputCounter;
 
 	public const string AutoResumeSaveFileKey = "AutoResumeSaveFile";
+
+	public const string PLAY_SHORT_ON_LAUNCH = "PlayShortOnLaunch";
 
 	private static int LANGUAGE_CONFIRMATION_VERSION = 2;
 
@@ -149,8 +159,8 @@ public class MainMenu : KScreen
 		MakeButton(new ButtonInfo(UI.FRONTEND.MAINMENU.QUITTODESKTOP, QuitGame, 14, normalButtonStyle));
 		RefreshResumeButton();
 		Button_ResumeGame.onClick += ResumeGame;
-		StartFEAudio();
 		SpawnVideoScreen();
+		StartFEAudio();
 		CheckPlayerPrefsCorruption();
 		if (PatchNotesScreen.ShouldShowScreen())
 		{
@@ -209,7 +219,7 @@ public class MainMenu : KScreen
 				}
 				motdImageButton.onClick.AddListener(delegate
 				{
-					Application.OpenURL(response.image_link_url);
+					App.OpenWebURL(response.image_link_url);
 				});
 			}
 			else
@@ -234,6 +244,11 @@ public class MainMenu : KScreen
 		if (e.Consumed)
 		{
 			return;
+		}
+		if (e.TryConsume(Action.DebugToggleUI))
+		{
+			m_screenshotMode = !m_screenshotMode;
+			uiCanvas.alpha = (m_screenshotMode ? 0f : 1f);
 		}
 		KKeyCode key_code = m_cheatInputCounter switch
 		{
@@ -475,7 +490,7 @@ public class MainMenu : KScreen
 					header = value.header;
 					gameInfo = value.headerData;
 				}
-				if (header.buildVersion > 484114 || gameInfo.saveMajorVersion != 7 || gameInfo.saveMinorVersion > 27)
+				if (header.buildVersion > 497575 || gameInfo.saveMajorVersion != 7 || gameInfo.saveMinorVersion > 28)
 				{
 					flag = false;
 				}
@@ -535,7 +550,7 @@ public class MainMenu : KScreen
 	public void StartFEAudio()
 	{
 		AudioMixer.instance.Reset();
-		MusicManager.instance.KillAllSongs(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+		MusicManager.instance.KillAllSongs(STOP_MODE.ALLOWFADEOUT);
 		AudioMixer.instance.Start(AudioMixerSnapshots.Get().FrontEndSnapshot);
 		if (!AudioMixer.instance.SnapshotIsActive(AudioMixerSnapshots.Get().UserVolumeSettingsSnapshot))
 		{
@@ -552,7 +567,7 @@ public class MainMenu : KScreen
 	{
 		if (ambientLoop.isValid())
 		{
-			ambientLoop.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+			ambientLoop.stop(STOP_MODE.ALLOWFADEOUT);
 			ambientLoop.release();
 			ambientLoop.clearHandle();
 		}
@@ -573,7 +588,7 @@ public class MainMenu : KScreen
 		{
 			Util.KInstantiateUI<ConfirmDialogScreen>(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject, base.gameObject, force_active: true).PopupConfirmDialog(UI.FRONTEND.SUPPORTWARNINGS.AUDIO_DRIVERS, null, null, UI.FRONTEND.SUPPORTWARNINGS.AUDIO_DRIVERS_MORE_INFO, delegate
 			{
-				Application.OpenURL("http://support.kleientertainment.com/customer/en/portal/articles/2947881-no-audio-when-playing-oxygen-not-included");
+				App.OpenWebURL("http://support.kleientertainment.com/customer/en/portal/articles/2947881-no-audio-when-playing-oxygen-not-included");
 			}, null, null, null, GlobalResources.Instance().sadDupeAudio);
 		}
 	}

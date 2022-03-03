@@ -29,7 +29,7 @@ public class PropGravitasWallConfig : IBuildingConfig
 	{
 		go.AddOrGet<AnimTileable>().objectLayer = ObjectLayer.Backwall;
 		go.AddComponent<ZoneTile>();
-		go.GetComponent<PrimaryElement>().SetElement(SimHashes.Glass);
+		go.GetComponent<PrimaryElement>().SetElement(SimHashes.Granite);
 		go.GetComponent<PrimaryElement>().Temperature = 273f;
 		go.GetComponent<KPrefabID>().AddTag(GameTags.Gravitas);
 		BuildingConfigManager.Instance.IgnoreDefaultKComponent(typeof(RequiresFoundation), prefab_tag);

@@ -217,7 +217,7 @@ public class InputBindingsScreen : KModalScreen
 		for (int i = 0; i < GameInputMapping.KeyBindings.Length; i++)
 		{
 			BindingEntry bindingEntry = GameInputMapping.KeyBindings[i];
-			if (bindingEntry.mGroup != null && bindingEntry.mRebindable && !screens.Contains(bindingEntry.mGroup))
+			if (bindingEntry.mGroup != null && bindingEntry.mRebindable && !screens.Contains(bindingEntry.mGroup) && DlcManager.IsDlcListValidForCurrentContent(bindingEntry.dlcIds))
 			{
 				if (bindingEntry.mGroup == "Root")
 				{
@@ -263,7 +263,7 @@ public class InputBindingsScreen : KModalScreen
 		for (int i = 0; i < GameInputMapping.KeyBindings.Length; i++)
 		{
 			BindingEntry binding = GameInputMapping.KeyBindings[i];
-			if (binding.mGroup == screens[activeScreen] && binding.mRebindable)
+			if (binding.mGroup == screens[activeScreen] && binding.mRebindable && DlcManager.IsDlcListValidForCurrentContent(binding.dlcIds))
 			{
 				GameObject gameObject = entryPool.GetFreeElement(parent, forceActive: true).gameObject;
 				LocText componentInChildren = gameObject.transform.GetChild(0).GetComponentInChildren<LocText>();
@@ -465,6 +465,7 @@ public class InputBindingsScreen : KModalScreen
 			if (bindingEntry2.mRebindable && bindingEntry2.mAction == actionToRebind)
 			{
 				BindingEntry duplicatedBinding = GetDuplicatedBinding(screens[activeScreen], bindingEntry);
+				bindingEntry.mButton = GameInputMapping.KeyBindings[i].mButton;
 				GameInputMapping.KeyBindings[i] = bindingEntry;
 				activeButton.GetComponentInChildren<LocText>().text = GetBindingText(bindingEntry);
 				if (duplicatedBinding.mAction != 0 && duplicatedBinding.mAction != actionToRebind)

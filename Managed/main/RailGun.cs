@@ -73,7 +73,7 @@ public class RailGun : StateMachineComponent<RailGun.StatesInstance>, ISim200ms,
 
 		public float EnergyCost()
 		{
-			return Mathf.Max(0f, 10f + (float)PathLength() * 10f);
+			return Mathf.Max(0f, 0f + (float)PathLength() * 10f);
 		}
 
 		public bool MayTurnOn()
@@ -148,6 +148,7 @@ public class RailGun : StateMachineComponent<RailGun.StatesInstance>, ISim200ms,
 				.ParamTransition(allowedFromLogic, on, (StatesInstance smi, bool p) => smi.MayTurnOn());
 			on.DefaultState(on.power_on).EventTransition(GameHashes.OperationalChanged, on.power_off, (StatesInstance smi) => !smi.master.operational.IsOperational).EventTransition(GameHashes.ClusterDestinationChanged, on.power_off, (StatesInstance smi) => !smi.IsDestinationReachable())
 				.EventTransition(GameHashes.ClusterFogOfWarRevealed, (StatesInstance smi) => Game.Instance, on.power_off, (StatesInstance smi) => !smi.IsDestinationReachable(forceRefresh: true))
+				.EventTransition(GameHashes.OnParticleStorageChanged, on.power_off, (StatesInstance smi) => !smi.MayTurnOn())
 				.ParamTransition(allowedFromLogic, on.power_off, (StatesInstance smi, bool p) => !p)
 				.ToggleMainStatusItem(Db.Get().BuildingStatusItems.Normal);
 			on.power_on.PlayAnim("power_on").OnAnimQueueComplete(on.wait_for_storage);

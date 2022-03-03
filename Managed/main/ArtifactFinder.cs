@@ -53,11 +53,14 @@ public class ArtifactFinder : KMonoBehaviour
 	public List<string> GetArtifactsOfTier(ArtifactTier tier)
 	{
 		List<string> list = new List<string>();
-		foreach (string artifactItem in ArtifactConfig.artifactItems)
+		foreach (KeyValuePair<ArtifactType, List<string>> artifactItem in ArtifactConfig.artifactItems)
 		{
-			if (Assets.GetPrefab(artifactItem.ToTag()).GetComponent<SpaceArtifact>().GetArtifactTier() == tier)
+			foreach (string item in artifactItem.Value)
 			{
-				list.Add(artifactItem);
+				if (Assets.GetPrefab(item.ToTag()).GetComponent<SpaceArtifact>().GetArtifactTier() == tier)
+				{
+					list.Add(item);
+				}
 			}
 		}
 		return list;

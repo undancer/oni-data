@@ -118,6 +118,7 @@ public enum Action
 	ManageDatabase,
 	ManageSkills,
 	ManageStarmap,
+	ManageDiagnostics,
 	Overlay1,
 	Overlay2,
 	Overlay3,
@@ -185,6 +186,7 @@ public enum Action
 	DebugTriggerException,
 	DebugTriggerError,
 	DebugTogglePersonalPriorityComparison,
+	DebugCheerEmote,
 	DebugDig,
 	DebugToggleUI,
 	DebugCollectGarbage,
@@ -241,6 +243,7 @@ public enum Action
 	SandboxRadsTool,
 	SandboxCritterTool,
 	SandboxCopyElement,
+	SandboxStressTool,
 	CinemaCamEnable,
 	CinemaPanLeft,
 	CinemaPanRight,
@@ -266,5 +269,9 @@ public enum Action
 	SwitchActiveWorld9,
 	SwitchActiveWorld10,
 	DebugSpawnMinionAtmoSuit,
+	BuildMenuUp,
+	BuildMenuDown,
+	BuildMenuLeft,
+	BuildMenuRight,
 	NumActions
 }

@@ -1,7 +1,6 @@
 name: STRINGS.WORLDS.MOOMOONLET.NAME
 description: STRINGS.WORLDS.MOOMOONLET.DESCRIPTION
-nameTables:
-  - MOO
+nameTables: [ MOO ]
 asteroidIcon: asteroid_moo_planet_kanim
 
 worldTraitScale: 0.08 # Adjust with worldSize. Traits are tuned to base game world sizes.

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Klei.AI;
 using STRINGS;
 using UnityEngine;
@@ -327,29 +328,44 @@ public class VitalsTableScreen : TableScreen
 			MinionIdentity minionIdentity = minion as MinionIdentity;
 			if (minionIdentity != null)
 			{
-				Sicknesses sicknesses = minionIdentity.GetComponent<MinionModifiers>().sicknesses;
-				if (sicknesses.IsInfected())
+				List<KeyValuePair<string, float>> list = new List<KeyValuePair<string, float>>();
+				foreach (SicknessInstance sickness in minionIdentity.GetComponent<MinionModifiers>().sicknesses)
 				{
-					string text = "";
-					if (sicknesses.Count > 1)
+					list.Add(new KeyValuePair<string, float>(sickness.modifier.Name, sickness.GetInfectedTimeRemaining()));
+				}
+				if (DlcManager.FeatureRadiationEnabled())
+				{
+					RadiationMonitor.Instance sMI = minionIdentity.GetSMI<RadiationMonitor.Instance>();
+					if (sMI != null && sMI.sm.isSick.Get(sMI))
+					{
+						Effects component = minionIdentity.GetComponent<Effects>();
+						string text = "";
+						text = (component.HasEffect(RadiationMonitor.minorSicknessEffect) ? Db.Get().effects.Get(RadiationMonitor.minorSicknessEffect).Name : (component.HasEffect(RadiationMonitor.majorSicknessEffect) ? Db.Get().effects.Get(RadiationMonitor.majorSicknessEffect).Name : ((!component.HasEffect(RadiationMonitor.extremeSicknessEffect)) ? ((string)DUPLICANTS.MODIFIERS.RADIATIONEXPOSUREDEADLY.NAME) : Db.Get().effects.Get(RadiationMonitor.extremeSicknessEffect).Name)));
+						list.Add(new KeyValuePair<string, float>(text, sMI.SicknessSecondsRemaining()));
+					}
+				}
+				if (list.Count > 0)
+				{
+					string text2 = "";
+					if (list.Count > 1)
 					{
 						float seconds = 0f;
-						foreach (SicknessInstance item in sicknesses)
+						foreach (KeyValuePair<string, float> item in list)
 						{
-							seconds = Mathf.Min(item.GetInfectedTimeRemaining());
+							seconds = Mathf.Min(item.Value);
 						}
-						return text + string.Format(UI.VITALSSCREEN.MULTIPLE_SICKNESSES, GameUtil.GetFormattedCycles(seconds));
+						return text2 + string.Format(UI.VITALSSCREEN.MULTIPLE_SICKNESSES, GameUtil.GetFormattedCycles(seconds));
 					}
 					{
-						foreach (SicknessInstance item2 in sicknesses)
+						foreach (KeyValuePair<string, float> item2 in list)
 						{
-							if (!string.IsNullOrEmpty(text))
+							if (!string.IsNullOrEmpty(text2))
 							{
-								text += "\n";
+								text2 += "\n";
 							}
-							text += string.Format(UI.VITALSSCREEN.SICKNESS_REMAINING, item2.modifier.Name, GameUtil.GetFormattedCycles(item2.GetInfectedTimeRemaining()));
+							text2 += string.Format(UI.VITALSSCREEN.SICKNESS_REMAINING, item2.Key, GameUtil.GetFormattedCycles(item2.Value));
 						}
-						return text;
+						return text2;
 					}
 				}
 				return UI.VITALSSCREEN.NO_SICKNESSES;
@@ -380,9 +396,21 @@ public class VitalsTableScreen : TableScreen
 			{
 				break;
 			}
+			bool flag = false;
+			new List<KeyValuePair<string, float>>();
+			if (DlcManager.FeatureRadiationEnabled())
+			{
+				RadiationMonitor.Instance sMI = minionIdentity.GetSMI<RadiationMonitor.Instance>();
+				if (sMI != null && sMI.sm.isSick.Get(sMI))
+				{
+					tooltip.AddMultiStringTooltip(sMI.GetEffectStatusTooltip(), null);
+					flag = true;
+				}
+			}
 			Sicknesses sicknesses = minionIdentity.GetComponent<MinionModifiers>().sicknesses;
 			if (sicknesses.IsInfected())
 			{
+				flag = true;
 				foreach (SicknessInstance item in sicknesses)
 				{
 					tooltip.AddMultiStringTooltip(UI.HORIZONTAL_RULE, null);
@@ -391,7 +419,7 @@ public class VitalsTableScreen : TableScreen
 					tooltip.AddMultiStringTooltip(statusItem.GetTooltip(item.ExposureInfo), null);
 				}
 			}
-			else
+			if (!flag)
 			{
 				tooltip.AddMultiStringTooltip(UI.VITALSSCREEN.NO_SICKNESSES, null);
 			}

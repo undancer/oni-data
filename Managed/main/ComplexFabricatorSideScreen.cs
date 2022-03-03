@@ -417,7 +417,7 @@ public class ComplexFabricatorSideScreen : SideScreenContent
 		ComplexRecipe.RecipeElement[] ingredients = recipe.ingredients;
 		foreach (ComplexRecipe.RecipeElement recipeElement in ingredients)
 		{
-			if (targetFab.GetMyWorld().worldInventory.GetAmount(recipeElement.material, includeRelatedWorlds: true) + targetFab.inStorage.GetAmountAvailable(recipeElement.material) + targetFab.buildStorage.GetAmountAvailable(recipeElement.material) >= recipeElement.amount)
+			if (targetFab.GetMyWorld().worldInventory.GetAmountWithoutTag(recipeElement.material, includeRelatedWorlds: true, targetFab.ForbiddenTags) + targetFab.inStorage.GetAmountAvailable(recipeElement.material, targetFab.ForbiddenTags) + targetFab.buildStorage.GetAmountAvailable(recipeElement.material, targetFab.ForbiddenTags) >= recipeElement.amount)
 			{
 				return true;
 			}
@@ -431,9 +431,10 @@ public class ComplexFabricatorSideScreen : SideScreenContent
 		ComplexRecipe.RecipeElement[] ingredients = recipe.ingredients;
 		foreach (ComplexRecipe.RecipeElement recipeElement in ingredients)
 		{
-			if (targetFab.GetMyWorld().worldInventory.GetAmount(recipeElement.material, includeRelatedWorlds: true) + targetFab.inStorage.GetAmountAvailable(recipeElement.material) + targetFab.buildStorage.GetAmountAvailable(recipeElement.material) < recipeElement.amount)
+			if (targetFab.GetMyWorld().worldInventory.GetAmountWithoutTag(recipeElement.material, includeRelatedWorlds: true, targetFab.ForbiddenTags) + targetFab.inStorage.GetAmountAvailable(recipeElement.material, targetFab.ForbiddenTags) + targetFab.buildStorage.GetAmountAvailable(recipeElement.material, targetFab.ForbiddenTags) < recipeElement.amount)
 			{
 				result = false;
+				break;
 			}
 		}
 		return result;

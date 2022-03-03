@@ -38,6 +38,7 @@ public class WarpConduitReceiverConfig : IBuildingConfig
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
+		Prioritizable.AddRef(go);
 		PrimaryElement component = go.GetComponent<PrimaryElement>();
 		component.SetElement(SimHashes.Unobtanium);
 		component.Temperature = 294.15f;

@@ -1,3 +1,4 @@
+using System.Collections;
 using STRINGS;
 using UnityEngine;
 using UnityEngine.UI;
@@ -50,12 +51,25 @@ public class RocketModuleSideScreen : SideScreenContent
 		base.OnSpawn();
 		addNewModuleButton.onClick += delegate
 		{
-			ClickAddNew();
+			Vector2 vector2 = Vector2.zero;
+			if (SelectModuleSideScreen.Instance != null)
+			{
+				vector2 = SelectModuleSideScreen.Instance.mainContents.GetComponent<KScrollRect>().content.rectTransform().anchoredPosition;
+			}
+			ClickAddNew(vector2.y);
 		};
 		removeModuleButton.onClick += ClickRemove;
 		moveModuleUpButton.onClick += ClickSwapUp;
 		moveModuleDownButton.onClick += ClickSwapDown;
-		changeModuleButton.onClick += ClickChangeModule;
+		changeModuleButton.onClick += delegate
+		{
+			Vector2 vector = Vector2.zero;
+			if (SelectModuleSideScreen.Instance != null)
+			{
+				vector = SelectModuleSideScreen.Instance.mainContents.GetComponent<KScrollRect>().content.rectTransform().anchoredPosition;
+			}
+			ClickChangeModule(vector.y);
+		};
 		viewInteriorButton.onClick += ClickViewInterior;
 		moduleNameLabel.textStyleSetting = nameSetting;
 		moduleDescriptionLabel.textStyleSetting = descriptionSetting;
@@ -130,7 +144,7 @@ public class RocketModuleSideScreen : SideScreenContent
 		}
 	}
 
-	public void ClickAddNew(BuildingDef autoSelectDef = null)
+	public void ClickAddNew(float scrollViewPosition, BuildingDef autoSelectDef = null)
 	{
 		SelectModuleSideScreen selectModuleSideScreen = (SelectModuleSideScreen)DetailsScreen.Instance.SetSecondarySideScreen(changeModuleSideScreen, UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.CHANGEMODULEPANEL);
 		selectModuleSideScreen.addingNewModule = true;
@@ -138,6 +152,28 @@ public class RocketModuleSideScreen : SideScreenContent
 		if (autoSelectDef != null)
 		{
 			selectModuleSideScreen.SelectModule(autoSelectDef);
+		}
+		ScrollToTargetPoint(scrollViewPosition);
+	}
+
+	private void ScrollToTargetPoint(float scrollViewPosition)
+	{
+		if (SelectModuleSideScreen.Instance != null)
+		{
+			SelectModuleSideScreen.Instance.mainContents.GetComponent<KScrollRect>().content.anchoredPosition = new Vector2(0f, scrollViewPosition);
+			if (base.gameObject.activeInHierarchy)
+			{
+				StartCoroutine(DelayedScrollToTargetPoint(scrollViewPosition));
+			}
+		}
+	}
+
+	private IEnumerator DelayedScrollToTargetPoint(float scrollViewPosition)
+	{
+		if (SelectModuleSideScreen.Instance != null)
+		{
+			yield return new WaitForEndOfFrame();
+			SelectModuleSideScreen.Instance.mainContents.GetComponent<KScrollRect>().content.anchoredPosition = new Vector2(0f, scrollViewPosition);
 		}
 	}
 
@@ -159,11 +195,12 @@ public class RocketModuleSideScreen : SideScreenContent
 		UpdateButtonStates();
 	}
 
-	private void ClickChangeModule()
+	private void ClickChangeModule(float scrollViewPosition)
 	{
 		SelectModuleSideScreen obj = (SelectModuleSideScreen)DetailsScreen.Instance.SetSecondarySideScreen(changeModuleSideScreen, UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.CHANGEMODULEPANEL);
 		obj.addingNewModule = false;
 		obj.SetTarget(reorderable.gameObject);
+		ScrollToTargetPoint(scrollViewPosition);
 	}
 
 	private void ClickViewInterior()

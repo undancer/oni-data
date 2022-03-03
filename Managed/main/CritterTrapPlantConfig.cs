@@ -21,7 +21,7 @@ public class CritterTrapPlantConfig : IEntityConfig
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreatePlacedEntity("CritterTrapPlant", STRINGS.CREATURES.SPECIES.CRITTERTRAPPLANT.NAME, STRINGS.CREATURES.SPECIES.CRITTERTRAPPLANT.DESC, 4f, decor: DECOR.BONUS.TIER1, anim: Assets.GetAnim("venus_critter_trap_kanim"), initialAnim: "idle_open", sceneLayer: Grid.SceneLayer.BuildingBack, width: 1, height: 2, noise: default(EffectorValues), element: SimHashes.Creature, additionalTags: null, defaultTemperature: TUNING.CREATURES.TEMPERATURE.FREEZING_3);
-		EntityTemplates.ExtendEntityToBasicPlant(gameObject, TUNING.CREATURES.TEMPERATURE.FREEZING_10, TUNING.CREATURES.TEMPERATURE.FREEZING_9, TUNING.CREATURES.TEMPERATURE.FREEZING, TUNING.CREATURES.TEMPERATURE.COOL, null, pressure_sensitive: false, 0f, 0.15f, "PlantMeat", can_drown: true, can_tinker: true, require_solid_tile: true, should_grow_old: false, 2400f, 0f, 220f, "CritterTrapPlantOriginal", STRINGS.CREATURES.SPECIES.CRITTERTRAPPLANT.NAME);
+		EntityTemplates.ExtendEntityToBasicPlant(gameObject, TUNING.CREATURES.TEMPERATURE.FREEZING_10, TUNING.CREATURES.TEMPERATURE.FREEZING_9, TUNING.CREATURES.TEMPERATURE.FREEZING, TUNING.CREATURES.TEMPERATURE.COOL, null, pressure_sensitive: false, 0f, 0.15f, "PlantMeat", can_drown: true, can_tinker: true, require_solid_tile: true, should_grow_old: false, 2400f, 0f, 2200f, "CritterTrapPlantOriginal", STRINGS.CREATURES.SPECIES.CRITTERTRAPPLANT.NAME);
 		Object.DestroyImmediate(gameObject.GetComponent<MutantPlant>());
 		TrapTrigger trapTrigger = gameObject.AddOrGet<TrapTrigger>();
 		trapTrigger.trappableCreatures = new Tag[2]

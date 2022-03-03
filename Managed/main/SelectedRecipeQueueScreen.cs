@@ -5,13 +5,31 @@ using UnityEngine.UI;
 
 public class SelectedRecipeQueueScreen : KScreen
 {
+	private class DescriptorWithSprite
+	{
+		public bool showFilterRow;
+
+		public Descriptor descriptor { get; }
+
+		public Tuple<Sprite, Color> tintedSprite { get; }
+
+		public DescriptorWithSprite(Descriptor desc, Tuple<Sprite, Color> sprite, bool filterRowVisible = false)
+		{
+			descriptor = desc;
+			tintedSprite = sprite;
+			showFilterRow = filterRowVisible;
+		}
+	}
+
 	public Image recipeIcon;
 
 	public LocText recipeName;
 
-	public DescriptorPanel IngredientsDescriptorPanel;
+	public GameObject IngredientsDescriptorPanel;
 
-	public DescriptorPanel EffectsDescriptorPanel;
+	public GameObject buildingGlobalRecipeFilters;
+
+	public GameObject EffectsDescriptorPanel;
 
 	public KNumberInputField QueueCount;
 
@@ -28,6 +46,13 @@ public class SelectedRecipeQueueScreen : KScreen
 	private ComplexFabricatorSideScreen ownerScreen;
 
 	private ComplexRecipe selectedRecipe;
+
+	[SerializeField]
+	private GameObject recipeElementDescriptorPrefab;
+
+	private Dictionary<DescriptorWithSprite, GameObject> recipeIngredientDescriptorRows = new Dictionary<DescriptorWithSprite, GameObject>();
+
+	private Dictionary<DescriptorWithSprite, GameObject> recipeEffectsDescriptorRows = new Dictionary<DescriptorWithSprite, GameObject>();
 
 	protected override void OnSpawn()
 	{
@@ -109,62 +134,103 @@ public class SelectedRecipeQueueScreen : KScreen
 
 	private void RefreshResultDescriptors()
 	{
-		List<Descriptor> list = new List<Descriptor>();
+		List<DescriptorWithSprite> list = new List<DescriptorWithSprite>();
 		list.AddRange(GetResultDescriptions(selectedRecipe));
-		list.AddRange(target.AdditionalEffectsForRecipe(selectedRecipe));
-		if (list.Count > 0)
+		foreach (Descriptor item in target.AdditionalEffectsForRecipe(selectedRecipe))
 		{
-			GameUtil.IndentListOfDescriptors(list);
-			list.Insert(0, new Descriptor(UI.UISIDESCREENS.FABRICATORSIDESCREEN.RESULTEFFECTS, UI.UISIDESCREENS.FABRICATORSIDESCREEN.RESULTEFFECTS));
-			EffectsDescriptorPanel.gameObject.SetActive(value: true);
-			EffectsDescriptorPanel.SetDescriptors(list);
+			list.Add(new DescriptorWithSprite(item, null));
+		}
+		if (list.Count <= 0)
+		{
+			return;
+		}
+		EffectsDescriptorPanel.gameObject.SetActive(value: true);
+		foreach (KeyValuePair<DescriptorWithSprite, GameObject> recipeEffectsDescriptorRow in recipeEffectsDescriptorRows)
+		{
+			Util.KDestroyGameObject(recipeEffectsDescriptorRow.Value);
+		}
+		recipeEffectsDescriptorRows.Clear();
+		foreach (DescriptorWithSprite item2 in list)
+		{
+			GameObject gameObject = Util.KInstantiateUI(recipeElementDescriptorPrefab, EffectsDescriptorPanel.gameObject, force_active: true);
+			HierarchyReferences component = gameObject.GetComponent<HierarchyReferences>();
+			component.GetReference<LocText>("Label").SetText(item2.descriptor.IndentedText());
+			component.GetReference<Image>("Icon").sprite = ((item2.tintedSprite == null) ? null : item2.tintedSprite.first);
+			component.GetReference<Image>("Icon").color = ((item2.tintedSprite == null) ? Color.white : item2.tintedSprite.second);
+			component.GetReference<RectTransform>("FilterControls").gameObject.SetActive(value: false);
+			component.GetReference<ToolTip>("Tooltip").SetSimpleTooltip(item2.descriptor.tooltipText);
+			recipeEffectsDescriptorRows.Add(item2, gameObject);
 		}
 	}
 
-	public List<Descriptor> GetResultDescriptions(ComplexRecipe recipe)
+	private List<DescriptorWithSprite> GetResultDescriptions(ComplexRecipe recipe)
 	{
-		List<Descriptor> list = new List<Descriptor>();
+		List<DescriptorWithSprite> list = new List<DescriptorWithSprite>();
 		if (recipe.producedHEP > 0)
 		{
-			list.Add(new Descriptor(string.Format("<b>{0}</b>: {1}", UI.FormatAsLink(ITEMS.RADIATION.HIGHENERGYPARITCLE.NAME, "HEP"), recipe.producedHEP), $"<b>{ITEMS.RADIATION.HIGHENERGYPARITCLE.NAME}</b>: {recipe.producedHEP}", Descriptor.DescriptorType.Requirement));
+			list.Add(new DescriptorWithSprite(new Descriptor(string.Format("<b>{0}</b>: {1}", UI.FormatAsLink(ITEMS.RADIATION.HIGHENERGYPARITCLE.NAME, "HEP"), recipe.producedHEP), $"<b>{ITEMS.RADIATION.HIGHENERGYPARITCLE.NAME}</b>: {recipe.producedHEP}", Descriptor.DescriptorType.Requirement), new Tuple<Sprite, Color>(Assets.GetSprite("radbolt"), Color.white)));
 		}
 		ComplexRecipe.RecipeElement[] results = recipe.results;
 		foreach (ComplexRecipe.RecipeElement recipeElement in results)
 		{
 			GameObject prefab = Assets.GetPrefab(recipeElement.material);
 			string formattedByTag = GameUtil.GetFormattedByTag(recipeElement.material, recipeElement.amount);
-			list.Add(new Descriptor(string.Format(UI.UISIDESCREENS.FABRICATORSIDESCREEN.RECIPEPRODUCT, prefab.GetProperName(), formattedByTag), string.Format(UI.UISIDESCREENS.FABRICATORSIDESCREEN.TOOLTIPS.RECIPEPRODUCT, prefab.GetProperName(), formattedByTag), Descriptor.DescriptorType.Requirement));
+			list.Add(new DescriptorWithSprite(new Descriptor(string.Format(UI.UISIDESCREENS.FABRICATORSIDESCREEN.RECIPEPRODUCT, prefab.GetProperName(), formattedByTag), string.Format(UI.UISIDESCREENS.FABRICATORSIDESCREEN.TOOLTIPS.RECIPEPRODUCT, prefab.GetProperName(), formattedByTag), Descriptor.DescriptorType.Requirement), Def.GetUISprite(recipeElement.material)));
 			Element element = ElementLoader.GetElement(recipeElement.material);
 			if (element != null)
 			{
-				List<Descriptor> materialDescriptors = GameUtil.GetMaterialDescriptors(element);
-				GameUtil.IndentListOfDescriptors(materialDescriptors);
-				list.AddRange(materialDescriptors);
+				List<DescriptorWithSprite> list2 = new List<DescriptorWithSprite>();
+				foreach (Descriptor materialDescriptor in GameUtil.GetMaterialDescriptors(element))
+				{
+					list2.Add(new DescriptorWithSprite(materialDescriptor, null));
+				}
+				foreach (DescriptorWithSprite item in list2)
+				{
+					item.descriptor.IncreaseIndent();
+				}
+				list.AddRange(list2);
+				continue;
 			}
-			else
+			List<DescriptorWithSprite> list3 = new List<DescriptorWithSprite>();
+			foreach (Descriptor effectDescriptor in GameUtil.GetEffectDescriptors(GameUtil.GetAllDescriptors(prefab)))
 			{
-				List<Descriptor> effectDescriptors = GameUtil.GetEffectDescriptors(GameUtil.GetAllDescriptors(prefab));
-				GameUtil.IndentListOfDescriptors(effectDescriptors);
-				list.AddRange(effectDescriptors);
+				list3.Add(new DescriptorWithSprite(effectDescriptor, null));
 			}
+			foreach (DescriptorWithSprite item2 in list3)
+			{
+				item2.descriptor.IncreaseIndent();
+			}
+			list.AddRange(list3);
 		}
 		return list;
 	}
 
 	private void RefreshIngredientDescriptors()
 	{
-		List<Descriptor> list = new List<Descriptor>();
-		list.Add(new Descriptor(UI.UISIDESCREENS.FABRICATORSIDESCREEN.COST, UI.UISIDESCREENS.FABRICATORSIDESCREEN.COST, Descriptor.DescriptorType.Requirement));
-		List<Descriptor> ingredientDescriptions = GetIngredientDescriptions(selectedRecipe);
-		GameUtil.IndentListOfDescriptors(ingredientDescriptions);
-		list.AddRange(ingredientDescriptions);
+		new List<DescriptorWithSprite>();
+		List<DescriptorWithSprite> ingredientDescriptions = GetIngredientDescriptions(selectedRecipe);
 		IngredientsDescriptorPanel.gameObject.SetActive(value: true);
-		IngredientsDescriptorPanel.SetDescriptors(list);
+		foreach (KeyValuePair<DescriptorWithSprite, GameObject> recipeIngredientDescriptorRow in recipeIngredientDescriptorRows)
+		{
+			Util.KDestroyGameObject(recipeIngredientDescriptorRow.Value);
+		}
+		recipeIngredientDescriptorRows.Clear();
+		foreach (DescriptorWithSprite item in ingredientDescriptions)
+		{
+			GameObject gameObject = Util.KInstantiateUI(recipeElementDescriptorPrefab, IngredientsDescriptorPanel.gameObject, force_active: true);
+			HierarchyReferences component = gameObject.GetComponent<HierarchyReferences>();
+			component.GetReference<LocText>("Label").SetText(item.descriptor.IndentedText());
+			component.GetReference<Image>("Icon").sprite = ((item.tintedSprite == null) ? null : item.tintedSprite.first);
+			component.GetReference<Image>("Icon").color = ((item.tintedSprite == null) ? Color.white : item.tintedSprite.second);
+			component.GetReference<RectTransform>("FilterControls").gameObject.SetActive(value: false);
+			component.GetReference<ToolTip>("Tooltip").SetSimpleTooltip(item.descriptor.tooltipText);
+			recipeIngredientDescriptorRows.Add(item, gameObject);
+		}
 	}
 
-	public List<Descriptor> GetIngredientDescriptions(ComplexRecipe recipe)
+	private List<DescriptorWithSprite> GetIngredientDescriptions(ComplexRecipe recipe)
 	{
-		List<Descriptor> list = new List<Descriptor>();
+		List<DescriptorWithSprite> list = new List<DescriptorWithSprite>();
 		ComplexRecipe.RecipeElement[] ingredients = recipe.ingredients;
 		foreach (ComplexRecipe.RecipeElement recipeElement in ingredients)
 		{
@@ -173,12 +239,12 @@ public class SelectedRecipeQueueScreen : KScreen
 			float amount = target.GetMyWorld().worldInventory.GetAmount(recipeElement.material, includeRelatedWorlds: true);
 			string formattedByTag2 = GameUtil.GetFormattedByTag(recipeElement.material, amount);
 			string text = ((amount >= recipeElement.amount) ? string.Format(UI.UISIDESCREENS.FABRICATORSIDESCREEN.RECIPERQUIREMENT, prefab.GetProperName(), formattedByTag, formattedByTag2) : ("<color=#F44A47>" + string.Format(UI.UISIDESCREENS.FABRICATORSIDESCREEN.RECIPERQUIREMENT, prefab.GetProperName(), formattedByTag, formattedByTag2) + "</color>"));
-			list.Add(new Descriptor(text, text, Descriptor.DescriptorType.Requirement));
+			list.Add(new DescriptorWithSprite(new Descriptor(text, text, Descriptor.DescriptorType.Requirement), Def.GetUISprite(recipeElement.material), Assets.GetPrefab(recipeElement.material).GetComponent<MutantPlant>() != null));
 		}
 		if (recipe.consumedHEP > 0)
 		{
 			HighEnergyParticleStorage component = target.GetComponent<HighEnergyParticleStorage>();
-			list.Add(new Descriptor(string.Format("<b>{0}</b>: {1} / {2}", UI.FormatAsLink(ITEMS.RADIATION.HIGHENERGYPARITCLE.NAME, "HEP"), component.Particles, recipe.consumedHEP), $"<b>{ITEMS.RADIATION.HIGHENERGYPARITCLE.NAME}</b>: {component.Particles} / {recipe.consumedHEP}", Descriptor.DescriptorType.Requirement));
+			list.Add(new DescriptorWithSprite(new Descriptor(string.Format("<b>{0}</b>: {1} / {2}", UI.FormatAsLink(ITEMS.RADIATION.HIGHENERGYPARITCLE.NAME, "HEP"), recipe.consumedHEP, component.Particles), $"<b>{ITEMS.RADIATION.HIGHENERGYPARITCLE.NAME}</b>: {recipe.consumedHEP} / {component.Particles}", Descriptor.DescriptorType.Requirement), new Tuple<Sprite, Color>(Assets.GetSprite("radbolt"), Color.white)));
 		}
 		return list;
 	}

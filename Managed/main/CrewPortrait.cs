@@ -177,7 +177,7 @@ public class CrewPortrait : KMonoBehaviour
 		SetPortraitData(identityObject, controller, useDefaultExpression);
 		if (useLabels && duplicantName != null)
 		{
-			duplicantName.SetText((identityObject != null) ? identityObject.GetProperName() : "");
+			duplicantName.SetText((!identityObject.IsNullOrDestroyed()) ? identityObject.GetProperName() : "");
 			if (identityObject is MinionIdentity && duplicantJob != null)
 			{
 				duplicantJob.SetText((identityObject != null) ? (identityObject as MinionIdentity).GetComponent<MinionResume>().GetSkillsSubtitle() : "");

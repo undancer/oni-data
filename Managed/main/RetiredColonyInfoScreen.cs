@@ -5,7 +5,6 @@ using Database;
 using ProcGen;
 using ProcGenGame;
 using STRINGS;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -61,7 +60,7 @@ public class RetiredColonyInfoScreen : KModalScreen
 	private GameObject victoryAchievementsPrefab;
 
 	[SerializeField]
-	private TMP_InputField achievementSearch;
+	private KInputTextField achievementSearch;
 
 	[SerializeField]
 	private KButton clearAchievementSearchButton;
@@ -112,7 +111,7 @@ public class RetiredColonyInfoScreen : KModalScreen
 	private GameObject colonyButtonPrefab;
 
 	[SerializeField]
-	private TMP_InputField explorerSearch;
+	private KInputTextField explorerSearch;
 
 	[SerializeField]
 	private KButton clearExplorerSearchButton;
@@ -340,6 +339,18 @@ public class RetiredColonyInfoScreen : KModalScreen
 		canvasRef.pixelPerfect = false;
 	}
 
+	public override void OnKeyDown(KButtonEvent e)
+	{
+		if (!e.Consumed)
+		{
+			if (e.TryConsume(Action.MouseRight))
+			{
+				Show(show: false);
+			}
+			base.OnKeyDown(e);
+		}
+	}
+
 	private void GetCanvasRef()
 	{
 		if (base.transform.parent.GetComponent<Canvas>() != null)
@@ -527,7 +538,10 @@ public class RetiredColonyInfoScreen : KModalScreen
 			{
 				gameObject.transform.SetAsFirstSibling();
 			}
+			bool flag = !DlcManager.IsValidForVanilla(resource.dlcIds);
+			component.GetReference<KImage>("dlc_overlay").gameObject.SetActive(flag);
 			gameObject.GetComponent<MultiToggle>().ChangeState(2);
+			gameObject.GetComponent<AchievementWidget>().dlcAchievement = flag;
 			achievementEntries.Add(resource.Id, gameObject);
 		}
 		UpdateAchievementData(null);

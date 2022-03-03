@@ -40,7 +40,7 @@ public class AttackChore : Chore<AttackChore.StatesInstance>
 				Health component3 = attackTarget.Get(smi).GetComponent<Health>();
 				if (component3 == null || component3.IsDefeated())
 				{
-					smi.StopSM("target defeated");
+					smi.StopSM("target defeated approachtarget");
 				}
 			});
 			attack.Target(attacker).Enter(delegate(StatesInstance smi)
@@ -86,7 +86,7 @@ public class AttackChore : Chore<AttackChore.StatesInstance>
 							else
 							{
 								smi.master.CleanUpMultitool();
-								smi.StopSM("target defeated");
+								smi.StopSM("target defeated success");
 							}
 						}
 					}
@@ -118,6 +118,8 @@ public class AttackChore : Chore<AttackChore.StatesInstance>
 	{
 		base.smi = new StatesInstance(this);
 		base.smi.sm.attackTarget.Set(enemy, base.smi);
+		Game.Instance.Trigger(1980521255, enemy);
+		SetPrioritizable(enemy.GetComponent<Prioritizable>());
 	}
 
 	public string GetHitAnim()
@@ -175,6 +177,15 @@ public class AttackChore : Chore<AttackChore.StatesInstance>
 	protected override void End(string reason)
 	{
 		CleanUpMultitool();
+		if (!base.smi.sm.attackTarget.IsNull(base.smi))
+		{
+			GameObject gameObject = base.smi.sm.attackTarget.Get(base.smi);
+			Prioritizable component = gameObject.GetComponent<Prioritizable>();
+			if (component != null && component.IsPrioritizable())
+			{
+				Prioritizable.RemoveRef(gameObject);
+			}
+		}
 		base.End(reason);
 	}
 

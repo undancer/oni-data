@@ -595,14 +595,14 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Data Bank";
 
-				public static LocString DESC = "Raw data that can be processed into " + UI.PRE_KEYWORD + "Interstellar Research" + UI.PST_KEYWORD + " points.";
+				public static LocString DESC = "Raw data that can be processed into " + UI.FormatAsLink("Interstellar Research", "RESEARCH") + " points.";
 			}
 
 			public class ORBITAL_RESEARCH_DATABANK
 			{
 				public static LocString NAME = "Data Bank";
 
-				public static LocString DESC = "Raw data that can be processed into " + UI.PRE_KEYWORD + "Data Analysis Research" + UI.PST_KEYWORD + " points.";
+				public static LocString DESC = "Raw Data that can be processed into " + UI.FormatAsLink("Data Analysis Research", "RESEARCH") + " points.";
 
 				public static LocString RECIPE_DESC = "Databanks of raw data generated from exploring, either by exploring new areas with Duplicants, or by using an " + UI.FormatAsLink("Orbital Data Collection Lab", "ORBITALRESEARCHCENTER") + ".\n\nUsed by the " + UI.FormatAsLink("Virtual Planetarium", "DLC1COSMICRESEARCHCENTER") + " to conduct research.";
 			}

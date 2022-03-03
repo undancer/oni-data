@@ -108,19 +108,21 @@ namespace Klei.AI
 
 		public bool ShouldGenerateEvents()
 		{
-			if (Season.minCycle > GameUtil.GetCurrentTimeInCycles())
-			{
-				return true;
-			}
-			if ((Season.finishAfterNumEvents != -1 && numStartEvents >= Season.finishAfterNumEvents) || allEventWillNotRunAgain)
-			{
-				return true;
-			}
-			if (Season.maxCycle == float.PositiveInfinity)
+			WorldContainer world = ClusterManager.Instance.GetWorld(worldId);
+			if (!world.IsDupeVisited && !world.IsRoverVisted)
 			{
 				return false;
 			}
-			return GameUtil.GetCurrentTimeInCycles() > Season.maxCycle;
+			if ((Season.finishAfterNumEvents != -1 && numStartEvents >= Season.finishAfterNumEvents) || allEventWillNotRunAgain)
+			{
+				return false;
+			}
+			float currentTimeInCycles = GameUtil.GetCurrentTimeInCycles();
+			if (currentTimeInCycles > Season.minCycle)
+			{
+				return currentTimeInCycles < Season.maxCycle;
+			}
+			return false;
 		}
 	}
 }

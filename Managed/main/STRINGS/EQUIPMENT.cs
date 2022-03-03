@@ -35,7 +35,7 @@ namespace STRINGS
 
 				public static LocString WORN_NAME = UI.FormatAsLink("Worn Atmo Suit", "ATMO_SUIT");
 
-				public static LocString WORN_DESC = "A worn out " + UI.FormatAsLink("Atmo Suit", "ATMO_SUIT") + ".\n\nSuits can be repaired at a " + UI.FormatAsLink("Crafting Station", "CRAFTINGTABLE") + ".";
+				public static LocString WORN_DESC = "A worn out " + UI.FormatAsLink("Atmo Suit", "ATMO_SUIT") + ".\n\nSuits can be repaired at an " + UI.FormatAsLink("Exosuit Forge", "SUITFABRICATOR") + ".";
 			}
 
 			public class AQUA_SUIT
@@ -84,7 +84,7 @@ namespace STRINGS
 
 				public static LocString WORN_NAME = UI.FormatAsLink("Worn Jet Suit", "JET_SUIT");
 
-				public static LocString WORN_DESC = "A worn out " + UI.FormatAsLink("Jet Suit", "JET_SUIT") + ".\n\nSuits can be repaired at a " + UI.FormatAsLink("Crafting Station", "CRAFTINGTABLE") + ".";
+				public static LocString WORN_DESC = "A worn out " + UI.FormatAsLink("Jet Suit", "JET_SUIT") + ".\n\nSuits can be repaired at an " + UI.FormatAsLink("Exosuit Forge", "SUITFABRICATOR") + ".";
 			}
 
 			public class LEAD_SUIT
@@ -105,7 +105,7 @@ namespace STRINGS
 
 				public static LocString WORN_NAME = UI.FormatAsLink("Worn Lead Suit", "LEAD_SUIT");
 
-				public static LocString WORN_DESC = "A worn out " + UI.FormatAsLink("Lead Suit", "LEAD_SUIT") + ".\n\nSuits can be repaired at a " + UI.FormatAsLink("Crafting Station", "CRAFTINGTABLE") + ".";
+				public static LocString WORN_DESC = "A worn out " + UI.FormatAsLink("Lead Suit", "LEAD_SUIT") + ".\n\nSuits can be repaired at an " + UI.FormatAsLink("Exosuit Forge", "SUITFABRICATOR") + ".";
 			}
 
 			public class COOL_VEST

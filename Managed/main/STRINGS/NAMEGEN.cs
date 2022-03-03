@@ -1092,19 +1092,21 @@ namespace STRINGS
 			{
 				public static LocString GENERIC = "Sol\nLun\nOrb\nCosm\nGlob\nStar\nZolt\nTakar\nBeep\nBoop\nZap\nZow\nGrav\nAb\nAd\nAr\nAshk\nBan\nBubbl\nBurt\nCamil\nCatal\nDevon\nEll\nFrank\nGoss\nHar\nHass\nJean\nJosh\nLeir\nLia\nLind\nMav\nMar\nMax\nMeep\nMim\nNail\nNik\nNis\nOtt\nRen\nRow\nRub\nStink\nTrav\nTurn\n";
 
-				public static LocString FOREST = "Veget\nLeaf\nWood\nTopiar\nTimber\nShrub\nHerb\nGrow\nVerd\nBark\n";
+				public static LocString FOREST = "Veget\nLeaf\nWood\nTopiar\nTimber\nShrub\nHerb\nGrow\nVerd\nSylv\nAbund\nArbor\nTwig\nCanop\nPerenn\nLush\nRoot\nSap\nCultiv\nBark\n";
 
 				public static LocString OILY = "Greas\nSlick\nOil\nPetr\nFuel\nCombust\nGreas\nCrud\nViscous\nPitch\n";
 
+				public static LocString FLIPPED = "Revers\nInver\nErr\nFlipp\nUpsid\nBottom\nRetr\nContr\nJumbel\nDiscor\nAwr\nAbnorm\n";
+
 				public static LocString SULFUR = "Sulph\nSulf\nBrim\nBrimston\nYell\nEgg\n";
 
-				public static LocString TERRA = "Earth\nFertil\nSoil\nBeaut\nEqu\nPleth\nIdyll\nHalcy\nPastor\nVital\n";
+				public static LocString TERRA = "Earth\nFertil\nSoil\nBeaut\nEqu\nPleth\nIdyll\nHalcy\nPastor\nAllur\nFlor\nNutril\nViv\nPerseph\nSanct\nExquis\nHaven\nPaix\nBloom\nVital\n";
 
 				public static LocString TUNDRA = "Brr'\nSnow\nTundr\nBlizz\nFreez\nChill\nFrig\nFroid\nCold\nFrost\n";
 
 				public static LocString MAGMA = "Fier\nMagm\nToast\nScorch\nBurn\nObsid\nLav\nMelt\nHot\nChar\n";
 
-				public static LocString SWAMP = "Goop\nMud\nMuck\nGross\nStink\nSmell\nYuck\nReek\nBlag\nOoz\n";
+				public static LocString SWAMP = "Goop\nMud\nMuck\nGross\nStink\nSmell\nYuck\nReek\nBlag\nSogg\nDripp\nUgh\nPustul\nIck\nCurd\nSlop\nPhlegm\nGurg\nSmear\nOoz\n";
 
 				public static LocString MOO = "Moom\nGas\nUdder\nHeffer\nBelch\nCalf\nCud\nGass\nMethan\nBull\n";
 

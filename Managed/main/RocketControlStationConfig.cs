@@ -17,6 +17,8 @@ public class RocketControlStationConfig : IBuildingConfig
 
 	public const float SLOW_SPEED = 0.5f;
 
+	public const float DEFAULT_PILOT_MODIFIER = 1f;
+
 	public override string[] GetDlcIds()
 	{
 		return DlcManager.AVAILABLE_EXPANSION1_ONLY;

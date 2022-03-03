@@ -38,52 +38,108 @@ public static class CodexEntryGenerator
 		}
 	}
 
+	private static string categoryPrefx = "BUILD_CATEGORY_";
+
 	public static Dictionary<string, CodexEntry> GenerateBuildingEntries()
 	{
-		string text = "BUILD_CATEGORY_";
-		Dictionary<string, CodexEntry> dictionary = new Dictionary<string, CodexEntry>();
+		Dictionary<string, CodexEntry> categoryEntries = new Dictionary<string, CodexEntry>();
 		foreach (PlanScreen.PlanInfo item in TUNING.BUILDINGS.PLANORDER)
 		{
-			string text2 = HashCache.Get().Get(item.category);
-			string text3 = CodexCache.FormatLinkID(text + text2);
-			Dictionary<string, CodexEntry> dictionary2 = new Dictionary<string, CodexEntry>();
-			for (int i = 0; i < ((ICollection<string>)item.data).Count; i++)
+			GenerateEntriesForBuildingsInCategory(item, categoryPrefx, ref categoryEntries);
+		}
+		if (DlcManager.FeatureClusterSpaceEnabled())
+		{
+			GenerateDLC1RocketryEntries();
+		}
+		PopulateCategoryEntries(categoryEntries);
+		return categoryEntries;
+	}
+
+	private static void GenerateEntriesForBuildingsInCategory(PlanScreen.PlanInfo category, string categoryPrefx, ref Dictionary<string, CodexEntry> categoryEntries)
+	{
+		string text = HashCache.Get().Get(category.category);
+		string text2 = CodexCache.FormatLinkID(categoryPrefx + text);
+		Dictionary<string, CodexEntry> dictionary = new Dictionary<string, CodexEntry>();
+		foreach (KeyValuePair<string, string> buildingAndSubcategoryDatum in category.buildingAndSubcategoryData)
+		{
+			CodexEntry codexEntry = GenerateSingleBuildingEntry(Assets.GetBuildingDef(buildingAndSubcategoryDatum.Key), text2);
+			if (codexEntry != null)
 			{
-				BuildingDef buildingDef = Assets.GetBuildingDef(((IList<string>)item.data)[i]);
-				if (!buildingDef.DebugOnly)
-				{
-					List<ContentContainer> list = new List<ContentContainer>();
-					List<ICodexWidget> list2 = new List<ICodexWidget>();
-					list2.Add(new CodexText(buildingDef.Name, CodexTextStyle.Title));
-					Tech tech = Db.Get().Techs.TryGetTechForTechItem(buildingDef.PrefabID);
-					if (tech != null)
-					{
-						list2.Add(new CodexLabelWithIcon(tech.Name, CodexTextStyle.Body, new Tuple<Sprite, Color>(Assets.GetSprite("research_type_alpha_icon"), Color.white)));
-					}
-					list2.Add(new CodexDividerLine());
-					list.Add(new ContentContainer(list2, ContentContainer.ContentLayout.Vertical));
-					GenerateImageContainers(buildingDef.GetUISprite(), list);
-					GenerateBuildingDescriptionContainers(buildingDef, list);
-					GenerateFabricatorContainers(buildingDef.BuildingComplete, list);
-					GenerateReceptacleContainers(buildingDef.BuildingComplete, list);
-					CodexEntry codexEntry = new CodexEntry(text3, list, Strings.Get("STRINGS.BUILDINGS.PREFABS." + ((IList<string>)item.data)[i].ToUpper() + ".NAME"));
-					codexEntry.icon = buildingDef.GetUISprite();
-					codexEntry.parentId = text3;
-					CodexCache.AddEntry(((IList<string>)item.data)[i], codexEntry);
-					dictionary2.Add(codexEntry.id, codexEntry);
-				}
-			}
-			if (dictionary2.Count != 0)
-			{
-				CategoryEntry categoryEntry = GenerateCategoryEntry(CodexCache.FormatLinkID(text3), Strings.Get("STRINGS.UI.BUILDCATEGORIES." + text2.ToUpper() + ".NAME"), dictionary2);
-				categoryEntry.parentId = "BUILDINGS";
-				categoryEntry.category = "BUILDINGS";
-				categoryEntry.icon = Assets.GetSprite(PlanScreen.IconNameMap[text2]);
-				dictionary.Add(text3, categoryEntry);
+				dictionary.Add(codexEntry.id, codexEntry);
 			}
 		}
-		PopulateCategoryEntries(dictionary);
-		return dictionary;
+		if (dictionary.Count != 0)
+		{
+			CategoryEntry categoryEntry = GenerateCategoryEntry(CodexCache.FormatLinkID(text2), Strings.Get("STRINGS.UI.BUILDCATEGORIES." + text.ToUpper() + ".NAME"), dictionary);
+			categoryEntry.parentId = "BUILDINGS";
+			categoryEntry.category = "BUILDINGS";
+			categoryEntry.icon = Assets.GetSprite(PlanScreen.IconNameMap[text]);
+			categoryEntries.Add(text2, categoryEntry);
+		}
+	}
+
+	private static CodexEntry GenerateSingleBuildingEntry(BuildingDef def, string categoryEntryID)
+	{
+		if (def.DebugOnly)
+		{
+			return null;
+		}
+		List<ContentContainer> list = new List<ContentContainer>();
+		List<ICodexWidget> list2 = new List<ICodexWidget>();
+		list2.Add(new CodexText(def.Name, CodexTextStyle.Title));
+		Tech tech = Db.Get().Techs.TryGetTechForTechItem(def.PrefabID);
+		if (tech != null)
+		{
+			list2.Add(new CodexLabelWithIcon(tech.Name, CodexTextStyle.Body, new Tuple<Sprite, Color>(Assets.GetSprite("research_type_alpha_icon"), Color.white)));
+		}
+		list2.Add(new CodexDividerLine());
+		list.Add(new ContentContainer(list2, ContentContainer.ContentLayout.Vertical));
+		GenerateImageContainers(def.GetUISprite(), list);
+		GenerateBuildingDescriptionContainers(def, list);
+		GenerateFabricatorContainers(def.BuildingComplete, list);
+		GenerateReceptacleContainers(def.BuildingComplete, list);
+		CodexEntry codexEntry = new CodexEntry(categoryEntryID, list, Strings.Get("STRINGS.BUILDINGS.PREFABS." + def.PrefabID.ToUpper() + ".NAME"));
+		codexEntry.icon = def.GetUISprite();
+		codexEntry.parentId = categoryEntryID;
+		CodexCache.AddEntry(def.PrefabID, codexEntry);
+		return codexEntry;
+	}
+
+	private static void GenerateDLC1RocketryEntries()
+	{
+		PlanScreen.PlanInfo planInfo = TUNING.BUILDINGS.PLANORDER.Find((PlanScreen.PlanInfo match) => match.category == new HashedString("Rocketry"));
+		foreach (string item in SelectModuleSideScreen.moduleButtonSortOrder)
+		{
+			string categoryEntryID = CodexCache.FormatLinkID(string.Concat(str1: HashCache.Get().Get(planInfo.category), str0: categoryPrefx));
+			BuildingDef buildingDef = Assets.GetBuildingDef(item);
+			CodexEntry codexEntry = GenerateSingleBuildingEntry(buildingDef, categoryEntryID);
+			List<ICodexWidget> list = new List<ICodexWidget>
+			{
+				new CodexSpacer(),
+				new CodexText(UI.CLUSTERMAP.ROCKETS.MODULE_STATS.NAME_HEADER, CodexTextStyle.Subtitle),
+				new CodexSpacer(),
+				new CodexText(UI.CLUSTERMAP.ROCKETS.SPEED.TOOLTIP)
+			};
+			RocketModuleCluster component = buildingDef.BuildingComplete.GetComponent<RocketModuleCluster>();
+			float burden = component.performanceStats.Burden;
+			float enginePower = component.performanceStats.EnginePower;
+			RocketEngineCluster component2 = buildingDef.BuildingComplete.GetComponent<RocketEngineCluster>();
+			if (component2 != null)
+			{
+				list.Add(new CodexText(string.Concat("    • ", UI.CLUSTERMAP.ROCKETS.MAX_HEIGHT.NAME_MAX_SUPPORTED, component2.maxHeight.ToString())));
+			}
+			list.Add(new CodexText(string.Concat("    • ", UI.CLUSTERMAP.ROCKETS.MAX_HEIGHT.NAME_RAW, buildingDef.HeightInCells.ToString())));
+			if (burden != 0f)
+			{
+				list.Add(new CodexText(string.Concat("    • ", UI.CLUSTERMAP.ROCKETS.BURDEN_MODULE.NAME, burden.ToString())));
+			}
+			if (enginePower != 0f)
+			{
+				list.Add(new CodexText(string.Concat("    • ", UI.CLUSTERMAP.ROCKETS.POWER_MODULE.NAME, enginePower.ToString())));
+			}
+			ContentContainer container = new ContentContainer(list, ContentContainer.ContentLayout.Vertical);
+			codexEntry.AddContentContainer(container);
+		}
 	}
 
 	public static void GeneratePageNotFound()
@@ -725,9 +781,13 @@ public static class CodexEntryGenerator
 		};
 		foreach (PlanScreen.PlanInfo item9 in TUNING.BUILDINGS.PLANORDER)
 		{
-			foreach (string datum in item9.data)
+			foreach (KeyValuePair<string, string> buildingAndSubcategoryDatum in item9.buildingAndSubcategoryData)
 			{
-				BuildingDef buildingDef = Assets.GetBuildingDef(datum);
+				BuildingDef buildingDef = Assets.GetBuildingDef(buildingAndSubcategoryDatum.Key);
+				if (buildingDef == null)
+				{
+					Debug.LogError("Building def for id " + buildingAndSubcategoryDatum.Key + " is null");
+				}
 				if (!buildingDef.Deprecated)
 				{
 					action(buildingDef.BuildingComplete, usedMap2, madeMap);

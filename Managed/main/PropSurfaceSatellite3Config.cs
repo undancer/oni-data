@@ -33,12 +33,7 @@ public class PropSurfaceSatellite3Config : IEntityConfig
 	public void OnPrefabInit(GameObject inst)
 	{
 		SetLocker component = inst.GetComponent<SetLocker>();
-		component.possible_contents_ids = new string[3][]
-		{
-			new string[3] { "ResearchDatabank", "ResearchDatabank", "ResearchDatabank" },
-			new string[3] { "ColdBreatherSeed", "ColdBreatherSeed", "ColdBreatherSeed" },
-			new string[4] { "Atmo_Suit", "Glom", "Glom", "Glom" }
-		};
+		component.possible_contents_ids = PropSurfaceSatellite1Config.GetLockerBaseContents();
 		component.ChooseContents();
 		OccupyArea component2 = inst.GetComponent<OccupyArea>();
 		component2.objectLayers = new ObjectLayer[1] { ObjectLayer.Building };
@@ -53,7 +48,7 @@ public class PropSurfaceSatellite3Config : IEntityConfig
 		radiationEmitter.radiusProportionalToRads = false;
 		radiationEmitter.emitRadiusX = 12;
 		radiationEmitter.emitRadiusY = 12;
-		radiationEmitter.emitRads = 240f / ((float)radiationEmitter.emitRadiusX / 6f);
+		radiationEmitter.emitRads = 2400f / ((float)radiationEmitter.emitRadiusX / 6f);
 	}
 
 	public void OnSpawn(GameObject inst)

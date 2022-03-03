@@ -1,7 +1,6 @@
 name: STRINGS.WORLDS.OILRICHWARPTARGET.NAME
 description: STRINGS.WORLDS.OILRICHWARPTARGET.DESCRIPTION
-nameTables:
-  - TERRA
+nameTables: [ TERRA, OILY ]
 asteroidIcon: asteroid_swamp_teleport_kanim
 
 worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.
@@ -118,6 +117,14 @@ unknownCellsAllowedSubworlds:
       - expansion1::subworlds/magma/BottomSmall
 
 worldTemplateRules:
+  # Ocean
+  - names:
+      - poi/poi_ocean_geyser_saltwater
+    listRule: TryOne
+    priority: 100 
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [Ocean]
   # Oil
   - names:
     - poi/oil/small_oilpockets_geyser_a

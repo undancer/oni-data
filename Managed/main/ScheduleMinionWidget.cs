@@ -2,6 +2,7 @@ using System.Linq;
 using Klei.AI;
 using STRINGS;
 using UnityEngine;
+using UnityEngine.UI;
 
 [AddComponentMenu("KMonoBehaviour/scripts/ScheduleMinionWidget")]
 public class ScheduleMinionWidget : KMonoBehaviour
@@ -21,6 +22,9 @@ public class ScheduleMinionWidget : KMonoBehaviour
 	[SerializeField]
 	private GameObject earlyBirdIcon;
 
+	[SerializeField]
+	private GameObject worldContainer;
+
 	public Schedulable schedulable { get; private set; }
 
 	public void ChangeAssignment(Schedule targetSchedule, Schedulable schedulable)
@@ -38,6 +42,7 @@ public class ScheduleMinionWidget : KMonoBehaviour
 		label.text = component.GetProperName();
 		MinionIdentity minionIdentity = component as MinionIdentity;
 		StoredMinionIdentity storedMinionIdentity = component as StoredMinionIdentity;
+		RefreshWidgetWorldData();
 		if (minionIdentity != null)
 		{
 			Traits component2 = minionIdentity.GetComponent<Traits>();
@@ -64,6 +69,25 @@ public class ScheduleMinionWidget : KMonoBehaviour
 		dropDown.Initialize(ScheduleManager.Instance.GetSchedules().Cast<IListableOption>(), OnDropEntryClick, null, DropEntryRefreshAction, displaySelectedValueWhenClosed: false, schedulable);
 	}
 
+	public void RefreshWidgetWorldData()
+	{
+		worldContainer.SetActive(DlcManager.IsExpansion1Active());
+		MinionIdentity minionIdentity = schedulable.GetComponent<IAssignableIdentity>() as MinionIdentity;
+		if (!(minionIdentity == null) && DlcManager.IsExpansion1Active())
+		{
+			WorldContainer myWorld = minionIdentity.GetMyWorld();
+			string text = myWorld.GetComponent<ClusterGridEntity>().Name;
+			Image componentInChildren = worldContainer.GetComponentInChildren<Image>();
+			componentInChildren.sprite = myWorld.GetComponent<ClusterGridEntity>().GetUISprite();
+			componentInChildren.SetAlpha((ClusterManager.Instance.activeWorld == myWorld) ? 1f : 0.7f);
+			if (ClusterManager.Instance.activeWorld != myWorld)
+			{
+				text = "<color=" + Constants.NEUTRAL_COLOR_STR + ">" + text + "</color>";
+			}
+			worldContainer.GetComponentInChildren<LocText>().SetText(text);
+		}
+	}
+
 	private void OnDropEntryClick(IListableOption option, object obj)
 	{
 		Schedule targetSchedule = (Schedule)option;
@@ -83,6 +107,7 @@ public class ScheduleMinionWidget : KMonoBehaviour
 			entry.label.text = schedule.name;
 			entry.button.isInteractable = true;
 		}
+		entry.gameObject.GetComponent<HierarchyReferences>().GetReference<RectTransform>("worldContainer").gameObject.SetActive(value: false);
 	}
 
 	public void SetupBlank(Schedule schedule)
@@ -102,14 +127,28 @@ public class ScheduleMinionWidget : KMonoBehaviour
 	{
 		Schedule targetSchedule = (Schedule)obj;
 		MinionIdentity minionIdentity = (MinionIdentity)option;
-		ChangeAssignment(targetSchedule, minionIdentity.GetComponent<Schedulable>());
+		if (!(minionIdentity == null) && !minionIdentity.HasTag(GameTags.Dead))
+		{
+			ChangeAssignment(targetSchedule, minionIdentity.GetComponent<Schedulable>());
+		}
 	}
 
 	private void BlankDropEntryRefreshAction(DropDownEntry entry, object obj)
 	{
-		Schedule obj2 = (Schedule)obj;
+		Schedule schedule = (Schedule)obj;
 		MinionIdentity minionIdentity = (MinionIdentity)entry.entryData;
-		if (obj2.IsAssigned(minionIdentity.GetComponent<Schedulable>()))
+		WorldContainer myWorld = minionIdentity.GetMyWorld();
+		entry.gameObject.GetComponent<HierarchyReferences>().GetReference<RectTransform>("worldContainer").gameObject.SetActive(DlcManager.IsExpansion1Active());
+		Image reference = entry.gameObject.GetComponent<HierarchyReferences>().GetReference<Image>("worldIcon");
+		reference.sprite = myWorld.GetComponent<ClusterGridEntity>().GetUISprite();
+		reference.SetAlpha((ClusterManager.Instance.activeWorld == myWorld) ? 1f : 0.7f);
+		string text = myWorld.GetComponent<ClusterGridEntity>().Name;
+		if (ClusterManager.Instance.activeWorld != myWorld)
+		{
+			text = "<color=" + Constants.NEUTRAL_COLOR_STR + ">" + text + "</color>";
+		}
+		entry.gameObject.GetComponent<HierarchyReferences>().GetReference<LocText>("worldLabel").SetText(text);
+		if (schedule.IsAssigned(minionIdentity.GetComponent<Schedulable>()))
 		{
 			entry.label.text = string.Format(UI.SCHEDULESCREEN.SCHEDULE_DROPDOWN_ASSIGNED, minionIdentity.GetProperName());
 			entry.button.isInteractable = false;

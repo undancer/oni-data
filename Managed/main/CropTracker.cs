@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 public class CropTracker : WorldTracker
 {
 	public CropTracker(int worldID)
@@ -10,10 +8,9 @@ public class CropTracker : WorldTracker
 	public override void UpdateData()
 	{
 		float num = 0f;
-		List<PlantablePlot> list = Components.PlantablePlots.GetWorldItems(base.WorldID).FindAll((PlantablePlot match) => match.HasDepositTag(GameTags.CropSeed));
-		for (int i = 0; i < list.Count; i++)
+		foreach (PlantablePlot item in Components.PlantablePlots.GetItems(base.WorldID))
 		{
-			if (!(list[i].plant == null) && !list[i].plant.HasTag(GameTags.Wilting))
+			if (!(item.plant == null) && item.HasDepositTag(GameTags.CropSeed) && !item.plant.HasTag(GameTags.Wilting))
 			{
 				num += 1f;
 			}

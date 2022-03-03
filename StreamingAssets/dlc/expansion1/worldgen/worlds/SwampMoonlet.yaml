@@ -1,7 +1,6 @@
 name: STRINGS.WORLDS.SWAMPMOONLET.NAME
 description: STRINGS.WORLDS.SWAMPMOONLET.DESCRIPTION
-nameTables:
-  - SWAMP
+nameTables: [ SWAMP ]
 asteroidIcon: asteroid_swamp_start_kanim
 
 worldTraitScale: 0.44 # Adjust with worldSize. Traits are tuned to base game world sizes.

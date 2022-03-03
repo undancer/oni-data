@@ -45,12 +45,13 @@ public class DiseaseContainers : KGameObjectSplitComponentManager<DiseaseHeader,
 				pooledList.Add(i);
 			}
 		}
+		bool radiation_enabled = Sim.IsRadiationEnabled();
 		foreach (int item in pooledList)
 		{
 			DiseaseContainer container = payloads[item];
 			DiseaseHeader diseaseHeader2 = headers[item];
 			Disease disease = Db.Get().Diseases[diseaseHeader2.diseaseIdx];
-			float num = CalculateDelta(diseaseHeader2, ref container, disease, dt);
+			float num = CalculateDelta(diseaseHeader2, ref container, disease, dt, radiation_enabled);
 			num += container.accumulatedError;
 			int num2 = (int)num;
 			container.accumulatedError = num - (float)num2;
@@ -73,12 +74,12 @@ public class DiseaseContainers : KGameObjectSplitComponentManager<DiseaseHeader,
 		pooledList.Recycle();
 	}
 
-	public static float CalculateDelta(DiseaseHeader header, ref DiseaseContainer container, Disease disease, float dt)
+	private static float CalculateDelta(DiseaseHeader header, ref DiseaseContainer container, Disease disease, float dt, bool radiation_enabled)
 	{
-		return CalculateDelta(header.diseaseCount, container.elemIdx, header.primaryElement.Mass, Grid.PosToCell(header.primaryElement.transform.GetPosition()), header.primaryElement.Temperature, container.instanceGrowthRate, disease, dt);
+		return CalculateDelta(header.diseaseCount, container.elemIdx, header.primaryElement.Mass, Grid.PosToCell(header.primaryElement.transform.GetPosition()), header.primaryElement.Temperature, container.instanceGrowthRate, disease, dt, radiation_enabled);
 	}
 
-	public static float CalculateDelta(int disease_count, int element_idx, float mass, int environment_cell, float temperature, float tags_multiplier_base, Disease disease, float dt)
+	public static float CalculateDelta(int disease_count, int element_idx, float mass, int environment_cell, float temperature, float tags_multiplier_base, Disease disease, float dt, bool radiation_enabled)
 	{
 		float num = 0f;
 		ElemGrowthInfo elemGrowthInfo = disease.elemGrowthInfo[element_idx];
@@ -92,6 +93,14 @@ public class DiseaseContainers : KGameObjectSplitComponentManager<DiseaseHeader,
 			byte b = Grid.ElementIdx[environment_cell];
 			ElemExposureInfo elemExposureInfo = disease.elemExposureInfo[b];
 			num += elemExposureInfo.CalculateExposureDiseaseCountDelta(disease_count, dt);
+			if (radiation_enabled)
+			{
+				float num4 = Grid.Radiation[environment_cell];
+				if (num4 > 0f)
+				{
+					num -= num4 * disease.radiationKillRate;
+				}
+			}
 		}
 		return num;
 	}

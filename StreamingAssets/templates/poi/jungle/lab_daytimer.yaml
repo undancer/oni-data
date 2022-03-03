@@ -133,13 +133,11 @@ cells:
   diseaseCount: 138
   location_x: 1
   location_y: -4
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.868574798
   temperature: 298.786255
   location_x: 2
   location_y: -4
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.871791482
   temperature: 300.013763
@@ -147,7 +145,6 @@ cells:
   diseaseCount: 38
   location_x: 3
   location_y: -4
-  preventFoWReveal: true
 - element: ContaminatedOxygen
   mass: 0.0149772484
   temperature: 296.080109
@@ -155,7 +152,6 @@ cells:
   diseaseCount: 187
   location_x: 1
   location_y: -3
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.871622562
   temperature: 296.710266
@@ -163,7 +159,6 @@ cells:
   diseaseCount: 7
   location_x: 2
   location_y: -3
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.874795318
   temperature: 297.62146
@@ -171,7 +166,6 @@ cells:
   diseaseCount: 56
   location_x: 3
   location_y: -3
-  preventFoWReveal: true
 - element: IgneousRock
   mass: 1056
   temperature: 299.693665
@@ -184,7 +178,6 @@ cells:
   diseaseCount: 18
   location_x: 3
   location_y: -2
-  preventFoWReveal: true
 - element: IgneousRock
   mass: 1056
   temperature: 299.446625
@@ -197,7 +190,6 @@ cells:
   diseaseCount: 776
   location_x: 1
   location_y: -1
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.911487162
   temperature: 297.121765
@@ -205,19 +197,16 @@ cells:
   diseaseCount: 45
   location_x: 3
   location_y: -1
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.934302092
   temperature: 296.071472
   diseaseName: SlimeLung
   diseaseCount: 262
   location_x: 1
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.92070812
   temperature: 297.054596
   location_x: 3
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.946774244
   temperature: 296.664795
@@ -225,13 +214,11 @@ cells:
   diseaseCount: 328
   location_x: 1
   location_y: 1
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.923273921
   temperature: 294.837769
   location_x: 3
   location_y: 1
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.957277715
   temperature: 296.03244
@@ -239,7 +226,6 @@ cells:
   diseaseCount: 475
   location_x: 1
   location_y: 2
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.96061188
   temperature: 298.824036
@@ -247,7 +233,6 @@ cells:
   diseaseCount: 909
   location_x: 1
   location_y: 3
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.964172244
   temperature: 294.726532
@@ -255,7 +240,6 @@ cells:
   diseaseCount: 688
   location_x: 2
   location_y: 3
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.959591508
   temperature: 301.884033
@@ -263,7 +247,6 @@ cells:
   diseaseCount: 839
   location_x: 1
   location_y: 4
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.962843776
   temperature: 296.975128
@@ -271,7 +254,6 @@ cells:
   diseaseCount: 712
   location_x: 2
   location_y: 4
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.957877636
   temperature: 300.773682
@@ -279,7 +261,6 @@ cells:
   diseaseCount: 179
   location_x: 1
   location_y: 5
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.960526526
   temperature: 299.944214
@@ -287,37 +268,31 @@ cells:
   diseaseCount: 51
   location_x: 2
   location_y: 5
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.965483308
   temperature: 297.720276
   location_x: 3
   location_y: 5
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.971716106
   temperature: 296.386139
   location_x: 4
   location_y: 5
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.958618045
   temperature: 302.933441
   location_x: 2
   location_y: 6
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.962458074
   temperature: 301.396027
   location_x: 3
   location_y: 6
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.968378305
   temperature: 301.009399
   location_x: 4
   location_y: 6
-  preventFoWReveal: true
 - element: IgneousRock
   mass: 1056
   temperature: 305.814667
@@ -455,25 +430,21 @@ cells:
   temperature: 295.827515
   location_x: 5
   location_y: 5
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.982174993
   temperature: 295.885803
   location_x: 6
   location_y: 5
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.985700428
   temperature: 295.943481
   location_x: 7
   location_y: 5
-  preventFoWReveal: true
 - element: Oxygen
   mass: 0.979018092
   temperature: 297.800323
   location_x: 6
   location_y: 6
-  preventFoWReveal: true
 - element: IgneousRock
   mass: 1056
   temperature: 299.15152

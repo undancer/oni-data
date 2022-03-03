@@ -1,7 +1,7 @@
 name: STRINGS.CLUSTER_NAMES.VANILLA_FOREST_CLUSTER.NAME
 description: STRINGS.CLUSTER_NAMES.VANILLA_FOREST_CLUSTER.DESCRIPTION
 requiredDlcId: EXPANSION1_ID
-coordinatePrefix: V-FRST-C
+coordinatePrefix: V-LUSH-C
 menuOrder: 5
 clusterCategory: 1
 difficulty: 2

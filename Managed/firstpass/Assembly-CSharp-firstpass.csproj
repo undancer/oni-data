@@ -12,49 +12,52 @@
   <ItemGroup />
   <ItemGroup>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>../UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>../Managed/UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>../UnityEngine.UI.dll</HintPath>
+      <HintPath>../Managed/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UIModule">
-      <HintPath>../UnityEngine.UIModule.dll</HintPath>
+      <HintPath>../Managed/UnityEngine.UIModule.dll</HintPath>
     </Reference>
     <Reference Include="FMODUnity">
-      <HintPath>../FMODUnity.dll</HintPath>
+      <HintPath>../Managed/FMODUnity.dll</HintPath>
     </Reference>
     <Reference Include="System.Core">
-      <HintPath>../System.Core.dll</HintPath>
+      <HintPath>../Managed/System.Core.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>../Newtonsoft.Json.dll</HintPath>
+      <HintPath>../Managed/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>../Unity.TextMeshPro.dll</HintPath>
+      <HintPath>../Managed/Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="com.rlabrecque.steamworks.net">
+      <HintPath>../Managed/com.rlabrecque.steamworks.net.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AnimationModule">
-      <HintPath>../UnityEngine.AnimationModule.dll</HintPath>
+      <HintPath>../Managed/UnityEngine.AnimationModule.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml">
-      <HintPath>../System.Xml.dll</HintPath>
+      <HintPath>../Managed/System.Xml.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>../UnityEngine.TextRenderingModule.dll</HintPath>
+      <HintPath>../Managed/UnityEngine.TextRenderingModule.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq">
-      <HintPath>../System.Xml.Linq.dll</HintPath>
+      <HintPath>../Managed/System.Xml.Linq.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
-      <HintPath>../UnityEngine.IMGUIModule.dll</HintPath>
+      <HintPath>../Managed/UnityEngine.IMGUIModule.dll</HintPath>
     </Reference>
     <Reference Include="LibNoiseDotNet">
-      <HintPath>../LibNoiseDotNet.dll</HintPath>
+      <HintPath>../Managed/LibNoiseDotNet.dll</HintPath>
     </Reference>
     <Reference Include="Ionic.Zip">
-      <HintPath>../Ionic.Zip.dll</HintPath>
+      <HintPath>../Managed/Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.InputLegacyModule">
-      <HintPath>../UnityEngine.InputLegacyModule.dll</HintPath>
+      <HintPath>../Managed/UnityEngine.InputLegacyModule.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

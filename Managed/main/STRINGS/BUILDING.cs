@@ -346,6 +346,13 @@ namespace STRINGS
 				public static LocString NOTIFICATION_TOOLTIP = "These buildings are entombed and need to be dug out:";
 			}
 
+			public class FABRICATORACCEPTSMUTANTSEEDS
+			{
+				public static LocString NAME = "Fabricator accepts mutant seeds";
+
+				public static LocString TOOLTIP = "This fabricator is allowed to use mutant seeds as recipe ingredients.";
+			}
+
 			public class INVALIDPORTOVERLAP
 			{
 				public static LocString NAME = "Invalid Port Overlap";
@@ -531,7 +538,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Missing Tile";
 
-				public static LocString TOOLTIP = "Build " + UI.PRE_KEYWORD + "Tile" + UI.PST_KEYWORD + " beneath this building to regain function" + UI.HORIZONTAL_BR_RULE + "Tile can be found in the " + UI.FormatAsBuildMenuTab("Base Tab") + " " + UI.FormatAsHotkey("[1]") + " of the Build Menu";
+				public static LocString TOOLTIP = "Build " + UI.PRE_KEYWORD + "Tile" + UI.PST_KEYWORD + " beneath this building to regain function" + UI.HORIZONTAL_BR_RULE + "Tile can be found in the " + UI.FormatAsBuildMenuTab("Base Tab", Action.Plan1) + " of the Build Menu";
 			}
 
 			public class NEUTRONIUMUNMINABLE
@@ -605,14 +612,14 @@ namespace STRINGS
 			{
 				public static LocString NAME = "No Conveyor Loader";
 
-				public static LocString TOOLTIP = "Material cannot be fed onto this Conveyor system for transport" + UI.HORIZONTAL_BR_RULE + "Enter the " + UI.FormatAsBuildMenuTab("Shipping Tab") + " " + UI.FormatAsHotkey("[7]") + " of the Build Menu to build and connect a " + UI.PRE_KEYWORD + "Conveyor Loader" + UI.PST_KEYWORD;
+				public static LocString TOOLTIP = "Material cannot be fed onto this Conveyor system for transport" + UI.HORIZONTAL_BR_RULE + "Enter the " + UI.FormatAsBuildMenuTab("Shipping Tab", Action.Plan13) + " of the Build Menu to build and connect a " + UI.PRE_KEYWORD + "Conveyor Loader" + UI.PST_KEYWORD;
 			}
 
 			public class NEEDSOLIDOUT
 			{
 				public static LocString NAME = "No Conveyor Receptacle";
 
-				public static LocString TOOLTIP = "Material cannot be offloaded from this Conveyor system and will backup the rails" + UI.HORIZONTAL_BR_RULE + "Enter the " + UI.FormatAsBuildMenuTab("Shipping Tab") + " " + UI.FormatAsHotkey("[7]") + " of the Build Menu to build and connect a " + UI.PRE_KEYWORD + "Conveyor Receptacle" + UI.PST_KEYWORD;
+				public static LocString TOOLTIP = "Material cannot be offloaded from this Conveyor system and will backup the rails" + UI.HORIZONTAL_BR_RULE + "Enter the " + UI.FormatAsBuildMenuTab("Shipping Tab", Action.Plan13) + " of the Build Menu to build and connect a " + UI.PRE_KEYWORD + "Conveyor Receptacle" + UI.PST_KEYWORD;
 			}
 
 			public class SOLIDPIPEOBSTRUCTED
@@ -672,7 +679,7 @@ namespace STRINGS
 
 				public static LocString NOTIFICATION_NAME = "New Printables are available";
 
-				public static LocString NOTIFICATION_TOOLTIP = "The Printing Pod " + UI.FormatAsHotkey("[H]") + " is ready to print a new Duplicant or care package.\nI'll need to select a blueprint:";
+				public static LocString NOTIFICATION_TOOLTIP = "The Printing Pod " + UI.FormatAsHotKey(Action.Plan1) + " is ready to print a new Duplicant or care package.\nI'll need to select a blueprint:";
 			}
 
 			public class NOAPPLICABLERESEARCHSELECTED
@@ -690,7 +697,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "No Analysis Focus Selected";
 
-				public static LocString TOOLTIP = "Select an unknown destination from the " + UI.FormatAsManagementMenu("Starmap", "[Z]") + " to begin analysis";
+				public static LocString TOOLTIP = "Select an unknown destination from the " + UI.FormatAsManagementMenu("Starmap", Action.ManageStarmap) + " to begin analysis";
 
 				public static LocString NOTIFICATION_NAME = UI.FormatAsLink("Telescope", "TELESCOPE") + " idle";
 
@@ -820,7 +827,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Function Suspended";
 
-				public static LocString TOOLTIP = "This building has been toggled off\nPress " + UI.PRE_KEYWORD + "Enable Building" + UI.PST_KEYWORD + " " + UI.FormatAsHotkey("[ENTER]") + " to resume its use";
+				public static LocString TOOLTIP = "This building has been toggled off\nPress " + UI.PRE_KEYWORD + "Enable Building" + UI.PST_KEYWORD + " " + UI.FormatAsHotKey(Action.ToggleEnabled) + " to resume its use";
 			}
 
 			public class PUMPINGSTATION
@@ -908,7 +915,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Awaiting Radbolts";
 
-				public static LocString TOOLTIP = "This building requires Radbolts to function" + UI.HORIZONTAL_BR_RULE + "Open the " + UI.FormatAsOverlay("Radiation Overlay") + " " + UI.FormatAsHotkey("[L-SHIFT + F4]") + " to view this building's radiation port";
+				public static LocString TOOLTIP = "This building requires Radbolts to function" + UI.HORIZONTAL_BR_RULE + "Open the " + UI.FormatAsOverlay("Radiation Overlay") + " " + UI.FormatAsHotKey(Action.Overlay15) + " to view this building's radiation port";
 			}
 
 			public class WAITINGFORREPAIRMATERIALS
@@ -1057,18 +1064,18 @@ namespace STRINGS
 			{
 				public static LocString NAME = "No Research Focus Selected";
 
-				public static LocString TOOLTIP = "Open the " + UI.FormatAsManagementMenu("Research Tree", "[R]") + " to select a new " + UI.FormatAsLink("Research", "TECH") + " project";
+				public static LocString TOOLTIP = "Open the " + UI.FormatAsManagementMenu("Research Tree", Action.ManageResearch) + " to select a new " + UI.FormatAsLink("Research", "TECH") + " project";
 
 				public static LocString NOTIFICATION_NAME = "No " + UI.FormatAsLink("Research Focus", "TECH") + " selected";
 
-				public static LocString NOTIFICATION_TOOLTIP = "Open the " + UI.FormatAsManagementMenu("Research Tree", "[R]") + " to select a new " + UI.FormatAsLink("Research", "TECH") + " project";
+				public static LocString NOTIFICATION_TOOLTIP = "Open the " + UI.FormatAsManagementMenu("Research Tree", Action.ManageResearch) + " to select a new " + UI.FormatAsLink("Research", "TECH") + " project";
 			}
 
 			public class NORESEARCHORDESTINATIONSELECTED
 			{
 				public static LocString NAME = "No Research Focus or Starmap Destination Selected";
 
-				public static LocString TOOLTIP = "Select a " + UI.FormatAsLink("Research", "TECH") + " project in the " + UI.FormatAsManagementMenu("Research Tree", "{Hotkey}") + " or a Destination in the " + UI.FormatAsManagementMenu("Starmap", "[Z]");
+				public static LocString TOOLTIP = "Select a " + UI.FormatAsLink("Research", "TECH") + " project in the " + UI.FormatAsManagementMenu("Research Tree", Action.ManageResearch) + " or a Destination in the " + UI.FormatAsManagementMenu("Starmap", Action.ManageStarmap);
 
 				public static LocString NOTIFICATION_NAME = "No " + UI.FormatAsLink("Research Focus", "TECH") + " or Starmap destination selected";
 
@@ -1107,7 +1114,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Emitting Light";
 
-				public static LocString TOOLTIP = "Open the " + UI.FormatAsOverlay("Light Overlay", "[{LightGridOverlay}]") + " to view this light's visibility radius";
+				public static LocString TOOLTIP = "Open the " + UI.FormatAsOverlay("Light Overlay", Action.Overlay5) + " to view this light's visibility radius";
 			}
 
 			public class RATIONBOXCONTENTS
@@ -1423,7 +1430,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Building Disabled";
 
-				public static LocString TOOLTIP = "Press " + UI.PRE_KEYWORD + "Enable Building" + UI.PST_KEYWORD + " " + UI.FormatAsHotkey("[ENTER]") + " to resume use";
+				public static LocString TOOLTIP = "Press " + UI.PRE_KEYWORD + "Enable Building" + UI.PST_KEYWORD + " " + UI.FormatAsHotKey(Action.ToggleEnabled) + " to resume use";
 			}
 
 			public class MISSINGREQUIREMENTS
@@ -1610,7 +1617,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Colony Lacks {Skills}";
 
-				public static LocString TOOLTIP = "{Skills} Skill required to operate" + UI.HORIZONTAL_BR_RULE + "Open the " + UI.FormatAsManagementMenu("Skills Panel", "[L]") + " to teach {Skills} to a Duplicant";
+				public static LocString TOOLTIP = "{Skills} Skill required to operate" + UI.HORIZONTAL_BR_RULE + "Open the " + UI.FormatAsManagementMenu("Skills Panel", Action.ManageSkills) + " to teach {Skills} to a Duplicant";
 			}
 
 			public class CLUSTERCOLONYLACKSREQUIREDSKILLPERK
@@ -1778,21 +1785,21 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Outside of room";
 
-				public static LocString TOOLTIP = "This building must be built inside a " + UI.PRE_KEYWORD + "Room" + UI.PST_KEYWORD + " for full functionality\n\nOpen the " + UI.FormatAsOverlay("Room Overlay", "[F11]") + " to view full " + UI.PRE_KEYWORD + "Room" + UI.PST_KEYWORD + " status";
+				public static LocString TOOLTIP = "This building must be built inside a " + UI.PRE_KEYWORD + "Room" + UI.PST_KEYWORD + " for full functionality\n\nOpen the " + UI.FormatAsOverlay("Room Overlay", Action.Overlay11) + " to view full " + UI.PRE_KEYWORD + "Room" + UI.PST_KEYWORD + " status";
 			}
 
 			public class NOTINREQUIREDROOM
 			{
 				public static LocString NAME = "Outside of {0}";
 
-				public static LocString TOOLTIP = "This building must be built inside a {0} for full functionality\n\nOpen the " + UI.FormatAsOverlay("Room Overlay", "[F11]") + " to view full " + UI.PRE_KEYWORD + "Room" + UI.PST_KEYWORD + " status";
+				public static LocString TOOLTIP = "This building must be built inside a {0} for full functionality\n\nOpen the " + UI.FormatAsOverlay("Room Overlay", Action.Overlay11) + " to view full " + UI.PRE_KEYWORD + "Room" + UI.PST_KEYWORD + " status";
 			}
 
 			public class NOTINRECOMMENDEDROOM
 			{
 				public static LocString NAME = "Outside of {0}";
 
-				public static LocString TOOLTIP = "It is recommended to build this building inside a {0}\n\nOpen the " + UI.FormatAsOverlay("Room Overlay", "[F11]") + " to view full " + UI.PRE_KEYWORD + "Room" + UI.PST_KEYWORD + " status";
+				public static LocString TOOLTIP = "It is recommended to build this building inside a {0}\n\nOpen the " + UI.FormatAsOverlay("Room Overlay", Action.Overlay11) + " to view full " + UI.PRE_KEYWORD + "Room" + UI.PST_KEYWORD + " status";
 			}
 
 			public class RELEASING_PRESSURE
@@ -1980,7 +1987,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Scan Quality: {Quality}";
 
-				public static LocString TOOLTIP = "This scanner dish is currently scanning at <b>{Quality}</b> effectiveness\n\nDecreased scan quality may be due to:\n    • Interference from nearby heavy machinery\n    • Rock or tile obstructing the dish's line of sight on space";
+				public static LocString TOOLTIP = "This scanner dish is currently scanning at <b>{Quality}</b> effectiveness\n\nDecreased scan quality may be due to:\n    • Interference from nearby industrial machinery\n    • Rock or tile obstructing the dish's line of sight on space";
 			}
 
 			public class NETWORKQUALITY
@@ -2081,6 +2088,13 @@ namespace STRINGS
 				public static LocString NAME = "Broadcaster Out of Range";
 
 				public static LocString TOOLTIP = "This receiver is too far from the selected broadcaster to get signal updates";
+			}
+
+			public class LOSINGRADBOLTS
+			{
+				public static LocString NAME = "Radbolt Decay";
+
+				public static LocString TOOLTIP = "This building is unable to maintain the integrity of the radbolts it is storing";
 			}
 
 			public class TOP_PRIORITY_CHORE

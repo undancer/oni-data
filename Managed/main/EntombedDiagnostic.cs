@@ -24,7 +24,7 @@ public class EntombedDiagnostic : ColonyDiagnostic
 		};
 		foreach (BuildingComplete item in worldItems)
 		{
-			if (item.HasTag(GameTags.Entombed))
+			if (!item.IsNullOrDestroyed() && item.HasTag(GameTags.Entombed))
 			{
 				result.opinion = DiagnosticResult.Opinion.Bad;
 				result.Message = UI.COLONY_DIAGNOSTICS.ENTOMBEDDIAGNOSTIC.BUILDING_ENTOMBED;

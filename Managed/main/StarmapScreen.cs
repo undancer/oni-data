@@ -194,6 +194,10 @@ public class StarmapScreen : KModalScreen
 
 	public override float GetSortKey()
 	{
+		if (base.isEditing)
+		{
+			return 50f;
+		}
 		return 20f;
 	}
 
@@ -655,6 +659,17 @@ public class StarmapScreen : KModalScreen
 		}
 	}
 
+	private void OnStartedTitlebarEditing()
+	{
+		base.isEditing = true;
+		KScreenManager.Instance.RefreshStack();
+	}
+
+	private void OnEndEditing(string data)
+	{
+		base.isEditing = false;
+	}
+
 	private void FillRocketListPanel()
 	{
 		ClearRocketListPanel();
@@ -675,6 +690,8 @@ public class StarmapScreen : KModalScreen
 			BreakdownList component = hierarchyReferences.GetComponent<BreakdownList>();
 			MultiToggle component2 = hierarchyReferences.GetComponent<MultiToggle>();
 			EditableTitleBar component3 = hierarchyReferences.GetReference<RectTransform>("EditableTitle").GetComponent<EditableTitleBar>();
+			component3.OnStartedEditing += OnStartedTitlebarEditing;
+			component3.inputField.onEndEdit.AddListener(OnEndEditing);
 			MultiToggle component4 = hierarchyReferences.GetReference<RectTransform>("LaunchRocketButton").GetComponent<MultiToggle>();
 			MultiToggle component5 = hierarchyReferences.GetReference<RectTransform>("LandRocketButton").GetComponent<MultiToggle>();
 			HierarchyReferences component6 = hierarchyReferences.GetReference<RectTransform>("ProgressBar").GetComponent<HierarchyReferences>();

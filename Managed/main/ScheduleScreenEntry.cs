@@ -147,6 +147,17 @@ public class ScheduleScreenEntry : KMonoBehaviour
 		return false;
 	}
 
+	public void RefreshWidgetWorldData()
+	{
+		foreach (ScheduleMinionWidget minionWidget in minionWidgets)
+		{
+			if (!minionWidget.IsNullOrDestroyed())
+			{
+				minionWidget.RefreshWidgetWorldData();
+			}
+		}
+	}
+
 	private void OnNameChanged(string newName)
 	{
 		schedule.name = newName;
@@ -208,6 +219,10 @@ public class ScheduleScreenEntry : KMonoBehaviour
 			{
 				blockTypeCounts[allowed_type.Id]++;
 			}
+		}
+		if (noteEntryRight == null)
+		{
+			return;
 		}
 		ToolTip component = noteEntryRight.GetComponent<ToolTip>();
 		component.ClearMultiStringTooltip();

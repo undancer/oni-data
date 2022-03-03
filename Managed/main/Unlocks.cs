@@ -49,12 +49,12 @@ public class Unlocks : KMonoBehaviour
 		},
 		{
 			"journals",
-			new string[32]
+			new string[33]
 			{
 				"journal_timesarrowthoughts", "journal_A046_1", "journal_B835_1", "journal_sunflowerseeds", "journal_B327_1", "journal_B556_1", "journal_employeeprocessing", "journal_B327_2", "journal_A046_2", "journal_elliesbirthday1",
 				"journal_B835_2", "journal_ants", "journal_pipedream", "journal_B556_2", "journal_movedrats", "journal_B835_3", "journal_A046_3", "journal_B556_3", "journal_B327_3", "journal_B835_4",
 				"journal_cleanup", "journal_A046_4", "journal_B327_4", "journal_revisitednumbers", "journal_B556_4", "journal_B835_5", "journal_elliesbirthday2", "journal_B111_1", "journal_revisitednumbers2", "journal_timemusings",
-				"journal_evil", "journal_timesorder"
+				"journal_evil", "journal_timesorder", "journal_inspace"
 			}
 		},
 		{

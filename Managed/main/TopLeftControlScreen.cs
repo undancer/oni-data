@@ -22,6 +22,7 @@ public class TopLeftControlScreen : KScreen
 		base.OnActivate();
 		Instance = this;
 		RefreshName();
+		KInputManager.InputChange.AddListener(ResetToolTip);
 		UpdateSandboxToggleState();
 		MultiToggle sandboxToggle = SandboxToggle;
 		sandboxToggle.onClick = (System.Action)Delegate.Combine(sandboxToggle.onClick, new System.Action(OnClickSandboxToggle));
@@ -36,6 +37,18 @@ public class TopLeftControlScreen : KScreen
 		if (SaveGame.Instance != null)
 		{
 			locText.text = SaveGame.Instance.BaseName;
+		}
+	}
+
+	public void ResetToolTip()
+	{
+		if (CheckSandboxModeLocked())
+		{
+			SandboxToggle.GetComponent<ToolTip>().SetSimpleTooltip(GameUtil.ReplaceHotkeyString(UI.SANDBOX_TOGGLE.TOOLTIP_LOCKED, Action.ToggleSandboxTools));
+		}
+		else
+		{
+			SandboxToggle.GetComponent<ToolTip>().SetSimpleTooltip(GameUtil.ReplaceHotkeyString(UI.SANDBOX_TOGGLE.TOOLTIP_UNLOCKED, Action.ToggleSandboxTools));
 		}
 	}
 

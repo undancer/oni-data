@@ -49,6 +49,7 @@ public class RocketInteriorLiquidOutputConfig : IBuildingConfig
 		go.AddOrGetDef<PoweredActiveController.Def>();
 		Storage storage = go.AddOrGet<Storage>();
 		storage.capacityKg = 10f;
+		storage.SetDefaultStoredItemModifiers(Storage.StandardSealedStorage);
 		go.AddOrGet<Filterable>().filterElementState = Filterable.ElementState.Liquid;
 		RocketConduitStorageAccess rocketConduitStorageAccess = go.AddOrGet<RocketConduitStorageAccess>();
 		rocketConduitStorageAccess.storage = storage;

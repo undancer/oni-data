@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using STRINGS;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ManagementMenu : KIconToggleMenu
 {
@@ -76,6 +77,8 @@ public class ManagementMenu : KIconToggleMenu
 		}
 	}
 
+	private const float UI_WIDTH_COMPRESS_THRESHOLD = 1300f;
+
 	[MyCmpReq]
 	public ManagementMenuNotificationDisplayer notificationDisplayer;
 
@@ -134,6 +137,8 @@ public class ManagementMenu : KIconToggleMenu
 	private ManagementMenuToggleInfo clusterMapInfo;
 
 	private ManagementMenuToggleInfo skillsInfo;
+
+	private UnityAction inputChangeReceiver;
 
 	private Dictionary<ManagementMenuToggleInfo, ScreenData> ScreenInfoMatch = new Dictionary<ManagementMenuToggleInfo, ScreenData>();
 
@@ -301,12 +306,15 @@ public class ManagementMenu : KIconToggleMenu
 		PauseMenuButton.onClick += OnPauseMenuClicked;
 		PauseMenuButton.transform.SetAsLastSibling();
 		PauseMenuButton.GetComponent<ToolTip>().toolTip = GameUtil.ReplaceHotkeyString(UI.TOOLTIPS.MANAGEMENTMENU_PAUSEMENU, Action.Escape);
+		inputChangeReceiver = (UnityAction)Delegate.Combine(inputChangeReceiver, new UnityAction(OnInputChanged));
+		KInputManager.InputChange.AddListener(inputChangeReceiver);
 		Components.ResearchCenters.OnAdd += CheckResearch;
 		Components.ResearchCenters.OnRemove += CheckResearch;
 		Components.RoleStations.OnAdd += CheckSkills;
 		Components.RoleStations.OnRemove += CheckSkills;
 		Game.Instance.Subscribe(-809948329, CheckResearch);
 		Game.Instance.Subscribe(-809948329, CheckSkills);
+		Game.Instance.Subscribe(445618876, OnResolutionChanged);
 		if (!DlcManager.FeatureClusterSpaceEnabled())
 		{
 			Components.Telescopes.OnAdd += CheckStarmap;
@@ -324,6 +332,7 @@ public class ManagementMenu : KIconToggleMenu
 			toggle.soundPlayer.toggle_widget_sound_events[0].PlaySound = false;
 			toggle.soundPlayer.toggle_widget_sound_events[1].PlaySound = false;
 		}
+		OnResolutionChanged();
 	}
 
 	protected override void OnSpawn()
@@ -332,6 +341,38 @@ public class ManagementMenu : KIconToggleMenu
 		mutuallyExclusiveScreens.Add(AllResourcesScreen.Instance);
 		mutuallyExclusiveScreens.Add(AllDiagnosticsScreen.Instance);
 		OnNotificationsChanged();
+	}
+
+	private void OnInputChanged()
+	{
+		PauseMenuButton.GetComponent<ToolTip>().toolTip = GameUtil.ReplaceHotkeyString(UI.TOOLTIPS.MANAGEMENTMENU_PAUSEMENU, Action.Escape);
+		consumablesInfo.tooltip = GameUtil.ReplaceHotkeyString(UI.TOOLTIPS.MANAGEMENTMENU_CONSUMABLES, consumablesInfo.hotKey);
+		vitalsInfo.tooltip = GameUtil.ReplaceHotkeyString(UI.TOOLTIPS.MANAGEMENTMENU_VITALS, vitalsInfo.hotKey);
+		researchInfo.tooltip = GameUtil.ReplaceHotkeyString(UI.TOOLTIPS.MANAGEMENTMENU_RESEARCH, researchInfo.hotKey);
+		jobsInfo.tooltip = GameUtil.ReplaceHotkeyString(UI.TOOLTIPS.MANAGEMENTMENU_JOBS, jobsInfo.hotKey);
+		skillsInfo.tooltip = GameUtil.ReplaceHotkeyString(UI.TOOLTIPS.MANAGEMENTMENU_SKILLS, skillsInfo.hotKey);
+		starmapInfo.tooltip = GameUtil.ReplaceHotkeyString(UI.TOOLTIPS.MANAGEMENTMENU_STARMAP, starmapInfo.hotKey);
+		clusterMapInfo.tooltip = GameUtil.ReplaceHotkeyString(UI.TOOLTIPS.MANAGEMENTMENU_STARMAP, clusterMapInfo.hotKey);
+		scheduleInfo.tooltip = GameUtil.ReplaceHotkeyString(UI.TOOLTIPS.MANAGEMENTMENU_SCHEDULE, scheduleInfo.hotKey);
+		reportsInfo.tooltip = GameUtil.ReplaceHotkeyString(UI.TOOLTIPS.MANAGEMENTMENU_DAILYREPORT, reportsInfo.hotKey);
+		codexInfo.tooltip = GameUtil.ReplaceHotkeyString(UI.TOOLTIPS.MANAGEMENTMENU_CODEX, codexInfo.hotKey);
+	}
+
+	private void OnResolutionChanged(object data = null)
+	{
+		bool flag = (float)Screen.width < 1300f;
+		foreach (KToggle toggle in toggles)
+		{
+			HierarchyReferences component = toggle.GetComponent<HierarchyReferences>();
+			if (!(component == null))
+			{
+				RectTransform reference = component.GetReference<RectTransform>("TextContainer");
+				if (!(reference == null))
+				{
+					reference.gameObject.SetActive(!flag);
+				}
+			}
+		}
 	}
 
 	private void OnNotificationsChanged()

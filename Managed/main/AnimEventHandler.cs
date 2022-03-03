@@ -5,6 +5,8 @@ public class AnimEventHandler : KMonoBehaviour
 {
 	private delegate void SetPos(Vector3 pos);
 
+	private const int UPDATE_FRAME_RATE = 3;
+
 	[MyCmpGet]
 	private KBatchedAnimController controller;
 
@@ -18,6 +20,8 @@ public class AnimEventHandler : KMonoBehaviour
 
 	public Vector2 baseOffset;
 
+	public int isDirty;
+
 	private HashedString context;
 
 	private int instanceIndex;
@@ -25,6 +29,11 @@ public class AnimEventHandler : KMonoBehaviour
 	private static int InstanceSequence;
 
 	private event SetPos onWorkTargetSet;
+
+	public void SetDirty()
+	{
+		isDirty = 2;
+	}
 
 	protected override void OnSpawn()
 	{
@@ -39,6 +48,7 @@ public class AnimEventHandler : KMonoBehaviour
 		}
 		baseOffset = animCollider.offset;
 		instanceIndex = InstanceSequence++;
+		SetDirty();
 	}
 
 	public HashedString GetContext()
@@ -78,11 +88,17 @@ public class AnimEventHandler : KMonoBehaviour
 	{
 		int num = Time.frameCount % 3;
 		int num2 = instanceIndex % 3;
-		if (num == num2)
+		if (num == num2 || isDirty > 0)
 		{
-			Vector3 pivotSymbolPosition = controller.GetPivotSymbolPosition();
-			Vector3 vector = navigator.NavGrid.GetNavTypeData(navigator.CurrentNavType).animControllerOffset;
-			animCollider.offset = new Vector2(baseOffset.x + pivotSymbolPosition.x - base.transform.GetPosition().x - vector.x, baseOffset.y + pivotSymbolPosition.y - base.transform.GetPosition().y + vector.y);
+			UpdateOffset();
 		}
+	}
+
+	public void UpdateOffset()
+	{
+		Vector3 pivotSymbolPosition = controller.GetPivotSymbolPosition();
+		Vector3 vector = navigator.NavGrid.GetNavTypeData(navigator.CurrentNavType).animControllerOffset;
+		animCollider.offset = new Vector2(baseOffset.x + pivotSymbolPosition.x - base.transform.GetPosition().x - vector.x, baseOffset.y + pivotSymbolPosition.y - base.transform.GetPosition().y + vector.y);
+		isDirty = Mathf.Max(0, isDirty - 1);
 	}
 }

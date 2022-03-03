@@ -146,7 +146,7 @@ public class ColdBreather : StateMachineComponent<ColdBreather.StatesInstance>, 
 			}
 			if (radiationEmitter != null)
 			{
-				radiationEmitter.emitRads = 48f;
+				radiationEmitter.emitRads = 480f;
 				radiationEmitter.Refresh();
 			}
 		}

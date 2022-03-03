@@ -112,7 +112,7 @@ public class BeeHive : GameStateMachine<BeeHive, BeeHive.StatesInstance, IStateM
 	{
 		base.serializable = SerializeType.ParamsOnly;
 		default_state = enabled.grownStates;
-		root.Enter(delegate(StatesInstance smi)
+		root.DoTutorial(Tutorial.TutorialMessages.TM_Radiation).Enter(delegate(StatesInstance smi)
 		{
 			AmountInstance amountInstance = Db.Get().Amounts.Calories.Lookup(smi.gameObject);
 			if (amountInstance != null)

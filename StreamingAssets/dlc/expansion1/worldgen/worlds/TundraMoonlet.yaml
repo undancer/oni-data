@@ -1,7 +1,6 @@
 name: STRINGS.WORLDS.TUNDRAMOONLET.NAME
 description: STRINGS.WORLDS.TUNDRAMOONLET.DESCRIPTION
-nameTables:
-  - TUNDRA
+nameTables: [ TUNDRA ]
 asteroidIcon: asteroid_ice_planet_kanim
 
 worldTraitScale: 0.08 # Adjust with worldSize. Traits are tuned to base game world sizes.
@@ -36,6 +35,7 @@ worldTraitRules:
     forbiddenTraits:
       - traits/MagmaVents # difficult to place guaranteed POIs
       - expansion1::traits/Volcanoes # Takes up too much space
+      - expansion1::traits/MetalCaves
 
 
 # List all the subworld files to load
@@ -74,7 +74,7 @@ unknownCellsAllowedSubworlds:
 
 fixedTraits:
   - sunlightVeryVeryLow
-  - cosmicRadiationHigh
+  - cosmicRadiationMed
 
 worldTemplateRules:
   # Gravitas

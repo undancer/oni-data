@@ -34,10 +34,15 @@ public class ArtifactHarvestModule : GameStateMachine<ArtifactHarvestModule, Art
 				return;
 			}
 			ArtifactPOIStates.Instance sMI = pOIAtCurrentLocation.GetSMI<ArtifactPOIStates.Instance>();
-			if (((bool)pOIAtCurrentLocation.GetComponent<ArtifactPOIClusterGridEntity>() || (bool)pOIAtCurrentLocation.GetComponent<HarvestablePOIClusterGridEntity>()) && !sMI.IsNullOrDestroyed())
+			if ((!pOIAtCurrentLocation.GetComponent<ArtifactPOIClusterGridEntity>() && !pOIAtCurrentLocation.GetComponent<HarvestablePOIClusterGridEntity>()) || sMI.IsNullOrDestroyed())
 			{
-				bool flag = false;
-				GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(sMI.GetArtifactToHarvest()), base.transform.position);
+				return;
+			}
+			bool flag = false;
+			string artifactToHarvest = sMI.GetArtifactToHarvest();
+			if (artifactToHarvest != null)
+			{
+				GameObject gameObject = Util.KInstantiate(Assets.GetPrefab(artifactToHarvest), base.transform.position);
 				gameObject.SetActive(value: true);
 				receptacle.ForceDeposit(gameObject);
 				storage.Store(gameObject);

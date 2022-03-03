@@ -141,7 +141,7 @@ public class RocketEngineCluster : StateMachineComponent<RocketEngineCluster.Sta
 		{
 			default_state = initializing.load;
 			initializing.load.ScheduleGoTo(0f, initializing.decide);
-			initializing.decide.Transition(idle, GameStateMachine<States, StatesInstance, RocketEngineCluster, object>.Not(IsRocketAirborne)).Transition(burning, IsRocketAirborne);
+			initializing.decide.Transition(space, IsRocketInSpace).Transition(burning, IsRocketAirborne).Transition(idle, IsRocketGrounded);
 			idle.DefaultState(idle.grounded).EventTransition(GameHashes.RocketLaunched, burning_pre);
 			idle.grounded.EventTransition(GameHashes.LaunchConditionChanged, idle.ready, IsReadyToLaunch).QueueAnim("grounded", loop: true);
 			idle.ready.EventTransition(GameHashes.LaunchConditionChanged, idle.grounded, GameStateMachine<States, StatesInstance, RocketEngineCluster, object>.Not(IsReadyToLaunch)).PlayAnim("pre_ready_to_launch", KAnim.PlayMode.Once).QueueAnim("ready_to_launch", loop: true)
@@ -183,6 +183,16 @@ public class RocketEngineCluster : StateMachineComponent<RocketEngineCluster.Sta
 				return !smi.master.HasTag(GameTags.RocketInSpace);
 			}
 			return false;
+		}
+
+		public bool IsRocketGrounded(StatesInstance smi)
+		{
+			return smi.master.HasTag(GameTags.RocketOnGround);
+		}
+
+		public bool IsRocketInSpace(StatesInstance smi)
+		{
+			return smi.master.HasTag(GameTags.RocketInSpace);
 		}
 	}
 

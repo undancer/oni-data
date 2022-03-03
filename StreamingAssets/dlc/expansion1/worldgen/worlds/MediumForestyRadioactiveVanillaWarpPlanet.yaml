@@ -1,7 +1,6 @@
 name: STRINGS.WORLDS.MEDIUMFORESTYRADIOACTIVEVANILLAWARPPLANET.NAME
 description: STRINGS.WORLDS.MEDIUMFORESTYRADIOACTIVEVANILLAWARPPLANET.DESCRIPTION
-nameTables:
-  - FOREST
+nameTables: [ FOREST, RADIOACTIVE ]
 asteroidIcon: asteroid_vanilla_swamp_warp_kanim
 
 worldTraitScale: 0.3 # Adjust with worldSize. Traits are tuned to base game world sizes.
@@ -35,7 +34,7 @@ worldTraitRules:
 
 fixedTraits:
   - sunlightMedLow
-  - cosmicRadiationMedHigh
+  - cosmicRadiationVeryLow
 
 startSubworldName: expansion1::subworlds/forest/ForestWarpStart
 startingBaseTemplate:  expansion1::bases/warpworldForestBase

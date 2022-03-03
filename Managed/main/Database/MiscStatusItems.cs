@@ -136,15 +136,15 @@ namespace Database
 			OreMass = CreateStatusItem("OreMass", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			OreMass.resolveStringCallback = delegate(string str, object data)
 			{
-				GameObject gameObject2 = (GameObject)data;
-				str = str.Replace("{Mass}", GameUtil.GetFormattedMass(gameObject2.GetComponent<PrimaryElement>().Mass));
+				GameObject gameObject3 = (GameObject)data;
+				str = str.Replace("{Mass}", GameUtil.GetFormattedMass(gameObject3.GetComponent<PrimaryElement>().Mass));
 				return str;
 			};
 			OreTemp = CreateStatusItem("OreTemp", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			OreTemp.resolveStringCallback = delegate(string str, object data)
 			{
-				GameObject gameObject = (GameObject)data;
-				str = str.Replace("{Temp}", GameUtil.GetFormattedTemperature(gameObject.GetComponent<PrimaryElement>().Temperature));
+				GameObject gameObject2 = (GameObject)data;
+				str = str.Replace("{Temp}", GameUtil.GetFormattedTemperature(gameObject2.GetComponent<PrimaryElement>().Temperature));
 				return str;
 			};
 			ElementalState = CreateStatusItem("ElementalState", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
@@ -298,7 +298,8 @@ namespace Database
 			HighEnergyParticleCount = CreateStatusItem("HighEnergyParticleCount", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			HighEnergyParticleCount.resolveStringCallback = delegate(string str, object data)
 			{
-				str = GameUtil.GetFormattedHighEnergyParticles(((GameObject)data).GetComponent<HighEnergyParticle>().payload);
+				GameObject gameObject = (GameObject)data;
+				str = GameUtil.GetFormattedHighEnergyParticles(gameObject.IsNullOrDestroyed() ? 0f : gameObject.GetComponent<HighEnergyParticle>().payload);
 				return str;
 			};
 			Durability = CreateStatusItem("Durability", "MISC", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);

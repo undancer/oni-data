@@ -4,7 +4,7 @@ using KSerialization;
 public class RocketClusterDestinationSelector : ClusterDestinationSelector
 {
 	[Serialize]
-	private Ref<LaunchPad> m_launchPad = new Ref<LaunchPad>();
+	private Dictionary<int, Ref<LaunchPad>> m_launchPad = new Dictionary<int, Ref<LaunchPad>>();
 
 	[Serialize]
 	private bool m_repeat;
@@ -49,26 +49,48 @@ public class RocketClusterDestinationSelector : ClusterDestinationSelector
 		}
 	}
 
+	public LaunchPad GetDestinationPad(AxialI destination)
+	{
+		int asteroidWorldIdAtLocation = ClusterUtil.GetAsteroidWorldIdAtLocation(destination);
+		if (m_launchPad.ContainsKey(asteroidWorldIdAtLocation))
+		{
+			return m_launchPad[asteroidWorldIdAtLocation].Get();
+		}
+		return null;
+	}
+
 	public LaunchPad GetDestinationPad()
 	{
-		return m_launchPad.Get();
+		return GetDestinationPad(m_destination);
 	}
 
 	public override void SetDestination(AxialI location)
 	{
-		m_launchPad.Set(null);
 		base.SetDestination(location);
 	}
 
 	public void SetDestinationPad(LaunchPad pad)
 	{
 		Debug.Assert(pad == null || ClusterGrid.Instance.IsInRange(pad.GetMyWorldLocation(), m_destination), "Tried sending a rocket to a launchpad that wasn't its destination world.");
-		m_launchPad.Set(pad);
 		if (pad != null)
 		{
+			AddDestinationPad(pad.GetMyWorldLocation(), pad);
 			base.SetDestination(pad.GetMyWorldLocation());
 		}
 		GetComponent<CraftModuleInterface>().TriggerEventOnCraftAndRocket(GameHashes.ClusterDestinationChanged, null);
+	}
+
+	private void AddDestinationPad(AxialI location, LaunchPad pad)
+	{
+		int asteroidWorldIdAtLocation = ClusterUtil.GetAsteroidWorldIdAtLocation(location);
+		if (asteroidWorldIdAtLocation >= 0)
+		{
+			if (!m_launchPad.ContainsKey(asteroidWorldIdAtLocation))
+			{
+				m_launchPad.Add(asteroidWorldIdAtLocation, new Ref<LaunchPad>());
+			}
+			m_launchPad[asteroidWorldIdAtLocation].Set(pad);
+		}
 	}
 
 	protected override void OnClusterLocationChanged(object data)
@@ -94,7 +116,7 @@ public class RocketClusterDestinationSelector : ClusterDestinationSelector
 
 	private void SetUpReturnTrip()
 	{
-		m_launchPad.Set(m_prevLaunchPad.Get());
+		AddDestinationPad(m_prevDestination, m_prevLaunchPad.Get());
 		m_destination = m_prevDestination;
 		m_prevDestination = GetComponent<Clustercraft>().Location;
 		m_prevLaunchPad.Set(GetComponent<CraftModuleInterface>().CurrentPad);

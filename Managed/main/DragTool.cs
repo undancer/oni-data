@@ -2,6 +2,7 @@ using System;
 using FMOD.Studio;
 using STRINGS;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class DragTool : InterfaceTool
 {
@@ -68,6 +69,10 @@ public class DragTool : InterfaceTool
 	protected override void OnDeactivateTool(InterfaceTool new_tool)
 	{
 		KScreenManager.Instance.SetEventSystemEnabled(state: true);
+		if (KInputManager.currentControllerIsGamepad)
+		{
+			(UnityEngine.EventSystems.EventSystem.current.currentInputModule as VirtualInputModule).mouseMovementOnly = false;
+		}
 		if (areaVisualizerText != Guid.Empty)
 		{
 			NameDisplayScreen.Instance.RemoveWorldText(areaVisualizerText);
@@ -117,7 +122,14 @@ public class DragTool : InterfaceTool
 		dragging = true;
 		downPos = cursor_pos;
 		previousCursorPos = cursor_pos;
-		KScreenManager.Instance.SetEventSystemEnabled(state: false);
+		if (!KInputManager.currentControllerIsGamepad)
+		{
+			KScreenManager.Instance.SetEventSystemEnabled(state: false);
+		}
+		else
+		{
+			(UnityEngine.EventSystems.EventSystem.current.currentInputModule as VirtualInputModule).mouseMovementOnly = true;
+		}
 		hasFocus = true;
 		if (areaVisualizerTextPrefab != null)
 		{
@@ -150,6 +162,10 @@ public class DragTool : InterfaceTool
 	public void CancelDragging()
 	{
 		KScreenManager.Instance.SetEventSystemEnabled(state: true);
+		if (KInputManager.currentControllerIsGamepad)
+		{
+			(UnityEngine.EventSystems.EventSystem.current.currentInputModule as VirtualInputModule).mouseMovementOnly = false;
+		}
 		dragAxis = DragAxis.Invalid;
 		if (dragging)
 		{
@@ -170,6 +186,10 @@ public class DragTool : InterfaceTool
 	{
 		cursor_pos = ClampPositionToWorld(cursor_pos, ClusterManager.Instance.activeWorld);
 		KScreenManager.Instance.SetEventSystemEnabled(state: true);
+		if (KInputManager.currentControllerIsGamepad)
+		{
+			(UnityEngine.EventSystems.EventSystem.current.currentInputModule as VirtualInputModule).mouseMovementOnly = false;
+		}
 		dragAxis = DragAxis.Invalid;
 		if (!dragging)
 		{

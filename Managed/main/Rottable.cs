@@ -113,7 +113,6 @@ public class Rottable : GameStateMachine<Rottable, Rottable.Instance, IStateMach
 
 		public void Rot(Instance smi, float deltaTime)
 		{
-			smi.sm.rotParameter.Set(rotAmountInstance.value, smi);
 			RefreshModifiers(deltaTime);
 			if (smi.pickupable.storage != null)
 			{
@@ -328,7 +327,11 @@ public class Rottable : GameStateMachine<Rottable, Rottable.Instance, IStateMach
 		default_state = Fresh;
 		base.serializable = SerializeType.Both_DEPRECATED;
 		root.TagTransition(GameTags.Preserved, Preserved).TagTransition(GameTags.Entombed, Preserved);
-		Fresh.ToggleStatusItem(Db.Get().CreatureStatusItems.Fresh, (Instance smi) => smi).ParamTransition(rotParameter, Stale_Pre, (Instance smi, float p) => p <= smi.def.spoilTime - (smi.def.spoilTime - smi.def.staleTime)).FastUpdate("Rot", rotCB, UpdateRate.SIM_1000ms, load_balance: true);
+		Fresh.ToggleStatusItem(Db.Get().CreatureStatusItems.Fresh, (Instance smi) => smi).ParamTransition(rotParameter, Stale_Pre, (Instance smi, float p) => p <= smi.def.spoilTime - (smi.def.spoilTime - smi.def.staleTime)).Update(delegate(Instance smi, float dt)
+		{
+			smi.sm.rotParameter.Set(smi.RotValue, smi);
+		}, UpdateRate.SIM_1000ms, load_balance: true)
+			.FastUpdate("Rot", rotCB, UpdateRate.SIM_1000ms, load_balance: true);
 		Preserved.TagTransition(PRESERVED_TAGS, Fresh, on_remove: true).Enter("RefreshModifiers", delegate(Instance smi)
 		{
 			smi.RefreshModifiers(0f);
@@ -338,6 +341,10 @@ public class Rottable : GameStateMachine<Rottable, Rottable.Instance, IStateMach
 			smi.GoTo(Stale);
 		});
 		Stale.ToggleStatusItem(Db.Get().CreatureStatusItems.Stale, (Instance smi) => smi).ParamTransition(rotParameter, Fresh, (Instance smi, float p) => p > smi.def.spoilTime - (smi.def.spoilTime - smi.def.staleTime)).ParamTransition(rotParameter, Spoiled, GameStateMachine<Rottable, Instance, IStateMachineTarget, Def>.IsLTEZero)
+			.Update(delegate(Instance smi, float dt)
+			{
+				smi.sm.rotParameter.Set(smi.RotValue, smi);
+			}, UpdateRate.SIM_1000ms)
 			.FastUpdate("Rot", rotCB, UpdateRate.SIM_1000ms);
 		Spoiled.Enter(delegate(Instance smi)
 		{

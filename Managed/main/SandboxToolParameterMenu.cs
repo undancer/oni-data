@@ -202,9 +202,14 @@ public class SandboxToolParameterMenu : KScreen
 		instance.settings.SetFloatSetting("SandbosTools.TemperatureAdditive", GameUtil.GetTemperatureConvertedToKelvin(value));
 	});
 
-	public SliderValue radiationAdditiveSlider = new SliderValue(-100f, 1000f, "little", "lots", UI.UNITSUFFIXES.RADIATION.RADS, UI.SANDBOXTOOLS.SETTINGS.RADIATION_ADDITIVE.TOOLTIP, UI.SANDBOXTOOLS.SETTINGS.RADIATION_ADDITIVE.NAME, delegate(float value)
+	public SliderValue stressAdditiveSlider = new SliderValue(-10f, 10f, "little", "lots", UI.UNITSUFFIXES.PERCENT, UI.SANDBOXTOOLS.SETTINGS.STRESS_ADDITIVE.TOOLTIP, UI.SANDBOXTOOLS.SETTINGS.STRESS_ADDITIVE.NAME, delegate(float value)
 	{
-		instance.settings.SetFloatSetting("SandbosTools.RadiationAdditive", value);
+		instance.settings.SetFloatSetting("SandbosTools.StressAdditive", value);
+	});
+
+	public SliderValue moraleSlider = new SliderValue(-25f, 25f, "little", "lots", UI.UNITSUFFIXES.UNITS, UI.SANDBOXTOOLS.SETTINGS.MORALE.TOOLTIP, UI.SANDBOXTOOLS.SETTINGS.MORALE.NAME, delegate(float value)
+	{
+		instance.settings.SetIntSetting("SandbosTools.MoraleAdjustment", Mathf.RoundToInt(value));
 	});
 
 	public SelectorValue diseaseSelector;
@@ -346,9 +351,14 @@ public class SandboxToolParameterMenu : KScreen
 		});
 		Game.Instance.Subscribe(999382396, OnTemperatureUnitChanged);
 		SandboxSettings sandboxSettings11 = settings;
-		sandboxSettings11.OnChangeAdditiveRadiation = (System.Action)Delegate.Combine(sandboxSettings11.OnChangeAdditiveRadiation, (System.Action)delegate
+		sandboxSettings11.OnChangeAdditiveStress = (System.Action)Delegate.Combine(sandboxSettings11.OnChangeAdditiveStress, (System.Action)delegate
 		{
-			radiationAdditiveSlider.SetValue(settings.GetFloatSetting("SandbosTools.RadiationAdditive"), runOnValueChanged: false);
+			stressAdditiveSlider.SetValue(settings.GetFloatSetting("SandbosTools.StressAdditive"), runOnValueChanged: false);
+		});
+		SandboxSettings sandboxSettings12 = settings;
+		sandboxSettings12.OnChangeMoraleAdjustment = (System.Action)Delegate.Combine(sandboxSettings12.OnChangeMoraleAdjustment, (System.Action)delegate
+		{
+			moraleSlider.SetValue(settings.GetIntSetting("SandbosTools.MoraleAdjustment"), runOnValueChanged: false);
 		});
 	}
 
@@ -362,9 +372,10 @@ public class SandboxToolParameterMenu : KScreen
 		massSlider.row.SetActive(value: false);
 		temperatureAdditiveSlider.row.SetActive(value: false);
 		temperatureSlider.row.SetActive(value: false);
-		radiationAdditiveSlider.row.SetActive(value: false);
 		diseaseCountSlider.row.SetActive(value: false);
 		diseaseSelector.row.SetActive(value: false);
+		stressAdditiveSlider.row.SetActive(value: false);
+		moraleSlider.row.SetActive(value: false);
 	}
 
 	protected override void OnSpawn()
@@ -381,9 +392,10 @@ public class SandboxToolParameterMenu : KScreen
 		SpawnSlider(massSlider);
 		SpawnSlider(temperatureSlider);
 		SpawnSlider(temperatureAdditiveSlider);
-		SpawnSlider(radiationAdditiveSlider);
+		SpawnSlider(stressAdditiveSlider);
 		SpawnSelector(diseaseSelector);
 		SpawnSlider(diseaseCountSlider);
+		SpawnSlider(moraleSlider);
 		if (instance == null)
 		{
 			instance = this;
@@ -570,11 +582,12 @@ public class SandboxToolParameterMenu : KScreen
 			brushRadiusSlider.SetValue(settings.GetIntSetting("SandboxTools.BrushSize"));
 		}
 		massSlider.SetValue(settings.GetFloatSetting("SandboxTools.Mass"));
-		radiationAdditiveSlider.SetValue(settings.GetFloatSetting("SandbosTools.RadiationAdditive"));
+		stressAdditiveSlider.SetValue(settings.GetFloatSetting("SandbosTools.StressAdditive"));
 		RefreshTemperatureUnitDisplays();
 		temperatureSlider.SetValue(GameUtil.GetConvertedTemperature(settings.GetFloatSetting("SandbosTools.Temperature"), roundOutput: true));
 		temperatureAdditiveSlider.SetValue(GameUtil.GetConvertedTemperature(settings.GetFloatSetting("SandbosTools.TemperatureAdditive"), roundOutput: true));
 		diseaseCountSlider.SetValue(settings.GetIntSetting("SandboxTools.DiseaseCount"));
+		moraleSlider.SetValue(settings.GetIntSetting("SandbosTools.MoraleAdjustment"));
 	}
 
 	private void OnTemperatureUnitChanged(object unit)

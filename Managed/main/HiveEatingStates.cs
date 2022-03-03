@@ -1,4 +1,5 @@
 using Klei.AI;
+using STRINGS;
 using UnityEngine;
 
 public class HiveEatingStates : GameStateMachine<HiveEatingStates, HiveEatingStates.Instance, IStateMachineTarget, HiveEatingStates.Def>
@@ -38,7 +39,7 @@ public class HiveEatingStates : GameStateMachine<HiveEatingStates, HiveEatingSta
 
 		public void TurnOn()
 		{
-			emitter.emitRads = 60f * emitter.emitRate;
+			emitter.emitRads = 600f * emitter.emitRate;
 			emitter.Refresh();
 		}
 
@@ -103,13 +104,14 @@ public class HiveEatingStates : GameStateMachine<HiveEatingStates, HiveEatingSta
 	{
 		default_state = eating;
 		base.serializable = SerializeType.ParamsOnly;
-		eating.DefaultState(eating.pre).Enter(delegate(Instance smi)
+		eating.ToggleStatusItem(CREATURES.STATUSITEMS.HIVE_DIGESTING.NAME, CREATURES.STATUSITEMS.HIVE_DIGESTING.TOOLTIP, "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, default(HashedString), 129022, null, null, Db.Get().StatusItemCategories.Main).DefaultState(eating.pre).Enter(delegate(Instance smi)
 		{
 			smi.TurnOn();
-		}).Exit(delegate(Instance smi)
-		{
-			smi.TurnOff();
-		});
+		})
+			.Exit(delegate(Instance smi)
+			{
+				smi.TurnOff();
+			});
 		eating.pre.PlayAnim("eating_pre", KAnim.PlayMode.Once).OnAnimQueueComplete(eating.loop);
 		eating.loop.PlayAnim("eating_loop", KAnim.PlayMode.Loop).Update(delegate(Instance smi, float dt)
 		{

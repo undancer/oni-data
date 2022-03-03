@@ -11,11 +11,14 @@ public struct AsteroidDescriptor
 
 	public Color associatedColor;
 
-	public AsteroidDescriptor(string text, string tooltip, Color associatedColor, List<Tuple<string, Color, float>> bands = null)
+	public string associatedIcon;
+
+	public AsteroidDescriptor(string text, string tooltip, Color associatedColor, List<Tuple<string, Color, float>> bands = null, string associatedIcon = null)
 	{
 		this.text = text;
 		this.tooltip = tooltip;
 		this.associatedColor = associatedColor;
 		this.bands = bands;
+		this.associatedIcon = associatedIcon;
 	}
 }

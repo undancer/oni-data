@@ -75,6 +75,11 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 
 	public bool useWideOffsets;
 
+	[MyCmpGet]
+	private Rotatable rotatable;
+
+	public Vector2 gunTargetOffset;
+
 	public FetchCategory fetchCategory;
 
 	public int storageNetworkID = -1;
@@ -219,6 +224,23 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 			return anim;
 		}
 		return base.GetAnim(worker);
+	}
+
+	public override Vector3 GetTargetPoint()
+	{
+		Vector3 targetPoint = base.GetTargetPoint();
+		if (useGunForDelivery && gunTargetOffset != Vector2.zero)
+		{
+			if (rotatable != null)
+			{
+				targetPoint += rotatable.GetRotatedOffset(gunTargetOffset);
+			}
+			else
+			{
+				targetPoint += new Vector3(gunTargetOffset.x, gunTargetOffset.y, 0f);
+			}
+		}
+		return targetPoint;
 	}
 
 	protected override void OnPrefabInit()
@@ -1181,6 +1203,24 @@ public class Storage : Workable, ISaveLoadableDetails, IGameObjectEffectDescript
 		{
 			GameObject gameObject = items[i];
 			if (gameObject != null && gameObject.HasTag(tag))
+			{
+				num += gameObject.GetComponent<PrimaryElement>().Units;
+			}
+		}
+		return num;
+	}
+
+	public float GetAmountAvailable(Tag tag, Tag[] forbiddenTags = null)
+	{
+		if (forbiddenTags == null)
+		{
+			return GetAmountAvailable(tag);
+		}
+		float num = 0f;
+		for (int i = 0; i < items.Count; i++)
+		{
+			GameObject gameObject = items[i];
+			if (gameObject != null && gameObject.HasTag(tag) && !gameObject.HasAnyTags(forbiddenTags))
 			{
 				num += gameObject.GetComponent<PrimaryElement>().Units;
 			}

@@ -13,10 +13,10 @@ public class Grid
 		Solid = 0x1,
 		Foundation = 0x2,
 		Door = 0x4,
-		FakeFloor = 0x8,
-		DupePassable = 0x10,
-		DupeImpassable = 0x20,
-		CritterImpassable = 0x40
+		DupePassable = 0x8,
+		DupeImpassable = 0x10,
+		CritterImpassable = 0x20,
+		FakeFloor = 0xC0
 	}
 
 	[StructLayout(LayoutKind.Sequential, Size = 1)]
@@ -60,16 +60,22 @@ public class Grid
 	[StructLayout(LayoutKind.Sequential, Size = 1)]
 	public struct BuildFlagsFakeFloorIndexer
 	{
-		public bool this[int i]
+		public bool this[int i] => (BuildMasks[i] & BuildFlags.FakeFloor) != 0;
+
+		public void Add(int i)
 		{
-			get
-			{
-				return (BuildMasks[i] & BuildFlags.FakeFloor) != 0;
-			}
-			set
-			{
-				UpdateBuildMask(i, BuildFlags.FakeFloor, value);
-			}
+			BuildFlags buildFlags = BuildMasks[i];
+			int val = ((int)(buildFlags & BuildFlags.FakeFloor) >> 6) + 1;
+			val = Math.Min(val, 3);
+			BuildMasks[i] = (buildFlags & ~BuildFlags.FakeFloor) | ((BuildFlags)(val << 6) & BuildFlags.FakeFloor);
+		}
+
+		public void Remove(int i)
+		{
+			BuildFlags buildFlags = BuildMasks[i];
+			int val = ((int)(buildFlags & BuildFlags.FakeFloor) >> 6) - 1;
+			val = Math.Max(val, 0);
+			BuildMasks[i] = (buildFlags & ~BuildFlags.FakeFloor) | ((BuildFlags)(val << 6) & BuildFlags.FakeFloor);
 		}
 	}
 

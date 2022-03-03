@@ -28,6 +28,8 @@ public class MotdServerClient
 
 		public string image_link_url { get; set; }
 
+		public string image_rail_link_url { get; set; }
+
 		public string news_header_text { get; set; }
 
 		public string news_body_text { get; set; }
@@ -35,6 +37,8 @@ public class MotdServerClient
 		public string patch_notes_summary { get; set; }
 
 		public string patch_notes_link_url { get; set; }
+
+		public string patch_notes_rail_link_url { get; set; }
 
 		public MotdUpdateData vanilla_update_data { get; set; }
 

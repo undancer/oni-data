@@ -145,6 +145,7 @@ public class AssignmentGroupControllerSideScreen : KScreen
 		{
 			identityRowMap[j].SetActive(value: false);
 		}
+		minionRowContainer.GetComponent<QuickLayout>().ForceUpdate();
 	}
 
 	private string UpdateToolTip(MinionAssignablesProxy minion, bool offworld)

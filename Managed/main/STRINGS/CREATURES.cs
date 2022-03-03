@@ -183,7 +183,7 @@ namespace STRINGS
 
 				public static LocString NAME = UI.FormatAsLink("Beeta", "BEE");
 
-				public static LocString DESC = "Beetas are hostile critters that thrive in " + UI.FormatAsLink("Radioactive", "RADIATION") + " environments.\n\nThey commonly gather " + UI.FormatAsLink("Uranium", "URANIUM") + " for their " + UI.FormatAsLink("Beeta Hives", "BEEHIVE") + " to produce " + UI.FormatAsLink("Enriched Uranium", "ENRICHEDURANIUM") + ".";
+				public static LocString DESC = "Beetas are hostile critters that thrive in " + UI.FormatAsLink("Radioactive", "RADIATION") + " environments.\n\nThey commonly gather " + UI.FormatAsLink("Uranium", "URANIUMORE") + " for their " + UI.FormatAsLink("Beeta Hives", "BEEHIVE") + " to produce " + UI.FormatAsLink("Enriched Uranium", "ENRICHEDURANIUM") + ".";
 			}
 
 			public class CHLORINEGEYSER
@@ -1260,7 +1260,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = UI.FormatAsLink("Experiment 52B", "SAPTREE");
 
-				public static LocString DESC = "An " + UI.FormatAsLink("Resin", "RESIN") + "-producing, cybernetic tree that shows signs of sentience.\n\nIt is rooted firmly in place, and appears to have been here for some time.";
+				public static LocString DESC = "A " + UI.FormatAsLink("Resin", "RESIN") + "-producing cybernetic tree that shows signs of sentience.\n\nIt is rooted firmly in place, and is waiting for some brave soul to bring it food.";
 			}
 
 			public class SEEDS
@@ -1565,6 +1565,13 @@ namespace STRINGS
 				public static LocString NAME = "Idle";
 
 				public static LocString TOOLTIP = "Just enjoying life, y'know?";
+			}
+
+			public class HIVE_DIGESTING
+			{
+				public static LocString NAME = "Digesting";
+
+				public static LocString TOOLTIP = "Digesting yummy food!";
 			}
 
 			public class EXCITED_TO_GET_RANCHED

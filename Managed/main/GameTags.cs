@@ -579,6 +579,8 @@ public class GameTags
 
 	public static readonly Tag HasSuitTank = TagManager.Create("HasSuitTank");
 
+	public static readonly Tag NoCreatureIdling = TagManager.Create("NoCreatureIdling");
+
 	public static readonly Tag UnderConstruction = TagManager.Create("UnderConstruction");
 
 	public static readonly Tag Operational = TagManager.Create("Operational");
@@ -672,6 +674,8 @@ public class GameTags
 	public static readonly Tag Hanging = TagManager.Create("Hanging");
 
 	public static readonly Tag FarmingMaterial = TagManager.Create("FarmingMaterial");
+
+	public static readonly Tag MutatedSeed = TagManager.Create("MutatedSeed");
 
 	public static readonly Tag OverlayInFrontOfConduits = TagManager.Create("OverlayFrontLayer");
 

@@ -64,7 +64,7 @@ public static class Sim
 			Transparent = 0x10,
 			Opaque = 0x20,
 			NotifyOnMelt = 0x40,
-			Constructed = 0x80
+			ConstructedTile = 0x80
 		}
 
 		public byte elementIdx;

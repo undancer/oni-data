@@ -332,6 +332,8 @@ namespace STRINGS
 
 			public static LocString DEBUGTOGGLEPERSONALPRIORITYCOMPARISON = "Debug Toggle Personal Priority Comparison";
 
+			public static LocString DEBUGCHEEREMOTE = "Debug Cheer Emote";
+
 			public static LocString DEBUGREPORTBUG = "Debug Report Bug";
 
 			public static LocString DEBUGTOGGLECLUSTERFX = "Debug Cluster FX";
@@ -366,6 +368,8 @@ namespace STRINGS
 			public static LocString SANDBOXRADSTOOL = "Sandbox Radiation Tool";
 
 			public static LocString SANDBOXCOPYELEMENT = "Sandbox Copy Element";
+
+			public static LocString SANDBOXSTRESSTOOL = "Sandbox Happy Tool";
 		}
 
 		public class SWITCHACTIVEWORLD

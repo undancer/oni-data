@@ -419,14 +419,6 @@ public class CharacterContainer : KScreen, ITelepadDeliverableContainer
 			locText6.GetComponent<ToolTip>().SetSimpleTooltip(stats.joyTrait.GetTooltip());
 			expectationLabels.Add(locText6);
 		}
-		if (stats.congenitaltrait != null)
-		{
-			LocText locText7 = Util.KInstantiateUI<LocText>(expectationRight.gameObject, expectationRight.transform.parent.gameObject);
-			locText7.gameObject.SetActive(value: true);
-			locText7.text = string.Format(UI.CHARACTERCONTAINER_CONGENITALTRAIT, stats.congenitaltrait.Name);
-			locText7.GetComponent<ToolTip>().SetSimpleTooltip(stats.congenitaltrait.GetTooltip());
-			expectationLabels.Add(locText7);
-		}
 		description.text = stats.personality.description;
 	}
 

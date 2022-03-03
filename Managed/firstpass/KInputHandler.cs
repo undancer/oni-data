@@ -30,6 +30,8 @@ public class KInputHandler
 
 	private KButtonEvent lastConsumedEventUp;
 
+	public KInputController currentController => mController;
+
 	public KInputHandler(IInputHandler obj, KInputController controller)
 		: this(obj)
 	{
@@ -53,7 +55,36 @@ public class KInputHandler
 		}
 	}
 
-	private void SetController(KInputController controller)
+	public int HandleChildCount()
+	{
+		if (mChildren == null)
+		{
+			return 0;
+		}
+		return mChildren.Count;
+	}
+
+	public void TransferHandles(KInputHandler to)
+	{
+		if (mChildren == null || to.mChildren == null)
+		{
+			return;
+		}
+		for (int i = 0; i < mChildren.Count; i++)
+		{
+			if (!to.mChildren.Contains(mChildren[i]))
+			{
+				to.mChildren.Add(new HandlerInfo
+				{
+					priority = mChildren[i].priority,
+					handler = mChildren[i].handler
+				});
+				to.mChildren.Sort((HandlerInfo a, HandlerInfo b) => b.priority.CompareTo(a.priority));
+			}
+		}
+	}
+
+	public void SetController(KInputController controller)
 	{
 		mController = controller;
 		if (mChildren == null)
@@ -64,6 +95,7 @@ public class KInputHandler
 		{
 			mChild.handler.SetController(controller);
 		}
+		mChildren.Sort((HandlerInfo a, HandlerInfo b) => b.priority.CompareTo(a.priority));
 	}
 
 	public void AddInputHandler(KInputHandler handler, int priority)
@@ -229,6 +261,15 @@ public class KInputHandler
 		if (mController != null)
 		{
 			return mController.IsActive(action);
+		}
+		return false;
+	}
+
+	public bool UsesController(IInputHandler handlerToCheck, KInputController conToCheck)
+	{
+		if (handlerToCheck.inputHandler.mController == conToCheck)
+		{
+			return true;
 		}
 		return false;
 	}

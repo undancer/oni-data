@@ -22,7 +22,6 @@ public class CometDetectorConfig : IBuildingConfig
 		obj.LogicOutputPorts = new List<LogicPorts.Port> { LogicPorts.Port.OutputPort(LogicSwitch.PORT_ID, new CellOffset(0, 0), STRINGS.BUILDINGS.PREFABS.LOGICSWITCH.LOGIC_PORT, STRINGS.BUILDINGS.PREFABS.LOGICSWITCH.LOGIC_PORT_ACTIVE, STRINGS.BUILDINGS.PREFABS.LOGICSWITCH.LOGIC_PORT_INACTIVE, show_wire_missing_icon: true) };
 		SoundEventVolumeCache.instance.AddVolume("world_element_sensor_kanim", "PowerSwitch_on", NOISE_POLLUTION.NOISY.TIER3);
 		SoundEventVolumeCache.instance.AddVolume("world_element_sensor_kanim", "PowerSwitch_off", NOISE_POLLUTION.NOISY.TIER3);
-		obj.ShowInBuildMenu = !DlcManager.FeatureClusterSpaceEnabled();
 		GeneratedBuildings.RegisterWithOverlay(OverlayModes.Logic.HighlightItemIDs, ID);
 		return obj;
 	}
@@ -30,7 +29,14 @@ public class CometDetectorConfig : IBuildingConfig
 	public override void DoPostConfigureComplete(GameObject go)
 	{
 		go.GetComponent<KPrefabID>().AddTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
-		go.AddOrGetDef<CometDetector.Def>();
+		if (DlcManager.IsExpansion1Active())
+		{
+			go.AddOrGetDef<ClusterCometDetector.Def>();
+		}
+		else
+		{
+			go.AddOrGetDef<CometDetector.Def>();
+		}
 		go.GetComponent<KPrefabID>().AddTag(GameTags.OverlayBehindConduits);
 	}
 }

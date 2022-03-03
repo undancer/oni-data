@@ -43,6 +43,14 @@ public static class DebugUtil
 		}
 	}
 
+	public static void AssertArgs(bool test, params object[] objs)
+	{
+		if (!test)
+		{
+			Debug.LogError(BuildString(objs));
+		}
+	}
+
 	public static string BuildString(object[] objs)
 	{
 		string text = "";
@@ -72,6 +80,12 @@ public static class DebugUtil
 		{
 			Debug.LogWarning(BuildString(objs));
 		}
+	}
+
+	[Conditional("UNITY_EDITOR")]
+	public static void AssertEditorOnlyArgs(bool test, params object[] objs)
+	{
+		Debug.Assert(test, BuildString(objs));
 	}
 
 	public static void DevAssertArgsWithStack(bool test, params object[] objs)

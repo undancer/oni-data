@@ -61,7 +61,7 @@ public static class ClusterUtil
 			return component.Location;
 		}
 		WorldContainer myWorld = gameObject.GetMyWorld();
-		Debug.Assert(myWorld != null, $"GetMyWorldLocation called on object with no world: {gameObject}");
+		DebugUtil.DevAssertArgs(myWorld != null, "GetMyWorldLocation called on object with no world", gameObject);
 		return myWorld.GetComponent<ClusterGridEntity>().Location;
 	}
 
@@ -88,8 +88,14 @@ public static class ClusterUtil
 			}
 			WorldContainer world = ClusterManager.Instance.GetWorld(Grid.WorldIdx[num]);
 			WorldContainer world2 = ClusterManager.Instance.GetWorld(Grid.WorldIdx[num2]);
-			DebugUtil.DevAssert(world != null, $"{go} at {num} has a valid cell but no world");
-			DebugUtil.DevAssert(world2 != null, $"{otherGo} at {num2} has a valid cell but no world");
+			if (world == null)
+			{
+				DebugUtil.DevLogError($"{go} at {num} has a valid cell but no world");
+			}
+			if (world2 == null)
+			{
+				DebugUtil.DevLogError($"{otherGo} at {num2} has a valid cell but no world");
+			}
 			if (world != null && world2 != null && world.ParentWorldId == world2.ParentWorldId)
 			{
 				return true;

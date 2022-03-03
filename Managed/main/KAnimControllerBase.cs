@@ -366,12 +366,12 @@ public abstract class KAnimControllerBase : MonoBehaviour
 		}
 		set
 		{
-			DebugUtil.Assert(value.Length != 0, "Controller for " + base.gameObject.name + " has no anim files.");
-			DebugUtil.Assert(value[0] != null, "First anim file for " + base.gameObject.name + " needs to be non-null.");
-			DebugUtil.Assert(value[0].buildBytes != null, "First anim file for " + base.gameObject.name + " needs to be the build file.");
+			DebugUtil.AssertArgs(value.Length != 0, "Controller has no anim files.", base.gameObject);
+			DebugUtil.AssertArgs(value[0] != null, "First anim file needs to be non-null.", base.gameObject);
+			DebugUtil.AssertArgs(value[0].buildBytes != null, "First anim file needs to be the build file.", base.gameObject);
 			for (int i = 0; i < value.Length; i++)
 			{
-				DebugUtil.Assert(value[i] != null, "Anim file is null", base.name);
+				DebugUtil.AssertArgs(value[i] != null, "Anim file is null", base.gameObject);
 			}
 			animFiles = new KAnimFile[value.Length];
 			for (int j = 0; j < value.Length; j++)

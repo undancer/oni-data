@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Klei.AI;
 using KSerialization;
 using STRINGS;
 using TUNING;
@@ -12,6 +13,10 @@ public class ClusterTelescope : GameStateMachine<ClusterTelescope, ClusterTelesc
 		public int clearScanCellRadius = 15;
 
 		public int analyzeClusterRadius = 3;
+
+		public KAnimFile[] workableOverrideAnims;
+
+		public bool providesOxygen;
 	}
 
 	public class ReadyStates : State
@@ -34,11 +39,17 @@ public class ClusterTelescope : GameStateMachine<ClusterTelescope, ClusterTelesc
 		[MyCmpAdd]
 		private ClusterTelescopeWorkable m_workable;
 
+		public KAnimFile[] workableOverrideAnims;
+
+		public bool providesOxygen;
+
 		public float PercentClear => m_percentClear;
 
 		public Instance(IStateMachineTarget smi, Def def)
 			: base(smi, def)
 		{
+			workableOverrideAnims = def.workableOverrideAnims;
+			providesOxygen = def.providesOxygen;
 		}
 
 		public bool CheckHasAnalyzeTarget()
@@ -55,7 +66,12 @@ public class ClusterTelescope : GameStateMachine<ClusterTelescope, ClusterTelesc
 
 		public Chore CreateChore()
 		{
-			return new WorkChore<ClusterTelescopeWorkable>(Db.Get().ChoreTypes.Research, m_workable);
+			WorkChore<ClusterTelescopeWorkable> workChore = new WorkChore<ClusterTelescopeWorkable>(Db.Get().ChoreTypes.Research, m_workable);
+			if (providesOxygen)
+			{
+				workChore.AddPrecondition(Telescope.ContainsOxygen);
+			}
+			return workChore;
 		}
 
 		public AxialI GetAnalyzeTarget()
@@ -86,7 +102,7 @@ public class ClusterTelescope : GameStateMachine<ClusterTelescope, ClusterTelesc
 		}
 	}
 
-	public class ClusterTelescopeWorkable : Workable
+	public class ClusterTelescopeWorkable : Workable, OxygenBreather.IGasProvider
 	{
 		[MySmiReq]
 		private Instance m_telescope;
@@ -97,6 +113,17 @@ public class ClusterTelescope : GameStateMachine<ClusterTelescope, ClusterTelesc
 
 		private AxialI currentTarget;
 
+		private OxygenBreather.IGasProvider workerGasProvider;
+
+		[MyCmpGet]
+		private Storage storage;
+
+		private AttributeModifier radiationShielding;
+
+		private float checkMarkerTimer;
+
+		private float checkMarkerFrequency = 1f;
+
 		protected override void OnPrefabInit()
 		{
 			base.OnPrefabInit();
@@ -104,9 +131,9 @@ public class ClusterTelescope : GameStateMachine<ClusterTelescope, ClusterTelesc
 			attributeExperienceMultiplier = DUPLICANTSTATS.ATTRIBUTE_LEVELING.ALL_DAY_EXPERIENCE;
 			skillExperienceSkillGroup = Db.Get().SkillGroups.Research.Id;
 			skillExperienceMultiplier = SKILLS.ALL_DAY_EXPERIENCE;
-			overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_telescope_low_kanim") };
 			requiredSkillPerk = Db.Get().SkillPerks.CanUseClusterTelescope.Id;
 			workLayer = Grid.SceneLayer.BuildingUse;
+			radiationShielding = new AttributeModifier(Db.Get().Attributes.RadiationResistance.Id, FIXEDTRAITS.COSMICRADIATION.TELESCOPE_RADIATION_SHIELDING, STRINGS.BUILDINGS.PREFABS.CLUSTERTELESCOPEENCLOSED.NAME);
 		}
 
 		protected override void OnCleanUp()
@@ -124,6 +151,7 @@ public class ClusterTelescope : GameStateMachine<ClusterTelescope, ClusterTelesc
 			OnWorkableEventCB = (Action<WorkableEvent>)Delegate.Combine(OnWorkableEventCB, new Action<WorkableEvent>(OnWorkableEvent));
 			m_fowManager = SaveGame.Instance.GetSMI<ClusterFogOfWarManager.Instance>();
 			SetWorkTime(float.PositiveInfinity);
+			overrideAnims = m_telescope.workableOverrideAnims;
 		}
 
 		private void OnWorkableEvent(WorkableEvent ev)
@@ -133,19 +161,45 @@ public class ClusterTelescope : GameStateMachine<ClusterTelescope, ClusterTelesc
 			{
 				return;
 			}
-			worker.GetComponent<KPrefabID>();
+			KPrefabID component = worker.GetComponent<KPrefabID>();
+			OxygenBreather component2 = worker.GetComponent<OxygenBreather>();
+			Attributes attributes = worker.GetAttributes();
 			switch (ev)
 			{
 			case WorkableEvent.WorkStarted:
 				ShowProgressBar(show: true);
-				telescopeTargetMarker = GameUtil.KInstantiate(Assets.GetPrefab("TelescopeTarget"), Grid.SceneLayer.Background);
-				telescopeTargetMarker.SetActive(value: true);
 				progressBar.SetUpdateFunc(() => m_fowManager.GetRevealCompleteFraction(currentTarget));
 				currentTarget = m_telescope.GetAnalyzeTarget();
-				telescopeTargetMarker.GetComponent<TelescopeTarget>().Init(currentTarget);
+				if (!ClusterGrid.Instance.GetEntityOfLayerAtCell(currentTarget, EntityLayer.Telescope))
+				{
+					telescopeTargetMarker = GameUtil.KInstantiate(Assets.GetPrefab("TelescopeTarget"), Grid.SceneLayer.Background);
+					telescopeTargetMarker.SetActive(value: true);
+					telescopeTargetMarker.GetComponent<TelescopeTarget>().Init(currentTarget);
+				}
+				if (m_telescope.providesOxygen)
+				{
+					attributes.Add(radiationShielding);
+					workerGasProvider = component2.GetGasProvider();
+					component2.SetGasProvider(this);
+					component2.GetComponent<CreatureSimTemperatureTransfer>().enabled = false;
+					component.AddTag(GameTags.Shaded);
+				}
+				GetComponent<Operational>().SetActive(value: true);
+				checkMarkerFrequency = UnityEngine.Random.Range(2f, 5f);
 				break;
 			case WorkableEvent.WorkStopped:
-				Util.KDestroyGameObject(telescopeTargetMarker);
+				if (m_telescope.providesOxygen)
+				{
+					attributes.Remove(radiationShielding);
+					component2.SetGasProvider(workerGasProvider);
+					component2.GetComponent<CreatureSimTemperatureTransfer>().enabled = true;
+					component.RemoveTag(GameTags.Shaded);
+				}
+				GetComponent<Operational>().SetActive(value: false);
+				if (telescopeTargetMarker != null)
+				{
+					Util.KDestroyGameObject(telescopeTargetMarker);
+				}
 				ShowProgressBar(show: false);
 				break;
 			}
@@ -164,15 +218,66 @@ public class ClusterTelescope : GameStateMachine<ClusterTelescope, ClusterTelesc
 		protected override bool OnWorkTick(Worker worker, float dt)
 		{
 			AxialI analyzeTarget = m_telescope.GetAnalyzeTarget();
+			bool flag = false;
 			if (analyzeTarget != currentTarget)
 			{
-				telescopeTargetMarker.GetComponent<TelescopeTarget>().Init(analyzeTarget);
+				if ((bool)telescopeTargetMarker)
+				{
+					telescopeTargetMarker.GetComponent<TelescopeTarget>().Init(analyzeTarget);
+				}
 				currentTarget = analyzeTarget;
+				flag = true;
 			}
+			if (!flag && checkMarkerTimer > checkMarkerFrequency)
+			{
+				checkMarkerTimer = 0f;
+				if (!telescopeTargetMarker && !ClusterGrid.Instance.GetEntityOfLayerAtCell(currentTarget, EntityLayer.Telescope))
+				{
+					telescopeTargetMarker = GameUtil.KInstantiate(Assets.GetPrefab("TelescopeTarget"), Grid.SceneLayer.Background);
+					telescopeTargetMarker.SetActive(value: true);
+					telescopeTargetMarker.GetComponent<TelescopeTarget>().Init(currentTarget);
+				}
+			}
+			checkMarkerTimer += dt;
 			float num = ROCKETRY.CLUSTER_FOW.POINTS_TO_REVEAL / ROCKETRY.CLUSTER_FOW.DEFAULT_CYCLES_PER_REVEAL / 600f;
 			float points = dt * num;
 			m_fowManager.EarnRevealPointsForLocation(currentTarget, points);
 			return base.OnWorkTick(worker, dt);
+		}
+
+		public void OnSetOxygenBreather(OxygenBreather oxygen_breather)
+		{
+		}
+
+		public void OnClearOxygenBreather(OxygenBreather oxygen_breather)
+		{
+		}
+
+		public bool ShouldEmitCO2()
+		{
+			return false;
+		}
+
+		public bool ShouldStoreCO2()
+		{
+			return false;
+		}
+
+		public bool ConsumeGas(OxygenBreather oxygen_breather, float amount)
+		{
+			if (storage.items.Count <= 0)
+			{
+				return false;
+			}
+			GameObject gameObject = storage.items[0];
+			if (gameObject == null)
+			{
+				return false;
+			}
+			PrimaryElement component = gameObject.GetComponent<PrimaryElement>();
+			bool result = component.Mass >= amount;
+			component.Mass = Mathf.Max(0f, component.Mass - amount);
+			return result;
 		}
 	}
 

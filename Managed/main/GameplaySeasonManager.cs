@@ -79,7 +79,7 @@ public class GameplaySeasonManager : GameStateMachine<GameplaySeasonManager, Gam
 		{
 			foreach (GameplaySeasonInstance activeSeason in activeSeasons)
 			{
-				if (activeSeason.ShouldGenerateEvents() || !(GameUtil.GetCurrentTimeInCycles() > activeSeason.NextEventTime))
+				if (!activeSeason.ShouldGenerateEvents() || !(GameUtil.GetCurrentTimeInCycles() > activeSeason.NextEventTime))
 				{
 					continue;
 				}

@@ -97,7 +97,7 @@ public class ModsScreen : KModalScreen
 		closeButton.onClick += Exit;
 		System.Action value = delegate
 		{
-			Application.OpenURL("http://steamcommunity.com/workshop/browse/?appid=457140");
+			App.OpenWebURL("http://steamcommunity.com/workshop/browse/?appid=457140");
 		};
 		workshopButton.onClick += value;
 		UpdateToggleAllButton();

@@ -45,6 +45,7 @@ public class BalloonStandConfig : IEntityConfig
 		GetBalloonWorkable component = inst.GetComponent<GetBalloonWorkable>();
 		WorkChore<GetBalloonWorkable> workChore = new WorkChore<GetBalloonWorkable>(Db.Get().ChoreTypes.JoyReaction, component, null, run_until_complete: true, MakeNewBalloonChore, null, null, allow_in_red_alert: true, Db.Get().ScheduleBlockTypes.Recreation, ignore_schedule_block: false, only_when_operational: true, null, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: true, PriorityScreen.PriorityClass.high, 5, ignore_building_assignment: true);
 		workChore.AddPrecondition(HasNoBalloon, workChore);
+		workChore.AddPrecondition(ChorePreconditions.instance.IsNotARobot, workChore);
 	}
 
 	private void MakeNewBalloonChore(Chore chore)
@@ -52,5 +53,6 @@ public class BalloonStandConfig : IEntityConfig
 		GetBalloonWorkable component = chore.target.GetComponent<GetBalloonWorkable>();
 		WorkChore<GetBalloonWorkable> workChore = new WorkChore<GetBalloonWorkable>(Db.Get().ChoreTypes.JoyReaction, component, null, run_until_complete: true, MakeNewBalloonChore, null, null, allow_in_red_alert: true, Db.Get().ScheduleBlockTypes.Recreation, ignore_schedule_block: false, only_when_operational: true, null, is_preemptable: false, allow_in_context_menu: true, allow_prioritization: true, PriorityScreen.PriorityClass.high, 5, ignore_building_assignment: true);
 		workChore.AddPrecondition(HasNoBalloon, workChore);
+		workChore.AddPrecondition(ChorePreconditions.instance.IsNotARobot, workChore);
 	}
 }

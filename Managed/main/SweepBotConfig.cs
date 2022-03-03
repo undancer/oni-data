@@ -56,7 +56,7 @@ public class SweepBotConfig : IEntityConfig
 		def.batteryAmountId = Db.Get().Amounts.InternalBattery.Id;
 		def.canCharge = true;
 		def.lowBatteryWarningPercent = 0.5f;
-		gameObject.AddOrGetDef<SweetBotReactMonitor.Def>();
+		gameObject.AddOrGetDef<SweepBotReactMonitor.Def>();
 		gameObject.AddOrGetDef<CreatureFallMonitor.Def>();
 		gameObject.AddOrGetDef<SweepBotTrappedMonitor.Def>();
 		gameObject.AddOrGet<AnimEventHandler>();
@@ -73,7 +73,9 @@ public class SweepBotConfig : IEntityConfig
 		});
 		SymbolOverrideControllerUtil.AddToPrefab(gameObject);
 		gameObject.AddComponent<Storage>();
-		gameObject.AddComponent<Storage>().capacityKg = 500f;
+		Storage storage = gameObject.AddComponent<Storage>();
+		storage.capacityKg = 500f;
+		storage.storageFXOffset = new Vector3(0f, 0.5f, 0f);
 		gameObject.AddOrGet<OrnamentReceptacle>().AddDepositTag(GameTags.PedestalDisplayable);
 		gameObject.AddOrGet<DecorProvider>();
 		gameObject.AddOrGet<UserNameable>();

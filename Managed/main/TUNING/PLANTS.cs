@@ -19,21 +19,21 @@ namespace TUNING
 		{
 			public const float NONE = 0f;
 
-			public const float TIER_0 = 25f;
+			public const float TIER_0 = 250f;
 
-			public const float TIER_1 = 90f;
+			public const float TIER_1 = 900f;
 
-			public const float TIER_2 = 220f;
+			public const float TIER_2 = 2200f;
 
-			public const float TIER_3 = 460f;
+			public const float TIER_3 = 4600f;
 
-			public const float TIER_4 = 740f;
+			public const float TIER_4 = 7400f;
 
-			public const float TIER_5 = 980f;
+			public const float TIER_5 = 9800f;
 
-			public const float TIER_6 = 1220f;
+			public const float TIER_6 = 12200f;
 
-			public const float MUTANT_BASELINE = 25f;
+			public const float MUTANT_BASELINE = 250f;
 		}
 
 		public const float MAX_MUTATION_CHANCE = 0.8f;

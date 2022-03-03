@@ -43,4 +43,9 @@ public class DoorConfig : IBuildingConfig
 		Prioritizable.AddRef(go);
 		Object.DestroyImmediate(go.GetComponent<BuildingEnabledButton>());
 	}
+
+	public override void DoPostConfigureUnderConstruction(GameObject go)
+	{
+		go.AddTag(GameTags.NoCreatureIdling);
+	}
 }

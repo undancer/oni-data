@@ -96,10 +96,11 @@ public class Components
 			List<T> list = new List<T>();
 			foreach (T item in Items)
 			{
-				bool flag = (item as KMonoBehaviour).GetMyWorldId() == worldId;
+				KMonoBehaviour component = item as KMonoBehaviour;
+				bool flag = component.GetMyWorldId() == worldId;
 				if (!flag && checkChildWorlds)
 				{
-					WorldContainer myWorld = (item as KMonoBehaviour).GetMyWorld();
+					WorldContainer myWorld = component.GetMyWorld();
 					if (myWorld != null && myWorld.ParentWorldId == worldId)
 					{
 						flag = true;
@@ -121,6 +122,77 @@ public class Components
 		public IEnumerator GetEnumerator()
 		{
 			return items.GetEnumerator();
+		}
+	}
+
+	public class CmpsByWorld<T>
+	{
+		private Dictionary<int, Cmps<T>> m_CmpsByWorld;
+
+		public int GlobalCount
+		{
+			get
+			{
+				int num = 0;
+				foreach (KeyValuePair<int, Cmps<T>> item in m_CmpsByWorld)
+				{
+					_ = item;
+					num += m_CmpsByWorld.Count;
+				}
+				return num;
+			}
+		}
+
+		public CmpsByWorld()
+		{
+			App.OnPreLoadScene = (System.Action)Delegate.Combine(App.OnPreLoadScene, new System.Action(Clear));
+			m_CmpsByWorld = new Dictionary<int, Cmps<T>>();
+		}
+
+		public void Clear()
+		{
+			m_CmpsByWorld.Clear();
+		}
+
+		public Cmps<T> CreateOrGetCmps(int worldId)
+		{
+			if (!m_CmpsByWorld.TryGetValue(worldId, out var value))
+			{
+				value = new Cmps<T>();
+				m_CmpsByWorld[worldId] = value;
+			}
+			return value;
+		}
+
+		public void Add(int worldId, T cmp)
+		{
+			CreateOrGetCmps(worldId).Add(cmp);
+		}
+
+		public void Remove(int worldId, T cmp)
+		{
+			CreateOrGetCmps(worldId).Remove(cmp);
+		}
+
+		public void Register(int worldId, Action<T> on_add, Action<T> on_remove)
+		{
+			CreateOrGetCmps(worldId).Register(on_add, on_remove);
+		}
+
+		public void Unregister(int worldId, Action<T> on_add, Action<T> on_remove)
+		{
+			CreateOrGetCmps(worldId).Unregister(on_add, on_remove);
+		}
+
+		public List<T> GetItems(int worldId)
+		{
+			ClusterManager.Instance.GetWorld(worldId);
+			return CreateOrGetCmps(worldId).Items;
+		}
+
+		public IEnumerator GetWorldEnumerator(int worldId)
+		{
+			return CreateOrGetCmps(worldId).GetEnumerator();
 		}
 	}
 
@@ -150,7 +222,7 @@ public class Components
 
 	public static Cmps<Refinery> Refineries = new Cmps<Refinery>();
 
-	public static Cmps<PlantablePlot> PlantablePlots = new Cmps<PlantablePlot>();
+	public static CmpsByWorld<PlantablePlot> PlantablePlots = new CmpsByWorld<PlantablePlot>();
 
 	public static Cmps<Ladder> Ladders = new Cmps<Ladder>();
 
@@ -249,6 +321,8 @@ public class Components
 	public static Cmps<ClustercraftInteriorDoor> ClusterCraftInteriorDoors = new Cmps<ClustercraftInteriorDoor>();
 
 	public static Cmps<PassengerRocketModule> PassengerRocketModules = new Cmps<PassengerRocketModule>();
+
+	public static Cmps<ClusterTraveler> ClusterTravelers = new Cmps<ClusterTraveler>();
 
 	public static Cmps<LaunchPad> LaunchPads = new Cmps<LaunchPad>();
 

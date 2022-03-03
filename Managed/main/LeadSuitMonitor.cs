@@ -62,7 +62,7 @@ public class LeadSuitMonitor : GameStateMachine<LeadSuitMonitor, LeadSuitMonitor
 					attributes.Remove(noBatteryModifier2);
 				}
 			}
-		}).TagTransition(GameTags.SuitBatteryOut, wearingSuit.noBattery, on_remove: true);
+		}).TagTransition(GameTags.SuitBatteryOut, wearingSuit.hasBattery, on_remove: true);
 	}
 
 	public static void CoolSuit(Instance smi, float dt)
@@ -72,7 +72,12 @@ public class LeadSuitMonitor : GameStateMachine<LeadSuitMonitor, LeadSuitMonitor
 			return;
 		}
 		GameObject gameObject = smi.sm.owner.Get(smi);
-		if ((bool)gameObject && gameObject.GetSMI<ExternalTemperatureMonitor.Instance>().AverageExternalTemperature >= smi.lead_suit_tank.coolingOperationalTemperature)
+		if (!gameObject)
+		{
+			return;
+		}
+		ExternalTemperatureMonitor.Instance sMI = gameObject.GetSMI<ExternalTemperatureMonitor.Instance>();
+		if (sMI != null && sMI.AverageExternalTemperature >= smi.lead_suit_tank.coolingOperationalTemperature)
 		{
 			smi.lead_suit_tank.batteryCharge -= 1f / smi.lead_suit_tank.batteryDuration * dt;
 			if (smi.lead_suit_tank.IsEmpty())

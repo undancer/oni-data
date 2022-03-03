@@ -426,9 +426,9 @@ public class SelectToolHoverTextCard : HoverTextConfiguration
 		}
 		else if (mode == OverlayModes.Radiation.ID)
 		{
-			flag2 = true;
 			if (flag3)
 			{
+				flag2 = true;
 				text += UI.OVERLAYS.RADIATION.DESC.Replace("{rads}", GameUtil.GetFormattedRads(Grid.Radiation[num])).Replace("{description}", GameUtil.GetRadiationDescription(Grid.Radiation[num]));
 				string text9 = UI.OVERLAYS.RADIATION.SHIELDING_DESC.Replace("{radiationAbsorptionFactor}", GameUtil.GetFormattedPercent(GameUtil.GetRadiationAbsorptionPercentage(num) * 100f));
 				hoverTextDrawer.BeginShadowBar();

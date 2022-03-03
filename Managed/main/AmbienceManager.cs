@@ -213,6 +213,8 @@ public class AmbienceManager : KMonoBehaviour
 
 		public int totalTileCount;
 
+		private bool m_isRadiationEnabled;
+
 		private SolidTimer[] solidTimers;
 
 		public Quadrant(QuadrantDef def)
@@ -227,8 +229,12 @@ public class AmbienceManager : KMonoBehaviour
 			facilityLayer = new Layer(def.facilitySound, null);
 			allLayers.Add(facilityLayer);
 			loopingLayers.Add(facilityLayer);
-			radiationLayer = new Layer(def.radiationSound, null);
-			allLayers.Add(radiationLayer);
+			m_isRadiationEnabled = Sim.IsRadiationEnabled();
+			if (m_isRadiationEnabled)
+			{
+				radiationLayer = new Layer(def.radiationSound, null);
+				allLayers.Add(radiationLayer);
+			}
 			for (int i = 0; i < 4; i++)
 			{
 				gasLayers[i] = new Layer(def.gasSounds[i], null);
@@ -380,9 +386,12 @@ public class AmbienceManager : KMonoBehaviour
 					layer.Stop();
 				}
 			}
-			radiationLayer.Start(emitter_position);
-			radiationLayer.UpdateAverageRadiation();
-			radiationLayer.UpdateParameters(emitter_position);
+			if (m_isRadiationEnabled)
+			{
+				radiationLayer.Start(emitter_position);
+				radiationLayer.UpdateAverageRadiation();
+				radiationLayer.UpdateParameters(emitter_position);
+			}
 			oneShotLayers.Sort();
 			for (int n = 0; n < activeSolidLayerCount; n++)
 			{
@@ -391,6 +400,11 @@ public class AmbienceManager : KMonoBehaviour
 					oneShotLayers[n].Start(emitter_position);
 				}
 			}
+		}
+
+		public List<Layer> GetAllLayers()
+		{
+			return allLayers;
 		}
 	}
 
@@ -410,6 +424,18 @@ public class AmbienceManager : KMonoBehaviour
 		for (int i = 0; i < quadrants.Length; i++)
 		{
 			quadrants[i] = new Quadrant(quadrantDefs[i]);
+		}
+	}
+
+	protected override void OnForcedCleanUp()
+	{
+		Quadrant[] array = quadrants;
+		for (int i = 0; i < array.Length; i++)
+		{
+			foreach (Layer allLayer in array[i].GetAllLayers())
+			{
+				allLayer.Stop();
+			}
 		}
 	}
 

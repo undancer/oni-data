@@ -14,6 +14,8 @@ public class LocText : TextMeshProUGUI
 
 	private TextLinkHandler textLinkHandler;
 
+	private string originalString = string.Empty;
+
 	[SerializeField]
 	private bool allowLinksInternal;
 
@@ -86,6 +88,7 @@ public class LocText : TextMeshProUGUI
 			}
 			text = Localization.Fixup(text);
 			base.isRightToLeftText = Localization.IsRightToLeft;
+			KInputManager.InputChange.AddListener(RefreshText);
 			SetTextStyleSetting setTextStyleSetting = base.gameObject.GetComponent<SetTextStyleSetting>();
 			if (setTextStyleSetting == null)
 			{
@@ -121,11 +124,66 @@ public class LocText : TextMeshProUGUI
 
 	private string FilterInput(string input)
 	{
+		if (input != null)
+		{
+			string obj = ParseText(input);
+			if (obj != input)
+			{
+				originalString = input;
+			}
+			else
+			{
+				originalString = string.Empty;
+			}
+			input = obj;
+		}
 		if (AllowLinks)
 		{
 			return ModifyLinkStrings(input);
 		}
 		return input;
+	}
+
+	public static string ParseText(string input)
+	{
+		if (input.Contains("{Hotkey/"))
+		{
+			string[] array = input.Split('{', '}');
+			if (array.Length >= 3)
+			{
+				string text = string.Empty;
+				for (int i = 0; i < array.Length; i++)
+				{
+					if (i % 2 == 0)
+					{
+						text += array[i];
+						continue;
+					}
+					string text2 = array[i].Split('/')[1];
+					for (int j = 0; j < 273; j++)
+					{
+						Action action = (Action)j;
+						string text3 = action.ToString();
+						if (text2 == text3)
+						{
+							text += GameUtil.ReplaceHotkeyString("{Hotkey}", (Action)j);
+							break;
+						}
+					}
+				}
+				input = text;
+				return text;
+			}
+		}
+		return input;
+	}
+
+	private void RefreshText()
+	{
+		if (originalString != string.Empty)
+		{
+			SetText(originalString);
+		}
 	}
 
 	protected override void GenerateTextMesh()

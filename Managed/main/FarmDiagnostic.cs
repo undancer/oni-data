@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FarmDiagnostic : ColonyDiagnostic
 {
+	private List<PlantablePlot> plots;
+
 	public FarmDiagnostic(int worldID)
 		: base(worldID, UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.ALL_NAME)
 	{
@@ -14,10 +16,15 @@ public class FarmDiagnostic : ColonyDiagnostic
 		AddCriterion("CheckOperational", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.CRITERIA.CHECKOPERATIONAL, CheckOperational));
 	}
 
+	private void RefreshPlots()
+	{
+		plots = Components.PlantablePlots.GetItems(base.worldID).FindAll((PlantablePlot match) => match.HasDepositTag(GameTags.CropSeed));
+	}
+
 	private DiagnosticResult CheckHasFarms()
 	{
 		DiagnosticResult result = new DiagnosticResult(DiagnosticResult.Opinion.Normal, UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_PASS);
-		if (Components.PlantablePlots.GetWorldItems(base.worldID).FindAll((PlantablePlot match) => match.HasDepositTag(GameTags.CropSeed)).Count == 0)
+		if (plots.Count == 0)
 		{
 			result.opinion = DiagnosticResult.Opinion.Concern;
 			result.Message = UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.NONE;
@@ -28,11 +35,10 @@ public class FarmDiagnostic : ColonyDiagnostic
 	private DiagnosticResult CheckPlanted()
 	{
 		DiagnosticResult result = new DiagnosticResult(DiagnosticResult.Opinion.Normal, UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_PASS);
-		List<PlantablePlot> list = Components.PlantablePlots.GetWorldItems(base.worldID).FindAll((PlantablePlot match) => match.HasDepositTag(GameTags.CropSeed));
 		bool flag = false;
-		foreach (PlantablePlot item in list)
+		foreach (PlantablePlot plot in plots)
 		{
-			if (item.plant != null)
+			if (plot.plant != null)
 			{
 				flag = true;
 				break;
@@ -49,16 +55,16 @@ public class FarmDiagnostic : ColonyDiagnostic
 	private DiagnosticResult CheckWilting()
 	{
 		DiagnosticResult result = new DiagnosticResult(DiagnosticResult.Opinion.Normal, UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_PASS);
-		foreach (PlantablePlot item in Components.PlantablePlots.GetWorldItems(base.worldID).FindAll((PlantablePlot match) => match.HasDepositTag(GameTags.CropSeed)))
+		foreach (PlantablePlot plot in plots)
 		{
-			if (item.plant != null && item.plant.HasTag(GameTags.Wilting))
+			if (plot.plant != null && plot.plant.HasTag(GameTags.Wilting))
 			{
-				StandardCropPlant component = item.plant.GetComponent<StandardCropPlant>();
+				StandardCropPlant component = plot.plant.GetComponent<StandardCropPlant>();
 				if (component != null && component.smi.IsInsideState(component.smi.sm.alive.wilting) && component.smi.timeinstate > 15f)
 				{
 					result.opinion = DiagnosticResult.Opinion.Concern;
 					result.Message = UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.WILTING;
-					result.clickThroughTarget = new Tuple<Vector3, GameObject>(item.transform.position, item.gameObject);
+					result.clickThroughTarget = new Tuple<Vector3, GameObject>(plot.transform.position, plot.gameObject);
 					return result;
 				}
 			}
@@ -69,13 +75,13 @@ public class FarmDiagnostic : ColonyDiagnostic
 	private DiagnosticResult CheckOperational()
 	{
 		DiagnosticResult result = new DiagnosticResult(DiagnosticResult.Opinion.Normal, UI.COLONY_DIAGNOSTICS.GENERIC_CRITERIA_PASS);
-		foreach (PlantablePlot item in Components.PlantablePlots.GetWorldItems(base.worldID).FindAll((PlantablePlot match) => match.HasDepositTag(GameTags.CropSeed)))
+		foreach (PlantablePlot plot in plots)
 		{
-			if (item.plant != null && !item.HasTag(GameTags.Operational))
+			if (plot.plant != null && !plot.HasTag(GameTags.Operational))
 			{
 				result.opinion = DiagnosticResult.Opinion.Concern;
 				result.Message = UI.COLONY_DIAGNOSTICS.FARMDIAGNOSTIC.INOPERATIONAL;
-				result.clickThroughTarget = new Tuple<Vector3, GameObject>(item.transform.position, item.gameObject);
+				result.clickThroughTarget = new Tuple<Vector3, GameObject>(plot.transform.position, plot.gameObject);
 				return result;
 			}
 		}
@@ -84,7 +90,11 @@ public class FarmDiagnostic : ColonyDiagnostic
 
 	public override string GetAverageValueString()
 	{
-		return TrackerTool.Instance.GetWorldTracker<CropTracker>(base.worldID).GetCurrentValue() + "/" + Components.PlantablePlots.GetWorldItems(base.worldID).FindAll((PlantablePlot match) => match.HasDepositTag(GameTags.CropSeed)).Count;
+		if (plots == null)
+		{
+			RefreshPlots();
+		}
+		return TrackerTool.Instance.GetWorldTracker<CropTracker>(base.worldID).GetCurrentValue() + "/" + plots.Count;
 	}
 
 	public override DiagnosticResult Evaluate()
@@ -94,6 +104,7 @@ public class FarmDiagnostic : ColonyDiagnostic
 		{
 			return result;
 		}
+		RefreshPlots();
 		return base.Evaluate();
 	}
 }

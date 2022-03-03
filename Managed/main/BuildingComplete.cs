@@ -107,10 +107,10 @@ public class BuildingComplete : Building
 		}
 	}
 
-	public override void UpdatePosition(int cell)
+	public override void UpdatePosition()
 	{
-		GameScenePartitioner.Instance.UpdatePosition(scenePartitionerEntry, cell);
-		base.UpdatePosition(cell);
+		base.UpdatePosition();
+		GameScenePartitioner.Instance.UpdatePosition(scenePartitionerEntry, GetExtents());
 	}
 
 	private void OnObjectReplaced(object data)
@@ -123,14 +123,9 @@ public class BuildingComplete : Building
 		base.OnSpawn();
 		primaryElement = GetComponent<PrimaryElement>();
 		int cell = Grid.PosToCell(base.transform.GetPosition());
-		int[] array = base.PlacementCells;
-		for (int i = 0; i < array.Length; i++)
-		{
-			SimMessages.SetCellProperties(array[i], 128);
-		}
 		if (Def.IsFoundation)
 		{
-			array = base.PlacementCells;
+			int[] array = base.PlacementCells;
 			foreach (int num in array)
 			{
 				Grid.Foundation[num] = true;

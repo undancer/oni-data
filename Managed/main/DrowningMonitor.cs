@@ -105,8 +105,8 @@ public class DrowningMonitor : KMonoBehaviour, IWiltCause, ISlicedSim1000ms
 	{
 		if (partitionerEntry.IsValid())
 		{
-			Extents extents = occupyArea.GetExtents();
-			GameScenePartitioner.Instance.UpdatePosition(partitionerEntry, extents.x, extents.y);
+			Extents ext = occupyArea.GetExtents();
+			GameScenePartitioner.Instance.UpdatePosition(partitionerEntry, ext);
 		}
 		else
 		{

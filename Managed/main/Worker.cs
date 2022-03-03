@@ -184,10 +184,11 @@ public class Worker : KMonoBehaviour
 				dt = Mathf.Min(workable.WorkTimeRemaining + 0.01f, 5f);
 			}
 			Klei.AI.Attribute workAttribute = workable.GetWorkAttribute();
-			if (workAttribute != null && workAttribute.IsTrainable)
+			AttributeLevels component3 = GetComponent<AttributeLevels>();
+			if (workAttribute != null && workAttribute.IsTrainable && component3 != null)
 			{
 				float attributeExperienceMultiplier = workable.GetAttributeExperienceMultiplier();
-				GetComponent<AttributeLevels>().AddExperience(workAttribute.Id, dt, attributeExperienceMultiplier);
+				component3.AddExperience(workAttribute.Id, dt, attributeExperienceMultiplier);
 			}
 			string skillExperienceSkillGroup = workable.GetSkillExperienceSkillGroup();
 			if (resume != null && skillExperienceSkillGroup != null)
@@ -453,14 +454,14 @@ public class Worker : KMonoBehaviour
 
 	private void DetachAnimOverrides()
 	{
+		KAnimControllerBase component = GetComponent<KAnimControllerBase>();
+		if (kanimSynchronizer != null)
+		{
+			kanimSynchronizer.Remove(component);
+			kanimSynchronizer = null;
+		}
 		if (animInfo.overrideAnims != null)
 		{
-			KAnimControllerBase component = GetComponent<KAnimControllerBase>();
-			if (kanimSynchronizer != null)
-			{
-				kanimSynchronizer.Remove(component);
-				kanimSynchronizer = null;
-			}
 			for (int i = 0; i < animInfo.overrideAnims.Length; i++)
 			{
 				component.RemoveAnimOverrides(animInfo.overrideAnims[i]);

@@ -27,7 +27,7 @@ public class OxyfernConfig : IEntityConfig
 	public GameObject CreatePrefab()
 	{
 		GameObject template = EntityTemplates.CreatePlacedEntity("Oxyfern", STRINGS.CREATURES.SPECIES.OXYFERN.NAME, STRINGS.CREATURES.SPECIES.OXYFERN.DESC, 1f, decor: DECOR.PENALTY.TIER1, anim: Assets.GetAnim("oxy_fern_kanim"), initialAnim: "idle_full", sceneLayer: Grid.SceneLayer.BuildingBack, width: 1, height: 2);
-		template = EntityTemplates.ExtendEntityToBasicPlant(template, 253.15f, 273.15f, 313.15f, 373.15f, new SimHashes[1] { SimHashes.CarbonDioxide }, pressure_sensitive: true, 0f, 0.025f, null, can_drown: true, can_tinker: false, require_solid_tile: true, should_grow_old: true, 2400f, 0f, 220f, "OxyfernOriginal", STRINGS.CREATURES.SPECIES.OXYFERN.NAME);
+		template = EntityTemplates.ExtendEntityToBasicPlant(template, 253.15f, 273.15f, 313.15f, 373.15f, new SimHashes[1] { SimHashes.CarbonDioxide }, pressure_sensitive: true, 0f, 0.025f, null, can_drown: true, can_tinker: false, require_solid_tile: true, should_grow_old: true, 2400f, 0f, 2200f, "OxyfernOriginal", STRINGS.CREATURES.SPECIES.OXYFERN.NAME);
 		Tag tag = ElementLoader.FindElementByHash(SimHashes.Water).tag;
 		GameObject template2 = template;
 		PlantElementAbsorber.ConsumeInfo[] array = new PlantElementAbsorber.ConsumeInfo[1];

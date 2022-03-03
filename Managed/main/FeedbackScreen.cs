@@ -1,5 +1,4 @@
 using STRINGS;
-using UnityEngine;
 
 public class FeedbackScreen : KModalScreen
 {
@@ -31,19 +30,19 @@ public class FeedbackScreen : KModalScreen
 		};
 		bugForumsButton.onClick += delegate
 		{
-			Application.OpenURL("https://forums.kleientertainment.com/klei-bug-tracker/oni/");
+			App.OpenWebURL("https://forums.kleientertainment.com/klei-bug-tracker/oni/");
 		};
 		suggestionForumsButton.onClick += delegate
 		{
-			Application.OpenURL("https://forums.kleientertainment.com/forums/forum/133-oxygen-not-included-suggestions-and-feedback/");
+			App.OpenWebURL("https://forums.kleientertainment.com/forums/forum/133-oxygen-not-included-suggestions-and-feedback/");
 		};
 		logsDirectoryButton.onClick += delegate
 		{
-			Application.OpenURL(Util.LogsFolder());
+			App.OpenWebURL(Util.LogsFolder());
 		};
 		saveFilesDirectoryButton.onClick += delegate
 		{
-			Application.OpenURL(SaveLoader.GetSavePrefix());
+			App.OpenWebURL(SaveLoader.GetSavePrefix());
 		};
 	}
 }

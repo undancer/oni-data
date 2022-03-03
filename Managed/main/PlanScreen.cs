@@ -5,6 +5,7 @@ using FMOD.Studio;
 using STRINGS;
 using TUNING;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class PlanScreen : KIconToggleMenu
@@ -15,15 +16,24 @@ public class PlanScreen : KIconToggleMenu
 
 		public bool hideIfNotResearched;
 
+		[Obsolete("Modders: Use ModUtil.AddBuildingToPlanScreen")]
 		public List<string> data;
+
+		public List<KeyValuePair<string, string>> buildingAndSubcategoryData;
 
 		public string RequiredDlcId;
 
-		public PlanInfo(HashedString category, bool hideIfNotResearched, List<string> data, string RequiredDlcId = "")
+		public PlanInfo(HashedString category, bool hideIfNotResearched, List<string> listData, string RequiredDlcId = "")
 		{
+			List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
+			foreach (string listDatum in listData)
+			{
+				list.Add(new KeyValuePair<string, string>(listDatum, TUNING.BUILDINGS.PLANSUBCATEGORYSORTING.ContainsKey(listDatum) ? TUNING.BUILDINGS.PLANSUBCATEGORYSORTING[listDatum] : "uncategorized"));
+			}
 			this.category = category;
 			this.hideIfNotResearched = hideIfNotResearched;
-			this.data = data;
+			data = listData;
+			buildingAndSubcategoryData = list;
 			this.RequiredDlcId = RequiredDlcId;
 		}
 	}
@@ -152,6 +162,13 @@ public class PlanScreen : KIconToggleMenu
 	[SerializeField]
 	private GameObject copyBuildingButton;
 
+	private bool USE_SUB_CATEGORY_LAYOUT;
+
+	private int refreshScaleHandle = -1;
+
+	[SerializeField]
+	private GameObject adjacentPinnedButtons;
+
 	private static Dictionary<HashedString, string> iconNameMap = new Dictionary<HashedString, string>
 	{
 		{
@@ -237,7 +254,20 @@ public class PlanScreen : KIconToggleMenu
 
 	private int notificationPingCount;
 
+	private Dictionary<string, GameObject> subCategoryObjects = new Dictionary<string, GameObject>();
+
+	private static Vector2 bigBuildingButtonSize = new Vector2(98f, 123f);
+
+	private static Vector2 standarduildingButtonSize = bigBuildingButtonSize * 0.8f;
+
+	private static int fontSizeBigMode = 16;
+
+	private static int fontSizeStandardMode = 14;
+
 	private GameObject selectedBuildingGameObject;
+
+	[SerializeField]
+	private GameObject subgroupPrefab;
 
 	public Transform GroupsTransform;
 
@@ -250,6 +280,8 @@ public class PlanScreen : KIconToggleMenu
 	public RectTransform BuildingGroupContentsRect;
 
 	public Sprite defaultBuildingIconSprite;
+
+	private KScrollRect planScreenScrollRect;
 
 	public Material defaultUIMaterial;
 
@@ -280,13 +312,11 @@ public class PlanScreen : KIconToggleMenu
 
 	private int building_button_refresh_idx;
 
-	private float buildGrid_bg_width = 274f;
+	private float buildGrid_bg_width = 320f;
 
-	private float buildGrid_bg_borderHeight = 32f;
+	private float buildGrid_bg_borderHeight = 48f;
 
 	private float buildGrid_bg_rowHeight;
-
-	private int buildGrid_maxRowsBeforeScroll = 5;
 
 	public static PlanScreen Instance { get; private set; }
 
@@ -343,8 +373,10 @@ public class PlanScreen : KIconToggleMenu
 			Instance = this;
 			productInfoScreen = Util.KInstantiateUI<ProductInfoScreen>(productInfoScreenPrefab, recipeInfoScreenParent);
 			productInfoScreen.rectTransform().pivot = new Vector2(0f, 0f);
-			productInfoScreen.rectTransform().SetLocalPosition(new Vector3(280f, 0f, 0f));
+			productInfoScreen.rectTransform().SetLocalPosition(new Vector3(326f, 0f, 0f));
 			productInfoScreen.onElementsFullySelected = OnRecipeElementsFullySelected;
+			KInputManager.InputChange.AddListener(RefreshToolTip);
+			planScreenScrollRect = base.transform.parent.GetComponentInParent<KScrollRect>();
 			Game.Instance.Subscribe(-107300940, OnResearchComplete);
 			Game.Instance.Subscribe(1174281782, OnActiveToolChanged);
 		}
@@ -354,6 +386,7 @@ public class PlanScreen : KIconToggleMenu
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
+		base.ConsumeMouseScroll = true;
 		initTime = KTime.Instance.UnscaledGameTime;
 		if (BuildMenu.UseHotkeyBuildMenu())
 		{
@@ -380,7 +413,42 @@ public class PlanScreen : KIconToggleMenu
 		{
 			CloseRecipe();
 		});
+		pointerEnterActions = (PointerEnterActions)Delegate.Combine(pointerEnterActions, new PointerEnterActions(PointerEnter));
+		pointerExitActions = (PointerExitActions)Delegate.Combine(pointerExitActions, new PointerExitActions(PointerExit));
 		copyBuildingButton.GetComponent<ToolTip>().SetSimpleTooltip(GameUtil.ReplaceHotkeyString(UI.COPY_BUILDING_TOOLTIP, Action.CopyBuilding));
+		RefreshScale();
+		refreshScaleHandle = Game.Instance.Subscribe(-442024484, RefreshScale);
+	}
+
+	private void RefreshScale(object data = null)
+	{
+		GetComponent<GridLayoutGroup>().cellSize = (ScreenResolutionMonitor.UsingGamepadUIMode() ? new Vector2(54f, 50f) : new Vector2(45f, 45f));
+		toggles.ForEach(delegate(KToggle to)
+		{
+			to.GetComponentInChildren<LocText>().fontSize = (ScreenResolutionMonitor.UsingGamepadUIMode() ? fontSizeBigMode : fontSizeStandardMode);
+		});
+		LayoutElement component = copyBuildingButton.GetComponent<LayoutElement>();
+		component.minWidth = (ScreenResolutionMonitor.UsingGamepadUIMode() ? 58 : 54);
+		component.minHeight = (ScreenResolutionMonitor.UsingGamepadUIMode() ? 58 : 54);
+		base.gameObject.rectTransform().anchoredPosition = new Vector2(0f, ScreenResolutionMonitor.UsingGamepadUIMode() ? (-68) : (-74));
+		adjacentPinnedButtons.GetComponent<HorizontalLayoutGroup>().padding.bottom = (ScreenResolutionMonitor.UsingGamepadUIMode() ? 14 : 6);
+		foreach (KeyValuePair<string, GameObject> subCategoryObject in subCategoryObjects)
+		{
+			subCategoryObject.Value.GetComponentInChildren<GridLayoutGroup>().cellSize = (ScreenResolutionMonitor.UsingGamepadUIMode() ? bigBuildingButtonSize : standarduildingButtonSize);
+		}
+		Vector2 sizeDelta = buildingGroupsRoot.rectTransform().sizeDelta;
+		Vector2 sizeDelta2 = (ScreenResolutionMonitor.UsingGamepadUIMode() ? new Vector2(320f, sizeDelta.y) : new Vector2(264f, sizeDelta.y));
+		buildingGroupsRoot.rectTransform().sizeDelta = sizeDelta2;
+		productInfoScreen.rectTransform().anchoredPosition = new Vector2(sizeDelta2.x + 8f, productInfoScreen.rectTransform().anchoredPosition.y);
+	}
+
+	protected override void OnCleanUp()
+	{
+		if (Game.Instance != null)
+		{
+			Game.Instance.Unsubscribe(refreshScaleHandle);
+		}
+		base.OnCleanUp();
 	}
 
 	private void OnClickCopyBuilding()
@@ -393,6 +461,7 @@ public class PlanScreen : KIconToggleMenu
 
 	public void RefreshCopyBuildingButton(object data = null)
 	{
+		adjacentPinnedButtons.rectTransform().anchoredPosition = new Vector2(Mathf.Min(base.gameObject.rectTransform().sizeDelta.x, base.transform.parent.rectTransform().rect.width), 0f);
 		MultiToggle component = copyBuildingButton.GetComponent<MultiToggle>();
 		if (SelectTool.Instance != null && SelectTool.Instance.selected != null)
 		{
@@ -415,6 +484,21 @@ public class PlanScreen : KIconToggleMenu
 			component.gameObject.SetActive(value: false);
 			component.ChangeState(0);
 		}
+	}
+
+	public void RefreshToolTip()
+	{
+		for (int i = 0; i < TUNING.BUILDINGS.PLANORDER.Count; i++)
+		{
+			PlanInfo planInfo = TUNING.BUILDINGS.PLANORDER[i];
+			if (DlcManager.IsContentActive(planInfo.RequiredDlcId))
+			{
+				Action action = ((i < 14) ? ((Action)(36 + i)) : Action.NumActions);
+				string text = HashCache.Get().Get(planInfo.category).ToUpper();
+				toggleInfo[i].tooltip = GameUtil.ReplaceHotkeyString(Strings.Get("STRINGS.UI.BUILDCATEGORIES." + text + ".TOOLTIP"), action);
+			}
+		}
+		copyBuildingButton.GetComponent<ToolTip>().SetSimpleTooltip(GameUtil.ReplaceHotkeyString(UI.COPY_BUILDING_TOOLTIP, Action.CopyBuilding));
 	}
 
 	public void Refresh()
@@ -444,7 +528,7 @@ public class PlanScreen : KIconToggleMenu
 			string text = HashCache.Get().Get(planInfo.category).ToUpper();
 			ToggleInfo toggleInfo = new ToggleInfo(UI.StripLinkFormatting(Strings.Get("STRINGS.UI.BUILDCATEGORIES." + text + ".NAME")), icon, planInfo.category, action, GameUtil.ReplaceHotkeyString(Strings.Get("STRINGS.UI.BUILDCATEGORIES." + text + ".TOOLTIP"), action));
 			list.Add(toggleInfo);
-			PopulateOrderInfo(planInfo.category, planInfo.data, tagCategoryMap, tagOrderMap, ref building_index);
+			PopulateOrderInfo(planInfo.category, planInfo.buildingAndSubcategoryData, tagCategoryMap, tagOrderMap, ref building_index);
 			List<BuildingDef> list2 = new List<BuildingDef>();
 			foreach (BuildingDef buildingDef in Assets.BuildingDefs)
 			{
@@ -467,6 +551,7 @@ public class PlanScreen : KIconToggleMenu
 				}
 			}
 			to.GetComponent<KToggle>().soundPlayer.Enabled = false;
+			to.GetComponentInChildren<LocText>().fontSize = (ScreenResolutionMonitor.UsingGamepadUIMode() ? fontSizeBigMode : fontSizeStandardMode);
 		});
 		for (int j = 0; j < toggleEntries.Count; j++)
 		{
@@ -480,9 +565,9 @@ public class PlanScreen : KIconToggleMenu
 	{
 		foreach (PlanInfo item in TUNING.BUILDINGS.PLANORDER)
 		{
-			foreach (string datum in item.data)
+			foreach (KeyValuePair<string, string> buildingAndSubcategoryDatum in item.buildingAndSubcategoryData)
 			{
-				if (building.Def.PrefabID == datum)
+				if (building.Def.PrefabID == buildingAndSubcategoryDatum.Key)
 				{
 					OpenCategoryByName(HashCache.Get().Get(item.category));
 					OnSelectBuilding(ActiveToggles[building.Def].gameObject, building.Def);
@@ -503,12 +588,12 @@ public class PlanScreen : KIconToggleMenu
 		if (data.GetType() == typeof(PlanInfo))
 		{
 			PlanInfo planInfo = (PlanInfo)data;
-			PopulateOrderInfo(planInfo.category, planInfo.data, category_map, order_map, ref building_index);
+			PopulateOrderInfo(planInfo.category, planInfo.buildingAndSubcategoryData, category_map, order_map, ref building_index);
 			return;
 		}
-		foreach (string item in (IList<string>)data)
+		foreach (KeyValuePair<string, string> item in (List<KeyValuePair<string, string>>)data)
 		{
-			Tag key = new Tag(item);
+			Tag key = new Tag(item.Key);
 			category_map[key] = category;
 			order_map[key] = building_index;
 			building_index++;
@@ -518,6 +603,7 @@ public class PlanScreen : KIconToggleMenu
 	protected override void OnCmpEnable()
 	{
 		Refresh();
+		RefreshCopyBuildingButton();
 	}
 
 	protected override void OnCmpDisable()
@@ -527,13 +613,14 @@ public class PlanScreen : KIconToggleMenu
 
 	private void ClearButtons()
 	{
-		foreach (KeyValuePair<BuildingDef, KToggle> activeToggle in ActiveToggles)
+		foreach (KeyValuePair<string, GameObject> subCategoryObject in subCategoryObjects)
 		{
-			activeToggle.Value.gameObject.SetActive(value: false);
-			activeToggle.Value.transform.SetParent(null);
-			UnityEngine.Object.DestroyImmediate(activeToggle.Value.gameObject);
+			UnityEngine.Object.DestroyImmediate(subCategoryObject.Value.gameObject);
 		}
+		subCategoryObjects.Clear();
 		ActiveToggles.Clear();
+		copyBuildingButton.gameObject.SetActive(value: false);
+		copyBuildingButton.GetComponent<MultiToggle>().ChangeState(0);
 	}
 
 	public void OnSelectBuilding(GameObject button_go, BuildingDef def)
@@ -756,6 +843,7 @@ public class PlanScreen : KIconToggleMenu
 				}
 			}
 		}
+		RefreshCopyBuildingButton();
 	}
 
 	private void DeactivateBuildTools()
@@ -898,38 +986,93 @@ public class PlanScreen : KIconToggleMenu
 
 	private void BuildButtonList(HashedString plan_category, GameObject parent)
 	{
-		IOrderedEnumerable<BuildingDef> orderedEnumerable = from def in Assets.BuildingDefs
-			where tagCategoryMap.ContainsKey(def.Tag) && tagCategoryMap[def.Tag] == plan_category && def.IsAvailable()
-			orderby tagOrderMap[def.Tag]
-			select def;
 		ActiveToggles.Clear();
 		int num = 0;
 		string plan_category2 = plan_category.ToString();
-		foreach (BuildingDef item in orderedEnumerable)
+		Dictionary<string, List<BuildingDef>> dictionary = new Dictionary<string, List<BuildingDef>>();
+		foreach (KeyValuePair<string, string> buildingAndSubcategoryDatum in TUNING.BUILDINGS.PLANORDER.Find((PlanInfo match) => match.category == plan_category).buildingAndSubcategoryData)
 		{
-			if (item.ShouldShowInBuildMenu())
+			BuildingDef buildingDef = Assets.GetBuildingDef(buildingAndSubcategoryDatum.Key);
+			if (!buildingDef.IsAvailable() || !buildingDef.ShowInBuildMenu)
 			{
-				CreateButton(item, parent, plan_category2, num);
+				continue;
+			}
+			if (USE_SUB_CATEGORY_LAYOUT)
+			{
+				if (!dictionary.ContainsKey(buildingAndSubcategoryDatum.Value))
+				{
+					dictionary.Add(buildingAndSubcategoryDatum.Value, new List<BuildingDef>());
+				}
+				dictionary[buildingAndSubcategoryDatum.Value].Add(buildingDef);
+			}
+			else
+			{
+				if (!dictionary.ContainsKey("default"))
+				{
+					dictionary.Add("default", new List<BuildingDef>());
+				}
+				dictionary["default"].Add(buildingDef);
+			}
+		}
+		subCategoryObjects.Clear();
+		foreach (KeyValuePair<string, List<BuildingDef>> item in dictionary)
+		{
+			subCategoryObjects.Add(item.Key, Util.KInstantiateUI(subgroupPrefab, parent, force_active: true));
+			GameObject parent2 = subCategoryObjects[item.Key].GetComponent<HierarchyReferences>().GetReference<GridLayoutGroup>("Grid").gameObject;
+			subCategoryObjects[item.Key].GetComponent<HierarchyReferences>().GetReference<RectTransform>("Header").gameObject.SetActive(USE_SUB_CATEGORY_LAYOUT);
+			foreach (BuildingDef item2 in item.Value)
+			{
+				CreateButton(item2, parent2, plan_category2, num);
 				num++;
 			}
 		}
+		RefreshScale();
 	}
 
 	private void ConfigurePanelSize()
 	{
-		GridLayoutGroup component = GroupsTransform.GetComponent<GridLayoutGroup>();
-		buildGrid_bg_rowHeight = component.cellSize.y + component.spacing.y;
-		int num = GroupsTransform.childCount;
+		buildGrid_bg_rowHeight = (ScreenResolutionMonitor.UsingGamepadUIMode() ? bigBuildingButtonSize.y : standarduildingButtonSize.y);
+		GridLayoutGroup reference = subgroupPrefab.GetComponent<HierarchyReferences>().GetReference<GridLayoutGroup>("Grid");
+		buildGrid_bg_rowHeight += reference.spacing.y;
+		int num = 0;
 		for (int i = 0; i < GroupsTransform.childCount; i++)
 		{
-			if (!GroupsTransform.GetChild(i).gameObject.activeSelf)
+			int num2 = 0;
+			HierarchyReferences component = GroupsTransform.GetChild(i).GetComponent<HierarchyReferences>();
+			if (component == null)
 			{
-				num--;
+				continue;
+			}
+			GridLayoutGroup reference2 = component.GetReference<GridLayoutGroup>("Grid");
+			if (reference2 == null)
+			{
+				continue;
+			}
+			for (int j = 0; j < reference2.transform.childCount; j++)
+			{
+				if (reference2.transform.GetChild(j).gameObject.activeSelf)
+				{
+					num2++;
+				}
+			}
+			num += num2 / reference2.constraintCount;
+			if (num2 % reference2.constraintCount != 0)
+			{
+				num++;
 			}
 		}
-		int num2 = Mathf.CeilToInt((float)num / 3f);
-		BuildingGroupContentsRect.GetComponent<ScrollRect>().verticalScrollbar.gameObject.SetActive(num2 >= 4);
-		buildingGroupsRoot.sizeDelta = new Vector2(buildGrid_bg_width, buildGrid_bg_borderHeight + (float)Mathf.Clamp(num2, 0, buildGrid_maxRowsBeforeScroll) * buildGrid_bg_rowHeight);
+		int num3 = num;
+		int val = Math.Max(1, Screen.height / (int)buildGrid_bg_rowHeight - 3);
+		val = Math.Min(val, 6);
+		BuildingGroupContentsRect.GetComponent<ScrollRect>().verticalScrollbar.gameObject.SetActive(num3 >= val - 1);
+		float num4 = buildGrid_bg_borderHeight + (float)Mathf.Clamp(num3, 0, val) * buildGrid_bg_rowHeight;
+		if (USE_SUB_CATEGORY_LAYOUT)
+		{
+			float minHeight = subgroupPrefab.GetComponent<HierarchyReferences>().GetReference("HeaderLabel").transform.parent.GetComponent<LayoutElement>().minHeight;
+			num4 += minHeight;
+		}
+		buildingGroupsRoot.sizeDelta = new Vector2(buildGrid_bg_width, num4);
+		RefreshScale();
 	}
 
 	private void SetScrollPoint(float targetY)
@@ -1011,7 +1154,8 @@ public class PlanScreen : KIconToggleMenu
 		}
 		image.sprite = uISprite;
 		image.SetNativeSize();
-		image.rectTransform().sizeDelta /= 4f;
+		float num = (ScreenResolutionMonitor.UsingGamepadUIMode() ? 3.25f : 4f);
+		image.rectTransform().sizeDelta /= num;
 		ToolTip component = toggle.gameObject.GetComponent<ToolTip>();
 		PositionTooltip(toggle, component);
 		component.ClearMultiStringTooltip();
@@ -1022,6 +1166,7 @@ public class PlanScreen : KIconToggleMenu
 		LocText componentInChildren = toggle.GetComponentInChildren<LocText>();
 		if (componentInChildren != null)
 		{
+			componentInChildren.fontSize = (ScreenResolutionMonitor.UsingGamepadUIMode() ? fontSizeBigMode : fontSizeStandardMode);
 			componentInChildren.text = def.Name;
 		}
 		RequirementsState requirementsState = BuildableState(def);
@@ -1142,7 +1287,10 @@ public class PlanScreen : KIconToggleMenu
 
 	private void PositionTooltip(KToggle toggle, ToolTip tip)
 	{
-		tip.overrideParentObject = (productInfoScreen.gameObject.activeSelf ? productInfoScreen.rectTransform() : buildingGroupsRoot);
+		tip.overrideParentObject = buildingGroupsRoot;
+		tip.tooltipPivot = Vector2.zero;
+		tip.parentPositionAnchor = new Vector2(1f, 0f);
+		tip.tooltipPositionOffset = (productInfoScreen.gameObject.activeSelf ? new Vector2(16f + productInfoScreen.rectTransform().sizeDelta.x, 0f) : new Vector2(-40f, 0f));
 	}
 
 	private void SetMaterialTint(KToggle toggle, bool disabled)
@@ -1154,15 +1302,35 @@ public class PlanScreen : KIconToggleMenu
 		}
 	}
 
+	private void PointerEnter(PointerEventData data)
+	{
+		planScreenScrollRect.mouseIsOver = true;
+	}
+
+	private void PointerExit(PointerEventData data)
+	{
+		planScreenScrollRect.mouseIsOver = false;
+	}
+
 	public override void OnKeyDown(KButtonEvent e)
 	{
 		if (e.Consumed)
 		{
 			return;
 		}
-		if (mouseOver && base.ConsumeMouseScroll && !e.TryConsume(Action.ZoomIn))
+		if (mouseOver && base.ConsumeMouseScroll)
 		{
-			e.TryConsume(Action.ZoomOut);
+			if (KInputManager.currentControllerIsGamepad)
+			{
+				if (e.IsAction(Action.ZoomIn) || e.IsAction(Action.ZoomOut))
+				{
+					planScreenScrollRect.OnKeyDown(e);
+				}
+			}
+			else if (!e.TryConsume(Action.ZoomIn))
+			{
+				e.TryConsume(Action.ZoomOut);
+			}
 		}
 		if (e.IsAction(Action.CopyBuilding) && e.TryConsume(Action.CopyBuilding))
 		{
@@ -1185,18 +1353,35 @@ public class PlanScreen : KIconToggleMenu
 
 	public override void OnKeyUp(KButtonEvent e)
 	{
-		if (selectedBuildingGameObject != null && PlayerController.Instance.ConsumeIfNotDragging(e, Action.MouseRight))
+		if (mouseOver && base.ConsumeMouseScroll)
 		{
-			CloseRecipe();
-			KMonoBehaviour.PlaySound(GlobalAssets.GetSound("HUD_Click_Close"));
-		}
-		else if (activeCategoryInfo != null && PlayerController.Instance.ConsumeIfNotDragging(e, Action.MouseRight))
-		{
-			OnUIClear(null);
+			if (KInputManager.currentControllerIsGamepad)
+			{
+				if (e.IsAction(Action.ZoomIn) || e.IsAction(Action.ZoomOut))
+				{
+					planScreenScrollRect.OnKeyUp(e);
+				}
+			}
+			else if (!e.TryConsume(Action.ZoomIn))
+			{
+				e.TryConsume(Action.ZoomOut);
+			}
 		}
 		if (!e.Consumed)
 		{
-			base.OnKeyUp(e);
+			if (selectedBuildingGameObject != null && PlayerController.Instance.ConsumeIfNotDragging(e, Action.MouseRight))
+			{
+				CloseRecipe();
+				KMonoBehaviour.PlaySound(GlobalAssets.GetSound("HUD_Click_Close"));
+			}
+			else if (activeCategoryInfo != null && PlayerController.Instance.ConsumeIfNotDragging(e, Action.MouseRight))
+			{
+				OnUIClear(null);
+			}
+			if (!e.Consumed)
+			{
+				base.OnKeyUp(e);
+			}
 		}
 	}
 

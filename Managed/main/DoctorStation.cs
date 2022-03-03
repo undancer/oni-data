@@ -44,7 +44,7 @@ public class DoctorStation : Workable
 			base.serializable = SerializeType.Never;
 			default_state = unoperational;
 			unoperational.EventTransition(GameHashes.OperationalChanged, operational, (StatesInstance smi) => smi.master.operational.IsOperational);
-			operational.EventTransition(GameHashes.OperationalChanged, operational, (StatesInstance smi) => !smi.master.operational.IsOperational).DefaultState(operational.not_ready);
+			operational.EventTransition(GameHashes.OperationalChanged, unoperational, (StatesInstance smi) => !smi.master.operational.IsOperational).DefaultState(operational.not_ready);
 			operational.not_ready.ParamTransition(hasSupplies, operational.ready, (StatesInstance smi, bool p) => p);
 			operational.ready.DefaultState(operational.ready.idle).ToggleRecurringChore(CreatePatientChore).ParamTransition(hasSupplies, operational.not_ready, (StatesInstance smi, bool p) => !p);
 			operational.ready.idle.ParamTransition(hasPatient, operational.ready.has_patient, (StatesInstance smi, bool p) => p);

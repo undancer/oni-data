@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using STRINGS;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,7 +23,7 @@ public class AllResourcesScreen : KScreen, ISim4000ms, ISim1000ms
 	public bool allowRefresh = true;
 
 	[SerializeField]
-	private TMP_InputField searchInputField;
+	private KInputTextField searchInputField;
 
 	[SerializeField]
 	private KButton clearSearchButton;
@@ -73,8 +72,8 @@ public class AllResourcesScreen : KScreen, ISim4000ms, ISim1000ms
 			{
 				SearchFilter(value);
 			});
-			TMP_InputField tMP_InputField = searchInputField;
-			tMP_InputField.onFocus = (System.Action)Delegate.Combine(tMP_InputField.onFocus, (System.Action)delegate
+			KInputTextField kInputTextField = searchInputField;
+			kInputTextField.onFocus = (System.Action)Delegate.Combine(kInputTextField.onFocus, (System.Action)delegate
 			{
 				base.isEditing = true;
 			});

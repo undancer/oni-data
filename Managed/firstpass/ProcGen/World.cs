@@ -164,12 +164,15 @@ namespace ProcGen
 
 			public List<string> subworldNames { get; private set; }
 
+			public bool optional { get; set; }
+
 			public AllowedCellsFilter()
 			{
 				temperatureRanges = new List<Temperature.Range>();
 				zoneTypes = new List<SubWorld.ZoneType>();
 				subworldNames = new List<string>();
 				command = Command.Replace;
+				optional = false;
 			}
 
 			public void Validate(string parentFile, List<WeightedSubworldName> parentCachedFiles)
@@ -195,6 +198,8 @@ namespace ProcGen
 		public string[] nameTables { get; private set; }
 
 		public string asteroidIcon { get; private set; }
+
+		public float iconScale { get; private set; }
 
 		public bool disableWorldTraits { get; private set; }
 
@@ -247,6 +252,7 @@ namespace ProcGen
 			fixedTraits = new List<string>();
 			category = WorldCategory.Asteroid;
 			worldTraitScale = 1f;
+			iconScale = 1f;
 			worldTraitRules = new List<TraitRule>();
 			worldTraitRules.Add(new TraitRule(2, 4));
 		}
@@ -302,11 +308,14 @@ namespace ProcGen
 		{
 			foreach (TraitRule worldTraitRule in worldTraitRules)
 			{
-				TagSet tagSet = ((worldTraitRule.requiredTags != null) ? new TagSet(worldTraitRule.requiredTags) : null);
-				TagSet tagSet2 = ((worldTraitRule.forbiddenTags != null) ? new TagSet(worldTraitRule.forbiddenTags) : null);
-				if ((tagSet == null || trait.traitTagsSet.ContainsAll(tagSet)) && (tagSet2 == null || !trait.traitTagsSet.ContainsOne(tagSet2)) && (worldTraitRule.forbiddenTraits == null || !worldTraitRule.forbiddenTraits.Contains(trait.filePath)) && trait.IsValid(this, logErrors: false))
+				if (worldTraitRule.specificTraits == null)
 				{
-					return true;
+					TagSet tagSet = ((worldTraitRule.requiredTags != null) ? new TagSet(worldTraitRule.requiredTags) : null);
+					TagSet tagSet2 = ((worldTraitRule.forbiddenTags != null) ? new TagSet(worldTraitRule.forbiddenTags) : null);
+					if ((tagSet == null || trait.traitTagsSet.ContainsAll(tagSet)) && (tagSet2 == null || !trait.traitTagsSet.ContainsOne(tagSet2)) && (worldTraitRule.forbiddenTraits == null || !worldTraitRule.forbiddenTraits.Contains(trait.filePath)) && trait.IsValid(this, logErrors: false))
+					{
+						return true;
+					}
 				}
 			}
 			return false;

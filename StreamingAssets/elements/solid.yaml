@@ -508,7 +508,7 @@ elements:
     molarMass: 120
     lightAbsorptionFactor: 1
     radiationAbsorptionFactor: 0.85
-    radiationPer1000Mass: 5
+    radiationPer1000Mass: 50
     materialCategory: RefinedMetal
     tags:
     - BuildableAny
@@ -644,7 +644,7 @@ elements:
     molarMass: 120
     lightAbsorptionFactor: 1
     radiationAbsorptionFactor: 0.3
-    radiationPer1000Mass: 25
+    radiationPer1000Mass: 250
     tags:
     materialCategory: ManufacturedMaterial
     buildMenuSort: 20
@@ -2225,7 +2225,7 @@ elements:
     molarMass: 120
     lightAbsorptionFactor: 1
     radiationAbsorptionFactor: 0.3
-    radiationPer1000Mass: 15
+    radiationPer1000Mass: 150
     materialCategory: Metal    
     tags:
     - BuildableAny
@@ -2413,17 +2413,17 @@ elements:
         percentage: 0.6
         
   - elementId: Sucrose
-    specificHeatCapacity: 0.43
-    thermalConductivity: 0.444 #todo
+    specificHeatCapacity: 1.255
+    thermalConductivity: 0.15
     solidSurfaceAreaMultiplier: 1
     liquidSurfaceAreaMultiplier: 1
     gasSurfaceAreaMultiplier: 1
-    strength: 0.1 #todo
+    strength: 0.1
     highTemp: 459
-    highTempTransitionTarget: MoltenSucrose #decompose to caramel?
+    highTempTransitionTarget: MoltenSucrose
     defaultTemperature: 290
-    defaultMass: 500 #todo
-    maxMass: 2000 #todo
+    defaultMass: 500
+    maxMass: 2000
     hardness: 5
     molarMass: 342.30
     lightAbsorptionFactor: 1
@@ -2475,7 +2475,7 @@ elements:
     toxicity: 0
     lightAbsorptionFactor: 1
     radiationAbsorptionFactor: 0.3
-    radiationPer1000Mass: 15
+    radiationPer1000Mass: 150
     materialCategory: Other
     tags:
     - EmitsLight

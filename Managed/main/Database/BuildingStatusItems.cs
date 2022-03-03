@@ -471,6 +471,10 @@ namespace Database
 
 		public StatusItem BroadcasterOutOfRange;
 
+		public StatusItem LosingRadbolts;
+
+		public StatusItem FabricatorAcceptsMutantSeeds;
+
 		public BuildingStatusItems(ResourceSet parent)
 			: base("BuildingStatusItems", parent)
 		{
@@ -494,7 +498,7 @@ namespace Database
 			AssignedTo.resolveStringCallback = delegate(string str, object data)
 			{
 				IAssignableIdentity assignee2 = ((Assignable)data).assignee;
-				if (assignee2 != null)
+				if (!assignee2.IsNullOrDestroyed())
 				{
 					string properName2 = assignee2.GetProperName();
 					str = str.Replace("{Assignee}", properName2);
@@ -505,7 +509,7 @@ namespace Database
 			AssignedToRoom.resolveStringCallback = delegate(string str, object data)
 			{
 				IAssignableIdentity assignee = ((Assignable)data).assignee;
-				if (assignee != null)
+				if (!assignee.IsNullOrDestroyed())
 				{
 					string properName = assignee.GetProperName();
 					str = str.Replace("{Assignee}", properName);
@@ -637,7 +641,7 @@ namespace Database
 			Func<string, object, string> resolveStringCallback = delegate(string str, object data)
 			{
 				RoomType roomType = Db.Get().RoomTypes.Get((string)data);
-				return (roomType != null) ? string.Format(str, roomType.Name) : str;
+				return (roomType != null) ? str.Replace("{0}", roomType.Name) : str;
 			};
 			NoCoolant = CreateStatusItem("NoCoolant", "BUILDING", "status_item_need_supply_in", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			NotInAnyRoom = CreateStatusItem("NotInAnyRoom", "BUILDING", "status_item_room_required", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
@@ -1429,6 +1433,8 @@ namespace Database
 			RocketRestrictionInactive = new StatusItem("ROCKETRESTRICTIONINACTIVE", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			NoRocketRestriction = new StatusItem("NOROCKETRESTRICTION", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			BroadcasterOutOfRange = new StatusItem("BROADCASTEROUTOFRANGE", "BUILDING", "status_item_exclamation", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			LosingRadbolts = new StatusItem("LOSINGRADBOLTS", "BUILDING", "status_item_exclamation", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
+			FabricatorAcceptsMutantSeeds = new StatusItem("FABRICATORACCEPTSMUTANTSEEDS", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID, showWorldIcon: false);
 		}
 
 		private static bool ShowInUtilityOverlay(HashedString mode, object data)

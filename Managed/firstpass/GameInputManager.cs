@@ -1,5 +1,9 @@
+using System.Collections.Generic;
+
 public class GameInputManager : KInputManager
 {
+	public List<IInputHandler> usedMenus = new List<IInputHandler>();
+
 	public KInputController AddKeyboardMouseController()
 	{
 		KInputController kInputController = new KInputController(is_gamepad: false);
@@ -20,7 +24,7 @@ public class GameInputManager : KInputManager
 		for (int i = 0; i < bindingEntries.Length; i++)
 		{
 			BindingEntry bindingEntry = bindingEntries[i];
-			kInputController.Bind(BindingEntry.GetGamepadKeyCode(gamepad_index, bindingEntry.mButton), Modifier.None, bindingEntry.mAction);
+			kInputController.Bind(bindingEntry.mKeyCode, Modifier.None, bindingEntry.mAction);
 		}
 		AddController(kInputController);
 		return kInputController;
@@ -31,6 +35,11 @@ public class GameInputManager : KInputManager
 		GameInputMapping.SetDefaultKeyBindings(default_keybindings);
 		GameInputMapping.LoadBindings();
 		AddKeyboardMouseController();
+		KInputManager.steamInputInterpreter.OnEnable();
+		if (KInputManager.steamInputInterpreter.NumOfISteamInputs > 0)
+		{
+			AddGamepadController(GetControllerCount());
+		}
 	}
 
 	public void RebindControls()
@@ -46,14 +55,33 @@ public class GameInputManager : KInputManager
 			}
 			mController.HandleCancelInput();
 		}
+		KInputManager.InputChange.Invoke();
 	}
 
 	public override void Update()
 	{
-		if (KInputManager.isFocused)
+		if (!KInputManager.isFocused)
 		{
-			base.Update();
+			return;
 		}
+		KInputManager.steamInputInterpreter.Update();
+		if (KInputManager.steamInputInterpreter.NumOfISteamInputs > 0 && GetControllerCount() <= 1)
+		{
+			AddGamepadController(GetControllerCount());
+		}
+		else if (KInputManager.steamInputInterpreter.NumOfISteamInputs < 1 && KInputManager.currentControllerIsGamepad)
+		{
+			KInputManager.currentControllerIsGamepad = false;
+			KInputManager.InputChange.Invoke();
+		}
+		for (int i = 0; i < mControllers.Count && i + 1 < mControllers.Count; i++)
+		{
+			if (mControllers[i].inputHandler.HandleChildCount() != mControllers[i + 1].inputHandler.HandleChildCount())
+			{
+				mControllers[i].inputHandler.TransferHandles(mControllers[i + 1].inputHandler);
+			}
+		}
+		base.Update();
 	}
 
 	public override void OnApplicationFocus(bool focusStatus)

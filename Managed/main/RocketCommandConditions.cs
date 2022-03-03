@@ -24,6 +24,8 @@ public class RocketCommandConditions : KMonoBehaviour
 
 	public ConditionHasNosecone hasNosecone;
 
+	public ConditionOnLaunchPad onLaunchPad;
+
 	public ConditionFlightPathIsClear flightPathIsClear;
 
 	protected override void OnSpawn()
@@ -47,6 +49,7 @@ public class RocketCommandConditions : KMonoBehaviour
 			pilotOnBoard = (ConditionPilotOnBoard)component.AddModuleCondition(ProcessCondition.ProcessConditionType.RocketBoard, new ConditionPilotOnBoard(GetComponent<PassengerRocketModule>()));
 			passengersOnBoard = (ConditionPassengersOnBoard)component.AddModuleCondition(ProcessCondition.ProcessConditionType.RocketBoard, new ConditionPassengersOnBoard(GetComponent<PassengerRocketModule>()));
 			noExtraPassengers = (ConditionNoExtraPassengers)component.AddModuleCondition(ProcessCondition.ProcessConditionType.RocketBoard, new ConditionNoExtraPassengers(GetComponent<PassengerRocketModule>()));
+			onLaunchPad = (ConditionOnLaunchPad)component.AddModuleCondition(ProcessCondition.ProcessConditionType.RocketPrep, new ConditionOnLaunchPad(GetComponent<RocketModuleCluster>().CraftInterface));
 		}
 		flightPathIsClear = (ConditionFlightPathIsClear)component.AddModuleCondition(ProcessCondition.ProcessConditionType.RocketFlight, new ConditionFlightPathIsClear(base.gameObject, 1));
 	}

@@ -8,6 +8,9 @@ public class FactionAlignment : KMonoBehaviour
 	[SerializeField]
 	public bool canBePlayerTargeted = true;
 
+	[SerializeField]
+	public bool updatePrioritizable = true;
+
 	[Serialize]
 	private bool alignmentActive = true;
 
@@ -105,6 +108,7 @@ public class FactionAlignment : KMonoBehaviour
 
 	private void UpdateStatusItem()
 	{
+		TogglePrioritizable(targeted);
 		if (targeted)
 		{
 			GetComponent<KSelectable>().AddStatusItem(Db.Get().MiscStatusItems.OrderAttack);
@@ -112,6 +116,22 @@ public class FactionAlignment : KMonoBehaviour
 		else
 		{
 			GetComponent<KSelectable>().RemoveStatusItem(Db.Get().MiscStatusItems.OrderAttack);
+		}
+	}
+
+	private void TogglePrioritizable(bool enable)
+	{
+		Prioritizable component = GetComponent<Prioritizable>();
+		if (!(component == null) && updatePrioritizable)
+		{
+			if (enable)
+			{
+				Prioritizable.AddRef(base.gameObject);
+			}
+			else if (component.IsPrioritizable())
+			{
+				Prioritizable.RemoveRef(base.gameObject);
+			}
 		}
 	}
 

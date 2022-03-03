@@ -7,9 +7,10 @@ public class SafeCellQuery : PathFinderQuery
 		IsNotLadder = 4,
 		IsNotTube = 8,
 		CorrectTemperature = 0x10,
-		IsBreathable = 0x20,
-		IsNotLiquidOnMyFace = 0x40,
-		IsNotLiquid = 0x80
+		IsNotRadiated = 0x20,
+		IsBreathable = 0x40,
+		IsNotLiquidOnMyFace = 0x80,
+		IsNotLiquid = 0x100
 	}
 
 	private MinionBrain brain;
@@ -51,13 +52,14 @@ public class SafeCellQuery : PathFinderQuery
 		bool num2 = !Grid.Element[cell].IsLiquid;
 		bool flag2 = !Grid.Element[num].IsLiquid;
 		bool num3 = Grid.Temperature[cell] > 285.15f && Grid.Temperature[cell] < 303.15f;
-		bool flag3 = brain.OxygenBreather.IsBreathableElementAtCell(cell, Grid.DefaultOffset);
-		bool flag4 = !brain.Navigator.NavGrid.NavTable.IsValid(cell, NavType.Ladder) && !brain.Navigator.NavGrid.NavTable.IsValid(cell, NavType.Pole);
-		bool flag5 = !brain.Navigator.NavGrid.NavTable.IsValid(cell, NavType.Tube);
-		bool flag6 = !avoid_light || SleepChore.IsDarkAtCell(cell);
+		bool flag3 = Grid.Radiation[cell] < 250f;
+		bool flag4 = brain.OxygenBreather.IsBreathableElementAtCell(cell, Grid.DefaultOffset);
+		bool flag5 = !brain.Navigator.NavGrid.NavTable.IsValid(cell, NavType.Ladder) && !brain.Navigator.NavGrid.NavTable.IsValid(cell, NavType.Pole);
+		bool flag6 = !brain.Navigator.NavGrid.NavTable.IsValid(cell, NavType.Tube);
+		bool flag7 = !avoid_light || SleepChore.IsDarkAtCell(cell);
 		if (cell == Grid.PosToCell(brain))
 		{
-			flag3 = !brain.OxygenBreather.IsSuffocating;
+			flag4 = !brain.OxygenBreather.IsSuffocating;
 		}
 		SafeFlags safeFlags = (SafeFlags)0;
 		if (flag)
@@ -70,13 +72,17 @@ public class SafeCellQuery : PathFinderQuery
 		}
 		if (flag3)
 		{
-			safeFlags |= SafeFlags.IsBreathable;
+			safeFlags |= SafeFlags.IsNotRadiated;
 		}
 		if (flag4)
 		{
-			safeFlags |= SafeFlags.IsNotLadder;
+			safeFlags |= SafeFlags.IsBreathable;
 		}
 		if (flag5)
+		{
+			safeFlags |= SafeFlags.IsNotLadder;
+		}
+		if (flag6)
 		{
 			safeFlags |= SafeFlags.IsNotTube;
 		}
@@ -88,7 +94,7 @@ public class SafeCellQuery : PathFinderQuery
 		{
 			safeFlags |= SafeFlags.IsNotLiquidOnMyFace;
 		}
-		if (flag6)
+		if (flag7)
 		{
 			safeFlags |= SafeFlags.IsLightOk;
 		}

@@ -45,7 +45,7 @@ public class RadiationDiagnostic : ColonyDiagnostic
 		foreach (MinionIdentity item in worldItems)
 		{
 			RadiationMonitor.Instance sMI = item.GetSMI<RadiationMonitor.Instance>();
-			if (sMI.sm.isSick.Get(sMI))
+			if (sMI != null && sMI.sm.isSick.Get(sMI))
 			{
 				result.opinion = DiagnosticResult.Opinion.Concern;
 				result.Message = UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA_RADIATION_SICKNESS.FAIL;
@@ -70,22 +70,25 @@ public class RadiationDiagnostic : ColonyDiagnostic
 		foreach (MinionIdentity item in worldItems)
 		{
 			RadiationMonitor.Instance sMI = item.GetSMI<RadiationMonitor.Instance>();
-			RadiationMonitor sm = sMI.sm;
-			GameObject gameObject = item.gameObject;
-			Vector3 position = gameObject.transform.position;
-			float num = sm.currentExposurePerCycle.Get(sMI);
-			float num2 = sm.radiationExposure.Get(sMI);
-			if (num > 60f && num2 > 30f)
+			if (sMI != null)
 			{
-				result.clickThroughTarget = new Tuple<Vector3, GameObject>(position, gameObject);
-				result.opinion = DiagnosticResult.Opinion.Concern;
-				result.Message = UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA_RADIATION_EXPOSURE.FAIL_CONCERN;
-			}
-			if (num > 600f)
-			{
-				result.clickThroughTarget = new Tuple<Vector3, GameObject>(position, item.gameObject);
-				result.opinion = DiagnosticResult.Opinion.Warning;
-				result.Message = UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA_RADIATION_EXPOSURE.FAIL_WARNING;
+				RadiationMonitor sm = sMI.sm;
+				GameObject gameObject = item.gameObject;
+				Vector3 position = gameObject.transform.position;
+				float p = sm.currentExposurePerCycle.Get(sMI);
+				float p2 = sm.radiationExposure.Get(sMI);
+				if (RadiationMonitor.COMPARE_LT_MINOR(sMI, p) && RadiationMonitor.COMPARE_RECOVERY_IMMEDIATE(sMI, p2))
+				{
+					result.clickThroughTarget = new Tuple<Vector3, GameObject>(position, gameObject);
+					result.opinion = DiagnosticResult.Opinion.Concern;
+					result.Message = UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA_RADIATION_EXPOSURE.FAIL_CONCERN;
+				}
+				if (RadiationMonitor.COMPARE_GTE_DEADLY(sMI, p))
+				{
+					result.clickThroughTarget = new Tuple<Vector3, GameObject>(position, item.gameObject);
+					result.opinion = DiagnosticResult.Opinion.Warning;
+					result.Message = UI.COLONY_DIAGNOSTICS.RADIATIONDIAGNOSTIC.CRITERIA_RADIATION_EXPOSURE.FAIL_WARNING;
+				}
 			}
 		}
 		return result;

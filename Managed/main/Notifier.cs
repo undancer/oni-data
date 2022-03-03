@@ -28,7 +28,7 @@ public class Notifier : KMonoBehaviour
 
 	public void Add(Notification notification, string suffix = "")
 	{
-		if (KScreenManager.Instance == null || DisableNotifications)
+		if (KScreenManager.Instance == null || DisableNotifications || DebugHandler.NotificationsDisabled)
 		{
 			return;
 		}

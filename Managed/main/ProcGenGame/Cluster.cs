@@ -61,7 +61,7 @@ namespace ProcGenGame
 		{
 		}
 
-		public Cluster(string name, int seed, bool assertMissingTraits)
+		public Cluster(string name, int seed, bool assertMissingTraits, bool skipWorldTraits)
 		{
 			DebugUtil.Assert(!string.IsNullOrEmpty(name), "Cluster file is missing");
 			this.seed = seed;
@@ -84,7 +84,7 @@ namespace ProcGenGame
 			foreach (WorldPlacement worldPlacement in clusterLayout.worldPlacements)
 			{
 				List<string> chosenTraits = new List<string>();
-				if (seed > 0)
+				if (seed > 0 && !skipWorldTraits)
 				{
 					ProcGen.World worldData2 = SettingsCache.worlds.GetWorldData(worldPlacement.world);
 					chosenTraits = SettingsCache.GetRandomTraits(seed, worldData2);

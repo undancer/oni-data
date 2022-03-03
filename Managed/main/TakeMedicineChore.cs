@@ -57,6 +57,7 @@ public class TakeMedicineChore : Chore<TakeMedicineChore.StatesInstance>
 		AddPrecondition(ChorePreconditions.instance.CanPickup, pickupable);
 		AddPrecondition(CanCure, this);
 		AddPrecondition(IsConsumptionPermitted, this);
+		AddPrecondition(ChorePreconditions.instance.IsNotARobot, this);
 	}
 
 	public override void Begin(Precondition.Context context)

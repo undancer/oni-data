@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Klei;
 using TUNING;
@@ -208,7 +207,7 @@ public class GeyserGenericConfig : IMultiEntityConfig
 				Debug.LogWarning("Could not load global world seed for geysers");
 			}
 			num = num + (int)inst.transform.GetPosition().x + (int)inst.transform.GetPosition().y;
-			int index = new System.Random(num).Next(0, configs.Count);
+			int index = new KRandom(num).Next(0, configs.Count);
 			GameUtil.KInstantiate(Assets.GetPrefab(configs[index].id), inst.transform.GetPosition(), Grid.SceneLayer.BuildingBack).SetActive(value: true);
 			inst.DeleteObject();
 		};

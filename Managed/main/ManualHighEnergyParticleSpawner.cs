@@ -103,6 +103,7 @@ public class ManualHighEnergyParticleSpawner : StateMachineComponent<ManualHighE
 		radiationEmitter.SetEmitting(emitting: false);
 		directionController = new EightDirectionController(GetComponent<KBatchedAnimController>(), "redirector_target", "redirect", EightDirectionController.Offset.Infront);
 		Direction = Direction;
+		Tutorial.Instance.TutorialMessage(Tutorial.TutorialMessages.TM_Radiation);
 	}
 
 	private void OnCopySettings(object data)

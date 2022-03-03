@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -187,6 +186,11 @@ public class CameraController : KMonoBehaviour, IInputHandler
 	public void ToggleClusterFX()
 	{
 		ignoreClusterFX = !ignoreClusterFX;
+	}
+
+	private void OnCleanup()
+	{
+		Global.Instance.GetInputManager().usedMenus.Remove(this);
 	}
 
 	public void GetWorldCamera(out Vector2I worldOffset, out Vector2I worldSize)
@@ -435,7 +439,7 @@ public class CameraController : KMonoBehaviour, IInputHandler
 			return false;
 		}
 		bool result = false;
-		if (current.currentSelectedGameObject != null && (current.currentSelectedGameObject.GetComponent<TMP_InputField>() != null || current.currentSelectedGameObject.GetComponent<InputField>() != null))
+		if (current.currentSelectedGameObject != null && (current.currentSelectedGameObject.GetComponent<KInputTextField>() != null || current.currentSelectedGameObject.GetComponent<InputField>() != null))
 		{
 			result = true;
 		}
@@ -1035,10 +1039,21 @@ public class CameraController : KMonoBehaviour, IInputHandler
 				isTargetPosSet = false;
 				overrideZoomSpeed = 0f;
 			}
-			Vector3 vector5 = new Vector3(Mathf.Lerp(0f, keyPanDelta.x, smoothDt * keyPanningEasing), Mathf.Lerp(0f, keyPanDelta.y, smoothDt * keyPanningEasing), 0f);
-			keyPanDelta -= vector5;
-			vector4.x += vector5.x;
-			vector4.y += vector5.y;
+			if (KInputManager.currentControllerIsGamepad)
+			{
+				Vector2 vector5 = num2 * KInputManager.steamInputInterpreter.GetSteamCameraMovement();
+				if (Mathf.Abs(vector5.x) > Mathf.Epsilon || Mathf.Abs(vector5.y) > Mathf.Epsilon)
+				{
+					ClearFollowTarget();
+					isTargetPosSet = false;
+					overrideZoomSpeed = 0f;
+				}
+				keyPanDelta += new Vector3(vector5.x, vector5.y, 0f);
+			}
+			Vector3 vector6 = new Vector3(Mathf.Lerp(0f, keyPanDelta.x, smoothDt * keyPanningEasing), Mathf.Lerp(0f, keyPanDelta.y, smoothDt * keyPanningEasing), 0f);
+			keyPanDelta -= vector6;
+			vector4.x += vector6.x;
+			vector4.y += vector6.y;
 		}
 		if (followTarget != null)
 		{

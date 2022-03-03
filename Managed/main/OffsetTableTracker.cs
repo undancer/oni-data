@@ -35,18 +35,18 @@ public class OffsetTableTracker : OffsetTracker
 		if (previous_cell != current_cell)
 		{
 			base.UpdateCell(previous_cell, current_cell);
+			Extents extents = new Extents(current_cell, table);
+			extents.height += 2;
+			extents.y--;
 			if (!solidPartitionerEntry.IsValid())
 			{
-				Extents extents = new Extents(current_cell, table);
-				extents.height += 2;
-				extents.y--;
 				solidPartitionerEntry = GameScenePartitioner.Instance.Add("OffsetTableTracker.UpdateCell", cmp.gameObject, extents, GameScenePartitioner.Instance.solidChangedLayer, OnCellChanged);
 				validNavCellChangedPartitionerEntry = GameScenePartitioner.Instance.Add("OffsetTableTracker.UpdateCell", cmp.gameObject, extents, GameScenePartitioner.Instance.validNavCellChangedLayer, OnCellChanged);
 			}
 			else
 			{
-				GameScenePartitioner.Instance.UpdatePosition(solidPartitionerEntry, current_cell);
-				GameScenePartitioner.Instance.UpdatePosition(validNavCellChangedPartitionerEntry, current_cell);
+				GameScenePartitioner.Instance.UpdatePosition(solidPartitionerEntry, extents);
+				GameScenePartitioner.Instance.UpdatePosition(validNavCellChangedPartitionerEntry, extents);
 			}
 			offsets = null;
 		}

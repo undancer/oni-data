@@ -1,7 +1,6 @@
 name: STRINGS.WORLDS.MINIFORESTFROZEN.NAME
 description: STRINGS.WORLDS.MINIFORESTFROZEN.DESCRIPTION
-nameTables:
-  - FOREST
+nameTables: [ FOREST, TUNDRA ]
 asteroidIcon: asteroid_mini_forestfrozen_kanim
 
 worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.
@@ -32,8 +31,7 @@ defaultsOverrides:
 #   min: 0.50
 #   max: 0.50
 
-disableWorldTraits: true
-worldTraitRules: # TODO
+worldTraitRules:
   - min: 1
     max: 2
     forbiddenTags:
@@ -42,13 +40,11 @@ worldTraitRules: # TODO
       - Oil
       - LargeWorld
       - Surface
-      - Crust
-      - Challenge
       - StartChange
 
 fixedTraits:
   - sunlightLow
-  - cosmicRadiationMedLow
+  - cosmicRadiationLow
 
 #------------------------------------------------------------------------------
 
@@ -195,3 +191,12 @@ worldTemplateRules:
       - command: Replace
         tagcommand: NotAtTag
         tag: NoGlobalFeatureSpawning        
+  # Gravitas Artifact POI
+  - names:
+    - expansion1::poi/genericGravitas/directors_room
+    listRule: GuaranteeAll
+    priority: 90
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning

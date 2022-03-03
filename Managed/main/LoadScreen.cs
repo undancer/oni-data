@@ -631,7 +631,7 @@ public class LoadScreen : KModalScreen
 		component.ClearOnClick();
 		component.onClick += delegate
 		{
-			Application.OpenURL(SaveLoader.GetSavePrefixAndCreateFolder());
+			App.OpenWebURL(SaveLoader.GetSavePrefixAndCreateFolder());
 		};
 		migrateButton.ClearOnClick();
 		migrateButton.onClick += delegate
@@ -673,7 +673,7 @@ public class LoadScreen : KModalScreen
 				.AddPlainText(UI.FRONTEND.LOADSCREEN.MIGRATE_RESULT_FAILURES_MORE_INFO_POST)
 				.AddOption(UI.FRONTEND.LOADSCREEN.MIGRATE_FAILURES_FORUM_BUTTON, delegate
 				{
-					Application.OpenURL("https://forums.kleientertainment.com/klei-bug-tracker/oni/");
+					App.OpenWebURL("https://forums.kleientertainment.com/klei-bug-tracker/oni/");
 				})
 				.AddOption(UI.CONFIRMDIALOG.OK, delegate(InfoDialogScreen d)
 				{
@@ -796,7 +796,7 @@ public class LoadScreen : KModalScreen
 			DoConvertAllToCloud();
 		}, delegate
 		{
-			Application.OpenURL(SaveLoader.GetSavePrefix());
+			App.OpenWebURL(SaveLoader.GetSavePrefix());
 		}, localToCloudSprite);
 	}
 
@@ -809,7 +809,7 @@ public class LoadScreen : KModalScreen
 			DoConvertAllToLocal();
 		}, delegate
 		{
-			Application.OpenURL(SaveLoader.GetCloudSavePrefix());
+			App.OpenWebURL(SaveLoader.GetCloudSavePrefix());
 		}, cloudToLocalSprite);
 	}
 
@@ -823,7 +823,7 @@ public class LoadScreen : KModalScreen
 			.AddPlainText(UI.FRONTEND.LOADSCREEN.SAVE_INFO_DIALOG_TEXT)
 			.AddOption(UI.FRONTEND.LOADSCREEN.OPEN_SAVE_FOLDER, delegate
 			{
-				Application.OpenURL(SaveLoader.GetSavePrefix());
+				App.OpenWebURL(SaveLoader.GetSavePrefix());
 			}, rightSide: true)
 			.AddDefaultCancel();
 		string cloudRoot = SaveLoader.GetCloudSavePrefix();
@@ -831,7 +831,7 @@ public class LoadScreen : KModalScreen
 		{
 			infoScreen.AddOption(UI.FRONTEND.LOADSCREEN.OPEN_CLOUDSAVE_FOLDER, delegate
 			{
-				Application.OpenURL(cloudRoot);
+				App.OpenWebURL(cloudRoot);
 			}, rightSide: true);
 		}
 		infoScreen.gameObject.SetActive(value: true);
@@ -865,7 +865,7 @@ public class LoadScreen : KModalScreen
 		{
 			if (display != null)
 			{
-				display.text = string.Format(UI.FRONTEND.LOADSCREEN.SAVE_TOO_NEW, save.FileName, save.FileHeader.buildVersion, save.FileInfo.saveMinorVersion, 484114u, 27);
+				display.text = string.Format(UI.FRONTEND.LOADSCREEN.SAVE_TOO_NEW, save.FileName, save.FileHeader.buildVersion, save.FileInfo.saveMinorVersion, 497575u, 28);
 			}
 			return false;
 		}
@@ -873,7 +873,7 @@ public class LoadScreen : KModalScreen
 		{
 			if (display != null)
 			{
-				display.text = string.Format(UI.FRONTEND.LOADSCREEN.UNSUPPORTED_SAVE_VERSION, save.FileName, save.FileInfo.saveMajorVersion, save.FileInfo.saveMinorVersion, 7, 27);
+				display.text = string.Format(UI.FRONTEND.LOADSCREEN.UNSUPPORTED_SAVE_VERSION, save.FileName, save.FileInfo.saveMajorVersion, save.FileInfo.saveMinorVersion, 7, 28);
 			}
 			return false;
 		}
@@ -1140,11 +1140,11 @@ public class LoadScreen : KModalScreen
 
 	private static bool IsSaveFileFromUnsupportedFutureBuild(SaveGame.Header header, SaveGame.GameInfo gameInfo)
 	{
-		if (gameInfo.saveMajorVersion > 7 || (gameInfo.saveMajorVersion == 7 && gameInfo.saveMinorVersion > 27))
+		if (gameInfo.saveMajorVersion > 7 || (gameInfo.saveMajorVersion == 7 && gameInfo.saveMinorVersion > 28))
 		{
 			return true;
 		}
-		return header.buildVersion > 484114;
+		return header.buildVersion > 497575;
 	}
 
 	private static bool IsSaveFromCurrentDLC(SaveGame.GameInfo gameInfo, out string saveDlcName)
@@ -1224,15 +1224,15 @@ public class LoadScreen : KModalScreen
 		SaveGame.GameInfo gameInfo = SaveLoader.LoadHeader(filename, out header);
 		string arg = null;
 		string arg2 = null;
-		if (header.buildVersion > 484114)
+		if (header.buildVersion > 497575)
 		{
 			arg = header.buildVersion.ToString();
-			arg2 = 484114u.ToString();
+			arg2 = 497575u.ToString();
 		}
 		else if (gameInfo.saveMajorVersion < 7)
 		{
 			arg = $"v{gameInfo.saveMajorVersion}.{gameInfo.saveMinorVersion}";
-			arg2 = $"v{7}.{27}";
+			arg2 = $"v{7}.{28}";
 		}
 		if (1 == 0)
 		{
@@ -1251,7 +1251,7 @@ public class LoadScreen : KModalScreen
 
 	private void MoreInfo()
 	{
-		Application.OpenURL("http://support.kleientertainment.com/customer/portal/articles/2776550");
+		App.OpenWebURL("http://support.kleientertainment.com/customer/portal/articles/2776550");
 	}
 
 	private void Delete(System.Action onDelete)
@@ -1309,7 +1309,7 @@ public class LoadScreen : KModalScreen
 				.AddPlainText(message)
 				.AddOption(UI.FRONTEND.LOADSCREEN.MIGRATE_FAILURES_FORUM_BUTTON, delegate
 				{
-					Application.OpenURL("https://forums.kleientertainment.com/klei-bug-tracker/oni/");
+					App.OpenWebURL("https://forums.kleientertainment.com/klei-bug-tracker/oni/");
 				})
 				.AddDefaultOK();
 			errorInfoScreen.Activate();

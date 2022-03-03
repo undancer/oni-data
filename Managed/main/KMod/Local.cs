@@ -1,7 +1,6 @@
 using System.IO;
 using Klei;
 using STRINGS;
-using UnityEngine;
 
 namespace KMod
 {
@@ -28,7 +27,7 @@ namespace KMod
 			label2.title = header.title;
 			Mod mod = new Mod(label2, header.staticID, header.description, file_source, UI.FRONTEND.MODS.TOOLTIPS.MANAGE_LOCAL_MOD, delegate
 			{
-				Application.OpenURL("file://" + file_source.GetRoot());
+				App.OpenWebURL("file://" + file_source.GetRoot());
 			});
 			if (file_source.GetType() == typeof(Directory))
 			{

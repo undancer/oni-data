@@ -1,4 +1,3 @@
-using System;
 using KSerialization;
 using STRINGS;
 using UnityEngine;
@@ -16,10 +15,15 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 
 	public class States : GameStateMachine<States, StatesInstance, HighEnergyParticleSpawner>
 	{
+		public class InoperationalStates : State
+		{
+			public State empty;
+
+			public State losing;
+		}
+
 		public class ReadyStates : State
 		{
-			public State create;
-
 			public State idle;
 
 			public State absorbing;
@@ -27,17 +31,19 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 
 		public BoolParameter isAbsorbingRadiation;
 
-		public State inoperational;
-
 		public ReadyStates ready;
+
+		public InoperationalStates inoperational;
 
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = inoperational;
-			inoperational.PlayAnim("off").TagTransition(GameTags.Operational, ready).Update(delegate(StatesInstance smi, float dt)
+			inoperational.PlayAnim("off").TagTransition(GameTags.Operational, ready).DefaultState(inoperational.empty);
+			inoperational.empty.EventTransition(GameHashes.OnParticleStorageChanged, inoperational.losing, (StatesInstance smi) => !smi.GetComponent<HighEnergyParticleStorage>().IsEmpty());
+			inoperational.losing.ToggleStatusItem(Db.Get().BuildingStatusItems.LosingRadbolts).Update(delegate(StatesInstance smi, float dt)
 			{
 				smi.master.DoConsumeParticlesWhileDisabled(dt);
-			});
+			}, UpdateRate.SIM_1000ms).EventTransition(GameHashes.OnParticleStorageChanged, inoperational.empty, (StatesInstance smi) => smi.GetComponent<HighEnergyParticleStorage>().IsEmpty());
 			ready.TagTransition(GameTags.Operational, inoperational, on_remove: true).DefaultState(ready.idle).Update(delegate(StatesInstance smi, float dt)
 			{
 				smi.master.LauncherUpdate(dt);
@@ -50,11 +56,10 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 			{
 				smi.master.operational.SetActive(value: false);
 			}).ParamTransition(isAbsorbingRadiation, ready.idle, GameStateMachine<States, StatesInstance, HighEnergyParticleSpawner, object>.IsFalse)
+				.ToggleStatusItem(Db.Get().BuildingStatusItems.CollectingHEP, (StatesInstance smi) => smi.master)
 				.PlayAnim("working_loop", KAnim.PlayMode.Loop);
 		}
 	}
-
-	public static readonly HashedString PORT_ID = "HEPSpawner";
 
 	[MyCmpReq]
 	private HighEnergyParticleStorage particleStorage;
@@ -62,15 +67,11 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 	[MyCmpGet]
 	private Operational operational;
 
-	private Guid HEPStatusHandle;
-
 	private float recentPerSecondConsumptionRate;
 
 	public int minSlider;
 
 	public int maxSlider;
-
-	private MeterController particleContainerVisual;
 
 	[Serialize]
 	private EightDirection _direction;
@@ -105,18 +106,7 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 		component.OnCopySettings(data);
 	});
 
-	private static readonly EventSystem.IntraObjectHandler<HighEnergyParticleSpawner> OnLogicValueChangedDelegate = new EventSystem.IntraObjectHandler<HighEnergyParticleSpawner>(delegate(HighEnergyParticleSpawner component, object data)
-	{
-		component.OnLogicValueChanged(data);
-	});
-
-	private bool hasLogicWire;
-
-	private bool isLogicActive;
-
-	private static StatusItem infoStatusItem_Logic;
-
-	public float PredictedPerCycleConsumptionRate => Mathf.FloorToInt(recentPerSecondConsumptionRate * 600f);
+	public float PredictedPerCycleConsumptionRate => Mathf.FloorToInt(recentPerSecondConsumptionRate * 0.1f * 600f);
 
 	public EightDirection Direction
 	{
@@ -136,27 +126,7 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 		}
 	}
 
-	public bool AllowSpawnParticles
-	{
-		get
-		{
-			if (hasLogicWire)
-			{
-				if (hasLogicWire)
-				{
-					return isLogicActive;
-				}
-				return false;
-			}
-			return true;
-		}
-	}
-
-	public bool HasLogicWire => hasLogicWire;
-
-	public bool IsLogicActive => isLogicActive;
-
-	public string SliderTitleKey => "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.TITLE";
+	public string SliderTitleKey => "STRINGS.UI.UISIDESCREENS.RADBOLTTHRESHOLDSIDESCREEN.TITLE";
 
 	public string SliderUnits => UI.UNITSUFFIXES.HIGHENERGYPARTICLES.PARTRICLES;
 
@@ -174,27 +144,18 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 	{
 		base.OnPrefabInit();
 		Subscribe(-905833192, OnCopySettingsDelegate);
-		Subscribe(-801688580, OnLogicValueChangedDelegate);
 	}
 
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
 		base.smi.StartSM();
-		KSelectable component = GetComponent<KSelectable>();
-		if (infoStatusItem_Logic == null)
-		{
-			infoStatusItem_Logic = new StatusItem("HEPSpawnerLogic", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
-			infoStatusItem_Logic.resolveStringCallback = ResolveInfoStatusItem;
-			infoStatusItem_Logic.resolveTooltipCallback = ResolveInfoStatusItemTooltip;
-		}
-		component.AddStatusItem(infoStatusItem_Logic, this);
-		HEPStatusHandle = component.AddStatusItem(Db.Get().BuildingStatusItems.CollectingHEP, this);
 		directionController = new EightDirectionController(GetComponent<KBatchedAnimController>(), "redirector_target", "redirect", EightDirectionController.Offset.Infront);
 		Direction = Direction;
 		particleController = new MeterController(GetComponent<KBatchedAnimController>(), "orb_target", "orb_off", Meter.Offset.NoChange, Grid.SceneLayer.NoLayer);
 		particleController.gameObject.AddOrGet<LoopingSounds>();
 		progressMeterController = new MeterController(GetComponent<KBatchedAnimController>(), "meter_target", "meter", Meter.Offset.Infront, Grid.SceneLayer.NoLayer);
+		Tutorial.Instance.TutorialMessage(Tutorial.TutorialMessages.TM_Radiation);
 	}
 
 	public float GetProgressBarMaxValue()
@@ -209,7 +170,7 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 
 	public string GetProgressBarTitleLabel()
 	{
-		return UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.PROGRESS_BAR_LABEL;
+		return UI.UISIDESCREENS.RADBOLTTHRESHOLDSIDESCREEN.PROGRESS_BAR_LABEL;
 	}
 
 	public string GetProgressBarLabel()
@@ -219,16 +180,13 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 
 	public string GetProgressBarTooltip()
 	{
-		return UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.PROGRESS_BAR_TOOLTIP;
-	}
-
-	private void OnSimConsumeRadiationCallback(Sim.ConsumedRadiationCallback radiationCBInfo, object data)
-	{
+		return UI.UISIDESCREENS.RADBOLTTHRESHOLDSIDESCREEN.PROGRESS_BAR_TOOLTIP;
 	}
 
 	public void DoConsumeParticlesWhileDisabled(float dt)
 	{
 		particleStorage.ConsumeAndGet(dt * 1f);
+		progressMeterController.SetPositionPercent(GetProgressBarFillPercentage());
 	}
 
 	public void LauncherUpdate(float dt)
@@ -239,14 +197,15 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 			radiationSampleTimer -= radiationSampleRate;
 			int i = Grid.PosToCell(this);
 			float num = Grid.Radiation[i];
-			if (num != 0f)
+			if (num != 0f && particleStorage.RemainingCapacity() > 0f)
 			{
 				base.smi.sm.isAbsorbingRadiation.Set(value: true, base.smi);
 				recentPerSecondConsumptionRate = num / 600f;
-				particleStorage.Store(recentPerSecondConsumptionRate * radiationSampleRate);
+				particleStorage.Store(recentPerSecondConsumptionRate * radiationSampleRate * 0.1f);
 			}
 			else
 			{
+				recentPerSecondConsumptionRate = 0f;
 				base.smi.sm.isAbsorbingRadiation.Set(value: false, base.smi);
 			}
 		}
@@ -258,7 +217,7 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 			particleVisualPlaying = true;
 		}
 		launcherTimer += dt;
-		if (!(launcherTimer < minLaunchInterval) && AllowSpawnParticles && particleStorage.Particles >= particleThreshold)
+		if (!(launcherTimer < minLaunchInterval) && particleStorage.Particles >= particleThreshold)
 		{
 			launcherTimer = 0f;
 			int highEnergyParticleOutputCell = GetComponent<Building>().GetHighEnergyParticleOutputCell();
@@ -276,55 +235,6 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 				particleVisualPlaying = false;
 			}
 		}
-	}
-
-	protected override void OnCleanUp()
-	{
-		base.OnCleanUp();
-	}
-
-	private LogicCircuitNetwork GetNetwork()
-	{
-		int portCell = GetComponent<LogicPorts>().GetPortCell(PORT_ID);
-		return Game.Instance.logicCircuitManager.GetNetworkForCell(portCell);
-	}
-
-	private void OnLogicValueChanged(object data)
-	{
-		LogicValueChanged logicValueChanged = (LogicValueChanged)data;
-		if (logicValueChanged.portID == PORT_ID)
-		{
-			isLogicActive = logicValueChanged.newValue > 0;
-			hasLogicWire = GetNetwork() != null;
-		}
-	}
-
-	private static string ResolveInfoStatusItem(string format_str, object data)
-	{
-		HighEnergyParticleSpawner highEnergyParticleSpawner = (HighEnergyParticleSpawner)data;
-		if (!highEnergyParticleSpawner.HasLogicWire)
-		{
-			return BUILDING.STATUSITEMS.HIGHENERGYPARTICLESPAWNER.NORMAL;
-		}
-		if (highEnergyParticleSpawner.IsLogicActive)
-		{
-			return BUILDING.STATUSITEMS.HIGHENERGYPARTICLESPAWNER.LOGIC_CONTROLLED_ACTIVE;
-		}
-		return BUILDING.STATUSITEMS.HIGHENERGYPARTICLESPAWNER.LOGIC_CONTROLLED_STANDBY;
-	}
-
-	private static string ResolveInfoStatusItemTooltip(string format_str, object data)
-	{
-		HighEnergyParticleSpawner highEnergyParticleSpawner = (HighEnergyParticleSpawner)data;
-		if (!highEnergyParticleSpawner.HasLogicWire)
-		{
-			return BUILDING.STATUSITEMS.HIGHENERGYPARTICLESPAWNER.TOOLTIPS.NORMAL;
-		}
-		if (highEnergyParticleSpawner.IsLogicActive)
-		{
-			return BUILDING.STATUSITEMS.HIGHENERGYPARTICLESPAWNER.TOOLTIPS.LOGIC_CONTROLLED_ACTIVE;
-		}
-		return BUILDING.STATUSITEMS.HIGHENERGYPARTICLESPAWNER.TOOLTIPS.LOGIC_CONTROLLED_STANDBY;
 	}
 
 	public int SliderDecimalPlaces(int index)
@@ -354,11 +264,11 @@ public class HighEnergyParticleSpawner : StateMachineComponent<HighEnergyParticl
 
 	public string GetSliderTooltipKey(int index)
 	{
-		return "STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.TOOLTIP";
+		return "STRINGS.UI.UISIDESCREENS.RADBOLTTHRESHOLDSIDESCREEN.TOOLTIP";
 	}
 
 	string ISliderControl.GetSliderTooltip()
 	{
-		return string.Format(Strings.Get("STRINGS.UI.UISIDESCREENS.HIGHENERGYPARTICLESPAWNERSIDESCREEN.TOOLTIP"), particleThreshold);
+		return string.Format(Strings.Get("STRINGS.UI.UISIDESCREENS.RADBOLTTHRESHOLDSIDESCREEN.TOOLTIP"), particleThreshold);
 	}
 }

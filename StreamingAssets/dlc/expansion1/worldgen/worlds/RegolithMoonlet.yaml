@@ -1,7 +1,6 @@
 name: STRINGS.WORLDS.REGOLITHMOONLET.NAME
 description: STRINGS.WORLDS.REGOLITHMOONLET.DESCRIPTION
-nameTables:
-  - REGOLITH
+nameTables: [ REGOLITH ]
 asteroidIcon: asteroid_regolith_moonlet_kanim
 
 worldTraitScale: 0.15 # Adjust with worldSize. Traits are tuned to base game world sizes.
@@ -51,7 +50,7 @@ subworldFiles:
   
 fixedTraits:
   - sunlightVeryVeryVeryHigh
-  - cosmicRadiationMedHigh
+  - cosmicRadiationMed
   
 unknownCellsAllowedSubworlds: 
   - tagcommand: Default
@@ -113,4 +112,29 @@ worldTemplateRules:
       maxDistance: 0
     - command: IntersectWith
       zoneTypes: [ FrozenWastes ]
-    
+  - names:
+    - expansion1::poi/regolith/bunker_lab
+    listRule: GuaranteeAll
+    priority: 90
+    allowExtremeTemperatureOverlap: true
+    allowedCellsFilter:
+      - command: Replace
+        subworldNames: 
+          - expansion1::subworlds/regolith/BarrenDust
+  - names:
+    - expansion1::poi/regolith/landing_pad
+    listRule: GuaranteeAll
+    priority: 90
+    allowExtremeTemperatureOverlap: true
+    overrideOffset:
+       X: 0
+       Y: 16
+    allowedCellsFilter:
+      - command: Replace
+        subworldNames: 
+          - expansion1::subworlds/regolith/BarrenDust
+      - command: IntersectWith
+        tagcommand: DistanceFromTag
+        tag: AtSurface
+        minDistance: 3
+        maxDistance: 3

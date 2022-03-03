@@ -23,7 +23,7 @@ public class FilterPlantConfig : IEntityConfig
 	public GameObject CreatePrefab()
 	{
 		GameObject gameObject = EntityTemplates.CreatePlacedEntity("FilterPlant", STRINGS.CREATURES.SPECIES.FILTERPLANT.NAME, STRINGS.CREATURES.SPECIES.FILTERPLANT.DESC, 2f, decor: DECOR.PENALTY.TIER1, anim: Assets.GetAnim("cactus_kanim"), initialAnim: "idle_empty", sceneLayer: Grid.SceneLayer.BuildingFront, width: 1, height: 2, noise: default(EffectorValues), element: SimHashes.Creature, additionalTags: null, defaultTemperature: 348.15f);
-		EntityTemplates.ExtendEntityToBasicPlant(gameObject, 253.15f, 293.15f, 383.15f, 443.15f, crop_id: SimHashes.Water.ToString(), baseTraitName: STRINGS.CREATURES.SPECIES.FILTERPLANT.NAME, safe_elements: new SimHashes[1] { SimHashes.Oxygen }, pressure_sensitive: true, pressure_lethal_low: 0f, pressure_warning_low: 0.025f, can_drown: true, can_tinker: true, require_solid_tile: true, should_grow_old: true, max_age: 2400f, min_radiation: 0f, max_radiation: 220f, baseTraitId: "FilterPlantOriginal");
+		EntityTemplates.ExtendEntityToBasicPlant(gameObject, 253.15f, 293.15f, 383.15f, 443.15f, crop_id: SimHashes.Water.ToString(), baseTraitName: STRINGS.CREATURES.SPECIES.FILTERPLANT.NAME, safe_elements: new SimHashes[1] { SimHashes.Oxygen }, pressure_sensitive: true, pressure_lethal_low: 0f, pressure_warning_low: 0.025f, can_drown: true, can_tinker: true, require_solid_tile: true, should_grow_old: true, max_age: 2400f, min_radiation: 0f, max_radiation: 2200f, baseTraitId: "FilterPlantOriginal");
 		PlantElementAbsorber.ConsumeInfo[] array = new PlantElementAbsorber.ConsumeInfo[1];
 		PlantElementAbsorber.ConsumeInfo consumeInfo = new PlantElementAbsorber.ConsumeInfo
 		{

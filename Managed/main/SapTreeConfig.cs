@@ -15,6 +15,10 @@ public class SapTreeConfig : IEntityConfig
 
 	private const int ATTACK_RADIUS = 2;
 
+	public const float MASS_EAT_RATE = 0.05f;
+
+	public const float KCAL_TO_KG_RATIO = 0.005f;
+
 	public string[] GetDlcIds()
 	{
 		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
@@ -25,9 +29,9 @@ public class SapTreeConfig : IEntityConfig
 		GameObject gameObject = EntityTemplates.CreatePlacedEntity("SapTree", STRINGS.CREATURES.SPECIES.SAPTREE.NAME, STRINGS.CREATURES.SPECIES.SAPTREE.DESC, 1f, decor: POSITIVE_DECOR_EFFECT, anim: Assets.GetAnim("gravitas_sap_tree_kanim"), initialAnim: "idle", sceneLayer: Grid.SceneLayer.BuildingFront, width: 5, height: 5, noise: default(EffectorValues), element: SimHashes.Creature, additionalTags: new List<Tag> { GameTags.Decoration });
 		SapTree.Def def = gameObject.AddOrGetDef<SapTree.Def>();
 		def.foodSenseArea = new Vector2I(5, 1);
-		def.massEatRate = 5f;
-		def.kcalorieToKGConversionRatio = 0.0005f;
-		def.stomachSize = 50f;
+		def.massEatRate = 0.05f;
+		def.kcalorieToKGConversionRatio = 0.005f;
+		def.stomachSize = 5f;
 		def.oozeRate = 2f;
 		def.oozeOffsets = new List<Vector3>
 		{

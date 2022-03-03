@@ -306,7 +306,7 @@ public class ReorderableBuilding : KMonoBehaviour
 		}
 	}
 
-	public bool CanMoveVertically(int moveAmount, GameObject ignoreBuildingBelow = null)
+	public bool CanMoveVertically(int moveAmount, GameObject ignoreBuilding = null)
 	{
 		if (moveAmount == 0)
 		{
@@ -316,7 +316,7 @@ public class ReorderableBuilding : KMonoBehaviour
 		AttachableBuilding component2 = GetComponent<AttachableBuilding>();
 		if (moveAmount > 0)
 		{
-			if (component != null && component.points[0].attachedBuilding != null && !component.points[0].attachedBuilding.GetComponent<ReorderableBuilding>().CanMoveVertically(moveAmount))
+			if (component != null && component.points[0].attachedBuilding != null && component.points[0].attachedBuilding.gameObject != ignoreBuilding && !component.points[0].attachedBuilding.GetComponent<ReorderableBuilding>().CanMoveVertically(moveAmount))
 			{
 				return false;
 			}
@@ -324,7 +324,7 @@ public class ReorderableBuilding : KMonoBehaviour
 		else if (component2 != null)
 		{
 			BuildingAttachPoint attachedTo = component2.GetAttachedTo();
-			if (attachedTo != null && attachedTo.gameObject != ignoreBuildingBelow && !component2.GetAttachedTo().GetComponent<ReorderableBuilding>().CanMoveVertically(moveAmount))
+			if (attachedTo != null && attachedTo.gameObject != ignoreBuilding && !component2.GetAttachedTo().GetComponent<ReorderableBuilding>().CanMoveVertically(moveAmount))
 			{
 				return false;
 			}

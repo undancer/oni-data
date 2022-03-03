@@ -1,8 +1,6 @@
-using System;
-
 public class SeededRandom
 {
-	private Random rnd;
+	private KRandom rnd;
 
 	public int seed { get; private set; }
 
@@ -13,10 +11,10 @@ public class SeededRandom
 			seed = 0;
 		}
 		this.seed = seed;
-		rnd = new Random(seed);
+		rnd = new KRandom(seed);
 	}
 
-	public Random RandomSource()
+	public KRandom RandomSource()
 	{
 		return rnd;
 	}

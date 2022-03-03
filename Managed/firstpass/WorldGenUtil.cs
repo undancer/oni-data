@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
 
 public static class WorldGenUtil
 {
-	public static void ShuffleSeeded<T>(this IList<T> list, Random rng)
+	public static void ShuffleSeeded<T>(this IList<T> list, KRandom rng)
 	{
 		int num = list.Count;
 		while (num > 1)

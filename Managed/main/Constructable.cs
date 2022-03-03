@@ -262,7 +262,7 @@ public class Constructable : Workable, ISaveLoadable
 		{
 			MarkArea();
 		}
-		if (Db.Get().TechItems.GetTechTierForItem(building.Def.PrefabID) > 1)
+		if (Db.Get().TechItems.GetTechTierForItem(building.Def.PrefabID) > 2)
 		{
 			requireMinionToWork = true;
 		}

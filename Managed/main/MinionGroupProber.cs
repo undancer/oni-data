@@ -33,6 +33,10 @@ public class MinionGroupProber : KMonoBehaviour, IGroupProber
 
 	private bool IsReachable_AssumeLock(int cell)
 	{
+		if (!Grid.IsValidCell(cell))
+		{
+			return false;
+		}
 		Dictionary<object, int> dictionary = cells[cell];
 		if (dictionary == null)
 		{

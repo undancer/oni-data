@@ -13,6 +13,9 @@ public struct BindingEntry : IEquatable<BindingEntry>
 	[JsonIgnore]
 	public bool mIgnoreRootConflics;
 
+	[JsonIgnore]
+	public string[] dlcIds;
+
 	[JsonConverter(typeof(StringEnumConverter))]
 	public GamepadButton mButton;
 
@@ -44,6 +47,16 @@ public struct BindingEntry : IEquatable<BindingEntry>
 	}
 
 	public BindingEntry(string group, GamepadButton button, KKeyCode key_code, Modifier modifier, Action action, bool rebindable = true, bool ignore_root_conflicts = false)
+		: this(group, button, key_code, modifier, action, rebindable, ignore_root_conflicts, null)
+	{
+	}
+
+	public BindingEntry(string group, GamepadButton button, KKeyCode key_code, Modifier modifier, Action action, string[] dlcIds)
+		: this(group, button, key_code, modifier, action, rebindable: true, ignore_root_conflicts: false, dlcIds)
+	{
+	}
+
+	public BindingEntry(string group, GamepadButton button, KKeyCode key_code, Modifier modifier, Action action, bool rebindable, bool ignore_root_conflicts, string[] dlcIds)
 	{
 		mGroup = group;
 		mButton = button;
@@ -52,6 +65,11 @@ public struct BindingEntry : IEquatable<BindingEntry>
 		mModifier = modifier;
 		mRebindable = rebindable;
 		mIgnoreRootConflics = ignore_root_conflicts;
+		this.dlcIds = dlcIds;
+		if (this.dlcIds == null)
+		{
+			this.dlcIds = DlcManager.AVAILABLE_ALL_VERSIONS;
+		}
 	}
 
 	public bool Equals(BindingEntry other)

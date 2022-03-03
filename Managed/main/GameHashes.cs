@@ -10,6 +10,7 @@ public enum GameHashes
 	HoverObject = -1454059909,
 	UnhoverObject = -983359998,
 	ObjectReplaced = 1606648047,
+	DebugInsantBuildModeChanged = 1557339983,
 	ConnectWiring = -1950680436,
 	DisconnectWiring = 1903019870,
 	SetActivator = 315865555,
@@ -329,6 +330,7 @@ public enum GameHashes
 	UpdateRocketStatus = -688990705,
 	StartRocketLaunch = 546421097,
 	RocketTouchDown = -735346771,
+	RocketCreated = 374403796,
 	RocketRestrictionChanged = 1861523068,
 	StoragePriorityChanged = -1626373771,
 	StorageCapacityChanged = -945020481,
@@ -406,5 +408,7 @@ public enum GameHashes
 	RocketSelfDestructRequested = -1061799784,
 	RocketExploded = -1311384361,
 	ModuleLanderLanded = 1591811118,
-	PartyLineJoined = 564760259
+	PartyLineJoined = 564760259,
+	ScreenResolutionChanged = 445618876,
+	GamepadUIModeChanged = -442024484
 }

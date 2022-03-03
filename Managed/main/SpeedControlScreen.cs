@@ -93,6 +93,7 @@ public class SpeedControlScreen : KScreen
 		{
 			TogglePause();
 		};
+		KInputManager.InputChange.AddListener(ResetToolTip);
 	}
 
 	protected override void OnSpawn()
@@ -161,6 +162,26 @@ public class SpeedControlScreen : KScreen
 		else
 		{
 			Pause(playsound);
+		}
+	}
+
+	public void ResetToolTip()
+	{
+		speedButtonWidget_slow.GetComponent<ToolTip>().ClearMultiStringTooltip();
+		speedButtonWidget_medium.GetComponent<ToolTip>().ClearMultiStringTooltip();
+		speedButtonWidget_fast.GetComponent<ToolTip>().ClearMultiStringTooltip();
+		speedButtonWidget_slow.GetComponent<ToolTip>().AddMultiStringTooltip(GameUtil.ReplaceHotkeyString(UI.TOOLTIPS.SPEEDBUTTON_SLOW, Action.CycleSpeed), TooltipTextStyle);
+		speedButtonWidget_medium.GetComponent<ToolTip>().AddMultiStringTooltip(GameUtil.ReplaceHotkeyString(UI.TOOLTIPS.SPEEDBUTTON_MEDIUM, Action.CycleSpeed), TooltipTextStyle);
+		speedButtonWidget_fast.GetComponent<ToolTip>().AddMultiStringTooltip(GameUtil.ReplaceHotkeyString(UI.TOOLTIPS.SPEEDBUTTON_FAST, Action.CycleSpeed), TooltipTextStyle);
+		if (pauseButton.isOn)
+		{
+			pauseButtonWidget.GetComponent<ToolTip>().ClearMultiStringTooltip();
+			pauseButtonWidget.GetComponent<ToolTip>().AddMultiStringTooltip(GameUtil.ReplaceHotkeyString(UI.TOOLTIPS.UNPAUSE, Action.TogglePause), TooltipTextStyle);
+		}
+		else
+		{
+			pauseButtonWidget.GetComponent<ToolTip>().ClearMultiStringTooltip();
+			pauseButtonWidget.GetComponent<ToolTip>().AddMultiStringTooltip(GameUtil.ReplaceHotkeyString(UI.TOOLTIPS.PAUSE, Action.TogglePause), TooltipTextStyle);
 		}
 	}
 

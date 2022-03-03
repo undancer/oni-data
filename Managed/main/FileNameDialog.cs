@@ -1,5 +1,4 @@
 using System;
-using TMPro;
 using UnityEngine;
 
 public class FileNameDialog : KModalScreen
@@ -9,7 +8,7 @@ public class FileNameDialog : KModalScreen
 	public System.Action onCancel;
 
 	[SerializeField]
-	private TMP_InputField inputField;
+	private KInputTextField inputField;
 
 	[SerializeField]
 	private KButton confirmButton;

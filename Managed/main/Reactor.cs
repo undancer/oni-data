@@ -106,7 +106,7 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 			{
 				smi.sm.reactionUnderway.Set(value: true, smi);
 				smi.master.operational.SetActive(value: true);
-				smi.master.SetEmitRads(105f);
+				smi.master.SetEmitRads(2400f);
 				smi.master.radEmitter.SetEmitting(emitting: true);
 			}).EventHandler(GameHashes.NewDay, (StatesInstance smi) => GameClock.Instance, delegate(StatesInstance smi)
 			{
@@ -182,7 +182,7 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 			meltdown.loop.PlayAnim("meltdown_loop", KAnim.PlayMode.Loop).Enter(delegate(StatesInstance smi)
 			{
 				smi.master.radEmitter.SetEmitting(emitting: true);
-				smi.master.SetEmitRads(210f);
+				smi.master.SetEmitRads(4800f);
 				smi.master.temperatureMeter.SetPositionPercent(1f / meterFrameScaleHack);
 				smi.master.UpdateCoolantStatus();
 				if (meltingDown.Get(smi))
@@ -236,7 +236,7 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 						{
 							if (num2 >= 0.001f)
 							{
-								SimMessages.AddRemoveSubstance(Grid.PosToCell(smi.master.transform.position + Vector3.up * 3f + Vector3.right * j * 2f), SimHashes.NuclearWaste, CellEventLogger.Instance.ElementEmitted, num2 / 3f, 3000f, Db.Get().Diseases.GetIndex(Db.Get().Diseases.RadiationPoisoning.Id), Mathf.RoundToInt(499.99997f * (num2 / 3f)));
+								SimMessages.AddRemoveSubstance(Grid.PosToCell(smi.master.transform.position + Vector3.up * 3f + Vector3.right * j * 2f), SimHashes.NuclearWaste, CellEventLogger.Instance.ElementEmitted, num2 / 3f, 3000f, Db.Get().Diseases.GetIndex(Db.Get().Diseases.RadiationPoisoning.Id), Mathf.RoundToInt(50f * (num2 / 3f)));
 							}
 						}
 					}
@@ -254,7 +254,7 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 				.Update(delegate(StatesInstance smi, float dt)
 				{
 					smi.sm.timeSinceMeltdown.Delta(dt, smi);
-					smi.master.radEmitter.emitRads = Mathf.Lerp(210f, 0f, smi.sm.timeSinceMeltdown.Get(smi) / 3000f);
+					smi.master.radEmitter.emitRads = Mathf.Lerp(4800f, 0f, smi.sm.timeSinceMeltdown.Get(smi) / 3000f);
 					smi.master.radEmitter.Refresh();
 				});
 		}
@@ -554,7 +554,7 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 			float num = spentFuel * 100f;
 			if (num > 0f)
 			{
-				GameObject go = ElementLoader.FindElementByHash(SimHashes.NuclearWaste).substance.SpawnResource(base.transform.position, num, activeFuel.Temperature, Db.Get().Diseases.GetIndex(Db.Get().Diseases.RadiationPoisoning.id), Mathf.RoundToInt(num * 499.99997f));
+				GameObject go = ElementLoader.FindElementByHash(SimHashes.NuclearWaste).substance.SpawnResource(base.transform.position, num, activeFuel.Temperature, Db.Get().Diseases.GetIndex(Db.Get().Diseases.RadiationPoisoning.id), Mathf.RoundToInt(num * 50f));
 				go.AddTag(GameTags.Stored);
 				wasteStorage.Store(go, hide_popups: true);
 			}

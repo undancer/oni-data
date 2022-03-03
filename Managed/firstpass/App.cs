@@ -5,6 +5,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using Klei;
+using Steamworks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -168,5 +169,17 @@ public class App : MonoBehaviour
 	public static List<Type> GetCurrentDomainTypes()
 	{
 		return types;
+	}
+
+	public static void OpenWebURL(string url)
+	{
+		if (DistributionPlatform.Initialized && SteamUtils.IsSteamRunningOnSteamDeck() && SteamUtils.IsOverlayEnabled())
+		{
+			SteamFriends.ActivateGameOverlayToWebPage(url);
+		}
+		else
+		{
+			Application.OpenURL(url);
+		}
 	}
 }

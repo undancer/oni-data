@@ -1,8 +1,8 @@
 info:
   size:
     X: 12
-    Y: 10
-  area: 120
+    Y: 11
+  area: 124
 cells:
 - element: Steel
   mass: 100
@@ -232,13 +232,11 @@ cells:
   location_x: -2
   location_y: 1
 - element: Vacuum
-  diseaseName: FoodPoisoning
   location_x: -1
   location_y: 1
 - element: Vacuum
   location_y: 1
 - element: Vacuum
-  diseaseName: FoodPoisoning
   location_x: 1
   location_y: 1
 - element: Vacuum
@@ -434,6 +432,25 @@ cells:
   temperature: 293.149994
   location_x: 6
   location_y: 5
+- element: Steel
+  mass: 100
+  temperature: 293.149994
+  location_x: -1
+  location_y: 6
+- element: Steel
+  mass: 100
+  temperature: 293.149994
+  location_y: 6
+- element: Steel
+  mass: 100
+  temperature: 293.149994
+  location_x: 1
+  location_y: 6
+- element: Steel
+  mass: 100
+  temperature: 293.149994
+  location_x: 2
+  location_y: 6
 buildings:
 - id: RocketWallTile
   location_x: 6
@@ -633,6 +650,25 @@ buildings:
 - id: RocketInteriorGasInputPort
   location_x: 4
   location_y: -4
+  element: Steel
+  temperature: 293.149994
+- id: RocketWallTile
+  location_x: 2
+  location_y: 6
+  element: Steel
+  temperature: 293.149994
+- id: RocketWallTile
+  location_x: -1
+  location_y: 6
+  element: Steel
+  temperature: 293.149994
+- id: RocketWallTile
+  location_y: 6
+  element: Steel
+  temperature: 293.149994
+- id: RocketWallTile
+  location_x: 1
+  location_y: 6
   element: Steel
   temperature: 293.149994
 otherEntities:

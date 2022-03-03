@@ -125,18 +125,19 @@ namespace Database
 		{
 			string text = Strings.Get(string.Format("{1}.STATS.{0}.NAME", id.ToUpper(), string_root.ToUpper()));
 			string description = Strings.Get(string.Format("{1}.STATS.{0}.TOOLTIP", id.ToUpper(), string_root.ToUpper()));
+			Attribute.Display show_in_ui2 = ((!show_in_ui) ? Attribute.Display.Never : Attribute.Display.Normal);
 			string text2 = id + "Min";
 			StringEntry result;
 			string name = (Strings.TryGet(new StringKey(string.Format("{1}.ATTRIBUTES.{0}.NAME", text2.ToUpper(), string_root)), out result) ? result.String : ("Minimum" + text));
 			StringEntry result2;
 			string attribute_description = (Strings.TryGet(new StringKey(string.Format("{1}.ATTRIBUTES.{0}.DESC", text2.ToUpper(), string_root)), out result2) ? result2.String : ("Minimum" + text));
-			Attribute attribute = new Attribute(id + "Min", name, "", attribute_description, min, Attribute.Display.Normal, is_trainable: false, null, null, uiFullColourSprite);
+			Attribute attribute = new Attribute(id + "Min", name, "", attribute_description, min, show_in_ui2, is_trainable: false, null, null, uiFullColourSprite);
 			string text3 = id + "Max";
 			StringEntry result3;
 			string name2 = (Strings.TryGet(new StringKey(string.Format("{1}.ATTRIBUTES.{0}.NAME", text3.ToUpper(), string_root)), out result3) ? result3.String : ("Maximum" + text));
 			StringEntry result4;
 			string attribute_description2 = (Strings.TryGet(new StringKey(string.Format("{1}.ATTRIBUTES.{0}.DESC", text3.ToUpper(), string_root)), out result4) ? result4.String : ("Maximum" + text));
-			Attribute attribute2 = new Attribute(id + "Max", name2, "", attribute_description2, max, Attribute.Display.Normal, is_trainable: false, null, null, uiFullColourSprite);
+			Attribute attribute2 = new Attribute(id + "Max", name2, "", attribute_description2, max, show_in_ui2, is_trainable: false, null, null, uiFullColourSprite);
 			string text4 = id + "Delta";
 			string name3 = Strings.Get(string.Format("{1}.ATTRIBUTES.{0}.NAME", text4.ToUpper(), string_root));
 			string attribute_description3 = Strings.Get(string.Format("{1}.ATTRIBUTES.{0}.DESC", text4.ToUpper(), string_root));

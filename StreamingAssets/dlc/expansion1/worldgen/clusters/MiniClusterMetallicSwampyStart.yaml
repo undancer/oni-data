@@ -10,19 +10,19 @@ startWorldIndex: 1
 numRings: 14
 worldPlacements:
 - world: expansion1::worlds/MiniBadlands # placed first due to tighter placement requirements
-  buffer: 1
+  buffer: 2
   locationType: InnerCluster
   allowedRings:
     min: 0
     max: 1
 - world: expansion1::worlds/MiniMetallicSwampyStart # start
-  buffer: 1
+  buffer: 2
   locationType: StartWorld
   allowedRings:
     min: 1
     max: 3
 - world: expansion1::worlds/MiniForestFrozenWarp # warp destination
-  buffer: 1
+  buffer: 2
   locationType: InnerCluster
   allowedRings:
     min: 1

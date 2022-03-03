@@ -115,7 +115,7 @@ public class PlantablePlot : SingleEntityReceptacle, ISaveLoadable, IGameObjectE
 		{
 			return;
 		}
-		if (base.occupyingObject == null && (requestedEntityTag != component.requestedEntityTag || component.occupyingObject != null))
+		if (base.occupyingObject == null && (requestedEntityTag != component.requestedEntityTag || requestedEntityAdditionalFilterTag != component.requestedEntityAdditionalFilterTag || component.occupyingObject != null))
 		{
 			Tag entityTag = component.requestedEntityTag;
 			Tag additionalFilterTag = component.requestedEntityAdditionalFilterTag;
@@ -125,6 +125,8 @@ public class PlantablePlot : SingleEntityReceptacle, ISaveLoadable, IGameObjectE
 				if (component2 != null)
 				{
 					entityTag = TagManager.Create(component2.seedInfo.seedId);
+					MutantPlant component3 = component.occupyingObject.GetComponent<MutantPlant>();
+					additionalFilterTag = (component3 ? component3.SubSpeciesID : Tag.Invalid);
 				}
 			}
 			CancelActiveRequest();
@@ -134,13 +136,13 @@ public class PlantablePlot : SingleEntityReceptacle, ISaveLoadable, IGameObjectE
 		{
 			return;
 		}
-		Prioritizable component3 = GetComponent<Prioritizable>();
-		if (component3 != null)
+		Prioritizable component4 = GetComponent<Prioritizable>();
+		if (component4 != null)
 		{
-			Prioritizable component4 = base.occupyingObject.GetComponent<Prioritizable>();
-			if (component4 != null)
+			Prioritizable component5 = base.occupyingObject.GetComponent<Prioritizable>();
+			if (component5 != null)
 			{
-				component4.SetMasterPriority(component3.GetMasterPriority());
+				component5.SetMasterPriority(component4.GetMasterPriority());
 			}
 		}
 	}
@@ -183,7 +185,7 @@ public class PlantablePlot : SingleEntityReceptacle, ISaveLoadable, IGameObjectE
 		}
 		base.OnSpawn();
 		autoReplaceEntity = false;
-		Components.PlantablePlots.Add(this);
+		Components.PlantablePlots.Add(base.gameObject.GetMyWorldId(), this);
 		Prioritizable component = GetComponent<Prioritizable>();
 		component.onPriorityChanged = (Action<PrioritySetting>)Delegate.Combine(component.onPriorityChanged, new Action<PrioritySetting>(SyncPriority));
 	}
@@ -205,7 +207,7 @@ public class PlantablePlot : SingleEntityReceptacle, ISaveLoadable, IGameObjectE
 		{
 			base.occupyingObject.Trigger(-216549700);
 		}
-		Components.PlantablePlots.Remove(this);
+		Components.PlantablePlots.Remove(base.gameObject.GetMyWorldId(), this);
 	}
 
 	protected override GameObject SpawnOccupyingObject(GameObject depositedEntity)
@@ -302,6 +304,7 @@ public class PlantablePlot : SingleEntityReceptacle, ISaveLoadable, IGameObjectE
 	{
 		autoReplaceEntity = false;
 		requestedEntityTag = Tag.Invalid;
+		requestedEntityAdditionalFilterTag = Tag.Invalid;
 	}
 
 	public override void OrderRemoveOccupant()

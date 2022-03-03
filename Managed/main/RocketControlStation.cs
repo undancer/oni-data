@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Klei.AI;
 using KSerialization;
 using STRINGS;
 using UnityEngine;
@@ -48,18 +49,14 @@ public class RocketControlStation : StateMachineComponent<RocketControlStation.S
 		{
 			base.serializable = SerializeType.ParamsOnly;
 			default_state = unoperational;
-			root.Enter("SetTarget", delegate(StatesInstance smi)
+			root.Enter("SetTarget", AquireClustercraft).Target(masterTarget).Exit(delegate(StatesInstance smi)
 			{
-				clusterCraft.Set(GetRocket(smi), smi);
-				clusterCraft.Get(smi).Subscribe(-1582839653, smi.master.OnTagsChanged);
-			}).Target(masterTarget).Exit(delegate(StatesInstance smi)
-			{
-				SetRocketSpeed(smi, 0.5f);
+				SetRocketSpeedModifiers(smi, 0.5f);
 			});
 			unoperational.PlayAnim("off").TagTransition(GameTags.Operational, operational);
 			operational.Enter(delegate(StatesInstance smi)
 			{
-				SetRocketSpeed(smi, 1f);
+				SetRocketSpeedModifiers(smi, 1f, smi.pilotSpeedMult);
 			}).PlayAnim("on").TagTransition(GameTags.Operational, unoperational, on_remove: true)
 				.Transition(ready, IsInFlight, UpdateRate.SIM_4000ms)
 				.Target(clusterCraft)
@@ -72,11 +69,11 @@ public class RocketControlStation : StateMachineComponent<RocketControlStation.S
 				});
 			launch.Enter(delegate(StatesInstance smi)
 			{
-				SetRocketSpeed(smi, 1f);
+				SetRocketSpeedModifiers(smi, 1f, smi.pilotSpeedMult);
 			}).ToggleChore(CreateLaunchChore, operational).Transition(launch.fadein, IsInFlight)
 				.Target(clusterCraft)
 				.EventTransition(GameHashes.RocketRequestLaunch, operational, GameStateMachine<States, StatesInstance, RocketControlStation, object>.Not(RocketReadyForLaunch))
-				.EventTransition(GameHashes.LaunchConditionChanged, launch, GameStateMachine<States, StatesInstance, RocketControlStation, object>.Not(RocketReadyForLaunch))
+				.EventTransition(GameHashes.LaunchConditionChanged, operational, GameStateMachine<States, StatesInstance, RocketControlStation, object>.Not(RocketReadyForLaunch))
 				.Target(masterTarget);
 			launch.fadein.Enter(delegate(StatesInstance smi)
 			{
@@ -89,7 +86,7 @@ public class RocketControlStation : StateMachineComponent<RocketControlStation.S
 				.ParamTransition(timeRemaining, ready, (StatesInstance smi, float p) => p <= 0f)
 				.Enter(delegate(StatesInstance smi)
 				{
-					SetRocketSpeed(smi, 1f);
+					SetRocketSpeedModifiers(smi, 1f, smi.pilotSpeedMult);
 				})
 				.Update("Decrement time", DecrementTime)
 				.Exit(delegate(StatesInstance smi)
@@ -106,17 +103,26 @@ public class RocketControlStation : StateMachineComponent<RocketControlStation.S
 			ready.autopilot.PlayAnim("on_failed", KAnim.PlayMode.Loop).ToggleMainStatusItem(Db.Get().BuildingStatusItems.AutoPilotActive).WorkableStartTransition((StatesInstance smi) => smi.master.GetComponent<RocketControlStationIdleWorkable>(), ready.working)
 				.Enter(delegate(StatesInstance smi)
 				{
-					SetRocketSpeed(smi, 0.5f);
+					SetRocketSpeedModifiers(smi, 0.5f, smi.pilotSpeedMult);
 				});
 			ready.working.PlayAnim("working_pre").QueueAnim("working_loop", loop: true).Enter(delegate(StatesInstance smi)
 			{
-				SetRocketSpeed(smi, 1f);
+				SetRocketSpeedModifiers(smi, 1f, smi.pilotSpeedMult);
 			})
 				.WorkableStopTransition((StatesInstance smi) => smi.master.GetComponent<RocketControlStationIdleWorkable>(), ready.idle);
 			ready.post.PlayAnim("working_pst").OnAnimQueueComplete(running).Exit(delegate(StatesInstance smi)
 			{
 				timeRemaining.Set(120f, smi);
 			});
+		}
+
+		public void AquireClustercraft(StatesInstance smi)
+		{
+			if (clusterCraft.IsNull(smi))
+			{
+				clusterCraft.Set(GetRocket(smi), smi);
+				clusterCraft.Get(smi).Subscribe(-1582839653, smi.master.OnTagsChanged);
+			}
 		}
 
 		private void DecrementTime(StatesInstance smi, float dt)
@@ -139,9 +145,10 @@ public class RocketControlStation : StateMachineComponent<RocketControlStation.S
 			return ClusterManager.Instance.GetWorld(smi.GetMyWorldId()).gameObject.GetComponent<Clustercraft>().gameObject;
 		}
 
-		private void SetRocketSpeed(StatesInstance smi, float speed_multiplier)
+		private void SetRocketSpeedModifiers(StatesInstance smi, float autoPilotSpeedMultiplier, float pilotSkillMultiplier = 1f)
 		{
-			clusterCraft.Get(smi).GetComponent<Clustercraft>().AutoPilotMultiplier = speed_multiplier;
+			clusterCraft.Get(smi).GetComponent<Clustercraft>().AutoPilotMultiplier = autoPilotSpeedMultiplier;
+			clusterCraft.Get(smi).GetComponent<Clustercraft>().PilotSkillMultiplier = pilotSkillMultiplier;
 		}
 
 		private Chore CreateChore(StatesInstance smi)
@@ -179,6 +186,8 @@ public class RocketControlStation : StateMachineComponent<RocketControlStation.S
 
 	public class StatesInstance : GameStateMachine<States, StatesInstance, RocketControlStation, object>.GameInstance
 	{
+		public float pilotSpeedMult = 1f;
+
 		public StatesInstance(RocketControlStation smi)
 			: base(smi)
 		{
@@ -187,6 +196,14 @@ public class RocketControlStation : StateMachineComponent<RocketControlStation.S
 		public void LaunchRocket()
 		{
 			base.sm.LaunchRocket(this);
+		}
+
+		public void SetPilotSpeedMult(Worker pilot)
+		{
+			AttributeConverter pilotingSpeed = Db.Get().AttributeConverters.PilotingSpeed;
+			AttributeConverterInstance converter = pilot.GetComponent<AttributeConverters>().GetConverter(pilotingSpeed.Id);
+			float a = 1f + converter.Evaluate();
+			pilotSpeedMult = Mathf.Max(a, 0.1f);
 		}
 	}
 
@@ -197,7 +214,7 @@ public class RocketControlStation : StateMachineComponent<RocketControlStation.S
 	[Serialize]
 	public float TimeRemaining;
 
-	private int m_logicUsageRestrictionState;
+	private bool m_logicUsageRestrictionState;
 
 	[Serialize]
 	private bool m_restrictWhenGrounded;
@@ -233,8 +250,9 @@ public class RocketControlStation : StateMachineComponent<RocketControlStation.S
 		{
 			if (IsLogicInputConnected())
 			{
-				return m_logicUsageRestrictionState == 1;
+				return m_logicUsageRestrictionState;
 			}
+			base.smi.sm.AquireClustercraft(base.smi);
 			GameObject gameObject = base.smi.sm.clusterCraft.Get(base.smi);
 			if (RestrictWhenGrounded && gameObject != null)
 			{
@@ -251,7 +269,6 @@ public class RocketControlStation : StateMachineComponent<RocketControlStation.S
 		Components.RocketControlStations.Add(this);
 		Subscribe(-801688580, OnLogicValueChangedDelegate);
 		Subscribe(1861523068, OnRocketRestrictionChanged);
-		CheckWireState();
 		UpdateRestrictionAnimSymbol();
 	}
 
@@ -268,10 +285,10 @@ public class RocketControlStation : StateMachineComponent<RocketControlStation.S
 
 	public void OnLogicValueChanged(object data)
 	{
-		LogicValueChanged logicValueChanged = (LogicValueChanged)data;
-		if (logicValueChanged.portID == PORT_ID)
+		if (((LogicValueChanged)data).portID == PORT_ID)
 		{
-			m_logicUsageRestrictionState = logicValueChanged.newValue;
+			int value = GetNetwork()?.OutputValue ?? 1;
+			bool flag = (m_logicUsageRestrictionState = LogicCircuitNetwork.IsBitActive(0, value));
 			Trigger(1861523068);
 		}
 	}
@@ -288,18 +305,6 @@ public class RocketControlStation : StateMachineComponent<RocketControlStation.S
 	{
 		int portCell = GetComponent<LogicPorts>().GetPortCell(PORT_ID);
 		return Game.Instance.logicCircuitManager.GetNetworkForCell(portCell);
-	}
-
-	private LogicCircuitNetwork CheckWireState()
-	{
-		LogicCircuitNetwork network = GetNetwork();
-		int num = network?.OutputValue ?? 1;
-		if (num != m_logicUsageRestrictionState)
-		{
-			m_logicUsageRestrictionState = num;
-			Trigger(1861523068);
-		}
-		return network;
 	}
 
 	private void UpdateRestrictionAnimSymbol(object o = null)

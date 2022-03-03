@@ -27,14 +27,14 @@ public class TelescopeTarget : ClusterGridEntity
 		base.Location = location;
 	}
 
+	public override bool ShowName()
+	{
+		return true;
+	}
+
 	public override bool ShowProgressBar()
 	{
-		float progress = GetProgress();
-		if (progress > 0f)
-		{
-			return progress < 1f;
-		}
-		return false;
+		return true;
 	}
 
 	public override float GetProgress()

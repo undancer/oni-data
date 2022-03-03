@@ -140,12 +140,26 @@ public class TemporalTearOpener : GameStateMachine<TemporalTearOpener, TemporalT
 
 		public bool SidescreenButtonInteractable()
 		{
+			if (GetCurrentState() != base.sm.ready)
+			{
+				return DebugHandler.InstantBuildMode;
+			}
 			return true;
 		}
 
 		public void OnSidescreenButtonPressed()
 		{
-			base.smi.GoTo(base.sm.opening_tear_beam_pre);
+			GameScreenManager.Instance.StartScreen(ScreenPrefabs.Instance.ConfirmDialogScreen.gameObject).GetComponent<ConfirmDialogScreen>().PopupConfirmDialog(UI.UISIDESCREENS.TEMPORALTEARSIDESCREEN.CONFIRM_POPUP_MESSAGE, delegate
+			{
+				FireTemporalTearOpener(base.smi);
+			}, delegate
+			{
+			}, null, null, confirm_text: UI.UISIDESCREENS.TEMPORALTEARSIDESCREEN.CONFIRM_POPUP_CONFIRM, cancel_text: UI.UISIDESCREENS.TEMPORALTEARSIDESCREEN.CONFIRM_POPUP_CANCEL, title_text: UI.UISIDESCREENS.TEMPORALTEARSIDESCREEN.CONFIRM_POPUP_TITLE);
+		}
+
+		private void FireTemporalTearOpener(Instance smi)
+		{
+			smi.GoTo(base.sm.opening_tear_beam_pre);
 		}
 
 		public int ButtonSideScreenSortOrder()

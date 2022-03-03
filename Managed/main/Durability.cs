@@ -31,6 +31,18 @@ public class Durability : KMonoBehaviour
 
 	private float difficultySettingMod = 1f;
 
+	public float TimeEquipped
+	{
+		get
+		{
+			return timeEquipped;
+		}
+		set
+		{
+			timeEquipped = value;
+		}
+	}
+
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();

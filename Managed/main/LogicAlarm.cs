@@ -68,6 +68,7 @@ public class LogicAlarm : KMonoBehaviour, ISaveLoadable
 			pauseOnNotify = component.pauseOnNotify;
 			zoomOnNotify = component.zoomOnNotify;
 			cooldown = component.cooldown;
+			notificationTooltip = component.notificationTooltip;
 		}
 	}
 

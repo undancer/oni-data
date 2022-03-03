@@ -8,6 +8,9 @@ public class KModalScreen : KScreen
 
 	public bool pause = true;
 
+	[Tooltip("Only used for main menu")]
+	public bool canBackoutWithRightClick;
+
 	private RectTransform backgroundRectTransform;
 
 	protected override void OnPrefabInit()
@@ -119,7 +122,7 @@ public class KModalScreen : KScreen
 			{
 				KMonoBehaviour.PlaySound(GlobalAssets.GetSound("Negative"));
 			}
-			if (!e.Consumed && e.TryConsume(Action.Escape))
+			if (!e.Consumed && (e.TryConsume(Action.Escape) || (e.TryConsume(Action.MouseRight) && canBackoutWithRightClick)))
 			{
 				Deactivate();
 			}
