@@ -139,7 +139,7 @@ internal class GraphicsOptionsScreen : KModalScreen
 				resolutionDropdown.value = resolutionIndex;
 			}
 		}
-		CanvasScalers = UnityEngine.Object.FindObjectsOfType<KCanvasScaler>();
+		CanvasScalers = UnityEngine.Object.FindObjectsOfType<KCanvasScaler>(includeInactive: true);
 		UpdateSliderLabel();
 		uiScaleSlider.onValueChanged.AddListener(delegate
 		{
@@ -193,7 +193,7 @@ internal class GraphicsOptionsScreen : KModalScreen
 			int @int = KPlayerPrefs.GetInt(ResolutionWidthKey);
 			int int2 = KPlayerPrefs.GetInt(ResolutionHeightKey);
 			int int3 = KPlayerPrefs.GetInt(RefreshRateKey, Screen.currentResolution.refreshRate);
-			bool flag2 = ((KPlayerPrefs.GetInt(FullScreenKey, Screen.fullScreen ? 1 : 0) == 1) ? true : false);
+			bool flag2 = KPlayerPrefs.GetInt(FullScreenKey, Screen.fullScreen ? 1 : 0) == 1;
 			if (int2 <= 1 || @int <= 1)
 			{
 				DebugUtil.LogArgs("Saved resolution was invalid, ignoring...");
@@ -303,6 +303,7 @@ internal class GraphicsOptionsScreen : KModalScreen
 
 	private void UpdateUIScale(float value)
 	{
+		CanvasScalers = UnityEngine.Object.FindObjectsOfType<KCanvasScaler>(includeInactive: true);
 		KCanvasScaler[] canvasScalers = CanvasScalers;
 		foreach (KCanvasScaler obj in canvasScalers)
 		{

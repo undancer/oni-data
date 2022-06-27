@@ -335,28 +335,23 @@ public class CodexEntry
 
 	private static string GetContentWidgetDebugString(ICodexWidget widget)
 	{
-		CodexText codexText = widget as CodexText;
-		if (codexText != null)
+		if (widget is CodexText codexText)
 		{
 			return codexText.text;
 		}
-		CodexLabelWithIcon codexLabelWithIcon = widget as CodexLabelWithIcon;
-		if (codexLabelWithIcon != null)
+		if (widget is CodexLabelWithIcon codexLabelWithIcon)
 		{
 			return codexLabelWithIcon.label.text + " / " + codexLabelWithIcon.icon.spriteName;
 		}
-		CodexImage codexImage = widget as CodexImage;
-		if (codexImage != null)
+		if (widget is CodexImage codexImage)
 		{
 			return codexImage.spriteName;
 		}
-		CodexVideo codexVideo = widget as CodexVideo;
-		if (codexVideo != null)
+		if (widget is CodexVideo codexVideo)
 		{
 			return codexVideo.name;
 		}
-		CodexIndentedLabelWithIcon codexIndentedLabelWithIcon = widget as CodexIndentedLabelWithIcon;
-		if (codexIndentedLabelWithIcon != null)
+		if (widget is CodexIndentedLabelWithIcon codexIndentedLabelWithIcon)
 		{
 			return codexIndentedLabelWithIcon.label.text + " / " + codexIndentedLabelWithIcon.icon.spriteName;
 		}

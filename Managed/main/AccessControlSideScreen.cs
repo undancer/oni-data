@@ -305,7 +305,7 @@ public class AccessControlSideScreen : SideScreenContent
 		MinionIdentitySort.SortInfo[] sortInfos = MinionIdentitySort.SortInfos;
 		foreach (MinionIdentitySort.SortInfo sortInfo in sortInfos)
 		{
-			if (!((string)sortInfo.name == role.GetProperName()))
+			if (!(sortInfo.name == role.GetProperName()))
 			{
 				continue;
 			}

@@ -50,7 +50,7 @@ public class StructureTemperatureComponents : KGameObjectSplitComponentManager<S
 			int key = (int)ev_data;
 			HandleVector<int>.Handle handle = handleInstanceMap[key];
 			StructureTemperaturePayload payload = GetPayload(handle);
-			if (str != (string)BUILDING.STATUSITEMS.OPERATINGENERGY.TOOLTIP)
+			if (str != BUILDING.STATUSITEMS.OPERATINGENERGY.TOOLTIP)
 			{
 				try
 				{

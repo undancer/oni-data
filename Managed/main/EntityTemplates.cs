@@ -254,7 +254,7 @@ public class EntityTemplates
 		Tag prefabTag = prefab.GetComponent<KPrefabID>().PrefabTag;
 		WildnessMonitor.Def def = prefab.AddOrGetDef<WildnessMonitor.Def>();
 		def.wildEffect = new Effect("Wild" + prefabTag.Name, STRINGS.CREATURES.MODIFIERS.WILD.NAME, STRINGS.CREATURES.MODIFIERS.WILD.TOOLTIP, 0f, show_in_ui: true, trigger_floating_text: true, is_bad: false);
-		def.wildEffect.Add(new AttributeModifier(Db.Get().Amounts.Wildness.deltaAttribute.Id, 0.008333334f, STRINGS.CREATURES.MODIFIERS.WILD.NAME));
+		def.wildEffect.Add(new AttributeModifier(Db.Get().Amounts.Wildness.deltaAttribute.Id, 1f / 120f, STRINGS.CREATURES.MODIFIERS.WILD.NAME));
 		def.wildEffect.Add(new AttributeModifier(Db.Get().CritterAttributes.Metabolism.Id, 25f, STRINGS.CREATURES.MODIFIERS.WILD.NAME));
 		def.wildEffect.Add(new AttributeModifier(Db.Get().Amounts.ScaleGrowth.deltaAttribute.Id, -0.75f, STRINGS.CREATURES.MODIFIERS.WILD.NAME, is_multiplier: true));
 		def.tameEffect = new Effect("Tame" + prefabTag.Name, STRINGS.CREATURES.MODIFIERS.TAME.NAME, STRINGS.CREATURES.MODIFIERS.TAME.TOOLTIP, 0f, show_in_ui: true, trigger_floating_text: true, is_bad: false);

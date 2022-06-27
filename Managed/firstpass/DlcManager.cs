@@ -23,6 +23,16 @@ public class DlcManager
 
 	public static List<string> RELEASE_ORDER = new List<string> { "", "EXPANSION1_ID" };
 
+	private static Dictionary<string, bool> dlcPurchasedCache = new Dictionary<string, bool>();
+
+	private static Dictionary<string, bool> dlcSubscribedCache = new Dictionary<string, bool>();
+
+	public static void ClearCachedValues()
+	{
+		dlcPurchasedCache = new Dictionary<string, bool>();
+		dlcSubscribedCache = new Dictionary<string, bool>();
+	}
+
 	public static bool IsVanillaId(string dlcId)
 	{
 		if (dlcId != null)
@@ -165,7 +175,12 @@ public class DlcManager
 		{
 			return true;
 		}
-		return DistributionPlatform.Inst.IsDLCSubscribed(dlcId);
+		if (!dlcSubscribedCache.TryGetValue(dlcId, out var value))
+		{
+			value = DistributionPlatform.Inst.IsDLCSubscribed(dlcId);
+			dlcSubscribedCache[dlcId] = value;
+		}
+		return value;
 	}
 
 	private static bool IsContentSettingEnabled(string dlcId)
@@ -187,7 +202,12 @@ public class DlcManager
 		{
 			return true;
 		}
-		return DistributionPlatform.Inst.IsDLCPurchased(dlcId);
+		if (!dlcPurchasedCache.TryGetValue(dlcId, out var value))
+		{
+			value = DistributionPlatform.Inst.IsDLCPurchased(dlcId);
+			dlcPurchasedCache[dlcId] = value;
+		}
+		return value;
 	}
 
 	public static List<string> GetOwnedDLCIds()
@@ -259,6 +279,8 @@ public class DlcManager
 		bool flag = Application.isEditor || DistributionPlatform.Inst.IsDLCPurchased(dlcId);
 		if (!enabled || flag)
 		{
+			dlcPurchasedCache.Clear();
+			dlcSubscribedCache.Clear();
 			KPlayerPrefs.SetInt(dlcId + ".ENABLED", enabled ? 1 : 0);
 			if (enabled && !CheckPlatformSubscription(dlcId))
 			{

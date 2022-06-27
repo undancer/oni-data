@@ -45,17 +45,23 @@ public class MeterScreen : KScreen, IRender1000ms
 
 	public ToolTip RedAlertTooltip;
 
-	private DisplayInfo stressDisplayInfo;
+	private DisplayInfo stressDisplayInfo = new DisplayInfo
+	{
+		selectedIndex = -1
+	};
 
-	private DisplayInfo immunityDisplayInfo;
+	private DisplayInfo immunityDisplayInfo = new DisplayInfo
+	{
+		selectedIndex = -1
+	};
 
 	private List<MinionIdentity> worldLiveMinionIdentities;
 
-	private int cachedMinionCount;
+	private int cachedMinionCount = -1;
 
-	private long cachedCalories;
+	private long cachedCalories = -1L;
 
-	private Dictionary<string, float> rationsDict;
+	private Dictionary<string, float> rationsDict = new Dictionary<string, float>();
 
 	public static MeterScreen Instance { get; private set; }
 
@@ -348,8 +354,7 @@ public class MeterScreen : KScreen, IRender1000ms
 
 	private void UpdateDisplayInfo(BaseEventData base_ev_data, ref DisplayInfo display_info, IList<MinionIdentity> minions)
 	{
-		PointerEventData pointerEventData = base_ev_data as PointerEventData;
-		if (pointerEventData == null)
+		if (!(base_ev_data is PointerEventData pointerEventData))
 		{
 			return;
 		}
@@ -372,23 +377,5 @@ public class MeterScreen : KScreen, IRender1000ms
 			display_info.selectedIndex = -1;
 			break;
 		}
-	}
-
-	public MeterScreen()
-	{
-		DisplayInfo displayInfo = new DisplayInfo
-		{
-			selectedIndex = -1
-		};
-		stressDisplayInfo = displayInfo;
-		displayInfo = new DisplayInfo
-		{
-			selectedIndex = -1
-		};
-		immunityDisplayInfo = displayInfo;
-		cachedMinionCount = -1;
-		cachedCalories = -1L;
-		rationsDict = new Dictionary<string, float>();
-		base._002Ector();
 	}
 }

@@ -43,10 +43,12 @@ public class NuclearResearchCenter : StateMachineComponent<NuclearResearchCenter
 				.Exit(delegate(StatesInstance smi)
 				{
 					smi.DestroyChore();
-				});
-			ready.idle.WorkableStartTransition((StatesInstance smi) => smi.master.GetComponent<NuclearResearchCenterWorkable>(), ready.working).EventTransition(GameHashes.ActiveResearchChanged, requirements.noResearchSelected, GameStateMachine<States, StatesInstance, NuclearResearchCenter, object>.Not(IsResearchSelected)).EventTransition(GameHashes.ActiveResearchChanged, requirements.noApplicableResearch, GameStateMachine<States, StatesInstance, NuclearResearchCenter, object>.Not(IsResearchApplicable))
+				})
+				.EventTransition(GameHashes.ActiveResearchChanged, requirements.noResearchSelected, GameStateMachine<States, StatesInstance, NuclearResearchCenter, object>.Not(IsResearchSelected))
+				.EventTransition(GameHashes.ActiveResearchChanged, requirements.noApplicableResearch, GameStateMachine<States, StatesInstance, NuclearResearchCenter, object>.Not(IsResearchApplicable))
 				.EventTransition(GameHashes.ResearchPointsChanged, requirements.noApplicableResearch, GameStateMachine<States, StatesInstance, NuclearResearchCenter, object>.Not(IsResearchApplicable))
 				.EventTransition(GameHashes.OnParticleStorageEmpty, requirements.highEnergyParticlesNeeded, GameStateMachine<States, StatesInstance, NuclearResearchCenter, object>.Not(HasRadiation));
+			ready.idle.WorkableStartTransition((StatesInstance smi) => smi.master.GetComponent<NuclearResearchCenterWorkable>(), ready.working);
 			ready.working.Enter("SetActive(true)", delegate(StatesInstance smi)
 			{
 				smi.master.operational.SetActive(value: true);

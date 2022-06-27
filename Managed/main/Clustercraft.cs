@@ -7,7 +7,7 @@ using STRINGS;
 using TUNING;
 using UnityEngine;
 
-public class Clustercraft : ClusterGridEntity, IClusterRange
+public class Clustercraft : ClusterGridEntity, IClusterRange, ISim4000ms
 {
 	public enum CraftStatus
 	{
@@ -213,6 +213,15 @@ public class Clustercraft : ClusterGridEntity, IClusterRange
 		});
 		SetRocketName(m_name);
 		UpdateStatusItem();
+	}
+
+	public void Sim4000ms(float dt)
+	{
+		RocketClusterDestinationSelector clusterDestinationSelector = m_moduleInterface.GetClusterDestinationSelector();
+		if (Status == CraftStatus.InFlight && m_location == clusterDestinationSelector.GetDestination())
+		{
+			OnClusterDestinationReached(null);
+		}
 	}
 
 	public void Init(AxialI location, LaunchPad pad)

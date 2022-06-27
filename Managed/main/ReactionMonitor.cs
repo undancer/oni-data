@@ -46,8 +46,7 @@ public class ReactionMonitor : GameStateMachine<ReactionMonitor, ReactionMonitor
 			GameScenePartitioner.Instance.GatherEntries(Grid.CellToXY(cell).x, Grid.CellToXY(cell).y, 1, 1, GameScenePartitioner.Instance.objectLayers[0], pooledList);
 			for (int i = 0; i < pooledList.Count; i++)
 			{
-				Reactable reactable2 = pooledList[i].obj as Reactable;
-				if (reactable2 != null && reactable2 != lastReactable && (!lastReactTimes.ContainsKey(reactable2.id) || !(GameClock.Instance.GetTime() - lastReactTimes[reactable2.id] < reactable2.minReactorTime)) && reactable2.CanBegin(base.gameObject, transition))
+				if (pooledList[i].obj is Reactable reactable2 && reactable2 != lastReactable && (!lastReactTimes.ContainsKey(reactable2.id) || !(GameClock.Instance.GetTime() - lastReactTimes[reactable2.id] < reactable2.minReactorTime)) && reactable2.CanBegin(base.gameObject, transition))
 				{
 					justReacted = true;
 					lastReactable = reactable2;

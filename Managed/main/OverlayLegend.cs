@@ -313,16 +313,16 @@ public class OverlayLegend : KScreen
 		if (overlayInfo.diagrams != null && overlayInfo.diagrams.Count > 0)
 		{
 			diagramsParent.SetActive(value: true);
-			foreach (GameObject diagram in overlayInfo.diagrams)
 			{
-				GameObject item = Util.KInstantiateUI(diagram, diagramsParent);
-				activeDiagrams.Add(item);
+				foreach (GameObject diagram in overlayInfo.diagrams)
+				{
+					GameObject item = Util.KInstantiateUI(diagram, diagramsParent);
+					activeDiagrams.Add(item);
+				}
+				return;
 			}
 		}
-		else
-		{
-			diagramsParent.SetActive(value: false);
-		}
+		diagramsParent.SetActive(value: false);
 	}
 
 	private void PopulateGeneratedLegend(OverlayInfo info, bool isRefresh = false)

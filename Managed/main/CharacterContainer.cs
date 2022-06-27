@@ -7,6 +7,7 @@ using Klei.AI;
 using STRINGS;
 using TUNING;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class CharacterContainer : KScreen, ITelepadDeliverableContainer
@@ -116,7 +117,42 @@ public class CharacterContainer : KScreen, ITelepadDeliverableContainer
 	[SerializeField]
 	private Sprite enabledSpr;
 
-	private static readonly HashedString[] idleAnims = new HashedString[7] { "anim_idle_healthy_kanim", "anim_idle_susceptible_kanim", "anim_idle_keener_kanim", "anim_idle_coaster_kanim", "anim_idle_fastfeet_kanim", "anim_idle_breatherdeep_kanim", "anim_idle_breathershallow_kanim" };
+	[SerializeField]
+	private KScrollRect scroll_rect;
+
+	private static readonly Dictionary<HashedString, string[]> traitIdleAnims = new Dictionary<HashedString, string[]>
+	{
+		{
+			"anim_idle_food_kanim",
+			new string[1] { "Foodie" }
+		},
+		{
+			"anim_idle_animal_lover_kanim",
+			new string[1] { "RanchingUp" }
+		},
+		{
+			"anim_idle_loner_kanim",
+			new string[1] { "Loner" }
+		},
+		{
+			"anim_idle_mole_hands_kanim",
+			new string[1] { "MoleHands" }
+		},
+		{
+			"anim_idle_buff_kanim",
+			new string[1] { "StrongArm" }
+		},
+		{
+			"anim_idle_distracted_kanim",
+			new string[4] { "CantResearch", "CantBuild", "CantCook", "CantDig" }
+		},
+		{
+			"anim_idle_coaster_kanim",
+			new string[1] { "HappySinger" }
+		}
+	};
+
+	private static readonly HashedString[] idleAnims = new HashedString[6] { "anim_idle_healthy_kanim", "anim_idle_susceptible_kanim", "anim_idle_keener_kanim", "anim_idle_fastfeet_kanim", "anim_idle_breatherdeep_kanim", "anim_idle_breathershallow_kanim" };
 
 	public float baseCharacterScale = 0.38f;
 
@@ -171,6 +207,12 @@ public class CharacterContainer : KScreen, ITelepadDeliverableContainer
 			animController.gameObject.DeleteObject();
 			animController = null;
 		}
+	}
+
+	protected override void OnForcedCleanUp()
+	{
+		containers.Remove(this);
+		base.OnForcedCleanUp();
 	}
 
 	protected override void OnCleanUp()
@@ -252,8 +294,8 @@ public class CharacterContainer : KScreen, ITelepadDeliverableContainer
 		stats.ApplyRace(animController.gameObject);
 		stats.ApplyAccessories(animController.gameObject);
 		stats.ApplyExperience(animController.gameObject);
-		HashedString hashedString = idleAnims[UnityEngine.Random.Range(0, idleAnims.Length)];
-		idle_anim = Assets.GetAnim(hashedString);
+		HashedString idleAnim = GetIdleAnim(stats);
+		idle_anim = Assets.GetAnim(idleAnim);
 		if (idle_anim != null)
 		{
 			animController.AddAnimOverrides(idle_anim);
@@ -264,6 +306,30 @@ public class CharacterContainer : KScreen, ITelepadDeliverableContainer
 			animController.AddAnimOverrides(anim);
 		}
 		animController.Queue("idle_default", KAnim.PlayMode.Loop);
+	}
+
+	private HashedString GetIdleAnim(MinionStartingStats minionStartingStats)
+	{
+		List<HashedString> list = new List<HashedString>();
+		foreach (KeyValuePair<HashedString, string[]> traitIdleAnim in traitIdleAnims)
+		{
+			foreach (Trait trait in minionStartingStats.Traits)
+			{
+				if (traitIdleAnim.Value.Contains(trait.Id))
+				{
+					list.Add(traitIdleAnim.Key);
+				}
+			}
+			if (traitIdleAnim.Value.Contains(minionStartingStats.joyTrait.Id) || traitIdleAnim.Value.Contains(minionStartingStats.stressTrait.Id))
+			{
+				list.Add(traitIdleAnim.Key);
+			}
+		}
+		if (list.Count > 0)
+		{
+			return list.ToArray()[UnityEngine.Random.Range(0, list.Count)];
+		}
+		return idleAnims[UnityEngine.Random.Range(0, idleAnims.Length)];
 	}
 
 	private void SetInfoText()
@@ -627,19 +693,80 @@ public class CharacterContainer : KScreen, ITelepadDeliverableContainer
 		return "<color=green>";
 	}
 
+	public override void OnPointerEnter(PointerEventData eventData)
+	{
+		scroll_rect.mouseIsOver = true;
+		base.OnPointerEnter(eventData);
+	}
+
+	public override void OnPointerExit(PointerEventData eventData)
+	{
+		scroll_rect.mouseIsOver = false;
+		base.OnPointerExit(eventData);
+	}
+
 	public override void OnKeyDown(KButtonEvent e)
 	{
-		if (e.IsAction(Action.Escape))
+		if (e.IsAction(Action.Escape) || e.IsAction(Action.MouseRight))
 		{
 			characterNameTitle.ForceStopEditing();
 			controller.OnPressBack();
+			archetypeDropDown.scrollRect.gameObject.SetActive(value: false);
 		}
-		e.Consumed = true;
+		if (KInputManager.currentControllerIsGamepad)
+		{
+			if (archetypeDropDown.scrollRect.activeInHierarchy)
+			{
+				KScrollRect component = archetypeDropDown.scrollRect.GetComponent<KScrollRect>();
+				Vector2 point = component.rectTransform().InverseTransformPoint(KInputManager.GetMousePos());
+				if (component.rectTransform().rect.Contains(point))
+				{
+					component.mouseIsOver = true;
+				}
+				else
+				{
+					component.mouseIsOver = false;
+				}
+				component.OnKeyDown(e);
+			}
+			else
+			{
+				scroll_rect.OnKeyDown(e);
+			}
+		}
+		else
+		{
+			e.Consumed = true;
+		}
 	}
 
 	public override void OnKeyUp(KButtonEvent e)
 	{
-		e.Consumed = true;
+		if (KInputManager.currentControllerIsGamepad)
+		{
+			if (archetypeDropDown.scrollRect.activeInHierarchy)
+			{
+				KScrollRect component = archetypeDropDown.scrollRect.GetComponent<KScrollRect>();
+				Vector2 point = component.rectTransform().InverseTransformPoint(KInputManager.GetMousePos());
+				if (component.rectTransform().rect.Contains(point))
+				{
+					component.mouseIsOver = true;
+				}
+				else
+				{
+					component.mouseIsOver = false;
+				}
+				component.OnKeyUp(e);
+			}
+			else
+			{
+				scroll_rect.OnKeyUp(e);
+			}
+		}
+		else
+		{
+			e.Consumed = true;
+		}
 	}
 
 	protected override void OnCmpEnable()

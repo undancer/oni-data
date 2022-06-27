@@ -155,10 +155,9 @@ public class StateMachineController : KMonoBehaviour, ISaveLoadableDetails, ISta
 		}
 		foreach (StateMachine.BaseDef def in cmpdef.defs)
 		{
-			DefType val = def as DefType;
-			if (val != null)
+			if (def is DefType result)
 			{
-				return val;
+				return result;
 			}
 		}
 		return null;
@@ -173,10 +172,9 @@ public class StateMachineController : KMonoBehaviour, ISaveLoadableDetails, ISta
 		}
 		foreach (StateMachine.BaseDef def in cmpdef.defs)
 		{
-			DefType val = def as DefType;
-			if (val != null)
+			if (def is DefType item)
 			{
-				list.Add(val);
+				list.Add(item);
 			}
 		}
 		return list;
@@ -205,10 +203,9 @@ public class StateMachineController : KMonoBehaviour, ISaveLoadableDetails, ISta
 		List<StateMachineInstanceType> list = new List<StateMachineInstanceType>();
 		foreach (StateMachine.Instance stateMachine in stateMachines)
 		{
-			StateMachineInstanceType val = stateMachine as StateMachineInstanceType;
-			if (val != null)
+			if (stateMachine is StateMachineInstanceType item)
 			{
-				list.Add(val);
+				list.Add(item);
 			}
 		}
 		return list;

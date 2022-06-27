@@ -6,9 +6,9 @@ public class MinionGroupProber : KMonoBehaviour, IGroupProber
 {
 	private static MinionGroupProber Instance;
 
-	private Dictionary<object, int>[] cells;
+	private Dictionary<object, short>[] cells;
 
-	private Dictionary<object, KeyValuePair<int, int>> valid_serial_nos = new Dictionary<object, KeyValuePair<int, int>>();
+	private Dictionary<object, KeyValuePair<short, short>> valid_serial_nos = new Dictionary<object, KeyValuePair<short, short>>();
 
 	private List<object> pending_removals = new List<object>();
 
@@ -28,7 +28,7 @@ public class MinionGroupProber : KMonoBehaviour, IGroupProber
 	{
 		base.OnPrefabInit();
 		Instance = this;
-		cells = new Dictionary<object, int>[Grid.CellCount];
+		cells = new Dictionary<object, short>[Grid.CellCount];
 	}
 
 	private bool IsReachable_AssumeLock(int cell)
@@ -37,16 +37,16 @@ public class MinionGroupProber : KMonoBehaviour, IGroupProber
 		{
 			return false;
 		}
-		Dictionary<object, int> dictionary = cells[cell];
+		Dictionary<object, short> dictionary = cells[cell];
 		if (dictionary == null)
 		{
 			return false;
 		}
 		bool result = false;
-		foreach (KeyValuePair<object, int> item in dictionary)
+		foreach (KeyValuePair<object, short> item in dictionary)
 		{
 			object key = item.Key;
-			int value = item.Value;
+			short value = item.Value;
 			if (valid_serial_nos.TryGetValue(key, out var value2) && (value == value2.Key || value == value2.Value))
 			{
 				result = true;
@@ -128,7 +128,7 @@ public class MinionGroupProber : KMonoBehaviour, IGroupProber
 		return IsReachable(Grid.PosToCell(workable), workable.GetOffsets());
 	}
 
-	public void Occupy(object prober, int serial_no, IEnumerable<int> cells)
+	public void Occupy(object prober, short serial_no, IEnumerable<int> cells)
 	{
 		lock (access)
 		{
@@ -136,18 +136,18 @@ public class MinionGroupProber : KMonoBehaviour, IGroupProber
 			{
 				if (this.cells[cell] == null)
 				{
-					this.cells[cell] = new Dictionary<object, int>();
+					this.cells[cell] = new Dictionary<object, short>();
 				}
 				this.cells[cell][prober] = serial_no;
 			}
 		}
 	}
 
-	public void SetValidSerialNos(object prober, int previous_serial_no, int serial_no)
+	public void SetValidSerialNos(object prober, short previous_serial_no, short serial_no)
 	{
 		lock (access)
 		{
-			valid_serial_nos[prober] = new KeyValuePair<int, int>(previous_serial_no, serial_no);
+			valid_serial_nos[prober] = new KeyValuePair<short, short>(previous_serial_no, serial_no);
 		}
 	}
 

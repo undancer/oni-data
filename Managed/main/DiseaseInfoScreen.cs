@@ -23,7 +23,7 @@ public class DiseaseInfoScreen : TargetScreen
 
 	public override bool IsValidForTarget(GameObject target)
 	{
-		if (!(target.GetComponent<CellSelectionObject>() != null))
+		if (!CellSelectionObject.IsSelectionObject(target))
 		{
 			return target.GetComponent<PrimaryElement>() != null;
 		}

@@ -34,6 +34,10 @@ public class Accessorizer : KMonoBehaviour
 		{
 			return;
 		}
+		if (animController == null)
+		{
+			animController = GetComponent<KAnimControllerBase>();
+		}
 		animController.GetComponent<SymbolOverrideController>().AddSymbolOverride(accessory.slot.targetSymbolId, accessory.symbol);
 		if (!HasAccessory(accessory))
 		{

@@ -54,7 +54,7 @@ public class HappinessMonitor : GameStateMachine<HappinessMonitor, HappinessMoni
 		happy.DefaultState(happy.wild).Transition(satisfied, GameStateMachine<HappinessMonitor, Instance, IStateMachineTarget, Def>.Not(IsHappy), UpdateRate.SIM_1000ms);
 		happy.wild.ToggleEffect((Instance smi) => happyWildEffect).TagTransition(GameTags.Creatures.Wild, happy.tame, on_remove: true);
 		happy.tame.ToggleEffect((Instance smi) => happyTameEffect).TagTransition(GameTags.Creatures.Wild, happy.wild);
-		unhappy.DefaultState(unhappy.wild).Transition(satisfied, IsHappy, UpdateRate.SIM_1000ms);
+		unhappy.DefaultState(unhappy.wild).Transition(satisfied, IsHappy, UpdateRate.SIM_1000ms).ToggleTag(GameTags.Creatures.Unhappy);
 		unhappy.wild.ToggleEffect((Instance smi) => unhappyWildEffect).TagTransition(GameTags.Creatures.Wild, unhappy.tame, on_remove: true);
 		unhappy.tame.ToggleEffect((Instance smi) => unhappyTameEffect).TagTransition(GameTags.Creatures.Wild, unhappy.wild);
 		happyWildEffect = new Effect("Happy", CREATURES.MODIFIERS.HAPPY.NAME, CREATURES.MODIFIERS.HAPPY.TOOLTIP, 0f, show_in_ui: true, trigger_floating_text: false, is_bad: false);

@@ -93,8 +93,6 @@ public class KAnim
 			public Matrix2x3 transform;
 
 			public Color multColour;
-
-			public int flags;
 		}
 
 		public string name;
@@ -142,7 +140,7 @@ public class KAnim
 			}
 			if (t > 0f)
 			{
-				float num = t * frameRate + (float)Math.PI * 113f / 710f;
+				float num = t * frameRate + 0.49999997f;
 				result = Math.Min(numFrames - 1, (int)num);
 			}
 			return result;

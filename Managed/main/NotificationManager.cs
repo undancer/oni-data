@@ -25,7 +25,7 @@ public class NotificationManager : KMonoBehaviour
 		}
 	}
 
-	protected override void OnCleanUp()
+	protected override void OnForcedCleanUp()
 	{
 		Instance = null;
 	}

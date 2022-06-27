@@ -122,6 +122,11 @@ public class GlobalChoreProvider : ChoreProvider, IRender200ms
 
 	private TagBits storageFetchableBits;
 
+	public static void DestroyInstance()
+	{
+		Instance = null;
+	}
+
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
@@ -132,20 +137,18 @@ public class GlobalChoreProvider : ChoreProvider, IRender200ms
 	public override void AddChore(Chore chore)
 	{
 		base.AddChore(chore);
-		FetchChore fetchChore = chore as FetchChore;
-		if (fetchChore != null)
+		if (chore is FetchChore item)
 		{
-			fetchChores.Add(fetchChore);
+			fetchChores.Add(item);
 		}
 	}
 
 	public override void RemoveChore(Chore chore)
 	{
 		base.RemoveChore(chore);
-		FetchChore fetchChore = chore as FetchChore;
-		if (fetchChore != null)
+		if (chore is FetchChore item)
 		{
-			fetchChores.Remove(fetchChore);
+			fetchChores.Remove(item);
 		}
 	}
 
@@ -153,7 +156,6 @@ public class GlobalChoreProvider : ChoreProvider, IRender200ms
 	{
 		fetches.Clear();
 		Navigator component = path_prober.GetComponent<Navigator>();
-		Fetch item;
 		foreach (FetchChore fetchChore in fetchChores)
 		{
 			if (fetchChore.driver != null || (fetchChore.automatable != null && fetchChore.automatable.GetAutomationOnly()))
@@ -166,16 +168,14 @@ public class GlobalChoreProvider : ChoreProvider, IRender200ms
 				int navigationCost = component.GetNavigationCost(destination);
 				if (navigationCost != -1)
 				{
-					List<Fetch> list = fetches;
-					item = new Fetch
+					fetches.Add(new Fetch
 					{
 						chore = fetchChore,
 						tagBitsHash = fetchChore.tagBitsHash,
 						cost = navigationCost,
 						priority = fetchChore.masterPriority,
 						category = destination.fetchCategory
-					};
-					list.Add(item);
+					});
 				}
 			}
 		}
@@ -188,8 +188,7 @@ public class GlobalChoreProvider : ChoreProvider, IRender200ms
 		int num = 0;
 		for (; i < fetches.Count; i++)
 		{
-			item = fetches[num];
-			if (!item.IsBetterThan(fetches[i]))
+			if (!fetches[num].IsBetterThan(fetches[i]))
 			{
 				num++;
 				fetches[num] = fetches[i];

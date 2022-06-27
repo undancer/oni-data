@@ -201,7 +201,7 @@ public static class TemplateLoader
 					Unsealable component5 = gameObject.GetComponent<Unsealable>();
 					if ((bool)component5)
 					{
-						component5.facingRight = ((template_amount_value2.value != 0f) ? true : false);
+						component5.facingRight = template_amount_value2.value != 0f;
 					}
 					break;
 				}

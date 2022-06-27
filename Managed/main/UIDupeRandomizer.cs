@@ -21,12 +21,6 @@ public class UIDupeRandomizer : MonoBehaviour
 		public KAnimFile curBody;
 	}
 
-	public KAnimFile head_default_anim;
-
-	public KAnimFile head_swap_anim;
-
-	public KAnimFile body_swap_anim;
-
 	public bool applyHat = true;
 
 	public bool applySuit = true;
@@ -37,7 +31,7 @@ public class UIDupeRandomizer : MonoBehaviour
 
 	protected virtual void Start()
 	{
-		slots = new AccessorySlots(null, head_default_anim, head_swap_anim, body_swap_anim);
+		slots = new AccessorySlots(null);
 		for (int i = 0; i < anims.Length; i++)
 		{
 			anims[i].curBody = null;

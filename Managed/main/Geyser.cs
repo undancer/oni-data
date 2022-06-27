@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using KSerialization;
 using STRINGS;
@@ -93,15 +94,34 @@ public class Geyser : StateMachineComponent<Geyser.StatesInstance>, IGameObjectE
 		{
 			configuration = GetComponent<GeyserConfigurator>().MakeConfiguration();
 		}
+		else
+		{
+			PrimaryElement component = base.gameObject.GetComponent<PrimaryElement>();
+			if (configuration.geyserType.geyserTemperature - component.Temperature != 0f)
+			{
+				SimTemperatureTransfer component2 = base.gameObject.GetComponent<SimTemperatureTransfer>();
+				component2.onSimRegistered = (Action<SimTemperatureTransfer>)Delegate.Combine(component2.onSimRegistered, new Action<SimTemperatureTransfer>(OnSimRegistered));
+			}
+		}
 		emitter.emitRange = 2;
 		emitter.maxPressure = configuration.GetMaxPressure();
 		emitter.outputElement = new ElementConverter.OutputElement(configuration.GetEmitRate(), configuration.GetElement(), configuration.GetTemperature(), useEntityTemperature: false, storeOutput: false, outputOffset.x, outputOffset.y, 1f, configuration.GetDiseaseIdx(), Mathf.RoundToInt((float)configuration.GetDiseaseCount() * configuration.GetEmitRate()));
 		base.smi.StartSM();
-		Workable component = GetComponent<Studyable>();
-		if (component != null)
+		Workable component3 = GetComponent<Studyable>();
+		if (component3 != null)
 		{
-			component.alwaysShowProgressBar = true;
+			component3.alwaysShowProgressBar = true;
 		}
+	}
+
+	private void OnSimRegistered(SimTemperatureTransfer stt)
+	{
+		PrimaryElement component = base.gameObject.GetComponent<PrimaryElement>();
+		if (configuration.geyserType.geyserTemperature - component.Temperature != 0f)
+		{
+			component.Temperature = configuration.geyserType.geyserTemperature;
+		}
+		stt.onSimRegistered = (Action<SimTemperatureTransfer>)Delegate.Remove(stt.onSimRegistered, new Action<SimTemperatureTransfer>(OnSimRegistered));
 	}
 
 	public float RemainingPhaseTimeFrom2(float onDuration, float offDuration, float time, Phase expectedPhase)

@@ -5,8 +5,6 @@ using UnityEngine;
 [AddComponentMenu("KMonoBehaviour/scripts/CavityVisualizer")]
 public class CavityVisualizer : KMonoBehaviour
 {
-	public static CavityVisualizer Instance;
-
 	public List<int> cavityCells = new List<int>();
 
 	public List<int> spawnCells = new List<int>();
@@ -17,8 +15,6 @@ public class CavityVisualizer : KMonoBehaviour
 
 	protected override void OnPrefabInit()
 	{
-		Debug.Assert(Instance == null);
-		Instance = this;
 		base.OnPrefabInit();
 		foreach (TerrainCell key in MobSpawning.NaturalCavities.Keys)
 		{

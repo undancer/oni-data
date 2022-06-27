@@ -15,8 +15,7 @@ internal class InputInit : MonoBehaviour
 			Component[] components = base.gameObject.GetComponents<Component>();
 			for (int j = 0; j < components.Length; j++)
 			{
-				IInputHandler inputHandler = components[j] as IInputHandler;
-				if (inputHandler != null)
+				if (components[j] is IInputHandler inputHandler)
 				{
 					KInputHandler.Add(controller, inputHandler);
 					Global.Instance.GetInputManager().usedMenus.Add(inputHandler);

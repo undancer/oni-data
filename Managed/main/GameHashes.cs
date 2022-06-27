@@ -410,5 +410,6 @@ public enum GameHashes
 	ModuleLanderLanded = 1591811118,
 	PartyLineJoined = 564760259,
 	ScreenResolutionChanged = 445618876,
-	GamepadUIModeChanged = -442024484
+	GamepadUIModeChanged = -442024484,
+	CatchyTune = -1278274506
 }

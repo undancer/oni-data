@@ -259,18 +259,16 @@ public class LaunchableRocket : StateMachineComponent<LaunchableRocket.StatesIns
 						}
 					}
 					smi.GoTo(grounded);
+					return;
 				}
-				else
+				foreach (GameObject part11 in smi.master.parts)
 				{
-					foreach (GameObject part11 in smi.master.parts)
+					if (!(part11 == null))
 					{
-						if (!(part11 == null))
-						{
-							KBatchedAnimController component = part11.GetComponent<KBatchedAnimController>();
-							component.Offset = Vector3.up * smi.master.flightAnimOffset;
-							Vector3 positionIncludingOffset = component.PositionIncludingOffset;
-							DoWorldDamage(part11, positionIncludingOffset);
-						}
+						KBatchedAnimController component = part11.GetComponent<KBatchedAnimController>();
+						component.Offset = Vector3.up * smi.master.flightAnimOffset;
+						Vector3 positionIncludingOffset = component.PositionIncludingOffset;
+						DoWorldDamage(part11, positionIncludingOffset);
 					}
 				}
 			}, UpdateRate.SIM_33ms);

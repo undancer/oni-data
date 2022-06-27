@@ -35,6 +35,12 @@ public class PasteBaseTemplateScreen : KScreen
 		RefreshStampButtons();
 	}
 
+	protected override void OnForcedCleanUp()
+	{
+		Instance = null;
+		base.OnForcedCleanUp();
+	}
+
 	[ContextMenu("Refresh")]
 	public void RefreshStampButtons()
 	{
@@ -49,20 +55,22 @@ public class PasteBaseTemplateScreen : KScreen
 		if (m_CurrentDirectory == NO_DIRECTORY)
 		{
 			directory_path_text.text = "";
-			foreach (string dlcId in DlcManager.RELEASE_ORDER)
 			{
-				if (DlcManager.IsContentActive(dlcId))
+				foreach (string dlcId in DlcManager.RELEASE_ORDER)
 				{
-					GameObject gameObject = Util.KInstantiateUI(prefab_directory_button, button_list_container, force_active: true);
-					gameObject.GetComponent<KButton>().onClick += delegate
+					if (DlcManager.IsContentActive(dlcId))
 					{
-						UpdateDirectory(SettingsCache.GetScope(dlcId));
-					};
-					gameObject.GetComponentInChildren<LocText>().text = ((dlcId == "") ? UI.DEBUG_TOOLS.SAVE_BASE_TEMPLATE.BASE_GAME_FOLDER_NAME.text : SettingsCache.GetScope(dlcId));
-					m_template_buttons.Add(gameObject);
+						GameObject gameObject = Util.KInstantiateUI(prefab_directory_button, button_list_container, force_active: true);
+						gameObject.GetComponent<KButton>().onClick += delegate
+						{
+							UpdateDirectory(SettingsCache.GetScope(dlcId));
+						};
+						gameObject.GetComponentInChildren<LocText>().text = ((dlcId == "") ? UI.DEBUG_TOOLS.SAVE_BASE_TEMPLATE.BASE_GAME_FOLDER_NAME.text : SettingsCache.GetScope(dlcId));
+						m_template_buttons.Add(gameObject);
+					}
 				}
+				return;
 			}
-			return;
 		}
 		string[] directories = Directory.GetDirectories(TemplateCache.RewriteTemplatePath(m_CurrentDirectory));
 		foreach (string path in directories)

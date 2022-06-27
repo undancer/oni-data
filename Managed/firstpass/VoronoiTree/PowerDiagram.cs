@@ -271,7 +271,7 @@ namespace VoronoiTree
 				catch (Exception ex)
 				{
 					Debug.LogError("Error [" + num + "] iters " + completedIterations + "/" + maxIterations + " Exception:" + ex.Message + "\n" + ex.StackTrace);
-					return;
+					break;
 				}
 				num = 0f;
 				foreach (PowerDiagramSite site2 in sites)
@@ -344,7 +344,7 @@ namespace VoronoiTree
 				{
 					zero += dualSite3d.coord;
 				}
-				zero *= 0.33333334f;
+				zero *= 1f / 3f;
 				DebugExtension.DebugPoint(zero, Color.red);
 			}
 		}

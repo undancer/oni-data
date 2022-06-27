@@ -22,35 +22,28 @@ namespace Database
 
 		public AccessorySlot HeadEffects;
 
-		public AccessorySlots(ResourceSet parent, KAnimFile default_build = null, KAnimFile swap_build = null, KAnimFile torso_swap_build = null)
+		public AccessorySlots(ResourceSet parent)
 			: base("AccessorySlots", parent)
 		{
-			if (swap_build == null)
-			{
-				swap_build = Assets.GetAnim("head_swap_kanim");
-				parent = Db.Get().Accessories;
-			}
-			if (default_build == null)
-			{
-				default_build = Assets.GetAnim("body_comp_default_kanim");
-			}
-			if (torso_swap_build == null)
-			{
-				torso_swap_build = Assets.GetAnim("body_swap_kanim");
-			}
-			Eyes = new AccessorySlot("Eyes", this, swap_build);
-			Hair = new AccessorySlot("Hair", this, swap_build);
-			HeadShape = new AccessorySlot("HeadShape", this, swap_build);
-			Mouth = new AccessorySlot("Mouth", this, swap_build);
-			Hat = new AccessorySlot("Hat", this, swap_build);
-			HatHair = new AccessorySlot("Hat_Hair", this, swap_build);
-			HairAlways = new AccessorySlot("Hair_Always", this, swap_build, "hair");
-			HeadEffects = new AccessorySlot("HeadFX", this, swap_build);
-			Body = new AccessorySlot("Body", this, torso_swap_build);
-			Arm = new AccessorySlot("Arm", this, torso_swap_build);
+			parent = Db.Get().Accessories;
+			KAnimFile anim = Assets.GetAnim("head_swap_kanim");
+			KAnimFile anim2 = Assets.GetAnim("body_comp_default_kanim");
+			KAnimFile anim3 = Assets.GetAnim("body_swap_kanim");
+			KAnimFile anim4 = Assets.GetAnim("hair_swap_kanim");
+			KAnimFile anim5 = Assets.GetAnim("hat_swap_kanim");
+			Eyes = new AccessorySlot("Eyes", this, anim);
+			Hair = new AccessorySlot("Hair", this, anim4);
+			HeadShape = new AccessorySlot("HeadShape", this, anim);
+			Mouth = new AccessorySlot("Mouth", this, anim);
+			Hat = new AccessorySlot("Hat", this, anim5);
+			HatHair = new AccessorySlot("Hat_Hair", this, anim4);
+			HairAlways = new AccessorySlot("Hair_Always", this, anim4, "hair");
+			HeadEffects = new AccessorySlot("HeadFX", this, anim);
+			Body = new AccessorySlot("Body", this, anim3);
+			Arm = new AccessorySlot("Arm", this, anim3);
 			foreach (AccessorySlot resource in resources)
 			{
-				resource.AddAccessories(default_build, parent);
+				resource.AddAccessories(anim2, parent);
 			}
 		}
 	}

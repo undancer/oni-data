@@ -29,6 +29,7 @@ public class TilePOIConfig : IBuildingConfig
 		obj.BlockTileMaterial = Assets.GetMaterial("tiles_solid");
 		obj.DecorBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_POI_tops_decor_info");
 		obj.DecorPlaceBlockTileInfo = Assets.GetBlockTileDecorInfo("tiles_POI_tops_decor_info");
+		obj.ShowInBuildMenu = false;
 		return obj;
 	}
 

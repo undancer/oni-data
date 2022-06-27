@@ -19,8 +19,7 @@ namespace Database
 			float num = 0f;
 			foreach (UtilityNetwork network in Conduit.GetNetworkManager(ConduitType.Gas).GetNetworks())
 			{
-				FlowUtilityNetwork flowUtilityNetwork = network as FlowUtilityNetwork;
-				if (flowUtilityNetwork == null)
+				if (!(network is FlowUtilityNetwork flowUtilityNetwork))
 				{
 					continue;
 				}
@@ -47,8 +46,7 @@ namespace Database
 			float num = 0f;
 			foreach (UtilityNetwork network in Conduit.GetNetworkManager(ConduitType.Gas).GetNetworks())
 			{
-				FlowUtilityNetwork flowUtilityNetwork = network as FlowUtilityNetwork;
-				if (flowUtilityNetwork == null)
+				if (!(network is FlowUtilityNetwork flowUtilityNetwork))
 				{
 					continue;
 				}

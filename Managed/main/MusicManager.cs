@@ -35,6 +35,9 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 		public int numberOfVariations;
 
 		[NonSerialized]
+		public string musicKeySigniture = "C";
+
+		[NonSerialized]
 		public FMOD.Studio.EventInstance ev;
 
 		[NonSerialized]
@@ -65,6 +68,10 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 		[SerializeField]
 		public int numberOfVariations;
 
+		[Tooltip("Some songs have different key signitures. Enter the key this music is in.")]
+		[SerializeField]
+		public string musicKeySigniture = "";
+
 		[Tooltip("Should playback of this song be limited to an active DLC?")]
 		[SerializeField]
 		public string requiredDlcId = "";
@@ -84,6 +91,10 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 	{
 		[EventRef]
 		public string fmodEvent;
+
+		[Tooltip("Some songs have different key signitures. Enter the key this music is in.")]
+		[SerializeField]
+		public string musicKeySigniture = "";
 
 		[Tooltip("Should playback of this song be limited to an active DLC?")]
 		[SerializeField]
@@ -157,6 +168,12 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 	private const string VARIATION_ID = "variation";
 
 	private const string INTERRUPTED_DIMMED_ID = "interrupted_dimmed";
+
+	private const string MUSIC_KEY = "MusicInKey";
+
+	private const float DYNAMIC_MUSIC_SCHEDULE_DELAY = 16000f;
+
+	private const float DYNAMIC_MUSIC_SCHEDULE_LOOKAHEAD = 48000f;
 
 	[Header("Song Lists")]
 	[Tooltip("Play during the daytime. The mix of the song is affected by the player's input, like pausing the sim, activating an overlay, or zooming in and out.")]
@@ -260,12 +277,14 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 			{
 				value.ev.setParameterByName("variation", num);
 			}
-			value.ev.start();
-			activeSongs[song_name] = value;
 			if (value.dynamic)
 			{
+				value.ev.setProperty(EVENT_PROPERTY.SCHEDULE_DELAY, 16000f);
+				value.ev.setProperty(EVENT_PROPERTY.SCHEDULE_LOOKAHEAD, 48000f);
 				activeDynamicSong = value;
 			}
+			value.ev.start();
+			activeSongs[song_name] = value;
 			return;
 		}
 		List<string> list = new List<string>(activeSongs.Keys);
@@ -542,6 +561,7 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 				SetDynamicMusicOverlayActive();
 			}
 			SetDynamicMusicPlayHook();
+			SetDynamicMusicKeySigniture();
 			string key = "Volume_Music";
 			if (KPlayerPrefs.HasKey(key))
 			{
@@ -692,6 +712,23 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 		return false;
 	}
 
+	public void SetDynamicMusicKeySigniture()
+	{
+		if (DynamicMusicIsActive())
+		{
+			string simpleSoundEventName = Assets.GetSimpleSoundEventName(activeDynamicSong.fmodEvent);
+			float value = activePlaylist.songMap[simpleSoundEventName].musicKeySigniture switch
+			{
+				"Ab" => 0f, 
+				"Bb" => 1f, 
+				"C" => 2f, 
+				"D" => 3f, 
+				_ => 2f, 
+			};
+			RuntimeManager.StudioSystem.setParameterByName("MusicInKey", value);
+		}
+	}
+
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
@@ -701,7 +738,7 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 		}
 		else if (KPlayerPrefs.HasKey(AudioOptionsScreen.AlwaysPlayMusicKey))
 		{
-			alwaysPlayMusic = ((KPlayerPrefs.GetInt(AudioOptionsScreen.AlwaysPlayMusicKey) == 1) ? true : false);
+			alwaysPlayMusic = KPlayerPrefs.GetInt(AudioOptionsScreen.AlwaysPlayMusicKey) == 1;
 		}
 	}
 
@@ -734,6 +771,7 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 			songInfo.dynamic = true;
 			songInfo.useTimeOfDay = dynamicSong.useTimeOfDay;
 			songInfo.numberOfVariations = dynamicSong.numberOfVariations;
+			songInfo.musicKeySigniture = dynamicSong.musicKeySigniture;
 			songInfo.sfxAttenuationPercentage = dynamicMusicSFXAttenuationPercentage;
 			songMap[simpleSoundEventName] = songInfo;
 			fullSongPlaylist.songMap[simpleSoundEventName] = songInfo;
@@ -750,6 +788,7 @@ public class MusicManager : KMonoBehaviour, ISerializationCallbackReceiver
 			songInfo2.dynamic = true;
 			songInfo2.useTimeOfDay = false;
 			songInfo2.numberOfVariations = 5;
+			songInfo2.musicKeySigniture = minisong.musicKeySigniture;
 			songInfo2.sfxAttenuationPercentage = miniSongSFXAttenuationPercentage;
 			songMap[simpleSoundEventName2] = songInfo2;
 			miniSongPlaylist.songMap[simpleSoundEventName2] = songInfo2;

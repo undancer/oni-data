@@ -34,8 +34,7 @@ namespace NodeEditorFramework
 
 		private static void CreateNodeCallback(object infoObj)
 		{
-			NodeEditorInputInfo nodeEditorInputInfo = infoObj as NodeEditorInputInfo;
-			if (nodeEditorInputInfo == null)
+			if (!(infoObj is NodeEditorInputInfo nodeEditorInputInfo))
 			{
 				throw new UnityException("Callback Object passed by context is not of type NodeEditorInputInfo!");
 			}

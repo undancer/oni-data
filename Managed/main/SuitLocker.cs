@@ -9,13 +9,105 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 	[AddComponentMenu("KMonoBehaviour/Workable/ReturnSuitWorkable")]
 	public class ReturnSuitWorkable : Workable
 	{
-		public static readonly Chore.Precondition DoesSuitNeedRechargingUrgent;
+		public static readonly Chore.Precondition DoesSuitNeedRechargingUrgent = new Chore.Precondition
+		{
+			id = "DoesSuitNeedRechargingUrgent",
+			description = DUPLICANTS.CHORES.PRECONDITIONS.DOES_SUIT_NEED_RECHARGING_URGENT,
+			fn = delegate(ref Chore.Precondition.Context context, object data)
+			{
+				Equipment equipment2 = context.consumerState.equipment;
+				if (equipment2 == null)
+				{
+					return false;
+				}
+				AssignableSlotInstance slot2 = equipment2.GetSlot(Db.Get().AssignableSlots.Suit);
+				if (slot2.assignable == null)
+				{
+					return false;
+				}
+				Equippable component2 = slot2.assignable.GetComponent<Equippable>();
+				if (component2 == null || !component2.isEquipped)
+				{
+					return false;
+				}
+				SuitTank component3 = slot2.assignable.GetComponent<SuitTank>();
+				if (component3 != null && component3.NeedsRecharging())
+				{
+					return true;
+				}
+				JetSuitTank component4 = slot2.assignable.GetComponent<JetSuitTank>();
+				if (component4 != null && component4.NeedsRecharging())
+				{
+					return true;
+				}
+				LeadSuitTank component5 = slot2.assignable.GetComponent<LeadSuitTank>();
+				return (component5 != null && component5.NeedsRecharging()) ? true : false;
+			}
+		};
 
-		public static readonly Chore.Precondition DoesSuitNeedRechargingIdle;
+		public static readonly Chore.Precondition DoesSuitNeedRechargingIdle = new Chore.Precondition
+		{
+			id = "DoesSuitNeedRechargingIdle",
+			description = DUPLICANTS.CHORES.PRECONDITIONS.DOES_SUIT_NEED_RECHARGING_IDLE,
+			fn = delegate(ref Chore.Precondition.Context context, object data)
+			{
+				Equipment equipment = context.consumerState.equipment;
+				if (equipment == null)
+				{
+					return false;
+				}
+				AssignableSlotInstance slot = equipment.GetSlot(Db.Get().AssignableSlots.Suit);
+				if (slot.assignable == null)
+				{
+					return false;
+				}
+				Equippable component = slot.assignable.GetComponent<Equippable>();
+				if (component == null || !component.isEquipped)
+				{
+					return false;
+				}
+				if (slot.assignable.GetComponent<SuitTank>() != null)
+				{
+					return true;
+				}
+				if (slot.assignable.GetComponent<JetSuitTank>() != null)
+				{
+					return true;
+				}
+				return (slot.assignable.GetComponent<LeadSuitTank>() != null) ? true : false;
+			}
+		};
 
-		public Chore.Precondition HasSuitMarker;
+		public Chore.Precondition HasSuitMarker = new Chore.Precondition
+		{
+			id = "IsValid",
+			description = DUPLICANTS.CHORES.PRECONDITIONS.HAS_SUIT_MARKER,
+			fn = delegate(ref Chore.Precondition.Context context, object data)
+			{
+				return ((SuitLocker)data).suitMarkerState == SuitMarkerState.HasMarker;
+			}
+		};
 
-		public Chore.Precondition SuitTypeMatchesLocker;
+		public Chore.Precondition SuitTypeMatchesLocker = new Chore.Precondition
+		{
+			id = "IsValid",
+			description = DUPLICANTS.CHORES.PRECONDITIONS.HAS_SUIT_MARKER,
+			fn = delegate(ref Chore.Precondition.Context context, object data)
+			{
+				SuitLocker suitLocker = (SuitLocker)data;
+				Equipment equipment = context.consumerState.equipment;
+				if (equipment == null)
+				{
+					return false;
+				}
+				AssignableSlotInstance slot = equipment.GetSlot(Db.Get().AssignableSlots.Suit);
+				if (slot.assignable == null)
+				{
+					return false;
+				}
+				return slot.assignable.HasAnyTags(suitLocker.OutfitTags) ? true : false;
+			}
+		};
 
 		private WorkChore<ReturnSuitWorkable> urgentChore;
 
@@ -96,114 +188,6 @@ public class SuitLocker : StateMachineComponent<SuitLocker.StatesInstance>
 			{
 				new HashedString("none")
 			};
-		}
-
-		public ReturnSuitWorkable()
-		{
-			Chore.Precondition hasSuitMarker = new Chore.Precondition
-			{
-				id = "IsValid",
-				description = DUPLICANTS.CHORES.PRECONDITIONS.HAS_SUIT_MARKER,
-				fn = delegate(ref Chore.Precondition.Context context, object data)
-				{
-					return ((SuitLocker)data).suitMarkerState == SuitMarkerState.HasMarker;
-				}
-			};
-			HasSuitMarker = hasSuitMarker;
-			hasSuitMarker = (SuitTypeMatchesLocker = new Chore.Precondition
-			{
-				id = "IsValid",
-				description = DUPLICANTS.CHORES.PRECONDITIONS.HAS_SUIT_MARKER,
-				fn = delegate(ref Chore.Precondition.Context context, object data)
-				{
-					SuitLocker suitLocker = (SuitLocker)data;
-					Equipment equipment = context.consumerState.equipment;
-					if (equipment == null)
-					{
-						return false;
-					}
-					AssignableSlotInstance slot = equipment.GetSlot(Db.Get().AssignableSlots.Suit);
-					if (slot.assignable == null)
-					{
-						return false;
-					}
-					return slot.assignable.HasAnyTags(suitLocker.OutfitTags) ? true : false;
-				}
-			});
-			base._002Ector();
-		}
-
-		static ReturnSuitWorkable()
-		{
-			Chore.Precondition precondition = new Chore.Precondition
-			{
-				id = "DoesSuitNeedRechargingUrgent",
-				description = DUPLICANTS.CHORES.PRECONDITIONS.DOES_SUIT_NEED_RECHARGING_URGENT,
-				fn = delegate(ref Chore.Precondition.Context context, object data)
-				{
-					Equipment equipment2 = context.consumerState.equipment;
-					if (equipment2 == null)
-					{
-						return false;
-					}
-					AssignableSlotInstance slot2 = equipment2.GetSlot(Db.Get().AssignableSlots.Suit);
-					if (slot2.assignable == null)
-					{
-						return false;
-					}
-					Equippable component2 = slot2.assignable.GetComponent<Equippable>();
-					if (component2 == null || !component2.isEquipped)
-					{
-						return false;
-					}
-					SuitTank component3 = slot2.assignable.GetComponent<SuitTank>();
-					if (component3 != null && component3.NeedsRecharging())
-					{
-						return true;
-					}
-					JetSuitTank component4 = slot2.assignable.GetComponent<JetSuitTank>();
-					if (component4 != null && component4.NeedsRecharging())
-					{
-						return true;
-					}
-					LeadSuitTank component5 = slot2.assignable.GetComponent<LeadSuitTank>();
-					return (component5 != null && component5.NeedsRecharging()) ? true : false;
-				}
-			};
-			DoesSuitNeedRechargingUrgent = precondition;
-			precondition = new Chore.Precondition
-			{
-				id = "DoesSuitNeedRechargingIdle",
-				description = DUPLICANTS.CHORES.PRECONDITIONS.DOES_SUIT_NEED_RECHARGING_IDLE,
-				fn = delegate(ref Chore.Precondition.Context context, object data)
-				{
-					Equipment equipment = context.consumerState.equipment;
-					if (equipment == null)
-					{
-						return false;
-					}
-					AssignableSlotInstance slot = equipment.GetSlot(Db.Get().AssignableSlots.Suit);
-					if (slot.assignable == null)
-					{
-						return false;
-					}
-					Equippable component = slot.assignable.GetComponent<Equippable>();
-					if (component == null || !component.isEquipped)
-					{
-						return false;
-					}
-					if (slot.assignable.GetComponent<SuitTank>() != null)
-					{
-						return true;
-					}
-					if (slot.assignable.GetComponent<JetSuitTank>() != null)
-					{
-						return true;
-					}
-					return (slot.assignable.GetComponent<LeadSuitTank>() != null) ? true : false;
-				}
-			};
-			DoesSuitNeedRechargingIdle = precondition;
 		}
 	}
 

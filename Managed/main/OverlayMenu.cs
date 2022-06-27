@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using STRINGS;
 using UnityEngine;
@@ -82,8 +81,7 @@ public class OverlayMenu : KIconToggleMenu
 		Setup(overlayToggleInfos);
 		Game.Instance.Subscribe(1798162660, OnOverlayChanged);
 		Game.Instance.Subscribe(-107300940, OnResearchComplete);
-		inputChangeReceiver = (UnityAction)Delegate.Combine(inputChangeReceiver, new UnityAction(Refresh));
-		KInputManager.InputChange.AddListener(inputChangeReceiver);
+		KInputManager.InputChange.AddListener(Refresh);
 		base.onSelect += OnToggleSelect;
 	}
 
@@ -116,6 +114,12 @@ public class OverlayMenu : KIconToggleMenu
 	private void OnResearchComplete(object data)
 	{
 		RefreshButtons();
+	}
+
+	protected override void OnForcedCleanUp()
+	{
+		KInputManager.InputChange.RemoveListener(Refresh);
+		base.OnForcedCleanUp();
 	}
 
 	protected override void OnCleanUp()

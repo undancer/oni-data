@@ -117,7 +117,7 @@ public class ConduitFlowVisualizer
 		public Vector3 position;
 	}
 
-	private struct RenderMeshContext
+	private class RenderMeshContext
 	{
 		public ListPool<int, ConduitFlowVisualizer>.PooledList visible_conduits;
 
@@ -482,19 +482,19 @@ public class ConduitFlowVisualizer
 		GridArea visibleArea = GridVisibleArea.GetVisibleArea();
 		Vector2I min = new Vector2I(Mathf.Max(0, visibleArea.Min.x - 1), Mathf.Max(0, visibleArea.Min.y - 1));
 		Vector2I max = new Vector2I(Mathf.Min(Grid.WidthInCells - 1, visibleArea.Max.x + 1), Mathf.Min(Grid.HeightInCells - 1, visibleArea.Max.y + 1));
-		RenderMeshContext shared_data = new RenderMeshContext(this, lerp_percent, min, max);
-		if (shared_data.visible_conduits.Count == 0)
+		RenderMeshContext renderMeshContext = new RenderMeshContext(this, lerp_percent, min, max);
+		if (renderMeshContext.visible_conduits.Count == 0)
 		{
-			shared_data.Finish();
+			renderMeshContext.Finish();
 			return;
 		}
-		render_mesh_job.Reset(shared_data);
-		int num = Mathf.Max(1, (int)((float)(shared_data.visible_conduits.Count / CPUBudget.coreCount) / 1.5f));
-		int num2 = Mathf.Max(1, shared_data.visible_conduits.Count / num);
+		render_mesh_job.Reset(renderMeshContext);
+		int num = Mathf.Max(1, (int)((float)(renderMeshContext.visible_conduits.Count / CPUBudget.coreCount) / 1.5f));
+		int num2 = Mathf.Max(1, renderMeshContext.visible_conduits.Count / num);
 		for (int i = 0; i != num2; i++)
 		{
 			int num3 = i * num;
-			int end = ((i == num2 - 1) ? shared_data.visible_conduits.Count : (num3 + num));
+			int end = ((i == num2 - 1) ? renderMeshContext.visible_conduits.Count : (num3 + num));
 			render_mesh_job.Add(new RenderMeshTask(num3, end));
 		}
 		GlobalJobManager.Run(render_mesh_job);
@@ -522,7 +522,8 @@ public class ConduitFlowVisualizer
 		}
 		movingBallMesh.End(z, layer);
 		staticBallMesh.End(z, layer);
-		shared_data.Finish();
+		renderMeshContext.Finish();
+		render_mesh_job.Reset(null);
 	}
 
 	public void ColourizePipeContents(bool show_contents, bool move_to_overlay_layer)

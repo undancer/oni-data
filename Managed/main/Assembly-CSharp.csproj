@@ -12,82 +12,85 @@
   <ItemGroup />
   <ItemGroup>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>../Managed/UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>../UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>../Managed/UnityEngine.UI.dll</HintPath>
+      <HintPath>../UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>../Managed/Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath>../Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UIModule">
-      <HintPath>../Managed/UnityEngine.UIModule.dll</HintPath>
+      <HintPath>../UnityEngine.UIModule.dll</HintPath>
     </Reference>
     <Reference Include="System.Core">
-      <HintPath>../Managed/System.Core.dll</HintPath>
+      <HintPath>../System.Core.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>../Managed/Newtonsoft.Json.dll</HintPath>
+      <HintPath>../Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="FMODUnity">
-      <HintPath>../Managed/FMODUnity.dll</HintPath>
+      <HintPath>../FMODUnity.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ParticleSystemModule">
-      <HintPath>../Managed/UnityEngine.ParticleSystemModule.dll</HintPath>
+      <HintPath>../UnityEngine.ParticleSystemModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>../Managed/UnityEngine.TextRenderingModule.dll</HintPath>
+      <HintPath>../UnityEngine.TextRenderingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.VideoModule">
-      <HintPath>../Managed/UnityEngine.VideoModule.dll</HintPath>
+      <HintPath>../UnityEngine.VideoModule.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>../Managed/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>../Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="com.rlabrecque.steamworks.net">
-      <HintPath>../Managed/com.rlabrecque.steamworks.net.dll</HintPath>
+      <HintPath>../com.rlabrecque.steamworks.net.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>../Managed/UnityEngine.PhysicsModule.dll</HintPath>
+      <HintPath>../UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
     <Reference Include="Ionic.Zip">
-      <HintPath>../Managed/Ionic.Zip.dll</HintPath>
+      <HintPath>../Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AnimationModule">
-      <HintPath>../Managed/UnityEngine.AnimationModule.dll</HintPath>
+      <HintPath>../UnityEngine.AnimationModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestModule">
-      <HintPath>../Managed/UnityEngine.UnityWebRequestModule.dll</HintPath>
+      <HintPath>../UnityEngine.UnityWebRequestModule.dll</HintPath>
     </Reference>
     <Reference Include="LibNoiseDotNet">
-      <HintPath>../Managed/LibNoiseDotNet.dll</HintPath>
+      <HintPath>../LibNoiseDotNet.dll</HintPath>
     </Reference>
     <Reference Include="0Harmony">
-      <HintPath>../Managed/0Harmony.dll</HintPath>
+      <HintPath>../0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Physics2DModule">
-      <HintPath>../Managed/UnityEngine.Physics2DModule.dll</HintPath>
+      <HintPath>../UnityEngine.Physics2DModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.InputLegacyModule">
-      <HintPath>../Managed/UnityEngine.InputLegacyModule.dll</HintPath>
+      <HintPath>../UnityEngine.InputLegacyModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AssetBundleModule">
-      <HintPath>../Managed/UnityEngine.AssetBundleModule.dll</HintPath>
+      <HintPath>../UnityEngine.AssetBundleModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ScreenCaptureModule">
-      <HintPath>../Managed/UnityEngine.ScreenCaptureModule.dll</HintPath>
+      <HintPath>../UnityEngine.ScreenCaptureModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ImageConversionModule">
-      <HintPath>../Managed/UnityEngine.ImageConversionModule.dll</HintPath>
+      <HintPath>../UnityEngine.ImageConversionModule.dll</HintPath>
     </Reference>
     <Reference Include="ArabicSupport">
-      <HintPath>../Managed/ArabicSupport.dll</HintPath>
+      <HintPath>../ArabicSupport.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
-      <HintPath>../Managed/UnityEngine.IMGUIModule.dll</HintPath>
+      <HintPath>../UnityEngine.IMGUIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestTextureModule">
-      <HintPath>../Managed/UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+      <HintPath>../UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="ImGui.NET">
+      <HintPath>../ImGui.NET.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

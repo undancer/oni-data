@@ -8,8 +8,8 @@ namespace Satsuma
 		[Flags]
 		public enum Flags
 		{
-			None = 0x0,
-			CreateOrder = 0x1
+			None = 0,
+			CreateOrder = 1
 		}
 
 		private class MyDfs : Dfs

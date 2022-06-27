@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Klei.AI;
 using STRINGS;
@@ -128,7 +127,7 @@ public class FertilizationMonitor : GameStateMachine<FertilizationMonitor, Ferti
 
 		protected virtual void MakeModifiers()
 		{
-			consumptionRate = new AttributeModifier(Db.Get().Amounts.Fertilization.deltaAttribute.Id, -355f / (678f * (float)Math.PI), CREATURES.STATS.FERTILIZATION.CONSUME_MODIFIER);
+			consumptionRate = new AttributeModifier(Db.Get().Amounts.Fertilization.deltaAttribute.Id, -1f / 6f, CREATURES.STATS.FERTILIZATION.CONSUME_MODIFIER);
 			absorptionRate = new AttributeModifier(Db.Get().Amounts.Fertilization.deltaAttribute.Id, 1.6666666f, CREATURES.STATS.FERTILIZATION.ABSORBING_MODIFIER);
 		}
 
@@ -272,7 +271,7 @@ public class FertilizationMonitor : GameStateMachine<FertilizationMonitor, Ferti
 			{
 				components[i].Pause(pause: false, "replanted");
 			}
-			smi.UpdateFertilization(71f / (678f * (float)Math.PI));
+			smi.UpdateFertilization(1f / 30f);
 		}).Target(fertilizerStorage).EventHandler(GameHashes.OnStorageChange, delegate(Instance smi)
 		{
 			smi.UpdateFertilization(0.2f);

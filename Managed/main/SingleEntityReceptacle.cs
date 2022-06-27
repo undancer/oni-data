@@ -23,6 +23,8 @@ public class SingleEntityReceptacle : Workable, IRender1000ms
 
 	protected FetchChore fetchChore;
 
+	public ChoreType choreType = Db.Get().ChoreTypes.Fetch;
+
 	[Serialize]
 	public bool autoReplaceEntity;
 
@@ -191,7 +193,7 @@ public class SingleEntityReceptacle : Workable, IRender1000ms
 	{
 		if (fetchChore == null && entityTag.IsValid && entityTag != GameTags.Empty)
 		{
-			fetchChore = new FetchChore(Db.Get().ChoreTypes.FarmFetch, storage, 1f, new Tag[1] { entityTag }, (!additionalRequiredTag.IsValid || !(additionalRequiredTag != GameTags.Empty)) ? null : new Tag[2] { entityTag, additionalRequiredTag }, null, null, run_until_complete: true, OnFetchComplete, delegate
+			fetchChore = new FetchChore(choreType, storage, 1f, new Tag[1] { entityTag }, (!additionalRequiredTag.IsValid || !(additionalRequiredTag != GameTags.Empty)) ? null : new Tag[2] { entityTag, additionalRequiredTag }, null, null, run_until_complete: true, OnFetchComplete, delegate
 			{
 				UpdateStatusItem();
 			}, delegate

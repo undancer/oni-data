@@ -44,6 +44,8 @@ namespace Database
 
 		public Thought Encourage;
 
+		public Thought CatchyTune;
+
 		public Thoughts(ResourceSet parent)
 			: base("Thoughts", parent)
 		{
@@ -67,6 +69,7 @@ namespace Database
 			NewRole = new Thought("NewRole", this, "crew_state_role", null, "crew_state_role", "bubble_alert", SpeechMonitor.PREFIX_SAD, DUPLICANTS.THOUGHTS.NEWROLE.TOOLTIP);
 			Encourage = new Thought("Encourage", this, "crew_state_encourage", null, "crew_state_happy", "bubble_conversation", SpeechMonitor.PREFIX_HAPPY, DUPLICANTS.THOUGHTS.ENCOURAGE.TOOLTIP);
 			Chatty = new Thought("Chatty", this, "crew_state_chatty", null, "conversation_short", "bubble_conversation", SpeechMonitor.PREFIX_HAPPY, DUPLICANTS.THOUGHTS.CHATTY.TOOLTIP);
+			CatchyTune = new Thought("CatchyTune", this, "crew_state_music", null, "crew_state_music", "bubble_conversation", SpeechMonitor.PREFIX_SINGER, DUPLICANTS.THOUGHTS.CATCHYTUNE.TOOLTIP, show_immediately: true);
 			for (int num = Count - 1; num >= 0; num--)
 			{
 				resources[num].priority = 100 * (Count - num);

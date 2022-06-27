@@ -20,6 +20,8 @@ public class MultiToggle : KMonoBehaviour, IPointerClickHandler, IEventSystemHan
 
 	public System.Action onClick;
 
+	private bool stateDirty = true;
+
 	public Func<bool> onDoubleClick;
 
 	public System.Action onEnter;
@@ -68,8 +70,22 @@ public class MultiToggle : KMonoBehaviour, IPointerClickHandler, IEventSystemHan
 		}
 	}
 
+	public void ChangeState(int new_state_index, bool forceRefreshState)
+	{
+		if (forceRefreshState)
+		{
+			stateDirty = true;
+		}
+		ChangeState(new_state_index);
+	}
+
 	public void ChangeState(int new_state_index)
 	{
+		if (!stateDirty && new_state_index == state)
+		{
+			return;
+		}
+		stateDirty = false;
 		state = new_state_index;
 		try
 		{

@@ -26,6 +26,12 @@ public class AnimInterruptStates : GameStateMachine<AnimInterruptStates, AnimInt
 
 	private void PlayAnim(Instance smi)
 	{
-		smi.Get<KBatchedAnimController>().Play(smi.GetSMI<AnimInterruptMonitor.Instance>().anim);
+		KBatchedAnimController kBatchedAnimController = smi.Get<KBatchedAnimController>();
+		HashedString[] anims = smi.GetSMI<AnimInterruptMonitor.Instance>().anims;
+		kBatchedAnimController.Play(anims[0]);
+		for (int i = 1; i < anims.Length; i++)
+		{
+			kBatchedAnimController.Queue(anims[i]);
+		}
 	}
 }

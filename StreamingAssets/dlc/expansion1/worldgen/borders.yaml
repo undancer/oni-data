@@ -51,7 +51,7 @@ add:
     - element: Granite
       weight: 1
   sandyCrust:
-    - element: Sandstone
+    - element: SandStone
       weight: 1
     - element: Sand
       weight: 1

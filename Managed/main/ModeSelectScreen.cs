@@ -1,7 +1,4 @@
 using System;
-using KMod;
-using ProcGen;
-using ProcGenGame;
 using STRINGS;
 using UnityEngine;
 using UnityEngine.UI;
@@ -70,7 +67,7 @@ public class ModeSelectScreen : NewGameFlowScreen
 	{
 		KMonoBehaviour.PlaySound(GlobalAssets.GetSound("HUD_Mouseover"));
 		survivalButtonSelectionFrame.SetAlpha(1f);
-		survivalButtonHeader.color = new Color(179f / 255f, 31f / 85f, 8f / 15f, 1f);
+		survivalButtonHeader.color = new Color(0.7019608f, 31f / 85f, 8f / 15f, 1f);
 		descriptionArea.text = UI.FRONTEND.MODESELECTSCREEN.SURVIVAL_DESC;
 	}
 
@@ -78,7 +75,7 @@ public class ModeSelectScreen : NewGameFlowScreen
 	{
 		KMonoBehaviour.PlaySound(GlobalAssets.GetSound("HUD_Mouseover"));
 		survivalButtonSelectionFrame.SetAlpha(0f);
-		survivalButtonHeader.color = new Color(79f / 255f, 29f / 85f, 98f / 255f, 1f);
+		survivalButtonHeader.color = new Color(0.30980393f, 29f / 85f, 0.38431373f, 1f);
 		descriptionArea.text = UI.FRONTEND.MODESELECTSCREEN.BLANK_DESC;
 	}
 
@@ -93,9 +90,6 @@ public class ModeSelectScreen : NewGameFlowScreen
 	{
 		if (!dataLoaded)
 		{
-			Global.Instance.modManager.Load(Content.LayerableFiles);
-			SettingsCache.Clear();
-			WorldGen.LoadSettings();
 			CustomGameSettings.Instance.LoadClusters();
 			Global.Instance.modManager.Report(base.gameObject);
 			dataLoaded = true;
@@ -106,7 +100,7 @@ public class ModeSelectScreen : NewGameFlowScreen
 	{
 		KMonoBehaviour.PlaySound(GlobalAssets.GetSound("HUD_Mouseover"));
 		nosweatButtonSelectionFrame.SetAlpha(1f);
-		nosweatButtonHeader.color = new Color(179f / 255f, 31f / 85f, 8f / 15f, 1f);
+		nosweatButtonHeader.color = new Color(0.7019608f, 31f / 85f, 8f / 15f, 1f);
 		descriptionArea.text = UI.FRONTEND.MODESELECTSCREEN.NOSWEAT_DESC;
 	}
 
@@ -114,7 +108,7 @@ public class ModeSelectScreen : NewGameFlowScreen
 	{
 		KMonoBehaviour.PlaySound(GlobalAssets.GetSound("HUD_Mouseover"));
 		nosweatButtonSelectionFrame.SetAlpha(0f);
-		nosweatButtonHeader.color = new Color(79f / 255f, 29f / 85f, 98f / 255f, 1f);
+		nosweatButtonHeader.color = new Color(0.30980393f, 29f / 85f, 0.38431373f, 1f);
 		descriptionArea.text = UI.FRONTEND.MODESELECTSCREEN.BLANK_DESC;
 	}
 

@@ -87,12 +87,12 @@ public static class PerlinSimplexNoise
 
 	public static float noise(float xin, float yin, float zin)
 	{
-		float num = 0.33333334f;
+		float num = 1f / 3f;
 		float num2 = (xin + yin + zin) * num;
 		int num3 = fastfloor(xin + num2);
 		int num4 = fastfloor(yin + num2);
 		int num5 = fastfloor(zin + num2);
-		float num6 = 355f / (678f * (float)Math.PI);
+		float num6 = 1f / 6f;
 		float num7 = (float)(num3 + num4 + num5) * num6;
 		float num8 = (float)num3 - num7;
 		float num9 = (float)num4 - num7;

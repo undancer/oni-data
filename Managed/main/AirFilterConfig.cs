@@ -1,4 +1,3 @@
-using System;
 using TUNING;
 using UnityEngine;
 
@@ -8,7 +7,7 @@ public class AirFilterConfig : IBuildingConfig
 
 	public const float DIRTY_AIR_CONSUMPTION_RATE = 0.1f;
 
-	private const float SAND_CONSUMPTION_RATE = 142f / (339f * (float)Math.PI);
+	private const float SAND_CONSUMPTION_RATE = 2f / 15f;
 
 	private const float REFILL_RATE = 2400f;
 
@@ -56,7 +55,7 @@ public class AirFilterConfig : IBuildingConfig
 		ElementConverter elementConverter = go.AddOrGet<ElementConverter>();
 		elementConverter.consumedElements = new ElementConverter.ConsumedElement[2]
 		{
-			new ElementConverter.ConsumedElement(new Tag("Filter"), 142f / (339f * (float)Math.PI)),
+			new ElementConverter.ConsumedElement(new Tag("Filter"), 2f / 15f),
 			new ElementConverter.ConsumedElement(new Tag("ContaminatedOxygen"), 0.1f)
 		};
 		elementConverter.outputElements = new ElementConverter.OutputElement[2]

@@ -6,7 +6,7 @@ public class AnimInterruptMonitor : GameStateMachine<AnimInterruptMonitor, AnimI
 
 	public new class Instance : GameInstance
 	{
-		public HashedString anim;
+		public HashedString[] anims;
 
 		public Instance(IStateMachineTarget master, Def def)
 			: base(master, def)
@@ -15,7 +15,12 @@ public class AnimInterruptMonitor : GameStateMachine<AnimInterruptMonitor, AnimI
 
 		public void PlayAnim(HashedString anim)
 		{
-			this.anim = anim;
+			PlayAnimSequence(new HashedString[1] { anim });
+		}
+
+		public void PlayAnimSequence(HashedString[] anims)
+		{
+			this.anims = anims;
 			GetComponent<CreatureBrain>().UpdateBrain();
 		}
 	}
@@ -28,11 +33,11 @@ public class AnimInterruptMonitor : GameStateMachine<AnimInterruptMonitor, AnimI
 
 	private static bool ShoulPlayAnim(Instance smi)
 	{
-		return smi.anim.IsValid;
+		return smi.anims != null;
 	}
 
 	private static void ClearAnim(Instance smi)
 	{
-		smi.anim = HashedString.Invalid;
+		smi.anims = null;
 	}
 }

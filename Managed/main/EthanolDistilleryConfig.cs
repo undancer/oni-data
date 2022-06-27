@@ -1,4 +1,3 @@
-using System;
 using TUNING;
 using UnityEngine;
 
@@ -12,9 +11,9 @@ public class EthanolDistilleryConfig : IBuildingConfig
 
 	public const float ETHANOL_RATE = 0.5f;
 
-	public const float SOLID_WASTE_RATE = 0.33333334f;
+	public const float SOLID_WASTE_RATE = 1f / 3f;
 
-	public const float CO2_WASTE_RATE = 355f / (678f * (float)Math.PI);
+	public const float CO2_WASTE_RATE = 1f / 6f;
 
 	public const float OUTPUT_TEMPERATURE = 346.5f;
 
@@ -60,8 +59,8 @@ public class EthanolDistilleryConfig : IBuildingConfig
 		elementConverter.outputElements = new ElementConverter.OutputElement[3]
 		{
 			new ElementConverter.OutputElement(0.5f, SimHashes.Ethanol, 346.5f, useEntityTemperature: false, storeOutput: true),
-			new ElementConverter.OutputElement(0.33333334f, SimHashes.ToxicSand, 366.5f, useEntityTemperature: false, storeOutput: true),
-			new ElementConverter.OutputElement(355f / (678f * (float)Math.PI), SimHashes.CarbonDioxide, 366.5f)
+			new ElementConverter.OutputElement(1f / 3f, SimHashes.ToxicSand, 366.5f, useEntityTemperature: false, storeOutput: true),
+			new ElementConverter.OutputElement(1f / 6f, SimHashes.CarbonDioxide, 366.5f)
 		};
 		AlgaeDistillery algaeDistillery = go.AddOrGet<AlgaeDistillery>();
 		algaeDistillery.emitMass = 20f;

@@ -48,6 +48,8 @@ namespace Database
 
 		public Face Tickled;
 
+		public Face Music;
+
 		public Face Radiation1;
 
 		public Face Radiation2;
@@ -81,6 +83,7 @@ namespace Database
 			Sparkle = Add(new Face("Sparkle"));
 			Balloon = Add(new Face("Balloon"));
 			Tickled = Add(new Face("Tickled"));
+			Music = Add(new Face("Music"));
 			Radiation1 = Add(new Face("Radiation1", "headfx_radiation1"));
 			Radiation2 = Add(new Face("Radiation2", "headfx_radiation2"));
 			Radiation3 = Add(new Face("Radiation3", "headfx_radiation3"));

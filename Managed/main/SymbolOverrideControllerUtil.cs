@@ -52,7 +52,16 @@ public static class SymbolOverrideControllerUtil
 		{
 			KAnim.Build.Symbol symbol = anim_file.GetData().build.symbols[i];
 			string text = HashCache.Get().Get(symbol.hash);
-			if (prefix != null && text.StartsWith(prefix))
+			if (prefix != null && postfix != null)
+			{
+				if (text.StartsWith(prefix) && text.EndsWith(postfix))
+				{
+					string text2 = text.Substring(prefix.Length, text.Length - prefix.Length);
+					text2 = text2.Substring(0, text2.Length - postfix.Length);
+					symbol_override_controller.AddSymbolOverride(text2, symbol, priority);
+				}
+			}
+			else if (prefix != null && text.StartsWith(prefix))
 			{
 				symbol_override_controller.AddSymbolOverride(text.Substring(prefix.Length, text.Length - prefix.Length), symbol, priority);
 			}

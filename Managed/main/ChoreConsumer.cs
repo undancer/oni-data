@@ -172,6 +172,16 @@ public class ChoreConsumer : KMonoBehaviour, IPersonalPriorityManager
 		consumerState = new ChoreConsumerState(this);
 	}
 
+	protected override void OnForcedCleanUp()
+	{
+		if (consumerState != null)
+		{
+			consumerState.navigator = null;
+		}
+		navigator = null;
+		base.OnForcedCleanUp();
+	}
+
 	protected override void OnCleanUp()
 	{
 		base.OnCleanUp();
@@ -290,8 +300,7 @@ public class ChoreConsumer : KMonoBehaviour, IPersonalPriorityManager
 					DebugUtil.Assert(test: false, "FindNextChore found an entry that was null");
 					continue;
 				}
-				FetchChore fetchChore = item.obj as FetchChore;
-				if (fetchChore == null)
+				if (!(item.obj is FetchChore fetchChore))
 				{
 					DebugUtil.Assert(test: false, "FindNextChore found an entry that wasn't a FetchChore");
 					continue;

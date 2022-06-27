@@ -288,15 +288,17 @@ public class ConsumablesTableScreen : TableScreen
 				ConsumerManager.instance.DefaultForbiddenTagsList.Add(consumableUIItem.ConsumableId.ToTag());
 			}
 			consumableInfoTableColumn.on_load_action(identity, widget_go);
-			foreach (KeyValuePair<TableRow, GameObject> item in consumableInfoTableColumn.widgets_by_row)
 			{
-				if (item.Key.rowType == TableRow.RowType.Header)
+				foreach (KeyValuePair<TableRow, GameObject> item in consumableInfoTableColumn.widgets_by_row)
 				{
-					consumableInfoTableColumn.on_load_action(null, item.Value);
-					break;
+					if (item.Key.rowType == TableRow.RowType.Header)
+					{
+						consumableInfoTableColumn.on_load_action(null, item.Value);
+						break;
+					}
 				}
+				break;
 			}
-			break;
 		case TableRow.RowType.Minion:
 		{
 			MinionIdentity minionIdentity = identity as MinionIdentity;
@@ -322,15 +324,17 @@ public class ConsumablesTableScreen : TableScreen
 				break;
 			}
 			consumableInfoTableColumn.on_load_action(widgetRow.GetIdentity(), widget_go);
-			foreach (KeyValuePair<TableRow, GameObject> item2 in consumableInfoTableColumn.widgets_by_row)
 			{
-				if (item2.Key.rowType == TableRow.RowType.Header)
+				foreach (KeyValuePair<TableRow, GameObject> item2 in consumableInfoTableColumn.widgets_by_row)
 				{
-					consumableInfoTableColumn.on_load_action(null, item2.Value);
-					break;
+					if (item2.Key.rowType == TableRow.RowType.Header)
+					{
+						consumableInfoTableColumn.on_load_action(null, item2.Value);
+						break;
+					}
 				}
+				break;
 			}
-			break;
 		}
 		case TableRow.RowType.StoredMinon:
 			break;
@@ -564,7 +568,7 @@ public class ConsumablesTableScreen : TableScreen
 			}
 			if (foodInfo != null && minion as MinionIdentity != null)
 			{
-				Color color2 = ((widget_go.GetComponent<HierarchyReferences>().GetReference("BGImage") as Image).color = new Color(184f / 255f, 113f / 255f, 148f / 255f, Mathf.Max((float)foodInfo.Quality - Db.Get().Attributes.FoodExpectation.Lookup(minion as MinionIdentity).GetTotalValue() + 1f, 0f) * 0.25f));
+				Color color2 = ((widget_go.GetComponent<HierarchyReferences>().GetReference("BGImage") as Image).color = new Color(0.72156864f, 0.44313726f, 0.5803922f, Mathf.Max((float)foodInfo.Quality - Db.Get().Attributes.FoodExpectation.Lookup(minion as MinionIdentity).GetTotalValue() + 1f, 0f) * 0.25f));
 			}
 			break;
 		}

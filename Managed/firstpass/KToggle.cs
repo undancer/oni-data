@@ -199,8 +199,7 @@ public class KToggle : Toggle
 
 	private ToggleGroup GetParentToggleGroup(BaseEventData eventData)
 	{
-		PointerEventData pointerEventData = eventData as PointerEventData;
-		if (pointerEventData == null)
+		if (!(eventData is PointerEventData pointerEventData))
 		{
 			return null;
 		}

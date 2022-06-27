@@ -32,6 +32,12 @@ public class TopLeftControlScreen : KScreen
 		});
 	}
 
+	protected override void OnForcedCleanUp()
+	{
+		KInputManager.InputChange.RemoveListener(ResetToolTip);
+		base.OnForcedCleanUp();
+	}
+
 	public void RefreshName()
 	{
 		if (SaveGame.Instance != null)

@@ -19,6 +19,11 @@ public class DiscoveredResources : KMonoBehaviour, ISaveLoadable, ISim4000ms
 
 	public event Action<Tag, Tag> OnDiscover;
 
+	public static void DestroyInstance()
+	{
+		Instance = null;
+	}
+
 	public void Discover(Tag tag, Tag categoryTag)
 	{
 		bool num = Discovered.Add(tag);

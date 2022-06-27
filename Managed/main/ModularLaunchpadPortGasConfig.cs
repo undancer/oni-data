@@ -11,7 +11,7 @@ public class ModularLaunchpadPortGasConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		return BaseModularLaunchpadPortConfig.CreateBaseLaunchpadPort("ModularLaunchpadPortGas", "conduit_port_gas_loader_kanim", ConduitType.Gas, isLoader: true);
+		return BaseModularLaunchpadPortConfig.CreateBaseLaunchpadPort("ModularLaunchpadPortGas", "conduit_port_gas_loader_kanim", ConduitType.Gas, isLoader: true, 2, 2);
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

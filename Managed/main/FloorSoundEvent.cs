@@ -15,13 +15,13 @@ public class FloorSoundEvent : SoundEvent
 
 	public override void PlaySound(AnimEventManager.EventPlayerData behaviour)
 	{
-		Vector3 vector = behaviour.GetComponent<Transform>().GetPosition();
+		Vector3 pos = behaviour.GetComponent<Transform>().GetPosition();
 		KBatchedAnimController component = behaviour.GetComponent<KBatchedAnimController>();
 		if (component != null)
 		{
-			vector = component.GetPivotSymbolPosition();
+			pos = component.GetPivotSymbolPosition();
 		}
-		int num = Grid.PosToCell(vector);
+		int num = Grid.PosToCell(pos);
 		string text = GlobalAssets.GetSound(StringFormatter.Combine(GetAudioCategory(Grid.CellBelow(num)), "_", base.name), force_no_warning: true);
 		if (text == null)
 		{
@@ -37,11 +37,11 @@ public class FloorSoundEvent : SoundEvent
 		{
 			return;
 		}
-		vector = SoundEvent.GetCameraScaledPosition(vector);
-		vector.z = 0f;
+		pos = SoundEvent.GetCameraScaledPosition(pos);
+		pos.z = 0f;
 		if (base.objectIsSelectedAndVisible)
 		{
-			vector = SoundEvent.AudioHighlightListenerPosition(vector);
+			pos = SoundEvent.AudioHighlightListenerPosition(pos);
 		}
 		if (Grid.Element == null)
 		{
@@ -55,7 +55,7 @@ public class FloorSoundEvent : SoundEvent
 			string text2 = GlobalAssets.GetSound("Liquid_footstep", force_no_warning: true);
 			if (text2 != null && (base.objectIsSelectedAndVisible || SoundEvent.ShouldPlaySound(behaviour.controller, text2, base.looping, isDynamic)))
 			{
-				FMOD.Studio.EventInstance instance = SoundEvent.BeginOneShot(text2, vector, SoundEvent.GetVolume(base.objectIsSelectedAndVisible));
+				FMOD.Studio.EventInstance instance = SoundEvent.BeginOneShot(text2, pos, SoundEvent.GetVolume(base.objectIsSelectedAndVisible));
 				if (num2 > 0f)
 				{
 					instance.setParameterByName("liquidDepth", num2);
@@ -67,7 +67,7 @@ public class FloorSoundEvent : SoundEvent
 		{
 			return;
 		}
-		FMOD.Studio.EventInstance instance2 = SoundEvent.BeginOneShot(text, vector);
+		FMOD.Studio.EventInstance instance2 = SoundEvent.BeginOneShot(text, pos);
 		if (instance2.isValid())
 		{
 			if (num2 > 0f)

@@ -21,11 +21,11 @@ public class ImmigrantScreen : CharacterSelectionController
 	[SerializeField]
 	private KButton cancelRejectionBtn;
 
-	private static ImmigrantScreen instance;
-
-	private Telepad telepad;
+	public static ImmigrantScreen instance;
 
 	private bool hasShown;
+
+	public Telepad telepad { get; private set; }
 
 	public static void DestroyInstance()
 	{
@@ -78,6 +78,12 @@ public class ImmigrantScreen : CharacterSelectionController
 			}
 		}
 		base.OnShow(show);
+	}
+
+	public void DebugShuffleOptions()
+	{
+		OnRejectionConfirmed();
+		Immigration.Instance.timeBeforeSpawn = 0f;
 	}
 
 	public override void OnPressBack()

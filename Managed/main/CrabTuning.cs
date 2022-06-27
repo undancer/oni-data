@@ -8,7 +8,55 @@ public static class CrabTuning
 		new FertilityMonitor.BreedingChance
 		{
 			egg = "CrabEgg".ToTag(),
-			weight = 0.98f
+			weight = 0.97f
+		},
+		new FertilityMonitor.BreedingChance
+		{
+			egg = "CrabWoodEgg".ToTag(),
+			weight = 0.02f
+		},
+		new FertilityMonitor.BreedingChance
+		{
+			egg = "CrabFreshWaterEgg".ToTag(),
+			weight = 0.01f
+		}
+	};
+
+	public static List<FertilityMonitor.BreedingChance> EGG_CHANCES_WOOD = new List<FertilityMonitor.BreedingChance>
+	{
+		new FertilityMonitor.BreedingChance
+		{
+			egg = "CrabEgg".ToTag(),
+			weight = 0.32f
+		},
+		new FertilityMonitor.BreedingChance
+		{
+			egg = "CrabWoodEgg".ToTag(),
+			weight = 0.65f
+		},
+		new FertilityMonitor.BreedingChance
+		{
+			egg = "CrabFreshWaterEgg".ToTag(),
+			weight = 0.02f
+		}
+	};
+
+	public static List<FertilityMonitor.BreedingChance> EGG_CHANCES_FRESH = new List<FertilityMonitor.BreedingChance>
+	{
+		new FertilityMonitor.BreedingChance
+		{
+			egg = "CrabEgg".ToTag(),
+			weight = 0.32f
+		},
+		new FertilityMonitor.BreedingChance
+		{
+			egg = "CrabWoodEgg".ToTag(),
+			weight = 0.02f
+		},
+		new FertilityMonitor.BreedingChance
+		{
+			egg = "CrabFreshWaterEgg".ToTag(),
+			weight = 0.65f
 		}
 	};
 

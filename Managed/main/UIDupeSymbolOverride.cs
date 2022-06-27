@@ -4,12 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(SymbolOverrideController))]
 public class UIDupeSymbolOverride : MonoBehaviour
 {
-	public KAnimFile head_default_anim;
-
-	public KAnimFile head_swap_anim;
-
-	public KAnimFile body_swap_anim;
-
 	private KBatchedAnimController animController;
 
 	private AccessorySlots slots;
@@ -20,7 +14,7 @@ public class UIDupeSymbolOverride : MonoBehaviour
 	{
 		if (slots == null)
 		{
-			slots = new AccessorySlots(null, head_default_anim, head_swap_anim, body_swap_anim);
+			slots = new AccessorySlots(null);
 		}
 		if (symbolOverrideController == null)
 		{

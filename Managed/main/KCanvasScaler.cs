@@ -56,6 +56,10 @@ public class KCanvasScaler : KMonoBehaviour
 
 	public void SetUserScale(float scale)
 	{
+		if (canvasScaler == null)
+		{
+			canvasScaler = GetComponent<CanvasScaler>();
+		}
 		userScale = scale;
 		canvasScaler.scaleFactor = GetCanvasScale();
 	}

@@ -43,35 +43,33 @@ public class DirectionControl : KMonoBehaviour
 	{
 		base.OnPrefabInit();
 		allowedDirection = WorkableReactable.AllowedDirection.Any;
-		DirectionInfo[] array = new DirectionInfo[3];
-		DirectionInfo directionInfo = new DirectionInfo
+		directionInfos = new DirectionInfo[3]
 		{
-			allowLeft = true,
-			allowRight = true,
-			iconName = "action_direction_both",
-			name = UI.USERMENUACTIONS.WORKABLE_DIRECTION_BOTH.NAME,
-			tooltip = UI.USERMENUACTIONS.WORKABLE_DIRECTION_BOTH.TOOLTIP
+			new DirectionInfo
+			{
+				allowLeft = true,
+				allowRight = true,
+				iconName = "action_direction_both",
+				name = UI.USERMENUACTIONS.WORKABLE_DIRECTION_BOTH.NAME,
+				tooltip = UI.USERMENUACTIONS.WORKABLE_DIRECTION_BOTH.TOOLTIP
+			},
+			new DirectionInfo
+			{
+				allowLeft = true,
+				allowRight = false,
+				iconName = "action_direction_left",
+				name = UI.USERMENUACTIONS.WORKABLE_DIRECTION_LEFT.NAME,
+				tooltip = UI.USERMENUACTIONS.WORKABLE_DIRECTION_LEFT.TOOLTIP
+			},
+			new DirectionInfo
+			{
+				allowLeft = false,
+				allowRight = true,
+				iconName = "action_direction_right",
+				name = UI.USERMENUACTIONS.WORKABLE_DIRECTION_RIGHT.NAME,
+				tooltip = UI.USERMENUACTIONS.WORKABLE_DIRECTION_RIGHT.TOOLTIP
+			}
 		};
-		array[0] = directionInfo;
-		directionInfo = new DirectionInfo
-		{
-			allowLeft = true,
-			allowRight = false,
-			iconName = "action_direction_left",
-			name = UI.USERMENUACTIONS.WORKABLE_DIRECTION_LEFT.NAME,
-			tooltip = UI.USERMENUACTIONS.WORKABLE_DIRECTION_LEFT.TOOLTIP
-		};
-		array[1] = directionInfo;
-		directionInfo = new DirectionInfo
-		{
-			allowLeft = false,
-			allowRight = true,
-			iconName = "action_direction_right",
-			name = UI.USERMENUACTIONS.WORKABLE_DIRECTION_RIGHT.NAME,
-			tooltip = UI.USERMENUACTIONS.WORKABLE_DIRECTION_RIGHT.TOOLTIP
-		};
-		array[2] = directionInfo;
-		directionInfos = array;
 		GetComponent<KSelectable>().AddStatusItem(Db.Get().BuildingStatusItems.DirectionControl, this);
 	}
 

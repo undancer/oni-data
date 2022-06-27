@@ -227,7 +227,7 @@ public class LiquidCooledFan : StateMachineComponent<LiquidCooledFan.StatesInsta
 		{
 			if (!component.HasStatusItem(Db.Get().BuildingStatusItems.UnderPressure))
 			{
-				component.AddStatusItem(Db.Get().BuildingStatusItems.UnderPressure);
+				component.AddStatusItem(Db.Get().BuildingStatusItems.UnderPressure, minEnvironmentMass);
 			}
 		}
 		else if (component.HasStatusItem(Db.Get().BuildingStatusItems.UnderPressure))

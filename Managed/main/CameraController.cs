@@ -188,16 +188,16 @@ public class CameraController : KMonoBehaviour, IInputHandler
 		ignoreClusterFX = !ignoreClusterFX;
 	}
 
-	private void OnCleanup()
+	protected override void OnForcedCleanUp()
 	{
-		Global.Instance.GetInputManager().usedMenus.Remove(this);
+		Global.Instance?.GetInputManager().usedMenus.Remove(this);
 	}
 
 	public void GetWorldCamera(out Vector2I worldOffset, out Vector2I worldSize)
 	{
-		if (!ignoreClusterFX && ClusterManager.Instance.activeWorld != null)
+		WorldContainer activeWorld = ClusterManager.Instance.activeWorld;
+		if (!ignoreClusterFX && activeWorld != null)
 		{
-			WorldContainer activeWorld = ClusterManager.Instance.activeWorld;
 			worldOffset = activeWorld.WorldOffset;
 			worldSize = activeWorld.WorldSize;
 		}
@@ -376,6 +376,7 @@ public class CameraController : KMonoBehaviour, IInputHandler
 		}
 		if (ClusterManager.Instance.activeWorldId != id)
 		{
+			DetailsScreen.Instance.DeselectAndClose();
 			activeFadeRoutine = StartCoroutine(SwapToWorldFade(id, useForcePosition, forcePosition, forceOrthgraphicSize, callback));
 			return;
 		}
@@ -1125,21 +1126,21 @@ public class CameraController : KMonoBehaviour, IInputHandler
 			if (!(point2.x - point.x > (float)activeWorld.Width * Grid.CellSizeInMeters) && !(point2.y - point.y > (float)activeWorld.Height * Grid.CellSizeInMeters))
 			{
 				Vector3 vector = base.transform.GetPosition() - ray.origin;
-				Vector3 vector2 = point;
-				vector2.x = Mathf.Max(activeWorld.minimumBounds.x * Grid.CellSizeInMeters, vector2.x);
-				vector2.y = Mathf.Max(activeWorld.minimumBounds.y * Grid.CellSizeInMeters, vector2.y);
-				ray.origin = vector2;
+				Vector3 origin = point;
+				origin.x = Mathf.Max(activeWorld.minimumBounds.x * Grid.CellSizeInMeters, origin.x);
+				origin.y = Mathf.Max(activeWorld.minimumBounds.y * Grid.CellSizeInMeters, origin.y);
+				ray.origin = origin;
 				ray.direction = -ray.direction;
-				vector2 = ray.GetPoint(distance);
-				base.transform.SetPosition(vector2 + vector);
+				origin = ray.GetPoint(distance);
+				base.transform.SetPosition(origin + vector);
 				vector = base.transform.GetPosition() - ray2.origin;
-				vector2 = point2;
-				vector2.x = Mathf.Min(activeWorld.maximumBounds.x * Grid.CellSizeInMeters, vector2.x);
-				vector2.y = Mathf.Min(activeWorld.maximumBounds.y * Grid.CellSizeInMeters * MAX_Y_SCALE, vector2.y);
-				ray2.origin = vector2;
+				origin = point2;
+				origin.x = Mathf.Min(activeWorld.maximumBounds.x * Grid.CellSizeInMeters, origin.x);
+				origin.y = Mathf.Min(activeWorld.maximumBounds.y * Grid.CellSizeInMeters * MAX_Y_SCALE, origin.y);
+				ray2.origin = origin;
 				ray2.direction = -ray2.direction;
-				vector2 = ray2.GetPoint(distance2);
-				Vector3 position = vector2 + vector;
+				origin = ray2.GetPoint(distance2);
+				Vector3 position = origin + vector;
 				position.z = -100f;
 				base.transform.SetPosition(position);
 			}

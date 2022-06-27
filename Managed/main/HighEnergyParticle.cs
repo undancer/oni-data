@@ -374,7 +374,6 @@ public class HighEnergyParticle : StateMachineComponent<HighEnergyParticle.State
 		loopingSounds.UpdateVelocity(flyingSound, vector - position);
 		if (!Grid.IsValidCell(num2))
 		{
-			Debug.LogWarning("High energy particle moved into invalid cell and is destroyed with no radiation");
 			base.smi.sm.destroySimpleSignal.Trigger(base.smi);
 			return;
 		}

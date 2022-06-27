@@ -88,7 +88,7 @@ public class LoreBearer : KMonoBehaviour, ISidescreenButtonControl
 				infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_OBJECT_FAIL." + text6));
 			}
 		}
-		else if (base.gameObject.GetProperName() == (string)BUILDINGS.PREFABS.PROPGRAVITASJAR1.NAME || base.gameObject.name == (string)BUILDINGS.PREFABS.PROPGRAVITASJAR2.NAME || base.gameObject.name == (string)BUILDINGS.PREFABS.PROPGRAVITASDISPLAY4.NAME)
+		else if (base.gameObject.GetProperName() == BUILDINGS.PREFABS.PROPGRAVITASJAR1.NAME || base.gameObject.name == BUILDINGS.PREFABS.PROPGRAVITASJAR2.NAME || base.gameObject.name == BUILDINGS.PREFABS.PROPGRAVITASDISPLAY4.NAME)
 		{
 			string text7 = Game.Instance.unlocks.UnlockNext("dimensionallore");
 			if (text7 != null)
@@ -145,19 +145,19 @@ public class LoreBearer : KMonoBehaviour, ISidescreenButtonControl
 			infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_CABINET"));
 			infoDialogScreen.AddOption(UI.USERMENUACTIONS.READLORE.GOTODATABASE, OpenCodexByLockKeyID("journal_newspaper"));
 		}
-		else if (base.gameObject.GetProperName() == (string)BUILDINGS.PREFABS.WARPRECEIVER.NAME)
+		else if (base.gameObject.GetProperName() == BUILDINGS.PREFABS.WARPRECEIVER.NAME)
 		{
 			Game.Instance.unlocks.Unlock("notes_AI");
 			infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_TELEPORTER_RECEIVER"));
 			infoDialogScreen.AddOption(UI.USERMENUACTIONS.READLORE.GOTODATABASE, OpenCodexByLockKeyID("notes_AI"));
 		}
-		else if (base.gameObject.GetProperName() == (string)BUILDINGS.PREFABS.WARPPORTAL.NAME)
+		else if (base.gameObject.GetProperName() == BUILDINGS.PREFABS.WARPPORTAL.NAME)
 		{
 			Game.Instance.unlocks.Unlock("notes_teleportation");
 			infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_TELEPORTER_SENDER"));
 			infoDialogScreen.AddOption(UI.USERMENUACTIONS.READLORE.GOTODATABASE, OpenCodexByLockKeyID("notes_teleportation"));
 		}
-		else if (base.gameObject.GetProperName() == (string)BUILDINGS.PREFABS.CRYOTANK.NAME)
+		else if (base.gameObject.GetProperName() == BUILDINGS.PREFABS.CRYOTANK.NAME)
 		{
 			Game.Instance.unlocks.Unlock("cryotank_warning");
 			infoDialogScreen.AddPlainText(Strings.Get("STRINGS.UI.USERMENUACTIONS.READLORE.SEARCH_CRYO_TANK"));

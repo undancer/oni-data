@@ -23,6 +23,25 @@ namespace STRINGS
 			Generic
 		}
 
+		public enum ClickType
+		{
+			Click,
+			Clicked,
+			Clicking,
+			Clickable,
+			Clicks,
+			click,
+			clicked,
+			clicking,
+			clickable,
+			clicks,
+			CLICK,
+			CLICKED,
+			CLICKING,
+			CLICKABLE,
+			CLICKS
+		}
+
 		public enum AutomationState
 		{
 			Active,
@@ -47,13 +66,13 @@ namespace STRINGS
 		{
 			public class CLICK_TOGGLE_MESSAGE
 			{
-				public static LocString ALWAYS = "Click to pin this diagnostic to the sidebar - Current State: <b>Visible On Alert Only</b>";
+				public static LocString ALWAYS = CLICK(ClickType.Click) + " to pin this diagnostic to the sidebar - Current State: <b>Visible On Alert Only</b>";
 
-				public static LocString ALERT_ONLY = "Click to subscribe to this diagnostic - Current State:  <b>Never Visible      </b>";
+				public static LocString ALERT_ONLY = CLICK(ClickType.Click) + " to subscribe to this diagnostic - Current State:  <b>Never Visible      </b>";
 
-				public static LocString NEVER = "Click to mute this diagnostic on the sidebar -  Current State: <b>Always Visible</b>";
+				public static LocString NEVER = CLICK(ClickType.Click) + " to mute this diagnostic on the sidebar -  Current State: <b>Always Visible</b>";
 
-				public static LocString TUTORIAL_DISABLED = "Click to enable this diagnostic -  Current State: <b>Temporarily disabled</b>";
+				public static LocString TUTORIAL_DISABLED = CLICK(ClickType.Click) + " to enable this diagnostic -  Current State: <b>Temporarily disabled</b>";
 			}
 
 			public static LocString TITLE = "Diagnostics";
@@ -567,6 +586,69 @@ namespace STRINGS
 			public static LocString STRESS = "Max Stress";
 
 			public static LocString IDLE = "Idle Duplicants";
+		}
+
+		public class CONTROLS
+		{
+			public static LocString PRESS = "Press";
+
+			public static LocString PRESSLOWER = "press";
+
+			public static LocString PRESSUPPER = "PRESS";
+
+			public static LocString PRESSING = "Pressing";
+
+			public static LocString PRESSINGLOWER = "pressing";
+
+			public static LocString PRESSINGUPPER = "PRESSING";
+
+			public static LocString PRESSED = "Pressed";
+
+			public static LocString PRESSEDLOWER = "pressed";
+
+			public static LocString PRESSEDUPPER = "PRESSED";
+
+			public static LocString PRESSES = "Presses";
+
+			public static LocString PRESSESLOWER = "presses";
+
+			public static LocString PRESSESUPPER = "PRESSES";
+
+			public static LocString PRESSABLE = "Pressable";
+
+			public static LocString PRESSABLELOWER = "pressable";
+
+			public static LocString PRESSABLEUPPER = "PRESSABLE";
+
+			public static LocString CLICK = "Click";
+
+			public static LocString CLICKLOWER = "click";
+
+			public static LocString CLICKUPPER = "CLICK";
+
+			public static LocString CLICKING = "Clicking";
+
+			public static LocString CLICKINGLOWER = "clicking";
+
+			public static LocString CLICKINGUPPER = "CLICKING";
+
+			public static LocString CLICKED = "Clicked";
+
+			public static LocString CLICKEDLOWER = "clicked";
+
+			public static LocString CLICKEDUPPER = "CLICKED";
+
+			public static LocString CLICKS = "Clicks";
+
+			public static LocString CLICKSLOWER = "clicks";
+
+			public static LocString CLICKSUPPER = "CLICKS";
+
+			public static LocString CLICKABLE = "Clickable";
+
+			public static LocString CLICKABLELOWER = "clickable";
+
+			public static LocString CLICKABLEUPPER = "CLICKABLE";
 		}
 
 		public class MATH_PICTURES
@@ -1110,7 +1192,7 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "Don't drink from it! There was a pacu... IN the percolator!";
 
-				public static LocString ARTIFACT = "A coffee percolator with the reminants of a blend of coffee that was a personal favorite of Dr. Hassan Aydem.\n\nHe would specifically reserve the consumption of this particular blend for when he was reviewing research papers on Sunday afternoons.";
+				public static LocString ARTIFACT = "A coffee percolator with the remnants of a blend of coffee that was a personal favorite of Dr. Hassan Aydem.\n\nHe would specifically reserve the consumption of this particular blend for when he was reviewing research papers on Sunday afternoons.";
 			}
 
 			public class ROBOTARM
@@ -1272,7 +1354,7 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "No space colony is complete without one.";
 
-				public static LocString ARTIFACT = "The bottom of this lamp contains the words 'Property of the Atmospheric Sciences Department'.\n\nIt's worth noting that the Gravitas Atmospheric Sciences Department once simulated an experiment testing the feasability of survival in an environment filled with noble gasses, similar to the ones contained within this device.";
+				public static LocString ARTIFACT = "The bottom of this lamp contains the words 'Property of the Atmospheric Sciences Department'.\n\nIt's worth noting that the Gravitas Atmospheric Sciences Department once simulated an experiment testing the feasibility of survival in an environment filled with noble gasses, similar to the ones contained within this device.";
 			}
 
 			public class MOLDAVITE
@@ -2309,6 +2391,17 @@ namespace STRINGS
 				public static LocString RESUMEBUTTON_BASENAME = "{0}: Cycle {1}";
 			}
 
+			public class DEVTOOLS
+			{
+				public static LocString TITLE = "About Dev Tools";
+
+				public static LocString WARNING = "DANGER!!\n\nDev Tools are intended for developer use only. Using them may result in your save becoming unplayable, unstable, or severely damaged.\n\nThese tools are completely unsupported and may contain bugs. Are you sure you want to continue?";
+
+				public static LocString DONTSHOW = "Do not show this message again";
+
+				public static LocString BUTTON = "Show Dev Tools";
+			}
+
 			public class NEWGAMESETTINGS
 			{
 				public class BUTTONS
@@ -2396,6 +2489,8 @@ namespace STRINGS
 
 			public class PATCHNOTESSCREEN
 			{
+				public static LocString HEADER = "IMPORTANT UPDATE NOTES";
+
 				public static LocString OK_BUTTON = "OK";
 
 				public static LocString FULLPATCHNOTES_TOOLTIP = "View the full patch notes online";
@@ -2403,13 +2498,13 @@ namespace STRINGS
 
 			public class MOTD
 			{
-				public static LocString IMAGE_HEADER = "BLAST OFF!";
+				public static LocString IMAGE_HEADER = "FAST FRIENDS";
 
 				public static LocString NEWS_HEADER = "JOIN THE DISCUSSION";
 
 				public static LocString NEWS_BODY = "Stay up to date by joining our mailing list, or head on over to the forums and join the discussion.";
 
-				public static LocString PATCH_NOTES_SUMMARY = "This minor update includes:\n\n•<indent=20px>Better controller support for Steam users.</indent>\n•<indent=20px>Steam Deck compatibility.</indent>\n•<indent=20px>Minor UI changes to accommodate smaller displays and resolutions.</indent>\n•<indent=20px>Numerous crash and bug fixes.</indent>\n\n   Check out the full patch notes for more details!";
+				public static LocString PATCH_NOTES_SUMMARY = "This update includes:\n\n•<indent=20px>Significant performance improvements.</indent>\n•<indent=20px>New Duplicants.</indent>\n•<indent=20px>New Overjoyed and Stressed traits.</indent>\n•<indent=20px>New Critter morphs.</indent>\n•<indent=20px>Numerous crash and bug fixes.</indent>\n\n   Check out the full patch notes for more details!";
 
 				public static LocString UPDATE_TEXT = "LAUNCHED!";
 
@@ -2550,7 +2645,7 @@ namespace STRINGS
 
 				public static LocString MIGRATE_RESULT_FAILURES_MORE_INFO_POST = "\n<b>If this still doesn't solve the problem, please post a bug in the forums and we will attempt to assist with your issue.</b>";
 
-				public static LocString MIGRATE_INFO = "We've changed how save files are organized!\nPlease click the button below to automatically update your save file storage.";
+				public static LocString MIGRATE_INFO = "We've changed how save files are organized!\nPlease " + CLICK(ClickType.click) + " the button below to automatically update your save file storage.";
 
 				public static LocString MIGRATE_DONE = "CONTINUE";
 
@@ -3126,6 +3221,8 @@ namespace STRINGS
 
 				public static LocString DESCRIPTION = "Let us know if you encounter any problems or how we can improve your Oxygen Not Included experience.\n\nWhen reporting a bug, please include your log and colony save file. The buttons to the right will help you find those files on your local drive.\n\nThank you for being part of the Oxygen Not Included community!";
 
+				public static LocString ALT_DESCRIPTION = "Let us know if you encounter any problems or how we can improve your Oxygen Not Included experience.\n\nWhen reporting a bug, please include your log and colony save file.\n\nThank you for being part of the Oxygen Not Included community!";
+
 				public static LocString BUG_FORUMS_BUTTON = "Report a Bug";
 
 				public static LocString SUGGESTION_FORUMS_BUTTON = "Suggestions Forum";
@@ -3270,7 +3367,7 @@ namespace STRINGS
 
 				public static LocString SAVE_DIRECTORY_INSUFFICIENT_SPACE = "There is insufficient disk space to write to your save directory.\n\nPlease free at least 15 MB to give your saves some room to breathe.\n{0}";
 
-				public static LocString WORLD_GEN_FILES = "A problem occurred while accessing certain game files that will prevent starting new games.\n\nPlease ensure you can modify these files and re-launch the game:\n\n{0}";
+				public static LocString WORLD_GEN_FILES = "A problem occurred while accessing certain game files that will prevent starting new games.\n\nPlease ensure that the directory and files are readable as well as writable and re-launch the game:\n\n{0}";
 
 				public static LocString WORLD_GEN_FAILURE = "A problem occurred while generating a world from this seed:\n{0}.\n\nUnfortunately, not all seeds germinate. Please try again with a different seed.";
 
@@ -3428,7 +3525,7 @@ namespace STRINGS
 			{
 				public static LocString UNASSIGNED = "Vacant Position";
 
-				public static LocString UNASSIGNED_TOOLTIP = "Click to assign a Duplicant to this job opening";
+				public static LocString UNASSIGNED_TOOLTIP = CLICK(ClickType.Click) + " to assign a Duplicant to this job opening";
 
 				public static LocString NOSLOTS = "No slots available";
 
@@ -3499,6 +3596,11 @@ namespace STRINGS
 					public static LocString DESCRIPTION = FormatAsLink("Corium", "CORIUM") + " Mining";
 				}
 
+				public class CAN_DIG_UNOBTANIUM
+				{
+					public static LocString DESCRIPTION = FormatAsLink("Neutronium", "UNOBTANIUM") + " Mining";
+				}
+
 				public class CAN_ART
 				{
 					public static LocString DESCRIPTION = string.Concat("Can produce artwork using ", BUILDINGS.PREFABS.CANVAS.NAME, " and ", BUILDINGS.PREFABS.SCULPTURE.NAME);
@@ -3567,6 +3669,11 @@ namespace STRINGS
 				public class ORBITAL_RESEARCH
 				{
 					public static LocString DESCRIPTION = string.Concat(BUILDINGS.PREFABS.DLC1COSMICRESEARCHCENTER.NAME, " Usage");
+				}
+
+				public class CAN_CLOTHING_ALTERATION
+				{
+					public static LocString DESCRIPTION = string.Concat(BUILDINGS.PREFABS.CLOTHINGALTERATIONSTATION.NAME, " Usage");
 				}
 
 				public class CAN_STUDY_WORLD_OBJECTS
@@ -4222,7 +4329,7 @@ namespace STRINGS
 
 		public class TOOLTIPS
 		{
-			public static LocString MANAGEMENTMENU_JOBS = "Manage my Duplicant Priorities {Hotkey}" + HORIZONTAL_BR_RULE + PRE_KEYWORD + "Duplicant Priorities" + PST_KEYWORD + " are calculated <i>before</i> the " + PRE_KEYWORD + "Building Priorities" + PST_KEYWORD + " set by the " + FormatAsTool("Priority Tool", Action.Prioritize);
+			public static LocString MANAGEMENTMENU_JOBS = "Manage my Duplicant Priorities {Hotkey}\n\nDuplicant Priorities" + PST_KEYWORD + " are calculated <i>before</i> the " + PRE_KEYWORD + "Building Priorities" + PST_KEYWORD + " set by the " + FormatAsTool("Priority Tool", Action.Prioritize);
 
 			public static LocString MANAGEMENTMENU_CONSUMABLES = "Manage my Duplicants' diets and medications {Hotkey}";
 
@@ -4230,7 +4337,7 @@ namespace STRINGS
 
 			public static LocString MANAGEMENTMENU_RESEARCH = "View the Research Tree {Hotkey}";
 
-			public static LocString MANAGEMENTMENU_REQUIRES_RESEARCH = string.Concat("Build a Research Station to unlock this menu", HORIZONTAL_BR_RULE, "The ", BUILDINGS.PREFABS.RESEARCHCENTER.NAME, " can be found in the ", FormatAsBuildMenuTab("Stations Tab", Action.Plan10), " of the Build Menu");
+			public static LocString MANAGEMENTMENU_REQUIRES_RESEARCH = string.Concat("Build a Research Station to unlock this menu\n\nThe ", BUILDINGS.PREFABS.RESEARCHCENTER.NAME, " can be found in the ", FormatAsBuildMenuTab("Stations Tab", Action.Plan10), " of the Build Menu");
 
 			public static LocString MANAGEMENTMENU_DAILYREPORT = "View each cycle's Colony Report {Hotkey}";
 
@@ -4240,13 +4347,13 @@ namespace STRINGS
 
 			public static LocString MANAGEMENTMENU_STARMAP = "Manage astronaut rocket missions {Hotkey}";
 
-			public static LocString MANAGEMENTMENU_REQUIRES_TELESCOPE = string.Concat("Build a Telescope to unlock this menu", HORIZONTAL_BR_RULE, "The ", BUILDINGS.PREFABS.TELESCOPE.NAME, " can be found in the ", FormatAsBuildMenuTab("Stations Tab", Action.Plan10), " of the Build Menu");
+			public static LocString MANAGEMENTMENU_REQUIRES_TELESCOPE = string.Concat("Build a Telescope to unlock this menu\n\nThe ", BUILDINGS.PREFABS.TELESCOPE.NAME, " can be found in the ", FormatAsBuildMenuTab("Stations Tab", Action.Plan10), " of the Build Menu");
 
-			public static LocString MANAGEMENTMENU_REQUIRES_TELESCOPE_CLUSTER = string.Concat("Build a Telescope to unlock this menu", HORIZONTAL_BR_RULE, "The ", BUILDINGS.PREFABS.TELESCOPE.NAME, " can be found in the ", FormatAsBuildMenuTab("Rocketry Tab", Action.Plan14), " of the Build Menu");
+			public static LocString MANAGEMENTMENU_REQUIRES_TELESCOPE_CLUSTER = string.Concat("Build a Telescope to unlock this menu\n\nThe ", BUILDINGS.PREFABS.TELESCOPE.NAME, " can be found in the ", FormatAsBuildMenuTab("Rocketry Tab", Action.Plan14), " of the Build Menu");
 
 			public static LocString MANAGEMENTMENU_SKILLS = "Manage Duplicants' Skill assignments {Hotkey}";
 
-			public static LocString MANAGEMENTMENU_REQUIRES_SKILL_STATION = string.Concat("Build a Printing Pod to unlock this menu", HORIZONTAL_BR_RULE, "The ", BUILDINGS.PREFABS.HEADQUARTERSCOMPLETE.NAME, " can be found in the ", FormatAsBuildMenuTab("Base Tab", Action.Plan1), " of the Build Menu");
+			public static LocString MANAGEMENTMENU_REQUIRES_SKILL_STATION = string.Concat("Build a Printing Pod to unlock this menu\n\nThe ", BUILDINGS.PREFABS.HEADQUARTERSCOMPLETE.NAME, " can be found in the ", FormatAsBuildMenuTab("Base Tab", Action.Plan1), " of the Build Menu");
 
 			public static LocString MANAGEMENTMENU_PAUSEMENU = "Open the game menu {Hotkey}";
 
@@ -4306,7 +4413,7 @@ namespace STRINGS
 
 			public static LocString PRIORITIZEMAINBUTTON = "";
 
-			public static LocString PRIORITIZEBUTTON = "Set Building Priority {Hotkey}" + HORIZONTAL_BR_RULE + PRE_KEYWORD + "Duplicant Priorities" + PST_KEYWORD + " " + FormatAsHotKey(Action.ManagePriorities) + " are calculated <i>before</i> the " + PRE_KEYWORD + "Building Priorities" + PST_KEYWORD + " set by this tool";
+			public static LocString PRIORITIZEBUTTON = "Set Building Priority {Hotkey}\n\nDuplicant Priorities" + PST_KEYWORD + " " + FormatAsHotKey(Action.ManagePriorities) + " are calculated <i>before</i> the " + PRE_KEYWORD + "Building Priorities" + PST_KEYWORD + " set by this tool";
 
 			public static LocString CLEANUPMAINBUTTON = "Mop and sweep messy floors {Hotkey}";
 
@@ -4414,7 +4521,7 @@ namespace STRINGS
 
 			public static LocString VITALSPANEL = "The Vitals Panel monitors the status and well being of my Duplicant";
 
-			public static LocString STRESSPANEL = "The Stress Panel offers a detailed look at what is psychology affecting Duplicant psychologically";
+			public static LocString STRESSPANEL = "The Stress Panel offers a detailed look at what is affecting my Duplicant psychologically";
 
 			public static LocString STATSPANEL = "The Stats Panel gives me an overview of my Duplicant's individual stats";
 
@@ -4446,7 +4553,7 @@ namespace STRINGS
 
 			public static LocString JOBSSCREEN_RELEVANT_ATTRIBUTES = "Relevant Attributes:";
 
-			public static LocString SORTCOLUMN = "Click to sort";
+			public static LocString SORTCOLUMN = CLICK(ClickType.Click) + " to sort";
 
 			public static LocString NOMATERIAL = "Not enough materials";
 
@@ -4665,7 +4772,7 @@ namespace STRINGS
 
 			public static LocString TILES_PER_CYCLE = "Tiles per cycle";
 
-			public static LocString CHANGE_DESTINATION = "Click to change destination";
+			public static LocString CHANGE_DESTINATION = CLICK(ClickType.Click) + " to change destination";
 
 			public static LocString SELECT_DESTINATION = "Select a new destination on the map";
 
@@ -4865,7 +4972,7 @@ namespace STRINGS
 					{
 						public static LocString READY = string.Concat("A Duplicant with the ", DUPLICANTS.ROLES.ROCKETPILOT.NAME, " skill is currently onboard");
 
-						public static LocString FAILURE = string.Concat("At least one crew member aboard the rocket must possess the ", DUPLICANTS.ROLES.ROCKETPILOT.NAME, " skill to launch", HORIZONTAL_BR_RULE, "Qualified Duplicants must be assigned to the rocket crew, and have access to the module's hatch");
+						public static LocString FAILURE = string.Concat("At least one crew member aboard the rocket must possess the ", DUPLICANTS.ROLES.ROCKETPILOT.NAME, " skill to launch\n\nQualified Duplicants must be assigned to the rocket crew, and have access to the module's hatch");
 
 						public static LocString WARNING = "Pilot warning";
 					}
@@ -4930,7 +5037,7 @@ namespace STRINGS
 					{
 						public static LocString READY = "The rocket's launch path is clear for takeoff";
 
-						public static LocString FAILURE = "This rocket does not have a clear line of sight to space, preventing launch" + HORIZONTAL_BR_RULE + "The rocket's launch path can be cleared by excavating undug tiles and deconstructing any buildings above the rocket";
+						public static LocString FAILURE = "This rocket does not have a clear line of sight to space, preventing launch\n\nThe rocket's launch path can be cleared by excavating undug tiles and deconstructing any buildings above the rocket";
 
 						public static LocString WARNING = "";
 					}
@@ -4951,7 +5058,7 @@ namespace STRINGS
 					{
 						public static LocString READY = "A fuel tank has been installed";
 
-						public static LocString FAILURE = "No fuel tank installed" + HORIZONTAL_BR_RULE + "This rocket cannot launch without a completed fuel tank";
+						public static LocString FAILURE = "No fuel tank installed\n\nThis rocket cannot launch without a completed fuel tank";
 
 						public static LocString WARNING = "Fuel tank warning";
 					}
@@ -4972,7 +5079,7 @@ namespace STRINGS
 					{
 						public static LocString READY = "A suitable engine has been installed";
 
-						public static LocString FAILURE = "No engine installed" + HORIZONTAL_BR_RULE + "This rocket cannot launch without a completed engine";
+						public static LocString FAILURE = "No engine installed\n\nThis rocket cannot launch without a completed engine";
 
 						public static LocString WARNING = "Engine warning";
 					}
@@ -4993,7 +5100,7 @@ namespace STRINGS
 					{
 						public static LocString READY = "A suitable nosecone has been installed";
 
-						public static LocString FAILURE = "No nosecone installed" + HORIZONTAL_BR_RULE + "This rocket cannot launch without a completed nosecone";
+						public static LocString FAILURE = "No nosecone installed\n\nThis rocket cannot launch without a completed nosecone";
 
 						public static LocString WARNING = "Nosecone warning";
 					}
@@ -5014,7 +5121,7 @@ namespace STRINGS
 					{
 						public static LocString READY = "The control station is installed and waiting for the pilot";
 
-						public static LocString FAILURE = "No Control Station" + HORIZONTAL_BR_RULE + "A new Rocket Control Station must be installed inside the rocket";
+						public static LocString FAILURE = "No Control Station\n\nA new Rocket Control Station must be installed inside the rocket";
 
 						public static LocString WARNING = "Control Station warning";
 					}
@@ -5098,7 +5205,7 @@ namespace STRINGS
 					{
 						public static LocString READY = "The rocket's engine can support the number of installed rocket modules";
 
-						public static LocString FAILURE = "The number of installed modules exceeds the engine's module limit" + HORIZONTAL_BR_RULE + "Excess modules must be removed";
+						public static LocString FAILURE = "The number of installed modules exceeds the engine's module limit\n\nExcess modules must be removed";
 
 						public static LocString WARNING = "Module limit warning";
 					}
@@ -5140,7 +5247,7 @@ namespace STRINGS
 					{
 						public static LocString READY = "The rocket's engine can support the height of the rocket";
 
-						public static LocString FAILURE = "The height of the rocket exceeds the engine's limit" + HORIZONTAL_BR_RULE + "Excess modules must be removed";
+						public static LocString FAILURE = "The height of the rocket exceeds the engine's limit\n\nExcess modules must be removed";
 
 						public static LocString WARNING = "Height limit warning";
 					}
@@ -5163,7 +5270,7 @@ namespace STRINGS
 
 						public static LocString READY_NO_DESTINATION = "This rocket's fuel tanks have been filled to capacity, but it has no destination";
 
-						public static LocString FAILURE = "This rocket does not have enough fuel to reach its destination" + HORIZONTAL_BR_RULE + "If the tanks are full, a different Fuel Tank Module may be required";
+						public static LocString FAILURE = "This rocket does not have enough fuel to reach its destination\n\nIf the tanks are full, a different Fuel Tank Module may be required";
 
 						public static LocString WARNING = "The rocket has enough fuel for a one-way trip to its destination, but will not be able to make it back";
 					}
@@ -5184,7 +5291,7 @@ namespace STRINGS
 					{
 						public static LocString READY = "This rocket has sufficient oxidizer for a roundtrip to its destination and back";
 
-						public static LocString FAILURE = "This rocket does not have enough oxidizer to reach its destination" + HORIZONTAL_BR_RULE + "If the oxidizer tanks are full, a different Oxidizer Tank Module may be required";
+						public static LocString FAILURE = "This rocket does not have enough oxidizer to reach its destination\n\nIf the oxidizer tanks are full, a different Oxidizer Tank Module may be required";
 
 						public static LocString WARNING = "The rocket has enough oxidizer for a one-way trip to its destination, but will not be able to make it back";
 					}
@@ -5225,7 +5332,7 @@ namespace STRINGS
 
 				public static LocString REQUIRED_TOOLTIP = "A {0} must be installed before launch";
 
-				public static LocString MISSING_TOOLTIP = "No {0} installed" + HORIZONTAL_BR_RULE + "This rocket cannot launch without a completed {0}";
+				public static LocString MISSING_TOOLTIP = "No {0} installed\n\nThis rocket cannot launch without a completed {0}";
 
 				public static LocString NO_DESTINATION = "No destination selected";
 
@@ -5361,7 +5468,7 @@ namespace STRINGS
 
 			public static LocString COMPOSITION_UNDISCOVERED = "?????????";
 
-			public static LocString COMPOSITION_UNDISCOVERED_TOOLTIP = "Further research required to identify resource" + HORIZONTAL_BR_RULE + "Send a Research Module to this destination for more information";
+			public static LocString COMPOSITION_UNDISCOVERED_TOOLTIP = "Further research required to identify resource\n\nSend a Research Module to this destination for more information";
 
 			public static LocString COMPOSITION_UNDISCOVERED_AMOUNT = "???";
 
@@ -5537,6 +5644,8 @@ namespace STRINGS
 
 				public static LocString ELEMENTSCLASSES = FormatAsLink("Classes", "ELEMENTS_CLASSES");
 
+				public static LocString INDUSTRIALINGREDIENTS = FormatAsLink("Industrial Ingredients", "INDUSTRIALINGREDIENTS");
+
 				public static LocString GEYSERS = FormatAsLink("Geysers", "GEYSERS");
 
 				public static LocString SYSTEMS = FormatAsLink("Systems", "SYSTEMS");
@@ -5566,13 +5675,13 @@ namespace STRINGS
 
 			public static LocString RECIPE_FABRICATOR_HEADER = "Produced by";
 
-			public static LocString BACK_BUTTON_TOOLTIP = "Click to go back:\n{0}";
+			public static LocString BACK_BUTTON_TOOLTIP = CLICK(ClickType.Click) + " to go back:\n{0}";
 
-			public static LocString BACK_BUTTON_NO_HISTORY_TOOLTIP = "Click to go back:\nN/A";
+			public static LocString BACK_BUTTON_NO_HISTORY_TOOLTIP = CLICK(ClickType.Click) + " to go back:\nN/A";
 
-			public static LocString FORWARD_BUTTON_TOOLTIP = "Click to go forward:\n{0}";
+			public static LocString FORWARD_BUTTON_TOOLTIP = CLICK(ClickType.Click) + " to go forward:\n{0}";
 
-			public static LocString FORWARD_BUTTON_NO_HISTORY_TOOLTIP = "Click to go forward:\nN/A";
+			public static LocString FORWARD_BUTTON_NO_HISTORY_TOOLTIP = CLICK(ClickType.Click) + " to go forward:\nN/A";
 
 			public static LocString TITLE = "DATABASE";
 
@@ -5603,14 +5712,25 @@ namespace STRINGS
 					public static LocString BODY_NOLINKS = "This DLC is currently in active development, which means you're likely to encounter strange, amusing, and occasionally just downright frustrating bugs.\n\n During this time Spaced Out! will be receiving regular updates to fix bugs, add features, and introduce additional content.\n\n We've got lots of content old and new to add to this DLC before it's ready, and we're happy to have you along with us. Enjoy your time in deep space!\n\n - The Team at Klei";
 
 					public static LocString FORUMBUTTON = "Visit Forums";
-
-					public static LocString CONTINUEBUTTON = "Okay, thanks for the heads up!";
 				}
 
 				public class HEALTHY_MESSAGE
 				{
 					public static LocString CONTINUEBUTTON = "Thanks!";
 				}
+			}
+
+			public class PREVIOUS_UPDATE
+			{
+				public static LocString TITLE = "<b>Welcome to Oxygen Not Included!</b>";
+
+				public static LocString BODY = "Whoops!\n\nYou’re about to opt in to the <b>Previous Update branch</b>. That means opting out of all new features, fixes and content from the live branch.\n\nThis branch is temporary. It will be replaced when the next update is released. It’s also completely unsupported—please don’t report bugs or issues you find here.\n\nAre you sure you want to opt in?";
+
+				public static LocString CONTINUEBUTTON = "Play Old Version";
+
+				public static LocString FORUMBUTTON = "More Information";
+
+				public static LocString QUITBUTTON = "Quit";
 			}
 
 			public class UPDATES
@@ -5630,7 +5750,7 @@ namespace STRINGS
 
 			public static LocString TESTING_WATERMARK = "TESTING BUILD: {0}";
 
-			public static LocString TESTING_TOOLTIP = "This game is currently running a Test version.\n\nClick for more info.";
+			public static LocString TESTING_TOOLTIP = "This game is currently running a Test version.\n\n" + CLICK(ClickType.Click) + " for more info.";
 
 			public static LocString TESTING_MESSAGE_TITLE = "TESTING BUILD";
 
@@ -6453,9 +6573,9 @@ namespace STRINGS
 		{
 			public static LocString DUPLICANT_PROPERNAME = "<b>{0}</b>";
 
-			public static LocString SELECT_DUPLICANT_BUTTON = "Click to select <b>{0}</b>";
+			public static LocString SELECT_DUPLICANT_BUTTON = CLICK(ClickType.Click) + " to select <b>{0}</b>";
 
-			public static LocString GOTO_DUPLICANT_BUTTON = "Double-click to go to <b>{0}</b>";
+			public static LocString GOTO_DUPLICANT_BUTTON = "Double-" + CLICK(ClickType.click) + " to go to <b>{0}</b>";
 
 			public static LocString COLUMN_SORT_BY_NAME = "Sort by <b>Name</b>";
 
@@ -6692,9 +6812,9 @@ namespace STRINGS
 
 			public static LocString RENAME_BUTTON_TOOLTIP = "Rename custom schedule";
 
-			public static LocString ALARM_BUTTON_ON_TOOLTIP = "Toggle Notifications" + HORIZONTAL_BR_RULE + "Sounds and notifications will play when shifts change for this schedule.\n\nENABLED\nClick to disable";
+			public static LocString ALARM_BUTTON_ON_TOOLTIP = "Toggle Notifications" + HORIZONTAL_BR_RULE + "Sounds and notifications will play when shifts change for this schedule.\n\nENABLED\n" + CLICK(ClickType.Click) + " to disable";
 
-			public static LocString ALARM_BUTTON_OFF_TOOLTIP = "Toggle Notifications" + HORIZONTAL_BR_RULE + "No sounds or notifications will play for this schedule.\n\nDISABLED\nClick to enable";
+			public static LocString ALARM_BUTTON_OFF_TOOLTIP = "Toggle Notifications" + HORIZONTAL_BR_RULE + "No sounds or notifications will play for this schedule.\n\nDISABLED\n" + CLICK(ClickType.Click) + " to enable";
 
 			public static LocString DELETE_BUTTON_TOOLTIP = "Delete Schedule";
 
@@ -6865,7 +6985,7 @@ namespace STRINGS
 
 			public static LocString HIGH_TOGGLE = "";
 
-			public static LocString OPEN_JOBS_SCREEN = "Click to open the Priorities Screen" + HORIZONTAL_BR_RULE + "Duplicants will first decide what to work on based on their " + PRE_KEYWORD + "Duplicant Priorities" + PST_KEYWORD + ", and then decide where to work based on " + PRE_KEYWORD + "Building Priorities" + PST_KEYWORD;
+			public static LocString OPEN_JOBS_SCREEN = CLICK(ClickType.Click) + " to open the Priorities Screen" + HORIZONTAL_BR_RULE + "Duplicants will first decide what to work on based on their " + PRE_KEYWORD + "Duplicant Priorities" + PST_KEYWORD + ", and then decide where to work based on " + PRE_KEYWORD + "Building Priorities" + PST_KEYWORD;
 
 			public static LocString DIAGRAM = "Duplicants will first choose what " + PST_KEYWORD + "Errand Type" + PST_KEYWORD + " to perform using their " + PRE_KEYWORD + "Duplicant Priorities" + PST_KEYWORD + " " + FormatAsHotKey(Action.ManagePriorities) + HORIZONTAL_BR_RULE + "They will then choose one " + PRE_KEYWORD + "Errand" + PST_KEYWORD + " from within that type using the " + PRE_KEYWORD + "Building Priorities" + PST_KEYWORD + " set by this tool";
 
@@ -6876,7 +6996,7 @@ namespace STRINGS
 		{
 			public static LocString HEADER = "RESOURCES";
 
-			public static LocString CATEGORY_TOOLTIP = "Counts all unallocated resources within reach" + HORIZONTAL_BR_RULE + "Click to expand";
+			public static LocString CATEGORY_TOOLTIP = "Counts all unallocated resources within reach" + HORIZONTAL_BR_RULE + CLICK(ClickType.Click) + " to expand";
 
 			public static LocString AVAILABLE_TOOLTIP = "Available: <b>{0}</b>\n({1} of {2} allocated to pending errands)";
 
@@ -7437,11 +7557,11 @@ namespace STRINGS
 
 				public static LocString LAUNCH_WARNINGS_BUTTON = "ACKNOWLEDGE WARNINGS";
 
-				public static LocString LAUNCH_WARNINGS_BUTTON_TOOLTIP = "Some items in the Launch Checklist require attention" + HORIZONTAL_BR_RULE + "<b>Click to ignore warnings and proceed with launch</b>";
+				public static LocString LAUNCH_WARNINGS_BUTTON_TOOLTIP = "Some items in the Launch Checklist require attention" + HORIZONTAL_BR_RULE + "<b>" + CLICK(ClickType.Click) + " to ignore warnings and proceed with launch</b>";
 
 				public static LocString LAUNCH_REQUESTED_BUTTON = "CANCEL LAUNCH";
 
-				public static LocString LAUNCH_REQUESTED_BUTTON_TOOLTIP = "This rocket will take off as soon as a Duplicant takes the controls" + HORIZONTAL_BR_RULE + "<b>Click to cancel launch</b>";
+				public static LocString LAUNCH_REQUESTED_BUTTON_TOOLTIP = "This rocket will take off as soon as a Duplicant takes the controls" + HORIZONTAL_BR_RULE + "<b>" + CLICK(ClickType.Click) + " to cancel launch</b>";
 
 				public static LocString LAUNCH_AUTOMATION_CONTROLLED = "AUTOMATION CONTROLLED";
 
@@ -7470,6 +7590,11 @@ namespace STRINGS
 					public class MINION
 					{
 						public static LocString TOOLTIP = "Spawn a Duplicant in front of the building";
+					}
+
+					public class FACADE
+					{
+						public static LocString TOOLTIP = "Toggle the building facade";
 					}
 				}
 
@@ -7591,7 +7716,7 @@ namespace STRINGS
 			{
 				public static LocString TITLE = "Great Monument";
 
-				public static LocString FLIP_FACING_BUTTON = "CLICK TO ROTATE";
+				public static LocString FLIP_FACING_BUTTON = CLICK(ClickType.CLICK) + " TO ROTATE";
 			}
 
 			public class PLANTERSIDESCREEN
@@ -7636,6 +7761,8 @@ namespace STRINGS
 				public static LocString AWAITINGREMOVAL = "AWAITING DIGGING UP: {0}";
 
 				public static LocString ENTITYDEPOSITED = "PLANTED: {0}";
+
+				public static LocString MUTATIONS_HEADER = "Mutations";
 
 				public static LocString DEPOSIT = "Plant";
 
@@ -7834,25 +7961,25 @@ namespace STRINGS
 
 				public static LocString MINION_ACCESS = "Duplicant Access Permissions";
 
-				public static LocString GO_LEFT_ENABLED = "Passing Left through this door is permitted\n\nClick to revoke permission";
+				public static LocString GO_LEFT_ENABLED = "Passing Left through this door is permitted\n\n" + CLICK(ClickType.Click) + " to revoke permission";
 
-				public static LocString GO_LEFT_DISABLED = "Passing Left through this door is not permitted\n\nClick to grant permission";
+				public static LocString GO_LEFT_DISABLED = "Passing Left through this door is not permitted\n\n" + CLICK(ClickType.Click) + " to grant permission";
 
-				public static LocString GO_RIGHT_ENABLED = "Passing Right through this door is permitted\n\nClick to revoke permission";
+				public static LocString GO_RIGHT_ENABLED = "Passing Right through this door is permitted\n\n" + CLICK(ClickType.Click) + " to revoke permission";
 
-				public static LocString GO_RIGHT_DISABLED = "Passing Right through this door is not permitted\n\nClick to grant permission";
+				public static LocString GO_RIGHT_DISABLED = "Passing Right through this door is not permitted\n\n" + CLICK(ClickType.Click) + " to grant permission";
 
-				public static LocString GO_UP_ENABLED = "Passing Up through this door is permitted\n\nClick to revoke permission";
+				public static LocString GO_UP_ENABLED = "Passing Up through this door is permitted\n\n" + CLICK(ClickType.Click) + " to revoke permission";
 
-				public static LocString GO_UP_DISABLED = "Passing Up through this door is not permitted\n\nClick to grant permission";
+				public static LocString GO_UP_DISABLED = "Passing Up through this door is not permitted\n\n" + CLICK(ClickType.Click) + " to grant permission";
 
-				public static LocString GO_DOWN_ENABLED = "Passing Down through this door is permitted\n\nClick to revoke permission";
+				public static LocString GO_DOWN_ENABLED = "Passing Down through this door is permitted\n\n" + CLICK(ClickType.Click) + " to revoke permission";
 
-				public static LocString GO_DOWN_DISABLED = "Passing Down through this door is not permitted\n\nClick to grant permission";
+				public static LocString GO_DOWN_DISABLED = "Passing Down through this door is not permitted\n\n" + CLICK(ClickType.Click) + " to grant permission";
 
-				public static LocString SET_TO_DEFAULT = "Click to clear custom permissions";
+				public static LocString SET_TO_DEFAULT = CLICK(ClickType.Click) + " to clear custom permissions";
 
-				public static LocString SET_TO_CUSTOM = "Click to assign custom permissions";
+				public static LocString SET_TO_CUSTOM = CLICK(ClickType.Click) + " to assign custom permissions";
 
 				public static LocString USING_DEFAULT = "Default Access";
 
@@ -9107,7 +9234,7 @@ namespace STRINGS
 
 				public static LocString REJECT = "Forbid Mutants";
 
-				public static LocString TOOLTIP = "Toggle whether or not this building will accept mutant seeds for recipes that could use them.";
+				public static LocString TOOLTIP = "Toggle whether or not this building will accept " + PRE_KEYWORD + "Mutant Seeds" + PST_KEYWORD + " for recipes that could use them";
 			}
 		}
 
@@ -9688,7 +9815,7 @@ namespace STRINGS
 
 				public static LocString TOOLNAME = "Build tool";
 
-				public static LocString TOOLACTION = "CLICK TO BUILD";
+				public static LocString TOOLACTION = CLICK(ClickType.CLICK) + " TO BUILD";
 
 				public static LocString TOOLACTION_DRAG = "DRAG";
 			}
@@ -9710,7 +9837,7 @@ namespace STRINGS
 
 				public static LocString TOOLNAME = "Place tool";
 
-				public static LocString TOOLACTION = "CLICK TO PLACE";
+				public static LocString TOOLACTION = CLICK(ClickType.CLICK) + "  TO PLACE";
 			}
 
 			public class MOVETOLOCATION
@@ -9719,7 +9846,7 @@ namespace STRINGS
 
 				public static LocString TOOLNAME = "Move Here";
 
-				public static LocString TOOLACTION = "CLICK";
+				public static LocString TOOLACTION = CLICK(ClickType.CLICK) ?? "";
 
 				public static LocString UNREACHABLE = "UNREACHABLE";
 			}
@@ -10538,6 +10665,8 @@ namespace STRINGS
 
 				public static LocString SCALE_GROWTH_ATMO = "This critter can be sheared every <b>{Time}</b> to produce " + FormatAsPositiveRate("{Amount}") + " of " + PRE_KEYWORD + "{Item}" + PST_KEYWORD + HORIZONTAL_BR_RULE + "It must be kept in " + PRE_KEYWORD + "{Atmosphere}" + PST_KEYWORD + "-rich environments to regrow sheared " + PRE_KEYWORD + "{Item}" + PST_KEYWORD;
 
+				public static LocString SCALE_GROWTH_TEMP = "This critter can be sheared every <b>{Time}</b> to produce " + FormatAsPositiveRate("{Amount}") + " of " + PRE_KEYWORD + "{Item}" + PST_KEYWORD + HORIZONTAL_BR_RULE + "It must eat food between {TempMin}-{TempMax} to regrow sheared " + PRE_KEYWORD + "{Item}" + PST_KEYWORD;
+
 				public static LocString MESS_TABLE_SALT = "Duplicants gain " + FormatAsPositiveModifier("+{0}") + " " + PRE_KEYWORD + "Morale" + PST_KEYWORD + " when using " + PRE_KEYWORD + "Table Salt" + PST_KEYWORD + " with their food at a " + BUILDINGS.PREFABS.DININGTABLE.NAME;
 
 				public static LocString ACCESS_CONTROL = "Settings to allow or restrict Duplicants from passing through the door.";
@@ -10743,6 +10872,8 @@ namespace STRINGS
 
 			public static LocString SCALE_GROWTH_ATMO = "Shearable {Item}: {Amount} per {Time} ({Atmosphere})";
 
+			public static LocString SCALE_GROWTH_TEMP = "Shearable {Item}: {Amount} per {Time} ({TempMin}-{TempMax})";
+
 			public static LocString ACCESS_CONTROL = "Duplicant Access Permissions";
 
 			public static LocString ROCKETRESTRICTION_HEADER = "Restriction Control:";
@@ -10899,6 +11030,10 @@ namespace STRINGS
 				public static LocString REQUIRES_DARKNESS = "This plant requires complete darkness";
 
 				public static LocString REQUIRES_ATMOSPHERE = "This plant must be submerged in one of the following gases: {0}";
+
+				public static LocString REQUIRES_ATMOSPHERE_LIQUID = "This plant must be submerged in one of the following liquids: {0}";
+
+				public static LocString REQUIRES_ATMOSPHERE_MIXED = "This plant must be submerged in one of the following gases or liquids: {0}";
 
 				public static LocString REQUIRES_PRESSURE = "Ambient " + PRE_KEYWORD + "Gas" + PST_KEYWORD + " pressure must be at least <b>{0}</b> for basic growth";
 
@@ -11617,7 +11752,7 @@ namespace STRINGS
 
 		public static LocString COPY_BUILDING = "Copy";
 
-		public static LocString COPY_BUILDING_TOOLTIP = "Create new build orders using the current building selection as a template. {Hotkey}";
+		public static LocString COPY_BUILDING_TOOLTIP = "Create new build orders using the most recent building selection as a template. {Hotkey}";
 
 		public static LocString NAME_WITH_UNITS = "{0} x {1}";
 
@@ -11914,6 +12049,11 @@ namespace STRINGS
 		public static string FormatAsNegativeRate(string text)
 		{
 			return PRE_RATE_NEGATIVE + text + PST_RATE;
+		}
+
+		public static string CLICK(ClickType c)
+		{
+			return "\\" + c.ToString() + "\\";
 		}
 
 		public static string FormatAsAutomationState(string text, AutomationState state)

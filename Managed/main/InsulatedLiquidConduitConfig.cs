@@ -9,7 +9,7 @@ public class InsulatedLiquidConduitConfig : IBuildingConfig
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef obj = BuildingTemplates.CreateBuildingDef("InsulatedLiquidConduit", 1, 1, "utilities_liquid_insulated_kanim", 10, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.PLUMBABLE, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER0);
-		obj.ThermalConductivity = 0.03125f;
+		obj.ThermalConductivity = 1f / 32f;
 		obj.Floodable = false;
 		obj.Overheatable = false;
 		obj.Entombable = false;

@@ -13,38 +13,12 @@ public class NavGrid
 
 		public NavType endNavType;
 
-		private byte _transitionId;
+		public byte transitionId;
 
-		private byte _cost;
-
-		public byte transitionId
-		{
-			get
-			{
-				return _transitionId;
-			}
-			set
-			{
-				_transitionId = value;
-			}
-		}
-
-		public byte cost
-		{
-			get
-			{
-				return _cost;
-			}
-			set
-			{
-				_cost = value;
-			}
-		}
+		public byte cost;
 
 		public Link(int link, NavType start_nav_type, NavType end_nav_type, byte transition_id, byte cost)
 		{
-			_transitionId = 0;
-			_cost = 0;
 			this.link = link;
 			startNavType = start_nav_type;
 			endNavType = end_nav_type;
@@ -390,8 +364,6 @@ public class NavGrid
 
 	public NavTable NavTable { get; private set; }
 
-	public NavGraph NavGraph { get; private set; }
-
 	public Transition[] transitions { get; set; }
 
 	public Transition[][] transitionsByNavType { get; private set; }
@@ -468,7 +440,6 @@ public class NavGrid
 		}
 		potentialScratchPad = new PathFinder.PotentialScratchPad(maxLinksPerCell);
 		InitializeGraph();
-		NavGraph = new NavGraph(Grid.CellCount, this);
 	}
 
 	public NavTypeData GetNavTypeData(NavType nav_type)
@@ -505,7 +476,7 @@ public class NavGrid
 
 	public void InitializeGraph()
 	{
-		NavGridUpdater.InitializeNavGrid(NavTable, ValidNavTypes, Validators, boundingOffsets, maxLinksPerCell, Links, transitionsByNavType);
+		NavGridUpdater.InitializeNavGrid(NavTable, Validators, boundingOffsets, maxLinksPerCell, Links, transitionsByNavType);
 	}
 
 	public void UpdateGraph()
@@ -531,7 +502,7 @@ public class NavGrid
 
 	public void UpdateGraph(HashSet<int> dirty_nav_cells)
 	{
-		NavGridUpdater.UpdateNavGrid(NavTable, ValidNavTypes, Validators, boundingOffsets, maxLinksPerCell, Links, transitionsByNavType, teleportTransitions, dirty_nav_cells);
+		NavGridUpdater.UpdateNavGrid(NavTable, Validators, boundingOffsets, maxLinksPerCell, Links, transitionsByNavType, teleportTransitions, dirty_nav_cells);
 		if (OnNavGridUpdateComplete != null)
 		{
 			OnNavGridUpdateComplete(dirty_nav_cells);

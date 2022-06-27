@@ -124,6 +124,8 @@ namespace Database
 
 		public StatusItem GeneratingPower;
 
+		public StatusItem Ranching;
+
 		public StatusItem Harvesting;
 
 		public StatusItem Uprooting;
@@ -391,6 +393,7 @@ namespace Database
 			GeneratingPower = CreateStatusItem("GeneratingPower", "DUPLICANTS", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			GeneratingPower.resolveStringCallback = resolveStringCallback;
 			Harvesting = CreateStatusItem("Harvesting", "DUPLICANTS", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			Ranching = CreateStatusItem("Ranching", "DUPLICANTS", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			Harvesting.resolveStringCallback = resolveStringCallback;
 			Uprooting = CreateStatusItem("Uprooting", "DUPLICANTS", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			Uprooting.resolveStringCallback = resolveStringCallback;

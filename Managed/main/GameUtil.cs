@@ -69,6 +69,13 @@ public static class GameUtil
 		quantity
 	}
 
+	public enum IdentityDescriptorTense
+	{
+		Normal,
+		Possessive,
+		Plural
+	}
+
 	public enum WattageFormatterUnit
 	{
 		Watts,
@@ -108,17 +115,17 @@ public static class GameUtil
 
 		public const int IMPENETRABLE = 255;
 
-		public static Color ImpenetrableColor = new Color(212f / 255f, 73f / 255f, 24f / 85f);
+		public static Color ImpenetrableColor = new Color(0.83137256f, 0.28627452f, 24f / 85f);
 
-		public static Color nearlyImpenetrableColor = new Color(63f / 85f, 89f / 255f, 127f / 255f);
+		public static Color nearlyImpenetrableColor = new Color(63f / 85f, 0.34901962f, 0.49803922f);
 
-		public static Color veryFirmColor = new Color(163f / 255f, 20f / 51f, 154f / 255f);
+		public static Color veryFirmColor = new Color(0.6392157f, 20f / 51f, 0.6039216f);
 
-		public static Color firmColor = new Color(134f / 255f, 107f / 255f, 0.64705884f);
+		public static Color firmColor = new Color(0.5254902f, 0.41960785f, 0.64705884f);
 
-		public static Color softColor = new Color(109f / 255f, 41f / 85f, 193f / 255f);
+		public static Color softColor = new Color(0.42745098f, 41f / 85f, 0.75686276f);
 
-		public static Color verySoftColor = new Color(113f / 255f, 57f / 85f, 69f / 85f);
+		public static Color verySoftColor = new Color(0.44313726f, 57f / 85f, 69f / 85f);
 	}
 
 	public static class GermResistanceValues
@@ -127,17 +134,17 @@ public static class GameUtil
 
 		public const float LARGE = 5f;
 
-		public static Color NegativeLargeColor = new Color(212f / 255f, 73f / 255f, 24f / 85f);
+		public static Color NegativeLargeColor = new Color(0.83137256f, 0.28627452f, 24f / 85f);
 
-		public static Color NegativeMediumColor = new Color(63f / 85f, 89f / 255f, 127f / 255f);
+		public static Color NegativeMediumColor = new Color(63f / 85f, 0.34901962f, 0.49803922f);
 
-		public static Color NegativeSmallColor = new Color(163f / 255f, 20f / 51f, 154f / 255f);
+		public static Color NegativeSmallColor = new Color(0.6392157f, 20f / 51f, 0.6039216f);
 
-		public static Color PositiveSmallColor = new Color(134f / 255f, 107f / 255f, 0.64705884f);
+		public static Color PositiveSmallColor = new Color(0.5254902f, 0.41960785f, 0.64705884f);
 
-		public static Color PositiveMediumColor = new Color(109f / 255f, 41f / 85f, 193f / 255f);
+		public static Color PositiveMediumColor = new Color(0.42745098f, 41f / 85f, 0.75686276f);
 
-		public static Color PositiveLargeColor = new Color(113f / 255f, 57f / 85f, 69f / 85f);
+		public static Color PositiveLargeColor = new Color(0.44313726f, 57f / 85f, 69f / 85f);
 	}
 
 	public static class ThermalConductivityValues
@@ -150,31 +157,31 @@ public static class GameUtil
 
 		public const float LOW = 1f;
 
-		public static Color veryLowConductivityColor = new Color(212f / 255f, 73f / 255f, 24f / 85f);
+		public static Color veryLowConductivityColor = new Color(0.83137256f, 0.28627452f, 24f / 85f);
 
-		public static Color lowConductivityColor = new Color(63f / 85f, 89f / 255f, 127f / 255f);
+		public static Color lowConductivityColor = new Color(63f / 85f, 0.34901962f, 0.49803922f);
 
-		public static Color mediumConductivityColor = new Color(163f / 255f, 20f / 51f, 154f / 255f);
+		public static Color mediumConductivityColor = new Color(0.6392157f, 20f / 51f, 0.6039216f);
 
-		public static Color highConductivityColor = new Color(134f / 255f, 107f / 255f, 0.64705884f);
+		public static Color highConductivityColor = new Color(0.5254902f, 0.41960785f, 0.64705884f);
 
-		public static Color veryHighConductivityColor = new Color(109f / 255f, 41f / 85f, 193f / 255f);
+		public static Color veryHighConductivityColor = new Color(0.42745098f, 41f / 85f, 0.75686276f);
 	}
 
 	public static class BreathableValues
 	{
-		public static Color positiveColor = new Color(113f / 255f, 57f / 85f, 69f / 85f);
+		public static Color positiveColor = new Color(0.44313726f, 57f / 85f, 69f / 85f);
 
-		public static Color warningColor = new Color(163f / 255f, 20f / 51f, 154f / 255f);
+		public static Color warningColor = new Color(0.6392157f, 20f / 51f, 0.6039216f);
 
-		public static Color negativeColor = new Color(212f / 255f, 73f / 255f, 24f / 85f);
+		public static Color negativeColor = new Color(0.83137256f, 0.28627452f, 24f / 85f);
 	}
 
 	public static class WireLoadValues
 	{
-		public static Color warningColor = new Color(251f / 255f, 176f / 255f, 59f / 255f);
+		public static Color warningColor = new Color(0.9843137f, 0.6901961f, 0.23137255f);
 
-		public static Color negativeColor = new Color(1f, 49f / 255f, 49f / 255f);
+		public static Color negativeColor = new Color(1f, 0.19215687f, 0.19215687f);
 	}
 
 	public static TemperatureUnit temperatureUnit;
@@ -360,17 +367,45 @@ public static class GameUtil
 		throw new ArgumentException(action.ToString() + " is not bound in GameInputBindings");
 	}
 
-	public static string GetIdentityDescriptor(GameObject go)
+	public static string GetIdentityDescriptor(GameObject go, IdentityDescriptorTense tense = IdentityDescriptorTense.Normal)
 	{
 		if ((bool)go.GetComponent<MinionIdentity>())
 		{
-			return DUPLICANTS.STATS.SUBJECTS.DUPLICANT;
+			switch (tense)
+			{
+			case IdentityDescriptorTense.Normal:
+				return DUPLICANTS.STATS.SUBJECTS.DUPLICANT;
+			case IdentityDescriptorTense.Possessive:
+				return DUPLICANTS.STATS.SUBJECTS.DUPLICANT_POSSESSIVE;
+			case IdentityDescriptorTense.Plural:
+				return DUPLICANTS.STATS.SUBJECTS.DUPLICANT_PLURAL;
+			}
 		}
-		if ((bool)go.GetComponent<CreatureBrain>())
+		else if ((bool)go.GetComponent<CreatureBrain>())
 		{
-			return DUPLICANTS.STATS.SUBJECTS.CREATURE;
+			switch (tense)
+			{
+			case IdentityDescriptorTense.Normal:
+				return DUPLICANTS.STATS.SUBJECTS.CREATURE;
+			case IdentityDescriptorTense.Possessive:
+				return DUPLICANTS.STATS.SUBJECTS.CREATURE_POSSESSIVE;
+			case IdentityDescriptorTense.Plural:
+				return DUPLICANTS.STATS.SUBJECTS.CREATURE_PLURAL;
+			}
 		}
-		return DUPLICANTS.STATS.SUBJECTS.PLANT;
+		else
+		{
+			switch (tense)
+			{
+			case IdentityDescriptorTense.Normal:
+				return DUPLICANTS.STATS.SUBJECTS.PLANT;
+			case IdentityDescriptorTense.Possessive:
+				return DUPLICANTS.STATS.SUBJECTS.PLANT_POSESSIVE;
+			case IdentityDescriptorTense.Plural:
+				return DUPLICANTS.STATS.SUBJECTS.PLANT_PLURAL;
+			}
+		}
+		return "";
 	}
 
 	public static float GetEnergyInPrimaryElement(PrimaryElement element)
@@ -1056,7 +1091,11 @@ public static class GameUtil
 
 	public static float GetRadiationAbsorptionPercentage(int cell)
 	{
-		return GetRadiationAbsorptionPercentage(Grid.Element[cell], Grid.Mass[cell], Grid.IsSolidCell(cell) && (Grid.Properties[cell] & 0x80) == 128);
+		if (Grid.IsValidCell(cell))
+		{
+			return GetRadiationAbsorptionPercentage(Grid.Element[cell], Grid.Mass[cell], Grid.IsSolidCell(cell) && (Grid.Properties[cell] & 0x80) == 128);
+		}
+		return 0f;
 	}
 
 	public static float GetRadiationAbsorptionPercentage(Element elem, float mass, bool isConstructed)
@@ -1068,6 +1107,57 @@ public static class GameUtil
 		float num5 = 0.8f;
 		num = ((!isConstructed) ? (elem.radiationAbsorptionFactor * num3 + mass / num2 * elem.radiationAbsorptionFactor * num4) : (elem.radiationAbsorptionFactor * num5));
 		return Mathf.Clamp(num, 0f, 1f);
+	}
+
+	public static HashSet<int> CollectCellsBreadthFirst(int start_cell, Func<int, bool> test_func, int max_depth = 10)
+	{
+		HashSet<int> hashSet = new HashSet<int>();
+		HashSet<int> hashSet2 = new HashSet<int>();
+		HashSet<int> hashSet3 = new HashSet<int>();
+		hashSet3.Add(start_cell);
+		Vector2Int[] array = new Vector2Int[4]
+		{
+			new Vector2Int(1, 0),
+			new Vector2Int(-1, 0),
+			new Vector2Int(0, 1),
+			new Vector2Int(0, -1)
+		};
+		for (int i = 0; i < max_depth; i++)
+		{
+			List<int> list = new List<int>();
+			foreach (int item in hashSet3)
+			{
+				Vector2Int[] array2 = array;
+				for (int j = 0; j < array2.Length; j++)
+				{
+					Vector2Int vector2Int = array2[j];
+					int num = Grid.OffsetCell(item, vector2Int.x, vector2Int.y);
+					if (!hashSet2.Contains(num) && !hashSet.Contains(num))
+					{
+						if (Grid.IsValidCell(num) && test_func(num))
+						{
+							hashSet.Add(num);
+							list.Add(num);
+						}
+						else
+						{
+							hashSet2.Add(num);
+						}
+					}
+				}
+			}
+			hashSet3.Clear();
+			foreach (int item2 in list)
+			{
+				hashSet3.Add(item2);
+			}
+			list.Clear();
+			if (hashSet3.Count == 0)
+			{
+				break;
+			}
+		}
+		return hashSet;
 	}
 
 	public static HashSet<int> FloodCollectCells(int start_cell, Func<int, bool> is_valid, int maxSize = 300, HashSet<int> AddInvalidCellsToSet = null, bool clearOversizedResults = true)
@@ -1130,13 +1220,11 @@ public static class GameUtil
 
 	public static int FloodFillFind<ArgType>(Func<int, ArgType, bool> fn, ArgType arg, int start_cell, int max_depth, bool stop_at_solid, bool stop_at_liquid)
 	{
-		Queue<FloodFillInfo> floodFillNext = FloodFillNext;
-		FloodFillInfo item = new FloodFillInfo
+		FloodFillNext.Enqueue(new FloodFillInfo
 		{
 			cell = start_cell,
 			depth = 0
-		};
-		floodFillNext.Enqueue(item);
+		});
 		int result = -1;
 		while (FloodFillNext.Count > 0)
 		{
@@ -1154,34 +1242,26 @@ public static class GameUtil
 					result = floodFillInfo.cell;
 					break;
 				}
-				Queue<FloodFillInfo> floodFillNext2 = FloodFillNext;
-				item = new FloodFillInfo
+				FloodFillNext.Enqueue(new FloodFillInfo
 				{
 					cell = Grid.CellLeft(floodFillInfo.cell),
 					depth = floodFillInfo.depth + 1
-				};
-				floodFillNext2.Enqueue(item);
-				Queue<FloodFillInfo> floodFillNext3 = FloodFillNext;
-				item = new FloodFillInfo
+				});
+				FloodFillNext.Enqueue(new FloodFillInfo
 				{
 					cell = Grid.CellRight(floodFillInfo.cell),
 					depth = floodFillInfo.depth + 1
-				};
-				floodFillNext3.Enqueue(item);
-				Queue<FloodFillInfo> floodFillNext4 = FloodFillNext;
-				item = new FloodFillInfo
+				});
+				FloodFillNext.Enqueue(new FloodFillInfo
 				{
 					cell = Grid.CellAbove(floodFillInfo.cell),
 					depth = floodFillInfo.depth + 1
-				};
-				floodFillNext4.Enqueue(item);
-				Queue<FloodFillInfo> floodFillNext5 = FloodFillNext;
-				item = new FloodFillInfo
+				});
+				FloodFillNext.Enqueue(new FloodFillInfo
 				{
 					cell = Grid.CellBelow(floodFillInfo.cell),
 					depth = floodFillInfo.depth + 1
-				};
-				floodFillNext5.Enqueue(item);
+				});
 			}
 		}
 		FloodFillVisited.Clear();
@@ -1210,30 +1290,26 @@ public static class GameUtil
 				if (condition(floodFillInfo.cell))
 				{
 					valid_cells?.Add(floodFillInfo.cell);
-					FloodFillInfo item = new FloodFillInfo
+					queue.Enqueue(new FloodFillInfo
 					{
 						cell = Grid.CellLeft(floodFillInfo.cell),
 						depth = floodFillInfo.depth + 1
-					};
-					queue.Enqueue(item);
-					item = new FloodFillInfo
+					});
+					queue.Enqueue(new FloodFillInfo
 					{
 						cell = Grid.CellRight(floodFillInfo.cell),
 						depth = floodFillInfo.depth + 1
-					};
-					queue.Enqueue(item);
-					item = new FloodFillInfo
+					});
+					queue.Enqueue(new FloodFillInfo
 					{
 						cell = Grid.CellAbove(floodFillInfo.cell),
 						depth = floodFillInfo.depth + 1
-					};
-					queue.Enqueue(item);
-					item = new FloodFillInfo
+					});
+					queue.Enqueue(new FloodFillInfo
 					{
 						cell = Grid.CellBelow(floodFillInfo.cell),
 						depth = floodFillInfo.depth + 1
-					};
-					queue.Enqueue(item);
+					});
 				}
 			}
 		}
@@ -1445,31 +1521,23 @@ public static class GameUtil
 		return c.ToHexString();
 	}
 
-	public static string AppendHotkeyString(string template, Action action)
+	public static string GetHotkeyString(Action action)
 	{
 		if (KInputManager.currentControllerIsGamepad)
 		{
-			return template + UI.FormatAsHotkey(GetActionString(action));
+			return UI.FormatAsHotkey(GetActionString(action));
 		}
-		return template + UI.FormatAsHotkey("[" + GetActionString(action) + "]");
+		return UI.FormatAsHotkey("[" + GetActionString(action) + "]");
 	}
 
 	public static string ReplaceHotkeyString(string template, Action action)
 	{
-		if (KInputManager.currentControllerIsGamepad)
-		{
-			return template.Replace("{Hotkey}", UI.FormatAsHotkey(GetActionString(action)));
-		}
-		return template.Replace("{Hotkey}", UI.FormatAsHotkey("[" + GetActionString(action) + "]"));
+		return template.Replace("{Hotkey}", GetHotkeyString(action));
 	}
 
 	public static string ReplaceHotkeyString(string template, Action action1, Action action2)
 	{
-		if (KInputManager.currentControllerIsGamepad)
-		{
-			return template.Replace("{Hotkey}", UI.FormatAsHotkey(GetActionString(action1)) + UI.FormatAsHotkey(GetActionString(action2)));
-		}
-		return template.Replace("{Hotkey}", UI.FormatAsHotkey("[" + GetActionString(action1) + "]") + UI.FormatAsHotkey("[" + GetActionString(action2) + "]"));
+		return template.Replace("{Hotkey}", GetHotkeyString(action1) + GetHotkeyString(action2));
 	}
 
 	public static string GetKeycodeLocalized(KKeyCode key_code)
@@ -2684,8 +2752,7 @@ public static class GameUtil
 		else if (chore.choreType == Db.Get().ChoreTypes.StorageFetch || chore.choreType == Db.Get().ChoreTypes.FoodFetch)
 		{
 			FetchChore fetchChore = chore as FetchChore;
-			FetchAreaChore fetchAreaChore = chore as FetchAreaChore;
-			if (fetchAreaChore != null)
+			if (chore is FetchAreaChore fetchAreaChore)
 			{
 				GameObject getFetchTarget = fetchAreaChore.GetFetchTarget;
 				KMonoBehaviour kMonoBehaviour = choreData as KMonoBehaviour;

@@ -6,6 +6,10 @@ using UnityEngine;
 [AddComponentMenu("KMonoBehaviour/scripts/CellSelectionObject")]
 public class CellSelectionObject : KMonoBehaviour
 {
+	private static CellSelectionObject selectionObjectA;
+
+	private static CellSelectionObject selectionObjectB;
+
 	[HideInInspector]
 	public CellSelectionObject alternateSelectionObject;
 
@@ -67,11 +71,34 @@ public class CellSelectionObject : KMonoBehaviour
 		overlayFilterMap.Add(OverlayModes.Oxygen.ID, () => Grid.Element[mouseCell].IsGas);
 		overlayFilterMap.Add(OverlayModes.GasConduits.ID, () => Grid.Element[mouseCell].IsGas);
 		overlayFilterMap.Add(OverlayModes.LiquidConduits.ID, () => Grid.Element[mouseCell].IsLiquid);
+		if (selectionObjectA == null)
+		{
+			selectionObjectA = this;
+		}
+		else if (selectionObjectB == null)
+		{
+			selectionObjectB = this;
+		}
+		else
+		{
+			Debug.LogError("CellSelectionObjects not properly cleaned up.");
+		}
 	}
 
 	protected override void OnCleanUp()
 	{
+		selectionObjectA = null;
+		selectionObjectB = null;
 		base.OnCleanUp();
+	}
+
+	public static bool IsSelectionObject(GameObject testObject)
+	{
+		if (!(testObject == selectionObjectA.gameObject))
+		{
+			return testObject == selectionObjectB.gameObject;
+		}
+		return true;
 	}
 
 	private void OnApplicationFocus(bool focusStatus)

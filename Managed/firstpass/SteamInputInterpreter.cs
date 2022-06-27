@@ -38,10 +38,6 @@ public class SteamInputInterpreter
 		wrangle_tool,
 		harvest_tool,
 		empty_tool,
-		build_menu_up,
-		build_menu_down,
-		build_menu_left,
-		build_menu_right,
 		pause_menu,
 		vitals_menu,
 		consumables_menu,
@@ -98,7 +94,15 @@ public class SteamInputInterpreter
 
 	private int activeControllerIndex;
 
-	private Dictionary<Action, EDigitalActions_MainGameActionSet> kleiActionToSteamActionLookup = new Dictionary<Action, EDigitalActions_MainGameActionSet>();
+	private Dictionary<Action, EDigitalActions_MainGameActionSet> kleiActionToSteamDigitalActionLookup = new Dictionary<Action, EDigitalActions_MainGameActionSet>();
+
+	private Dictionary<Action, EAnalogActions_MainGameActionSet> kleiActionToSteamAnalogActionLookup = new Dictionary<Action, EAnalogActions_MainGameActionSet>();
+
+	private Sprite[] spritesCache;
+
+	private Sprite[] errorSpriteCache;
+
+	private ESteamInputType currentControllerType;
 
 	private int m_numActionSets;
 
@@ -168,54 +172,60 @@ public class SteamInputInterpreter
 		{
 			m_MainGameActionSetDigitalActionHandles[k] = SteamInput.GetDigitalActionHandle(m_MainGameActionSetDigitalActionNames[k]);
 		}
-		if (kleiActionToSteamActionLookup.Count < 1)
+		if (kleiActionToSteamDigitalActionLookup.Count < 1)
 		{
-			kleiActionToSteamActionLookup.Add(Action.MouseLeft, EDigitalActions_MainGameActionSet.affirmative_click);
-			kleiActionToSteamActionLookup.Add(Action.MouseRight, EDigitalActions_MainGameActionSet.negative_click);
-			kleiActionToSteamActionLookup.Add(Action.CameraHome, EDigitalActions_MainGameActionSet.camera_home);
-			kleiActionToSteamActionLookup.Add(Action.ZoomIn, EDigitalActions_MainGameActionSet.camera_zoom_in_scroll_down);
-			kleiActionToSteamActionLookup.Add(Action.ZoomOut, EDigitalActions_MainGameActionSet.camera_zoom_out_scroll_up);
-			kleiActionToSteamActionLookup.Add(Action.TogglePause, EDigitalActions_MainGameActionSet.sim_pause);
-			kleiActionToSteamActionLookup.Add(Action.CycleSpeed, EDigitalActions_MainGameActionSet.sim_cycle_speed);
-			kleiActionToSteamActionLookup.Add(Action.RotateBuilding, EDigitalActions_MainGameActionSet.rotate_building);
-			kleiActionToSteamActionLookup.Add(Action.CopyBuilding, EDigitalActions_MainGameActionSet.copy_building);
-			kleiActionToSteamActionLookup.Add(Action.Dig, EDigitalActions_MainGameActionSet.dig_tool);
-			kleiActionToSteamActionLookup.Add(Action.BuildingCancel, EDigitalActions_MainGameActionSet.cancel_tool);
-			kleiActionToSteamActionLookup.Add(Action.BuildingDeconstruct, EDigitalActions_MainGameActionSet.deconstruct_tool);
-			kleiActionToSteamActionLookup.Add(Action.Prioritize, EDigitalActions_MainGameActionSet.priority_tool);
-			kleiActionToSteamActionLookup.Add(Action.Disinfect, EDigitalActions_MainGameActionSet.disinfect_tool);
-			kleiActionToSteamActionLookup.Add(Action.Clear, EDigitalActions_MainGameActionSet.sweep_tool);
-			kleiActionToSteamActionLookup.Add(Action.Mop, EDigitalActions_MainGameActionSet.mop_tool);
-			kleiActionToSteamActionLookup.Add(Action.Attack, EDigitalActions_MainGameActionSet.attack_tool);
-			kleiActionToSteamActionLookup.Add(Action.Capture, EDigitalActions_MainGameActionSet.wrangle_tool);
-			kleiActionToSteamActionLookup.Add(Action.Harvest, EDigitalActions_MainGameActionSet.harvest_tool);
-			kleiActionToSteamActionLookup.Add(Action.EmptyPipe, EDigitalActions_MainGameActionSet.empty_tool);
-			kleiActionToSteamActionLookup.Add(Action.Escape, EDigitalActions_MainGameActionSet.pause_menu);
-			kleiActionToSteamActionLookup.Add(Action.ManageVitals, EDigitalActions_MainGameActionSet.vitals_menu);
-			kleiActionToSteamActionLookup.Add(Action.ManageConsumables, EDigitalActions_MainGameActionSet.consumables_menu);
-			kleiActionToSteamActionLookup.Add(Action.ManageSchedule, EDigitalActions_MainGameActionSet.schedule_menu);
-			kleiActionToSteamActionLookup.Add(Action.ManagePriorities, EDigitalActions_MainGameActionSet.priorities_menu);
-			kleiActionToSteamActionLookup.Add(Action.ManageSkills, EDigitalActions_MainGameActionSet.skills_menu);
-			kleiActionToSteamActionLookup.Add(Action.ManageResearch, EDigitalActions_MainGameActionSet.research_menu);
-			kleiActionToSteamActionLookup.Add(Action.ManageStarmap, EDigitalActions_MainGameActionSet.starmap_menu);
-			kleiActionToSteamActionLookup.Add(Action.ManageReport, EDigitalActions_MainGameActionSet.colony_menu);
-			kleiActionToSteamActionLookup.Add(Action.ManageDatabase, EDigitalActions_MainGameActionSet.codex_menu);
-			kleiActionToSteamActionLookup.Add(Action.Overlay1, EDigitalActions_MainGameActionSet.oxygen_overlay);
-			kleiActionToSteamActionLookup.Add(Action.Overlay2, EDigitalActions_MainGameActionSet.power_overlay);
-			kleiActionToSteamActionLookup.Add(Action.Overlay3, EDigitalActions_MainGameActionSet.temperature_overlay);
-			kleiActionToSteamActionLookup.Add(Action.Overlay4, EDigitalActions_MainGameActionSet.materials_overlay);
-			kleiActionToSteamActionLookup.Add(Action.Overlay5, EDigitalActions_MainGameActionSet.light_overlay);
-			kleiActionToSteamActionLookup.Add(Action.Overlay6, EDigitalActions_MainGameActionSet.plumbing_overlay);
-			kleiActionToSteamActionLookup.Add(Action.Overlay7, EDigitalActions_MainGameActionSet.ventilation_overlay);
-			kleiActionToSteamActionLookup.Add(Action.Overlay8, EDigitalActions_MainGameActionSet.decor_overlay);
-			kleiActionToSteamActionLookup.Add(Action.Overlay9, EDigitalActions_MainGameActionSet.germs_overlay);
-			kleiActionToSteamActionLookup.Add(Action.Overlay10, EDigitalActions_MainGameActionSet.farming_overlay);
-			kleiActionToSteamActionLookup.Add(Action.Overlay11, EDigitalActions_MainGameActionSet.rooms_overlay);
-			kleiActionToSteamActionLookup.Add(Action.Overlay12, EDigitalActions_MainGameActionSet.exosuits_overlay);
-			kleiActionToSteamActionLookup.Add(Action.Overlay13, EDigitalActions_MainGameActionSet.automation_overlay);
-			kleiActionToSteamActionLookup.Add(Action.Overlay14, EDigitalActions_MainGameActionSet.shipping_overlay);
-			kleiActionToSteamActionLookup.Add(Action.Overlay15, EDigitalActions_MainGameActionSet.radiation_overlay);
+			kleiActionToSteamDigitalActionLookup.Add(Action.MouseLeft, EDigitalActions_MainGameActionSet.affirmative_click);
+			kleiActionToSteamDigitalActionLookup.Add(Action.MouseRight, EDigitalActions_MainGameActionSet.negative_click);
+			kleiActionToSteamDigitalActionLookup.Add(Action.CameraHome, EDigitalActions_MainGameActionSet.camera_home);
+			kleiActionToSteamDigitalActionLookup.Add(Action.ZoomIn, EDigitalActions_MainGameActionSet.camera_zoom_in_scroll_down);
+			kleiActionToSteamDigitalActionLookup.Add(Action.ZoomOut, EDigitalActions_MainGameActionSet.camera_zoom_out_scroll_up);
+			kleiActionToSteamDigitalActionLookup.Add(Action.TogglePause, EDigitalActions_MainGameActionSet.sim_pause);
+			kleiActionToSteamDigitalActionLookup.Add(Action.CycleSpeed, EDigitalActions_MainGameActionSet.sim_cycle_speed);
+			kleiActionToSteamDigitalActionLookup.Add(Action.RotateBuilding, EDigitalActions_MainGameActionSet.rotate_building);
+			kleiActionToSteamDigitalActionLookup.Add(Action.CopyBuilding, EDigitalActions_MainGameActionSet.copy_building);
+			kleiActionToSteamDigitalActionLookup.Add(Action.Dig, EDigitalActions_MainGameActionSet.dig_tool);
+			kleiActionToSteamDigitalActionLookup.Add(Action.BuildingCancel, EDigitalActions_MainGameActionSet.cancel_tool);
+			kleiActionToSteamDigitalActionLookup.Add(Action.BuildingDeconstruct, EDigitalActions_MainGameActionSet.deconstruct_tool);
+			kleiActionToSteamDigitalActionLookup.Add(Action.Prioritize, EDigitalActions_MainGameActionSet.priority_tool);
+			kleiActionToSteamDigitalActionLookup.Add(Action.Disinfect, EDigitalActions_MainGameActionSet.disinfect_tool);
+			kleiActionToSteamDigitalActionLookup.Add(Action.Clear, EDigitalActions_MainGameActionSet.sweep_tool);
+			kleiActionToSteamDigitalActionLookup.Add(Action.Mop, EDigitalActions_MainGameActionSet.mop_tool);
+			kleiActionToSteamDigitalActionLookup.Add(Action.Attack, EDigitalActions_MainGameActionSet.attack_tool);
+			kleiActionToSteamDigitalActionLookup.Add(Action.Capture, EDigitalActions_MainGameActionSet.wrangle_tool);
+			kleiActionToSteamDigitalActionLookup.Add(Action.Harvest, EDigitalActions_MainGameActionSet.harvest_tool);
+			kleiActionToSteamDigitalActionLookup.Add(Action.EmptyPipe, EDigitalActions_MainGameActionSet.empty_tool);
+			kleiActionToSteamDigitalActionLookup.Add(Action.Escape, EDigitalActions_MainGameActionSet.pause_menu);
+			kleiActionToSteamDigitalActionLookup.Add(Action.ManageVitals, EDigitalActions_MainGameActionSet.vitals_menu);
+			kleiActionToSteamDigitalActionLookup.Add(Action.ManageConsumables, EDigitalActions_MainGameActionSet.consumables_menu);
+			kleiActionToSteamDigitalActionLookup.Add(Action.ManageSchedule, EDigitalActions_MainGameActionSet.schedule_menu);
+			kleiActionToSteamDigitalActionLookup.Add(Action.ManagePriorities, EDigitalActions_MainGameActionSet.priorities_menu);
+			kleiActionToSteamDigitalActionLookup.Add(Action.ManageSkills, EDigitalActions_MainGameActionSet.skills_menu);
+			kleiActionToSteamDigitalActionLookup.Add(Action.ManageResearch, EDigitalActions_MainGameActionSet.research_menu);
+			kleiActionToSteamDigitalActionLookup.Add(Action.ManageStarmap, EDigitalActions_MainGameActionSet.starmap_menu);
+			kleiActionToSteamDigitalActionLookup.Add(Action.ManageReport, EDigitalActions_MainGameActionSet.colony_menu);
+			kleiActionToSteamDigitalActionLookup.Add(Action.ManageDatabase, EDigitalActions_MainGameActionSet.codex_menu);
+			kleiActionToSteamDigitalActionLookup.Add(Action.Overlay1, EDigitalActions_MainGameActionSet.oxygen_overlay);
+			kleiActionToSteamDigitalActionLookup.Add(Action.Overlay2, EDigitalActions_MainGameActionSet.power_overlay);
+			kleiActionToSteamDigitalActionLookup.Add(Action.Overlay3, EDigitalActions_MainGameActionSet.temperature_overlay);
+			kleiActionToSteamDigitalActionLookup.Add(Action.Overlay4, EDigitalActions_MainGameActionSet.materials_overlay);
+			kleiActionToSteamDigitalActionLookup.Add(Action.Overlay5, EDigitalActions_MainGameActionSet.light_overlay);
+			kleiActionToSteamDigitalActionLookup.Add(Action.Overlay6, EDigitalActions_MainGameActionSet.plumbing_overlay);
+			kleiActionToSteamDigitalActionLookup.Add(Action.Overlay7, EDigitalActions_MainGameActionSet.ventilation_overlay);
+			kleiActionToSteamDigitalActionLookup.Add(Action.Overlay8, EDigitalActions_MainGameActionSet.decor_overlay);
+			kleiActionToSteamDigitalActionLookup.Add(Action.Overlay9, EDigitalActions_MainGameActionSet.germs_overlay);
+			kleiActionToSteamDigitalActionLookup.Add(Action.Overlay10, EDigitalActions_MainGameActionSet.farming_overlay);
+			kleiActionToSteamDigitalActionLookup.Add(Action.Overlay11, EDigitalActions_MainGameActionSet.rooms_overlay);
+			kleiActionToSteamDigitalActionLookup.Add(Action.Overlay12, EDigitalActions_MainGameActionSet.exosuits_overlay);
+			kleiActionToSteamDigitalActionLookup.Add(Action.Overlay13, EDigitalActions_MainGameActionSet.automation_overlay);
+			kleiActionToSteamDigitalActionLookup.Add(Action.Overlay14, EDigitalActions_MainGameActionSet.shipping_overlay);
+			kleiActionToSteamDigitalActionLookup.Add(Action.Overlay15, EDigitalActions_MainGameActionSet.radiation_overlay);
 		}
+		if (kleiActionToSteamAnalogActionLookup.Count < 1)
+		{
+			kleiActionToSteamAnalogActionLookup.Add(Action.AnalogCamera, EAnalogActions_MainGameActionSet.Camera);
+			kleiActionToSteamAnalogActionLookup.Add(Action.AnalogCursor, EAnalogActions_MainGameActionSet.Cursor);
+		}
+		errorSpriteCache = Resources.LoadAll<Sprite>("Sprite Assets/ErrorSheet");
 		SteamInput.RunFrame();
 		m_nInputs = SteamInput.GetConnectedControllers(m_InputHandles);
 		for (int l = 0; l < m_InputHandles.Length; l++)
@@ -239,7 +249,7 @@ public class SteamInputInterpreter
 		bool flag = false;
 		for (int i = 0; i < m_nInputs; i++)
 		{
-			if (kleiActionToSteamActionLookup.TryGetValue(action, out var value))
+			if (kleiActionToSteamDigitalActionLookup.TryGetValue(action, out var value))
 			{
 				flag |= controllerDatas[i].digitalDatas[(int)value].down;
 			}
@@ -279,60 +289,132 @@ public class SteamInputInterpreter
 
 	public string GetActionGlyph(Action action)
 	{
-		int num = -1;
-		string text = string.Empty;
-		if (kleiActionToSteamActionLookup.TryGetValue(action, out var value))
+		int finalIndex = -1;
+		int offset = 0;
+		string spritesheetName = string.Empty;
+		EAnalogActions_MainGameActionSet value2;
+		if (kleiActionToSteamDigitalActionLookup.TryGetValue(action, out var value))
 		{
 			InputDigitalActionHandle_t digitalActionHandle = m_MainGameActionSetDigitalActionHandles[(int)value];
 			EInputActionOrigin[] array = new EInputActionOrigin[8];
 			SteamInput.GetDigitalActionOrigins(m_InputHandles[activeControllerIndex], m_ActionSetHandles[0], digitalActionHandle, array);
-			int num2 = 0;
-			int num3 = (int)array[0];
-			switch (SteamInput.GetInputTypeForHandle(m_InputHandles[activeControllerIndex]))
-			{
-			case ESteamInputType.k_ESteamInputType_Unknown:
-				num2 = 0;
-				break;
-			case ESteamInputType.k_ESteamInputType_SteamController:
-				text = "SteamControllerSheet";
-				num2 = 1;
-				break;
-			case ESteamInputType.k_ESteamInputType_XBox360Controller:
-				text = "XB360Sheet";
-				num2 = 153;
-				break;
-			case ESteamInputType.k_ESteamInputType_XBoxOneController:
-				text = "XboxOneSheet";
-				num2 = 114;
-				break;
-			case ESteamInputType.k_ESteamInputType_GenericGamepad:
-				num2 = 0;
-				break;
-			case ESteamInputType.k_ESteamInputType_PS4Controller:
-				text = "PS4Sheet";
-				num2 = 50;
-				break;
-			case ESteamInputType.k_ESteamInputType_SwitchJoyConPair:
-				num2 = 192;
-				break;
-			case ESteamInputType.k_ESteamInputType_SwitchProController:
-				num2 = 192;
-				break;
-			case ESteamInputType.k_ESteamInputType_PS5Controller:
-				num2 = 258;
-				break;
-			case ESteamInputType.k_ESteamInputType_SteamDeckController:
-				text = "SteamDeckSheet";
-				num2 = 333;
-				break;
-			}
-			num = num3 - num2;
+			EInputActionOrigin num = array[0];
+			GetControllerTypeForGlyphLookup(ref offset, ref spritesheetName);
+			finalIndex = (int)(num - offset);
+		}
+		else if (kleiActionToSteamAnalogActionLookup.TryGetValue(action, out value2))
+		{
+			InputAnalogActionHandle_t analogActionHandle = m_MainGameActionSetAnalogActionHandles[(int)value2];
+			EInputActionOrigin[] array2 = new EInputActionOrigin[8];
+			SteamInput.GetAnalogActionOrigins(m_InputHandles[activeControllerIndex], m_ActionSetHandles[0], analogActionHandle, array2);
+			EInputActionOrigin num2 = array2[0];
+			GetControllerTypeForGlyphLookup(ref offset, ref spritesheetName);
+			finalIndex = (int)(num2 - offset);
+		}
+		return GetFinalGlyphString(finalIndex, spritesheetName);
+	}
+
+	public Sprite GetActionSprite(Action action, bool ShowEmptyOnError = false)
+	{
+		int num = -1;
+		int offset = 0;
+		string spritesheetName = string.Empty;
+		bool flag = false;
+		if (SteamInput.GetInputTypeForHandle(m_InputHandles[activeControllerIndex]) != currentControllerType)
+		{
+			currentControllerType = SteamInput.GetInputTypeForHandle(m_InputHandles[activeControllerIndex]);
+			flag = true;
+		}
+		EAnalogActions_MainGameActionSet value2;
+		if (kleiActionToSteamDigitalActionLookup.TryGetValue(action, out var value))
+		{
+			InputDigitalActionHandle_t digitalActionHandle = m_MainGameActionSetDigitalActionHandles[(int)value];
+			EInputActionOrigin[] array = new EInputActionOrigin[8];
+			SteamInput.GetDigitalActionOrigins(m_InputHandles[activeControllerIndex], m_ActionSetHandles[0], digitalActionHandle, array);
+			EInputActionOrigin num2 = array[0];
+			GetControllerTypeForGlyphLookup(ref offset, ref spritesheetName);
+			num = (int)(num2 - offset);
+		}
+		else if (kleiActionToSteamAnalogActionLookup.TryGetValue(action, out value2))
+		{
+			InputAnalogActionHandle_t analogActionHandle = m_MainGameActionSetAnalogActionHandles[(int)value2];
+			EInputActionOrigin[] array2 = new EInputActionOrigin[8];
+			SteamInput.GetAnalogActionOrigins(m_InputHandles[activeControllerIndex], m_ActionSetHandles[0], analogActionHandle, array2);
+			EInputActionOrigin num3 = array2[0];
+			GetControllerTypeForGlyphLookup(ref offset, ref spritesheetName);
+			num = (int)(num3 - offset);
 		}
 		if (num >= 0)
 		{
-			return "<sprite=\"" + text + "\" index=" + num + ">";
+			if (flag || spritesCache == null)
+			{
+				spritesCache = Resources.LoadAll<Sprite>("Sprite Assets/" + spritesheetName);
+			}
+			return spritesCache[num];
 		}
-		return "";
+		if (!ShowEmptyOnError)
+		{
+			return errorSpriteCache[0];
+		}
+		return errorSpriteCache[1];
+	}
+
+	private void GetControllerTypeForGlyphLookup(ref int offset, ref string spritesheetName)
+	{
+		currentControllerType = SteamInput.GetInputTypeForHandle(m_InputHandles[activeControllerIndex]);
+		switch (currentControllerType)
+		{
+		case ESteamInputType.k_ESteamInputType_Unknown:
+			offset = 0;
+			break;
+		case ESteamInputType.k_ESteamInputType_SteamController:
+			spritesheetName = "SteamControllerSheet";
+			offset = 1;
+			break;
+		case ESteamInputType.k_ESteamInputType_XBox360Controller:
+			spritesheetName = "XB360Sheet";
+			offset = 153;
+			break;
+		case ESteamInputType.k_ESteamInputType_XBoxOneController:
+			spritesheetName = "XboxOneSheet";
+			offset = 114;
+			break;
+		case ESteamInputType.k_ESteamInputType_GenericGamepad:
+			offset = 0;
+			break;
+		case ESteamInputType.k_ESteamInputType_PS4Controller:
+			spritesheetName = "PS4Sheet";
+			offset = 50;
+			break;
+		case ESteamInputType.k_ESteamInputType_SwitchJoyConPair:
+			offset = 192;
+			break;
+		case ESteamInputType.k_ESteamInputType_SwitchProController:
+			offset = 192;
+			break;
+		case ESteamInputType.k_ESteamInputType_PS5Controller:
+			offset = 258;
+			break;
+		case ESteamInputType.k_ESteamInputType_SteamDeckController:
+			spritesheetName = "SteamDeckSheet";
+			offset = 333;
+			break;
+		case ESteamInputType.k_ESteamInputType_AppleMFiController:
+		case ESteamInputType.k_ESteamInputType_AndroidController:
+		case ESteamInputType.k_ESteamInputType_SwitchJoyConSingle:
+		case ESteamInputType.k_ESteamInputType_MobileTouch:
+		case ESteamInputType.k_ESteamInputType_PS3Controller:
+			break;
+		}
+	}
+
+	private string GetFinalGlyphString(int finalIndex, string spriteAssetSet)
+	{
+		if (finalIndex < 0)
+		{
+			return string.Empty;
+		}
+		return "<sprite=\"" + spriteAssetSet + "\" index=" + finalIndex + ">";
 	}
 
 	public void CheckForControllerChange()

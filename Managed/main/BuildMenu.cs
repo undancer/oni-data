@@ -260,7 +260,8 @@ public class BuildMenu : KScreen
 				new BuildingInfo("Juicer", Action.BuildMenuKeyJ),
 				new BuildingInfo("SodaFountain", Action.BuildMenuKeyF),
 				new BuildingInfo("VerticalWindTunnel", Action.BuildMenuKeyW),
-				new BuildingInfo("ParkSign", Action.BuildMenuKeyR)
+				new BuildingInfo("ParkSign", Action.BuildMenuKeyR),
+				new BuildingInfo("Telephone", Action.BuildMenuKeyT)
 			})
 		}),
 		new DisplayInfo(CacheHashString("Infrastructure"), "icon_category_utilities", Action.Plan4, KKeyCode.None, new List<DisplayInfo>

@@ -51,6 +51,12 @@ public class AnimEventHandler : KMonoBehaviour
 		SetDirty();
 	}
 
+	protected override void OnForcedCleanUp()
+	{
+		navigator = null;
+		base.OnForcedCleanUp();
+	}
+
 	public HashedString GetContext()
 	{
 		return context;

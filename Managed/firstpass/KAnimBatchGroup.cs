@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using Unity.Collections;
 using UnityEngine;
 
@@ -9,18 +8,6 @@ public class KAnimBatchGroup
 	{
 		public class Entry
 		{
-			[StructLayout(LayoutKind.Explicit)]
-			public struct ByteToFloatConverter
-			{
-				[FieldOffset(0)]
-				public byte[] bytes;
-
-				[FieldOffset(0)]
-				public float[] floats;
-			}
-
-			private ByteToFloatConverter floatConverter;
-
 			public int texturePropertyId;
 
 			public int textureSizePropertyId;
@@ -28,10 +15,6 @@ public class KAnimBatchGroup
 			public int cacheIndex = -1;
 
 			public Texture2D texture { get; private set; }
-
-			public byte[] bytes => floatConverter.bytes;
-
-			public float[] floats => floatConverter.floats;
 
 			public int width => texture.width;
 
@@ -57,16 +40,13 @@ public class KAnimBatchGroup
 				texture.wrapMode = TextureWrapMode.Clamp;
 				texture.filterMode = FilterMode.Point;
 				texture.anisoLevel = 0;
-				floatConverter = new ByteToFloatConverter
-				{
-					bytes = new byte[float4s_per_side * float4s_per_side * 4 * 4]
-				};
 				int num = float4s_per_side * float4s_per_side;
 				NativeArray<Color> rawTextureData = texture.GetRawTextureData<Color>();
 				for (int i = 0; i < num; i++)
 				{
 					rawTextureData[i] = ResetColor;
 				}
+				texture.Apply();
 			}
 
 			public void SetTextureAndSize(MaterialPropertyBlock property_block)
@@ -75,14 +55,19 @@ public class KAnimBatchGroup
 				property_block.SetVector(textureSizePropertyId, new Vector4(texelSize.x, texelSize.y, width, height));
 			}
 
+			public NativeArray<byte> GetDataPointer()
+			{
+				return texture.GetRawTextureData<byte>();
+			}
+
+			public NativeArray<float> GetFloatDataPointer()
+			{
+				return texture.GetRawTextureData<float>();
+			}
+
 			public void Apply()
 			{
 				texture.Apply();
-			}
-
-			public void LoadRawTextureData()
-			{
-				texture.LoadRawTextureData(bytes);
 			}
 		}
 
@@ -327,13 +312,13 @@ public class KAnimBatchGroup
 		if (animFrames.Count == 0)
 		{
 			num += data.symbolFrameInstances.Count * 4;
-			num += data.symbolFrameInstances.Count * 16;
+			num += data.symbolFrameInstances.Count * 12;
 		}
 		else
 		{
 			num += animFrames.Count * 4;
 			List<KAnim.Anim.FrameElement> animFrameElements = data.GetAnimFrameElements();
-			num += animFrameElements.Count * 16;
+			num += animFrameElements.Count * 12;
 		}
 		return (float)num / 4f;
 	}
@@ -348,10 +333,10 @@ public class KAnimBatchGroup
 		{
 			Debug.LogErrorFormat("Texture is the wrong size! {0} <= {1}", num, buildAndAnimTex.width * buildAndAnimTex.height);
 		}
-		int start_index = data.WriteBuildData(data.symbolFrameInstances, buildAndAnimTex.floats);
-		data.WriteAnimData(start_index, buildAndAnimTex.floats);
-		buildAndAnimTex.LoadRawTextureData();
-		buildAndAnimTex.Apply();
+		NativeArray<float> floatDataPointer = buildAndAnimTex.GetFloatDataPointer();
+		int start_index = data.WriteBuildData(data.symbolFrameInstances, floatDataPointer);
+		data.WriteAnimData(start_index, floatDataPointer);
+		buildAndAnimTex.texture.Apply(updateMipmaps: false, makeNoLongerReadable: true);
 	}
 
 	private Mesh BuildMesh(int numQuads)

@@ -102,7 +102,6 @@ public class NameDisplayScreen : KScreen
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		UIRegistry.nameDisplayScreen = this;
 		Components.Health.Register(OnHealthAdded, null);
 		Components.Equipment.Register(OnEquipmentAdded, null);
 		updateSectionIndex = 0;
@@ -385,11 +384,11 @@ public class NameDisplayScreen : KScreen
 		if (!App.isLoading && !App.IsExiting)
 		{
 			bindOnOverlayChange();
-			Camera main = Camera.main;
-			if (!(main == null) && !(lastKnownOverlayID != OverlayModes.None.ID))
+			Camera mainCamera = Game.Instance.MainCamera;
+			if (!(mainCamera == null) && !(lastKnownOverlayID != OverlayModes.None.ID))
 			{
 				_ = entries.Count;
-				LateUpdatePos(main.orthographicSize < HideDistance);
+				LateUpdatePos(mainCamera.orthographicSize < HideDistance);
 				lateUpdateSections[updateSectionIndex]();
 				updateSectionIndex = (updateSectionIndex + 1) % lateUpdateSections.Count;
 			}

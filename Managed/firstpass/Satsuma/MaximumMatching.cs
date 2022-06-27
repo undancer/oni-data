@@ -48,22 +48,22 @@ namespace Satsuma
 				foreach (Arc item in Graph.Arcs(unmatchedRedNode))
 				{
 					Node node = Graph.Other(item, unmatchedRedNode);
-					if (matching.HasNode(node))
+					if (!matching.HasNode(node))
 					{
-						continue;
+						matching.Enable(item, enabled: true);
+						list.Add(unmatchedRedNode);
+						num++;
+						if (num >= maxImprovements)
+						{
+							goto end_IL_0092;
+						}
+						break;
 					}
-					matching.Enable(item, enabled: true);
-					list.Add(unmatchedRedNode);
-					num++;
-					if (num >= maxImprovements)
-					{
-						goto IL_00ae;
-					}
-					break;
 				}
+				continue;
+				end_IL_0092:
+				break;
 			}
-			goto IL_00ae;
-			IL_00ae:
 			foreach (Node item2 in list)
 			{
 				unmatchedRedNodes.Remove(item2);

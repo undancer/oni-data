@@ -32,7 +32,7 @@ public class Weapon : KMonoBehaviour
 	public int AttackArea(Vector3 centerPoint)
 	{
 		Vector3 a = centerPoint;
-		Vector3 b = Vector3.zero;
+		Vector3 zero = Vector3.zero;
 		alignment = GetComponent<FactionAlignment>();
 		if (alignment == null)
 		{
@@ -48,9 +48,9 @@ public class Weapon : KMonoBehaviour
 			FactionAlignment component = item.GetComponent<FactionAlignment>();
 			if (!(component == null) && component.IsAlignmentActive() && FactionManager.Instance.GetDisposition(alignment.Alignment, component.Alignment) == FactionManager.Disposition.Attack)
 			{
-				b = item.transform.GetPosition();
-				b.z = a.z;
-				if (Vector3.Distance(a, b) <= properties.aoe_radius)
+				zero = item.transform.GetPosition();
+				zero.z = a.z;
+				if (Vector3.Distance(a, zero) <= properties.aoe_radius)
 				{
 					list.Add(item.gameObject);
 				}

@@ -41,33 +41,27 @@ public class DoorToggleSideScreen : SideScreenContent
 
 	private void InitButtons()
 	{
-		List<DoorButtonInfo> list = buttonList;
-		DoorButtonInfo item = new DoorButtonInfo
+		buttonList.Add(new DoorButtonInfo
 		{
 			button = openButton,
 			state = Door.ControlState.Opened,
 			currentString = UI.UISIDESCREENS.DOOR_TOGGLE_SIDE_SCREEN.OPEN,
 			pendingString = UI.UISIDESCREENS.DOOR_TOGGLE_SIDE_SCREEN.OPEN_PENDING
-		};
-		list.Add(item);
-		List<DoorButtonInfo> list2 = buttonList;
-		item = new DoorButtonInfo
+		});
+		buttonList.Add(new DoorButtonInfo
 		{
 			button = autoButton,
 			state = Door.ControlState.Auto,
 			currentString = UI.UISIDESCREENS.DOOR_TOGGLE_SIDE_SCREEN.AUTO,
 			pendingString = UI.UISIDESCREENS.DOOR_TOGGLE_SIDE_SCREEN.AUTO_PENDING
-		};
-		list2.Add(item);
-		List<DoorButtonInfo> list3 = buttonList;
-		item = new DoorButtonInfo
+		});
+		buttonList.Add(new DoorButtonInfo
 		{
 			button = closeButton,
 			state = Door.ControlState.Locked,
 			currentString = UI.UISIDESCREENS.DOOR_TOGGLE_SIDE_SCREEN.CLOSE,
 			pendingString = UI.UISIDESCREENS.DOOR_TOGGLE_SIDE_SCREEN.CLOSE_PENDING
-		};
-		list3.Add(item);
+		});
 		foreach (DoorButtonInfo info in buttonList)
 		{
 			info.button.onClick += delegate

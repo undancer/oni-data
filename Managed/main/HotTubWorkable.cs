@@ -33,7 +33,7 @@ public class HotTubWorkable : Workable, IWorkerPrioritizable
 
 	protected override void OnStartWork(Worker worker)
 	{
-		faceLeft = ((Random.value > 0.5f) ? true : false);
+		faceLeft = Random.value > 0.5f;
 		worker.GetComponent<Effects>().Add("HotTubRelaxing", should_save: false);
 	}
 

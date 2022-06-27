@@ -98,6 +98,6 @@ public class GeneticAnalysisStation : GameStateMachine<GeneticAnalysisStation, G
 
 	private Chore CreateChore(StatesInstance smi)
 	{
-		return new WorkChore<GeneticAnalysisStationWorkable>(Db.Get().ChoreTypes.Research, smi.workable);
+		return new WorkChore<GeneticAnalysisStationWorkable>(Db.Get().ChoreTypes.AnalyzeSeed, smi.workable);
 	}
 }

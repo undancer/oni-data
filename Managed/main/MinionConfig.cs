@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Klei.AI;
 using STRINGS;
@@ -300,9 +299,7 @@ public class MinionConfig : IEntityConfig
 		gameObject.AddOrGet<SicknessTrigger>();
 		gameObject.AddOrGet<ClothingWearer>();
 		gameObject.AddOrGet<SuitEquipper>();
-		DecorProvider decorProvider = gameObject.AddOrGet<DecorProvider>();
-		decorProvider.baseRadius = 3f;
-		decorProvider.isMovable = true;
+		gameObject.AddOrGet<DecorProvider>().baseRadius = 3f;
 		gameObject.AddOrGet<ConsumableConsumer>();
 		gameObject.AddOrGet<NoiseListener>();
 		gameObject.AddOrGet<MinionResume>();
@@ -322,137 +319,125 @@ public class MinionConfig : IEntityConfig
 		kBatchedAnimEventToggler.enableEvent = "LaserOn";
 		kBatchedAnimEventToggler.disableEvent = "LaserOff";
 		kBatchedAnimEventToggler.entries = new List<KBatchedAnimEventToggler.Entry>();
-		LaserEffect[] array = new LaserEffect[14];
-		LaserEffect laserEffect = new LaserEffect
+		LaserEffect[] obj = new LaserEffect[14]
 		{
-			id = "DigEffect",
-			animFile = "laser_kanim",
-			anim = "idle",
-			context = "dig"
+			new LaserEffect
+			{
+				id = "DigEffect",
+				animFile = "laser_kanim",
+				anim = "idle",
+				context = "dig"
+			},
+			new LaserEffect
+			{
+				id = "BuildEffect",
+				animFile = "construct_beam_kanim",
+				anim = "loop",
+				context = "build"
+			},
+			new LaserEffect
+			{
+				id = "FetchLiquidEffect",
+				animFile = "hose_fx_kanim",
+				anim = "loop",
+				context = "fetchliquid"
+			},
+			new LaserEffect
+			{
+				id = "PaintEffect",
+				animFile = "paint_beam_kanim",
+				anim = "loop",
+				context = "paint"
+			},
+			new LaserEffect
+			{
+				id = "HarvestEffect",
+				animFile = "plant_harvest_beam_kanim",
+				anim = "loop",
+				context = "harvest"
+			},
+			new LaserEffect
+			{
+				id = "CaptureEffect",
+				animFile = "net_gun_fx_kanim",
+				anim = "loop",
+				context = "capture"
+			},
+			new LaserEffect
+			{
+				id = "AttackEffect",
+				animFile = "attack_beam_fx_kanim",
+				anim = "loop",
+				context = "attack"
+			},
+			new LaserEffect
+			{
+				id = "PickupEffect",
+				animFile = "vacuum_fx_kanim",
+				anim = "loop",
+				context = "pickup"
+			},
+			new LaserEffect
+			{
+				id = "StoreEffect",
+				animFile = "vacuum_reverse_fx_kanim",
+				anim = "loop",
+				context = "store"
+			},
+			new LaserEffect
+			{
+				id = "DisinfectEffect",
+				animFile = "plant_spray_beam_kanim",
+				anim = "loop",
+				context = "disinfect"
+			},
+			new LaserEffect
+			{
+				id = "TendEffect",
+				animFile = "plant_tending_beam_fx_kanim",
+				anim = "loop",
+				context = "tend"
+			},
+			new LaserEffect
+			{
+				id = "PowerTinkerEffect",
+				animFile = "electrician_beam_fx_kanim",
+				anim = "idle",
+				context = "powertinker"
+			},
+			new LaserEffect
+			{
+				id = "SpecialistDigEffect",
+				animFile = "senior_miner_beam_fx_kanim",
+				anim = "idle",
+				context = "specialistdig"
+			},
+			new LaserEffect
+			{
+				id = "DemolishEffect",
+				animFile = "poi_demolish_fx_kanim",
+				anim = "idle",
+				context = "demolish"
+			}
 		};
-		array[0] = laserEffect;
-		laserEffect = new LaserEffect
-		{
-			id = "BuildEffect",
-			animFile = "construct_beam_kanim",
-			anim = "loop",
-			context = "build"
-		};
-		array[1] = laserEffect;
-		laserEffect = new LaserEffect
-		{
-			id = "FetchLiquidEffect",
-			animFile = "hose_fx_kanim",
-			anim = "loop",
-			context = "fetchliquid"
-		};
-		array[2] = laserEffect;
-		laserEffect = new LaserEffect
-		{
-			id = "PaintEffect",
-			animFile = "paint_beam_kanim",
-			anim = "loop",
-			context = "paint"
-		};
-		array[3] = laserEffect;
-		laserEffect = new LaserEffect
-		{
-			id = "HarvestEffect",
-			animFile = "plant_harvest_beam_kanim",
-			anim = "loop",
-			context = "harvest"
-		};
-		array[4] = laserEffect;
-		laserEffect = new LaserEffect
-		{
-			id = "CaptureEffect",
-			animFile = "net_gun_fx_kanim",
-			anim = "loop",
-			context = "capture"
-		};
-		array[5] = laserEffect;
-		laserEffect = new LaserEffect
-		{
-			id = "AttackEffect",
-			animFile = "attack_beam_fx_kanim",
-			anim = "loop",
-			context = "attack"
-		};
-		array[6] = laserEffect;
-		laserEffect = new LaserEffect
-		{
-			id = "PickupEffect",
-			animFile = "vacuum_fx_kanim",
-			anim = "loop",
-			context = "pickup"
-		};
-		array[7] = laserEffect;
-		laserEffect = new LaserEffect
-		{
-			id = "StoreEffect",
-			animFile = "vacuum_reverse_fx_kanim",
-			anim = "loop",
-			context = "store"
-		};
-		array[8] = laserEffect;
-		laserEffect = new LaserEffect
-		{
-			id = "DisinfectEffect",
-			animFile = "plant_spray_beam_kanim",
-			anim = "loop",
-			context = "disinfect"
-		};
-		array[9] = laserEffect;
-		laserEffect = new LaserEffect
-		{
-			id = "TendEffect",
-			animFile = "plant_tending_beam_fx_kanim",
-			anim = "loop",
-			context = "tend"
-		};
-		array[10] = laserEffect;
-		laserEffect = new LaserEffect
-		{
-			id = "PowerTinkerEffect",
-			animFile = "electrician_beam_fx_kanim",
-			anim = "idle",
-			context = "powertinker"
-		};
-		array[11] = laserEffect;
-		laserEffect = new LaserEffect
-		{
-			id = "SpecialistDigEffect",
-			animFile = "senior_miner_beam_fx_kanim",
-			anim = "idle",
-			context = "specialistdig"
-		};
-		array[12] = laserEffect;
-		laserEffect = new LaserEffect
-		{
-			id = "DemolishEffect",
-			animFile = "poi_demolish_fx_kanim",
-			anim = "idle",
-			context = "demolish"
-		};
-		array[13] = laserEffect;
 		KBatchedAnimController component = prefab.GetComponent<KBatchedAnimController>();
-		LaserEffect[] array2 = array;
-		for (int i = 0; i < array2.Length; i++)
+		LaserEffect[] array = obj;
+		for (int i = 0; i < array.Length; i++)
 		{
-			LaserEffect laserEffect2 = array2[i];
-			GameObject gameObject2 = new GameObject(laserEffect2.id);
+			LaserEffect laserEffect = array[i];
+			GameObject gameObject2 = new GameObject(laserEffect.id);
 			gameObject2.transform.parent = gameObject.transform;
-			gameObject2.AddOrGet<KPrefabID>().PrefabTag = new Tag(laserEffect2.id);
+			gameObject2.AddOrGet<KPrefabID>().PrefabTag = new Tag(laserEffect.id);
 			KBatchedAnimTracker kBatchedAnimTracker = gameObject2.AddOrGet<KBatchedAnimTracker>();
 			kBatchedAnimTracker.controller = component;
 			kBatchedAnimTracker.symbol = new HashedString("snapTo_rgtHand");
 			kBatchedAnimTracker.offset = new Vector3(195f, -35f, 0f);
 			kBatchedAnimTracker.useTargetPoint = true;
 			KBatchedAnimController kBatchedAnimController = gameObject2.AddOrGet<KBatchedAnimController>();
-			kBatchedAnimController.AnimFiles = new KAnimFile[1] { Assets.GetAnim(laserEffect2.animFile) };
+			kBatchedAnimController.AnimFiles = new KAnimFile[1] { Assets.GetAnim(laserEffect.animFile) };
 			KBatchedAnimEventToggler.Entry entry = default(KBatchedAnimEventToggler.Entry);
-			entry.anim = laserEffect2.anim;
-			entry.context = laserEffect2.context;
+			entry.anim = laserEffect.anim;
+			entry.context = laserEffect.context;
 			entry.controller = kBatchedAnimController;
 			KBatchedAnimEventToggler.Entry item = entry;
 			kBatchedAnimEventToggler.entries.Add(item);
@@ -464,7 +449,7 @@ public class MinionConfig : IEntityConfig
 	{
 		AmountInstance amountInstance = Db.Get().Amounts.ImmuneLevel.Lookup(go);
 		amountInstance.value = amountInstance.GetMax();
-		Db.Get().Amounts.Bladder.Lookup(go).value = UnityEngine.Random.Range(0f, 10f);
+		Db.Get().Amounts.Bladder.Lookup(go).value = Random.Range(0f, 10f);
 		Db.Get().Amounts.Stress.Lookup(go).value = 5f;
 		Db.Get().Amounts.Temperature.Lookup(go).value = 310.15f;
 		AmountInstance amountInstance2 = Db.Get().Amounts.Stamina.Lookup(go);
@@ -557,7 +542,7 @@ public class MinionConfig : IEntityConfig
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.deltaAttribute.Id, -1666.6666f, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Calories.maxAttribute.Id, 4000000f, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Toxicity.deltaAttribute.Id, 0f, name));
-		trait.Add(new AttributeModifier(Db.Get().Amounts.Bladder.deltaAttribute.Id, 355f / (678f * (float)Math.PI), name));
+		trait.Add(new AttributeModifier(Db.Get().Amounts.Bladder.deltaAttribute.Id, 1f / 6f, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.HitPoints.maxAttribute.Id, 100f, name));
 		trait.Add(new AttributeModifier(Db.Get().Amounts.ImmuneLevel.deltaAttribute.Id, 0.025f, name));
 		modifiers.initialTraits.Add(MINION_BASE_TRAIT_ID);

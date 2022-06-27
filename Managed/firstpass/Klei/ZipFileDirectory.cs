@@ -90,7 +90,6 @@ namespace Klei
 
 		public FileHandle FindFileHandle(string path)
 		{
-			FileHandle result;
 			if (FileExists(path))
 			{
 				if (mountPoint.Length > 0)
@@ -101,13 +100,12 @@ namespace Klei
 					}
 					path = path.Substring(mountPoint.Length);
 				}
-				result = default(FileHandle);
+				FileHandle result = default(FileHandle);
 				result.full_path = FileSystem.Normalize(Path.Combine(mountPoint, path));
 				result.source = this;
 				return result;
 			}
-			result = default(FileHandle);
-			return result;
+			return default(FileHandle);
 		}
 
 		public bool IsModded()

@@ -133,11 +133,153 @@ public class PropertyTextures : KMonoBehaviour, ISim200ms
 	[SerializeField]
 	private Texture2D[] externallyUpdatedTextures;
 
-	private TextureProperties[] textureProperties;
+	private TextureProperties[] textureProperties = new TextureProperties[14]
+	{
+		new TextureProperties
+		{
+			simProperty = Property.Flow,
+			textureFormat = TextureFormat.RGFloat,
+			filterMode = FilterMode.Bilinear,
+			updateEveryFrame = true,
+			updatedExternally = true,
+			blend = true,
+			blendSpeed = 0.25f
+		},
+		new TextureProperties
+		{
+			simProperty = Property.Liquid,
+			textureFormat = TextureFormat.RGBA32,
+			filterMode = FilterMode.Point,
+			updateEveryFrame = true,
+			updatedExternally = true,
+			blend = true,
+			blendSpeed = 1f
+		},
+		new TextureProperties
+		{
+			simProperty = Property.ExposedToSunlight,
+			textureFormat = TextureFormat.Alpha8,
+			filterMode = FilterMode.Bilinear,
+			updateEveryFrame = true,
+			updatedExternally = true,
+			blend = false,
+			blendSpeed = 0f
+		},
+		new TextureProperties
+		{
+			simProperty = Property.SolidDigAmount,
+			textureFormat = TextureFormat.RGB24,
+			filterMode = FilterMode.Bilinear,
+			updateEveryFrame = true,
+			updatedExternally = false,
+			blend = false,
+			blendSpeed = 0f
+		},
+		new TextureProperties
+		{
+			simProperty = Property.GasColour,
+			textureFormat = TextureFormat.RGBA32,
+			filterMode = FilterMode.Bilinear,
+			updateEveryFrame = false,
+			updatedExternally = false,
+			blend = true,
+			blendSpeed = 0.25f
+		},
+		new TextureProperties
+		{
+			simProperty = Property.GasDanger,
+			textureFormat = TextureFormat.Alpha8,
+			filterMode = FilterMode.Bilinear,
+			updateEveryFrame = false,
+			updatedExternally = false,
+			blend = true,
+			blendSpeed = 0.25f
+		},
+		new TextureProperties
+		{
+			simProperty = Property.GasPressure,
+			textureFormat = TextureFormat.Alpha8,
+			filterMode = FilterMode.Bilinear,
+			updateEveryFrame = false,
+			updatedExternally = false,
+			blend = true,
+			blendSpeed = 0.25f
+		},
+		new TextureProperties
+		{
+			simProperty = Property.FogOfWar,
+			textureFormat = TextureFormat.Alpha8,
+			filterMode = FilterMode.Bilinear,
+			updateEveryFrame = true,
+			updatedExternally = false,
+			blend = false,
+			blendSpeed = 0f
+		},
+		new TextureProperties
+		{
+			simProperty = Property.WorldLight,
+			textureFormat = TextureFormat.RGBA32,
+			filterMode = FilterMode.Bilinear,
+			updateEveryFrame = false,
+			updatedExternally = false,
+			blend = false,
+			blendSpeed = 0f
+		},
+		new TextureProperties
+		{
+			simProperty = Property.StateChange,
+			textureFormat = TextureFormat.Alpha8,
+			filterMode = FilterMode.Bilinear,
+			updateEveryFrame = false,
+			updatedExternally = false,
+			blend = false,
+			blendSpeed = 0f
+		},
+		new TextureProperties
+		{
+			simProperty = Property.FallingSolid,
+			textureFormat = TextureFormat.Alpha8,
+			filterMode = FilterMode.Bilinear,
+			updateEveryFrame = false,
+			updatedExternally = false,
+			blend = false,
+			blendSpeed = 0f
+		},
+		new TextureProperties
+		{
+			simProperty = Property.SolidLiquidGasMass,
+			textureFormat = TextureFormat.RGBA32,
+			filterMode = FilterMode.Point,
+			updateEveryFrame = true,
+			updatedExternally = false,
+			blend = false,
+			blendSpeed = 0f
+		},
+		new TextureProperties
+		{
+			simProperty = Property.Temperature,
+			textureFormat = TextureFormat.RGB24,
+			filterMode = FilterMode.Bilinear,
+			updateEveryFrame = false,
+			updatedExternally = false,
+			blend = false,
+			blendSpeed = 0f
+		},
+		new TextureProperties
+		{
+			simProperty = Property.Radiation,
+			textureFormat = TextureFormat.RFloat,
+			filterMode = FilterMode.Bilinear,
+			updateEveryFrame = false,
+			updatedExternally = false,
+			blend = false,
+			blendSpeed = 0f
+		}
+	};
 
-	private List<TextureProperties> allTextureProperties;
+	private List<TextureProperties> allTextureProperties = new List<TextureProperties>();
 
-	private WorkItemCollection<WorkItem, object> workItems;
+	private WorkItemCollection<WorkItem, object> workItems = new WorkItemCollection<WorkItem, object>();
 
 	public static bool IsFogOfWarEnabled => FogOfWarScale < 1f;
 
@@ -156,11 +298,6 @@ public class PropertyTextures : KMonoBehaviour, ISim200ms
 		instance = this;
 		base.OnPrefabInit();
 		ShaderReloader.Register(OnShadersReloaded);
-	}
-
-	public void SetFilterMode(Property property, FilterMode mode)
-	{
-		textureProperties[(int)property].filterMode = mode;
 	}
 
 	public Texture GetTexture(Property property)
@@ -787,168 +924,5 @@ public class PropertyTextures : KMonoBehaviour, ISim200ms
 				region.SetBytes(j, i, v);
 			}
 		}
-	}
-
-	public PropertyTextures()
-	{
-		TextureProperties[] array = new TextureProperties[14];
-		TextureProperties textureProperties = new TextureProperties
-		{
-			simProperty = Property.Flow,
-			textureFormat = TextureFormat.RGFloat,
-			filterMode = FilterMode.Bilinear,
-			updateEveryFrame = true,
-			updatedExternally = true,
-			blend = true,
-			blendSpeed = 0.25f
-		};
-		array[0] = textureProperties;
-		textureProperties = new TextureProperties
-		{
-			simProperty = Property.Liquid,
-			textureFormat = TextureFormat.RGBA32,
-			filterMode = FilterMode.Point,
-			updateEveryFrame = true,
-			updatedExternally = true,
-			blend = true,
-			blendSpeed = 1f
-		};
-		array[1] = textureProperties;
-		textureProperties = new TextureProperties
-		{
-			simProperty = Property.ExposedToSunlight,
-			textureFormat = TextureFormat.Alpha8,
-			filterMode = FilterMode.Bilinear,
-			updateEveryFrame = true,
-			updatedExternally = true,
-			blend = false,
-			blendSpeed = 0f
-		};
-		array[2] = textureProperties;
-		textureProperties = new TextureProperties
-		{
-			simProperty = Property.SolidDigAmount,
-			textureFormat = TextureFormat.RGB24,
-			filterMode = FilterMode.Bilinear,
-			updateEveryFrame = true,
-			updatedExternally = false,
-			blend = false,
-			blendSpeed = 0f
-		};
-		array[3] = textureProperties;
-		textureProperties = new TextureProperties
-		{
-			simProperty = Property.GasColour,
-			textureFormat = TextureFormat.RGBA32,
-			filterMode = FilterMode.Bilinear,
-			updateEveryFrame = false,
-			updatedExternally = false,
-			blend = true,
-			blendSpeed = 0.25f
-		};
-		array[4] = textureProperties;
-		textureProperties = new TextureProperties
-		{
-			simProperty = Property.GasDanger,
-			textureFormat = TextureFormat.Alpha8,
-			filterMode = FilterMode.Bilinear,
-			updateEveryFrame = false,
-			updatedExternally = false,
-			blend = true,
-			blendSpeed = 0.25f
-		};
-		array[5] = textureProperties;
-		textureProperties = new TextureProperties
-		{
-			simProperty = Property.GasPressure,
-			textureFormat = TextureFormat.Alpha8,
-			filterMode = FilterMode.Bilinear,
-			updateEveryFrame = false,
-			updatedExternally = false,
-			blend = true,
-			blendSpeed = 0.25f
-		};
-		array[6] = textureProperties;
-		textureProperties = new TextureProperties
-		{
-			simProperty = Property.FogOfWar,
-			textureFormat = TextureFormat.Alpha8,
-			filterMode = FilterMode.Bilinear,
-			updateEveryFrame = true,
-			updatedExternally = false,
-			blend = false,
-			blendSpeed = 0f
-		};
-		array[7] = textureProperties;
-		textureProperties = new TextureProperties
-		{
-			simProperty = Property.WorldLight,
-			textureFormat = TextureFormat.RGBA32,
-			filterMode = FilterMode.Bilinear,
-			updateEveryFrame = false,
-			updatedExternally = false,
-			blend = false,
-			blendSpeed = 0f
-		};
-		array[8] = textureProperties;
-		textureProperties = new TextureProperties
-		{
-			simProperty = Property.StateChange,
-			textureFormat = TextureFormat.Alpha8,
-			filterMode = FilterMode.Bilinear,
-			updateEveryFrame = false,
-			updatedExternally = false,
-			blend = false,
-			blendSpeed = 0f
-		};
-		array[9] = textureProperties;
-		textureProperties = new TextureProperties
-		{
-			simProperty = Property.FallingSolid,
-			textureFormat = TextureFormat.Alpha8,
-			filterMode = FilterMode.Bilinear,
-			updateEveryFrame = false,
-			updatedExternally = false,
-			blend = false,
-			blendSpeed = 0f
-		};
-		array[10] = textureProperties;
-		textureProperties = new TextureProperties
-		{
-			simProperty = Property.SolidLiquidGasMass,
-			textureFormat = TextureFormat.RGBA32,
-			filterMode = FilterMode.Point,
-			updateEveryFrame = true,
-			updatedExternally = false,
-			blend = false,
-			blendSpeed = 0f
-		};
-		array[11] = textureProperties;
-		textureProperties = new TextureProperties
-		{
-			simProperty = Property.Temperature,
-			textureFormat = TextureFormat.RGB24,
-			filterMode = FilterMode.Bilinear,
-			updateEveryFrame = false,
-			updatedExternally = false,
-			blend = false,
-			blendSpeed = 0f
-		};
-		array[12] = textureProperties;
-		textureProperties = new TextureProperties
-		{
-			simProperty = Property.Radiation,
-			textureFormat = TextureFormat.RFloat,
-			filterMode = FilterMode.Bilinear,
-			updateEveryFrame = false,
-			updatedExternally = false,
-			blend = false,
-			blendSpeed = 0f
-		};
-		array[13] = textureProperties;
-		this.textureProperties = array;
-		allTextureProperties = new List<TextureProperties>();
-		workItems = new WorkItemCollection<WorkItem, object>();
-		base._002Ector();
 	}
 }

@@ -385,7 +385,7 @@ public static class Localization
 		return num;
 	}
 
-	private static bool LoadTranslation(string[] lines, bool isTemplate = false)
+	public static bool LoadTranslation(string[] lines, bool isTemplate = false)
 	{
 		try
 		{
@@ -911,8 +911,8 @@ public static class Localization
 
 	private static bool AreParametersPreserved(string old_string, string new_string)
 	{
-		MatchCollection matchCollection = Regex.Matches(old_string, "{.*?}");
-		MatchCollection matchCollection2 = Regex.Matches(new_string, "{.*?}");
+		MatchCollection matchCollection = Regex.Matches(old_string, "({.[^}]*?})(?!.*\\1)");
+		MatchCollection matchCollection2 = Regex.Matches(new_string, "({.[^}]*?})(?!.*\\1)");
 		bool result = false;
 		if (matchCollection == null && matchCollection2 == null)
 		{

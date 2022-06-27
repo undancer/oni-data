@@ -536,65 +536,85 @@ namespace KSerialization
 			switch (elem_type_info.info)
 			{
 			case SerializationTypeInfo.SByte:
+			{
 				foreach (object item in collection)
 				{
 					writer.Write((sbyte)item);
 				}
 				break;
+			}
 			case SerializationTypeInfo.Byte:
+			{
 				foreach (object item2 in collection)
 				{
 					writer.Write((byte)item2);
 				}
 				break;
+			}
 			case SerializationTypeInfo.Int16:
+			{
 				foreach (object item3 in collection)
 				{
 					writer.Write((short)item3);
 				}
 				break;
+			}
 			case SerializationTypeInfo.UInt16:
+			{
 				foreach (object item4 in collection)
 				{
 					writer.Write((ushort)item4);
 				}
 				break;
+			}
 			case SerializationTypeInfo.Int32:
+			{
 				foreach (object item5 in collection)
 				{
 					writer.Write((int)item5);
 				}
 				break;
+			}
 			case SerializationTypeInfo.UInt32:
+			{
 				foreach (object item6 in collection)
 				{
 					writer.Write((uint)item6);
 				}
 				break;
+			}
 			case SerializationTypeInfo.Int64:
+			{
 				foreach (object item7 in collection)
 				{
 					writer.Write((long)item7);
 				}
 				break;
+			}
 			case SerializationTypeInfo.UInt64:
+			{
 				foreach (object item8 in collection)
 				{
 					writer.Write((ulong)item8);
 				}
 				break;
+			}
 			case SerializationTypeInfo.Single:
+			{
 				foreach (object item9 in collection)
 				{
 					writer.WriteSingleFast((float)item9);
 				}
 				break;
+			}
 			case SerializationTypeInfo.Double:
+			{
 				foreach (object item10 in collection)
 				{
 					writer.Write((double)item10);
 				}
 				break;
+			}
 			case SerializationTypeInfo.Boolean:
 				break;
 			}

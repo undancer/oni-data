@@ -84,6 +84,15 @@ internal class SteamDistributionPlatform : MonoBehaviour, DistributionPlatform.I
 		}
 	}
 
+	public bool IsPreviousVersionBranch
+	{
+		get
+		{
+			SteamApps.GetCurrentBetaName(out var pchName, 100);
+			return pchName == "public_previous_update";
+		}
+	}
+
 	public bool IsDLCStatusReady()
 	{
 		return true;

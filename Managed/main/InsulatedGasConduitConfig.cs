@@ -9,7 +9,7 @@ public class InsulatedGasConduitConfig : IBuildingConfig
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef obj = BuildingTemplates.CreateBuildingDef("InsulatedGasConduit", 1, 1, "utilities_gas_insulated_kanim", 10, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.RAW_MINERALS, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER0);
-		obj.ThermalConductivity = 0.03125f;
+		obj.ThermalConductivity = 1f / 32f;
 		obj.Overheatable = false;
 		obj.Floodable = false;
 		obj.Entombable = false;

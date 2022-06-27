@@ -60,11 +60,10 @@ namespace ClipperLib
 
 		public override bool Equals(object obj)
 		{
-			if (obj == null || !(obj is Int128))
+			if (obj == null || !(obj is Int128 @int))
 			{
 				return false;
 			}
-			Int128 @int = (Int128)obj;
 			if (@int.hi == hi)
 			{
 				return @int.lo == lo;

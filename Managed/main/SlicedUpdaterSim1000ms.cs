@@ -91,6 +91,12 @@ public abstract class SlicedUpdaterSim1000ms<T> : KMonoBehaviour, ISim200ms wher
 		instance = this;
 	}
 
+	protected override void OnForcedCleanUp()
+	{
+		instance = null;
+		base.OnForcedCleanUp();
+	}
+
 	private void InitializeSlices()
 	{
 		int num = NUM_200MS_BUCKETS * numSlicesPer200ms;

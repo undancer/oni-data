@@ -37,7 +37,6 @@ namespace KSerialization
 			}
 			int num = reader.ReadInt32();
 			int num2 = reader.ReadInt32();
-			SerializedInfo item;
 			for (int i = 0; i < num; i++)
 			{
 				DebugLog.Output(DebugLog.Level.Info, "Field " + i);
@@ -49,13 +48,11 @@ namespace KSerialization
 					string msg = $"Unknown type encountered while dserializing template {template_type_name} field {i} ({text}) at offset {reader.Position}";
 					DebugLog.Output(DebugLog.Level.Warning, msg);
 				}
-				List<SerializedInfo> list = serializedMembers;
-				item = new SerializedInfo
+				serializedMembers.Add(new SerializedInfo
 				{
 					name = text,
 					typeInfo = typeInfo
-				};
-				list.Add(item);
+				});
 			}
 			for (int j = 0; j < num2; j++)
 			{
@@ -68,13 +65,11 @@ namespace KSerialization
 					string msg2 = $"Unknown type encountered while dserializing template {template_type_name} property {j} ({text2}) at offset {reader.Position}";
 					DebugLog.Output(DebugLog.Level.Info, msg2);
 				}
-				List<SerializedInfo> list2 = serializedMembers;
-				item = new SerializedInfo
+				serializedMembers.Add(new SerializedInfo
 				{
 					name = text2,
 					typeInfo = typeInfo2
-				};
-				list2.Add(item);
+				});
 			}
 			DebugLog.Output(DebugLog.Level.Info, "Finished loading template " + template_type_name);
 		}

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using STRINGS;
 using UnityEngine;
 
 public class EggProtectionMonitor : GameStateMachine<EggProtectionMonitor, EggProtectionMonitor.Instance, IStateMachineTarget, EggProtectionMonitor.Def>
@@ -7,6 +8,8 @@ public class EggProtectionMonitor : GameStateMachine<EggProtectionMonitor, EggPr
 	public class Def : BaseDef
 	{
 		public Tag[] allyTags;
+
+		public string animPrefix;
 	}
 
 	public class GuardEggStates : State
@@ -27,7 +30,12 @@ public class EggProtectionMonitor : GameStateMachine<EggProtectionMonitor, EggPr
 
 		private struct FindEggsTask : IWorkItem<List<KPrefabID>>
 		{
-			private static readonly Tag EGG_TAG = "CrabEgg".ToTag();
+			private static readonly List<Tag> EGG_TAG = new List<Tag>
+			{
+				"CrabEgg".ToTag(),
+				"CrabWoodEgg".ToTag(),
+				"CrabFreshWaterEgg".ToTag()
+			};
 
 			private ListPool<int, EggProtectionMonitor>.PooledList eggs;
 
@@ -46,7 +54,7 @@ public class EggProtectionMonitor : GameStateMachine<EggProtectionMonitor, EggPr
 			{
 				for (int i = start; i != end; i++)
 				{
-					if (prefab_ids[i].HasTag(EGG_TAG))
+					if (prefab_ids[i].HasAnyTags(EGG_TAG))
 					{
 						eggs.Add(i);
 					}
@@ -136,6 +144,7 @@ public class EggProtectionMonitor : GameStateMachine<EggProtectionMonitor, EggPr
 				find_eggs_job.GetWorkItem(j).Finish(pooledList, pooledList2);
 			}
 			pooledList.Recycle();
+			find_eggs_job.Reset(null);
 			foreach (UpdateBucketWithUpdater<Instance>.Entry item in new List<UpdateBucketWithUpdater<Instance>.Entry>(instances))
 			{
 				GameObject eggToGuard = null;
@@ -296,11 +305,18 @@ public class EggProtectionMonitor : GameStateMachine<EggProtectionMonitor, EggPr
 		find_egg.BatchUpdate(Instance.FindEggToGuard).ParamTransition(hasEggToGuard, guard.safe, GameStateMachine<EggProtectionMonitor, Instance, IStateMachineTarget, Def>.IsTrue);
 		guard.Enter(delegate(Instance smi)
 		{
-			smi.gameObject.AddOrGet<SymbolOverrideController>().ApplySymbolOverridesByAffix(Assets.GetAnim("pincher_kanim"), null, "_heat");
+			smi.gameObject.AddOrGet<SymbolOverrideController>().ApplySymbolOverridesByAffix(Assets.GetAnim("pincher_kanim"), smi.def.animPrefix, "_heat");
 			smi.gameObject.AddOrGet<FactionAlignment>().SwitchAlignment(FactionManager.FactionID.Hostile);
 		}).Exit(delegate(Instance smi)
 		{
-			smi.gameObject.AddOrGet<SymbolOverrideController>().RemoveBuildOverride(Assets.GetAnim("pincher_kanim").GetData());
+			if (!smi.def.animPrefix.IsNullOrWhiteSpace())
+			{
+				smi.gameObject.AddOrGet<SymbolOverrideController>().ApplySymbolOverridesByAffix(Assets.GetAnim("pincher_kanim"), smi.def.animPrefix);
+			}
+			else
+			{
+				smi.gameObject.AddOrGet<SymbolOverrideController>().RemoveBuildOverride(Assets.GetAnim("pincher_kanim").GetData());
+			}
 			smi.gameObject.AddOrGet<FactionAlignment>().SwitchAlignment(FactionManager.FactionID.Pest);
 		}).Update("evaulate_egg", delegate(Instance smi, float dt)
 		{
@@ -313,7 +329,7 @@ public class EggProtectionMonitor : GameStateMachine<EggProtectionMonitor, EggPr
 		}).Update("safe", delegate(Instance smi, float dt)
 		{
 			smi.RefreshThreat(null);
-		}, UpdateRate.SIM_200ms, load_balance: true);
+		}, UpdateRate.SIM_200ms, load_balance: true).ToggleStatusItem(CREATURES.STATUSITEMS.PROTECTINGENTITY.NAME, CREATURES.STATUSITEMS.PROTECTINGENTITY.TOOLTIP);
 		guard.threatened.ToggleBehaviour(GameTags.Creatures.Defend, (Instance smi) => smi.MainThreat != null, delegate(Instance smi)
 		{
 			smi.GoTo(guard.safe);

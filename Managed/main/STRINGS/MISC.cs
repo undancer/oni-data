@@ -118,7 +118,7 @@ namespace STRINGS
 
 			public static LocString COMPOSTABLE = UI.FormatAsLink("Compostable", "COMPOSTABLE");
 
-			public static LocString COMPOSTABLE_DESC = "Compostables are biological materials which can be put into a " + UI.FormatAsLink("Compost", "COMPOST") + " to generate clean " + UI.FormatAsLink("Dirt", "DIRT") + ".\n\nThe act of composting also generates a small amount of " + UI.FormatAsLink("Heat", "HEAT") + ".\n\nOnce it starts to rot, consumable food should be composted to prevent " + UI.FormatAsLink("Food Poisoning", "FOODSICKNESS") + ".";
+			public static LocString COMPOSTABLE_DESC = "Compostables are biological materials which can be put into a " + UI.FormatAsLink("Compost", "COMPOST") + " to generate clean " + UI.FormatAsLink("Dirt", "DIRT") + ".\n\nComposting also generates a small amount of " + UI.FormatAsLink("Heat", "HEAT") + ".\n\nOnce it starts to rot, consumable food should be composted to prevent " + UI.FormatAsLink("Food Poisoning", "FOODSICKNESS") + ".";
 
 			public static LocString COMPOSTBASICPLANTFOOD = "Compost Muckroot";
 
@@ -384,7 +384,7 @@ namespace STRINGS
 
 				public static LocString NOTIFICATION = "Buried object discovered";
 
-				public static LocString NOTIFICATION_TOOLTIP = "My Duplicants have uncovered a {Uncoverable}!\n\nClick to jump to its location.";
+				public static LocString NOTIFICATION_TOOLTIP = "My Duplicants have uncovered a {Uncoverable}!\n\n" + UI.CLICK(UI.ClickType.Click) + " to jump to its location.";
 			}
 
 			public class GENETICANALYSISCOMPLETED
@@ -632,7 +632,9 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Tutorial: Basic Controls";
 
-				public static LocString MESSAGEBODY = "• I can use " + UI.FormatAsHotKey(Action.CinemaPanLeft) + " and " + UI.FormatAsHotKey(Action.CinemaPanRight) + "to pan my view left and right, and " + UI.FormatAsHotKey(Action.CinemaPanUp) + "and " + UI.FormatAsHotKey(Action.CinemaPanDown) + "to pan up and down.\n\n• " + UI.FormatAsHotKey(Action.CinemaZoomIn) + " lets me zoom in, and " + UI.FormatAsHotKey(Action.CinemaZoomOut) + "zooms out.\n\n• " + UI.FormatAsHotKey(Action.CameraHome) + " returns my view to the Printing Pod.\n\n• I can speed or slow my perception of time using the top left corner buttons, or by pressing " + UI.FormatAsHotKey(Action.SpeedUp) + "or " + UI.FormatAsHotKey(Action.SlowDown) + ". Pressing " + UI.FormatAsHotKey(Action.TogglePause) + " will pause the flow of time entirely.\n\n• I'll keep records of everything I discover in my personal DATABASE " + UI.FormatAsHotKey(Action.ManageDatabase) + " to refer back to if I forget anything important.";
+				public static LocString MESSAGEBODY = "• I can use " + UI.FormatAsHotKey(Action.PanLeft) + " and " + UI.FormatAsHotKey(Action.PanRight) + " to pan my view left and right, and " + UI.FormatAsHotKey(Action.PanUp) + " and " + UI.FormatAsHotKey(Action.PanDown) + " to pan up and down.\n\n• " + UI.FormatAsHotKey(Action.ZoomIn) + " lets me zoom in, and " + UI.FormatAsHotKey(Action.ZoomOut) + " zooms out.\n\n• " + UI.FormatAsHotKey(Action.CameraHome) + " returns my view to the Printing Pod.\n\n• I can speed or slow my perception of time using the top left corner buttons, or by pressing " + UI.FormatAsHotKey(Action.SpeedUp) + " or " + UI.FormatAsHotKey(Action.SlowDown) + ". Pressing " + UI.FormatAsHotKey(Action.TogglePause) + " will pause the flow of time entirely.\n\n•  I'll keep records of everything I discover in my personal DATABASE " + UI.FormatAsHotKey(Action.ManageDatabase) + " to refer back to if I forget anything important.";
+
+				public static LocString MESSAGEBODYALT = "• I can use " + UI.FormatAsHotKey(Action.AnalogCamera) + " to pan my view.\n\n• " + UI.FormatAsHotKey(Action.ZoomIn) + " lets me zoom in, and " + UI.FormatAsHotKey(Action.ZoomOut) + " zooms out.\n\n• I can speed or slow my perception of time using the top left corner buttons, or by pressing " + UI.FormatAsHotKey(Action.CycleSpeed) + ". Pressing " + UI.FormatAsHotKey(Action.TogglePause) + " will pause the flow of time entirely.\n\n•  I'll keep records of everything I discover in my personal DATABASE " + UI.FormatAsHotKey(Action.ManageDatabase) + " to refer back to if I forget anything important.";
 
 				public static LocString TOOLTIP = "Notes on using my HUD";
 			}
@@ -677,7 +679,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Tutorial: Polluted Water";
 
-				public static LocString MESSAGEBODY = UI.FormatAsLink("Polluted Water", "DIRTYWATER") + " slowly emits " + UI.FormatAsLink("Polluted Oxygen", "CONTAMINATEDOXYGEN") + " which accelerates the spread of " + UI.FormatAsLink("Disease", "DISEASE") + ".\n\nDuplicants will also be " + UI.FormatAsLink("Stressed", "STRESS") + " by walking through Polluted Water, so I should have my Duplicants clean up spills by clicking and dragging the " + UI.FormatAsTool("Mop Tool", Action.Mop);
+				public static LocString MESSAGEBODY = UI.FormatAsLink("Polluted Water", "DIRTYWATER") + " slowly emits " + UI.FormatAsLink("Polluted Oxygen", "CONTAMINATEDOXYGEN") + " which accelerates the spread of " + UI.FormatAsLink("Disease", "DISEASE") + ".\n\nDuplicants will also be " + UI.FormatAsLink("Stressed", "STRESS") + " by walking through Polluted Water, so I should have my Duplicants clean up spills by " + UI.CLICK(UI.ClickType.clicking) + " and dragging the " + UI.FormatAsTool("Mop Tool", Action.Mop);
 
 				public static LocString TOOLTIP = "Notes on handling polluted materials";
 			}
@@ -686,7 +688,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Video: Duplicant Movement";
 
-				public static LocString MESSAGEBODY = "Duplicants have limited jumping and climbing abilities. They can only climb two tiles high and cannot fit into spaces shorter than two tiles, or cross gaps wider than one tile. I should keep this in mind while placing errands.\n\nTo check if an errand I've placed is accessible, I can select a Duplicant and click <b>Show Navigation</b> to view all areas within their reach.";
+				public static LocString MESSAGEBODY = "Duplicants have limited jumping and climbing abilities. They can only climb two tiles high and cannot fit into spaces shorter than two tiles, or cross gaps wider than one tile. I should keep this in mind while placing errands.\n\nTo check if an errand I've placed is accessible, I can select a Duplicant and " + UI.CLICK(UI.ClickType.click) + " <b>Show Navigation</b> to view all areas within their reach.";
 
 				public static LocString TOOLTIP = "Notes on my Duplicants' maneuverability";
 			}
@@ -760,7 +762,7 @@ namespace STRINGS
 
 				public static LocString TOOLTIP = "Notes on managing food contamination";
 
-				public static LocString MESSAGEBODY = string.Concat("The ", UI.FormatAsLink("Food", "FOOD"), " my Duplicants cook will only ever be as clean as the ingredients used to make it. Storing food in sterile or ", UI.FormatAsLink("Refrigerated", "REFRIGERATOR"), " environments will keep food free of ", UI.FormatAsLink("Germs", "DISEASE"), ", while carefully placed hygiene stations like ", BUILDINGS.PREFABS.WASHBASIN.NAME, " or ", BUILDINGS.PREFABS.SHOWER.NAME, " will prevent the cooks from infecting the food by handling it.\n\nDangerously contaminated food can be sent to compost by clicking the <b>Compost</b> button on the selected item.");
+				public static LocString MESSAGEBODY = string.Concat("The ", UI.FormatAsLink("Food", "FOOD"), " my Duplicants cook will only ever be as clean as the ingredients used to make it. Storing food in sterile or ", UI.FormatAsLink("Refrigerated", "REFRIGERATOR"), " environments will keep food free of ", UI.FormatAsLink("Germs", "DISEASE"), ", while carefully placed hygiene stations like ", BUILDINGS.PREFABS.WASHBASIN.NAME, " or ", BUILDINGS.PREFABS.SHOWER.NAME, " will prevent the cooks from infecting the food by handling it.\n\nDangerously contaminated food can be sent to compost by ", UI.CLICK(UI.ClickType.clicking), " the <b>Compost</b> button on the selected item.");
 			}
 
 			public class SUITS
@@ -787,7 +789,7 @@ namespace STRINGS
 
 				public static LocString TOOLTIP = "Notes on traveling in space";
 
-				public static LocString MESSAGEBODY = "Building a rocket first requires constructing a " + UI.FormatAsLink("Rocket Platform", "LAUNCHPAD") + " and adding modules from the menu. All components of the Rocket Checklist will need to be complete before being capable of launching.\n\nA " + UI.FormatAsLink("Telescope", "TELESCOPE") + " needs to be built on the surface of a Planetoid in order to use the " + UI.PRE_KEYWORD + "Starmap Screen" + UI.PST_KEYWORD + " " + UI.FormatAsHotKey(Action.ManageStarmap) + " to see and set course for new destinations.";
+				public static LocString MESSAGEBODY = "Building a rocket first requires constructing a " + UI.FormatAsLink("Rocket Platform", "LAUNCHPAD") + " and adding modules from the menu. All components of the Rocket Checklist will need to be complete before being capable of launching.\n\nA " + UI.FormatAsLink("Telescope", "CLUSTERTELESCOPE") + " needs to be built on the surface of a Planetoid in order to use the " + UI.PRE_KEYWORD + "Starmap Screen" + UI.PST_KEYWORD + " " + UI.FormatAsHotKey(Action.ManageStarmap) + " to see and set course for new destinations.";
 			}
 
 			public class MORALE
@@ -805,7 +807,7 @@ namespace STRINGS
 
 				public static LocString TOOLTIP = "Notes on managing electricity";
 
-				public static LocString MESSAGEBODY = "Generators are considered \"Producers\" of Power, while the various buildings and machines in the colony are considered \"Consumers\". Each Consumer will pull a certain wattage from the power circuit it is connected to, which can be checked at any time by clicking the building and going to the Energy Tab.\n\nI can use the Power Overlay " + UI.FormatAsHotKey(Action.Overlay2) + " to quickly check the status of all my circuits. If the Consumers are taking more wattage than the Generators are creating, the Batteries will drain and there will be brownouts.\n\nAdditionally, if the Consumers are pulling more wattage through the Wires than the Wires can handle, they will overload and burn out. To correct both these situations, I will need to reorganize my Consumers onto separate circuits.";
+				public static LocString MESSAGEBODY = "Generators are considered \"Producers\" of Power, while the various buildings and machines in the colony are considered \"Consumers\". Each Consumer will pull a certain wattage from the power circuit it is connected to, which can be checked at any time by " + UI.CLICK(UI.ClickType.clicking) + " the building and going to the Energy Tab.\n\nI can use the Power Overlay " + UI.FormatAsHotKey(Action.Overlay2) + " to quickly check the status of all my circuits. If the Consumers are taking more wattage than the Generators are creating, the Batteries will drain and there will be brownouts.\n\nAdditionally, if the Consumers are pulling more wattage through the Wires than the Wires can handle, they will overload and burn out. To correct both these situations, I will need to reorganize my Consumers onto separate circuits.";
 			}
 
 			public class DIGGING
@@ -832,7 +834,7 @@ namespace STRINGS
 
 				public static LocString TOOLTIP = "Notes on connecting buildings with pipes";
 
-				public static LocString MESSAGEBODY = "When connecting pipes it is useful to have the Plumbing Overlay " + UI.FormatAsHotKey(Action.Overlay6) + " selected. Each building which requires plumbing must have their Building Intake connected to the Output Pipe from a source such as a Liquid Pump. Liquid Pumps must be submerged in liquid and attached to a power source to function.\n\nBuildings often output contaminated water which must flow out of the building through piping from the Output Pipe. The water can then be expelled through a Liquid Vent, or filtered through a Liquid Filter for reuse.";
+				public static LocString MESSAGEBODY = "When connecting pipes for plumbing, it is useful to have the Plumbing Overlay " + UI.FormatAsHotKey(Action.Overlay6) + " selected. Each building which requires plumbing must have their Building Intake connected to the Output Pipe from a source such as a Liquid Pump. Liquid Pumps must be submerged in liquid and attached to a power source to function.\n\nBuildings often output contaminated water which must flow out of the building through piping from the Output Pipe. The water can then be expelled through a Liquid Vent, or filtered through a Liquid Filter for reuse.\n\nVentilation applies the same principles to gases. Select the Ventilation Overlay " + UI.FormatAsHotKey(Action.Overlay7) + " to see how gases are being moved around the colony.";
 			}
 
 			public class NEW_AUTOMATION_WARNING

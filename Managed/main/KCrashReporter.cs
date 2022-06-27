@@ -94,7 +94,6 @@ public class KCrashReporter : MonoBehaviour
 		Application.logMessageReceived += HandleLog;
 		ignoreAll = true;
 		string path = Path.Combine(dataRoot, "hashes.json");
-		bool flag;
 		if (File.Exists(path))
 		{
 			StringBuilder stringBuilder = new StringBuilder();
@@ -102,7 +101,7 @@ public class KCrashReporter : MonoBehaviour
 			Dictionary<string, string> dictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(path));
 			if (dictionary.Count > 0)
 			{
-				flag = true;
+				bool flag = true;
 				foreach (KeyValuePair<string, string> item in dictionary)
 				{
 					string key = item.Key;
@@ -117,25 +116,23 @@ public class KCrashReporter : MonoBehaviour
 					if (stringBuilder.ToString() != value)
 					{
 						flag = false;
-						goto IL_011c;
+						break;
 					}
 				}
-				goto IL_011c;
+				if (flag)
+				{
+					ignoreAll = false;
+				}
 			}
-			ignoreAll = false;
+			else
+			{
+				ignoreAll = false;
+			}
 		}
 		else
 		{
 			ignoreAll = false;
 		}
-		goto IL_0136;
-		IL_011c:
-		if (flag)
-		{
-			ignoreAll = false;
-		}
-		goto IL_0136;
-		IL_0136:
 		if (ignoreAll)
 		{
 			Debug.Log("Ignoring crash due to mismatched hashes.json entries.");
@@ -177,7 +174,7 @@ public class KCrashReporter : MonoBehaviour
 		}
 		if (SpeedControlScreen.Instance != null)
 		{
-			SpeedControlScreen.Instance.Pause();
+			SpeedControlScreen.Instance.Pause(playSound: true, isCrashed: true);
 		}
 		string text = stack_trace;
 		if (string.IsNullOrEmpty(text))
@@ -451,7 +448,7 @@ public class KCrashReporter : MonoBehaviour
 				error.callstack = error.callstack + "\n" + Guid.NewGuid().ToString();
 			}
 			error.fullstack = $"{msg}\n\n{stack_trace}";
-			error.build = 497575;
+			error.build = 512719;
 			error.log = GetLogContents();
 			error.summaryline = string.Join("\n", list.ToArray());
 			error.user_message = userMessage;

@@ -11,10 +11,12 @@ public class DevPumpGasConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("DevPumpGas", 2, 2, "dev_pump_gas_kanim", 100, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER1, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.PENALTY.TIER1);
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("DevPumpGas", 2, 2, "dev_pump_gas_kanim", 100, 30f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER1, MATERIALS.ALL_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.PENALTY.TIER1);
 		obj.RequiresPowerInput = false;
 		obj.OutputConduitType = ConduitType.Gas;
 		obj.Floodable = false;
+		obj.Invincible = true;
+		obj.Entombable = false;
 		obj.ViewMode = OverlayModes.GasConduits.ID;
 		obj.AudioCategory = "Metal";
 		obj.UtilityOutputOffset = primaryPort.offset;

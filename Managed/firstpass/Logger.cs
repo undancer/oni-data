@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using ImGuiNET;
 
 public abstract class Logger
 {
@@ -30,6 +31,10 @@ public abstract class Logger
 	}
 
 	public virtual void DebugDisplayLog()
+	{
+	}
+
+	public virtual void DebugDevTool()
 	{
 	}
 }
@@ -73,5 +78,34 @@ public class Logger<EntryType> : Logger
 	[Conditional("UNITY_EDITOR")]
 	public void Log(EntryType entry)
 	{
+	}
+
+	public override void DebugDevTool()
+	{
+		bool v = base.enableConsoleLogging;
+		if (ImGui.Checkbox("Console Logging:", ref v))
+		{
+			base.enableConsoleLogging = v;
+		}
+		v = base.breakOnLog;
+		if (ImGui.Checkbox("Break On Log:", ref v))
+		{
+			base.breakOnLog = v;
+		}
+		ImGui.Text(name + " Log:");
+		if (ImGui.Button("Clear"))
+		{
+			entries.Clear();
+		}
+		if (entries == null)
+		{
+			return;
+		}
+		ImGui.Indent();
+		foreach (EntryType entry in entries)
+		{
+			ImGui.Text(entry.ToString());
+		}
+		ImGui.Unindent();
 	}
 }

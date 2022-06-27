@@ -176,7 +176,7 @@ namespace ProcGenGame
 				catch (Exception ex)
 				{
 					DebugUtil.LogErrorArgs("LoadSim Error!\n", ex.Message, ex.StackTrace);
-					return;
+					break;
 				}
 				if (simSaveFileStructure.worldDetail == null)
 				{

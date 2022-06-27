@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MushroomPlantConfig : IEntityConfig
 {
-	public const float FERTILIZATION_RATE = 0.006666667f;
+	public const float FERTILIZATION_RATE = 1f / 150f;
 
 	public const string ID = "MushroomPlant";
 
@@ -25,7 +25,7 @@ public class MushroomPlantConfig : IEntityConfig
 			new PlantElementAbsorber.ConsumeInfo
 			{
 				tag = GameTags.SlimeMold,
-				massConsumptionRate = 0.006666667f
+				massConsumptionRate = 1f / 150f
 			}
 		});
 		gameObject.AddOrGet<StandardCropPlant>();

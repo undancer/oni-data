@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
 public class KBatchGroupData
@@ -7,7 +8,7 @@ public class KBatchGroupData
 
 	public const int SIZE_OF_ANIM_FRAME = 4;
 
-	public const int SIZE_OF_ANIM_FRAME_ELEMENT = 16;
+	public const int SIZE_OF_ANIM_FRAME_ELEMENT = 12;
 
 	private const int MAX_VISIBLE_SYMBOLS = 120;
 
@@ -266,7 +267,7 @@ public class KBatchGroupData
 		return symbolFrameInstances.Count;
 	}
 
-	public void WriteAnimData(int start_index, float[] data)
+	public void WriteAnimData(int start_index, NativeArray<float> data)
 	{
 		List<KAnim.Anim.Frame> list = GetAnimFrames();
 		List<KAnim.Anim.FrameElement> animFrameElements = GetAnimFrameElements();
@@ -288,8 +289,8 @@ public class KBatchGroupData
 			}
 			for (int j = 0; j < symbolFrameInstances.Count; j++)
 			{
-				WriteAnimFrameElement(data, start_index, j, j, Matrix2x3.identity, Color.white, 0);
-				start_index += 16;
+				WriteAnimFrameElement(data, start_index, j, j, Matrix2x3.identity, Color.white);
+				start_index += 12;
 			}
 			return;
 		}
@@ -303,7 +304,7 @@ public class KBatchGroupData
 			KAnim.Anim.FrameElement element = animFrameElements[l];
 			if (element.symbol == KGlobalAnimParser.MISSING_SYMBOL)
 			{
-				WriteAnimFrameElement(data, start_index, -1, l, Matrix2x3.identity, Color.white, 0);
+				WriteAnimFrameElement(data, start_index, -1, l, Matrix2x3.identity, Color.white);
 			}
 			else
 			{
@@ -326,7 +327,7 @@ public class KBatchGroupData
 				int frameIdx = buildSymbol.GetFrameIdx(element.frame);
 				Write(data, start_index, frameIdx, l, element);
 			}
-			start_index += 16;
+			start_index += 12;
 		}
 	}
 
@@ -345,7 +346,7 @@ public class KBatchGroupData
 		return value;
 	}
 
-	public int WriteBuildData(List<KAnim.Build.SymbolFrameInstance> symbol_frame_instances, float[] data)
+	public int WriteBuildData(List<KAnim.Build.SymbolFrameInstance> symbol_frame_instances, NativeArray<float> data)
 	{
 		int num = 0;
 		for (num = 0; num < symbol_frame_instances.Count; num++)
@@ -355,7 +356,7 @@ public class KBatchGroupData
 		return num * 16;
 	}
 
-	private void Write(float[] data, int startIndex, int thisFrameIndex, int atlasIndex, KAnim.Build.SymbolFrameInstance symbol_frame_instance)
+	private void Write(NativeArray<float> data, int startIndex, int thisFrameIndex, int atlasIndex, KAnim.Build.SymbolFrameInstance symbol_frame_instance)
 	{
 		data[startIndex++] = atlasIndex;
 		data[startIndex++] = thisFrameIndex;
@@ -397,7 +398,7 @@ public class KBatchGroupData
 		}
 	}
 
-	private void WriteAnimFrame(float[] data, int startIndex, int firstElementIdx, int idx, int numElements, int thisFrameIndex)
+	private void WriteAnimFrame(NativeArray<float> data, int startIndex, int firstElementIdx, int idx, int numElements, int thisFrameIndex)
 	{
 		data[startIndex++] = firstElementIdx;
 		data[startIndex++] = numElements;
@@ -405,19 +406,17 @@ public class KBatchGroupData
 		data[startIndex++] = idx;
 	}
 
-	private void Write(float[] data, int startIndex, int thisFrameIndex, KAnim.Anim.Frame frame)
+	private void Write(NativeArray<float> data, int startIndex, int thisFrameIndex, KAnim.Anim.Frame frame)
 	{
 		WriteAnimFrame(data, startIndex, frame.firstElementIdx, frame.idx, frame.numElements, thisFrameIndex);
 	}
 
-	private void WriteAnimFrameElement(float[] data, int startIndex, int symbolFrameIdx, int thisFrameIndex, Matrix2x3 transform, Color colour, int flags)
+	private void WriteAnimFrameElement(NativeArray<float> data, int startIndex, int symbolFrameIdx, int thisFrameIndex, Matrix2x3 transform, Color colour)
 	{
 		if (symbolFrameIdx != -1010)
 		{
 			data[startIndex++] = symbolFrameIdx;
 			data[startIndex++] = thisFrameIndex;
-			data[startIndex++] = flags;
-			data[startIndex++] = 0f;
 			data[startIndex++] = colour.r;
 			data[startIndex++] = colour.g;
 			data[startIndex++] = colour.b;
@@ -425,18 +424,14 @@ public class KBatchGroupData
 			data[startIndex++] = transform.m00;
 			data[startIndex++] = transform.m01;
 			data[startIndex++] = transform.m02;
-			data[startIndex++] = 2.8801546E+09f;
 			data[startIndex++] = transform.m10;
 			data[startIndex++] = transform.m11;
 			data[startIndex++] = transform.m12;
-			data[startIndex++] = 3.1664858E+09f;
 		}
 		else
 		{
 			data[startIndex++] = symbolFrameIdx;
 			data[startIndex++] = thisFrameIndex;
-			data[startIndex++] = flags;
-			data[startIndex++] = -1f;
 			data[startIndex++] = colour.r;
 			data[startIndex++] = colour.g;
 			data[startIndex++] = colour.b;
@@ -444,21 +439,14 @@ public class KBatchGroupData
 			data[startIndex++] = 0f;
 			data[startIndex++] = 0f;
 			data[startIndex++] = 0f;
-			data[startIndex++] = 2.8801546E+09f;
 			data[startIndex++] = 0f;
 			data[startIndex++] = 0f;
 			data[startIndex++] = 0f;
-			data[startIndex++] = 3.1664858E+09f;
 		}
 	}
 
-	private void WriteNullFrameElement(float[] data, int startIndex, int thisFrameIndex)
+	private void Write(NativeArray<float> data, int startIndex, int symbolFrameIdx, int thisFrameIndex, KAnim.Anim.FrameElement element)
 	{
-		WriteAnimFrameElement(data, startIndex, -1010, thisFrameIndex, Matrix2x3.identity, Color.black, 0);
-	}
-
-	private void Write(float[] data, int startIndex, int symbolFrameIdx, int thisFrameIndex, KAnim.Anim.FrameElement element)
-	{
-		WriteAnimFrameElement(data, startIndex, symbolFrameIdx, thisFrameIndex, element.transform, element.multColour, element.flags);
+		WriteAnimFrameElement(data, startIndex, symbolFrameIdx, thisFrameIndex, element.transform, element.multColour);
 	}
 }

@@ -6,6 +6,45 @@ using UnityEngine.UI;
 
 public class PinnedResourcesPanel : KScreen, IRender1000ms
 {
+	public class PinnedResourceRow
+	{
+		public GameObject gameObject;
+
+		public Image icon;
+
+		public LocText nameLabel;
+
+		public LocText valueLabel;
+
+		public MultiToggle pinToggle;
+
+		public MultiToggle notifyToggle;
+
+		public MultiToggle newLabel;
+
+		private float oldResourceAmount = -1f;
+
+		public Tag Tag { get; private set; }
+
+		public string SortableNameWithoutLink { get; private set; }
+
+		public PinnedResourceRow(Tag tag)
+		{
+			Tag = tag;
+			SortableNameWithoutLink = tag.ProperNameStripLink();
+		}
+
+		public bool CheckAmountChanged(float newResourceAmount, bool updateIfTrue)
+		{
+			bool num = newResourceAmount != oldResourceAmount;
+			if (num && updateIfTrue)
+			{
+				oldResourceAmount = newResourceAmount;
+			}
+			return num;
+		}
+	}
+
 	public GameObject linePrefab;
 
 	public GameObject rowContainer;
@@ -18,11 +57,21 @@ public class PinnedResourcesPanel : KScreen, IRender1000ms
 
 	public MultiToggle seeAllButton;
 
-	private Dictionary<Tag, GameObject> rows = new Dictionary<Tag, GameObject>();
+	private LocText seeAllLabel;
+
+	private QuickLayout rowContainerLayout;
+
+	private Dictionary<Tag, PinnedResourceRow> rows = new Dictionary<Tag, PinnedResourceRow>();
 
 	public static PinnedResourcesPanel Instance;
 
 	private int clickIdx;
+
+	protected override void OnPrefabInit()
+	{
+		base.OnPrefabInit();
+		rowContainerLayout = rowContainer.GetComponent<QuickLayout>();
+	}
 
 	protected override void OnSpawn()
 	{
@@ -40,6 +89,7 @@ public class PinnedResourcesPanel : KScreen, IRender1000ms
 		{
 			AllResourcesScreen.Instance.Show(!AllResourcesScreen.Instance.gameObject.activeSelf);
 		});
+		seeAllLabel = seeAllButton.GetComponentInChildren<LocText>();
 		MultiToggle component3 = clearNewButton.GetComponent<MultiToggle>();
 		component3.onClick = (System.Action)Delegate.Combine(component3.onClick, (System.Action)delegate
 		{
@@ -55,6 +105,12 @@ public class PinnedResourcesPanel : KScreen, IRender1000ms
 		Refresh();
 	}
 
+	protected override void OnForcedCleanUp()
+	{
+		Instance = null;
+		base.OnForcedCleanUp();
+	}
+
 	public void ClearExcessiveNewItems()
 	{
 		if (DiscoveredResources.Instance.CheckAllDiscoveredAreNew())
@@ -65,9 +121,9 @@ public class PinnedResourcesPanel : KScreen, IRender1000ms
 
 	private void ClearAllNew()
 	{
-		foreach (KeyValuePair<Tag, GameObject> row in rows)
+		foreach (KeyValuePair<Tag, PinnedResourceRow> row in rows)
 		{
-			if (row.Value.activeSelf && DiscoveredResources.Instance.newDiscoveries.ContainsKey(row.Key))
+			if (row.Value.gameObject.activeSelf && DiscoveredResources.Instance.newDiscoveries.ContainsKey(row.Key))
 			{
 				DiscoveredResources.Instance.newDiscoveries.Remove(row.Key);
 			}
@@ -77,102 +133,100 @@ public class PinnedResourcesPanel : KScreen, IRender1000ms
 	private void UnPinAll()
 	{
 		WorldInventory worldInventory = ClusterManager.Instance.GetWorld(ClusterManager.Instance.activeWorldId).worldInventory;
-		foreach (KeyValuePair<Tag, GameObject> row in rows)
+		foreach (KeyValuePair<Tag, PinnedResourceRow> row in rows)
 		{
 			worldInventory.pinnedResources.Remove(row.Key);
 		}
 	}
 
+	private PinnedResourceRow CreateRow(Tag tag)
+	{
+		PinnedResourceRow pinnedResourceRow = new PinnedResourceRow(tag);
+		HierarchyReferences component = (pinnedResourceRow.gameObject = Util.KInstantiateUI(linePrefab, rowContainer)).GetComponent<HierarchyReferences>();
+		pinnedResourceRow.icon = component.GetReference<Image>("Icon");
+		pinnedResourceRow.nameLabel = component.GetReference<LocText>("NameLabel");
+		pinnedResourceRow.valueLabel = component.GetReference<LocText>("ValueLabel");
+		pinnedResourceRow.pinToggle = component.GetReference<MultiToggle>("PinToggle");
+		pinnedResourceRow.notifyToggle = component.GetReference<MultiToggle>("NotifyToggle");
+		pinnedResourceRow.newLabel = component.GetReference<MultiToggle>("NewLabel");
+		Tuple<Sprite, Color> uISprite = Def.GetUISprite(tag);
+		pinnedResourceRow.icon.sprite = uISprite.first;
+		pinnedResourceRow.icon.color = uISprite.second;
+		pinnedResourceRow.nameLabel.SetText(tag.ProperNameStripLink());
+		MultiToggle component2 = pinnedResourceRow.gameObject.GetComponent<MultiToggle>();
+		component2.onClick = (System.Action)Delegate.Combine(component2.onClick, (System.Action)delegate
+		{
+			List<Pickupable> list = ClusterManager.Instance.activeWorld.worldInventory.CreatePickupablesList(tag);
+			if (list != null && list.Count > 0)
+			{
+				SelectTool.Instance.SelectAndFocus(list[clickIdx % list.Count].transform.position, list[clickIdx % list.Count].GetComponent<KSelectable>());
+				clickIdx++;
+			}
+			else
+			{
+				clickIdx = 0;
+			}
+		});
+		return pinnedResourceRow;
+	}
+
 	public void Populate(object data = null)
 	{
 		WorldInventory worldInventory = ClusterManager.Instance.GetWorld(ClusterManager.Instance.activeWorldId).worldInventory;
-		foreach (KeyValuePair<Tag, float> resource in DiscoveredResources.Instance.newDiscoveries)
+		foreach (KeyValuePair<Tag, float> newDiscovery in DiscoveredResources.Instance.newDiscoveries)
 		{
-			if (rows.ContainsKey(resource.Key) || !IsDisplayedTag(resource.Key))
+			if (!rows.ContainsKey(newDiscovery.Key) && IsDisplayedTag(newDiscovery.Key))
 			{
-				continue;
+				rows.Add(newDiscovery.Key, CreateRow(newDiscovery.Key));
 			}
-			GameObject gameObject = Util.KInstantiateUI(linePrefab, rowContainer);
-			rows.Add(resource.Key, gameObject);
-			MultiToggle component = gameObject.GetComponent<MultiToggle>();
-			component.onClick = (System.Action)Delegate.Combine(component.onClick, (System.Action)delegate
-			{
-				List<Pickupable> list2 = ClusterManager.Instance.activeWorld.worldInventory.CreatePickupablesList(resource.Key);
-				if (list2 != null && list2.Count > 0)
-				{
-					SelectTool.Instance.SelectAndFocus(list2[clickIdx % list2.Count].transform.position, list2[clickIdx % list2.Count].GetComponent<KSelectable>());
-					clickIdx++;
-				}
-				else
-				{
-					clickIdx = 0;
-				}
-			});
 		}
-		foreach (Tag tag in worldInventory.pinnedResources)
+		foreach (Tag pinnedResource in worldInventory.pinnedResources)
 		{
-			if (rows.ContainsKey(tag))
+			if (!rows.ContainsKey(pinnedResource))
 			{
-				continue;
+				rows.Add(pinnedResource, CreateRow(pinnedResource));
 			}
-			GameObject gameObject2 = Util.KInstantiateUI(linePrefab, rowContainer);
-			MultiToggle component2 = gameObject2.GetComponent<MultiToggle>();
-			component2.onClick = (System.Action)Delegate.Combine(component2.onClick, (System.Action)delegate
-			{
-				List<Pickupable> list = ClusterManager.Instance.activeWorld.worldInventory.CreatePickupablesList(tag);
-				if (list != null && list.Count > 0)
-				{
-					SelectTool.Instance.SelectAndFocus(list[clickIdx % list.Count].transform.position, list[clickIdx % list.Count].GetComponent<KSelectable>());
-					clickIdx++;
-				}
-				else
-				{
-					clickIdx = 0;
-				}
-			});
-			rows.Add(tag, gameObject2);
 		}
 		foreach (Tag notifyResource in worldInventory.notifyResources)
 		{
 			if (!rows.ContainsKey(notifyResource))
 			{
-				GameObject value = Util.KInstantiateUI(linePrefab, rowContainer);
-				rows.Add(notifyResource, value);
+				rows.Add(notifyResource, CreateRow(notifyResource));
 			}
 		}
-		foreach (KeyValuePair<Tag, GameObject> row in rows)
+		foreach (KeyValuePair<Tag, PinnedResourceRow> row in rows)
 		{
 			if (false || worldInventory.pinnedResources.Contains(row.Key) || worldInventory.notifyResources.Contains(row.Key) || (DiscoveredResources.Instance.newDiscoveries.ContainsKey(row.Key) && worldInventory.GetAmount(row.Key, includeRelatedWorlds: false) > 0f))
 			{
-				if (!row.Value.activeSelf)
+				if (!row.Value.gameObject.activeSelf)
 				{
-					row.Value.SetActive(value: true);
+					row.Value.gameObject.SetActive(value: true);
 				}
 			}
-			else if (row.Value.activeSelf)
+			else if (row.Value.gameObject.activeSelf)
 			{
-				row.Value.SetActive(value: false);
+				row.Value.gameObject.SetActive(value: false);
 			}
 		}
-		foreach (KeyValuePair<Tag, GameObject> row2 in rows)
+		foreach (KeyValuePair<Tag, PinnedResourceRow> row2 in rows)
 		{
-			row2.Value.GetComponent<HierarchyReferences>().GetReference<MultiToggle>("PinToggle").gameObject.SetActive(worldInventory.pinnedResources.Contains(row2.Key));
+			row2.Value.pinToggle.gameObject.SetActive(worldInventory.pinnedResources.Contains(row2.Key));
 		}
 		SortRows();
-		rowContainer.GetComponent<QuickLayout>().ForceUpdate();
+		rowContainerLayout.ForceUpdate();
 	}
 
 	private void SortRows()
 	{
-		List<Tag> list = new List<Tag>();
-		foreach (KeyValuePair<Tag, GameObject> row in rows)
+		List<PinnedResourceRow> list = new List<PinnedResourceRow>();
+		foreach (KeyValuePair<Tag, PinnedResourceRow> row in rows)
 		{
-			list.Add(row.Key);
+			list.Add(row.Value);
 		}
-		list.Sort((Tag a, Tag b) => a.ProperNameStripLink().CompareTo(b.ProperNameStripLink()));
-		foreach (Tag item in list)
+		list.Sort((PinnedResourceRow a, PinnedResourceRow b) => a.SortableNameWithoutLink.CompareTo(b.SortableNameWithoutLink));
+		foreach (PinnedResourceRow item in list)
 		{
-			rows[item].transform.SetAsLastSibling();
+			rows[item.Tag].gameObject.transform.SetAsLastSibling();
 		}
 		clearNewButton.transform.SetAsLastSibling();
 		seeAllButton.transform.SetAsLastSibling();
@@ -229,19 +283,9 @@ public class PinnedResourcesPanel : KScreen, IRender1000ms
 		}
 		if (!flag)
 		{
-			foreach (KeyValuePair<Tag, GameObject> row in rows)
+			foreach (KeyValuePair<Tag, PinnedResourceRow> row in rows)
 			{
-				if (worldInventory.pinnedResources.Contains(row.Key) != row.Value.activeSelf)
-				{
-					flag = true;
-					break;
-				}
-				if (worldInventory.notifyResources.Contains(row.Key) != row.Value.activeSelf)
-				{
-					flag = true;
-					break;
-				}
-				if (DiscoveredResources.Instance.newDiscoveries.ContainsKey(row.Key) != row.Value.activeSelf)
+				if ((worldInventory.pinnedResources.Contains(row.Key) || worldInventory.notifyResources.Contains(row.Key) || (DiscoveredResources.Instance.newDiscoveries.ContainsKey(row.Key) && worldInventory.GetAmount(row.Key, includeRelatedWorlds: false) > 0f)) != row.Value.gameObject.activeSelf)
 				{
 					flag = true;
 					break;
@@ -259,64 +303,74 @@ public class PinnedResourcesPanel : KScreen, IRender1000ms
 		SyncRows();
 		WorldInventory worldInventory = ClusterManager.Instance.GetWorld(ClusterManager.Instance.activeWorldId).worldInventory;
 		bool flag = false;
-		foreach (KeyValuePair<Tag, GameObject> row in rows)
+		foreach (KeyValuePair<Tag, PinnedResourceRow> row in rows)
 		{
-			if (row.Value.activeSelf)
+			if (row.Value.gameObject.activeSelf)
 			{
 				RefreshLine(row.Key, worldInventory);
 				flag = flag || DiscoveredResources.Instance.newDiscoveries.ContainsKey(row.Key);
 			}
 		}
 		clearNewButton.gameObject.SetActive(flag);
-		seeAllButton.GetComponentInChildren<LocText>().SetText(string.Format(UI.RESOURCESCREEN.SEE_ALL, AllResourcesScreen.Instance.UniqueResourceRowCount()));
+		seeAllLabel.SetText(string.Format(UI.RESOURCESCREEN.SEE_ALL, AllResourcesScreen.Instance.UniqueResourceRowCount()));
 	}
 
-	private void RefreshLine(Tag tag, WorldInventory inventory)
+	private void RefreshLine(Tag tag, WorldInventory inventory, bool initialConfig = false)
 	{
 		Tag tag2 = tag;
-		HierarchyReferences component = rows[tag2].GetComponent<HierarchyReferences>();
-		Tuple<Sprite, Color> uISprite = Def.GetUISprite(tag2);
-		component.GetReference<Image>("Icon").sprite = uISprite.first;
-		component.GetReference<Image>("Icon").color = uISprite.second;
-		component.GetReference<LocText>("NameLabel").SetText(tag2.ProperNameStripLink());
 		if (!AllResourcesScreen.Instance.units.ContainsKey(tag))
 		{
 			AllResourcesScreen.Instance.units.Add(tag, GameUtil.MeasureUnit.quantity);
 		}
 		if (!inventory.HasValidCount)
 		{
-			component.GetReference<LocText>("ValueLabel").SetText(UI.ALLRESOURCESSCREEN.FIRST_FRAME_NO_DATA);
+			rows[tag].valueLabel.SetText(UI.ALLRESOURCESSCREEN.FIRST_FRAME_NO_DATA);
 		}
 		else
 		{
 			switch (AllResourcesScreen.Instance.units[tag])
 			{
 			case GameUtil.MeasureUnit.mass:
-				component.GetReference<LocText>("ValueLabel").SetText(GameUtil.GetFormattedMass(inventory.GetAmount(tag2, includeRelatedWorlds: false)));
+			{
+				float amount = inventory.GetAmount(tag2, includeRelatedWorlds: false);
+				if (rows[tag].CheckAmountChanged(amount, updateIfTrue: true))
+				{
+					rows[tag].valueLabel.SetText(GameUtil.GetFormattedMass(amount));
+				}
 				break;
+			}
 			case GameUtil.MeasureUnit.quantity:
-				component.GetReference<LocText>("ValueLabel").SetText(GameUtil.GetFormattedUnits(inventory.GetAmount(tag2, includeRelatedWorlds: false)));
+			{
+				float amount2 = inventory.GetAmount(tag2, includeRelatedWorlds: false);
+				if (rows[tag].CheckAmountChanged(amount2, updateIfTrue: true))
+				{
+					rows[tag].valueLabel.SetText(GameUtil.GetFormattedUnits(amount2));
+				}
 				break;
+			}
 			case GameUtil.MeasureUnit.kcal:
 			{
-				float calories = RationTracker.Get().CountRationsByFoodType(tag.Name, ClusterManager.Instance.activeWorld.worldInventory);
-				component.GetReference<LocText>("ValueLabel").SetText(GameUtil.GetFormattedCalories(calories));
+				float num = RationTracker.Get().CountRationsByFoodType(tag.Name, ClusterManager.Instance.activeWorld.worldInventory);
+				if (rows[tag].CheckAmountChanged(num, updateIfTrue: true))
+				{
+					rows[tag].valueLabel.SetText(GameUtil.GetFormattedCalories(num));
+				}
 				break;
 			}
 			}
 		}
-		component.GetReference<MultiToggle>("PinToggle").onClick = delegate
+		rows[tag].pinToggle.onClick = delegate
 		{
 			inventory.pinnedResources.Remove(tag);
 			SyncRows();
 		};
-		component.GetReference<MultiToggle>("NotifyToggle").onClick = delegate
+		rows[tag].notifyToggle.onClick = delegate
 		{
 			inventory.notifyResources.Remove(tag);
 			SyncRows();
 		};
-		component.GetReference("NewLabel").gameObject.SetActive(DiscoveredResources.Instance.newDiscoveries.ContainsKey(tag));
-		component.GetReference("NewLabel").GetComponent<MultiToggle>().onClick = delegate
+		rows[tag].newLabel.gameObject.SetActive(DiscoveredResources.Instance.newDiscoveries.ContainsKey(tag));
+		rows[tag].newLabel.onClick = delegate
 		{
 			AllResourcesScreen.Instance.Show(!AllResourcesScreen.Instance.gameObject.activeSelf);
 		};

@@ -1,4 +1,5 @@
 using Klei.AI;
+using KSerialization;
 using UnityEngine;
 
 public class StaterpillarGenerator : Generator
@@ -30,8 +31,17 @@ public class StaterpillarGenerator : Generator
 
 	private StatesInstance smi;
 
+	[Serialize]
+	public Ref<Staterpillar> parent = new Ref<Staterpillar>();
+
 	protected override void OnSpawn()
 	{
+		Staterpillar staterpillar = parent.Get();
+		if (staterpillar == null || staterpillar.GetGenerator() != this)
+		{
+			Util.KDestroyGameObject(base.gameObject);
+			return;
+		}
 		smi = new StatesInstance(this);
 		smi.StartSM();
 		base.OnSpawn();

@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 [AddComponentMenu("KMonoBehaviour/scripts/SpriteSheetAnimManager")]
 public class SpriteSheetAnimManager : KMonoBehaviour, IRenderEveryTick
 {
-	public const float SECONDS_PER_FRAME = 71f / (678f * (float)Math.PI);
+	public const float SECONDS_PER_FRAME = 1f / 30f;
 
 	[SerializeField]
 	private SpriteSheet[] sheets;

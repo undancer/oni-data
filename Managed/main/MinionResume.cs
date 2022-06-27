@@ -109,20 +109,23 @@ public class MinionResume : KMonoBehaviour, ISaveLoadable, ISim200ms
 	[OnDeserialized]
 	private void OnDeserializedMethod()
 	{
-		if (!SaveLoader.Instance.GameInfo.IsVersionOlderThan(7, 7))
+		if (SaveLoader.Instance.GameInfo.IsVersionOlderThan(7, 7))
 		{
-			return;
-		}
-		foreach (KeyValuePair<string, bool> item in MasteryByRoleID)
-		{
-			if (item.Value && item.Key != "NoRole")
+			foreach (KeyValuePair<string, bool> item in MasteryByRoleID)
 			{
-				ForceAddSkillPoint();
+				if (item.Value && item.Key != "NoRole")
+				{
+					ForceAddSkillPoint();
+				}
+			}
+			foreach (KeyValuePair<HashedString, float> item2 in AptitudeByRoleGroup)
+			{
+				AptitudeBySkillGroup[item2.Key] = item2.Value;
 			}
 		}
-		foreach (KeyValuePair<HashedString, float> item2 in AptitudeByRoleGroup)
+		if (TotalSkillPointsGained > 1000 || TotalSkillPointsGained < 0)
 		{
-			AptitudeBySkillGroup[item2.Key] = item2.Value;
+			ForceSetSkillPoints(100);
 		}
 	}
 
@@ -478,6 +481,11 @@ public class MinionResume : KMonoBehaviour, ISaveLoadable, ISim200ms
 	{
 		Trigger(540773776);
 		Game.Instance.Trigger(-1523247426, this);
+	}
+
+	public void ForceSetSkillPoints(int points)
+	{
+		totalExperienceGained = CalculatePreviousExperienceBar(points);
 	}
 
 	public void ForceAddSkillPoint()

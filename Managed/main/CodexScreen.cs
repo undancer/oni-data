@@ -240,6 +240,43 @@ public class CodexScreen : KScreen
 		return 50f;
 	}
 
+	public void RefreshTutorialMessages()
+	{
+		if (!HasFocus)
+		{
+			return;
+		}
+		string key = CodexCache.FormatLinkID("MISCELLANEOUSTIPS");
+		if (!CodexCache.entries.TryGetValue(key, out var value))
+		{
+			return;
+		}
+		for (int i = 0; i < value.subEntries.Count; i++)
+		{
+			for (int j = 0; j < value.subEntries[i].contentContainers.Count; j++)
+			{
+				for (int k = 0; k < value.subEntries[i].contentContainers[j].content.Count; k++)
+				{
+					if (value.subEntries[i].contentContainers[j].content[k] is CodexText codexText && codexText.messageID == MISC.NOTIFICATIONS.BASICCONTROLS.NAME)
+					{
+						if (KInputManager.currentControllerIsGamepad)
+						{
+							codexText.text = MISC.NOTIFICATIONS.BASICCONTROLS.MESSAGEBODYALT;
+						}
+						else
+						{
+							codexText.text = MISC.NOTIFICATIONS.BASICCONTROLS.MESSAGEBODY;
+						}
+						if (!string.IsNullOrEmpty(activeEntryID))
+						{
+							ChangeArticle("MISCELLANEOUSTIPS0");
+						}
+					}
+				}
+			}
+		}
+	}
+
 	private void CodexScreenInit()
 	{
 		textStyles[CodexTextStyle.Title] = textStyleTitle;
@@ -265,6 +302,7 @@ public class CodexScreen : KScreen
 				}
 			}
 		});
+		KInputManager.InputChange.AddListener(RefreshTutorialMessages);
 	}
 
 	private void SetupPrefabs()

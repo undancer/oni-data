@@ -49,6 +49,26 @@ public class ComplexRecipeManager
 		return stringBuilder.ToString();
 	}
 
+	public static string MakeRecipeID(string fabricator, IList<ComplexRecipe.RecipeElement> inputs, IList<ComplexRecipe.RecipeElement> outputs, string facadeID)
+	{
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.Append(fabricator);
+		stringBuilder.Append("_I");
+		foreach (ComplexRecipe.RecipeElement input in inputs)
+		{
+			stringBuilder.Append("_");
+			stringBuilder.Append(input.material.ToString());
+		}
+		stringBuilder.Append("_O");
+		foreach (ComplexRecipe.RecipeElement output in outputs)
+		{
+			stringBuilder.Append("_");
+			stringBuilder.Append(output.material.ToString());
+		}
+		stringBuilder.Append("_" + facadeID);
+		return stringBuilder.ToString();
+	}
+
 	public void Add(ComplexRecipe recipe)
 	{
 		foreach (ComplexRecipe recipe2 in recipes)

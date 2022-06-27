@@ -40,7 +40,7 @@ public class KScreenManager : KMonoBehaviour, IInputHandler
 		Instance = this;
 	}
 
-	protected override void OnCleanUp()
+	protected override void OnForcedCleanUp()
 	{
 		Instance = null;
 	}
@@ -165,7 +165,7 @@ public class KScreenManager : KMonoBehaviour, IInputHandler
 		for (int num = screenStack.Count - 1; num >= 0; num--)
 		{
 			KScreen kScreen = screenStack[num];
-			if (kScreen != null && kScreen.isActiveAndEnabled)
+			if (!kScreen.isHiddenButActive && kScreen != null && kScreen.isActiveAndEnabled)
 			{
 				kScreen.OnKeyDown(e);
 				if (e.Consumed)

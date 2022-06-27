@@ -116,8 +116,7 @@ public class Spacecraft
 		{
 			foreach (SkillPerk perk in Db.Get().Skills.Get(item.Key).perks)
 			{
-				SkillAttributePerk skillAttributePerk = perk as SkillAttributePerk;
-				if (skillAttributePerk != null && skillAttributePerk.modifier.AttributeId == text)
+				if (perk is SkillAttributePerk skillAttributePerk && skillAttributePerk.modifier.AttributeId == text)
 				{
 					num += skillAttributePerk.modifier.Value;
 				}

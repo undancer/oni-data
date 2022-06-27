@@ -45,7 +45,10 @@ public class GameComps : KComponents
 		FieldInfo[] fields = typeof(GameComps).GetFields();
 		for (int i = 0; i < fields.Length; i++)
 		{
-			(fields[i].GetValue(null) as IComponentManager)?.Clear();
+			if (fields[i].GetValue(null) is IComponentManager componentManager)
+			{
+				componentManager.Clear();
+			}
 		}
 	}
 

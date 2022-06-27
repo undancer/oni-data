@@ -114,7 +114,7 @@ public class GameScenePartitioner : KMonoBehaviour
 		for (int i = 0; i < 42; i++)
 		{
 			ObjectLayer objectLayer = (ObjectLayer)i;
-			objectLayers[i] = partitioner.CreateMask(new HashedString(objectLayer.ToString()));
+			objectLayers[i] = partitioner.CreateMask(objectLayer.ToString());
 		}
 	}
 
@@ -295,5 +295,20 @@ public class GameScenePartitioner : KMonoBehaviour
 	{
 		base.OnCleanUp();
 		partitioner.Cleanup();
+	}
+
+	public bool DoDebugLayersContainItemsOnCell(int cell)
+	{
+		return partitioner.DoDebugLayersContainItemsOnCell(cell);
+	}
+
+	public List<ScenePartitionerLayer> GetLayers()
+	{
+		return partitioner.layers;
+	}
+
+	public void SetToggledLayers(HashSet<ScenePartitionerLayer> toggled_layers)
+	{
+		partitioner.toggledLayers = toggled_layers;
 	}
 }

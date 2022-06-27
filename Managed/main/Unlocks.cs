@@ -40,21 +40,21 @@ public class Unlocks : KMonoBehaviour
 	{
 		{
 			"emails",
-			new string[22]
+			new string[25]
 			{
 				"email_thermodynamiclaws", "email_security2", "email_pens2", "email_atomiconrecruitment", "email_devonsblog", "email_researchgiant", "email_thejanitor", "email_newemployee", "email_timeoffapproved", "email_security3",
 				"email_preliminarycalculations", "email_hollandsdog", "email_temporalbowupdate", "email_retemporalbowupdate", "email_memorychip", "email_arthistoryrequest", "email_AIcontrol", "email_AIcontrol2", "email_friendlyemail", "email_AIcontrol3",
-				"email_AIcontrol4", "email_engineeringcandidate"
+				"email_AIcontrol4", "email_engineeringcandidate", "email_missingnotes", "email_journalistrequest", "email_journalistrequest2"
 			}
 		},
 		{
 			"journals",
-			new string[33]
+			new string[35]
 			{
 				"journal_timesarrowthoughts", "journal_A046_1", "journal_B835_1", "journal_sunflowerseeds", "journal_B327_1", "journal_B556_1", "journal_employeeprocessing", "journal_B327_2", "journal_A046_2", "journal_elliesbirthday1",
 				"journal_B835_2", "journal_ants", "journal_pipedream", "journal_B556_2", "journal_movedrats", "journal_B835_3", "journal_A046_3", "journal_B556_3", "journal_B327_3", "journal_B835_4",
 				"journal_cleanup", "journal_A046_4", "journal_B327_4", "journal_revisitednumbers", "journal_B556_4", "journal_B835_5", "journal_elliesbirthday2", "journal_B111_1", "journal_revisitednumbers2", "journal_timemusings",
-				"journal_evil", "journal_timesorder", "journal_inspace"
+				"journal_evil", "journal_timesorder", "journal_inspace", "journal_mysteryaward", "journal_courier"
 			}
 		},
 		{
@@ -322,8 +322,7 @@ public class Unlocks : KMonoBehaviour
 			{
 				foreach (ICodexWidget item in contentContainer.content)
 				{
-					CodexText codexText = item as CodexText;
-					if (codexText != null)
+					if (item is CodexText codexText)
 					{
 						text2 = text2 + "\n\n" + codexText.text;
 					}

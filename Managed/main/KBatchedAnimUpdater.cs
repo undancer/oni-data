@@ -90,6 +90,8 @@ public class KBatchedAnimUpdater : Singleton<KBatchedAnimUpdater>
 		previouslyVisibleChunks.Clear();
 		previouslyVisibleChunkGrid = new bool[num, num2];
 		visibleChunkGrid = new bool[num, num2];
+		controllerChunkInfos.Clear();
+		movingControllerInfos.Clear();
 	}
 
 	public Vector2I GetVisibleSize()

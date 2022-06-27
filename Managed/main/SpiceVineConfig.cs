@@ -24,22 +24,22 @@ public class SpiceVineConfig : IEntityConfig
 		EntityTemplates.MakeHangingOffsets(gameObject, 1, 3);
 		EntityTemplates.ExtendEntityToBasicPlant(gameObject, 258.15f, 308.15f, 358.15f, 448.15f, null, pressure_sensitive: true, 0f, 0.15f, SpiceNutConfig.ID, can_drown: true, can_tinker: true, require_solid_tile: true, should_grow_old: true, 2400f, 0f, 9800f, "SpiceVineOriginal", STRINGS.CREATURES.SPECIES.SPICE_VINE.NAME);
 		Tag tag = ElementLoader.FindElementByHash(SimHashes.DirtyWater).tag;
-		PlantElementAbsorber.ConsumeInfo[] array = new PlantElementAbsorber.ConsumeInfo[1];
-		PlantElementAbsorber.ConsumeInfo consumeInfo = new PlantElementAbsorber.ConsumeInfo
+		EntityTemplates.ExtendPlantToIrrigated(gameObject, new PlantElementAbsorber.ConsumeInfo[1]
 		{
-			tag = tag,
-			massConsumptionRate = 7f / 120f
-		};
-		array[0] = consumeInfo;
-		EntityTemplates.ExtendPlantToIrrigated(gameObject, array);
-		PlantElementAbsorber.ConsumeInfo[] array2 = new PlantElementAbsorber.ConsumeInfo[1];
-		consumeInfo = new PlantElementAbsorber.ConsumeInfo
+			new PlantElementAbsorber.ConsumeInfo
+			{
+				tag = tag,
+				massConsumptionRate = 7f / 120f
+			}
+		});
+		EntityTemplates.ExtendPlantToFertilizable(gameObject, new PlantElementAbsorber.ConsumeInfo[1]
 		{
-			tag = GameTags.Phosphorite,
-			massConsumptionRate = 0.0016666667f
-		};
-		array2[0] = consumeInfo;
-		EntityTemplates.ExtendPlantToFertilizable(gameObject, array2);
+			new PlantElementAbsorber.ConsumeInfo
+			{
+				tag = GameTags.Phosphorite,
+				massConsumptionRate = 0.0016666667f
+			}
+		});
 		gameObject.GetComponent<UprootedMonitor>().monitorCells = new CellOffset[1]
 		{
 			new CellOffset(0, 1)

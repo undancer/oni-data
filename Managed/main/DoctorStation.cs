@@ -99,9 +99,25 @@ public class DoctorStation : Workable
 
 	private StatesInstance smi;
 
-	public static readonly Chore.Precondition TreatmentAvailable;
+	public static readonly Chore.Precondition TreatmentAvailable = new Chore.Precondition
+	{
+		id = "TreatmentAvailable",
+		description = DUPLICANTS.CHORES.PRECONDITIONS.TREATMENT_AVAILABLE,
+		fn = delegate(ref Chore.Precondition.Context context, object data)
+		{
+			return ((DoctorStation)data).IsTreatmentAvailable(context.consumerState.gameObject);
+		}
+	};
 
-	public static readonly Chore.Precondition DoctorAvailable;
+	public static readonly Chore.Precondition DoctorAvailable = new Chore.Precondition
+	{
+		id = "DoctorAvailable",
+		description = DUPLICANTS.CHORES.PRECONDITIONS.DOCTOR_AVAILABLE,
+		fn = delegate(ref Chore.Precondition.Context context, object data)
+		{
+			return ((DoctorStation)data).IsDoctorAvailable(context.consumerState.gameObject);
+		}
+	};
 
 	protected override void OnPrefabInit()
 	{
@@ -241,29 +257,5 @@ public class DoctorStation : Workable
 			}
 		}
 		return false;
-	}
-
-	static DoctorStation()
-	{
-		Chore.Precondition precondition = new Chore.Precondition
-		{
-			id = "TreatmentAvailable",
-			description = DUPLICANTS.CHORES.PRECONDITIONS.TREATMENT_AVAILABLE,
-			fn = delegate(ref Chore.Precondition.Context context, object data)
-			{
-				return ((DoctorStation)data).IsTreatmentAvailable(context.consumerState.gameObject);
-			}
-		};
-		TreatmentAvailable = precondition;
-		precondition = new Chore.Precondition
-		{
-			id = "DoctorAvailable",
-			description = DUPLICANTS.CHORES.PRECONDITIONS.DOCTOR_AVAILABLE,
-			fn = delegate(ref Chore.Precondition.Context context, object data)
-			{
-				return ((DoctorStation)data).IsDoctorAvailable(context.consumerState.gameObject);
-			}
-		};
-		DoctorAvailable = precondition;
 	}
 }

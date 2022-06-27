@@ -160,7 +160,7 @@ public class BuildMenuCategoriesScreen : KIconToggleMenu
 			}
 			case PlanScreen.RequirementsState.Materials:
 			{
-				item.toggle.fgImage.SetAlpha(flag ? (64f / 255f) : 1f);
+				item.toggle.fgImage.SetAlpha(flag ? 0.2509804f : 1f);
 				ImageToggleState.State state = ((selectedCategory.IsValid && hashedString == selectedCategory) ? ImageToggleState.State.DisabledActive : ImageToggleState.State.Disabled);
 				if (!userData.currentToggleState.HasValue || userData.currentToggleState.GetValueOrDefault() != state)
 				{
@@ -259,33 +259,33 @@ public class BuildMenuCategoriesScreen : KIconToggleMenu
 		if (subcategories != null && subcategories.Count > 0)
 		{
 			UpdateButtonStates();
-			foreach (ToggleInfo item in toggleInfo)
 			{
-				UserData userData = (UserData)item.userData;
-				HashedString hashedString = userData.category;
-				PlanScreen.RequirementsState categoryRequirements = GetCategoryRequirements(hashedString);
-				if (userData.requirementsState == categoryRequirements)
+				foreach (ToggleInfo item in toggleInfo)
 				{
-					continue;
-				}
-				userData.requirementsState = categoryRequirements;
-				item.userData = userData;
-				if (!skip_flourish)
-				{
-					item.toggle.ActivateFlourish(state: false);
-					string stateName = "NotificationPing";
-					if (!item.toggle.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag(stateName))
+					UserData userData = (UserData)item.userData;
+					HashedString hashedString = userData.category;
+					PlanScreen.RequirementsState categoryRequirements = GetCategoryRequirements(hashedString);
+					if (userData.requirementsState == categoryRequirements)
 					{
-						item.toggle.gameObject.GetComponent<Animator>().Play(stateName);
-						BuildMenu.Instance.PlayNewBuildingSounds();
+						continue;
+					}
+					userData.requirementsState = categoryRequirements;
+					item.userData = userData;
+					if (!skip_flourish)
+					{
+						item.toggle.ActivateFlourish(state: false);
+						string stateName = "NotificationPing";
+						if (!item.toggle.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag(stateName))
+						{
+							item.toggle.gameObject.GetComponent<Animator>().Play(stateName);
+							BuildMenu.Instance.PlayNewBuildingSounds();
+						}
 					}
 				}
+				return;
 			}
 		}
-		else
-		{
-			buildingsScreen.UpdateBuildableStates();
-		}
+		buildingsScreen.UpdateBuildableStates();
 	}
 
 	protected override void OnShow(bool show)

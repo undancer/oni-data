@@ -139,8 +139,7 @@ public class TelepadSideScreen : SideScreenContent
 			gameObject.GetComponent<HierarchyReferences>().GetReference<LocText>("Label").SetText(resource.Name);
 			foreach (ColonyAchievementRequirement item in resource.requirementChecklist)
 			{
-				VictoryColonyAchievementRequirement victoryColonyAchievementRequirement = item as VictoryColonyAchievementRequirement;
-				if (victoryColonyAchievementRequirement != null)
+				if (item is VictoryColonyAchievementRequirement victoryColonyAchievementRequirement)
 				{
 					GameObject gameObject2 = Util.KInstantiateUI(checkboxLinePrefab, gameObject, force_active: true);
 					gameObject2.GetComponent<HierarchyReferences>().GetReference<LocText>("Label").SetText(victoryColonyAchievementRequirement.Name());

@@ -43,7 +43,7 @@ public class JobsTableScreen : TableScreen
 	private Color32 skillOutlineColourLow = Color.white;
 
 	[SerializeField]
-	private Color32 skillOutlineColourHigh = new Color(184f / 255f, 113f / 255f, 148f / 255f);
+	private Color32 skillOutlineColourHigh = new Color(0.72156864f, 0.44313726f, 0.5803922f);
 
 	[SerializeField]
 	private int skillLevelLow = 1;
@@ -62,8 +62,6 @@ public class JobsTableScreen : TableScreen
 
 	[SerializeField]
 	private KImage optionsPanel;
-
-	public static JobsTableScreen Instance;
 
 	[SerializeField]
 	private bool dynamicRowSpacing = true;
@@ -110,7 +108,6 @@ public class JobsTableScreen : TableScreen
 
 	protected override void OnActivate()
 	{
-		Instance = this;
 		title = UI.JOBSSCREEN.TITLE;
 		base.OnActivate();
 		resetSettingsButton.onClick += OnResetSettingsClicked;
@@ -481,8 +478,7 @@ public class JobsTableScreen : TableScreen
 		IPersonalPriorityManager priorityManager = GetPriorityManager(widgetRow);
 		foreach (TableColumn value in columns.Values)
 		{
-			PrioritizationGroupTableColumn prioritizationGroupTableColumn = value as PrioritizationGroupTableColumn;
-			if (prioritizationGroupTableColumn != null)
+			if (value is PrioritizationGroupTableColumn prioritizationGroupTableColumn)
 			{
 				ChoreGroup chore_group = prioritizationGroupTableColumn.userData as ChoreGroup;
 				GameObject widget = widgetRow.GetWidget(prioritizationGroupTableColumn);
@@ -589,8 +585,7 @@ public class JobsTableScreen : TableScreen
 			}
 			foreach (TableColumn value in columns.Values)
 			{
-				PrioritizationGroupTableColumn prioritizationGroupTableColumn = value as PrioritizationGroupTableColumn;
-				if (prioritizationGroupTableColumn != null)
+				if (value is PrioritizationGroupTableColumn prioritizationGroupTableColumn)
 				{
 					GameObject widget = row.GetWidget(prioritizationGroupTableColumn);
 					UpdateWidget(widget, prioritizationGroupTableColumn.userData as ChoreGroup, (identity as MinionIdentity).GetComponent<ChoreConsumer>());
@@ -801,8 +796,8 @@ public class JobsTableScreen : TableScreen
 		bool flag = false;
 		if (e.IsAction(Action.MouseRight))
 		{
-			GetMouseHoverInfo(out var is_hovering_screen, out var _);
-			if (is_hovering_screen)
+			GetMouseHoverInfo(out var _, out var is_hovering_button);
+			if (is_hovering_button)
 			{
 				flag = true;
 				if (!e.Consumed)
@@ -822,18 +817,11 @@ public class JobsTableScreen : TableScreen
 		bool flag = false;
 		if (e.IsAction(Action.MouseRight))
 		{
-			GetMouseHoverInfo(out var is_hovering_screen, out var is_hovering_button);
-			if (is_hovering_screen)
+			GetMouseHoverInfo(out var _, out var is_hovering_button);
+			if (is_hovering_button)
 			{
+				e.TryConsume(Action.MouseRight);
 				flag = true;
-				if (!is_hovering_button)
-				{
-					UISounds.PlaySound(UISounds.Sound.Negative);
-				}
-				if (!e.Consumed)
-				{
-					e.TryConsume(Action.MouseRight);
-				}
 			}
 		}
 		if (!flag)

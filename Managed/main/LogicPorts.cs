@@ -317,8 +317,7 @@ public class LogicPorts : KMonoBehaviour, IGameObjectEffectDescriptor, IRenderEv
 		}
 		for (int i = 0; i < inputPorts.Count; i++)
 		{
-			LogicEventHandler logicEventHandler = inputPorts[i] as LogicEventHandler;
-			if (logicEventHandler != null)
+			if (inputPorts[i] is LogicEventHandler logicEventHandler)
 			{
 				Game.Instance.logicCircuitSystem.RemoveFromNetworks(logicEventHandler.GetLogicCell(), logicEventHandler, is_endpoint: true);
 			}
@@ -425,7 +424,11 @@ public class LogicPorts : KMonoBehaviour, IGameObjectEffectDescriptor, IRenderEv
 			}
 			if (inputPortInfo[i].id == port_id)
 			{
-				return (inputPorts[i] as LogicEventHandler)?.Value ?? 0;
+				if (!(inputPorts[i] is LogicEventHandler logicEventHandler))
+				{
+					return 0;
+				}
+				return logicEventHandler.Value;
 			}
 		}
 		return 0;
@@ -435,8 +438,7 @@ public class LogicPorts : KMonoBehaviour, IGameObjectEffectDescriptor, IRenderEv
 	{
 		for (int i = 0; i < outputPorts.Count; i++)
 		{
-			LogicEventSender logicEventSender = outputPorts[i] as LogicEventSender;
-			if (logicEventSender == null)
+			if (!(outputPorts[i] is LogicEventSender logicEventSender))
 			{
 				return 0;
 			}

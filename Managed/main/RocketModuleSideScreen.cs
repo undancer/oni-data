@@ -41,6 +41,12 @@ public class RocketModuleSideScreen : SideScreenContent
 		instance = this;
 	}
 
+	protected override void OnForcedCleanUp()
+	{
+		instance = null;
+		base.OnForcedCleanUp();
+	}
+
 	public override int GetSideScreenSortOrder()
 	{
 		return 500;
@@ -103,8 +109,7 @@ public class RocketModuleSideScreen : SideScreenContent
 		reorderable = new_target.GetComponent<ReorderableBuilding>();
 		moduleIcon.sprite = Def.GetUISprite(reorderable.gameObject).first;
 		moduleNameLabel.SetText(reorderable.GetProperName());
-		BuildingDef buildingDef = ((!(reorderable.GetComponent<Building>() != null)) ? reorderable.GetComponent<BuildingUnderConstruction>().Def : reorderable.GetComponent<Building>().Def);
-		moduleDescriptionLabel.SetText(buildingDef.Desc);
+		moduleDescriptionLabel.SetText(reorderable.GetComponent<Building>().Desc);
 		UpdateButtonStates();
 	}
 
@@ -125,6 +130,11 @@ public class RocketModuleSideScreen : SideScreenContent
 		{
 			if (ClusterManager.Instance.activeWorld == component.GetTargetWorld())
 			{
+				changeModuleButton.isInteractable = false;
+				addNewModuleButton.isInteractable = false;
+				removeModuleButton.isInteractable = false;
+				moveModuleDownButton.isInteractable = false;
+				moveModuleUpButton.isInteractable = false;
 				viewInteriorButton.isInteractable = component.GetMyWorldId() != ClusterManager.INVALID_WORLD_IDX;
 				viewInteriorButton.GetComponentInChildren<LocText>().SetText(UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.BUTTONVIEWEXTERIOR.LABEL);
 				viewInteriorButton.GetComponent<ToolTip>().SetSimpleTooltip(viewInteriorButton.isInteractable ? UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.BUTTONVIEWEXTERIOR.DESC.text : UI.UISIDESCREENS.ROCKETMODULESIDESCREEN.BUTTONVIEWEXTERIOR.INVALID.text);
@@ -222,6 +232,7 @@ public class RocketModuleSideScreen : SideScreenContent
 			AudioMixer.instance.Start(component2.interiorReverbSnapshot);
 			ClusterManager.Instance.SetActiveWorld(targetWorld.id);
 		}
+		DetailsScreen.Instance.ClearSecondarySideScreen();
 		UpdateButtonStates();
 	}
 }

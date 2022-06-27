@@ -17,9 +17,9 @@ public class RanchStation : GameStateMachine<RanchStation, RanchStation.Instance
 
 		public HashedString rancherInteractAnim = "anim_interacts_rancherstation_kanim";
 
-		public int interactLoopCount = 1;
+		public StatusItem ranchingStatusItem = Db.Get().DuplicantStatusItems.Ranching;
 
-		public bool synchronizeBuilding;
+		public float worktime = 12f;
 
 		public Func<Instance, int> getTargetRanchCell = (Instance smi) => Grid.PosToCell(smi);
 	}
@@ -37,6 +37,7 @@ public class RanchStation : GameStateMachine<RanchStation, RanchStation.Instance
 		public Instance(IStateMachineTarget master, Def def)
 			: base(master, def)
 		{
+			base.gameObject.AddOrGet<RancherChore.RancherWorkable>();
 		}
 
 		public Chore CreateChore()

@@ -343,7 +343,7 @@ public class ResearchEntry : KMonoBehaviour
 		toggle.onClick += OnResearchClicked;
 		foreach (KeyValuePair<string, GameObject> item3 in progressBarsByResearchTypeID)
 		{
-			item3.Value.transform.GetChild(0).GetComponentsInChildren<Image>()[1].color = new Color(133f / 255f, 133f / 255f, 133f / 255f);
+			item3.Value.transform.GetChild(0).GetComponentsInChildren<Image>()[1].color = new Color(0.52156866f, 0.52156866f, 0.52156866f);
 		}
 	}
 

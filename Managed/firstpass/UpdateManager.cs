@@ -8,5 +8,5 @@ public class UpdateManager
 
 	public const int SubTicksPerSimTick = 12;
 
-	public const float SecondsPerSubTick = 0.016666668f;
+	public const float SecondsPerSubTick = 1f / 60f;
 }

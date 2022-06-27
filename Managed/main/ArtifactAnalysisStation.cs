@@ -59,6 +59,6 @@ public class ArtifactAnalysisStation : GameStateMachine<ArtifactAnalysisStation,
 
 	private Chore CreateChore(StatesInstance smi)
 	{
-		return new WorkChore<ArtifactAnalysisStationWorkable>(Db.Get().ChoreTypes.Research, smi.workable);
+		return new WorkChore<ArtifactAnalysisStationWorkable>(Db.Get().ChoreTypes.AnalyzeArtifact, smi.workable);
 	}
 }

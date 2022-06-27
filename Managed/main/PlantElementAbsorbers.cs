@@ -19,36 +19,31 @@ public class PlantElementAbsorbers : KCompactedVector<PlantElementAbsorber>
 			array[i] = Game.Instance.accumulators.Add("ElementsConsumed", storage);
 		}
 		HandleVector<int>.Handle invalidHandle = HandleVector<int>.InvalidHandle;
-		PlantElementAbsorber initial_data;
-		PlantElementAbsorber.LocalInfo localInfo;
 		if (consumed_elements.Length == 1)
 		{
-			initial_data = new PlantElementAbsorber
+			return Allocate(new PlantElementAbsorber
 			{
 				storage = storage,
 				consumedElements = null,
-				accumulators = array
-			};
-			localInfo = new PlantElementAbsorber.LocalInfo
-			{
-				tag = consumed_elements[0].tag,
-				massConsumptionRate = consumed_elements[0].massConsumptionRate
-			};
-			initial_data.localInfo = localInfo;
-			return Allocate(initial_data);
+				accumulators = array,
+				localInfo = new PlantElementAbsorber.LocalInfo
+				{
+					tag = consumed_elements[0].tag,
+					massConsumptionRate = consumed_elements[0].massConsumptionRate
+				}
+			});
 		}
-		initial_data = new PlantElementAbsorber
+		return Allocate(new PlantElementAbsorber
 		{
 			storage = storage,
 			consumedElements = consumed_elements,
-			accumulators = array
-		};
-		localInfo = (initial_data.localInfo = new PlantElementAbsorber.LocalInfo
-		{
-			tag = Tag.Invalid,
-			massConsumptionRate = 0f
+			accumulators = array,
+			localInfo = new PlantElementAbsorber.LocalInfo
+			{
+				tag = Tag.Invalid,
+				massConsumptionRate = 0f
+			}
 		});
-		return Allocate(initial_data);
 	}
 
 	public HandleVector<int>.Handle Remove(HandleVector<int>.Handle h)

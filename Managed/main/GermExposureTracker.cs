@@ -34,7 +34,7 @@ public class GermExposureTracker : KMonoBehaviour
 		rng = new SeededRandom(GameClock.Instance.GetCycle());
 	}
 
-	protected override void OnCleanUp()
+	protected override void OnForcedCleanUp()
 	{
 		Instance = null;
 	}

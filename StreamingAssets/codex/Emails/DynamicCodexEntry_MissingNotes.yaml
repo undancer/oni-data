@@ -1,0 +1,97 @@
+id: "MissingNotes"
+title: STRINGS.CODEX.MISSINGNOTES.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_missingnotes
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MISSINGNOTES.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.MISSINGNOTES.SUBTITLE
+          style: Subtitle
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_missingnotes
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MISSINGNOTES.BODY.EMAILHEADER3
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_missingnotes
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MISSINGNOTES.BODY.CONTAINER4
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.MISSINGNOTES.BODY.SIGNATURE3
+          style: Body
+
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_missingnotes
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MISSINGNOTES.TITLE
+          style: Subtitle
+      - !CodexText
+          stringKey: STRINGS.CODEX.MISSINGNOTES.BODY.EMAILHEADER1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_missingnotes
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MISSINGNOTES.BODY.CONTAINER3
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.MISSINGNOTES.BODY.SIGNATURE1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_missingnotes
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MISSINGNOTES.TITLE
+          style: Subtitle
+      - !CodexText
+          stringKey: STRINGS.CODEX.MISSINGNOTES.BODY.EMAILHEADER2
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_missingnotes
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MISSINGNOTES.BODY.CONTAINER2
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.MISSINGNOTES.BODY.SIGNATURE2
+          style: Body
+          #-----------------------------
+  - contentLayout: Vertical
+    lockID: email_missingnotes
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MISSINGNOTES.TITLE2
+          style: Subtitle
+      - !CodexText
+          stringKey: STRINGS.CODEX.MISSINGNOTES.BODY.EMAILHEADER1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_missingnotes
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MISSINGNOTES.BODY.CONTAINER1
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.MISSINGNOTES.BODY.SIGNATURE1
+          style: Body
+          

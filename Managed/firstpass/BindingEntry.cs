@@ -102,11 +102,10 @@ public struct BindingEntry : IEquatable<BindingEntry>
 
 	public override bool Equals(object o)
 	{
-		if (!(o is BindingEntry))
+		if (!(o is BindingEntry bindingEntry))
 		{
 			return false;
 		}
-		BindingEntry bindingEntry = (BindingEntry)o;
 		return this == bindingEntry;
 	}
 

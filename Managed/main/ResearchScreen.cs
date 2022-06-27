@@ -66,6 +66,9 @@ public class ResearchScreen : KModalScreen
 
 	private bool panRight;
 
+	[SerializeField]
+	private KChildFitter scrollContentChildFitter;
+
 	private bool rightMouseDown;
 
 	private bool leftMouseDown;
@@ -208,7 +211,7 @@ public class ResearchScreen : KModalScreen
 		{
 			Vector2 steamCameraMovement = KInputManager.steamInputInterpreter.GetSteamCameraMovement();
 			steamCameraMovement *= -1f;
-			keyPanDelta = steamCameraMovement * Time.unscaledDeltaTime * num * 5f;
+			keyPanDelta = steamCameraMovement * Time.unscaledDeltaTime * num * 2f;
 		}
 		Vector2 vector3 = new Vector2(Mathf.Lerp(0f, keyPanDelta.x, Time.unscaledDeltaTime * keyPanEasing), Mathf.Lerp(0f, keyPanDelta.y, Time.unscaledDeltaTime * keyPanEasing));
 		keyPanDelta -= vector3;
@@ -543,6 +546,7 @@ public class ResearchScreen : KModalScreen
 	public override void Show(bool show = true)
 	{
 		mouseOver = false;
+		scrollContentChildFitter.enabled = show;
 		Canvas[] componentsInChildren = GetComponentsInChildren<Canvas>(includeInactive: true);
 		foreach (Canvas canvas in componentsInChildren)
 		{

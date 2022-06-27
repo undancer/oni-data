@@ -56,7 +56,7 @@ public class SolidTransferArm : StateMachineComponent<SolidTransferArm.SMInstanc
 		}
 	}
 
-	private struct BatchUpdateContext
+	private class BatchUpdateContext
 	{
 		public ListPool<SolidTransferArm, BatchUpdateContext>.PooledList solid_transfer_arms;
 
@@ -209,11 +209,11 @@ public class SolidTransferArm : StateMachineComponent<SolidTransferArm.SMInstanc
 		component.OnEndChore(data);
 	});
 
-	private static List<CachedPickupable> cached_pickupables = new List<CachedPickupable>();
-
 	private static WorkItemCollection<BatchUpdateTask, BatchUpdateContext> batch_update_job = new WorkItemCollection<BatchUpdateTask, BatchUpdateContext>();
 
-	private int serial_no;
+	private static List<CachedPickupable> cached_pickupables = new List<CachedPickupable>();
+
+	private short serial_no;
 
 	private static HashedString HASH_ROTATION = "rotation";
 
@@ -278,8 +278,14 @@ public class SolidTransferArm : StateMachineComponent<SolidTransferArm.SMInstanc
 		base.OnCleanUp();
 	}
 
-	private static void CachePickupables()
+	public static void BatchUpdate(List<UpdateBucketWithUpdater<ISim1000ms>.Entry> solid_transfer_arms, float time_delta)
 	{
+		BatchUpdateContext batchUpdateContext = new BatchUpdateContext(solid_transfer_arms);
+		if (batchUpdateContext.solid_transfer_arms.Count == 0)
+		{
+			batchUpdateContext.Finish();
+			return;
+		}
 		cached_pickupables.Clear();
 		foreach (KeyValuePair<Tag, FetchManager.FetchablesByPrefabId> prefabIdToFetchable in Game.Instance.fetchManager.prefabIdToFetchables)
 		{
@@ -294,24 +300,13 @@ public class SolidTransferArm : StateMachineComponent<SolidTransferArm.SMInstanc
 				});
 			}
 		}
-	}
-
-	public static void BatchUpdate(List<UpdateBucketWithUpdater<ISim1000ms>.Entry> solid_transfer_arms, float time_delta)
-	{
-		BatchUpdateContext shared_data = new BatchUpdateContext(solid_transfer_arms);
-		if (shared_data.solid_transfer_arms.Count == 0)
-		{
-			shared_data.Finish();
-			return;
-		}
-		CachePickupables();
-		batch_update_job.Reset(shared_data);
-		int num = Math.Max(1, shared_data.solid_transfer_arms.Count / CPUBudget.coreCount);
-		int num2 = Math.Min(shared_data.solid_transfer_arms.Count, CPUBudget.coreCount);
+		batch_update_job.Reset(batchUpdateContext);
+		int num = Math.Max(1, batchUpdateContext.solid_transfer_arms.Count / CPUBudget.coreCount);
+		int num2 = Math.Min(batchUpdateContext.solid_transfer_arms.Count, CPUBudget.coreCount);
 		for (int i = 0; i != num2; i++)
 		{
 			int num3 = i * num;
-			int end = ((i == num2 - 1) ? shared_data.solid_transfer_arms.Count : (num3 + num));
+			int end = ((i == num2 - 1) ? batchUpdateContext.solid_transfer_arms.Count : (num3 + num));
 			batch_update_job.Add(new BatchUpdateTask(num3, end));
 		}
 		GlobalJobManager.Run(batch_update_job);
@@ -319,7 +314,9 @@ public class SolidTransferArm : StateMachineComponent<SolidTransferArm.SMInstanc
 		{
 			batch_update_job.GetWorkItem(j).Finish();
 		}
-		shared_data.Finish();
+		batchUpdateContext.Finish();
+		batch_update_job.Reset(null);
+		cached_pickupables.Clear();
 	}
 
 	private void Sim()

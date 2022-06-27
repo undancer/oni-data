@@ -136,14 +136,14 @@ public static class ClusterUtil
 
 	public static float GetAmountFromRelatedWorlds(WorldInventory worldInventory, Tag element)
 	{
-		WorldContainer component = worldInventory.GetComponent<WorldContainer>();
+		WorldContainer worldContainer = worldInventory.WorldContainer;
 		float num = 0f;
-		int parentWorldId = component.ParentWorldId;
-		foreach (WorldContainer worldContainer in ClusterManager.Instance.WorldContainers)
+		int parentWorldId = worldContainer.ParentWorldId;
+		foreach (WorldContainer worldContainer2 in ClusterManager.Instance.WorldContainers)
 		{
-			if (worldContainer.ParentWorldId == parentWorldId)
+			if (worldContainer2.ParentWorldId == parentWorldId)
 			{
-				num += worldContainer.worldInventory.GetAmount(element, includeRelatedWorlds: false);
+				num += worldContainer2.worldInventory.GetAmount(element, includeRelatedWorlds: false);
 			}
 		}
 		return num;

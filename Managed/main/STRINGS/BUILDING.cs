@@ -350,7 +350,7 @@ namespace STRINGS
 			{
 				public static LocString NAME = "Fabricator accepts mutant seeds";
 
-				public static LocString TOOLTIP = "This fabricator is allowed to use mutant seeds as recipe ingredients.";
+				public static LocString TOOLTIP = "This fabricator is allowed to use " + UI.PRE_KEYWORD + "Mutant Seeds" + UI.PST_KEYWORD + " as recipe ingredients";
 			}
 
 			public class INVALIDPORTOVERLAP
@@ -1414,9 +1414,9 @@ namespace STRINGS
 
 			public class HEATINGSTALLEDLOWMASS_GAS
 			{
-				public static LocString NAME = "Low Air Pressure";
+				public static LocString NAME = "Insufficient Atmosphere";
 
-				public static LocString TOOLTIP = "A minimum atmospheric pressure of <b>{TargetPressure}</b> is needed for this building to heat up";
+				public static LocString TOOLTIP = "This building cannot operate in a vacuum";
 			}
 
 			public class HEATINGSTALLEDLOWMASS_LIQUID

@@ -68,7 +68,7 @@ public class GourmetCookingStationConfig : IBuildingConfig
 		};
 		elementConverter.outputElements = new ElementConverter.OutputElement[1]
 		{
-			new ElementConverter.OutputElement(0.025f, SimHashes.CarbonDioxide, 348.15f, useEntityTemperature: false, storeOutput: false, 0f, 3f)
+			new ElementConverter.OutputElement(0.025f, SimHashes.CarbonDioxide, 348.15f, useEntityTemperature: false, storeOutput: false, 0f, 2f)
 		};
 		ConfigureRecipes();
 		Prioritizable.AddRef(go);
@@ -174,17 +174,34 @@ public class GourmetCookingStationConfig : IBuildingConfig
 			fabricators = new List<Tag> { "GourmetCookingStation" },
 			sortOrder = 800
 		};
-		ComplexRecipe.RecipeElement[] array11 = new ComplexRecipe.RecipeElement[3]
+		ComplexRecipe.RecipeElement[] array11 = new ComplexRecipe.RecipeElement[2]
+		{
+			new ComplexRecipe.RecipeElement(GingerConfig.ID, 4f),
+			new ComplexRecipe.RecipeElement("BeanPlantSeed", 4f)
+		};
+		ComplexRecipe.RecipeElement[] array12 = new ComplexRecipe.RecipeElement[1]
+		{
+			new ComplexRecipe.RecipeElement("Curry", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
+		};
+		SpicyTofuConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("GourmetCookingStation", array11, array12), array11, array12)
+		{
+			time = FOOD.RECIPES.STANDARD_COOK_TIME,
+			description = ITEMS.FOOD.CURRY.RECIPEDESC,
+			nameDisplay = ComplexRecipe.RecipeNameDisplay.Result,
+			fabricators = new List<Tag> { "GourmetCookingStation" },
+			sortOrder = 800
+		};
+		ComplexRecipe.RecipeElement[] array13 = new ComplexRecipe.RecipeElement[3]
 		{
 			new ComplexRecipe.RecipeElement("ColdWheatBread", 1f),
 			new ComplexRecipe.RecipeElement("Lettuce", 1f),
 			new ComplexRecipe.RecipeElement("CookedMeat", 1f)
 		};
-		ComplexRecipe.RecipeElement[] array12 = new ComplexRecipe.RecipeElement[1]
+		ComplexRecipe.RecipeElement[] array14 = new ComplexRecipe.RecipeElement[1]
 		{
 			new ComplexRecipe.RecipeElement("Burger", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 		};
-		BurgerConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("GourmetCookingStation", array11, array12), array11, array12)
+		BurgerConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("GourmetCookingStation", array13, array14), array13, array14)
 		{
 			time = FOOD.RECIPES.STANDARD_COOK_TIME,
 			description = ITEMS.FOOD.BURGER.RECIPEDESC,
@@ -194,17 +211,17 @@ public class GourmetCookingStationConfig : IBuildingConfig
 		};
 		if (DlcManager.IsExpansion1Active())
 		{
-			ComplexRecipe.RecipeElement[] array13 = new ComplexRecipe.RecipeElement[3]
+			ComplexRecipe.RecipeElement[] array15 = new ComplexRecipe.RecipeElement[3]
 			{
 				new ComplexRecipe.RecipeElement("ColdWheatSeed", 3f),
 				new ComplexRecipe.RecipeElement("WormSuperFruit", 4f),
 				new ComplexRecipe.RecipeElement("GrilledPrickleFruit", 1f)
 			};
-			ComplexRecipe.RecipeElement[] array14 = new ComplexRecipe.RecipeElement[1]
+			ComplexRecipe.RecipeElement[] array16 = new ComplexRecipe.RecipeElement[1]
 			{
 				new ComplexRecipe.RecipeElement("BerryPie", 1f, ComplexRecipe.RecipeElement.TemperatureOperation.Heated)
 			};
-			BerryPieConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("GourmetCookingStation", array13, array14), array13, array14)
+			BerryPieConfig.recipe = new ComplexRecipe(ComplexRecipeManager.MakeRecipeID("GourmetCookingStation", array15, array16), array15, array16)
 			{
 				time = FOOD.RECIPES.STANDARD_COOK_TIME,
 				description = ITEMS.FOOD.BERRYPIE.RECIPEDESC,

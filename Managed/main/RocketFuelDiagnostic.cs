@@ -6,7 +6,7 @@ public class RocketFuelDiagnostic : ColonyDiagnostic
 		: base(worldID, UI.COLONY_DIAGNOSTICS.ROCKETFUELDIAGNOSTIC.ALL_NAME)
 	{
 		tracker = TrackerTool.Instance.GetWorldTracker<RocketFuelTracker>(worldID);
-		icon = "icon_action_dig";
+		icon = "rocket_fuel";
 	}
 
 	public override string[] GetDlcIds()

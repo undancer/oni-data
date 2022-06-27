@@ -7,7 +7,7 @@ public class RocketsInOrbitDiagnostic : ColonyDiagnostic
 	public RocketsInOrbitDiagnostic(int worldID)
 		: base(worldID, UI.COLONY_DIAGNOSTICS.ROCKETINORBITDIAGNOSTIC.ALL_NAME)
 	{
-		icon = "icon_action_dig";
+		icon = "icon_errand_rocketry";
 		AddCriterion("RocketsOrbiting", new DiagnosticCriterion(UI.COLONY_DIAGNOSTICS.ROCKETINORBITDIAGNOSTIC.CRITERIA.CHECKORBIT, CheckOrbit));
 	}
 

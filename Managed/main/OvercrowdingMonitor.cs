@@ -14,11 +14,16 @@ public class OvercrowdingMonitor : GameStateMachine<OvercrowdingMonitor, Overcro
 
 		public bool isBaby;
 
+		public bool isFish;
+
 		public Instance(IStateMachineTarget master, Def def)
 			: base(master, def)
 		{
 			BabyMonitor.Def def2 = master.gameObject.GetDef<BabyMonitor.Def>();
 			isBaby = def2 != null;
+			FishOvercrowdingMonitor.Def def3 = master.gameObject.GetDef<FishOvercrowdingMonitor.Def>();
+			isFish = def3 != null;
+			UpdateState(this, 0f);
 		}
 
 		protected override void OnCleanUp()
@@ -28,13 +33,18 @@ public class OvercrowdingMonitor : GameStateMachine<OvercrowdingMonitor, Overcro
 			{
 				if (HasTag(GameTags.Egg))
 				{
-					cavity.eggs.Remove(component);
+					cavity.RemoveFromCavity(component, cavity.eggs);
 				}
 				else
 				{
-					cavity.creatures.Remove(component);
+					cavity.RemoveFromCavity(component, cavity.creatures);
 				}
 			}
+		}
+
+		public void RoomRefreshUpdateCavity()
+		{
+			UpdateState(this, 0f);
 		}
 	}
 
@@ -43,6 +53,8 @@ public class OvercrowdingMonitor : GameStateMachine<OvercrowdingMonitor, Overcro
 	public static Effect futureOvercrowdedEffect;
 
 	public static Effect overcrowdedEffect;
+
+	public static Effect fishOvercrowdedEffect;
 
 	public static Effect stuckEffect;
 
@@ -54,6 +66,8 @@ public class OvercrowdingMonitor : GameStateMachine<OvercrowdingMonitor, Overcro
 		futureOvercrowdedEffect.Add(new AttributeModifier(Db.Get().Amounts.Fertility.deltaAttribute.Id, -1f, CREATURES.MODIFIERS.FUTURE_OVERCROWDED.NAME, is_multiplier: true));
 		overcrowdedEffect = new Effect("Overcrowded", CREATURES.MODIFIERS.OVERCROWDED.NAME, CREATURES.MODIFIERS.OVERCROWDED.TOOLTIP, 0f, show_in_ui: true, trigger_floating_text: false, is_bad: true);
 		overcrowdedEffect.Add(new AttributeModifier(Db.Get().CritterAttributes.Happiness.Id, -5f, CREATURES.MODIFIERS.OVERCROWDED.NAME));
+		fishOvercrowdedEffect = new Effect("Overcrowded", CREATURES.MODIFIERS.OVERCROWDED.NAME, CREATURES.MODIFIERS.OVERCROWDED.FISHTOOLTIP, 0f, show_in_ui: true, trigger_floating_text: false, is_bad: true);
+		fishOvercrowdedEffect.Add(new AttributeModifier(Db.Get().CritterAttributes.Happiness.Id, -5f, CREATURES.MODIFIERS.OVERCROWDED.NAME));
 		stuckEffect = new Effect("Confined", CREATURES.MODIFIERS.CONFINED.NAME, CREATURES.MODIFIERS.CONFINED.TOOLTIP, 0f, show_in_ui: true, trigger_floating_text: false, is_bad: true);
 		stuckEffect.Add(new AttributeModifier(Db.Get().CritterAttributes.Happiness.Id, -10f, CREATURES.MODIFIERS.CONFINED.NAME));
 	}
@@ -111,7 +125,7 @@ public class OvercrowdingMonitor : GameStateMachine<OvercrowdingMonitor, Overcro
 			{
 				return sMI.cellCount / fishCount < smi.def.spaceRequiredPerCreature;
 			}
-			return false;
+			return !Grid.IsLiquid(Grid.PosToCell(smi));
 		}
 		if (smi.cavity != null && smi.cavity.creatures.Count > 1)
 		{
@@ -131,7 +145,8 @@ public class OvercrowdingMonitor : GameStateMachine<OvercrowdingMonitor, Overcro
 		component.SetTag(GameTags.Creatures.Overcrowded, flag2);
 		component.SetTag(GameTags.Creatures.Expecting, flag3);
 		SetEffect(smi, stuckEffect, flag);
-		SetEffect(smi, overcrowdedEffect, !flag && flag2);
+		Effect effect = (smi.isFish ? fishOvercrowdedEffect : overcrowdedEffect);
+		SetEffect(smi, effect, !flag && flag2);
 		SetEffect(smi, futureOvercrowdedEffect, !flag && flag3);
 	}
 
@@ -160,11 +175,11 @@ public class OvercrowdingMonitor : GameStateMachine<OvercrowdingMonitor, Overcro
 		{
 			if (smi.HasTag(GameTags.Egg))
 			{
-				smi.cavity.eggs.Remove(component);
+				smi.cavity.RemoveFromCavity(component, smi.cavity.eggs);
 			}
 			else
 			{
-				smi.cavity.creatures.Remove(component);
+				smi.cavity.RemoveFromCavity(component, smi.cavity.creatures);
 			}
 			Game.Instance.roomProber.UpdateRoom(cavityForCell);
 		}

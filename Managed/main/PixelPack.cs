@@ -51,9 +51,9 @@ public class PixelPack : KMonoBehaviour, ISaveLoadable
 	[Serialize]
 	public List<ColorPair> colorSettings;
 
-	private Color defaultActive = new Color(88f / 255f, 72f / 85f, 28f / 85f);
+	private Color defaultActive = new Color(0.34509805f, 72f / 85f, 28f / 85f);
 
-	private Color defaultStandby = new Color(248f / 255f, 0.47058824f, 88f / 255f);
+	private Color defaultStandby = new Color(0.972549f, 0.47058824f, 0.34509805f);
 
 	protected static readonly HashedString[] ON_ANIMS = new HashedString[2] { "on_pre", "on" };
 

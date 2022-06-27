@@ -367,10 +367,6 @@ public class ReorderableBuilding : KMonoBehaviour
 			Components.BuildingAttachPoints.Remove(component);
 		}
 		UnmarkBuilding(base.gameObject, null);
-		if (materials == null)
-		{
-			materials = toModule.DefaultElements();
-		}
 		if (num != 0 && gameObject != null)
 		{
 			gameObject.GetComponent<ReorderableBuilding>().MoveVertical(num);
@@ -383,7 +379,17 @@ public class ReorderableBuilding : KMonoBehaviour
 				num *= -1;
 				gameObject.GetComponent<ReorderableBuilding>().MoveVertical(num);
 			}
+			MarkBuilding(base.gameObject, (gameObject != null) ? gameObject.GetComponent<AttachableBuilding>() : null);
+			if (component != null && gameObject != null)
+			{
+				component.points[0].attachedBuilding = gameObject.GetComponent<AttachableBuilding>();
+				Components.BuildingAttachPoints.Add(component);
+			}
 			return null;
+		}
+		if (materials == null)
+		{
+			materials = toModule.DefaultElements();
 		}
 		GameObject gameObject2 = null;
 		gameObject2 = ((!DebugHandler.InstantBuildMode && (!Game.Instance.SandboxModeActive || !SandboxToolParameterMenu.instance.settings.InstantBuild)) ? toModule.TryPlace(base.gameObject, Grid.CellToPosCBC(cell, toModule.SceneLayer), Orientation.Neutral, materials) : toModule.Build(cell, Orientation.Neutral, null, materials, 273.15f, playsound: true, GameClock.Instance.GetTime()));

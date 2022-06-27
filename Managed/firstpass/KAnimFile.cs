@@ -36,6 +36,10 @@ public class KAnimFile : ScriptableObject
 
 	public string homedirectory = "";
 
+	public bool IsBuildLoaded { get; private set; }
+
+	public bool IsAnimLoaded { get; private set; }
+
 	public byte[] animBytes
 	{
 		get
@@ -95,6 +99,14 @@ public class KAnimFile : ScriptableObject
 			_batchTag = KAnimGroupFile.GetGroupForHomeDirectory(new HashedString(homedirectory));
 			return _batchTag;
 		}
+	}
+
+	public void FinalizeLoading()
+	{
+		IsBuildLoaded = buildBytes != null;
+		IsAnimLoaded = animBytes != null;
+		animFile = null;
+		buildFile = null;
 	}
 
 	public void Initialize(TextAsset anim, TextAsset build, IList<Texture2D> textures)

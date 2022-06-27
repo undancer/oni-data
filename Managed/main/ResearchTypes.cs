@@ -21,12 +21,12 @@ public class ResearchTypes
 
 	public ResearchTypes()
 	{
-		ResearchType item = new ResearchType("basic", RESEARCH.TYPES.ALPHA.NAME, RESEARCH.TYPES.ALPHA.DESC, Assets.GetSprite("research_type_alpha_icon"), new Color(152f / 255f, 2f / 3f, 233f / 255f), new Recipe.Ingredient[1]
+		ResearchType item = new ResearchType("basic", RESEARCH.TYPES.ALPHA.NAME, RESEARCH.TYPES.ALPHA.DESC, Assets.GetSprite("research_type_alpha_icon"), new Color(0.59607846f, 2f / 3f, 0.9137255f), new Recipe.Ingredient[1]
 		{
 			new Recipe.Ingredient("Dirt".ToTag(), 100f)
 		}, 600f, "research_center_kanim", new string[1] { "ResearchCenter" }, RESEARCH.TYPES.ALPHA.RECIPEDESC);
 		Types.Add(item);
-		ResearchType item2 = new ResearchType("advanced", RESEARCH.TYPES.BETA.NAME, RESEARCH.TYPES.BETA.DESC, Assets.GetSprite("research_type_beta_icon"), new Color(0.6f, 98f / 255f, 29f / 51f), new Recipe.Ingredient[1]
+		ResearchType item2 = new ResearchType("advanced", RESEARCH.TYPES.BETA.NAME, RESEARCH.TYPES.BETA.DESC, Assets.GetSprite("research_type_beta_icon"), new Color(0.6f, 0.38431373f, 29f / 51f), new Recipe.Ingredient[1]
 		{
 			new Recipe.Ingredient("Water".ToTag(), 25f)
 		}, 1200f, "research_center_kanim", new string[1] { "AdvancedResearchCenter" }, RESEARCH.TYPES.BETA.RECIPEDESC);

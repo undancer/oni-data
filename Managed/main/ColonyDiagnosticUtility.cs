@@ -65,6 +65,11 @@ public class ColonyDiagnosticUtility : KMonoBehaviour, ISim1000ms
 
 	public static ColonyDiagnostic.DiagnosticResult NoDataResult = new ColonyDiagnostic.DiagnosticResult(ColonyDiagnostic.DiagnosticResult.Opinion.Normal, UI.COLONY_DIAGNOSTICS.NO_DATA);
 
+	public static void DestroyInstance()
+	{
+		Instance = null;
+	}
+
 	public ColonyDiagnostic.DiagnosticResult.Opinion GetWorldDiagnosticResult(int worldID)
 	{
 		ColonyDiagnostic.DiagnosticResult.Opinion opinion = ColonyDiagnostic.DiagnosticResult.Opinion.Good;

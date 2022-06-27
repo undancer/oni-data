@@ -15,7 +15,7 @@ public class CustomGameSettings : KMonoBehaviour
 	{
 		Survival = 0,
 		Nosweat = 1,
-		Custom = 0xFF
+		Custom = 255
 	}
 
 	public struct MetricSettingsData
@@ -330,22 +330,20 @@ public class CustomGameSettings : KMonoBehaviour
 	public List<MetricSettingsData> GetSettingsForMetrics()
 	{
 		List<MetricSettingsData> list = new List<MetricSettingsData>();
-		MetricSettingsData metricSettingsData = new MetricSettingsData
+		list.Add(new MetricSettingsData
 		{
 			Name = "CustomGameMode",
 			Value = this.customGameMode.ToString()
-		};
-		list.Add(metricSettingsData);
+		});
 		foreach (KeyValuePair<string, string> item2 in CurrentQualityLevelsBySetting)
 		{
-			metricSettingsData = new MetricSettingsData
+			list.Add(new MetricSettingsData
 			{
 				Name = item2.Key,
 				Value = item2.Value
-			};
-			list.Add(metricSettingsData);
+			});
 		}
-		metricSettingsData = default(MetricSettingsData);
+		MetricSettingsData metricSettingsData = default(MetricSettingsData);
 		metricSettingsData.Name = "CustomGameModeActual";
 		metricSettingsData.Value = CustomGameMode.Custom.ToString();
 		MetricSettingsData item = metricSettingsData;

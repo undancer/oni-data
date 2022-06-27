@@ -16,6 +16,12 @@ public class WorldGenScreen : NewGameFlowScreen
 		Instance = this;
 	}
 
+	protected override void OnForcedCleanUp()
+	{
+		Instance = null;
+		base.OnForcedCleanUp();
+	}
+
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
@@ -56,6 +62,10 @@ public class WorldGenScreen : NewGameFlowScreen
 		if (!e.Consumed)
 		{
 			e.TryConsume(Action.Escape);
+		}
+		if (!e.Consumed)
+		{
+			e.TryConsume(Action.MouseRight);
 		}
 		base.OnKeyDown(e);
 	}

@@ -136,6 +136,12 @@ namespace Database
 
 		public ChoreType EquipmentFetch;
 
+		public ChoreType Research;
+
+		public ChoreType AnalyzeArtifact;
+
+		public ChoreType AnalyzeSeed;
+
 		public ChoreType Disinfect;
 
 		public ChoreType Repair;
@@ -147,8 +153,6 @@ namespace Database
 		public ChoreType Demolish;
 
 		public ChoreType Art;
-
-		public ChoreType Research;
 
 		public ChoreType GeneratePower;
 
@@ -206,6 +210,8 @@ namespace Database
 
 		public ChoreType UglyCry;
 
+		public ChoreType BansheeWail;
+
 		public ChoreType BingeEat;
 
 		public ChoreType StressIdle;
@@ -239,6 +245,8 @@ namespace Database
 		public ChoreType RocketControl;
 
 		public ChoreType Party;
+
+		public ChoreType Hug;
 
 		private int nextImplicitPriority = 10000;
 
@@ -303,8 +311,10 @@ namespace Database
 			Emote = Add("Emote", new string[0], "Emote", new string[0], DUPLICANTS.CHORES.EMOTEHIGHPRIORITY.NAME, DUPLICANTS.CHORES.EMOTEHIGHPRIORITY.STATUS, DUPLICANTS.CHORES.EMOTEHIGHPRIORITY.TOOLTIP, skip_implicit_priority_change: false);
 			EmoteHighPriority = Add("EmoteHighPriority", new string[0], "EmoteHighPriority", new string[0], DUPLICANTS.CHORES.EMOTEHIGHPRIORITY.NAME, DUPLICANTS.CHORES.EMOTEHIGHPRIORITY.STATUS, DUPLICANTS.CHORES.EMOTEHIGHPRIORITY.TOOLTIP, skip_implicit_priority_change: false);
 			StressEmote = Add("StressEmote", new string[0], "EmoteHighPriority", new string[0], DUPLICANTS.CHORES.EMOTEHIGHPRIORITY.NAME, DUPLICANTS.CHORES.EMOTEHIGHPRIORITY.STATUS, DUPLICANTS.CHORES.EMOTEHIGHPRIORITY.TOOLTIP, skip_implicit_priority_change: false);
+			Hug = Add("Hug", new string[0], "", new string[0], DUPLICANTS.CHORES.HUG.NAME, DUPLICANTS.CHORES.HUG.STATUS, DUPLICANTS.CHORES.HUG.TOOLTIP, skip_implicit_priority_change: false);
 			StressVomit = Add("StressVomit", new string[0], "", new string[0], DUPLICANTS.CHORES.STRESSVOMIT.NAME, DUPLICANTS.CHORES.STRESSVOMIT.STATUS, DUPLICANTS.CHORES.STRESSVOMIT.TOOLTIP, skip_implicit_priority_change: false);
 			UglyCry = Add("UglyCry", new string[0], "", new string[1] { "MoveTo" }, DUPLICANTS.CHORES.UGLY_CRY.NAME, DUPLICANTS.CHORES.UGLY_CRY.STATUS, DUPLICANTS.CHORES.UGLY_CRY.TOOLTIP, skip_implicit_priority_change: false);
+			BansheeWail = Add("BansheeWail", new string[0], "", new string[1] { "MoveTo" }, DUPLICANTS.CHORES.BANSHEE_WAIL.NAME, DUPLICANTS.CHORES.BANSHEE_WAIL.STATUS, DUPLICANTS.CHORES.BANSHEE_WAIL.TOOLTIP, skip_implicit_priority_change: false);
 			BingeEat = Add("BingeEat", new string[0], "", new string[1] { "MoveTo" }, DUPLICANTS.CHORES.BINGE_EAT.NAME, DUPLICANTS.CHORES.BINGE_EAT.STATUS, DUPLICANTS.CHORES.BINGE_EAT.TOOLTIP, skip_implicit_priority_change: false);
 			StressActingOut = Add("StressActingOut", new string[0], "", new string[1] { "MoveTo" }, DUPLICANTS.CHORES.STRESSACTINGOUT.NAME, DUPLICANTS.CHORES.STRESSACTINGOUT.STATUS, DUPLICANTS.CHORES.STRESSACTINGOUT.TOOLTIP, skip_implicit_priority_change: false);
 			Vomit = Add("Vomit", new string[0], "EmoteHighPriority", new string[0], DUPLICANTS.CHORES.VOMIT.NAME, DUPLICANTS.CHORES.VOMIT.STATUS, DUPLICANTS.CHORES.VOMIT.TOOLTIP, skip_implicit_priority_change: false);
@@ -330,7 +340,7 @@ namespace Database
 			LearnSkill = Add("LearnSkill", new string[0], "LearnSkill", new string[0], DUPLICANTS.CHORES.LEARNSKILL.NAME, DUPLICANTS.CHORES.LEARNSKILL.STATUS, DUPLICANTS.CHORES.LEARNSKILL.TOOLTIP, skip_implicit_priority_change: false);
 			UnlearnSkill = Add("UnlearnSkill", new string[0], "", new string[0], DUPLICANTS.CHORES.UNLEARNSKILL.NAME, DUPLICANTS.CHORES.UNLEARNSKILL.STATUS, DUPLICANTS.CHORES.UNLEARNSKILL.TOOLTIP, skip_implicit_priority_change: false);
 			Equip = Add("Equip", new string[0], "", new string[0], DUPLICANTS.CHORES.EQUIP.NAME, DUPLICANTS.CHORES.EQUIP.STATUS, DUPLICANTS.CHORES.EQUIP.TOOLTIP, skip_implicit_priority_change: false);
-			JoyReaction = Add("JoyReaction", new string[0], "", new string[0], DUPLICANTS.CHORES.JOYREACTION.NAME, DUPLICANTS.CHORES.JOYREACTION.STATUS, DUPLICANTS.CHORES.JOYREACTION.TOOLTIP, skip_implicit_priority_change: false, 5000);
+			JoyReaction = Add("JoyReaction", new string[0], "", new string[0], DUPLICANTS.CHORES.JOYREACTION.NAME, DUPLICANTS.CHORES.JOYREACTION.STATUS, DUPLICANTS.CHORES.JOYREACTION.TOOLTIP, skip_implicit_priority_change: false);
 			RocketControl = Add("RocketControl", new string[1] { "Rocketry" }, "", new string[0], DUPLICANTS.CHORES.ROCKETCONTROL.NAME, DUPLICANTS.CHORES.ROCKETCONTROL.STATUS, DUPLICANTS.CHORES.ROCKETCONTROL.TOOLTIP, skip_implicit_priority_change: false);
 			StressHeal = Add("StressHeal", new string[0], "", new string[1] { "" }, DUPLICANTS.CHORES.STRESSHEAL.NAME, DUPLICANTS.CHORES.STRESSHEAL.STATUS, DUPLICANTS.CHORES.STRESSHEAL.TOOLTIP, skip_implicit_priority_change: false);
 			Party = Add("Party", new string[0], "", new string[0], DUPLICANTS.CHORES.PARTY.NAME, DUPLICANTS.CHORES.PARTY.STATUS, DUPLICANTS.CHORES.PARTY.TOOLTIP, skip_implicit_priority_change: false);
@@ -344,7 +354,7 @@ namespace Database
 			Toggle = Add("Toggle", new string[1] { "Toggle" }, "", new string[0], DUPLICANTS.CHORES.TOGGLE.NAME, DUPLICANTS.CHORES.TOGGLE.STATUS, DUPLICANTS.CHORES.TOGGLE.TOOLTIP, skip_implicit_priority_change: true, 5000);
 			Capture = Add("Capture", new string[1] { "Ranching" }, "", new string[0], DUPLICANTS.CHORES.CAPTURE.NAME, DUPLICANTS.CHORES.CAPTURE.STATUS, DUPLICANTS.CHORES.CAPTURE.TOOLTIP, skip_implicit_priority_change: false, 5000);
 			CreatureFetch = Add("CreatureFetch", new string[1] { "Ranching" }, "", new string[0], DUPLICANTS.CHORES.FETCHCREATURE.NAME, DUPLICANTS.CHORES.FETCHCREATURE.STATUS, DUPLICANTS.CHORES.FETCHCREATURE.TOOLTIP, skip_implicit_priority_change: false, 5000);
-			RanchingFetch = Add("RanchingFetch", new string[1] { "Ranching" }, "", new string[0], DUPLICANTS.CHORES.FETCHRANCHING.NAME, DUPLICANTS.CHORES.FETCHRANCHING.STATUS, DUPLICANTS.CHORES.FETCHRANCHING.TOOLTIP, skip_implicit_priority_change: false, 5000);
+			RanchingFetch = Add("RanchingFetch", new string[2] { "Ranching", "Hauling" }, "", new string[0], DUPLICANTS.CHORES.FETCHRANCHING.NAME, DUPLICANTS.CHORES.FETCHRANCHING.STATUS, DUPLICANTS.CHORES.FETCHRANCHING.TOOLTIP, skip_implicit_priority_change: false, 5000);
 			EggSing = Add("EggSing", new string[1] { "Ranching" }, "", new string[0], DUPLICANTS.CHORES.SINGTOEGG.NAME, DUPLICANTS.CHORES.SINGTOEGG.STATUS, DUPLICANTS.CHORES.SINGTOEGG.TOOLTIP, skip_implicit_priority_change: false, 5000);
 			Astronaut = Add("Astronaut", new string[1] { "MachineOperating" }, "", new string[0], DUPLICANTS.CHORES.ASTRONAUT.NAME, DUPLICANTS.CHORES.ASTRONAUT.STATUS, DUPLICANTS.CHORES.ASTRONAUT.TOOLTIP, skip_implicit_priority_change: false, 5000);
 			FetchCritical = Add("FetchCritical", new string[2] { "Hauling", "LifeSupport" }, "", new string[0], DUPLICANTS.CHORES.FETCHCRITICAL.NAME, DUPLICANTS.CHORES.FETCHCRITICAL.STATUS, DUPLICANTS.CHORES.FETCHCRITICAL.TOOLTIP, skip_implicit_priority_change: false, 5000, DUPLICANTS.CHORES.FETCHCRITICAL.REPORT_NAME);
@@ -358,6 +368,8 @@ namespace Database
 			Deconstruct = Add("Deconstruct", new string[1] { "Build" }, "", new string[0], DUPLICANTS.CHORES.DECONSTRUCT.NAME, DUPLICANTS.CHORES.DECONSTRUCT.STATUS, DUPLICANTS.CHORES.DECONSTRUCT.TOOLTIP, skip_implicit_priority_change: false, 5000);
 			Demolish = Add("Demolish", new string[1] { "Build" }, "", new string[0], DUPLICANTS.CHORES.DEMOLISH.NAME, DUPLICANTS.CHORES.DEMOLISH.STATUS, DUPLICANTS.CHORES.DEMOLISH.TOOLTIP, skip_implicit_priority_change: false, 5000);
 			Research = Add("Research", new string[1] { "Research" }, "", new string[0], DUPLICANTS.CHORES.RESEARCH.NAME, DUPLICANTS.CHORES.RESEARCH.STATUS, DUPLICANTS.CHORES.RESEARCH.TOOLTIP, skip_implicit_priority_change: false, 5000);
+			AnalyzeArtifact = Add("AnalyzeArtifact", new string[2] { "Research", "Art" }, "", new string[0], DUPLICANTS.CHORES.ANALYZEARTIFACT.NAME, DUPLICANTS.CHORES.ANALYZEARTIFACT.STATUS, DUPLICANTS.CHORES.ANALYZEARTIFACT.TOOLTIP, skip_implicit_priority_change: false, 5000);
+			AnalyzeSeed = Add("AnalyzeSeed", new string[2] { "Research", "Farming" }, "", new string[0], DUPLICANTS.CHORES.ANALYZESEED.NAME, DUPLICANTS.CHORES.ANALYZESEED.STATUS, DUPLICANTS.CHORES.ANALYZESEED.TOOLTIP, skip_implicit_priority_change: false, 5000);
 			ResearchFetch = Add("ResearchFetch", new string[2] { "Research", "Hauling" }, "", new string[0], DUPLICANTS.CHORES.RESEARCHFETCH.NAME, DUPLICANTS.CHORES.RESEARCHFETCH.STATUS, DUPLICANTS.CHORES.RESEARCHFETCH.TOOLTIP, skip_implicit_priority_change: false, 5000);
 			GeneratePower = Add("GeneratePower", new string[1] { "MachineOperating" }, "", new string[1] { "StressHeal" }, DUPLICANTS.CHORES.GENERATEPOWER.NAME, DUPLICANTS.CHORES.GENERATEPOWER.STATUS, DUPLICANTS.CHORES.GENERATEPOWER.TOOLTIP, skip_implicit_priority_change: false, 5000);
 			CropTend = Add("CropTend", new string[1] { "Farming" }, "", new string[0], DUPLICANTS.CHORES.CROP_TEND.NAME, DUPLICANTS.CHORES.CROP_TEND.STATUS, DUPLICANTS.CHORES.CROP_TEND.TOOLTIP, skip_implicit_priority_change: false, 5000);
@@ -408,7 +420,7 @@ namespace Database
 				new ChoreType[1] { RecoverBreath },
 				new ChoreType[1] { ReturnSuitUrgent },
 				new ChoreType[1] { UglyCry },
-				new ChoreType[1] { BingeEat },
+				new ChoreType[2] { BingeEat, BansheeWail },
 				new ChoreType[9] { EmoteHighPriority, StressActingOut, Vomit, Cough, Pee, StressIdle, RescueIncapacitated, SwitchHat, RadiationPain },
 				new ChoreType[1] { MoveToQuarantine },
 				new ChoreType[1] { TopPriority },
@@ -421,21 +433,21 @@ namespace Database
 				new ChoreType[3] { Heal, SleepDueToDisease, RestDueToDisease },
 				new ChoreType[2] { Sleep, Narcolepsy },
 				new ChoreType[2] { Doctor, GetDoctored },
-				new ChoreType[1] { Emote },
+				new ChoreType[2] { Emote, Hug },
 				new ChoreType[1] { Mourn },
 				new ChoreType[1] { StressHeal },
 				new ChoreType[1] { Party },
 				new ChoreType[1] { Relax },
 				new ChoreType[2] { Equip, Unequip },
-				new ChoreType[64]
+				new ChoreType[66]
 				{
 					DeliverFood, Sigh, EmptyStorage, Repair, Disinfect, Shower, CleanToilet, LiquidCooledFan, IceCooledFan, SuitMarker,
 					Checkpoint, TravelTubeEntrance, WashHands, Recharge, ScrubOre, Ranch, MoveToSafety, Relocate, Research, Mop,
 					Toggle, Deconstruct, Demolish, Capture, EggSing, Art, GeneratePower, CropTend, PowerTinker, MachineTinker,
 					DropUnusedInventory, Harvest, Uproot, FarmingFabricate, PowerFabricate, Compound, Fabricate, Train, Cook, Build,
-					Dig, BuildDig, FlipCompost, Depressurize, StressEmote, Astronaut, EmptyDesalinator, FetchCritical, ResearchFetch, CreatureFetch,
-					RanchingFetch, Fetch, Transport, FarmFetch, BuildFetch, CookFetch, DoctorFetch, MachineFetch, PowerFetch, FabricateFetch,
-					FoodFetch, StorageFetch, RepairFetch, EquipmentFetch
+					Dig, BuildDig, FlipCompost, Depressurize, StressEmote, Astronaut, EmptyDesalinator, FetchCritical, ResearchFetch, AnalyzeArtifact,
+					AnalyzeSeed, CreatureFetch, RanchingFetch, Fetch, Transport, FarmFetch, BuildFetch, CookFetch, DoctorFetch, MachineFetch,
+					PowerFetch, FabricateFetch, FoodFetch, StorageFetch, RepairFetch, EquipmentFetch
 				},
 				new ChoreType[2] { ReturnSuitIdle, EmoteIdle },
 				new ChoreType[1] { Idle }

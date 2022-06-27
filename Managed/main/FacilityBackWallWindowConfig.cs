@@ -15,6 +15,7 @@ public class FacilityBackWallWindowConfig : IBuildingConfig
 		obj.DefaultAnimState = "off";
 		obj.ObjectLayer = ObjectLayer.Backwall;
 		obj.SceneLayer = Grid.SceneLayer.Backwall;
+		obj.ShowInBuildMenu = false;
 		return obj;
 	}
 

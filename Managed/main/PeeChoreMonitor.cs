@@ -6,6 +6,11 @@ public class PeeChoreMonitor : GameStateMachine<PeeChoreMonitor, PeeChoreMonitor
 			: base(master)
 		{
 		}
+
+		public bool IsCritical()
+		{
+			return IsInsideState(base.sm.critical);
+		}
 	}
 
 	public State building;

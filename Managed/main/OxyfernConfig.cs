@@ -9,9 +9,9 @@ public class OxyfernConfig : IEntityConfig
 
 	public const string SEED_ID = "OxyfernSeed";
 
-	public const float WATER_CONSUMPTION_RATE = 19f / 600f;
+	public const float WATER_CONSUMPTION_RATE = 0.031666666f;
 
-	public const float FERTILIZATION_RATE = 0.006666667f;
+	public const float FERTILIZATION_RATE = 1f / 150f;
 
 	public const float CO2_RATE = 0.00062500004f;
 
@@ -29,24 +29,22 @@ public class OxyfernConfig : IEntityConfig
 		GameObject template = EntityTemplates.CreatePlacedEntity("Oxyfern", STRINGS.CREATURES.SPECIES.OXYFERN.NAME, STRINGS.CREATURES.SPECIES.OXYFERN.DESC, 1f, decor: DECOR.PENALTY.TIER1, anim: Assets.GetAnim("oxy_fern_kanim"), initialAnim: "idle_full", sceneLayer: Grid.SceneLayer.BuildingBack, width: 1, height: 2);
 		template = EntityTemplates.ExtendEntityToBasicPlant(template, 253.15f, 273.15f, 313.15f, 373.15f, new SimHashes[1] { SimHashes.CarbonDioxide }, pressure_sensitive: true, 0f, 0.025f, null, can_drown: true, can_tinker: false, require_solid_tile: true, should_grow_old: true, 2400f, 0f, 2200f, "OxyfernOriginal", STRINGS.CREATURES.SPECIES.OXYFERN.NAME);
 		Tag tag = ElementLoader.FindElementByHash(SimHashes.Water).tag;
-		GameObject template2 = template;
-		PlantElementAbsorber.ConsumeInfo[] array = new PlantElementAbsorber.ConsumeInfo[1];
-		PlantElementAbsorber.ConsumeInfo consumeInfo = new PlantElementAbsorber.ConsumeInfo
+		EntityTemplates.ExtendPlantToIrrigated(template, new PlantElementAbsorber.ConsumeInfo[1]
 		{
-			tag = tag,
-			massConsumptionRate = 19f / 600f
-		};
-		array[0] = consumeInfo;
-		EntityTemplates.ExtendPlantToIrrigated(template2, array);
-		GameObject template3 = template;
-		PlantElementAbsorber.ConsumeInfo[] array2 = new PlantElementAbsorber.ConsumeInfo[1];
-		consumeInfo = new PlantElementAbsorber.ConsumeInfo
+			new PlantElementAbsorber.ConsumeInfo
+			{
+				tag = tag,
+				massConsumptionRate = 0.031666666f
+			}
+		});
+		EntityTemplates.ExtendPlantToFertilizable(template, new PlantElementAbsorber.ConsumeInfo[1]
 		{
-			tag = GameTags.Dirt,
-			massConsumptionRate = 0.006666667f
-		};
-		array2[0] = consumeInfo;
-		EntityTemplates.ExtendPlantToFertilizable(template3, array2);
+			new PlantElementAbsorber.ConsumeInfo
+			{
+				tag = GameTags.Dirt,
+				massConsumptionRate = 1f / 150f
+			}
+		});
 		template.AddOrGet<Oxyfern>();
 		template.AddOrGet<LoopingSounds>();
 		Storage storage = template.AddOrGet<Storage>();

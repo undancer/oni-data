@@ -2,7 +2,7 @@ namespace TUNING
 {
 	public class ROLES
 	{
-		public static float PASSIVE_EXPERIENCE_SCALE = 0.041666668f;
+		public static float PASSIVE_EXPERIENCE_SCALE = 1f / 24f;
 
 		public static float BASIC_ROLE_MASTERY_EXPERIENCE_REQUIRED = 250f;
 

@@ -33,10 +33,6 @@ public class FallMonitor : GameStateMachine<FallMonitor, FallMonitor.Instance>
 
 		private int MAX_CELLS_TRACKED = 3;
 
-		private float lastRecoverAttempt;
-
-		private float recoverCooldown = 0.33f;
-
 		private bool flipRecoverEmote;
 
 		public Instance(IStateMachineTarget master, bool shouldPlayEmotes, string entombedAnimOverride = null)
@@ -231,13 +227,6 @@ public class FallMonitor : GameStateMachine<FallMonitor, FallMonitor.Instance>
 
 		public void TryEntombedEscape()
 		{
-			float timePlayedInSeconds = GameClock.Instance.GetTimePlayedInSeconds();
-			if (timePlayedInSeconds <= lastRecoverAttempt + recoverCooldown)
-			{
-				GoTo(base.sm.entombed.stuck);
-				return;
-			}
-			lastRecoverAttempt = timePlayedInSeconds;
 			int num = Grid.PosToCell(base.transform.GetPosition());
 			int backCell = GetComponent<Facing>().GetBackCell();
 			int num2 = Grid.CellAbove(backCell);

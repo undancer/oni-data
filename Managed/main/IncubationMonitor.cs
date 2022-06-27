@@ -149,7 +149,7 @@ public class IncubationMonitor : GameStateMachine<IncubationMonitor, IncubationM
 			.Exit(DeleteSelf);
 		not_viable.Enter(SpawnGenericEgg).GoTo(null).Exit(DeleteSelf);
 		suppressedEffect = new Effect("IncubationSuppressed", CREATURES.MODIFIERS.INCUBATING_SUPPRESSED.NAME, CREATURES.MODIFIERS.INCUBATING_SUPPRESSED.TOOLTIP, 0f, show_in_ui: true, trigger_floating_text: false, is_bad: true);
-		suppressedEffect.Add(new AttributeModifier(Db.Get().Amounts.Viability.deltaAttribute.Id, -0.016666668f, CREATURES.MODIFIERS.INCUBATING_SUPPRESSED.NAME));
+		suppressedEffect.Add(new AttributeModifier(Db.Get().Amounts.Viability.deltaAttribute.Id, -1f / 60f, CREATURES.MODIFIERS.INCUBATING_SUPPRESSED.NAME));
 	}
 
 	private static bool IsReadyToHatch(Instance smi)

@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Database;
+using Klei;
 using Klei.AI;
 using STRINGS;
 using UnityEngine;
@@ -91,6 +93,18 @@ public class Db : EntityModifierSet
 
 	public OrbitalTypeCategories OrbitalTypeCategories;
 
+	public EquippableFacades EquippableFacades;
+
+	public static string GetPath(string dlcId, string folder)
+	{
+		if (dlcId == "")
+		{
+			return FileSystem.Normalize(Path.Combine(Application.streamingAssetsPath, folder));
+		}
+		string contentDirectoryName = DlcManager.GetContentDirectoryName(dlcId);
+		return FileSystem.Normalize(Path.Combine(Application.streamingAssetsPath, "dlc", contentDirectoryName, folder));
+	}
+
 	public static Db Get()
 	{
 		if (_Instance == null)
@@ -147,10 +161,16 @@ public class Db : EntityModifierSet
 			PlantMutations = new PlantMutations(Root);
 		}
 		OrbitalTypeCategories = new OrbitalTypeCategories(Root);
+		EquippableFacades = new EquippableFacades(Root);
 		Effect effect = new Effect("CenterOfAttention", DUPLICANTS.MODIFIERS.CENTEROFATTENTION.NAME, DUPLICANTS.MODIFIERS.CENTEROFATTENTION.TOOLTIP, 0f, show_in_ui: true, trigger_floating_text: true, is_bad: false);
-		effect.Add(new AttributeModifier("StressDelta", -0.008333334f, DUPLICANTS.MODIFIERS.CENTEROFATTENTION.NAME));
+		effect.Add(new AttributeModifier("StressDelta", -1f / 120f, DUPLICANTS.MODIFIERS.CENTEROFATTENTION.NAME));
 		effects.Add(effect);
 		CollectResources(Root, ResourceTable);
+	}
+
+	public void PostProcess()
+	{
+		Techs.PostProcess();
 	}
 
 	private void CollectResources(Resource resource, List<Resource> resource_table)
@@ -159,8 +179,7 @@ public class Db : EntityModifierSet
 		{
 			resource_table.Add(resource);
 		}
-		ResourceSet resourceSet = resource as ResourceSet;
-		if (resourceSet != null)
+		if (resource is ResourceSet resourceSet)
 		{
 			for (int i = 0; i < resourceSet.Count; i++)
 			{

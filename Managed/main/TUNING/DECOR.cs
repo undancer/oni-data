@@ -6,136 +6,98 @@ namespace TUNING
 	{
 		public class BONUS
 		{
-			public static readonly EffectorValues TIER0;
-
-			public static readonly EffectorValues TIER1;
-
-			public static readonly EffectorValues TIER2;
-
-			public static readonly EffectorValues TIER3;
-
-			public static readonly EffectorValues TIER4;
-
-			public static readonly EffectorValues TIER5;
-
-			public static readonly EffectorValues TIER6;
-
-			public static readonly EffectorValues TIER7;
-
-			public static readonly EffectorValues TIER8;
-
-			static BONUS()
+			public static readonly EffectorValues TIER0 = new EffectorValues
 			{
-				EffectorValues effectorValues = new EffectorValues
-				{
-					amount = 10,
-					radius = 1
-				};
-				TIER0 = effectorValues;
-				effectorValues = new EffectorValues
-				{
-					amount = 15,
-					radius = 2
-				};
-				TIER1 = effectorValues;
-				effectorValues = new EffectorValues
-				{
-					amount = 20,
-					radius = 3
-				};
-				TIER2 = effectorValues;
-				effectorValues = new EffectorValues
-				{
-					amount = 25,
-					radius = 4
-				};
-				TIER3 = effectorValues;
-				effectorValues = new EffectorValues
-				{
-					amount = 30,
-					radius = 5
-				};
-				TIER4 = effectorValues;
-				effectorValues = new EffectorValues
-				{
-					amount = 35,
-					radius = 6
-				};
-				TIER5 = effectorValues;
-				effectorValues = new EffectorValues
-				{
-					amount = 50,
-					radius = 7
-				};
-				TIER6 = effectorValues;
-				effectorValues = new EffectorValues
-				{
-					amount = 80,
-					radius = 7
-				};
-				TIER7 = effectorValues;
-				effectorValues = new EffectorValues
-				{
-					amount = 200,
-					radius = 8
-				};
-				TIER8 = effectorValues;
-			}
+				amount = 10,
+				radius = 1
+			};
+
+			public static readonly EffectorValues TIER1 = new EffectorValues
+			{
+				amount = 15,
+				radius = 2
+			};
+
+			public static readonly EffectorValues TIER2 = new EffectorValues
+			{
+				amount = 20,
+				radius = 3
+			};
+
+			public static readonly EffectorValues TIER3 = new EffectorValues
+			{
+				amount = 25,
+				radius = 4
+			};
+
+			public static readonly EffectorValues TIER4 = new EffectorValues
+			{
+				amount = 30,
+				radius = 5
+			};
+
+			public static readonly EffectorValues TIER5 = new EffectorValues
+			{
+				amount = 35,
+				radius = 6
+			};
+
+			public static readonly EffectorValues TIER6 = new EffectorValues
+			{
+				amount = 50,
+				radius = 7
+			};
+
+			public static readonly EffectorValues TIER7 = new EffectorValues
+			{
+				amount = 80,
+				radius = 7
+			};
+
+			public static readonly EffectorValues TIER8 = new EffectorValues
+			{
+				amount = 200,
+				radius = 8
+			};
 		}
 
 		public class PENALTY
 		{
-			public static readonly EffectorValues TIER0;
-
-			public static readonly EffectorValues TIER1;
-
-			public static readonly EffectorValues TIER2;
-
-			public static readonly EffectorValues TIER3;
-
-			public static readonly EffectorValues TIER4;
-
-			public static readonly EffectorValues TIER5;
-
-			static PENALTY()
+			public static readonly EffectorValues TIER0 = new EffectorValues
 			{
-				EffectorValues effectorValues = new EffectorValues
-				{
-					amount = -5,
-					radius = 1
-				};
-				TIER0 = effectorValues;
-				effectorValues = new EffectorValues
-				{
-					amount = -10,
-					radius = 2
-				};
-				TIER1 = effectorValues;
-				effectorValues = new EffectorValues
-				{
-					amount = -15,
-					radius = 3
-				};
-				TIER2 = effectorValues;
-				effectorValues = new EffectorValues
-				{
-					amount = -20,
-					radius = 4
-				};
-				TIER3 = effectorValues;
-				effectorValues = new EffectorValues
-				{
-					amount = -20,
-					radius = 5
-				};
-				TIER4 = effectorValues;
-				effectorValues = new EffectorValues
-				{
-					amount = -25,
-					radius = 6
-				};
-				TIER5 = effectorValues;
-			}
+				amount = -5,
+				radius = 1
+			};
+
+			public static readonly EffectorValues TIER1 = new EffectorValues
+			{
+				amount = -10,
+				radius = 2
+			};
+
+			public static readonly EffectorValues TIER2 = new EffectorValues
+			{
+				amount = -15,
+				radius = 3
+			};
+
+			public static readonly EffectorValues TIER3 = new EffectorValues
+			{
+				amount = -20,
+				radius = 4
+			};
+
+			public static readonly EffectorValues TIER4 = new EffectorValues
+			{
+				amount = -20,
+				radius = 5
+			};
+
+			public static readonly EffectorValues TIER5 = new EffectorValues
+			{
+				amount = -25,
+				radius = 6
+			};
 		}
 
 		public class SPACEARTIFACT

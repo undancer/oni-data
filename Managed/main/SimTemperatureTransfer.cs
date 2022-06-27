@@ -311,6 +311,10 @@ public class SimTemperatureTransfer : KMonoBehaviour
 			{
 				onSimRegistered(this);
 			}
+			if (!base.enabled)
+			{
+				OnCmpDisable();
+			}
 		}
 		else
 		{

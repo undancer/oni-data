@@ -183,7 +183,7 @@ public class BuildMenuBuildingsScreen : KIconToggleMenu
 		string effect = def.Effect;
 		if (def.HotKey != Action.NumActions)
 		{
-			text = GameUtil.AppendHotkeyString(text, def.HotKey);
+			text += GameUtil.GetHotkeyString(def.HotKey);
 		}
 		component.AddMultiStringTooltip(text, buildingToolTipSettings.BuildButtonName);
 		component.AddMultiStringTooltip(effect, buildingToolTipSettings.BuildButtonDescription);

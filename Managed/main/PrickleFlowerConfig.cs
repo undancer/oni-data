@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Klei.AI;
 using STRINGS;
@@ -7,7 +6,7 @@ using UnityEngine;
 
 public class PrickleFlowerConfig : IEntityConfig
 {
-	public const float WATER_RATE = 71f / (678f * (float)Math.PI);
+	public const float WATER_RATE = 1f / 30f;
 
 	public const string ID = "PrickleFlower";
 
@@ -32,7 +31,7 @@ public class PrickleFlowerConfig : IEntityConfig
 			new PlantElementAbsorber.ConsumeInfo
 			{
 				tag = GameTags.Water,
-				massConsumptionRate = 71f / (678f * (float)Math.PI)
+				massConsumptionRate = 1f / 30f
 			}
 		});
 		gameObject.AddOrGet<StandardCropPlant>();

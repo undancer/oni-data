@@ -204,30 +204,30 @@ public class LaunchConditionManager : KMonoBehaviour, ISim4000ms, ISim1000ms
 				component.SendSignal(statusPort, 0);
 			}
 			KSelectable component2 = GetComponent<KSelectable>();
-			foreach (RocketModule rocketModule in rocketModules)
 			{
-				foreach (ProcessCondition item in rocketModule.GetConditionSet(ProcessCondition.ProcessConditionType.RocketFlight))
+				foreach (RocketModule rocketModule in rocketModules)
 				{
-					if (item.EvaluateCondition() == ProcessCondition.Status.Failure)
+					foreach (ProcessCondition item in rocketModule.GetConditionSet(ProcessCondition.ProcessConditionType.RocketFlight))
 					{
-						if (!conditionStatuses.ContainsKey(item))
+						if (item.EvaluateCondition() == ProcessCondition.Status.Failure)
 						{
-							StatusItem statusItem = item.GetStatusItem(ProcessCondition.Status.Failure);
-							conditionStatuses[item] = component2.AddStatusItem(statusItem, item);
+							if (!conditionStatuses.ContainsKey(item))
+							{
+								StatusItem statusItem = item.GetStatusItem(ProcessCondition.Status.Failure);
+								conditionStatuses[item] = component2.AddStatusItem(statusItem, item);
+							}
+						}
+						else if (conditionStatuses.ContainsKey(item))
+						{
+							component2.RemoveStatusItem(conditionStatuses[item]);
+							conditionStatuses.Remove(item);
 						}
 					}
-					else if (conditionStatuses.ContainsKey(item))
-					{
-						component2.RemoveStatusItem(conditionStatuses[item]);
-						conditionStatuses.Remove(item);
-					}
 				}
+				return;
 			}
 		}
-		else
-		{
-			ClearFlightStatuses();
-			component.SendSignal(statusPort, 0);
-		}
+		ClearFlightStatuses();
+		component.SendSignal(statusPort, 0);
 	}
 }

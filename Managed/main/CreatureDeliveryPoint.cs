@@ -161,7 +161,7 @@ public class CreatureDeliveryPoint : StateMachineComponent<CreatureDeliveryPoint
 
 	private void RefreshCreatureCount(object data = null)
 	{
-		int cell = Grid.PosToCell(this);
+		int cell = Grid.OffsetCell(Grid.PosToCell(this), spawnOffset);
 		CavityInfo cavityForCell = Game.Instance.roomProber.GetCavityForCell(cell);
 		int num = storedCreatureCount;
 		storedCreatureCount = 0;

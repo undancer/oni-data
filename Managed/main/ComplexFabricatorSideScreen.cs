@@ -240,7 +240,7 @@ public class ComplexFabricatorSideScreen : SideScreenContent
 			}
 			num++;
 			Tuple<Sprite, Color> uISprite = Def.GetUISprite(recipe.ingredients[0].material);
-			Tuple<Sprite, Color> uISprite2 = Def.GetUISprite(recipe.results[0].material);
+			Tuple<Sprite, Color> uISprite2 = Def.GetUISprite(recipe.results[0].material, recipe.results[0].facadeID);
 			KToggle newToggle = null;
 			GameObject entryGO;
 			switch (target.sideScreenStyle)
@@ -410,6 +410,21 @@ public class ComplexFabricatorSideScreen : SideScreenContent
 		{
 			DetailsScreen.Instance.ClearSecondarySideScreen();
 		}
+	}
+
+	public void CycleRecipe(int increment)
+	{
+		int num = 0;
+		if (selectedToggle != null)
+		{
+			num = recipeToggles.IndexOf(selectedToggle.gameObject);
+		}
+		int num2 = (num + increment) % recipeToggles.Count;
+		if (num2 < 0)
+		{
+			num2 = recipeToggles.Count + num2;
+		}
+		ToggleClicked(recipeToggles[num2].GetComponent<KToggle>());
 	}
 
 	private bool HasAnyRecipeRequirements(ComplexRecipe recipe)

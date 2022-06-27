@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,7 +29,7 @@ namespace TUNING
 
 			public const float MIN_CO2_TO_EMIT = 0.02f;
 
-			public const float BLADDER_INCREASE_PER_SECOND = 355f / (678f * (float)Math.PI);
+			public const float BLADDER_INCREASE_PER_SECOND = 1f / 6f;
 
 			public const float DECOR_EXPECTATION = 0f;
 
@@ -220,27 +219,27 @@ namespace TUNING
 
 				public const float NEUTRAL = 0.004166667f;
 
-				public const float HARD = 0.008333334f;
+				public const float HARD = 1f / 120f;
 
-				public const float VERYHARD = 0.016666668f;
+				public const float VERYHARD = 1f / 60f;
 			}
 
 			public class MAX_STRESS
 			{
-				public const float EASY = 0.016666668f;
+				public const float EASY = 1f / 60f;
 
-				public const float NEUTRAL = 0.041666668f;
+				public const float NEUTRAL = 1f / 24f;
 
 				public const float HARD = 0.05f;
 
-				public const float VERYHARD = 0.083333336f;
+				public const float VERYHARD = 1f / 12f;
 			}
 
-			public const float ABOVE_EXPECTATIONS = -0.016666668f;
+			public const float ABOVE_EXPECTATIONS = -1f / 60f;
 
-			public const float AT_EXPECTATIONS = -0.008333334f;
+			public const float AT_EXPECTATIONS = -1f / 120f;
 
-			public const float MIN_STRESS = -71f / (678f * (float)Math.PI);
+			public const float MIN_STRESS = -1f / 30f;
 		}
 
 		public class COMBAT
@@ -278,6 +277,8 @@ namespace TUNING
 				public const int POSITIVE_MILD = 10;
 
 				public const int POSITIVE_SIGNIFICANT = 30;
+
+				public const int POSITIVE_MAJOR = 40;
 			}
 
 			public class CONDUCTIVITY_BARRIER_MODIFICATION
@@ -319,7 +320,7 @@ namespace TUNING
 
 			public static int[] GetRandomDistribution()
 			{
-				return TYPES[UnityEngine.Random.Range(0, TYPES.Count)];
+				return TYPES[Random.Range(0, TYPES.Count)];
 			}
 		}
 
@@ -389,15 +390,17 @@ namespace TUNING
 
 		public const float DUPLICANT_BASE_GENERATION_KILOWATTS = 0.08368001f;
 
-		public const float STANDARD_STRESS_PENALTY = 0.016666668f;
+		public const float STANDARD_STRESS_PENALTY = 1f / 60f;
 
-		public const float STANDARD_STRESS_BONUS = -71f / (678f * (float)Math.PI);
+		public const float STANDARD_STRESS_BONUS = -1f / 30f;
 
 		public const float RANCHING_DURATION_MULTIPLIER_BONUS_PER_POINT = 0.1f;
 
 		public const float FARMING_DURATION_MULTIPLIER_BONUS_PER_POINT = 0.1f;
 
 		public const float POWER_DURATION_MULTIPLIER_BONUS_PER_POINT = 0.025f;
+
+		public const float RANCHING_CAPTURABLE_MULTIPLIER_BONUS_PER_POINT = 0.05f;
 
 		public const float STRESS_BELOW_EXPECTATIONS_FOOD = 0.25f;
 
@@ -553,23 +556,673 @@ namespace TUNING
 
 		public static readonly List<string> CONTRACTEDTRAITS_HEALING = new List<string> { "IrritableBowel", "Aggressive", "SlowLearner", "WeakImmuneSystem", "Snorer", "CantDig" };
 
-		public static readonly List<TraitVal> CONGENITALTRAITS;
+		public static readonly List<TraitVal> CONGENITALTRAITS = new List<TraitVal>
+		{
+			new TraitVal
+			{
+				id = "None"
+			},
+			new TraitVal
+			{
+				id = "Joshua",
+				mutuallyExclusiveTraits = new List<string> { "ScaredyCat", "Aggressive" }
+			},
+			new TraitVal
+			{
+				id = "Ellie",
+				statBonus = TINY_STATPOINT_BONUS,
+				mutuallyExclusiveTraits = new List<string> { "InteriorDecorator", "MouthBreather", "Uncultured" }
+			},
+			new TraitVal
+			{
+				id = "Stinky",
+				mutuallyExclusiveTraits = new List<string> { "Flatulence", "InteriorDecorator" }
+			},
+			new TraitVal
+			{
+				id = "Liam",
+				mutuallyExclusiveTraits = new List<string> { "Flatulence", "InteriorDecorator" }
+			}
+		};
 
-		public static readonly TraitVal INVALID_TRAIT_VAL;
+		public static readonly TraitVal INVALID_TRAIT_VAL = new TraitVal
+		{
+			id = "INVALID"
+		};
 
-		public static readonly List<TraitVal> BADTRAITS;
+		public static readonly List<TraitVal> BADTRAITS = new List<TraitVal>
+		{
+			new TraitVal
+			{
+				id = "CantResearch",
+				statBonus = NO_STATPOINT_BONUS,
+				rarity = RARITY_COMMON,
+				dlcId = "",
+				mutuallyExclusiveAptitudes = new List<HashedString> { "Research" }
+			},
+			new TraitVal
+			{
+				id = "CantDig",
+				statBonus = LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = "",
+				mutuallyExclusiveAptitudes = new List<HashedString> { "Mining" }
+			},
+			new TraitVal
+			{
+				id = "CantCook",
+				statBonus = NO_STATPOINT_BONUS,
+				rarity = RARITY_UNCOMMON,
+				dlcId = "",
+				mutuallyExclusiveAptitudes = new List<HashedString> { "Cooking" }
+			},
+			new TraitVal
+			{
+				id = "CantBuild",
+				statBonus = LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = "",
+				mutuallyExclusiveAptitudes = new List<HashedString> { "Building" },
+				mutuallyExclusiveTraits = new List<string> { "GrantSkill_Engineering1" }
+			},
+			new TraitVal
+			{
+				id = "Hemophobia",
+				statBonus = NO_STATPOINT_BONUS,
+				rarity = RARITY_UNCOMMON,
+				dlcId = "",
+				mutuallyExclusiveAptitudes = new List<HashedString> { "MedicalAid" }
+			},
+			new TraitVal
+			{
+				id = "ScaredyCat",
+				statBonus = NO_STATPOINT_BONUS,
+				rarity = RARITY_UNCOMMON,
+				dlcId = "",
+				mutuallyExclusiveAptitudes = new List<HashedString> { "Mining" }
+			},
+			new TraitVal
+			{
+				id = "ConstructionDown",
+				statBonus = MEDIUM_STATPOINT_BONUS,
+				rarity = RARITY_UNCOMMON,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "ConstructionUp", "CantBuild" }
+			},
+			new TraitVal
+			{
+				id = "RanchingDown",
+				statBonus = SMALL_STATPOINT_BONUS,
+				rarity = RARITY_COMMON,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "RanchingUp" }
+			},
+			new TraitVal
+			{
+				id = "CaringDown",
+				statBonus = SMALL_STATPOINT_BONUS,
+				rarity = RARITY_COMMON,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "Hemophobia" }
+			},
+			new TraitVal
+			{
+				id = "BotanistDown",
+				statBonus = SMALL_STATPOINT_BONUS,
+				rarity = RARITY_COMMON,
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "ArtDown",
+				statBonus = SMALL_STATPOINT_BONUS,
+				rarity = RARITY_COMMON,
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "CookingDown",
+				statBonus = SMALL_STATPOINT_BONUS,
+				rarity = RARITY_COMMON,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "Foodie", "CantCook" }
+			},
+			new TraitVal
+			{
+				id = "MachineryDown",
+				statBonus = SMALL_STATPOINT_BONUS,
+				rarity = RARITY_COMMON,
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "DiggingDown",
+				statBonus = MEDIUM_STATPOINT_BONUS,
+				rarity = RARITY_RARE,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "MoleHands", "CantDig" }
+			},
+			new TraitVal
+			{
+				id = "SlowLearner",
+				statBonus = MEDIUM_STATPOINT_BONUS,
+				rarity = RARITY_RARE,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "FastLearner", "CantResearch" }
+			},
+			new TraitVal
+			{
+				id = "NoodleArms",
+				statBonus = MEDIUM_STATPOINT_BONUS,
+				rarity = RARITY_RARE,
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "DecorDown",
+				statBonus = TINY_STATPOINT_BONUS,
+				rarity = RARITY_COMMON,
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "Anemic",
+				statBonus = HUGE_STATPOINT_BONUS,
+				rarity = RARITY_LEGENDARY,
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "Flatulence",
+				statBonus = MEDIUM_STATPOINT_BONUS,
+				rarity = RARITY_RARE,
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "IrritableBowel",
+				statBonus = TINY_STATPOINT_BONUS,
+				rarity = RARITY_UNCOMMON,
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "Snorer",
+				statBonus = TINY_STATPOINT_BONUS,
+				rarity = RARITY_RARE,
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "MouthBreather",
+				statBonus = HUGE_STATPOINT_BONUS,
+				rarity = RARITY_LEGENDARY,
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "SmallBladder",
+				statBonus = TINY_STATPOINT_BONUS,
+				rarity = RARITY_UNCOMMON,
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "CalorieBurner",
+				statBonus = LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "WeakImmuneSystem",
+				statBonus = SMALL_STATPOINT_BONUS,
+				rarity = RARITY_UNCOMMON,
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "Allergies",
+				statBonus = SMALL_STATPOINT_BONUS,
+				rarity = RARITY_RARE,
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "NightLight",
+				statBonus = SMALL_STATPOINT_BONUS,
+				rarity = RARITY_RARE,
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "Narcolepsy",
+				statBonus = HUGE_STATPOINT_BONUS,
+				rarity = RARITY_RARE,
+				dlcId = ""
+			}
+		};
 
-		public static readonly List<TraitVal> STRESSTRAITS;
+		public static readonly List<TraitVal> STRESSTRAITS = new List<TraitVal>
+		{
+			new TraitVal
+			{
+				id = "Aggressive",
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "StressVomiter",
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "UglyCrier",
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "BingeEater",
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "Banshee",
+				dlcId = ""
+			}
+		};
 
-		public static readonly List<TraitVal> JOYTRAITS;
+		public static readonly List<TraitVal> JOYTRAITS = new List<TraitVal>
+		{
+			new TraitVal
+			{
+				id = "BalloonArtist",
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "SparkleStreaker",
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "StickerBomber",
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "SuperProductive",
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "HappySinger",
+				dlcId = ""
+			}
+		};
 
-		public static readonly List<TraitVal> GENESHUFFLERTRAITS;
+		public static readonly List<TraitVal> GENESHUFFLERTRAITS = new List<TraitVal>
+		{
+			new TraitVal
+			{
+				id = "Regeneration",
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "DeeperDiversLungs",
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "SunnyDisposition",
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "RockCrusher",
+				dlcId = ""
+			}
+		};
 
-		public static readonly List<TraitVal> SPECIALTRAITS;
+		public static readonly List<TraitVal> SPECIALTRAITS = new List<TraitVal>
+		{
+			new TraitVal
+			{
+				id = "AncientKnowledge",
+				rarity = RARITY_LEGENDARY,
+				dlcId = "EXPANSION1_ID",
+				doNotGenerateTrait = true,
+				mutuallyExclusiveTraits = new List<string>
+				{
+					"CantResearch", "CantBuild", "CantCook", "CantDig", "Hemophobia", "ScaredyCat", "Anemic", "SlowLearner", "NoodleArms", "ConstructionDown",
+					"RanchingDown", "DiggingDown", "MachineryDown", "CookingDown", "ArtDown", "CaringDown", "BotanistDown"
+				}
+			}
+		};
 
-		public static readonly List<TraitVal> GOODTRAITS;
+		public static readonly List<TraitVal> GOODTRAITS = new List<TraitVal>
+		{
+			new TraitVal
+			{
+				id = "Twinkletoes",
+				rarity = RARITY_EPIC,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "Anemic" }
+			},
+			new TraitVal
+			{
+				id = "StrongArm",
+				rarity = RARITY_RARE,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "NoodleArms" }
+			},
+			new TraitVal
+			{
+				id = "Greasemonkey",
+				rarity = RARITY_UNCOMMON,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "MachineryDown" }
+			},
+			new TraitVal
+			{
+				id = "DiversLung",
+				rarity = RARITY_EPIC,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "MouthBreather" }
+			},
+			new TraitVal
+			{
+				id = "IronGut",
+				rarity = RARITY_COMMON,
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "StrongImmuneSystem",
+				rarity = RARITY_COMMON,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "WeakImmuneSystem" }
+			},
+			new TraitVal
+			{
+				id = "EarlyBird",
+				rarity = RARITY_RARE,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "NightOwl" }
+			},
+			new TraitVal
+			{
+				id = "NightOwl",
+				rarity = RARITY_RARE,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "EarlyBird" }
+			},
+			new TraitVal
+			{
+				id = "MoleHands",
+				rarity = RARITY_RARE,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "CantDig", "DiggingDown" }
+			},
+			new TraitVal
+			{
+				id = "FastLearner",
+				rarity = RARITY_RARE,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "SlowLearner", "CantResearch" }
+			},
+			new TraitVal
+			{
+				id = "InteriorDecorator",
+				rarity = RARITY_COMMON,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "Uncultured", "ArtDown" }
+			},
+			new TraitVal
+			{
+				id = "Uncultured",
+				rarity = RARITY_COMMON,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "InteriorDecorator" },
+				mutuallyExclusiveAptitudes = new List<HashedString> { "Art" }
+			},
+			new TraitVal
+			{
+				id = "SimpleTastes",
+				rarity = RARITY_UNCOMMON,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "Foodie" }
+			},
+			new TraitVal
+			{
+				id = "Foodie",
+				rarity = RARITY_COMMON,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "SimpleTastes", "CantCook", "CookingDown" },
+				mutuallyExclusiveAptitudes = new List<HashedString> { "Cooking" }
+			},
+			new TraitVal
+			{
+				id = "BedsideManner",
+				rarity = RARITY_COMMON,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "Hemophobia", "CaringDown" }
+			},
+			new TraitVal
+			{
+				id = "DecorUp",
+				rarity = RARITY_UNCOMMON,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "DecorDown" }
+			},
+			new TraitVal
+			{
+				id = "Thriver",
+				rarity = RARITY_EPIC,
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "GreenThumb",
+				rarity = RARITY_COMMON,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "BotanistDown" }
+			},
+			new TraitVal
+			{
+				id = "ConstructionUp",
+				rarity = RARITY_UNCOMMON,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "ConstructionDown" }
+			},
+			new TraitVal
+			{
+				id = "RanchingUp",
+				rarity = RARITY_UNCOMMON,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "RanchingDown" }
+			},
+			new TraitVal
+			{
+				id = "Loner",
+				rarity = RARITY_EPIC,
+				dlcId = "EXPANSION1_ID"
+			},
+			new TraitVal
+			{
+				id = "StarryEyed",
+				rarity = RARITY_RARE,
+				dlcId = "EXPANSION1_ID"
+			},
+			new TraitVal
+			{
+				id = "GlowStick",
+				rarity = RARITY_EPIC,
+				dlcId = "EXPANSION1_ID"
+			},
+			new TraitVal
+			{
+				id = "RadiationEater",
+				rarity = RARITY_EPIC,
+				dlcId = "EXPANSION1_ID"
+			},
+			new TraitVal
+			{
+				id = "GrantSkill_Mining1",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_LEGENDARY,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "CantDig" }
+			},
+			new TraitVal
+			{
+				id = "GrantSkill_Mining2",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_LEGENDARY,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "CantDig" }
+			},
+			new TraitVal
+			{
+				id = "GrantSkill_Mining3",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_LEGENDARY,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "CantDig" }
+			},
+			new TraitVal
+			{
+				id = "GrantSkill_Farming2",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "GrantSkill_Ranching1",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "GrantSkill_Cooking1",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "CantCook" }
+			},
+			new TraitVal
+			{
+				id = "GrantSkill_Arting1",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "Uncultured" }
+			},
+			new TraitVal
+			{
+				id = "GrantSkill_Arting2",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "Uncultured" }
+			},
+			new TraitVal
+			{
+				id = "GrantSkill_Arting3",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "Uncultured" }
+			},
+			new TraitVal
+			{
+				id = "GrantSkill_Suits1",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "GrantSkill_Technicals2",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "GrantSkill_Engineering1",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "GrantSkill_Basekeeping2",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "Anemic" }
+			},
+			new TraitVal
+			{
+				id = "GrantSkill_Medicine2",
+				statBonus = -LARGE_STATPOINT_BONUS,
+				rarity = RARITY_EPIC,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "Hemophobia" }
+			}
+		};
 
-		public static readonly List<TraitVal> NEEDTRAITS;
+		public static readonly List<TraitVal> NEEDTRAITS = new List<TraitVal>
+		{
+			new TraitVal
+			{
+				id = "Claustrophobic",
+				rarity = RARITY_COMMON,
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "PrefersWarmer",
+				rarity = RARITY_COMMON,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "PrefersColder" }
+			},
+			new TraitVal
+			{
+				id = "PrefersColder",
+				rarity = RARITY_COMMON,
+				dlcId = "",
+				mutuallyExclusiveTraits = new List<string> { "PrefersWarmer" }
+			},
+			new TraitVal
+			{
+				id = "SensitiveFeet",
+				rarity = RARITY_COMMON,
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "Fashionable",
+				rarity = RARITY_COMMON,
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "Climacophobic",
+				rarity = RARITY_COMMON,
+				dlcId = ""
+			},
+			new TraitVal
+			{
+				id = "SolitarySleeper",
+				rarity = RARITY_COMMON,
+				dlcId = ""
+			}
+		};
 
 		public static TraitVal GetTraitVal(string id)
 		{
@@ -603,743 +1256,6 @@ namespace TUNING
 			}
 			DebugUtil.Assert(test: true, "Could not find TraitVal with ID: " + id);
 			return INVALID_TRAIT_VAL;
-		}
-
-		static DUPLICANTSTATS()
-		{
-			List<TraitVal> list = new List<TraitVal>();
-			TraitVal traitVal = new TraitVal
-			{
-				id = "None"
-			};
-			list.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "Joshua",
-				mutuallyExclusiveTraits = new List<string> { "ScaredyCat", "Aggressive" }
-			};
-			list.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "Ellie",
-				statBonus = TINY_STATPOINT_BONUS,
-				mutuallyExclusiveTraits = new List<string> { "InteriorDecorator", "MouthBreather", "Uncultured" }
-			};
-			list.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "Stinky",
-				mutuallyExclusiveTraits = new List<string> { "Flatulence", "InteriorDecorator" }
-			};
-			list.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "Liam",
-				mutuallyExclusiveTraits = new List<string> { "Flatulence", "InteriorDecorator" }
-			};
-			list.Add(traitVal);
-			CONGENITALTRAITS = list;
-			traitVal = new TraitVal
-			{
-				id = "INVALID"
-			};
-			INVALID_TRAIT_VAL = traitVal;
-			List<TraitVal> list2 = new List<TraitVal>();
-			traitVal = new TraitVal
-			{
-				id = "CantResearch",
-				statBonus = NO_STATPOINT_BONUS,
-				rarity = RARITY_COMMON,
-				dlcId = "",
-				mutuallyExclusiveAptitudes = new List<HashedString> { "Research" }
-			};
-			list2.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "CantDig",
-				statBonus = LARGE_STATPOINT_BONUS,
-				rarity = RARITY_EPIC,
-				dlcId = "",
-				mutuallyExclusiveAptitudes = new List<HashedString> { "Mining" }
-			};
-			list2.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "CantCook",
-				statBonus = NO_STATPOINT_BONUS,
-				rarity = RARITY_UNCOMMON,
-				dlcId = "",
-				mutuallyExclusiveAptitudes = new List<HashedString> { "Cooking" }
-			};
-			list2.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "CantBuild",
-				statBonus = LARGE_STATPOINT_BONUS,
-				rarity = RARITY_EPIC,
-				dlcId = "",
-				mutuallyExclusiveAptitudes = new List<HashedString> { "Building" },
-				mutuallyExclusiveTraits = new List<string> { "GrantSkill_Engineering1" }
-			};
-			list2.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "Hemophobia",
-				statBonus = NO_STATPOINT_BONUS,
-				rarity = RARITY_UNCOMMON,
-				dlcId = "",
-				mutuallyExclusiveAptitudes = new List<HashedString> { "MedicalAid" }
-			};
-			list2.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "ScaredyCat",
-				statBonus = NO_STATPOINT_BONUS,
-				rarity = RARITY_UNCOMMON,
-				dlcId = "",
-				mutuallyExclusiveAptitudes = new List<HashedString> { "Mining" }
-			};
-			list2.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "ConstructionDown",
-				statBonus = MEDIUM_STATPOINT_BONUS,
-				rarity = RARITY_UNCOMMON,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "ConstructionUp", "CantBuild" }
-			};
-			list2.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "RanchingDown",
-				statBonus = SMALL_STATPOINT_BONUS,
-				rarity = RARITY_COMMON,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "RanchingUp" }
-			};
-			list2.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "CaringDown",
-				statBonus = SMALL_STATPOINT_BONUS,
-				rarity = RARITY_COMMON,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "Hemophobia" }
-			};
-			list2.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "BotanistDown",
-				statBonus = SMALL_STATPOINT_BONUS,
-				rarity = RARITY_COMMON,
-				dlcId = ""
-			};
-			list2.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "ArtDown",
-				statBonus = SMALL_STATPOINT_BONUS,
-				rarity = RARITY_COMMON,
-				dlcId = ""
-			};
-			list2.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "CookingDown",
-				statBonus = SMALL_STATPOINT_BONUS,
-				rarity = RARITY_COMMON,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "Foodie", "CantCook" }
-			};
-			list2.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "MachineryDown",
-				statBonus = SMALL_STATPOINT_BONUS,
-				rarity = RARITY_COMMON,
-				dlcId = ""
-			};
-			list2.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "DiggingDown",
-				statBonus = MEDIUM_STATPOINT_BONUS,
-				rarity = RARITY_RARE,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "MoleHands", "CantDig" }
-			};
-			list2.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "SlowLearner",
-				statBonus = MEDIUM_STATPOINT_BONUS,
-				rarity = RARITY_RARE,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "FastLearner", "CantResearch" }
-			};
-			list2.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "NoodleArms",
-				statBonus = MEDIUM_STATPOINT_BONUS,
-				rarity = RARITY_RARE,
-				dlcId = ""
-			};
-			list2.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "DecorDown",
-				statBonus = TINY_STATPOINT_BONUS,
-				rarity = RARITY_COMMON,
-				dlcId = ""
-			};
-			list2.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "Anemic",
-				statBonus = HUGE_STATPOINT_BONUS,
-				rarity = RARITY_LEGENDARY,
-				dlcId = ""
-			};
-			list2.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "Flatulence",
-				statBonus = MEDIUM_STATPOINT_BONUS,
-				rarity = RARITY_RARE,
-				dlcId = ""
-			};
-			list2.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "IrritableBowel",
-				statBonus = TINY_STATPOINT_BONUS,
-				rarity = RARITY_UNCOMMON,
-				dlcId = ""
-			};
-			list2.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "Snorer",
-				statBonus = TINY_STATPOINT_BONUS,
-				rarity = RARITY_RARE,
-				dlcId = ""
-			};
-			list2.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "MouthBreather",
-				statBonus = HUGE_STATPOINT_BONUS,
-				rarity = RARITY_LEGENDARY,
-				dlcId = ""
-			};
-			list2.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "SmallBladder",
-				statBonus = TINY_STATPOINT_BONUS,
-				rarity = RARITY_UNCOMMON,
-				dlcId = ""
-			};
-			list2.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "CalorieBurner",
-				statBonus = LARGE_STATPOINT_BONUS,
-				rarity = RARITY_EPIC,
-				dlcId = ""
-			};
-			list2.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "WeakImmuneSystem",
-				statBonus = SMALL_STATPOINT_BONUS,
-				rarity = RARITY_UNCOMMON,
-				dlcId = ""
-			};
-			list2.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "Allergies",
-				statBonus = SMALL_STATPOINT_BONUS,
-				rarity = RARITY_RARE,
-				dlcId = ""
-			};
-			list2.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "NightLight",
-				statBonus = SMALL_STATPOINT_BONUS,
-				rarity = RARITY_RARE,
-				dlcId = ""
-			};
-			list2.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "Narcolepsy",
-				statBonus = HUGE_STATPOINT_BONUS,
-				rarity = RARITY_RARE,
-				dlcId = ""
-			};
-			list2.Add(traitVal);
-			BADTRAITS = list2;
-			List<TraitVal> list3 = new List<TraitVal>();
-			traitVal = new TraitVal
-			{
-				id = "Aggressive",
-				dlcId = ""
-			};
-			list3.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "StressVomiter",
-				dlcId = ""
-			};
-			list3.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "UglyCrier",
-				dlcId = ""
-			};
-			list3.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "BingeEater",
-				dlcId = ""
-			};
-			list3.Add(traitVal);
-			STRESSTRAITS = list3;
-			List<TraitVal> list4 = new List<TraitVal>();
-			traitVal = new TraitVal
-			{
-				id = "BalloonArtist",
-				dlcId = ""
-			};
-			list4.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "SparkleStreaker",
-				dlcId = ""
-			};
-			list4.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "StickerBomber",
-				dlcId = ""
-			};
-			list4.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "SuperProductive",
-				dlcId = ""
-			};
-			list4.Add(traitVal);
-			JOYTRAITS = list4;
-			List<TraitVal> list5 = new List<TraitVal>();
-			traitVal = new TraitVal
-			{
-				id = "Regeneration",
-				dlcId = ""
-			};
-			list5.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "DeeperDiversLungs",
-				dlcId = ""
-			};
-			list5.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "SunnyDisposition",
-				dlcId = ""
-			};
-			list5.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "RockCrusher",
-				dlcId = ""
-			};
-			list5.Add(traitVal);
-			GENESHUFFLERTRAITS = list5;
-			List<TraitVal> list6 = new List<TraitVal>();
-			traitVal = new TraitVal
-			{
-				id = "AncientKnowledge",
-				rarity = RARITY_LEGENDARY,
-				dlcId = "EXPANSION1_ID",
-				doNotGenerateTrait = true,
-				mutuallyExclusiveTraits = new List<string>
-				{
-					"CantResearch", "CantBuild", "CantCook", "CantDig", "Hemophobia", "ScaredyCat", "Anemic", "SlowLearner", "NoodleArms", "ConstructionDown",
-					"RanchingDown", "DiggingDown", "MachineryDown", "CookingDown", "ArtDown", "CaringDown", "BotanistDown"
-				}
-			};
-			list6.Add(traitVal);
-			SPECIALTRAITS = list6;
-			List<TraitVal> list7 = new List<TraitVal>();
-			traitVal = new TraitVal
-			{
-				id = "Twinkletoes",
-				rarity = RARITY_EPIC,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "Anemic" }
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "StrongArm",
-				rarity = RARITY_RARE,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "NoodleArms" }
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "Greasemonkey",
-				rarity = RARITY_UNCOMMON,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "MachineryDown" }
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "DiversLung",
-				rarity = RARITY_EPIC,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "MouthBreather" }
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "IronGut",
-				rarity = RARITY_COMMON,
-				dlcId = ""
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "StrongImmuneSystem",
-				rarity = RARITY_COMMON,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "WeakImmuneSystem" }
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "EarlyBird",
-				rarity = RARITY_RARE,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "NightOwl" }
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "NightOwl",
-				rarity = RARITY_RARE,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "EarlyBird" }
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "MoleHands",
-				rarity = RARITY_RARE,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "CantDig", "DiggingDown" }
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "FastLearner",
-				rarity = RARITY_RARE,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "SlowLearner", "CantResearch" }
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "InteriorDecorator",
-				rarity = RARITY_COMMON,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "Uncultured", "ArtDown" }
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "Uncultured",
-				rarity = RARITY_COMMON,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "InteriorDecorator" },
-				mutuallyExclusiveAptitudes = new List<HashedString> { "Art" }
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "SimpleTastes",
-				rarity = RARITY_UNCOMMON,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "Foodie" }
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "Foodie",
-				rarity = RARITY_COMMON,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "SimpleTastes", "CantCook", "CookingDown" },
-				mutuallyExclusiveAptitudes = new List<HashedString> { "Cooking" }
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "BedsideManner",
-				rarity = RARITY_COMMON,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "Hemophobia", "CaringDown" }
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "DecorUp",
-				rarity = RARITY_UNCOMMON,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "DecorDown" }
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "Thriver",
-				rarity = RARITY_EPIC,
-				dlcId = ""
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "GreenThumb",
-				rarity = RARITY_COMMON,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "BotanistDown" }
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "ConstructionUp",
-				rarity = RARITY_UNCOMMON,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "ConstructionDown" }
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "RanchingUp",
-				rarity = RARITY_UNCOMMON,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "RanchingDown" }
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "Loner",
-				rarity = RARITY_EPIC,
-				dlcId = "EXPANSION1_ID"
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "StarryEyed",
-				rarity = RARITY_RARE,
-				dlcId = "EXPANSION1_ID"
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "GlowStick",
-				rarity = RARITY_EPIC,
-				dlcId = "EXPANSION1_ID"
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "RadiationEater",
-				rarity = RARITY_EPIC,
-				dlcId = "EXPANSION1_ID"
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "GrantSkill_Mining1",
-				statBonus = -LARGE_STATPOINT_BONUS,
-				rarity = RARITY_LEGENDARY,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "CantDig" }
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "GrantSkill_Mining2",
-				statBonus = -LARGE_STATPOINT_BONUS,
-				rarity = RARITY_LEGENDARY,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "CantDig" }
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "GrantSkill_Mining3",
-				statBonus = -LARGE_STATPOINT_BONUS,
-				rarity = RARITY_LEGENDARY,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "CantDig" }
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "GrantSkill_Farming2",
-				statBonus = -LARGE_STATPOINT_BONUS,
-				rarity = RARITY_EPIC,
-				dlcId = ""
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "GrantSkill_Ranching1",
-				statBonus = -LARGE_STATPOINT_BONUS,
-				rarity = RARITY_EPIC,
-				dlcId = ""
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "GrantSkill_Cooking1",
-				statBonus = -LARGE_STATPOINT_BONUS,
-				rarity = RARITY_EPIC,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "CantCook" }
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "GrantSkill_Arting1",
-				statBonus = -LARGE_STATPOINT_BONUS,
-				rarity = RARITY_EPIC,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "Uncultured" }
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "GrantSkill_Arting2",
-				statBonus = -LARGE_STATPOINT_BONUS,
-				rarity = RARITY_EPIC,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "Uncultured" }
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "GrantSkill_Arting3",
-				statBonus = -LARGE_STATPOINT_BONUS,
-				rarity = RARITY_EPIC,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "Uncultured" }
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "GrantSkill_Suits1",
-				statBonus = -LARGE_STATPOINT_BONUS,
-				rarity = RARITY_EPIC,
-				dlcId = ""
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "GrantSkill_Technicals2",
-				statBonus = -LARGE_STATPOINT_BONUS,
-				rarity = RARITY_EPIC,
-				dlcId = ""
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "GrantSkill_Engineering1",
-				statBonus = -LARGE_STATPOINT_BONUS,
-				rarity = RARITY_EPIC,
-				dlcId = ""
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "GrantSkill_Basekeeping2",
-				statBonus = -LARGE_STATPOINT_BONUS,
-				rarity = RARITY_EPIC,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "Anemic" }
-			};
-			list7.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "GrantSkill_Medicine2",
-				statBonus = -LARGE_STATPOINT_BONUS,
-				rarity = RARITY_EPIC,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "Hemophobia" }
-			};
-			list7.Add(traitVal);
-			GOODTRAITS = list7;
-			List<TraitVal> list8 = new List<TraitVal>();
-			traitVal = new TraitVal
-			{
-				id = "Claustrophobic",
-				rarity = RARITY_COMMON,
-				dlcId = ""
-			};
-			list8.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "PrefersWarmer",
-				rarity = RARITY_COMMON,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "PrefersColder" }
-			};
-			list8.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "PrefersColder",
-				rarity = RARITY_COMMON,
-				dlcId = "",
-				mutuallyExclusiveTraits = new List<string> { "PrefersWarmer" }
-			};
-			list8.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "SensitiveFeet",
-				rarity = RARITY_COMMON,
-				dlcId = ""
-			};
-			list8.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "Fashionable",
-				rarity = RARITY_COMMON,
-				dlcId = ""
-			};
-			list8.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "Climacophobic",
-				rarity = RARITY_COMMON,
-				dlcId = ""
-			};
-			list8.Add(traitVal);
-			traitVal = new TraitVal
-			{
-				id = "SolitarySleeper",
-				rarity = RARITY_COMMON,
-				dlcId = ""
-			};
-			list8.Add(traitVal);
-			NEEDTRAITS = list8;
 		}
 	}
 }

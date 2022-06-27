@@ -18,8 +18,7 @@ namespace MIConvexHull
 
 		public override bool Equals(object obj)
 		{
-			VoronoiEdge<TVertex, TCell> voronoiEdge = obj as VoronoiEdge<TVertex, TCell>;
-			if (voronoiEdge == null)
+			if (!(obj is VoronoiEdge<TVertex, TCell> voronoiEdge))
 			{
 				return false;
 			}

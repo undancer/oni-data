@@ -585,12 +585,12 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 		else if (component3 != null)
 		{
 			text = component3.Def.Effect;
-			text2 = component3.Def.Desc;
+			text2 = component3.Desc;
 		}
 		else if (component4 != null)
 		{
 			text = component4.Def.Effect;
-			text2 = component4.Def.Desc;
+			text2 = component4.Desc;
 		}
 		else if (component7 != null)
 		{
@@ -785,7 +785,7 @@ public class SimpleInfoScreen : TargetScreen, ISim4000ms, ISim1000ms
 	{
 		WorldContainer worldContainer = ((selectedTarget == null) ? null : selectedTarget.GetComponent<WorldContainer>());
 		AsteroidGridEntity asteroidGridEntity = ((selectedTarget == null) ? null : selectedTarget.GetComponent<AsteroidGridEntity>());
-		bool flag = worldContainer != null && asteroidGridEntity != null;
+		bool flag = ManagementMenu.Instance.IsScreenOpen(ClusterMapScreen.Instance) && worldContainer != null && asteroidGridEntity != null;
 		worldBiomesPanel.gameObject.SetActive(flag);
 		worldGeysersPanel.gameObject.SetActive(flag);
 		worldTraitsPanel.gameObject.SetActive(flag);

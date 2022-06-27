@@ -21,6 +21,7 @@ public class PropGravitasLabWindowHorizontalConfig : IBuildingConfig
 		obj.DefaultAnimState = "on";
 		obj.ObjectLayer = ObjectLayer.Backwall;
 		obj.SceneLayer = Grid.SceneLayer.Backwall;
+		obj.ShowInBuildMenu = false;
 		return obj;
 	}
 

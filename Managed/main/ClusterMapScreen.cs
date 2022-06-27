@@ -79,6 +79,9 @@ public class ClusterMapScreen : KScreen
 	[SerializeField]
 	private KScrollRect mapScrollRect;
 
+	[SerializeField]
+	private float scrollSpeed = 15f;
+
 	public GameObject selectMarkerPrefab;
 
 	public ClusterMapPathDrawer pathDrawer;
@@ -106,6 +109,11 @@ public class ClusterMapScreen : KScreen
 	public float floatCycleOffset = 0.75f;
 
 	public float floatCycleSpeed = 0.75f;
+
+	public static void DestroyInstance()
+	{
+		Instance = null;
+	}
 
 	public ClusterMapVisualizer GetEntityVisAnim(ClusterGridEntity entity)
 	{
@@ -405,7 +413,7 @@ public class ClusterMapScreen : KScreen
 	{
 		if (KInputManager.currentControllerIsGamepad)
 		{
-			mapScrollRect.AnalogUpdate(KInputManager.steamInputInterpreter.GetSteamCameraMovement());
+			mapScrollRect.AnalogUpdate(KInputManager.steamInputInterpreter.GetSteamCameraMovement() * scrollSpeed);
 		}
 	}
 

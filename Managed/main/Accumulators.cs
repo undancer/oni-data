@@ -44,7 +44,7 @@ public class Accumulators
 			List<float> dataList = accumulated.GetDataList();
 			List<float> dataList2 = average.GetDataList();
 			int count = dataList.Count;
-			float num = 0.33333334f;
+			float num = 1f / 3f;
 			for (int i = 0; i < count; i++)
 			{
 				dataList2[i] = dataList[i] * num;

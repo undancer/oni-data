@@ -147,13 +147,7 @@ public class TableRow : KMonoBehaviour
 				scrollers[column_scroller].transform.parent.GetComponent<ScrollRect>().horizontalNormalizedPosition = 0f;
 			}
 		}
-		foreach (KeyValuePair<string, TableColumn> column2 in columns)
-		{
-			if (column2.Value.on_load_action != null)
-			{
-				column2.Value.on_load_action(minion, column2.Value.widgets_by_row[this]);
-			}
-		}
+		RefreshColumns(columns);
 		if (minion != null)
 		{
 			base.gameObject.name = minion.GetProperName();
@@ -178,6 +172,17 @@ public class TableRow : KMonoBehaviour
 			vector4.y = 0f;
 			rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, 374f);
 			rectTransform.SetLocalPosition(vector4 + Vector3.up * rectTransform.GetLocalPosition().y + Vector3.up * (0f - rectTransform.anchoredPosition.y));
+		}
+	}
+
+	public void RefreshColumns(Dictionary<string, TableColumn> columns)
+	{
+		foreach (KeyValuePair<string, TableColumn> column in columns)
+		{
+			if (column.Value.on_load_action != null)
+			{
+				column.Value.on_load_action(minion, column.Value.widgets_by_row[this]);
+			}
 		}
 	}
 

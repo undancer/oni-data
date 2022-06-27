@@ -11,6 +11,9 @@ public class Equippable : Assignable, ISaveLoadable, IGameObjectEffectDescriptor
 	[MyCmpAdd]
 	private EquippableWorkable equippableWorkable;
 
+	[MyCmpAdd]
+	private EquippableFacade facade;
+
 	[MyCmpReq]
 	private KSelectable selectable;
 
@@ -91,6 +94,16 @@ public class Equippable : Assignable, ISaveLoadable, IGameObjectEffectDescriptor
 			}
 		}
 		Subscribe(1969584890, SetDestroyedTrueDelegate);
+	}
+
+	public KAnimFile GetBuildOverride()
+	{
+		EquippableFacade component = GetComponent<EquippableFacade>();
+		if (component == null || component.BuildOverride == null)
+		{
+			return def.BuildOverride;
+		}
+		return Assets.GetAnim(component.BuildOverride);
 	}
 
 	public override void Assign(IAssignableIdentity new_assignee)

@@ -33,7 +33,14 @@ public class PrebuildToolHoverTextCard : HoverTextConfiguration
 			}
 		}
 		hoverTextDrawer.NewLine();
-		hoverTextDrawer.DrawIcon(instance.GetSprite("icon_mouse_right"));
+		if (KInputManager.currentControllerIsGamepad)
+		{
+			hoverTextDrawer.DrawIcon(KInputManager.steamInputInterpreter.GetActionSprite(Action.MouseRight), 20);
+		}
+		else
+		{
+			hoverTextDrawer.DrawIcon(instance.GetSprite("icon_mouse_right"), 20);
+		}
 		hoverTextDrawer.DrawText(backStr, Styles_Instruction.Standard);
 		hoverTextDrawer.EndShadowBar();
 		hoverTextDrawer.EndDrawing();

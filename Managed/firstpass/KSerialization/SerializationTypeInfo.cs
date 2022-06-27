@@ -17,8 +17,8 @@ namespace KSerialization
 		String = 12,
 		Enumeration = 13,
 		Vector2I = 14,
-		Vector2 = 0xF,
-		Vector3 = 0x10,
+		Vector2 = 15,
+		Vector3 = 16,
 		Array = 17,
 		Pair = 18,
 		Dictionary = 19,
@@ -26,8 +26,8 @@ namespace KSerialization
 		HashSet = 21,
 		Queue = 22,
 		Colour = 23,
-		IS_GENERIC_TYPE = 0x80,
-		IS_VALUE_TYPE = 0x40,
-		VALUE_MASK = 0x3F
+		IS_GENERIC_TYPE = 128,
+		IS_VALUE_TYPE = 64,
+		VALUE_MASK = 63
 	}
 }

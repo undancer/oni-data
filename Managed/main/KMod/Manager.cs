@@ -35,11 +35,9 @@ namespace KMod
 
 		public const Content all_content = Content.LayerableFiles | Content.Strings | Content.DLL | Content.Translation | Content.Animation;
 
-		public const Content boot_content = Content.Strings | Content.DLL | Content.Translation | Content.Animation;
+		public const Content boot_content = Content.LayerableFiles | Content.Strings | Content.DLL | Content.Translation | Content.Animation;
 
-		public const Content install_content = Content.DLL;
-
-		public const Content on_demand_content = Content.LayerableFiles;
+		public const Content on_demand_content = (Content)0;
 
 		public List<IDistributionPlatform> distribution_platforms = new List<IDistributionPlatform>();
 
@@ -157,7 +155,7 @@ namespace KMod
 		{
 			foreach (Mod mod in mods)
 			{
-				mod.Unload(Content.LayerableFiles);
+				mod.Unload((Content)0);
 			}
 		}
 
@@ -215,35 +213,28 @@ namespace KMod
 			{
 				Debug.LogFormat("\tInstalling mod: {0}", mod.title);
 				mod.Install();
-				Event item;
 				if (mod.status == Mod.Status.Installed)
 				{
 					Debug.Log("\tSuccessfully installed.");
-					List<Event> list = events;
-					item = new Event
+					events.Add(new Event
 					{
 						event_type = EventType.Installed,
 						mod = mod.label
-					};
-					list.Add(item);
+					});
 				}
 				else
 				{
 					Debug.Log("\tFailed install. Will install on restart.");
-					List<Event> list2 = events;
-					item = new Event
+					events.Add(new Event
 					{
 						event_type = EventType.InstallFailed,
 						mod = mod.label
-					};
-					list2.Add(item);
-					List<Event> list3 = events;
-					item = new Event
+					});
+					events.Add(new Event
 					{
 						event_type = EventType.RestartRequested,
 						mod = mod.label
-					};
-					list3.Add(item);
+					});
 				}
 			}
 		}
@@ -279,40 +270,33 @@ namespace KMod
 			}
 			else
 			{
-				Event item;
 				if (mod2.status == Mod.Status.UninstallPending)
 				{
 					mod2.status = Mod.Status.Installed;
-					List<Event> list = events;
-					item = new Event
+					events.Add(new Event
 					{
 						event_type = EventType.Installed,
 						mod = mod2.label
-					};
-					list.Add(item);
+					});
 				}
 				bool num = mod2.label.version != mod.label.version;
 				bool flag = mod2.available_content != mod.available_content;
 				bool flag2 = num || flag || mod2.status == Mod.Status.ReinstallPending;
 				if (num)
 				{
-					List<Event> list2 = events;
-					item = new Event
+					events.Add(new Event
 					{
 						event_type = EventType.VersionUpdate,
 						mod = mod.label
-					};
-					list2.Add(item);
+					});
 				}
 				if (flag)
 				{
-					List<Event> list3 = events;
-					item = new Event
+					events.Add(new Event
 					{
 						event_type = EventType.AvailableContentChanged,
 						mod = mod.label
-					};
-					list3.Add(item);
+					});
 				}
 				string root = mod.file_source.GetRoot();
 				mod2.CopyPersistentDataTo(mod);
@@ -325,13 +309,11 @@ namespace KMod
 					{
 						mod.reinstall_path = root;
 						mod.status = Mod.Status.ReinstallPending;
-						List<Event> list4 = events;
-						item = new Event
+						events.Add(new Event
 						{
 							event_type = EventType.RestartRequested,
 							mod = mod.label
-						};
-						list4.Add(item);
+						});
 					}
 					else
 					{
@@ -358,13 +340,11 @@ namespace KMod
 			DebugUtil.DevAssert(!string.IsNullOrEmpty(mod2.label.id), "Should be subscribed to a mod we are getting an Update notification for");
 			if (mod2.status != Mod.Status.UninstallPending)
 			{
-				List<Event> list = events;
-				Event item = new Event
+				events.Add(new Event
 				{
 					event_type = EventType.VersionUpdate,
 					mod = mod.label
-				};
-				list.Add(item);
+				});
 				string root = mod.file_source.GetRoot();
 				mod2.CopyPersistentDataTo(mod);
 				mod.is_subscribed = mod2.is_subscribed;
@@ -375,13 +355,11 @@ namespace KMod
 				{
 					mod.reinstall_path = root;
 					mod.status = Mod.Status.ReinstallPending;
-					List<Event> list2 = events;
-					item = new Event
+					events.Add(new Event
 					{
 						event_type = EventType.RestartRequested,
 						mod = mod.label
-					};
-					list2.Add(item);
+					});
 				}
 				else
 				{
@@ -413,24 +391,20 @@ namespace KMod
 			}
 			Mod mod = mods[num];
 			mod.SetEnabledForActiveDlc(enabled: false);
-			mod.Unload(Content.LayerableFiles);
-			List<Event> list = events;
-			Event item = new Event
+			mod.Unload((Content)0);
+			events.Add(new Event
 			{
 				event_type = EventType.Uninstalled,
 				mod = mod.label
-			};
-			list.Add(item);
+			});
 			if (mod.IsActive())
 			{
 				Debug.LogFormat("\tCould not unload all content provided by mod {0} : {1}\nUninstall will likely fail", mod.title, mod.label.ToString());
-				List<Event> list2 = events;
-				item = new Event
+				events.Add(new Event
 				{
 					event_type = EventType.RestartRequested,
 					mod = mod.label
-				};
-				list2.Add(item);
+				});
 			}
 			if (mod.status == Mod.Status.Installed)
 			{
@@ -491,26 +465,21 @@ namespace KMod
 				if (mod3.IsEnabledForActiveDlc() && content2 != content3)
 				{
 					mod3.SetCrashed();
-					Event item;
 					if (!mod3.IsEnabledForActiveDlc())
 					{
 						flag = true;
-						List<Event> list = events;
-						item = new Event
+						events.Add(new Event
 						{
 							event_type = EventType.Deactivated,
 							mod = mod3.label
-						};
-						list.Add(item);
+						});
 					}
 					Debug.LogFormat("Failed to load mod {0}...disabling", mod3.title);
-					List<Event> list2 = events;
-					item = new Event
+					events.Add(new Event
 					{
 						event_type = EventType.LoadError,
 						mod = mod3.label
-					};
-					list2.Add(item);
+					});
 				}
 			}
 			if (flag)
@@ -551,7 +520,6 @@ namespace KMod
 			bool flag3 = false;
 			int num = -1;
 			Func<Label, Mod, bool> is_match = (Label label, Mod mod) => mod.label.Match(label);
-			Event item;
 			foreach (Label label2 in footprint)
 			{
 				bool flag4 = false;
@@ -565,13 +533,11 @@ namespace KMod
 					{
 						if (flag5 && mod2.IsEnabledForActiveDlc())
 						{
-							List<Event> list = events;
-							item = new Event
+							events.Add(new Event
 							{
 								event_type = EventType.ExpectedInactive,
 								mod = mod2.label
-							};
-							list.Add(item);
+							});
 							flag3 = true;
 						}
 						continue;
@@ -580,24 +546,20 @@ namespace KMod
 					{
 						if (!mod2.IsEnabledForActiveDlc())
 						{
-							List<Event> list2 = events;
-							item = new Event
+							events.Add(new Event
 							{
 								event_type = EventType.ExpectedActive,
 								mod = label2
-							};
-							list2.Add(item);
+							});
 							flag = false;
 						}
 						else if (!mod2.AllActive(content))
 						{
-							List<Event> list3 = events;
-							item = new Event
+							events.Add(new Event
 							{
 								event_type = EventType.LoadError,
 								mod = label2
-							};
-							list3.Add(item);
+							});
 						}
 					}
 					flag4 = true;
@@ -605,13 +567,11 @@ namespace KMod
 				}
 				if (!flag4)
 				{
-					List<Event> list4 = events;
-					item = new Event
+					events.Add(new Event
 					{
 						event_type = ((!mods.Exists((Mod candidate) => is_match(label2, candidate))) ? EventType.NotFound : EventType.OutOfOrder),
 						mod = label2
-					};
-					list4.Add(item);
+					});
 					flag2 = false;
 				}
 			}
@@ -620,13 +580,11 @@ namespace KMod
 				Mod mod3 = mods[j];
 				if ((mod3.available_content & relevant_content) != 0 && mod3.IsEnabledForActiveDlc())
 				{
-					List<Event> list5 = events;
-					item = new Event
+					events.Add(new Event
 					{
 						event_type = EventType.ExpectedInactive,
 						mod = mod3.label
-					};
-					list5.Add(item);
+					});
 					flag3 = true;
 				}
 			}
@@ -857,7 +815,6 @@ namespace KMod
 		{
 			string value = FileSystem.Normalize(GetDirectory());
 			ListPool<Mod, Manager>.PooledList pooledList = ListPool<Mod, Manager>.Allocate();
-			Event item;
 			foreach (YamlIO.Error world_gen_error in world_gen_errors)
 			{
 				string text = ((world_gen_error.file.source != null) ? FileSystem.Normalize(world_gen_error.file.source.GetRoot()) : string.Empty);
@@ -870,30 +827,26 @@ namespace KMod
 				{
 					if (mod.IsEnabledForActiveDlc() && text.Contains(mod.label.install_path))
 					{
-						List<Event> list = events;
-						item = new Event
+						events.Add(new Event
 						{
 							event_type = EventType.BadWorldGen,
 							mod = mod.label,
 							details = Path.GetFileName(world_gen_error.file.full_path)
-						};
-						list.Add(item);
+						});
 						break;
 					}
 				}
 			}
-			foreach (Mod item2 in pooledList)
+			foreach (Mod item in pooledList)
 			{
-				item2.SetCrashed();
-				if (!item2.IsDev)
+				item.SetCrashed();
+				if (!item.IsDev)
 				{
-					List<Event> list2 = events;
-					item = new Event
+					events.Add(new Event
 					{
 						event_type = EventType.Deactivated,
-						mod = item2.label
-					};
-					list2.Add(item);
+						mod = item.label
+					});
 				}
 				dirty = true;
 			}
@@ -935,7 +888,7 @@ namespace KMod
 					flag3 = true;
 					break;
 				case EventType.Deactivated:
-					if ((FindMod(event2.mod).available_content & (Content.Strings | Content.DLL | Content.Translation | Content.Animation)) != 0)
+					if ((FindMod(event2.mod).available_content & (Content.LayerableFiles | Content.Strings | Content.DLL | Content.Translation | Content.Animation)) != 0)
 					{
 						flag3 = true;
 					}
@@ -1032,11 +985,11 @@ namespace KMod
 			mod.SetEnabledForActiveDlc(enabled);
 			if (enabled)
 			{
-				mod.Load(Content.LayerableFiles);
+				mod.Load((Content)0);
 			}
 			else
 			{
-				mod.Unload(Content.LayerableFiles);
+				mod.Unload((Content)0);
 			}
 			dirty = true;
 			Update(caller);

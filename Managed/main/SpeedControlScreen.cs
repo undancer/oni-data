@@ -107,6 +107,12 @@ public class SpeedControlScreen : KScreen
 		OnChanged();
 	}
 
+	protected override void OnForcedCleanUp()
+	{
+		KInputManager.InputChange.RemoveListener(ResetToolTip);
+		base.OnForcedCleanUp();
+	}
+
 	public int GetSpeed()
 	{
 		return speed;
@@ -185,7 +191,7 @@ public class SpeedControlScreen : KScreen
 		}
 	}
 
-	public void Pause(bool playSound = true)
+	public void Pause(bool playSound = true, bool isCrashed = false)
 	{
 		pauseCount++;
 		if (pauseCount != 1)
@@ -194,7 +200,14 @@ public class SpeedControlScreen : KScreen
 		}
 		if (playSound)
 		{
-			KMonoBehaviour.PlaySound(GlobalAssets.GetSound("Speed_Pause"));
+			if (isCrashed)
+			{
+				KMonoBehaviour.PlaySound(GlobalAssets.GetSound("Crash_Screen"));
+			}
+			else
+			{
+				KMonoBehaviour.PlaySound(GlobalAssets.GetSound("Speed_Pause"));
+			}
 			if (SoundListenerController.Instance != null)
 			{
 				SoundListenerController.Instance.SetLoopingVolume(0f);

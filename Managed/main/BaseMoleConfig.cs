@@ -7,15 +7,19 @@ public static class BaseMoleConfig
 {
 	private static readonly string[] SolidIdleAnims = new string[4] { "idle1", "idle2", "idle3", "idle4" };
 
-	public static GameObject BaseMole(string id, string name, string desc, string traitId, string anim_file, bool is_baby)
+	public static GameObject BaseMole(string id, string name, string desc, string traitId, string anim_file, bool is_baby, string symbolOverridePrefix = null, int on_death_drop_count = 10)
 	{
-		GameObject obj = EntityTemplates.CreatePlacedEntity(id, name, desc, 25f, decor: TUNING.BUILDINGS.DECOR.NONE, anim: Assets.GetAnim(anim_file), initialAnim: "idle_loop", sceneLayer: Grid.SceneLayer.Creatures, width: 1, height: 1);
-		EntityTemplates.ExtendEntityToBasicCreature(obj, FactionManager.FactionID.Pest, traitId, "DiggerNavGrid", NavType.Floor, 32, 2f, "Meat", 10, drownVulnerable: true, entombVulnerable: false, 123.149994f, 673.15f, 73.149994f, 773.15f);
-		obj.AddOrGetDef<CreatureFallMonitor.Def>();
-		obj.AddOrGet<Trappable>();
-		obj.AddOrGetDef<DiggerMonitor.Def>().depthToDig = MoleTuning.DEPTH_TO_HIDE;
-		EntityTemplates.CreateAndRegisterBaggedCreature(obj, must_stand_on_top_for_pickup: true, allow_mark_for_capture: true);
-		obj.GetComponent<KPrefabID>().AddTag(GameTags.Creatures.Walker);
+		GameObject gameObject = EntityTemplates.CreatePlacedEntity(id, name, desc, 25f, decor: TUNING.BUILDINGS.DECOR.NONE, anim: Assets.GetAnim(anim_file), initialAnim: "idle_loop", sceneLayer: Grid.SceneLayer.Creatures, width: 1, height: 1);
+		EntityTemplates.ExtendEntityToBasicCreature(gameObject, FactionManager.FactionID.Pest, traitId, "DiggerNavGrid", NavType.Floor, 32, 2f, "Meat", on_death_drop_count, drownVulnerable: true, entombVulnerable: false, 123.149994f, 673.15f, 73.149994f, 773.15f);
+		if (symbolOverridePrefix != null)
+		{
+			gameObject.AddOrGet<SymbolOverrideController>().ApplySymbolOverridesByAffix(Assets.GetAnim(anim_file), symbolOverridePrefix);
+		}
+		gameObject.AddOrGetDef<CreatureFallMonitor.Def>();
+		gameObject.AddOrGet<Trappable>();
+		gameObject.AddOrGetDef<DiggerMonitor.Def>().depthToDig = MoleTuning.DEPTH_TO_HIDE;
+		EntityTemplates.CreateAndRegisterBaggedCreature(gameObject, must_stand_on_top_for_pickup: true, allow_mark_for_capture: true);
+		gameObject.GetComponent<KPrefabID>().AddTag(GameTags.Creatures.Walker);
 		ChoreTable.Builder chore_table = new ChoreTable.Builder().Add(new DeathStates.Def()).Add(new AnimInterruptStates.Def()).Add(new FallStates.Def())
 			.Add(new StunnedStates.Def())
 			.Add(new DrowningStates.Def())
@@ -40,8 +44,8 @@ public static class BaseMoleConfig
 			{
 				customIdleAnim = CustomIdleAnim
 			});
-		EntityTemplates.AddCreatureBrain(obj, chore_table, GameTags.Creatures.Species.MoleSpecies, null);
-		return obj;
+		EntityTemplates.AddCreatureBrain(gameObject, chore_table, GameTags.Creatures.Species.MoleSpecies, symbolOverridePrefix);
+		return gameObject;
 	}
 
 	public static List<Diet.Info> SimpleOreDiet(List<Tag> elementTags, float caloriesPerKg, float producedConversionRate)

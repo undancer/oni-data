@@ -66,16 +66,16 @@ public class UtilityNetworkManager<NetworkType, ItemType> : IUtilityNetworkMgr w
 		queuedVirtualKeys = new HashSet<object>();
 		for (int i = 0; i < visualGrid.Length; i++)
 		{
-			UtilityNetworkGridNode utilityNetworkGridNode = (visualGrid[i] = new UtilityNetworkGridNode
+			visualGrid[i] = new UtilityNetworkGridNode
 			{
 				networkIdx = -1,
 				connections = (UtilityConnections)0
-			});
-			utilityNetworkGridNode = (physicalGrid[i] = new UtilityNetworkGridNode
+			};
+			physicalGrid[i] = new UtilityNetworkGridNode
 			{
 				networkIdx = -1,
 				connections = (UtilityConnections)0
-			});
+			};
 		}
 	}
 

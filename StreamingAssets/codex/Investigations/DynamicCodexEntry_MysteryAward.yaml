@@ -1,0 +1,30 @@
+id: "MysteryAward"
+title: STRINGS.CODEX.MYSTERYAWARD.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_mysteryaward
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYSTERYAWARD.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYSTERYAWARD.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_mysteryaward
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYSTERYAWARD.BODY.CONTAINER1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_mysteryaward
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.MYSTERYAWARD.BODY.CONTAINER2
+          style: Body

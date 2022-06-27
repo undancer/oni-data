@@ -85,9 +85,17 @@ public class EvilFlower : StateMachineComponent<EvilFlower.StatesInstance>
 
 	public bool replanted;
 
-	public EffectorValues positive_decor_effect;
+	public EffectorValues positive_decor_effect = new EffectorValues
+	{
+		amount = 1,
+		radius = 5
+	};
 
-	public EffectorValues negative_decor_effect;
+	public EffectorValues negative_decor_effect = new EffectorValues
+	{
+		amount = -1,
+		radius = 5
+	};
 
 	private static readonly EventSystem.IntraObjectHandler<EvilFlower> SetReplantedTrueDelegate = new EventSystem.IntraObjectHandler<EvilFlower>(delegate(EvilFlower component, object data)
 	{
@@ -110,22 +118,5 @@ public class EvilFlower : StateMachineComponent<EvilFlower.StatesInstance>
 	{
 		CreatureHelpers.DeselectCreature(base.gameObject);
 		Util.KDestroyGameObject(base.gameObject);
-	}
-
-	public EvilFlower()
-	{
-		EffectorValues effectorValues = new EffectorValues
-		{
-			amount = 1,
-			radius = 5
-		};
-		positive_decor_effect = effectorValues;
-		effectorValues = new EffectorValues
-		{
-			amount = -1,
-			radius = 5
-		};
-		negative_decor_effect = effectorValues;
-		base._002Ector();
 	}
 }

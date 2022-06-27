@@ -442,7 +442,8 @@ public class Pickupable : Workable, IHasSortOrder
 		{
 			return;
 		}
-		if ((base.gameObject.GetSMI<DeathMonitor.Instance>()?.IsDead() ?? true) && ((Grid.Solid[num] && Grid.Foundation[num]) || Grid.Properties[num] != 0))
+		DeathMonitor.Instance sMI = base.gameObject.GetSMI<DeathMonitor.Instance>();
+		if ((sMI == null || sMI.IsDead()) && ((Grid.Solid[num] && Grid.Foundation[num]) || Grid.Properties[num] != 0))
 		{
 			for (int i = 0; i < displacementOffsets.Length; i++)
 			{
@@ -470,10 +471,14 @@ public class Pickupable : Workable, IHasSortOrder
 	{
 		bool flag = IsEntombed;
 		bool flag2 = false;
-		if (Grid.IsValidCell(cell) && Grid.Solid[cell] && (base.gameObject.GetSMI<DeathMonitor.Instance>()?.IsDead() ?? true))
+		if (Grid.IsValidCell(cell) && Grid.Solid[cell])
 		{
-			Clearable.CancelClearing();
-			flag2 = true;
+			DeathMonitor.Instance sMI = base.gameObject.GetSMI<DeathMonitor.Instance>();
+			if (sMI == null || sMI.IsDead())
+			{
+				Clearable.CancelClearing();
+				flag2 = true;
+			}
 		}
 		if (flag2 != flag && !KPrefabID.HasTag(GameTags.Stored))
 		{

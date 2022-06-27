@@ -352,20 +352,13 @@ public class NotificationScreen : KScreen
 				reference2.sprite = icon_warning;
 				break;
 			case NotificationType.Messages:
-			{
 				reference3.color = messageColor;
 				reference2.sprite = icon_message;
-				MessageNotification messageNotification = notification as MessageNotification;
-				if (messageNotification != null)
+				if (notification is MessageNotification messageNotification && messageNotification.message is TutorialMessage tutorialMessage && !string.IsNullOrEmpty(tutorialMessage.videoClipId))
 				{
-					TutorialMessage tutorialMessage = messageNotification.message as TutorialMessage;
-					if (tutorialMessage != null && !string.IsNullOrEmpty(tutorialMessage.videoClipId))
-					{
-						reference2.sprite = icon_video;
-					}
+					reference2.sprite = icon_video;
 				}
 				break;
-			}
 			case NotificationType.Event:
 				reference3.color = eventColor;
 				reference2.sprite = icon_event;

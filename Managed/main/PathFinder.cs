@@ -6,19 +6,26 @@ public class PathFinder
 {
 	public struct Cell
 	{
-		public int queryId;
-
 		public int cost;
 
 		public int parent;
 
-		public byte underwaterCost;
+		public short queryId;
 
-		public NavType navType;
+		private byte navTypes;
 
-		public NavType parentNavType;
+		public byte transitionId;
 
-		public int transitionId;
+		public NavType navType => (NavType)(navTypes & 0xFu);
+
+		public NavType parentNavType => (NavType)(navTypes >> 4);
+
+		public void SetNavTypes(NavType type, NavType parent_type)
+		{
+			byte b = (byte)type;
+			byte b2 = (byte)parent_type;
+			navTypes = (byte)(b | (b2 << 4));
+		}
 	}
 
 	public struct PotentialPath
@@ -26,11 +33,11 @@ public class PathFinder
 		[Flags]
 		public enum Flags : byte
 		{
-			None = 0x0,
-			HasAtmoSuit = 0x1,
-			HasJetPack = 0x2,
-			HasOxygenMask = 0x4,
-			PerformSuitChecks = 0x8
+			None = 0,
+			HasAtmoSuit = 1,
+			HasJetPack = 2,
+			HasOxygenMask = 4,
+			PerformSuitChecks = 8
 		}
 
 		public int cell;
@@ -75,7 +82,7 @@ public class PathFinder
 
 			public NavType navType;
 
-			public int transitionId;
+			public byte transitionId;
 		}
 
 		public int cost;
@@ -418,7 +425,7 @@ public class PathFinder
 				if (link.link == node2.cell && node2.navType == link.endNavType && node.navType == link.startNavType)
 				{
 					PotentialPath path2 = new PotentialPath(node.cell, node.navType, PotentialPath.Flags.None);
-					flag = abilities.TraversePath(ref path2, node.cell, node.navType, 0, link.transitionId, 0);
+					flag = abilities.TraversePath(ref path2, node.cell, node.navType, 0, link.transitionId, submerged: false);
 					if (flag)
 					{
 						break;
@@ -505,7 +512,7 @@ public class PathFinder
 		PathGrid.ResetUpdate();
 		PathGrid.BeginUpdate(potential_path.cell, isContinuation: false);
 		Cell cell_data = PathGrid.GetCell(potential_path, out var is_cell_in_range);
-		AddPotential(potential_path, Grid.InvalidCell, NavType.NumNavTypes, 0, 0, -1, potentials, PathGrid, ref cell_data);
+		AddPotential(potential_path, Grid.InvalidCell, NavType.NumNavTypes, 0, 0, potentials, PathGrid, ref cell_data);
 		int num = int.MaxValue;
 		while (potentials.Count > 0)
 		{
@@ -520,19 +527,17 @@ public class PathFinder
 					result_nav_type = cell_data.navType;
 					break;
 				}
-				AddPotentials(nav_grid.potentialScratchPad, keyValuePair.Value, cell_data.cost, cell_data.underwaterCost, ref abilities, query, nav_grid.maxLinksPerCell, nav_grid.Links, potentials, PathGrid, cell_data.parent, cell_data.parentNavType);
+				AddPotentials(nav_grid.potentialScratchPad, keyValuePair.Value, cell_data.cost, ref abilities, query, nav_grid.maxLinksPerCell, nav_grid.Links, potentials, PathGrid, cell_data.parent, cell_data.parentNavType);
 			}
 		}
 		PathGrid.EndUpdate(isComplete: true);
 	}
 
-	public static void AddPotential(PotentialPath potential_path, int parent_cell, NavType parent_nav_type, int cost, int underwater_cost, int transition_id, PotentialList potentials, PathGrid path_grid, ref Cell cell_data)
+	public static void AddPotential(PotentialPath potential_path, int parent_cell, NavType parent_nav_type, int cost, byte transition_id, PotentialList potentials, PathGrid path_grid, ref Cell cell_data)
 	{
 		cell_data.cost = cost;
-		cell_data.underwaterCost = (byte)Math.Min(underwater_cost, 255);
 		cell_data.parent = parent_cell;
-		cell_data.navType = potential_path.navType;
-		cell_data.parentNavType = parent_nav_type;
+		cell_data.SetNavTypes(potential_path.navType, parent_nav_type);
 		cell_data.transitionId = transition_id;
 		potentials.Add(cost, potential_path);
 		path_grid.SetCell(potential_path, ref cell_data);
@@ -566,7 +571,7 @@ public class PathFinder
 		return false;
 	}
 
-	public static void AddPotentials(PotentialScratchPad potential_scratch_pad, PotentialPath potential, int cost, int underwater_cost, ref PathFinderAbilities abilities, PathFinderQuery query, int max_links_per_cell, NavGrid.Link[] links, PotentialList potentials, PathGrid path_grid, int parent_cell, NavType parent_nav_type)
+	public static void AddPotentials(PotentialScratchPad potential_scratch_pad, PotentialPath potential, int cost, ref PathFinderAbilities abilities, PathFinderQuery query, int max_links_per_cell, NavGrid.Link[] links, PotentialList potentials, PathGrid path_grid, int parent_cell, NavType parent_nav_type)
 	{
 		if (!Grid.IsValidCell(potential.cell))
 		{
@@ -625,24 +630,25 @@ public class PathFinder
 			PotentialPath path = potential;
 			path.cell = link7;
 			path.navType = link6.endNavType;
-			int num7 = underwater_cost;
 			if (pathGridCellData2.isSubmerged)
 			{
-				num7 = underwater_cost + 1;
 				int submergedPathCostPenalty = abilities.GetSubmergedPathCostPenalty(path, link6);
 				num6 += submergedPathCostPenalty;
 			}
-			else
-			{
-				num7 = 0;
-			}
 			PotentialPath.Flags flags = path.flags;
-			bool num8 = abilities.TraversePath(ref path, potential.cell, potential.navType, num6, link6.transitionId, num7);
+			bool num7 = abilities.TraversePath(ref path, potential.cell, potential.navType, num6, link6.transitionId, pathGridCellData2.isSubmerged);
 			_ = path.flags;
-			if (num8)
+			if (num7)
 			{
-				AddPotential(path, potential.cell, potential.navType, num6, num7, link6.transitionId, potentials, path_grid, ref cell_data);
+				AddPotential(path, potential.cell, potential.navType, num6, link6.transitionId, potentials, path_grid, ref cell_data);
 			}
 		}
+	}
+
+	public static void DestroyStatics()
+	{
+		PathGrid.OnCleanUp();
+		PathGrid = null;
+		Temp.Potentials.Clear();
 	}
 }

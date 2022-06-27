@@ -10,6 +10,10 @@ public class EffectPrefabs : MonoBehaviour
 
 	public GameObject SparkleStreakFX;
 
+	public GameObject HappySingerFX;
+
+	public GameObject HugFrenzyFX;
+
 	public GameObject GameplayEventDisplay;
 
 	public GameObject OpenTemporalTearBeam;

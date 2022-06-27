@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Klei.AI;
 using STRINGS;
@@ -120,7 +119,7 @@ public class IrrigationMonitor : GameStateMachine<IrrigationMonitor, IrrigationM
 
 		protected virtual void MakeModifiers()
 		{
-			consumptionRate = new AttributeModifier(Db.Get().Amounts.Irrigation.deltaAttribute.Id, -355f / (678f * (float)Math.PI), CREATURES.STATS.IRRIGATION.CONSUME_MODIFIER);
+			consumptionRate = new AttributeModifier(Db.Get().Amounts.Irrigation.deltaAttribute.Id, -1f / 6f, CREATURES.STATS.IRRIGATION.CONSUME_MODIFIER);
 			absorptionRate = new AttributeModifier(Db.Get().Amounts.Irrigation.deltaAttribute.Id, 1.6666666f, CREATURES.STATS.IRRIGATION.ABSORBING_MODIFIER);
 		}
 
@@ -357,7 +356,7 @@ public class IrrigationMonitor : GameStateMachine<IrrigationMonitor, IrrigationM
 			{
 				components[i].Pause(pause: false, "replanted");
 			}
-			smi.UpdateIrrigation(71f / (678f * (float)Math.PI));
+			smi.UpdateIrrigation(1f / 30f);
 		}).Target(resourceStorage).EventHandler(GameHashes.OnStorageChange, delegate(Instance smi)
 		{
 			smi.UpdateIrrigation(0.2f);

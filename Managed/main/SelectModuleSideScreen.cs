@@ -73,6 +73,12 @@ public class SelectModuleSideScreen : KScreen
 		buildSelectedModuleButton.onClick += OnClickBuildSelectedModule;
 	}
 
+	protected override void OnForcedCleanUp()
+	{
+		Instance = null;
+		base.OnForcedCleanUp();
+	}
+
 	protected override void OnCmpDisable()
 	{
 		ClearSubscriptionHandles();

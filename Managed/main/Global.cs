@@ -7,6 +7,7 @@ using Klei;
 using KMod;
 using KSerialization;
 using Newtonsoft.Json;
+using ProcGenGame;
 using STRINGS;
 using UnityEngine;
 using UnityEngine.U2D;
@@ -199,6 +200,8 @@ public class Global : MonoBehaviour
 			new BindingEntry("Debug", GamepadButton.NumButtons, KKeyCode.Alpha5, Modifier.Alt, Action.DebugLockCursor),
 			new BindingEntry("Debug", GamepadButton.NumButtons, KKeyCode.Alpha0, Modifier.Alt, Action.DebugTogglePersonalPriorityComparison),
 			new BindingEntry("Root", GamepadButton.NumButtons, KKeyCode.Return, Modifier.None, Action.DialogSubmit, rebindable: false),
+			new BindingEntry("Analog", GamepadButton.NumButtons, KKeyCode.None, Modifier.None, Action.AnalogCamera, rebindable: false),
+			new BindingEntry("Analog", GamepadButton.NumButtons, KKeyCode.None, Modifier.None, Action.AnalogCursor, rebindable: false),
 			new BindingEntry("BuildingsMenu", GamepadButton.NumButtons, KKeyCode.A, Modifier.None, Action.BuildMenuKeyA, rebindable: false, ignore_root_conflicts: true),
 			new BindingEntry("BuildingsMenu", GamepadButton.NumButtons, KKeyCode.B, Modifier.None, Action.BuildMenuKeyB, rebindable: false, ignore_root_conflicts: true),
 			new BindingEntry("BuildingsMenu", GamepadButton.NumButtons, KKeyCode.C, Modifier.None, Action.BuildMenuKeyC, rebindable: false, ignore_root_conflicts: true),
@@ -273,8 +276,9 @@ public class Global : MonoBehaviour
 			{
 				AddBindings(display_info.category, item2, bindings);
 			}
+			return;
 		}
-		else if (typeof(IList<BuildMenu.BuildingInfo>).IsAssignableFrom(type))
+		if (typeof(IList<BuildMenu.BuildingInfo>).IsAssignableFrom(type))
 		{
 			string str = HashCache.Get().Get(parent_category);
 			string group = new CultureInfo("en-US", useUserOverride: false).TextInfo.ToTitleCase(str) + " Menu";
@@ -362,6 +366,7 @@ public class Global : MonoBehaviour
 			OnGetUserIdKey();
 		}
 		modManager.Load(Content.LayerableFiles);
+		WorldGen.LoadSettings(in_async_thread: true);
 		GlobalResources.Instance();
 	}
 
@@ -480,7 +485,7 @@ public class Global : MonoBehaviour
 	private void SetONIStaticSessionVariables()
 	{
 		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable("Branch", "release");
-		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable("Build", 497575u);
+		ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable("Build", 512719u);
 		if (KPlayerPrefs.HasKey(UnitConfigurationScreen.MassUnitKey))
 		{
 			ThreadedHttps<KleiMetrics>.Instance.SetStaticSessionVariable(UnitConfigurationScreen.MassUnitKey, ((GameUtil.MassUnit)KPlayerPrefs.GetInt(UnitConfigurationScreen.MassUnitKey)).ToString());
@@ -559,13 +564,13 @@ public class Global : MonoBehaviour
 				{
 					Console.WriteLine($"    {hardwareStat.Key.ToString()}={hardwareStat.Value.ToString()}");
 				}
-				catch
+				catch (Exception)
 				{
 				}
 			}
 			Console.WriteLine(string.Format("    {0}={1}", "System Language", Application.systemLanguage.ToString()));
 		}
-		catch
+		catch (Exception)
 		{
 		}
 	}

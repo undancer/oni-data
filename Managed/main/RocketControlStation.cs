@@ -120,8 +120,12 @@ public class RocketControlStation : StateMachineComponent<RocketControlStation.S
 		{
 			if (clusterCraft.IsNull(smi))
 			{
-				clusterCraft.Set(GetRocket(smi), smi);
-				clusterCraft.Get(smi).Subscribe(-1582839653, smi.master.OnTagsChanged);
+				GameObject rocket = GetRocket(smi);
+				clusterCraft.Set(rocket, smi);
+				if (rocket != null)
+				{
+					rocket.Subscribe(-1582839653, smi.master.OnTagsChanged);
+				}
 			}
 		}
 
@@ -142,7 +146,12 @@ public class RocketControlStation : StateMachineComponent<RocketControlStation.S
 
 		private GameObject GetRocket(StatesInstance smi)
 		{
-			return ClusterManager.Instance.GetWorld(smi.GetMyWorldId()).gameObject.GetComponent<Clustercraft>().gameObject;
+			WorldContainer world = ClusterManager.Instance.GetWorld(smi.GetMyWorldId());
+			if (world == null)
+			{
+				return null;
+			}
+			return world.gameObject.GetComponent<Clustercraft>().gameObject;
 		}
 
 		private void SetRocketSpeedModifiers(StatesInstance smi, float autoPilotSpeedMultiplier, float pilotSkillMultiplier = 1f)

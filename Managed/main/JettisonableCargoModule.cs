@@ -132,18 +132,18 @@ public class JettisonableCargoModule : GameStateMachine<JettisonableCargoModule,
 				component3.SetOverrideCell(landerPlacementCell);
 				interiorDoor.GetComponent<NavTeleporter>().SetTarget(component3);
 				component3.SetTarget(interiorDoor.GetComponent<NavTeleporter>());
-				foreach (MinionIdentity worldItem in Components.MinionIdentities.GetWorldItems(interiorDoor.GetMyWorldId()))
 				{
-					component2.SetPermission(worldItem.assignableProxy.Get(), (!(worldItem == ChosenDuplicant)) ? AccessControl.Permission.Neither : AccessControl.Permission.Both);
+					foreach (MinionIdentity worldItem in Components.MinionIdentities.GetWorldItems(interiorDoor.GetMyWorldId()))
+					{
+						component2.SetPermission(worldItem.assignableProxy.Get(), (!(worldItem == ChosenDuplicant)) ? AccessControl.Permission.Neither : AccessControl.Permission.Both);
+					}
+					return;
 				}
 			}
-			else
-			{
-				component3.SetOverrideCell(-1);
-				interiorDoor.GetComponent<NavTeleporter>().SetTarget(null);
-				component3.SetTarget(null);
-				component2.SetPermission(ChosenDuplicant.assignableProxy.Get(), AccessControl.Permission.Neither);
-			}
+			component3.SetOverrideCell(-1);
+			interiorDoor.GetComponent<NavTeleporter>().SetTarget(null);
+			component3.SetTarget(null);
+			component2.SetPermission(ChosenDuplicant.assignableProxy.Get(), AccessControl.Permission.Neither);
 		}
 
 		public void FinalDeploy()

@@ -7,6 +7,10 @@ public class KInputManager
 {
 	protected List<KInputController> mControllers = new List<KInputController>();
 
+	private static bool hasFocus = false;
+
+	public static bool devToolFocus = false;
+
 	public static SteamInputInterpreter steamInputInterpreter = new SteamInputInterpreter();
 
 	public static Vector3F virtualCursorPos;
@@ -23,7 +27,17 @@ public class KInputManager
 
 	public static Vector3 lockedMousePos;
 
-	public static bool isFocused { get; private set; }
+	public static bool isFocused
+	{
+		get
+		{
+			if (hasFocus)
+			{
+				return !devToolFocus;
+			}
+			return false;
+		}
+	}
 
 	public static long lastUserActionTicks { get; private set; }
 
@@ -38,7 +52,7 @@ public class KInputManager
 	public KInputManager()
 	{
 		lastUserActionTicks = DateTime.Now.Ticks;
-		isFocused = true;
+		hasFocus = true;
 	}
 
 	public void AddController(KInputController controller)
@@ -87,7 +101,7 @@ public class KInputManager
 
 	public virtual void OnApplicationFocus(bool focus)
 	{
-		isFocused = focus;
+		hasFocus = focus;
 		SetUserActive();
 		if (isFocused)
 		{

@@ -661,7 +661,7 @@ buildings:
   element: Granite
   temperature: 250
 - id: TemporalTearOpener
-  location_x: 1
+  location_x: 2
   location_y: -2
   element: Unobtanium
   temperature: 293.149994

@@ -81,16 +81,14 @@ namespace Klei
 
 		public FileHandle FindFileHandle(string path)
 		{
-			FileHandle result;
 			if (FileExists(path))
 			{
-				result = default(FileHandle);
+				FileHandle result = default(FileHandle);
 				result.full_path = path;
 				result.source = this;
 				return result;
 			}
-			result = default(FileHandle);
-			return result;
+			return default(FileHandle);
 		}
 
 		public bool IsModded()

@@ -82,9 +82,32 @@ public class Repairable : Workable
 
 		public State repaired;
 
-		public static readonly Chore.Precondition IsNotBeingAttacked;
+		public static readonly Chore.Precondition IsNotBeingAttacked = new Chore.Precondition
+		{
+			id = "IsNotBeingAttacked",
+			description = DUPLICANTS.CHORES.PRECONDITIONS.IS_NOT_BEING_ATTACKED,
+			fn = delegate(ref Chore.Precondition.Context context, object data)
+			{
+				bool result = true;
+				if (data != null)
+				{
+					result = ((Breakable)data).worker == null;
+				}
+				return result;
+			}
+		};
 
-		public static readonly Chore.Precondition IsNotAngry;
+		public static readonly Chore.Precondition IsNotAngry = new Chore.Precondition
+		{
+			id = "IsNotAngry",
+			description = DUPLICANTS.CHORES.PRECONDITIONS.IS_NOT_ANGRY,
+			fn = delegate(ref Chore.Precondition.Context context, object data)
+			{
+				Traits traits = context.consumerState.traits;
+				AmountInstance amountInstance = Db.Get().Amounts.Stress.Lookup(context.consumerState.gameObject);
+				return (!(traits != null) || amountInstance == null || !(amountInstance.value >= STRESS.ACTING_OUT_RESET) || !traits.HasTrait("Aggressive")) ? true : false;
+			}
+		};
 
 		public override void InitializeStates(out BaseState default_state)
 		{
@@ -144,37 +167,6 @@ public class Repairable : Workable
 			}
 			workChore.AddPrecondition(IsNotAngry);
 			return workChore;
-		}
-
-		static States()
-		{
-			Chore.Precondition precondition = new Chore.Precondition
-			{
-				id = "IsNotBeingAttacked",
-				description = DUPLICANTS.CHORES.PRECONDITIONS.IS_NOT_BEING_ATTACKED,
-				fn = delegate(ref Chore.Precondition.Context context, object data)
-				{
-					bool result = true;
-					if (data != null)
-					{
-						result = ((Breakable)data).worker == null;
-					}
-					return result;
-				}
-			};
-			IsNotBeingAttacked = precondition;
-			precondition = new Chore.Precondition
-			{
-				id = "IsNotAngry",
-				description = DUPLICANTS.CHORES.PRECONDITIONS.IS_NOT_ANGRY,
-				fn = delegate(ref Chore.Precondition.Context context, object data)
-				{
-					Traits traits = context.consumerState.traits;
-					AmountInstance amountInstance = Db.Get().Amounts.Stress.Lookup(context.consumerState.gameObject);
-					return (!(traits != null) || amountInstance == null || !(amountInstance.value >= STRESS.ACTING_OUT_RESET) || !traits.HasTrait("Aggressive")) ? true : false;
-				}
-			};
-			IsNotAngry = precondition;
 		}
 	}
 

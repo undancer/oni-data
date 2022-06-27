@@ -71,8 +71,7 @@ namespace VoronoiTree
 			Vector2 point = leaf.site.poly.Centroid();
 			for (int i = 0; i < children.Count; i++)
 			{
-				Tree tree = children[i] as Tree;
-				if (tree != null && tree.site.poly.Contains(point))
+				if (children[i] is Tree tree && tree.site.poly.Contains(point))
 				{
 					return tree;
 				}

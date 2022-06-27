@@ -5,6 +5,8 @@ public class StandardAmountDisplayer : IAmountDisplayer
 {
 	protected StandardAttributeFormatter formatter;
 
+	public GameUtil.IdentityDescriptorTense tense;
+
 	public IAttributeFormatter Formatter => formatter;
 
 	public GameUtil.TimeSlice DeltaTimeSlice
@@ -19,8 +21,9 @@ public class StandardAmountDisplayer : IAmountDisplayer
 		}
 	}
 
-	public StandardAmountDisplayer(GameUtil.UnitClass unitClass, GameUtil.TimeSlice deltaTimeSlice, StandardAttributeFormatter formatter = null)
+	public StandardAmountDisplayer(GameUtil.UnitClass unitClass, GameUtil.TimeSlice deltaTimeSlice, StandardAttributeFormatter formatter = null, GameUtil.IdentityDescriptorTense tense = GameUtil.IdentityDescriptorTense.Normal)
 	{
+		this.tense = tense;
 		if (formatter != null)
 		{
 			this.formatter = formatter;
@@ -48,7 +51,7 @@ public class StandardAmountDisplayer : IAmountDisplayer
 	public virtual string GetTooltip(Amount master, AmountInstance instance)
 	{
 		string text = "";
-		text = ((master.description.IndexOf("{1}") <= -1) ? (text + string.Format(master.description, formatter.GetFormattedValue(instance.value))) : (text + string.Format(master.description, formatter.GetFormattedValue(instance.value), GameUtil.GetIdentityDescriptor(instance.gameObject))));
+		text = ((master.description.IndexOf("{1}") <= -1) ? (text + string.Format(master.description, formatter.GetFormattedValue(instance.value))) : (text + string.Format(master.description, formatter.GetFormattedValue(instance.value), GameUtil.GetIdentityDescriptor(instance.gameObject, tense))));
 		text += "\n\n";
 		if (formatter.DeltaTimeSlice == GameUtil.TimeSlice.PerCycle)
 		{

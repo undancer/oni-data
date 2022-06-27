@@ -12,7 +12,27 @@ public class OreSizeVisualizerComponents : KGameObjectComponentManager<OreSizeVi
 		public float colliderRadius;
 	}
 
-	private static readonly MassTier[] MassTiers;
+	private static readonly MassTier[] MassTiers = new MassTier[3]
+	{
+		new MassTier
+		{
+			animName = "idle1",
+			massRequired = 50f,
+			colliderRadius = 0.15f
+		},
+		new MassTier
+		{
+			animName = "idle2",
+			massRequired = 600f,
+			colliderRadius = 0.2f
+		},
+		new MassTier
+		{
+			animName = "idle3",
+			massRequired = float.MaxValue,
+			colliderRadius = 0.25f
+		}
+	};
 
 	public HandleVector<int>.Handle Add(GameObject go)
 	{
@@ -75,32 +95,5 @@ public class OreSizeVisualizerComponents : KGameObjectComponentManager<OreSizeVi
 			component2.radius = massTier.colliderRadius;
 		}
 		primaryElement.Trigger(1807976145);
-	}
-
-	static OreSizeVisualizerComponents()
-	{
-		MassTier[] array = new MassTier[3];
-		MassTier massTier = new MassTier
-		{
-			animName = "idle1",
-			massRequired = 50f,
-			colliderRadius = 0.15f
-		};
-		array[0] = massTier;
-		massTier = new MassTier
-		{
-			animName = "idle2",
-			massRequired = 600f,
-			colliderRadius = 0.2f
-		};
-		array[1] = massTier;
-		massTier = new MassTier
-		{
-			animName = "idle3",
-			massRequired = float.MaxValue,
-			colliderRadius = 0.25f
-		};
-		array[2] = massTier;
-		MassTiers = array;
 	}
 }

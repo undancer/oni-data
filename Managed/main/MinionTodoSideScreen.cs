@@ -126,12 +126,15 @@ public class MinionTodoSideScreen : SideScreenContent
 			{
 				return;
 			}
-			foreach (GameObject choreTarget in choreTargets)
 			{
-				OffscreenIndicator.Instance.DeactivateIndicator(choreTarget);
+				foreach (GameObject choreTarget in choreTargets)
+				{
+					OffscreenIndicator.Instance.DeactivateIndicator(choreTarget);
+				}
+				return;
 			}
 		}
-		else if (!(DetailsScreen.Instance.target == null))
+		if (!(DetailsScreen.Instance.target == null))
 		{
 			choreConsumer = DetailsScreen.Instance.target.GetComponent<ChoreConsumer>();
 			PopulateElements();

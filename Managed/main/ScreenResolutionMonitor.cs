@@ -39,6 +39,7 @@ public class ScreenResolutionMonitor : MonoBehaviour
 			if (!(Game.Instance == null))
 			{
 				Game.Instance.Trigger(-442024484);
+				KMonoBehaviour.PlaySound(GlobalAssets.GetSound(flag ? "ControllerType_ToggleOn" : "ControllerType_ToggleOff"));
 			}
 		}
 	}

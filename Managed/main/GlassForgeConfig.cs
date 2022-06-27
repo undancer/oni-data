@@ -17,6 +17,13 @@ public class GlassForgeConfig : IBuildingConfig
 		Storage.StoredItemModifier.Preserve
 	};
 
+	public static readonly List<Storage.StoredItemModifier> OutputItemModifiers = new List<Storage.StoredItemModifier>
+	{
+		Storage.StoredItemModifier.Hide,
+		Storage.StoredItemModifier.Preserve,
+		Storage.StoredItemModifier.Insulate
+	};
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef obj = BuildingTemplates.CreateBuildingDef("GlassForge", 5, 4, "glassrefinery_kanim", 30, 60f, TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER5, MATERIALS.ALL_MINERALS, 2400f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER6, decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER2);
@@ -46,7 +53,7 @@ public class GlassForgeConfig : IBuildingConfig
 		glassForge.storeProduced = true;
 		glassForge.inStorage.SetDefaultStoredItemModifiers(RefineryStoredItemModifiers);
 		glassForge.buildStorage.SetDefaultStoredItemModifiers(RefineryStoredItemModifiers);
-		glassForge.outStorage.SetDefaultStoredItemModifiers(RefineryStoredItemModifiers);
+		glassForge.outStorage.SetDefaultStoredItemModifiers(OutputItemModifiers);
 		glassForge.outputOffset = new Vector3(1f, 0.5f);
 		complexFabricatorWorkable.overrideAnims = new KAnimFile[1] { Assets.GetAnim("anim_interacts_metalrefinery_kanim") };
 		ConduitDispenser conduitDispenser = go.AddOrGet<ConduitDispenser>();

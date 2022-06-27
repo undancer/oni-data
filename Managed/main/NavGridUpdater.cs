@@ -73,19 +73,19 @@ public class NavGridUpdater
 
 	public static int InvalidCell = -1;
 
-	public static void InitializeNavGrid(NavTable nav_table, NavType[] valid_nav_types, NavTableValidator[] validators, CellOffset[] bounding_offsets, int max_links_per_cell, NavGrid.Link[] links, NavGrid.Transition[][] transitions_by_nav_type)
+	public static void InitializeNavGrid(NavTable nav_table, NavTableValidator[] validators, CellOffset[] bounding_offsets, int max_links_per_cell, NavGrid.Link[] links, NavGrid.Transition[][] transitions_by_nav_type)
 	{
-		MarkValidCells(nav_table, valid_nav_types, validators, bounding_offsets);
+		MarkValidCells(nav_table, validators, bounding_offsets);
 		CreateLinks(nav_table, max_links_per_cell, links, transitions_by_nav_type, new Dictionary<int, int>());
 	}
 
-	public static void UpdateNavGrid(NavTable nav_table, NavType[] valid_nav_types, NavTableValidator[] validators, CellOffset[] bounding_offsets, int max_links_per_cell, NavGrid.Link[] links, NavGrid.Transition[][] transitions_by_nav_type, Dictionary<int, int> teleport_transitions, HashSet<int> dirty_nav_cells)
+	public static void UpdateNavGrid(NavTable nav_table, NavTableValidator[] validators, CellOffset[] bounding_offsets, int max_links_per_cell, NavGrid.Link[] links, NavGrid.Transition[][] transitions_by_nav_type, Dictionary<int, int> teleport_transitions, HashSet<int> dirty_nav_cells)
 	{
-		UpdateValidCells(dirty_nav_cells, nav_table, valid_nav_types, validators, bounding_offsets);
+		UpdateValidCells(dirty_nav_cells, nav_table, validators, bounding_offsets);
 		UpdateLinks(dirty_nav_cells, nav_table, max_links_per_cell, links, transitions_by_nav_type, teleport_transitions);
 	}
 
-	private static void UpdateValidCells(HashSet<int> dirty_solid_cells, NavTable nav_table, NavType[] valid_nav_types, NavTableValidator[] validators, CellOffset[] bounding_offsets)
+	private static void UpdateValidCells(HashSet<int> dirty_solid_cells, NavTable nav_table, NavTableValidator[] validators, CellOffset[] bounding_offsets)
 	{
 		foreach (int dirty_solid_cell in dirty_solid_cells)
 		{
@@ -161,7 +161,7 @@ public class NavGridUpdater
 		links[num].link = Grid.InvalidCell;
 	}
 
-	private static void MarkValidCells(NavTable nav_table, NavType[] valid_nav_types, NavTableValidator[] validators, CellOffset[] bounding_offsets)
+	private static void MarkValidCells(NavTable nav_table, NavTableValidator[] validators, CellOffset[] bounding_offsets)
 	{
 		WorkItemCollection<MarkValidCellWorkItem, object> workItemCollection = new WorkItemCollection<MarkValidCellWorkItem, object>();
 		workItemCollection.Reset(null);

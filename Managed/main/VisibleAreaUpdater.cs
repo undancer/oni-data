@@ -8,19 +8,14 @@ public class VisibleAreaUpdater
 
 	private Action<int> InsideViewFirstTimeCallback;
 
-	private Action<int> InsideViewSecondTimeCallback;
-
-	private Action<int> InsideViewRepeatCallback;
-
 	private Action<int> UpdateCallback;
 
 	private string Name;
 
-	public VisibleAreaUpdater(Action<int> outside_view_first_time_cb, Action<int> inside_view_first_time_cb, Action<int> inside_view_second_time_cb, Action<int> inside_view_repeat_cb, string name)
+	public VisibleAreaUpdater(Action<int> outside_view_first_time_cb, Action<int> inside_view_first_time_cb, string name)
 	{
 		OutsideViewFirstTimeCallback = outside_view_first_time_cb;
 		InsideViewFirstTimeCallback = inside_view_first_time_cb;
-		InsideViewSecondTimeCallback = inside_view_second_time_cb;
 		UpdateCallback = InternalUpdateCell;
 		Name = name;
 	}
@@ -30,17 +25,7 @@ public class VisibleAreaUpdater
 		if (CameraController.Instance != null && VisibleArea == null)
 		{
 			VisibleArea = CameraController.Instance.VisibleArea;
-			VisibleArea.AddCallback(Name, OnVisibleAreaUpdate);
 			VisibleArea.Run(InsideViewFirstTimeCallback);
-			VisibleArea.Run(InsideViewRepeatCallback);
-		}
-	}
-
-	private void OnVisibleAreaUpdate()
-	{
-		if (VisibleArea != null)
-		{
-			VisibleArea.Run(OutsideViewFirstTimeCallback, InsideViewFirstTimeCallback, InsideViewSecondTimeCallback);
 		}
 	}
 

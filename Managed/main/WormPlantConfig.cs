@@ -9,7 +9,7 @@ public class WormPlantConfig : IEntityConfig
 
 	public const string SEED_ID = "WormPlantSeed";
 
-	public const float SULFUR_CONSUMPTION_RATE = 0.016666668f;
+	public const float SULFUR_CONSUMPTION_RATE = 1f / 60f;
 
 	public static readonly EffectorValues BASIC_DECOR = DECOR.PENALTY.TIER0;
 
@@ -43,7 +43,7 @@ public class WormPlantConfig : IEntityConfig
 			new PlantElementAbsorber.ConsumeInfo
 			{
 				tag = SimHashes.Sulfur.CreateTag(),
-				massConsumptionRate = 0.016666668f
+				massConsumptionRate = 1f / 60f
 			}
 		});
 		gameObject.AddOrGet<StandardCropPlant>();

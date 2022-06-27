@@ -119,8 +119,7 @@ public class ClusterCometDetector : GameStateMachine<ClusterCometDetector, Clust
 				float num = float.MaxValue;
 				foreach (GameplayEventInstance meteorShower in meteorShowers)
 				{
-					MeteorShowerEvent.StatesInstance statesInstance = meteorShower.smi as MeteorShowerEvent.StatesInstance;
-					if (statesInstance != null)
+					if (meteorShower.smi is MeteorShowerEvent.StatesInstance statesInstance)
 					{
 						num = Mathf.Min(num, statesInstance.TimeUntilNextShower());
 					}

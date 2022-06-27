@@ -116,6 +116,7 @@ public class GameplayEventInstance : ISaveLoadable
 		switch (status)
 		{
 		case StateMachine.Status.Success:
+		{
 			foreach (HashedString successEvent in this.gameplayEvent.successEvents)
 			{
 				GameplayEvent gameplayEvent2 = Db.Get().GameplayEvents.TryGet(successEvent);
@@ -126,7 +127,9 @@ public class GameplayEventInstance : ISaveLoadable
 				}
 			}
 			break;
+		}
 		case StateMachine.Status.Failed:
+		{
 			foreach (HashedString failureEvent in this.gameplayEvent.failureEvents)
 			{
 				GameplayEvent gameplayEvent = Db.Get().GameplayEvents.TryGet(failureEvent);
@@ -137,6 +140,7 @@ public class GameplayEventInstance : ISaveLoadable
 				}
 			}
 			break;
+		}
 		}
 	}
 

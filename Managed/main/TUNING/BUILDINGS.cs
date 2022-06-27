@@ -318,133 +318,93 @@ namespace TUNING
 			{
 				public class MONUMENT
 				{
-					public static readonly EffectorValues COMPLETE;
-
-					public static readonly EffectorValues INCOMPLETE;
-
-					static MONUMENT()
+					public static readonly EffectorValues COMPLETE = new EffectorValues
 					{
-						EffectorValues effectorValues = new EffectorValues
-						{
-							amount = 40,
-							radius = 10
-						};
-						COMPLETE = effectorValues;
-						effectorValues = new EffectorValues
-						{
-							amount = 10,
-							radius = 5
-						};
-						INCOMPLETE = effectorValues;
-					}
-				}
-
-				public static readonly EffectorValues TIER0;
-
-				public static readonly EffectorValues TIER1;
-
-				public static readonly EffectorValues TIER2;
-
-				public static readonly EffectorValues TIER3;
-
-				public static readonly EffectorValues TIER4;
-
-				public static readonly EffectorValues TIER5;
-
-				static BONUS()
-				{
-					EffectorValues effectorValues = new EffectorValues
-					{
-						amount = 5,
-						radius = 1
+						amount = 40,
+						radius = 10
 					};
-					TIER0 = effectorValues;
-					effectorValues = new EffectorValues
+
+					public static readonly EffectorValues INCOMPLETE = new EffectorValues
 					{
 						amount = 10,
-						radius = 2
-					};
-					TIER1 = effectorValues;
-					effectorValues = new EffectorValues
-					{
-						amount = 15,
-						radius = 3
-					};
-					TIER2 = effectorValues;
-					effectorValues = new EffectorValues
-					{
-						amount = 20,
-						radius = 4
-					};
-					TIER3 = effectorValues;
-					effectorValues = new EffectorValues
-					{
-						amount = 25,
 						radius = 5
 					};
-					TIER4 = effectorValues;
-					effectorValues = new EffectorValues
-					{
-						amount = 30,
-						radius = 6
-					};
-					TIER5 = effectorValues;
 				}
+
+				public static readonly EffectorValues TIER0 = new EffectorValues
+				{
+					amount = 5,
+					radius = 1
+				};
+
+				public static readonly EffectorValues TIER1 = new EffectorValues
+				{
+					amount = 10,
+					radius = 2
+				};
+
+				public static readonly EffectorValues TIER2 = new EffectorValues
+				{
+					amount = 15,
+					radius = 3
+				};
+
+				public static readonly EffectorValues TIER3 = new EffectorValues
+				{
+					amount = 20,
+					radius = 4
+				};
+
+				public static readonly EffectorValues TIER4 = new EffectorValues
+				{
+					amount = 25,
+					radius = 5
+				};
+
+				public static readonly EffectorValues TIER5 = new EffectorValues
+				{
+					amount = 30,
+					radius = 6
+				};
 			}
 
 			public class PENALTY
 			{
-				public static readonly EffectorValues TIER0;
-
-				public static readonly EffectorValues TIER1;
-
-				public static readonly EffectorValues TIER2;
-
-				public static readonly EffectorValues TIER3;
-
-				public static readonly EffectorValues TIER4;
-
-				public static readonly EffectorValues TIER5;
-
-				static PENALTY()
+				public static readonly EffectorValues TIER0 = new EffectorValues
 				{
-					EffectorValues effectorValues = new EffectorValues
-					{
-						amount = -5,
-						radius = 1
-					};
-					TIER0 = effectorValues;
-					effectorValues = new EffectorValues
-					{
-						amount = -10,
-						radius = 2
-					};
-					TIER1 = effectorValues;
-					effectorValues = new EffectorValues
-					{
-						amount = -15,
-						radius = 3
-					};
-					TIER2 = effectorValues;
-					effectorValues = new EffectorValues
-					{
-						amount = -20,
-						radius = 4
-					};
-					TIER3 = effectorValues;
-					effectorValues = new EffectorValues
-					{
-						amount = -20,
-						radius = 5
-					};
-					TIER4 = effectorValues;
-					effectorValues = new EffectorValues
-					{
-						amount = -25,
-						radius = 6
-					};
-					TIER5 = effectorValues;
-				}
+					amount = -5,
+					radius = 1
+				};
+
+				public static readonly EffectorValues TIER1 = new EffectorValues
+				{
+					amount = -10,
+					radius = 2
+				};
+
+				public static readonly EffectorValues TIER2 = new EffectorValues
+				{
+					amount = -15,
+					radius = 3
+				};
+
+				public static readonly EffectorValues TIER3 = new EffectorValues
+				{
+					amount = -20,
+					radius = 4
+				};
+
+				public static readonly EffectorValues TIER4 = new EffectorValues
+				{
+					amount = -20,
+					radius = 5
+				};
+
+				public static readonly EffectorValues TIER5 = new EffectorValues
+				{
+					amount = -25,
+					radius = 6
+				};
 			}
 
 			public static readonly EffectorValues NONE = new EffectorValues
@@ -831,6 +791,7 @@ namespace TUNING
 			{ "ResetSkillsStation", "work stations" },
 			{ "CraftingTable", "suits general" },
 			{ "ClothingFabricator", "suits general" },
+			{ "ClothingAlterationStation", "suits general" },
 			{ "SuitFabricator", "suits general" },
 			{ "OxygenMaskMarker", "oxygen masks" },
 			{ "OxygenMaskLocker", "oxygen masks" },
@@ -1124,7 +1085,11 @@ namespace TUNING
 				"Compost", "WaterPurifier", "Desalinator", "FertilizerMaker", "AlgaeDistillery", "EthanolDistillery", "RockCrusher", "Kiln", "SludgePress", "MetalRefinery",
 				"GlassForge", "OilRefinery", "Polymerizer", "OxyliteRefinery", "SupermaterialRefinery", "DiamondPress"
 			}),
-			new PlanScreen.PlanInfo(new HashedString("Medical"), hideIfNotResearched: false, new List<string> { "WashBasin", "WashSink", "HandSanitizer", "DecontaminationShower", "Apothecary", "DoctorStation", "AdvancedDoctorStation", "MedicalCot", "MassageTable", "Grave" }),
+			new PlanScreen.PlanInfo(new HashedString("Medical"), hideIfNotResearched: false, new List<string>
+			{
+				"DevLifeSupport", "WashBasin", "WashSink", "HandSanitizer", "DecontaminationShower", "Apothecary", "DoctorStation", "AdvancedDoctorStation", "MedicalCot", "MassageTable",
+				"Grave"
+			}),
 			new PlanScreen.PlanInfo(new HashedString("Furniture"), hideIfNotResearched: false, new List<string>
 			{
 				BedConfig.ID,
@@ -1170,8 +1135,8 @@ namespace TUNING
 			new PlanScreen.PlanInfo(new HashedString("Equipment"), hideIfNotResearched: false, new List<string>
 			{
 				"ResearchCenter", "AdvancedResearchCenter", "NuclearResearchCenter", "OrbitalResearchCenter", "CosmicResearchCenter", "DLC1CosmicResearchCenter", "Telescope", "PowerControlStation", "FarmStation", "GeneticAnalysisStation",
-				"RanchStation", "ShearingStation", "RoleStation", "ResetSkillsStation", "ArtifactAnalysisStation", "CraftingTable", "ClothingFabricator", "SuitFabricator", "OxygenMaskMarker", "OxygenMaskLocker",
-				"SuitMarker", "SuitLocker", "JetSuitMarker", "JetSuitLocker", "LeadSuitMarker", "LeadSuitLocker", "AstronautTrainingCenter"
+				"RanchStation", "ShearingStation", "RoleStation", "ResetSkillsStation", "ArtifactAnalysisStation", "CraftingTable", "ClothingFabricator", "ClothingAlterationStation", "SuitFabricator", "OxygenMaskMarker",
+				"OxygenMaskLocker", "SuitMarker", "SuitLocker", "JetSuitMarker", "JetSuitLocker", "LeadSuitMarker", "LeadSuitLocker", "AstronautTrainingCenter"
 			}),
 			new PlanScreen.PlanInfo(new HashedString("Utilities"), hideIfNotResearched: true, new List<string>
 			{

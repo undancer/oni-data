@@ -6,9 +6,97 @@ using UnityEngine.UI;
 
 public class AllResourcesScreen : KScreen, ISim4000ms, ISim1000ms
 {
-	private Dictionary<Tag, GameObject> resourceRows = new Dictionary<Tag, GameObject>();
+	private class ScreenRowBase
+	{
+		public LocText availableLabel;
 
-	private Dictionary<Tag, GameObject> categoryRows = new Dictionary<Tag, GameObject>();
+		public LocText totalLabel;
+
+		public LocText reservedLabel;
+
+		public SparkLayer sparkLayer;
+
+		private float oldAvailableResourceAmount = -1f;
+
+		private float oldTotalResourceAmount = -1f;
+
+		private float oldReserverResourceAmount = -1f;
+
+		public Tag Tag { get; private set; }
+
+		public GameObject GameObject { get; private set; }
+
+		public ScreenRowBase(Tag tag, GameObject gameObject)
+		{
+			Tag = tag;
+			GameObject = gameObject;
+			HierarchyReferences component = GameObject.GetComponent<HierarchyReferences>();
+			availableLabel = component.GetReference<LocText>("AvailableLabel");
+			totalLabel = component.GetReference<LocText>("TotalLabel");
+			reservedLabel = component.GetReference<LocText>("ReservedLabel");
+			sparkLayer = component.GetReference<SparkLayer>("Chart");
+		}
+
+		public bool CheckAvailableAmountChanged(float newAvailableResourceAmount, bool updateIfTrue)
+		{
+			bool num = newAvailableResourceAmount != oldAvailableResourceAmount;
+			if (num && updateIfTrue)
+			{
+				oldAvailableResourceAmount = newAvailableResourceAmount;
+			}
+			return num;
+		}
+
+		public bool CheckTotalResourceAmountChanged(float newTotalResourceAmount, bool updateIfTrue)
+		{
+			bool num = newTotalResourceAmount != oldTotalResourceAmount;
+			if (num && updateIfTrue)
+			{
+				oldTotalResourceAmount = newTotalResourceAmount;
+			}
+			return num;
+		}
+
+		public bool CheckReservedResourceAmountChanged(float newReservedResourceAmount, bool updateIfTrue)
+		{
+			bool num = newReservedResourceAmount != oldReserverResourceAmount;
+			if (num && updateIfTrue)
+			{
+				oldReserverResourceAmount = newReservedResourceAmount;
+			}
+			return num;
+		}
+	}
+
+	private class CategoryRow : ScreenRowBase
+	{
+		public FoldOutPanel FoldOutPanel { get; private set; }
+
+		public CategoryRow(Tag tag, GameObject gameObject)
+			: base(tag, gameObject)
+		{
+			FoldOutPanel = base.GameObject.GetComponent<FoldOutPanel>();
+		}
+	}
+
+	private class ResourceRow : ScreenRowBase
+	{
+		public MultiToggle notificiationToggle;
+
+		public MultiToggle pinToggle;
+
+		public ResourceRow(Tag tag, GameObject gameObject)
+			: base(tag, gameObject)
+		{
+			HierarchyReferences component = base.GameObject.GetComponent<HierarchyReferences>();
+			notificiationToggle = component.GetReference<MultiToggle>("NotificationToggle");
+			pinToggle = component.GetReference<MultiToggle>("PinToggle");
+		}
+	}
+
+	private Dictionary<Tag, ResourceRow> resourceRows = new Dictionary<Tag, ResourceRow>();
+
+	private Dictionary<Tag, CategoryRow> categoryRows = new Dictionary<Tag, CategoryRow>();
 
 	public Dictionary<Tag, GameUtil.MeasureUnit> units = new Dictionary<Tag, GameUtil.MeasureUnit>();
 
@@ -21,6 +109,8 @@ public class AllResourcesScreen : KScreen, ISim4000ms, ISim1000ms
 	public KButton closeButton;
 
 	public bool allowRefresh = true;
+
+	private bool currentlyShown;
 
 	[SerializeField]
 	private KInputTextField searchInputField;
@@ -47,6 +137,12 @@ public class AllResourcesScreen : KScreen, ISim4000ms, ISim1000ms
 		base.OnSpawn();
 		base.ConsumeMouseScroll = true;
 		Init();
+	}
+
+	protected override void OnForcedCleanUp()
+	{
+		Instance = null;
+		base.OnForcedCleanUp();
 	}
 
 	public void Init()
@@ -88,6 +184,7 @@ public class AllResourcesScreen : KScreen, ISim4000ms, ISim1000ms
 	protected override void OnShow(bool show)
 	{
 		base.OnShow(show);
+		currentlyShown = show;
 		if (show)
 		{
 			ManagementMenu.Instance.CloseAll();
@@ -157,14 +254,14 @@ public class AllResourcesScreen : KScreen, ISim4000ms, ISim1000ms
 			SpawnCategoryRow(unitCategory, GameUtil.MeasureUnit.quantity);
 		}
 		List<Tag> list = new List<Tag>();
-		foreach (KeyValuePair<Tag, GameObject> categoryRow in categoryRows)
+		foreach (KeyValuePair<Tag, CategoryRow> categoryRow in categoryRows)
 		{
 			list.Add(categoryRow.Key);
 		}
 		list.Sort((Tag a, Tag b) => a.ProperNameStripLink().CompareTo(b.ProperNameStripLink()));
 		foreach (Tag item in list)
 		{
-			categoryRows[item].transform.SetAsLastSibling();
+			categoryRows[item].GameObject.transform.SetAsLastSibling();
 		}
 	}
 
@@ -174,17 +271,18 @@ public class AllResourcesScreen : KScreen, ISim4000ms, ISim1000ms
 		if (!categoryRows.ContainsKey(categoryTag))
 		{
 			GameObject gameObject2 = Util.KInstantiateUI(categoryLinePrefab, rootListContainer, force_active: true);
+			CategoryRow categoryRow = new CategoryRow(categoryTag, gameObject2);
 			gameObject2.GetComponent<HierarchyReferences>().GetReference<LocText>("NameLabel").SetText(categoryTag.ProperNameStripLink());
-			categoryRows.Add(categoryTag, gameObject2);
+			categoryRows.Add(categoryTag, categoryRow);
 			currentlyDisplayedRows.Add(categoryTag, value: true);
 			units.Add(categoryTag, unit);
-			HierarchyReferences component = gameObject2.GetComponent<HierarchyReferences>();
-			component.GetReference<SparkLayer>("Chart").GetComponent<GraphBase>().axis_x.min_value = 0f;
-			component.GetReference<SparkLayer>("Chart").GetComponent<GraphBase>().axis_x.max_value = 600f;
-			component.GetReference<SparkLayer>("Chart").GetComponent<GraphBase>().axis_x.guide_frequency = 120f;
-			component.GetReference<SparkLayer>("Chart").GetComponent<GraphBase>().RefreshGuides();
+			GraphBase component = categoryRow.sparkLayer.GetComponent<GraphBase>();
+			component.axis_x.min_value = 0f;
+			component.axis_x.max_value = 600f;
+			component.axis_x.guide_frequency = 120f;
+			component.RefreshGuides();
 		}
-		gameObject = categoryRows[categoryTag].GetComponent<FoldOutPanel>().container;
+		gameObject = categoryRows[categoryTag].FoldOutPanel.container;
 		foreach (Tag item in DiscoveredResources.Instance.GetDiscoveredResourcesFromTag(categoryTag))
 		{
 			if (resourceRows.ContainsKey(item))
@@ -237,7 +335,8 @@ public class AllResourcesScreen : KScreen, ISim4000ms, ISim1000ms
 			component2.GetReference<SparkLayer>("Chart").GetComponent<GraphBase>().axis_x.max_value = 600f;
 			component2.GetReference<SparkLayer>("Chart").GetComponent<GraphBase>().axis_x.guide_frequency = 120f;
 			component2.GetReference<SparkLayer>("Chart").GetComponent<GraphBase>().RefreshGuides();
-			resourceRows.Add(item, gameObject3);
+			ResourceRow value = new ResourceRow(item, gameObject3);
+			resourceRows.Add(item, value);
 			currentlyDisplayedRows.Add(item, value: true);
 			if (units.ContainsKey(item))
 			{
@@ -257,11 +356,11 @@ public class AllResourcesScreen : KScreen, ISim4000ms, ISim1000ms
 
 	private void SearchFilter(string search)
 	{
-		foreach (KeyValuePair<Tag, GameObject> resourceRow in resourceRows)
+		foreach (KeyValuePair<Tag, ResourceRow> resourceRow in resourceRows)
 		{
 			FilterRowBySearch(resourceRow.Key, search);
 		}
-		foreach (KeyValuePair<Tag, GameObject> categoryRow in categoryRows)
+		foreach (KeyValuePair<Tag, CategoryRow> categoryRow in categoryRows)
 		{
 			if (PassesSearchFilter(categoryRow.Key, search))
 			{
@@ -296,17 +395,17 @@ public class AllResourcesScreen : KScreen, ISim4000ms, ISim1000ms
 
 	private void EnableCategoriesByActiveChildren()
 	{
-		foreach (KeyValuePair<Tag, GameObject> categoryRow in categoryRows)
+		foreach (KeyValuePair<Tag, CategoryRow> categoryRow in categoryRows)
 		{
 			if (DiscoveredResources.Instance.GetDiscoveredResourcesFromTag(categoryRow.Key).Count == 0)
 			{
 				currentlyDisplayedRows[categoryRow.Key] = false;
 				continue;
 			}
-			GameObject container = categoryRow.Value.GetComponent<FoldOutPanel>().container;
-			foreach (KeyValuePair<Tag, GameObject> resourceRow in resourceRows)
+			GameObject container = categoryRow.Value.GameObject.GetComponent<FoldOutPanel>().container;
+			foreach (KeyValuePair<Tag, ResourceRow> resourceRow in resourceRows)
 			{
-				if (!(resourceRow.Value.transform.parent.gameObject != container))
+				if (!(resourceRow.Value.GameObject.transform.parent.gameObject != container))
 				{
 					currentlyDisplayedRows[categoryRow.Key] = currentlyDisplayedRows[categoryRow.Key] || currentlyDisplayedRows[resourceRow.Key];
 				}
@@ -316,89 +415,150 @@ public class AllResourcesScreen : KScreen, ISim4000ms, ISim1000ms
 
 	private void RefreshPinnedState(Tag tag)
 	{
-		resourceRows[tag].GetComponent<HierarchyReferences>().GetReference<MultiToggle>("NotificationToggle").ChangeState(ClusterManager.Instance.activeWorld.worldInventory.notifyResources.Contains(tag) ? 1 : 0);
-		resourceRows[tag].GetComponent<HierarchyReferences>().GetReference<MultiToggle>("PinToggle").ChangeState(ClusterManager.Instance.activeWorld.worldInventory.pinnedResources.Contains(tag) ? 1 : 0);
+		resourceRows[tag].notificiationToggle.ChangeState(ClusterManager.Instance.activeWorld.worldInventory.notifyResources.Contains(tag) ? 1 : 0);
+		resourceRows[tag].pinToggle.ChangeState(ClusterManager.Instance.activeWorld.worldInventory.pinnedResources.Contains(tag) ? 1 : 0);
 	}
 
 	public void RefreshRows()
 	{
 		WorldInventory worldInventory = ClusterManager.Instance.GetWorld(ClusterManager.Instance.activeWorldId).worldInventory;
-		if (allowRefresh)
+		EnableCategoriesByActiveChildren();
+		SetRowsActive();
+		if (!allowRefresh)
 		{
-			foreach (KeyValuePair<Tag, GameObject> categoryRow in categoryRows)
+			return;
+		}
+		foreach (KeyValuePair<Tag, CategoryRow> categoryRow in categoryRows)
+		{
+			if (!categoryRow.Value.GameObject.activeInHierarchy)
 			{
-				HierarchyReferences component = categoryRow.Value.GetComponent<HierarchyReferences>();
-				float amount = worldInventory.GetAmount(categoryRow.Key, includeRelatedWorlds: false);
-				float totalAmount = worldInventory.GetTotalAmount(categoryRow.Key, includeRelatedWorlds: false);
-				if (!worldInventory.HasValidCount)
+				continue;
+			}
+			float amount = worldInventory.GetAmount(categoryRow.Key, includeRelatedWorlds: false);
+			float totalAmount = worldInventory.GetTotalAmount(categoryRow.Key, includeRelatedWorlds: false);
+			if (!worldInventory.HasValidCount)
+			{
+				categoryRow.Value.availableLabel.SetText(UI.ALLRESOURCESSCREEN.FIRST_FRAME_NO_DATA);
+				categoryRow.Value.totalLabel.SetText(UI.ALLRESOURCESSCREEN.FIRST_FRAME_NO_DATA);
+				categoryRow.Value.reservedLabel.SetText(UI.ALLRESOURCESSCREEN.FIRST_FRAME_NO_DATA);
+				continue;
+			}
+			switch (units[categoryRow.Key])
+			{
+			case GameUtil.MeasureUnit.mass:
+				if (categoryRow.Value.CheckAvailableAmountChanged(amount, updateIfTrue: true))
 				{
-					component.GetReference<LocText>("AvailableLabel").SetText(UI.ALLRESOURCESSCREEN.FIRST_FRAME_NO_DATA);
-					component.GetReference<LocText>("TotalLabel").SetText(UI.ALLRESOURCESSCREEN.FIRST_FRAME_NO_DATA);
-					component.GetReference<LocText>("ReservedLabel").SetText(UI.ALLRESOURCESSCREEN.FIRST_FRAME_NO_DATA);
-					continue;
+					categoryRow.Value.availableLabel.SetText(GameUtil.GetFormattedMass(amount));
 				}
-				switch (units[categoryRow.Key])
+				if (categoryRow.Value.CheckTotalResourceAmountChanged(totalAmount, updateIfTrue: true))
+				{
+					categoryRow.Value.totalLabel.SetText(GameUtil.GetFormattedMass(totalAmount));
+				}
+				if (categoryRow.Value.CheckReservedResourceAmountChanged(totalAmount - amount, updateIfTrue: true))
+				{
+					categoryRow.Value.reservedLabel.SetText(GameUtil.GetFormattedMass(totalAmount - amount));
+				}
+				break;
+			case GameUtil.MeasureUnit.kcal:
+			{
+				float calories = RationTracker.Get().CountRations(null, ClusterManager.Instance.activeWorld.worldInventory);
+				if (categoryRow.Value.CheckAvailableAmountChanged(amount, updateIfTrue: true))
+				{
+					categoryRow.Value.availableLabel.SetText(GameUtil.GetFormattedCalories(calories));
+				}
+				if (categoryRow.Value.CheckTotalResourceAmountChanged(totalAmount, updateIfTrue: true))
+				{
+					categoryRow.Value.totalLabel.SetText(GameUtil.GetFormattedCalories(totalAmount));
+				}
+				if (categoryRow.Value.CheckReservedResourceAmountChanged(totalAmount - amount, updateIfTrue: true))
+				{
+					categoryRow.Value.reservedLabel.SetText(GameUtil.GetFormattedCalories(totalAmount - amount));
+				}
+				break;
+			}
+			case GameUtil.MeasureUnit.quantity:
+				if (categoryRow.Value.CheckAvailableAmountChanged(amount, updateIfTrue: true))
+				{
+					categoryRow.Value.availableLabel.SetText(GameUtil.GetFormattedUnits(amount));
+				}
+				if (categoryRow.Value.CheckTotalResourceAmountChanged(totalAmount, updateIfTrue: true))
+				{
+					categoryRow.Value.totalLabel.SetText(GameUtil.GetFormattedUnits(totalAmount));
+				}
+				if (categoryRow.Value.CheckReservedResourceAmountChanged(totalAmount - amount, updateIfTrue: true))
+				{
+					categoryRow.Value.reservedLabel.SetText(GameUtil.GetFormattedUnits(totalAmount - amount));
+				}
+				break;
+			}
+		}
+		foreach (KeyValuePair<Tag, ResourceRow> resourceRow in resourceRows)
+		{
+			if (!resourceRow.Value.GameObject.activeInHierarchy)
+			{
+				continue;
+			}
+			float amount2 = worldInventory.GetAmount(resourceRow.Key, includeRelatedWorlds: false);
+			float totalAmount2 = worldInventory.GetTotalAmount(resourceRow.Key, includeRelatedWorlds: false);
+			if (!worldInventory.HasValidCount)
+			{
+				resourceRow.Value.availableLabel.SetText(UI.ALLRESOURCESSCREEN.FIRST_FRAME_NO_DATA);
+				resourceRow.Value.totalLabel.SetText(UI.ALLRESOURCESSCREEN.FIRST_FRAME_NO_DATA);
+				resourceRow.Value.reservedLabel.SetText(UI.ALLRESOURCESSCREEN.FIRST_FRAME_NO_DATA);
+			}
+			else
+			{
+				switch (units[resourceRow.Key])
 				{
 				case GameUtil.MeasureUnit.mass:
-					component.GetReference<LocText>("AvailableLabel").SetText(GameUtil.GetFormattedMass(amount));
-					component.GetReference<LocText>("TotalLabel").SetText(GameUtil.GetFormattedMass(totalAmount));
-					component.GetReference<LocText>("ReservedLabel").SetText(GameUtil.GetFormattedMass(totalAmount - amount));
+					if (resourceRow.Value.CheckAvailableAmountChanged(amount2, updateIfTrue: true))
+					{
+						resourceRow.Value.availableLabel.SetText(GameUtil.GetFormattedMass(amount2));
+					}
+					if (resourceRow.Value.CheckTotalResourceAmountChanged(totalAmount2, updateIfTrue: true))
+					{
+						resourceRow.Value.totalLabel.SetText(GameUtil.GetFormattedMass(totalAmount2));
+					}
+					if (resourceRow.Value.CheckReservedResourceAmountChanged(totalAmount2 - amount2, updateIfTrue: true))
+					{
+						resourceRow.Value.reservedLabel.SetText(GameUtil.GetFormattedMass(totalAmount2 - amount2));
+					}
 					break;
 				case GameUtil.MeasureUnit.kcal:
 				{
-					float calories = RationTracker.Get().CountRations(null, ClusterManager.Instance.activeWorld.worldInventory);
-					component.GetReference<LocText>("AvailableLabel").SetText(GameUtil.GetFormattedCalories(calories));
-					component.GetReference<LocText>("TotalLabel").SetText(GameUtil.GetFormattedCalories(totalAmount));
-					component.GetReference<LocText>("ReservedLabel").SetText(GameUtil.GetFormattedCalories(totalAmount - amount));
+					float num = RationTracker.Get().CountRationsByFoodType(resourceRow.Key.Name, ClusterManager.Instance.activeWorld.worldInventory);
+					if (resourceRow.Value.CheckAvailableAmountChanged(num, updateIfTrue: true))
+					{
+						resourceRow.Value.availableLabel.SetText(GameUtil.GetFormattedCalories(num));
+					}
+					if (resourceRow.Value.CheckTotalResourceAmountChanged(totalAmount2, updateIfTrue: true))
+					{
+						resourceRow.Value.totalLabel.SetText(GameUtil.GetFormattedCalories(totalAmount2));
+					}
+					if (resourceRow.Value.CheckReservedResourceAmountChanged(totalAmount2 - amount2, updateIfTrue: true))
+					{
+						resourceRow.Value.reservedLabel.SetText(GameUtil.GetFormattedCalories(totalAmount2 - amount2));
+					}
 					break;
 				}
 				case GameUtil.MeasureUnit.quantity:
-					component.GetReference<LocText>("AvailableLabel").SetText(GameUtil.GetFormattedUnits(amount));
-					component.GetReference<LocText>("TotalLabel").SetText(GameUtil.GetFormattedUnits(totalAmount));
-					component.GetReference<LocText>("ReservedLabel").SetText(GameUtil.GetFormattedUnits(totalAmount - amount));
+					if (resourceRow.Value.CheckAvailableAmountChanged(amount2, updateIfTrue: true))
+					{
+						resourceRow.Value.availableLabel.SetText(GameUtil.GetFormattedUnits(amount2));
+					}
+					if (resourceRow.Value.CheckTotalResourceAmountChanged(totalAmount2, updateIfTrue: true))
+					{
+						resourceRow.Value.totalLabel.SetText(GameUtil.GetFormattedUnits(totalAmount2));
+					}
+					if (resourceRow.Value.CheckReservedResourceAmountChanged(totalAmount2 - amount2, updateIfTrue: true))
+					{
+						resourceRow.Value.reservedLabel.SetText(GameUtil.GetFormattedUnits(totalAmount2 - amount2));
+					}
 					break;
 				}
 			}
-			foreach (KeyValuePair<Tag, GameObject> resourceRow in resourceRows)
-			{
-				HierarchyReferences component2 = resourceRow.Value.GetComponent<HierarchyReferences>();
-				float amount2 = worldInventory.GetAmount(resourceRow.Key, includeRelatedWorlds: false);
-				float totalAmount2 = worldInventory.GetTotalAmount(resourceRow.Key, includeRelatedWorlds: false);
-				if (!worldInventory.HasValidCount)
-				{
-					component2.GetReference<LocText>("AvailableLabel").SetText(UI.ALLRESOURCESSCREEN.FIRST_FRAME_NO_DATA);
-					component2.GetReference<LocText>("TotalLabel").SetText(UI.ALLRESOURCESSCREEN.FIRST_FRAME_NO_DATA);
-					component2.GetReference<LocText>("ReservedLabel").SetText(UI.ALLRESOURCESSCREEN.FIRST_FRAME_NO_DATA);
-				}
-				else
-				{
-					switch (units[resourceRow.Key])
-					{
-					case GameUtil.MeasureUnit.mass:
-						component2.GetReference<LocText>("AvailableLabel").SetText(GameUtil.GetFormattedMass(amount2));
-						component2.GetReference<LocText>("TotalLabel").SetText(GameUtil.GetFormattedMass(totalAmount2));
-						component2.GetReference<LocText>("ReservedLabel").SetText(GameUtil.GetFormattedMass(totalAmount2 - amount2));
-						break;
-					case GameUtil.MeasureUnit.kcal:
-					{
-						float calories2 = RationTracker.Get().CountRationsByFoodType(resourceRow.Key.Name, ClusterManager.Instance.activeWorld.worldInventory);
-						component2.GetReference<LocText>("AvailableLabel").SetText(GameUtil.GetFormattedCalories(calories2));
-						component2.GetReference<LocText>("TotalLabel").SetText(GameUtil.GetFormattedCalories(totalAmount2));
-						component2.GetReference<LocText>("ReservedLabel").SetText(GameUtil.GetFormattedCalories(totalAmount2 - amount2));
-						break;
-					}
-					case GameUtil.MeasureUnit.quantity:
-						component2.GetReference<LocText>("AvailableLabel").SetText(GameUtil.GetFormattedUnits(amount2));
-						component2.GetReference<LocText>("TotalLabel").SetText(GameUtil.GetFormattedUnits(totalAmount2));
-						component2.GetReference<LocText>("ReservedLabel").SetText(GameUtil.GetFormattedUnits(totalAmount2 - amount2));
-						break;
-					}
-				}
-				RefreshPinnedState(resourceRow.Key);
-			}
+			RefreshPinnedState(resourceRow.Key);
 		}
-		EnableCategoriesByActiveChildren();
-		SetRowsActive();
 	}
 
 	public int UniqueResourceRowCount()
@@ -410,48 +570,50 @@ public class AllResourcesScreen : KScreen, ISim4000ms, ISim1000ms
 	{
 		float time = GameClock.Instance.GetTime();
 		float num = 3000f;
-		foreach (KeyValuePair<Tag, GameObject> categoryRow in categoryRows)
+		foreach (KeyValuePair<Tag, CategoryRow> categoryRow in categoryRows)
 		{
-			HierarchyReferences component = categoryRow.Value.GetComponent<HierarchyReferences>();
 			ResourceTracker resourceStatistic = TrackerTool.Instance.GetResourceStatistic(ClusterManager.Instance.activeWorldId, categoryRow.Key);
 			if (resourceStatistic != null)
 			{
-				SparkLayer reference = component.GetReference<SparkLayer>("Chart");
+				SparkLayer sparkLayer = categoryRow.Value.sparkLayer;
 				Tuple<float, float>[] array = resourceStatistic.ChartableData(num);
 				if (array.Length != 0)
 				{
-					reference.graph.axis_x.max_value = array[array.Length - 1].first;
+					sparkLayer.graph.axis_x.max_value = array[array.Length - 1].first;
 				}
 				else
 				{
-					reference.graph.axis_x.max_value = 0f;
+					sparkLayer.graph.axis_x.max_value = 0f;
 				}
-				reference.graph.axis_x.min_value = time - num;
-				reference.RefreshLine(array, "resourceAmount");
+				sparkLayer.graph.axis_x.min_value = time - num;
+				sparkLayer.RefreshLine(array, "resourceAmount");
 			}
 			else
 			{
 				DebugUtil.DevLogError("DevError: No tracker found for resource category " + categoryRow.Key.ToString());
 			}
 		}
-		foreach (KeyValuePair<Tag, GameObject> resourceRow in resourceRows)
+		foreach (KeyValuePair<Tag, ResourceRow> resourceRow in resourceRows)
 		{
-			HierarchyReferences component = resourceRow.Value.GetComponent<HierarchyReferences>();
+			if (!resourceRow.Value.GameObject.activeInHierarchy)
+			{
+				continue;
+			}
 			ResourceTracker resourceStatistic2 = TrackerTool.Instance.GetResourceStatistic(ClusterManager.Instance.activeWorldId, resourceRow.Key);
 			if (resourceStatistic2 != null)
 			{
-				SparkLayer reference2 = component.GetReference<SparkLayer>("Chart");
+				SparkLayer sparkLayer2 = resourceRow.Value.sparkLayer;
 				Tuple<float, float>[] array2 = resourceStatistic2.ChartableData(num);
 				if (array2.Length != 0)
 				{
-					reference2.graph.axis_x.max_value = array2[array2.Length - 1].first;
+					sparkLayer2.graph.axis_x.max_value = array2[array2.Length - 1].first;
 				}
 				else
 				{
-					reference2.graph.axis_x.max_value = 0f;
+					sparkLayer2.graph.axis_x.max_value = 0f;
 				}
-				reference2.graph.axis_x.min_value = time - num;
-				reference2.RefreshLine(array2, "resourceAmount");
+				sparkLayer2.graph.axis_x.min_value = time - num;
+				sparkLayer2.RefreshLine(array2, "resourceAmount");
 			}
 			else
 			{
@@ -462,29 +624,35 @@ public class AllResourcesScreen : KScreen, ISim4000ms, ISim1000ms
 
 	private void SetRowsActive()
 	{
-		foreach (KeyValuePair<Tag, GameObject> categoryRow in categoryRows)
+		foreach (KeyValuePair<Tag, CategoryRow> categoryRow in categoryRows)
 		{
-			if (categoryRow.Value.activeSelf != currentlyDisplayedRows[categoryRow.Key])
+			if (categoryRow.Value.GameObject.activeSelf != currentlyDisplayedRows[categoryRow.Key])
 			{
-				categoryRow.Value.SetActive(currentlyDisplayedRows[categoryRow.Key]);
+				categoryRow.Value.GameObject.SetActive(currentlyDisplayedRows[categoryRow.Key]);
 			}
 		}
-		foreach (KeyValuePair<Tag, GameObject> resourceRow in resourceRows)
+		foreach (KeyValuePair<Tag, ResourceRow> resourceRow in resourceRows)
 		{
-			if (resourceRow.Value.activeSelf != currentlyDisplayedRows[resourceRow.Key])
+			if (resourceRow.Value.GameObject.activeSelf != currentlyDisplayedRows[resourceRow.Key])
 			{
-				resourceRow.Value.SetActive(currentlyDisplayedRows[resourceRow.Key]);
+				resourceRow.Value.GameObject.SetActive(currentlyDisplayedRows[resourceRow.Key]);
 			}
 		}
 	}
 
 	public void Sim4000ms(float dt)
 	{
-		RefreshCharts();
+		if (currentlyShown)
+		{
+			RefreshCharts();
+		}
 	}
 
 	public void Sim1000ms(float dt)
 	{
-		RefreshRows();
+		if (currentlyShown)
+		{
+			RefreshRows();
+		}
 	}
 }

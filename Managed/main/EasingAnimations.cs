@@ -39,6 +39,8 @@ public class EasingAnimations : MonoBehaviour
 
 	public Action<string> OnAnimationDone;
 
+	public bool IsPlaying => animationCoroutine != null;
+
 	private void Start()
 	{
 		if (animationMap == null || animationMap.Count == 0)
@@ -98,6 +100,7 @@ public class EasingAnimations : MonoBehaviour
 			base.transform.localScale = Vector3.one * currentAnimation.currentScale;
 			yield return new WaitForEndOfFrame();
 		}
+		animationCoroutine = null;
 		if (OnAnimationDone != null)
 		{
 			OnAnimationDone(currentAnimation.name);

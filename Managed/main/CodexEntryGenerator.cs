@@ -1174,7 +1174,7 @@ public static class CodexEntryGenerator
 					list2.Add(new ContentContainer(new List<ICodexWidget> { codexVideo }, ContentContainer.ContentLayout.Vertical));
 					list2.Add(new ContentContainer(new List<ICodexWidget>
 					{
-						new CodexText(tutorialMessage.GetMessageBody())
+						new CodexText(tutorialMessage.GetMessageBody(), CodexTextStyle.Body, tutorialMessage.GetTitle())
 					}, ContentContainer.ContentLayout.Vertical));
 					CodexEntry codexEntry2 = new CodexEntry("Videos", list2, UI.FormatAsLink(tutorialMessage.GetTitle(), "videos_" + i));
 					codexEntry2.icon = Assets.GetSprite("codexVideo");
@@ -1187,7 +1187,7 @@ public static class CodexEntryGenerator
 					GenerateTitleContainers(tutorialMessage.GetTitle(), list3);
 					list3.Add(new ContentContainer(new List<ICodexWidget>
 					{
-						new CodexText(tutorialMessage.GetMessageBody())
+						new CodexText(tutorialMessage.GetMessageBody(), CodexTextStyle.Body, tutorialMessage.GetTitle())
 					}, ContentContainer.ContentLayout.Vertical));
 					list3.Add(new ContentContainer(new List<ICodexWidget>
 					{
@@ -1652,6 +1652,12 @@ public static class CodexEntryGenerator
 	{
 		List<ICodexWidget> list = new List<ICodexWidget>();
 		list.Add(new CodexSpacer());
+		StringEntry result = null;
+		if (Strings.TryGet("STRINGS.DUPLICANTS.DISEASES." + disease.Id.ToUpper() + ".DESC", out result))
+		{
+			list.Add(new CodexText(result.String));
+			list.Add(new CodexSpacer());
+		}
 		foreach (Descriptor quantitativeDescriptor in disease.GetQuantitativeDescriptors())
 		{
 			list.Add(new CodexText(quantitativeDescriptor.text));

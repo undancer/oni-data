@@ -101,7 +101,7 @@ public class AudioOptionsScreen : KModalScreen
 			ToggleAlwaysPlayAutomation();
 		};
 		component2.GetReference<LocText>("Label").SetText(UI.FRONTEND.AUDIO_OPTIONS_SCREEN.AUTOMATION_SOUNDS_ALWAYS);
-		component2.GetReference("CheckMark").gameObject.SetActive((KPlayerPrefs.GetInt(AlwaysPlayAutomation) == 1) ? true : false);
+		component2.GetReference("CheckMark").gameObject.SetActive(KPlayerPrefs.GetInt(AlwaysPlayAutomation) == 1);
 		if (!KPlayerPrefs.HasKey(MuteOnFocusLost))
 		{
 			KPlayerPrefs.SetInt(MuteOnFocusLost, 0);
@@ -114,7 +114,7 @@ public class AudioOptionsScreen : KModalScreen
 			ToggleMuteOnFocusLost();
 		};
 		component3.GetReference<LocText>("Label").SetText(UI.FRONTEND.AUDIO_OPTIONS_SCREEN.MUTE_ON_FOCUS_LOST);
-		component3.GetReference("CheckMark").gameObject.SetActive((KPlayerPrefs.GetInt(MuteOnFocusLost) == 1) ? true : false);
+		component3.GetReference("CheckMark").gameObject.SetActive(KPlayerPrefs.GetInt(MuteOnFocusLost) == 1);
 	}
 
 	public override void OnKeyDown(KButtonEvent e)
@@ -149,13 +149,13 @@ public class AudioOptionsScreen : KModalScreen
 	private void ToggleAlwaysPlayAutomation()
 	{
 		KPlayerPrefs.SetInt(AlwaysPlayAutomation, (KPlayerPrefs.GetInt(AlwaysPlayAutomation) != 1) ? 1 : 0);
-		alwaysPlayAutomationButton.GetComponent<HierarchyReferences>().GetReference("CheckMark").gameObject.SetActive((KPlayerPrefs.GetInt(AlwaysPlayAutomation) == 1) ? true : false);
+		alwaysPlayAutomationButton.GetComponent<HierarchyReferences>().GetReference("CheckMark").gameObject.SetActive(KPlayerPrefs.GetInt(AlwaysPlayAutomation) == 1);
 	}
 
 	private void ToggleMuteOnFocusLost()
 	{
 		KPlayerPrefs.SetInt(MuteOnFocusLost, (KPlayerPrefs.GetInt(MuteOnFocusLost) != 1) ? 1 : 0);
-		muteOnFocusLostToggle.GetComponent<HierarchyReferences>().GetReference("CheckMark").gameObject.SetActive((KPlayerPrefs.GetInt(MuteOnFocusLost) == 1) ? true : false);
+		muteOnFocusLostToggle.GetComponent<HierarchyReferences>().GetReference("CheckMark").gameObject.SetActive(KPlayerPrefs.GetInt(MuteOnFocusLost) == 1);
 	}
 
 	private void BuildAudioDeviceList()

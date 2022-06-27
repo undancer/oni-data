@@ -192,13 +192,11 @@ public class EnergyInfoScreen : TargetScreen
 						gameObject.GetComponent<LocText>().fontStyle = ((item4.gameObject == selectedTarget) ? FontStyles.Bold : FontStyles.Normal);
 					}
 				}
+				return;
 			}
-			else
-			{
-				gameObject = AddOrGetLabel(batteriesLabels, batteriesPanel, "nobatteries");
-				gameObject.GetComponent<LocText>().text = UI.DETAILTABS.ENERGYGENERATOR.NOBATTERIES;
-				gameObject.SetActive(value: true);
-			}
+			gameObject = AddOrGetLabel(batteriesLabels, batteriesPanel, "nobatteries");
+			gameObject.GetComponent<LocText>().text = UI.DETAILTABS.ENERGYGENERATOR.NOBATTERIES;
+			gameObject.SetActive(value: true);
 		}
 		else
 		{

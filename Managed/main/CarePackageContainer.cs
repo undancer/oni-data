@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Database;
 using STRINGS;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +14,20 @@ public class CarePackageContainer : KScreen, ITelepadDeliverableContainer
 		public string professionName;
 
 		public Sprite iconImg;
+	}
+
+	public class CarePackageInstanceData : ITelepadDeliverable
+	{
+		public CarePackageInfo info;
+
+		public string facadeID;
+
+		public GameObject Deliver(Vector3 position)
+		{
+			GameObject gameObject = info.Deliver(position);
+			gameObject.GetComponent<CarePackage>().SetFacade(facadeID);
+			return gameObject;
+		}
 	}
 
 	[Header("UI References")]
@@ -54,6 +69,8 @@ public class CarePackageContainer : KScreen, ITelepadDeliverableContainer
 	private KToggle selectButton;
 
 	private CarePackageInfo info;
+
+	public CarePackageInstanceData carePackageInstanceData;
 
 	private CharacterSelectionController controller;
 
@@ -151,6 +168,16 @@ public class CarePackageContainer : KScreen, ITelepadDeliverableContainer
 			UnityEngine.Object.Destroy(animController.gameObject);
 			animController = null;
 		}
+		carePackageInstanceData = new CarePackageInstanceData();
+		carePackageInstanceData.info = info;
+		if (info.facadeID == "SELECTRANDOM")
+		{
+			carePackageInstanceData.facadeID = Db.Get().EquippableFacades.resources.FindAll((EquippableFacadeResource match) => match.DefID == info.id).GetRandom().Id;
+		}
+		else
+		{
+			carePackageInstanceData.facadeID = info.facadeID;
+		}
 		SetAnimator();
 		SetInfoText();
 		selectButton.ClearOnClick();
@@ -175,9 +202,10 @@ public class CarePackageContainer : KScreen, ITelepadDeliverableContainer
 				GameObject gameObject = Util.KInstantiateUI(contentBody, contentBody.transform.parent.gameObject);
 				gameObject.SetActive(value: true);
 				Image component = gameObject.GetComponent<Image>();
-				Tuple<Sprite, Color> uISprite = Def.GetUISprite(prefab);
-				component.sprite = uISprite.first;
-				component.color = uISprite.second;
+				Tuple<Sprite, Color> tuple = null;
+				tuple = (carePackageInstanceData.facadeID.IsNullOrWhiteSpace() ? Def.GetUISprite(prefab) : Def.GetUISprite(prefab.PrefabID(), carePackageInstanceData.facadeID));
+				component.sprite = tuple.first;
+				component.color = tuple.second;
 				entryIcons.Add(gameObject);
 				if (num <= 1)
 				{
@@ -242,7 +270,11 @@ public class CarePackageContainer : KScreen, ITelepadDeliverableContainer
 			}
 			return "";
 		}
-		return prefab.GetProperName();
+		if (string.IsNullOrEmpty(carePackageInstanceData.facadeID))
+		{
+			return prefab.GetProperName();
+		}
+		return EquippableFacade.GetNameOverride(carePackageInstanceData.info.id, carePackageInstanceData.facadeID);
 	}
 
 	private string GetSpawnableQuantityOnly()
@@ -319,7 +351,7 @@ public class CarePackageContainer : KScreen, ITelepadDeliverableContainer
 	{
 		if (controller != null)
 		{
-			controller.AddDeliverable(info);
+			controller.AddDeliverable(carePackageInstanceData);
 		}
 		if (MusicManager.instance.SongIsPlaying("Music_SelectDuplicant"))
 		{
@@ -343,7 +375,7 @@ public class CarePackageContainer : KScreen, ITelepadDeliverableContainer
 	{
 		if (controller != null)
 		{
-			controller.RemoveDeliverable(info);
+			controller.RemoveDeliverable(carePackageInstanceData);
 		}
 		selectButton.GetComponent<ImageToggleState>().SetInactive();
 		selectButton.Deselect();
@@ -358,7 +390,7 @@ public class CarePackageContainer : KScreen, ITelepadDeliverableContainer
 
 	private void OnReplacedEvent(ITelepadDeliverable stats)
 	{
-		if (stats == info)
+		if (stats == carePackageInstanceData)
 		{
 			DeselectDeliverable();
 		}
@@ -475,12 +507,18 @@ public class CarePackageContainer : KScreen, ITelepadDeliverableContainer
 		{
 			controller.OnPressBack();
 		}
-		e.Consumed = true;
+		if (!KInputManager.currentControllerIsGamepad)
+		{
+			e.Consumed = true;
+		}
 	}
 
 	public override void OnKeyUp(KButtonEvent e)
 	{
-		e.Consumed = true;
+		if (!KInputManager.currentControllerIsGamepad)
+		{
+			e.Consumed = true;
+		}
 	}
 
 	protected override void OnCmpEnable()

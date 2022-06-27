@@ -50,17 +50,18 @@ public class KMonoBehaviour : MonoBehaviour, IStateMachineTarget, ISaveLoadable,
 		obj = lastObj;
 		isInitialized = true;
 		MyAttributes.OnAwake(this);
-		if (!isPoolPreInit)
+		if (isPoolPreInit)
 		{
-			try
-			{
-				OnPrefabInit();
-			}
-			catch (Exception e)
-			{
-				string errorMessage = "Error in " + base.name + "." + GetType().Name + ".OnPrefabInit";
-				DebugUtil.LogException(this, errorMessage, e);
-			}
+			return;
+		}
+		try
+		{
+			OnPrefabInit();
+		}
+		catch (Exception e)
+		{
+			string errorMessage = "Error in " + base.name + "." + GetType().Name + ".OnPrefabInit";
+			DebugUtil.LogException(this, errorMessage, e);
 		}
 	}
 
@@ -166,10 +167,6 @@ public class KMonoBehaviour : MonoBehaviour, IStateMachineTarget, ISaveLoadable,
 	}
 
 	protected virtual void OnLoadLevel()
-	{
-	}
-
-	public virtual void CreateDef()
 	{
 	}
 

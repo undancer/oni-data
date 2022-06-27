@@ -62,6 +62,8 @@ public class ScreenPrefabs : KMonoBehaviour
 
 	public ModsScreen modsMenu;
 
+	public RailModUploadScreen RailModUploadMenu;
+
 	public GameObject GameOverScreen;
 
 	public GameObject VictoryScreen;
@@ -91,6 +93,8 @@ public class ScreenPrefabs : KMonoBehaviour
 	public VideoScreen VideoScreen;
 
 	public ComicViewer ComicViewer;
+
+	public GameObject OldVersionWarningScreen;
 
 	public static ScreenPrefabs Instance { get; private set; }
 

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Klei.AI;
 using Klei.CustomSettings;
@@ -37,7 +36,7 @@ public class QualityOfLifeNeed : Need, ISim4000ms
 		};
 		stressNeutral = new ModifierType
 		{
-			modifier = new AttributeModifier(Db.Get().Amounts.Stress.deltaAttribute.Id, -0.008333334f, DUPLICANTS.NEEDS.QUALITYOFLIFE.NEUTRAL_MODIFIER)
+			modifier = new AttributeModifier(Db.Get().Amounts.Stress.deltaAttribute.Id, -1f / 120f, DUPLICANTS.NEEDS.QUALITYOFLIFE.NEUTRAL_MODIFIER)
 		};
 		stressPenalty = new ModifierType
 		{
@@ -68,7 +67,7 @@ public class QualityOfLifeNeed : Need, ISim4000ms
 			return;
 		}
 		float num = 0.004166667f;
-		float b = 0.041666668f;
+		float b = 1f / 24f;
 		SettingLevel currentQualitySetting = CustomGameSettings.Instance.GetCurrentQualitySetting(CustomGameSettingConfigs.Morale);
 		if (currentQualitySetting.id == "Disabled")
 		{
@@ -78,17 +77,17 @@ public class QualityOfLifeNeed : Need, ISim4000ms
 		if (currentQualitySetting.id == "Easy")
 		{
 			num = 0.0033333334f;
-			b = 0.016666668f;
+			b = 1f / 60f;
 		}
 		else if (currentQualitySetting.id == "Hard")
 		{
-			num = 0.008333334f;
+			num = 1f / 120f;
 			b = 0.05f;
 		}
 		else if (currentQualitySetting.id == "VeryHard")
 		{
-			num = 0.016666668f;
-			b = 0.083333336f;
+			num = 1f / 60f;
+			b = 1f / 12f;
 		}
 		float totalValue = qolAttribute.GetTotalValue();
 		float totalValue2 = expectationAttribute.GetTotalValue();
@@ -100,7 +99,7 @@ public class QualityOfLifeNeed : Need, ISim4000ms
 		}
 		else if (totalValue > totalValue2)
 		{
-			stressBonus.modifier.SetValue(Mathf.Max((0f - num2) * -0.016666668f, -71f / (678f * (float)Math.PI)));
+			stressBonus.modifier.SetValue(Mathf.Max((0f - num2) * (-1f / 60f), -1f / 30f));
 			SetModifier(stressBonus);
 		}
 		else

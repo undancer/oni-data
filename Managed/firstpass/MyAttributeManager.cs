@@ -135,16 +135,15 @@ public abstract class MyAttributeManager<T> : IAttributeManager where T : class
 		{
 			AttrFns attrFns = fieldData.attrFns;
 			FieldInfo fieldInfo = fieldData.fieldInfo;
-			T val = fieldInfo.GetValue(obj) as T;
-			if (val != null)
+			if (fieldInfo.GetValue(obj) is T obj2)
 			{
 				if (m_spawnFunc != null)
 				{
-					m_spawnFunc(val);
+					m_spawnFunc(obj2);
 				}
 				continue;
 			}
-			val = attrFns.GetFunction(fieldData.myAttributeType)(cmp, arg2: true);
+			T val = attrFns.GetFunction(fieldData.myAttributeType)(cmp, arg2: true);
 			if (val != null && m_spawnFunc != null)
 			{
 				m_spawnFunc(val);

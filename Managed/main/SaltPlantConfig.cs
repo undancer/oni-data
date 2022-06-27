@@ -9,7 +9,7 @@ public class SaltPlantConfig : IEntityConfig
 
 	public const string SEED_ID = "SaltPlantSeed";
 
-	public const float FERTILIZATION_RATE = 7f / 600f;
+	public const float FERTILIZATION_RATE = 0.011666667f;
 
 	public const float CHLORINE_CONSUMPTION_RATE = 0.006f;
 
@@ -29,7 +29,7 @@ public class SaltPlantConfig : IEntityConfig
 			new PlantElementAbsorber.ConsumeInfo
 			{
 				tag = SimHashes.Sand.CreateTag(),
-				massConsumptionRate = 7f / 600f
+				massConsumptionRate = 0.011666667f
 			}
 		});
 		Storage storage = gameObject.AddOrGet<Storage>();

@@ -118,7 +118,7 @@ namespace STRINGS
 
 				public static LocString EFFECT = "Protects the wearer from <style=\"heat\">Heat</style> by decreasing insulation.";
 
-				public static LocString RECIPE_DESC = "Protects the wearer from <style=\"heat\">Heat</style> by decreasing insulation.";
+				public static LocString RECIPE_DESC = "Protects the wearer from <style=\"heat\">Heat</style> by decreasing insulation";
 			}
 
 			public class WARM_VEST
@@ -131,7 +131,7 @@ namespace STRINGS
 
 				public static LocString EFFECT = "Protects the wearer from <style=\"heat\">Cold</style> by increasing insulation.";
 
-				public static LocString RECIPE_DESC = "Protects the wearer from <style=\"heat\">Cold</style> by increasing insulation.";
+				public static LocString RECIPE_DESC = "Protects the wearer from <style=\"heat\">Cold</style> by increasing insulation";
 			}
 
 			public class FUNKY_VEST
@@ -142,9 +142,59 @@ namespace STRINGS
 
 				public static LocString DESC = "This transforms my Duplicant into a walking beacon of charm and style.";
 
+				public static LocString EFFECT = "Increases Decor in a small area effect around the wearer. Can be upgraded to " + UI.FormatAsLink("Primo Garb", "CUSTOMCLOTHING") + " at the " + UI.FormatAsLink("Clothing Refashionator", "CLOTHINGALTERATIONSTATION") + ".";
+
+				public static LocString RECIPE_DESC = "Increases Decor in a small area effect around the wearer. Can be upgraded to " + UI.FormatAsLink("Primo Garb", "CUSTOMCLOTHING") + " at the " + UI.FormatAsLink("Clothing Refashionator", "CLOTHINGALTERATIONSTATION");
+			}
+
+			public class CUSTOMCLOTHING
+			{
+				public class FACADES
+				{
+					public static LocString DECOR_02 = UI.FormatAsLink("Snazzier Red Suit", "CUSTOMCLOTHING");
+
+					public static LocString DECOR_03 = UI.FormatAsLink("Snazzier Blue Suit", "CUSTOMCLOTHING");
+
+					public static LocString DECOR_04 = UI.FormatAsLink("Snazzier Green Suit", "CUSTOMCLOTHING");
+
+					public static LocString DECOR_05 = UI.FormatAsLink("Snazzier Violet Suit", "CUSTOMCLOTHING");
+
+					public static LocString VELOUR01 = UI.FormatAsLink("Midnight Velour", "CUSTOMCLOTHING");
+
+					public static LocString VELOUR02 = UI.FormatAsLink("Blue Velour", "CUSTOMCLOTHING");
+
+					public static LocString VELOUR03 = UI.FormatAsLink("Bubblegum Velour", "CUSTOMCLOTHING");
+
+					public static LocString CUMMERBUND = UI.FormatAsLink("Classic Cummerbund", "CUSTOMCLOTHING");
+
+					public static LocString SMOKINGJACKET = UI.FormatAsLink("Smoking Jacket", "CUSTOMCLOTHING");
+
+					public static LocString PINSTRIPEWAISTCOAT = UI.FormatAsLink("Pinstripe Waistcoat", "CUSTOMCLOTHING");
+
+					public static LocString OVERALLS = UI.FormatAsLink("Spiffy Overalls", "CUSTOMCLOTHING");
+
+					public static LocString TRIANGLES = UI.FormatAsLink("Confetti Suit", "CUSTOMCLOTHING");
+
+					public static LocString LIMONE = UI.FormatAsLink("Citrus Spandex", "CUSTOMCLOTHING");
+
+					public static LocString GAUDYSWEATER = UI.FormatAsLink("Pompom Knit", "CUSTOMCLOTHING");
+
+					public static LocString MONDRIAN = UI.FormatAsLink("Cubist Knit", "CUSTOMCLOTHING");
+
+					public static LocString WORKOUT = UI.FormatAsLink("Pink Unitard", "CUSTOMCLOTHING");
+
+					public static LocString CLUBSHIRT = UI.FormatAsLink("Purple Polyester", "CUSTOMCLOTHING");
+				}
+
+				public static LocString NAME = UI.FormatAsLink("Primo Garb", "CUSTOMCLOTHING");
+
+				public static LocString GENERICNAME = "Clothing";
+
+				public static LocString DESC = "This transforms my Duplicant into a colony-inspiring fashion icon.";
+
 				public static LocString EFFECT = "Increases Decor in a small area effect around the wearer.";
 
-				public static LocString RECIPE_DESC = "Increases Decor in a small area effect around the wearer.";
+				public static LocString RECIPE_DESC = "Increases Decor in a small area effect around the wearer";
 			}
 
 			public class OXYGEN_TANK
@@ -157,7 +207,7 @@ namespace STRINGS
 
 				public static LocString EFFECT = "Allows Duplicants to breathe in hazardous environments.\n\nDoes not work when submerged in <style=\"liquid\">Liquid</style>.";
 
-				public static LocString RECIPE_DESC = "Allows Duplicants to breathe in hazardous environments.\n\nDoes not work when submerged in <style=\"liquid\">Liquid</style>.";
+				public static LocString RECIPE_DESC = "Allows Duplicants to breathe in hazardous environments.\n\nDoes not work when submerged in <style=\"liquid\">Liquid</style>";
 			}
 
 			public class OXYGEN_TANK_UNDERWATER
@@ -170,7 +220,7 @@ namespace STRINGS
 
 				public static LocString EFFECT = "Allows Duplicants to breathe while submerged in <style=\"liquid\">Liquid</style>.\n\nDoes not work outside of liquid.";
 
-				public static LocString RECIPE_DESC = "Allows Duplicants to breathe while submerged in <style=\"liquid\">Liquid</style>.\n\nDoes not work outside of liquid.";
+				public static LocString RECIPE_DESC = "Allows Duplicants to breathe while submerged in <style=\"liquid\">Liquid</style>.\n\nDoes not work outside of liquid";
 			}
 
 			public class EQUIPPABLEBALLOON
@@ -181,7 +231,7 @@ namespace STRINGS
 
 				public static LocString EFFECT = "Gives Duplicants a boost in brain function.\n\nSupplied by Duplicants with the Balloon Artist " + UI.FormatAsLink("Overjoyed", "MORALE") + " response.";
 
-				public static LocString RECIPE_DESC = "Gives Duplicants a boost in brain function.\n\nSupplied by Duplicants with the Balloon Artist " + UI.FormatAsLink("Overjoyed", "MORALE") + " response.";
+				public static LocString RECIPE_DESC = "Gives Duplicants a boost in brain function.\n\nSupplied by Duplicants with the Balloon Artist " + UI.FormatAsLink("Overjoyed", "MORALE") + " response";
 
 				public static LocString GENERICNAME = "Balloon Friend";
 			}

@@ -53,6 +53,10 @@ public class EntitySplitter : KMonoBehaviour
 		{
 			return false;
 		}
+		if (pickupable.PrimaryElement.Mass + other.PrimaryElement.Mass > maxStackSize)
+		{
+			return false;
+		}
 		if (rottable != null)
 		{
 			Rottable.Instance sMI = other.GetSMI<Rottable.Instance>();

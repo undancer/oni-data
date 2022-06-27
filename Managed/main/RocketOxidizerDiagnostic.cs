@@ -6,7 +6,7 @@ public class RocketOxidizerDiagnostic : ColonyDiagnostic
 		: base(worldID, UI.COLONY_DIAGNOSTICS.ROCKETOXIDIZERDIAGNOSTIC.ALL_NAME)
 	{
 		tracker = TrackerTool.Instance.GetWorldTracker<RocketOxidizerTracker>(worldID);
-		icon = "icon_action_dig";
+		icon = "rocket_oxidizer";
 	}
 
 	public override string[] GetDlcIds()

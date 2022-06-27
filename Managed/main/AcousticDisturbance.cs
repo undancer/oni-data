@@ -21,8 +21,7 @@ public class AcousticDisturbance
 		Vector2 vector = gameObject.transform.GetPosition();
 		int num = Grid.PosToCell(vector);
 		int num2 = EmissionRadius * EmissionRadius;
-		int max_depth = Mathf.CeilToInt(EmissionRadius);
-		DetermineCellsInRadius(num, 0, max_depth, cellsInRange);
+		cellsInRange = GameUtil.CollectCellsBreadthFirst(num, (int cell) => !Grid.Solid[cell], EmissionRadius);
 		DrawVisualEffect(num, cellsInRange);
 		for (int i = 0; i < liveMinionIdentities.Count; i++)
 		{
@@ -78,46 +77,5 @@ public class AcousticDisturbance
 		Vector2I vector2I2 = Grid.CellToXY(center_cell);
 		Vector2I vector2I3 = vector2I - vector2I2;
 		return Math.Abs(vector2I3.x) + Math.Abs(vector2I3.y);
-	}
-
-	private static void DetermineCellsInRadius(int cell, int depth, int max_depth, HashSet<int> cells_in_range)
-	{
-		if (!Grid.IsValidCell(cell) || Grid.Solid[cell])
-		{
-			return;
-		}
-		cells_in_range.Add(cell);
-		if (depth < max_depth)
-		{
-			int depth2 = depth + 1;
-			int num = Grid.CellBelow(cell);
-			int num2 = Grid.CellAbove(cell);
-			int num3 = cell - 1;
-			int num4 = cell + 1;
-			bool num5 = Grid.IsValidCell(num) && !Grid.Solid[num];
-			bool flag = Grid.IsValidCell(num2) && !Grid.Solid[num2];
-			bool flag2 = Grid.IsValidCell(num3) && !Grid.Solid[num3];
-			bool flag3 = Grid.IsValidCell(num4) && !Grid.Solid[num4];
-			if (num5 || flag2)
-			{
-				DetermineCellsInRadius(num - 1, depth2, max_depth, cells_in_range);
-			}
-			DetermineCellsInRadius(num, depth2, max_depth, cells_in_range);
-			if (num5 || flag3)
-			{
-				DetermineCellsInRadius(num + 1, depth2, max_depth, cells_in_range);
-			}
-			DetermineCellsInRadius(num3, depth2, max_depth, cells_in_range);
-			DetermineCellsInRadius(num4, depth2, max_depth, cells_in_range);
-			if (flag || flag2)
-			{
-				DetermineCellsInRadius(num2 - 1, depth2, max_depth, cells_in_range);
-			}
-			DetermineCellsInRadius(num2, depth2, max_depth, cellsInRange);
-			if (flag || flag3)
-			{
-				DetermineCellsInRadius(num2 + 1, depth2, max_depth, cells_in_range);
-			}
-		}
 	}
 }

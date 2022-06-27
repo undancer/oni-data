@@ -22,12 +22,12 @@ public class DetailScreenTabHeader : KTabMenuHeader
 				if (i == tabIdx)
 				{
 					component.preferredHeight = SelectedHeight;
-					component.transform.Find("Icon").GetComponent<Image>().color = new Color(37f / 255f, 14f / 85f, 59f / 255f);
+					component.transform.Find("Icon").GetComponent<Image>().color = new Color(0.14509805f, 14f / 85f, 0.23137255f);
 				}
 				else
 				{
 					component.preferredHeight = UnselectedHeight;
-					component.transform.Find("Icon").GetComponent<Image>().color = new Color(91f / 255f, 19f / 51f, 23f / 51f);
+					component.transform.Find("Icon").GetComponent<Image>().color = new Color(0.35686275f, 19f / 51f, 23f / 51f);
 				}
 			}
 		}

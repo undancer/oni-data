@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using STRINGS;
 using TUNING;
@@ -10,9 +9,9 @@ public class ColdWheatConfig : IEntityConfig
 
 	public const string SEED_ID = "ColdWheatSeed";
 
-	public const float FERTILIZATION_RATE = 0.008333334f;
+	public const float FERTILIZATION_RATE = 1f / 120f;
 
-	public const float WATER_RATE = 71f / (678f * (float)Math.PI);
+	public const float WATER_RATE = 1f / 30f;
 
 	public string[] GetDlcIds()
 	{
@@ -28,22 +27,22 @@ public class ColdWheatConfig : IEntityConfig
 			SimHashes.ContaminatedOxygen,
 			SimHashes.CarbonDioxide
 		}, pressure_sensitive: true, 0f, 0.15f, "ColdWheatSeed", can_drown: true, can_tinker: true, require_solid_tile: true, should_grow_old: true, 2400f, 0f, 12200f, "ColdWheatOriginal", STRINGS.CREATURES.SPECIES.COLDWHEAT.NAME);
-		PlantElementAbsorber.ConsumeInfo[] array = new PlantElementAbsorber.ConsumeInfo[1];
-		PlantElementAbsorber.ConsumeInfo consumeInfo = new PlantElementAbsorber.ConsumeInfo
+		EntityTemplates.ExtendPlantToFertilizable(gameObject, new PlantElementAbsorber.ConsumeInfo[1]
 		{
-			tag = GameTags.Dirt,
-			massConsumptionRate = 0.008333334f
-		};
-		array[0] = consumeInfo;
-		EntityTemplates.ExtendPlantToFertilizable(gameObject, array);
-		PlantElementAbsorber.ConsumeInfo[] array2 = new PlantElementAbsorber.ConsumeInfo[1];
-		consumeInfo = new PlantElementAbsorber.ConsumeInfo
+			new PlantElementAbsorber.ConsumeInfo
+			{
+				tag = GameTags.Dirt,
+				massConsumptionRate = 1f / 120f
+			}
+		});
+		EntityTemplates.ExtendPlantToIrrigated(gameObject, new PlantElementAbsorber.ConsumeInfo[1]
 		{
-			tag = GameTags.Water,
-			massConsumptionRate = 71f / (678f * (float)Math.PI)
-		};
-		array2[0] = consumeInfo;
-		EntityTemplates.ExtendPlantToIrrigated(gameObject, array2);
+			new PlantElementAbsorber.ConsumeInfo
+			{
+				tag = GameTags.Water,
+				massConsumptionRate = 1f / 30f
+			}
+		});
 		gameObject.AddOrGet<StandardCropPlant>();
 		GameObject gameObject2 = EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.DigOnly, "ColdWheatSeed", STRINGS.CREATURES.SPECIES.SEEDS.COLDWHEAT.NAME, STRINGS.CREATURES.SPECIES.SEEDS.COLDWHEAT.DESC, Assets.GetAnim("seed_coldwheat_kanim"), "object", 1, new List<Tag> { GameTags.CropSeed }, SingleEntityReceptacle.ReceptacleDirection.Top, default(Tag), 3, STRINGS.CREATURES.SPECIES.COLDWHEAT.DOMESTICATEDDESC, EntityTemplates.CollisionShape.CIRCLE, 0.2f, 0.2f, null, "", ignoreDefaultSeedTag: true);
 		EntityTemplates.ExtendEntityToFood(gameObject2, FOOD.FOOD_TYPES.COLD_WHEAT_SEED);

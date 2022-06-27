@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using Unity.Collections;
 using UnityEngine;
 
 public class SymbolOverrideInfoGpuData
@@ -101,9 +102,9 @@ public class SymbolOverrideInfoGpuData
 		MarkDirty();
 	}
 
-	public void WriteToTexture(byte[] data, int data_idx, int instance_idx)
+	public void WriteToTexture(NativeArray<byte> data, int data_idx, int instance_idx)
 	{
 		DebugUtil.Assert(instance_idx * symbolCount * 12 * 4 == data_idx);
-		Buffer.BlockCopy(symbolOverrideInfoConverter.bytes, 0, data, data_idx, symbolCount * 12 * 4);
+		NativeArray<byte>.Copy(symbolOverrideInfoConverter.bytes, 0, data, data_idx, symbolCount * 12 * 4);
 	}
 }

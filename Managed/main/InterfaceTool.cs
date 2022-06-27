@@ -86,22 +86,21 @@ public class InterfaceTool : KMonoBehaviour
 
 	public virtual bool ShowHoverUI()
 	{
+		if (ManagementMenu.Instance == null || ManagementMenu.Instance.IsFullscreenUIActive())
+		{
+			return false;
+		}
 		Vector3 pos = Camera.main.ScreenToWorldPoint(KInputManager.GetMousePos());
 		if (OverlayScreen.Instance == null || !ClusterManager.Instance.IsPositionInActiveWorld(pos) || pos.x < 0f || pos.x > Grid.WidthInMeters || pos.y < 0f || pos.y > Grid.HeightInMeters)
 		{
 			return false;
 		}
-		bool result = false;
 		UnityEngine.EventSystems.EventSystem current = UnityEngine.EventSystems.EventSystem.current;
 		if (current != null)
 		{
-			Vector3 vector = new Vector3(KInputManager.GetMousePos().x, KInputManager.GetMousePos().y, 0f);
-			PointerEventData pointerEventData = new PointerEventData(current);
-			pointerEventData.position = vector;
-			current.RaycastAll(pointerEventData, castResults);
-			result = castResults.Count == 0;
+			return !current.IsPointerOverGameObject();
 		}
-		return result;
+		return false;
 	}
 
 	protected virtual void OnActivateTool()
@@ -351,15 +350,13 @@ public class InterfaceTool : KMonoBehaviour
 		Vector3 position = new Vector3(KInputManager.GetMousePos().x, KInputManager.GetMousePos().y, 0f - main.transform.GetPosition().z);
 		Vector3 pos = main.ScreenToWorldPoint(position);
 		Vector2 pos2 = new Vector2(pos.x, pos.y);
-		Intersection item;
 		if (hoverOverride != null)
 		{
-			item = new Intersection
+			intersections.Add(new Intersection
 			{
 				component = hoverOverride,
 				distance = -100f
-			};
-			intersections.Add(item);
+			});
 		}
 		int cell = Grid.PosToCell(pos);
 		if (!Grid.IsValidCell(cell) || !Grid.IsVisible(cell))
@@ -372,9 +369,9 @@ public class InterfaceTool : KMonoBehaviour
 		int y = 0;
 		Grid.CellToXY(cell, out x, out y);
 		GameScenePartitioner.Instance.GatherEntries(x, y, 1, 1, GameScenePartitioner.Instance.collisionLayer, pooledList);
-		foreach (ScenePartitionerEntry item2 in pooledList)
+		foreach (ScenePartitionerEntry item in pooledList)
 		{
-			KCollider2D kCollider2D = item2.obj as KCollider2D;
+			KCollider2D kCollider2D = item.obj as KCollider2D;
 			if (kCollider2D == null || !kCollider2D.Intersects(new Vector2(pos.x, pos.y)))
 			{
 				continue;
@@ -403,12 +400,11 @@ public class InterfaceTool : KMonoBehaviour
 			}
 			if (!flag)
 			{
-				item = new Intersection
+				intersections.Add(new Intersection
 				{
 					component = val,
 					distance = num
-				};
-				intersections.Add(item);
+				});
 			}
 		}
 		pooledList.Recycle();

@@ -35,9 +35,9 @@ public class LogicRibbonWriter : KMonoBehaviour, ILogicRibbonBitSelector, IRende
 
 	private KBatchedAnimController kbac;
 
-	private Color colorOn = new Color(29f / 85f, 37f / 51f, 94f / 255f);
+	private Color colorOn = new Color(29f / 85f, 37f / 51f, 0.36862746f);
 
-	private Color colorOff = new Color(81f / 85f, 74f / 255f, 71f / 255f);
+	private Color colorOff = new Color(81f / 85f, 0.2901961f, 0.2784314f);
 
 	private static KAnimHashedString BIT_ONE_SYMBOL = "bit1_bloom";
 

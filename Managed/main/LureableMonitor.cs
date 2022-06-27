@@ -41,8 +41,7 @@ public class LureableMonitor : GameStateMachine<LureableMonitor, LureableMonitor
 
 			public void Iterate(object target_obj)
 			{
-				Lure.Instance instance = target_obj as Lure.Instance;
-				if (instance != null && instance.IsActive() && instance.HasAnyLure(lures))
+				if (target_obj is Lure.Instance instance && instance.IsActive() && instance.HasAnyLure(lures))
 				{
 					int navigationCost = navigator.GetNavigationCost(Grid.PosToCell(instance.transform.GetPosition()), instance.def.lurePoints);
 					if (navigationCost != -1 && (cost == -1 || navigationCost < cost))

@@ -61,7 +61,8 @@ public class FertilityMonitor : GameStateMachine<FertilityMonitor, FertilityMoni
 		[OnDeserialized]
 		private void OnDeserialized()
 		{
-			if (breedingChances.Count == 0)
+			int num = ((base.def.initialBreedingWeights != null) ? base.def.initialBreedingWeights.Count : 0);
+			if (breedingChances.Count != num)
 			{
 				InitializeBreedingChances();
 			}

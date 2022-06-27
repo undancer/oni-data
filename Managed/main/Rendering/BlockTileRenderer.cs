@@ -20,10 +20,10 @@ namespace Rendering
 			Up = 0x40,
 			UpRight = 0x20,
 			Left = 0x10,
-			Right = 0x8,
-			DownLeft = 0x4,
-			Down = 0x2,
-			DownRight = 0x1
+			Right = 8,
+			DownLeft = 4,
+			Down = 2,
+			DownRight = 1
 		}
 
 		protected class RenderInfo
@@ -136,7 +136,7 @@ namespace Rendering
 					atlasInfo[k].uvBox = item.uvBox;
 					atlasInfo[k].name = item.name;
 				}
-				trimUVSize = new Vector2(0.03125f, 0.03125f);
+				trimUVSize = new Vector2(1f / 32f, 1f / 32f);
 			}
 
 			public void FreeResources()
@@ -798,23 +798,23 @@ namespace Rendering
 					}
 				}
 				cell_status = cell;
-				foreach (KeyValuePair<KeyValuePair<BuildingDef, RenderInfoLayer>, RenderInfo> item2 in renderInfo)
 				{
-					item2.Value.MarkDirtyIfOccupied(cell_status);
-				}
-			}
-			else
-			{
-				if (cell_status != cell)
-				{
+					foreach (KeyValuePair<KeyValuePair<BuildingDef, RenderInfoLayer>, RenderInfo> item2 in renderInfo)
+					{
+						item2.Value.MarkDirtyIfOccupied(cell_status);
+					}
 					return;
 				}
-				foreach (KeyValuePair<KeyValuePair<BuildingDef, RenderInfoLayer>, RenderInfo> item3 in renderInfo)
-				{
-					item3.Value.MarkDirty(cell_status);
-				}
-				cell_status = -1;
 			}
+			if (cell_status != cell)
+			{
+				return;
+			}
+			foreach (KeyValuePair<KeyValuePair<BuildingDef, RenderInfoLayer>, RenderInfo> item3 in renderInfo)
+			{
+				item3.Value.MarkDirty(cell_status);
+			}
+			cell_status = -1;
 		}
 	}
 }

@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Klei.CustomSettings;
-using KMod;
-using ProcGen;
-using ProcGenGame;
 using UnityEngine;
 
 [AddComponentMenu("KMonoBehaviour/scripts/NewGameSettingsPanel")]
@@ -49,41 +46,32 @@ public class NewGameSettingsPanel : KMonoBehaviour
 
 	public void Init()
 	{
-		Global.Instance.modManager.Load(Content.LayerableFiles);
-		SettingsCache.Clear();
-		WorldGen.LoadSettings();
 		CustomGameSettings.Instance.LoadClusters();
 		Global.Instance.modManager.Report(base.gameObject);
 		settings = CustomGameSettings.Instance;
 		widgets = new List<NewGameSettingWidget>();
 		foreach (KeyValuePair<string, SettingConfig> qualitySetting in settings.QualitySettings)
 		{
-			if ((qualitySetting.Value.debug_only && !DebugHandler.enabled) || (qualitySetting.Value.editor_only && !Application.isEditor) || !DlcManager.IsContentActive(qualitySetting.Value.required_content))
+			if ((!qualitySetting.Value.debug_only || DebugHandler.enabled) && (!qualitySetting.Value.editor_only || Application.isEditor) && DlcManager.IsContentActive(qualitySetting.Value.required_content))
 			{
-				continue;
-			}
-			ListSettingConfig listSettingConfig = qualitySetting.Value as ListSettingConfig;
-			if (listSettingConfig != null)
-			{
-				NewGameSettingList newGameSettingList = Util.KInstantiateUI<NewGameSettingList>(prefab_cycle_setting, content.gameObject, force_active: true);
-				newGameSettingList.Initialize(listSettingConfig, this, qualitySetting.Value.missing_content_default);
-				widgets.Add(newGameSettingList);
-				continue;
-			}
-			ToggleSettingConfig toggleSettingConfig = qualitySetting.Value as ToggleSettingConfig;
-			if (toggleSettingConfig != null)
-			{
-				NewGameSettingToggle newGameSettingToggle = Util.KInstantiateUI<NewGameSettingToggle>(prefab_checkbox_setting, content.gameObject, force_active: true);
-				newGameSettingToggle.Initialize(toggleSettingConfig, this, qualitySetting.Value.missing_content_default);
-				widgets.Add(newGameSettingToggle);
-				continue;
-			}
-			SeedSettingConfig seedSettingConfig = qualitySetting.Value as SeedSettingConfig;
-			if (seedSettingConfig != null)
-			{
-				NewGameSettingSeed newGameSettingSeed = Util.KInstantiateUI<NewGameSettingSeed>(prefab_seed_input_setting, content.gameObject, force_active: true);
-				newGameSettingSeed.Initialize(seedSettingConfig);
-				widgets.Add(newGameSettingSeed);
+				if (qualitySetting.Value is ListSettingConfig config)
+				{
+					NewGameSettingList newGameSettingList = Util.KInstantiateUI<NewGameSettingList>(prefab_cycle_setting, content.gameObject, force_active: true);
+					newGameSettingList.Initialize(config, this, qualitySetting.Value.missing_content_default);
+					widgets.Add(newGameSettingList);
+				}
+				else if (qualitySetting.Value is ToggleSettingConfig config2)
+				{
+					NewGameSettingToggle newGameSettingToggle = Util.KInstantiateUI<NewGameSettingToggle>(prefab_checkbox_setting, content.gameObject, force_active: true);
+					newGameSettingToggle.Initialize(config2, this, qualitySetting.Value.missing_content_default);
+					widgets.Add(newGameSettingToggle);
+				}
+				else if (qualitySetting.Value is SeedSettingConfig config3)
+				{
+					NewGameSettingSeed newGameSettingSeed = Util.KInstantiateUI<NewGameSettingSeed>(prefab_seed_input_setting, content.gameObject, force_active: true);
+					newGameSettingSeed.Initialize(config3);
+					widgets.Add(newGameSettingSeed);
+				}
 			}
 		}
 		Refresh();
@@ -114,7 +102,5 @@ public class NewGameSettingsPanel : KMonoBehaviour
 
 	public void Cancel()
 	{
-		Global.Instance.modManager.Unload(Content.LayerableFiles);
-		SettingsCache.Clear();
 	}
 }

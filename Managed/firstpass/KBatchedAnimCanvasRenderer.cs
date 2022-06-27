@@ -142,39 +142,36 @@ public class KBatchedAnimCanvasRenderer : MonoBehaviour, IMaskable
 	{
 		if (texturesToCopy == null)
 		{
-			TextureToCopyEntry[] array = new TextureToCopyEntry[4];
-			TextureToCopyEntry textureToCopyEntry = new TextureToCopyEntry
+			texturesToCopy = new TextureToCopyEntry[4]
 			{
-				textureId = Shader.PropertyToID("instanceTex"),
-				sizeId = Shader.PropertyToID("INSTANCE_TEXTURE_SIZE")
+				new TextureToCopyEntry
+				{
+					textureId = Shader.PropertyToID("instanceTex"),
+					sizeId = Shader.PropertyToID("INSTANCE_TEXTURE_SIZE")
+				},
+				new TextureToCopyEntry
+				{
+					textureId = Shader.PropertyToID("buildAndAnimTex"),
+					sizeId = Shader.PropertyToID("BUILD_AND_ANIM_TEXTURE_SIZE")
+				},
+				new TextureToCopyEntry
+				{
+					textureId = Shader.PropertyToID("symbolInstanceTex"),
+					sizeId = Shader.PropertyToID("SYMBOL_INSTANCE_TEXTURE_SIZE")
+				},
+				new TextureToCopyEntry
+				{
+					textureId = Shader.PropertyToID("symbolOverrideInfoTex"),
+					sizeId = Shader.PropertyToID("SYMBOL_OVERRIDE_INFO_TEXTURE_SIZE")
+				}
 			};
-			array[0] = textureToCopyEntry;
-			textureToCopyEntry = new TextureToCopyEntry
-			{
-				textureId = Shader.PropertyToID("buildAndAnimTex"),
-				sizeId = Shader.PropertyToID("BUILD_AND_ANIM_TEXTURE_SIZE")
-			};
-			array[1] = textureToCopyEntry;
-			textureToCopyEntry = new TextureToCopyEntry
-			{
-				textureId = Shader.PropertyToID("symbolInstanceTex"),
-				sizeId = Shader.PropertyToID("SYMBOL_INSTANCE_TEXTURE_SIZE")
-			};
-			array[2] = textureToCopyEntry;
-			textureToCopyEntry = new TextureToCopyEntry
-			{
-				textureId = Shader.PropertyToID("symbolOverrideInfoTex"),
-				sizeId = Shader.PropertyToID("SYMBOL_OVERRIDE_INFO_TEXTURE_SIZE")
-			};
-			array[3] = textureToCopyEntry;
-			texturesToCopy = array;
 		}
-		TextureToCopyEntry[] array2 = texturesToCopy;
-		for (int i = 0; i < array2.Length; i++)
+		TextureToCopyEntry[] array = texturesToCopy;
+		for (int i = 0; i < array.Length; i++)
 		{
-			TextureToCopyEntry textureToCopyEntry2 = array2[i];
-			uiMat.SetTexture(textureToCopyEntry2.textureId, batch.matProperties.GetTexture(textureToCopyEntry2.textureId));
-			uiMat.SetVector(textureToCopyEntry2.sizeId, batch.matProperties.GetVector(textureToCopyEntry2.sizeId));
+			TextureToCopyEntry textureToCopyEntry = array[i];
+			uiMat.SetTexture(textureToCopyEntry.textureId, batch.matProperties.GetTexture(textureToCopyEntry.textureId));
+			uiMat.SetVector(textureToCopyEntry.sizeId, batch.matProperties.GetVector(textureToCopyEntry.sizeId));
 		}
 		for (int j = 0; j < KAnimBatchManager.instance.atlasNames.Length; j++)
 		{
@@ -184,12 +181,12 @@ public class KBatchedAnimCanvasRenderer : MonoBehaviour, IMaskable
 				uiMat.SetTexture(KAnimBatchManager.instance.atlasNames[j], texture);
 			}
 		}
-		array2 = texturesToCopy;
-		for (int i = 0; i < array2.Length; i++)
+		array = texturesToCopy;
+		for (int i = 0; i < array.Length; i++)
 		{
-			TextureToCopyEntry textureToCopyEntry3 = array2[i];
-			uiMat.SetTexture(textureToCopyEntry3.textureId, batch.matProperties.GetTexture(textureToCopyEntry3.textureId));
-			uiMat.SetVector(textureToCopyEntry3.sizeId, batch.matProperties.GetVector(textureToCopyEntry3.sizeId));
+			TextureToCopyEntry textureToCopyEntry2 = array[i];
+			uiMat.SetTexture(textureToCopyEntry2.textureId, batch.matProperties.GetTexture(textureToCopyEntry2.textureId));
+			uiMat.SetVector(textureToCopyEntry2.sizeId, batch.matProperties.GetVector(textureToCopyEntry2.sizeId));
 		}
 		for (int k = 0; k < KAnimBatchManager.instance.atlasNames.Length; k++)
 		{

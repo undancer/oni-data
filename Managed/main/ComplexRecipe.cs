@@ -31,6 +31,8 @@ public class ComplexRecipe
 
 		public bool inheritElement;
 
+		public string facadeID;
+
 		public float amount { get; private set; }
 
 		public RecipeElement(Tag material, float amount, bool inheritElement)
@@ -54,6 +56,15 @@ public class ComplexRecipe
 			this.amount = amount;
 			this.temperatureOperation = temperatureOperation;
 			this.storeElement = storeElement;
+		}
+
+		public RecipeElement(Tag material, float amount, TemperatureOperation temperatureOperation, string facadeID, bool storeElement = false)
+		{
+			this.material = material;
+			this.amount = amount;
+			this.temperatureOperation = temperatureOperation;
+			this.storeElement = storeElement;
+			this.facadeID = facadeID;
 		}
 	}
 
@@ -146,38 +157,39 @@ public class ComplexRecipe
 
 	public string GetUIName(bool includeAmounts)
 	{
+		string text = (results[0].facadeID.IsNullOrWhiteSpace() ? results[0].material.ProperName() : GameTagExtensions.ProperName(results[0].facadeID));
 		switch (nameDisplay)
 		{
 		case RecipeNameDisplay.Result:
 			if (includeAmounts)
 			{
-				return string.Format(UI.UISIDESCREENS.REFINERYSIDESCREEN.RECIPE_SIMPLE_INCLUDE_AMOUNTS, results[0].material.ProperName(), results[0].amount);
+				return string.Format(UI.UISIDESCREENS.REFINERYSIDESCREEN.RECIPE_SIMPLE_INCLUDE_AMOUNTS, text, results[0].amount);
 			}
-			return results[0].material.ProperName();
+			return text;
 		case RecipeNameDisplay.IngredientToResult:
 			if (includeAmounts)
 			{
-				return string.Format(UI.UISIDESCREENS.REFINERYSIDESCREEN.RECIPE_FROM_TO_INCLUDE_AMOUNTS, ingredients[0].material.ProperName(), results[0].material.ProperName(), ingredients[0].amount, results[0].amount);
+				return string.Format(UI.UISIDESCREENS.REFINERYSIDESCREEN.RECIPE_FROM_TO_INCLUDE_AMOUNTS, ingredients[0].material.ProperName(), text, ingredients[0].amount, results[0].amount);
 			}
-			return string.Format(UI.UISIDESCREENS.REFINERYSIDESCREEN.RECIPE_FROM_TO, ingredients[0].material.ProperName(), results[0].material.ProperName());
+			return string.Format(UI.UISIDESCREENS.REFINERYSIDESCREEN.RECIPE_FROM_TO, ingredients[0].material.ProperName(), text);
 		case RecipeNameDisplay.ResultWithIngredient:
 			if (includeAmounts)
 			{
-				return string.Format(UI.UISIDESCREENS.REFINERYSIDESCREEN.RECIPE_WITH_INCLUDE_AMOUNTS, ingredients[0].material.ProperName(), results[0].material.ProperName(), ingredients[0].amount, results[0].amount);
+				return string.Format(UI.UISIDESCREENS.REFINERYSIDESCREEN.RECIPE_WITH_INCLUDE_AMOUNTS, ingredients[0].material.ProperName(), text, ingredients[0].amount, results[0].amount);
 			}
-			return string.Format(UI.UISIDESCREENS.REFINERYSIDESCREEN.RECIPE_WITH, ingredients[0].material.ProperName(), results[0].material.ProperName());
+			return string.Format(UI.UISIDESCREENS.REFINERYSIDESCREEN.RECIPE_WITH, ingredients[0].material.ProperName(), text);
 		case RecipeNameDisplay.Composite:
 			if (includeAmounts)
 			{
-				return string.Format(UI.UISIDESCREENS.REFINERYSIDESCREEN.RECIPE_FROM_TO_COMPOSITE_INCLUDE_AMOUNTS, ingredients[0].material.ProperName(), results[0].material.ProperName(), results[1].material.ProperName(), ingredients[0].amount, results[0].amount, results[1].amount);
+				return string.Format(UI.UISIDESCREENS.REFINERYSIDESCREEN.RECIPE_FROM_TO_COMPOSITE_INCLUDE_AMOUNTS, ingredients[0].material.ProperName(), text, results[1].material.ProperName(), ingredients[0].amount, results[0].amount, results[1].amount);
 			}
-			return string.Format(UI.UISIDESCREENS.REFINERYSIDESCREEN.RECIPE_FROM_TO_COMPOSITE, ingredients[0].material.ProperName(), results[0].material.ProperName(), results[1].material.ProperName());
+			return string.Format(UI.UISIDESCREENS.REFINERYSIDESCREEN.RECIPE_FROM_TO_COMPOSITE, ingredients[0].material.ProperName(), text, results[1].material.ProperName());
 		case RecipeNameDisplay.HEP:
 			if (includeAmounts)
 			{
 				return string.Format(UI.UISIDESCREENS.REFINERYSIDESCREEN.RECIPE_FROM_TO_HEP_INCLUDE_AMOUNTS, ingredients[0].material.ProperName(), results[1].material.ProperName(), ingredients[0].amount, producedHEP, results[1].amount);
 			}
-			return string.Format(UI.UISIDESCREENS.REFINERYSIDESCREEN.RECIPE_FROM_TO_HEP, ingredients[0].material.ProperName(), results[0].material.ProperName());
+			return string.Format(UI.UISIDESCREENS.REFINERYSIDESCREEN.RECIPE_FROM_TO_HEP, ingredients[0].material.ProperName(), text);
 		default:
 			if (includeAmounts)
 			{

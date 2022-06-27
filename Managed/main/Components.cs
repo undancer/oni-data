@@ -230,7 +230,7 @@ public class Components
 
 	public static Cmps<ITravelTubePiece> ITravelTubePieces = new Cmps<ITravelTubePiece>();
 
-	public static Cmps<CreatureFeeder> CreatureFeeders = new Cmps<CreatureFeeder>();
+	public static CmpsByWorld<CreatureFeeder> CreatureFeeders = new CmpsByWorld<CreatureFeeder>();
 
 	public static Cmps<Light2D> Light2Ds = new Cmps<Light2D>();
 

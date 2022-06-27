@@ -1,0 +1,95 @@
+id: "JournalistRequest"
+title: STRINGS.CODEX.JOURNALISTREQUEST.TITLE
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_journalistrequest
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.JOURNALISTREQUEST.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.JOURNALISTREQUEST.SUBTITLE
+          style: Subtitle
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_journalistrequest2
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.JOURNALISTREQUEST.BODY.EMAILHEADER2
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_journalistrequest2
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.JOURNALISTREQUEST.BODY.CONTAINER1
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.JOURNALISTREQUEST.BODY.SIGNATURE2
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_journalistrequest
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.JOURNALISTREQUEST.TITLE
+          style: Subtitle
+      - !CodexText
+          stringKey: STRINGS.CODEX.JOURNALISTREQUEST.BODY.EMAILHEADER1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_journalistrequest
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.JOURNALISTREQUEST.BODY.CONTAINER2
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.JOURNALISTREQUEST.BODY.SIGNATURE1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_journalistrequest
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.JOURNALISTREQUEST.TITLE
+          style: Subtitle
+      - !CodexText
+          stringKey: STRINGS.CODEX.JOURNALISTREQUEST.BODY.EMAILHEADER1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_journalistrequest
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.JOURNALISTREQUEST.BODY.CONTAINER3
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.JOURNALISTREQUEST.BODY.SIGNATURE1
+          style: Body
+          #-----------------------------
+  - contentLayout: Vertical
+    lockID: email_journalistrequest
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.JOURNALISTREQUEST.TITLE2
+          style: Subtitle
+      - !CodexText
+          stringKey: STRINGS.CODEX.JOURNALISTREQUEST.BODY.EMAILHEADER1
+          style: Body
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: email_journalistrequest
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.JOURNALISTREQUEST.BODY.CONTAINER4
+          style: Body
+
+      - !CodexText
+          stringKey: STRINGS.CODEX.JOURNALISTREQUEST.BODY.SIGNATURE1
+          style: Body

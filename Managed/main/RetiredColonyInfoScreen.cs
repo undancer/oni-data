@@ -596,8 +596,9 @@ public class RetiredColonyInfoScreen : KModalScreen
 
 	private void UpdateAchievementData(RetiredColonyData data, string[] newlyAchieved = null)
 	{
-		int num = 1;
-		float num2 = 1f;
+		int num = 0;
+		float num2 = 2f;
+		float num3 = 1f;
 		if (newlyAchieved != null && newlyAchieved.Length != 0)
 		{
 			retiredColonyData = RetireColonyUtility.LoadRetiredColonies(skipStats: true);
@@ -648,7 +649,7 @@ public class RetiredColonyInfoScreen : KModalScreen
 			{
 				if (flag3)
 				{
-					achievementEntry.Value.GetComponent<AchievementWidget>().ActivateNewlyAchievedFlourish(num2 + (float)num * 1f);
+					achievementEntry.Value.GetComponent<AchievementWidget>().ActivateNewlyAchievedFlourish(num3 + (float)num * num2);
 					num++;
 				}
 				else
@@ -672,7 +673,7 @@ public class RetiredColonyInfoScreen : KModalScreen
 		if (newlyAchieved != null && newlyAchieved.Length != 0)
 		{
 			StartCoroutine(ShowAchievementVeil());
-			StartCoroutine(ClearAchievementVeil(num2 + (float)num * 1f));
+			StartCoroutine(ClearAchievementVeil(num3 + (float)num * num2));
 		}
 	}
 

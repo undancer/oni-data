@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Klei.AI;
 using STRINGS;
@@ -43,7 +42,7 @@ public class FishFeederConfig : IBuildingConfig
 		go.AddOrGet<StorageLocker>().choreTypeID = Db.Get().ChoreTypes.RanchingFetch.Id;
 		go.AddOrGet<UserNameable>();
 		Effect effect = new Effect("AteFromFeeder", STRINGS.CREATURES.MODIFIERS.ATE_FROM_FEEDER.NAME, STRINGS.CREATURES.MODIFIERS.ATE_FROM_FEEDER.TOOLTIP, 600f, show_in_ui: true, trigger_floating_text: false, is_bad: false);
-		effect.Add(new AttributeModifier(Db.Get().Amounts.Wildness.deltaAttribute.Id, -71f / (678f * (float)Math.PI), STRINGS.CREATURES.MODIFIERS.ATE_FROM_FEEDER.NAME));
+		effect.Add(new AttributeModifier(Db.Get().Amounts.Wildness.deltaAttribute.Id, -1f / 30f, STRINGS.CREATURES.MODIFIERS.ATE_FROM_FEEDER.NAME));
 		effect.Add(new AttributeModifier(Db.Get().CritterAttributes.Happiness.Id, 2f, STRINGS.CREATURES.MODIFIERS.ATE_FROM_FEEDER.NAME));
 		Db.Get().effects.Add(effect);
 		go.AddOrGet<TreeFilterable>();

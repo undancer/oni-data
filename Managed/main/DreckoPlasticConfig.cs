@@ -15,11 +15,11 @@ public class DreckoPlasticConfig : IEntityConfig
 
 	public static Tag EMIT_ELEMENT = SimHashes.Polypropylene.CreateTag();
 
-	private static float DAYS_PLANT_GROWTH_EATEN_PER_CYCLE = 3f;
+	private static float DAYS_PLANT_GROWTH_EATEN_PER_CYCLE = 1f;
 
 	private static float CALORIES_PER_DAY_OF_PLANT_EATEN = DreckoTuning.STANDARD_CALORIES_PER_CYCLE / DAYS_PLANT_GROWTH_EATEN_PER_CYCLE;
 
-	private static float KG_POOP_PER_DAY_OF_PLANT = 3f;
+	private static float KG_POOP_PER_DAY_OF_PLANT = 9f;
 
 	private static float MIN_POOP_SIZE_IN_KG = 1.5f;
 

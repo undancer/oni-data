@@ -31,6 +31,7 @@ public class GasBottler : Workable
 				smi.master.storage.allowItemRemoval = true;
 				foreach (GameObject item in smi.master.storage.items)
 				{
+					item.GetComponent<KPrefabID>().AddTag(GameTags.GasSource);
 					item.Trigger(-778359855, smi.master.storage);
 				}
 			}).Exit(delegate(Instance smi)

@@ -20,8 +20,6 @@ public class ClothingWearer : KMonoBehaviour
 		[Serialize]
 		public float homeostasisEfficiencyMultiplier;
 
-		public static readonly ClothingInfo UGLY_CLOTHING = new ClothingInfo(EQUIPMENT.PREFABS.COOL_VEST.GENERICNAME, -30, 0.0025f, -1.25f);
-
 		public static readonly ClothingInfo BASIC_CLOTHING = new ClothingInfo(EQUIPMENT.PREFABS.COOL_VEST.GENERICNAME, -5, 0.0025f, -1.25f);
 
 		public static readonly ClothingInfo WARM_CLOTHING = new ClothingInfo(EQUIPMENT.PREFABS.WARM_VEST.NAME, -10, 0.01f, -1.25f);
@@ -29,6 +27,8 @@ public class ClothingWearer : KMonoBehaviour
 		public static readonly ClothingInfo COOL_CLOTHING = new ClothingInfo(EQUIPMENT.PREFABS.COOL_VEST.NAME, -10, 0.0005f, 0f);
 
 		public static readonly ClothingInfo FANCY_CLOTHING = new ClothingInfo(EQUIPMENT.PREFABS.FUNKY_VEST.NAME, 30, 0.0025f, -1.25f);
+
+		public static readonly ClothingInfo CUSTOM_CLOTHING = new ClothingInfo(EQUIPMENT.PREFABS.CUSTOMCLOTHING.NAME, 40, 0.0025f, -1.25f);
 
 		public ClothingInfo(string _name, int _decor, float _temperature, float _homeostasisEfficiencyMultiplier)
 		{

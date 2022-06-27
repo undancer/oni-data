@@ -382,7 +382,7 @@ public class LineLayer : GraphLayer
 			if (lines[j].PointCount != 0)
 			{
 				Vector2 closestDataToPointOnXAxis = lines[j].GetClosestDataToPointOnXAxis(localPoint);
-				if (!float.IsNaN(closestDataToPointOnXAxis.x) && !float.IsNaN(closestDataToPointOnXAxis.y))
+				if (!float.IsInfinity(closestDataToPointOnXAxis.x) && !float.IsNaN(closestDataToPointOnXAxis.x) && !float.IsInfinity(closestDataToPointOnXAxis.y) && !float.IsNaN(closestDataToPointOnXAxis.y))
 				{
 					lines[j].SetPointHighlight(closestDataToPointOnXAxis);
 				}

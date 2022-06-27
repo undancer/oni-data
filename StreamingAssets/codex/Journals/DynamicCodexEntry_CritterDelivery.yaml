@@ -1,0 +1,24 @@
+id: "CritterDelivery"
+title: STRINGS.CODEX.CRITTERDELIVERY.TITLE 
+
+contentContainers:
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_courier
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.CRITTERDELIVERY.TITLE
+          style: Title
+      - !CodexText
+          stringKey: STRINGS.CODEX.CRITTERDELIVERY.SUBTITLE
+          style: Subtitle
+      - !CodexDividerLine
+          preferredWidth: -1
+#-----------------------------
+  - contentLayout: Vertical
+    lockID: journal_courier
+    content:
+      - !CodexText
+          stringKey: STRINGS.CODEX.CRITTERDELIVERY.BODY.CONTAINER1
+          style: Body
+

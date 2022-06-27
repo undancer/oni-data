@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using STRINGS;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class ManagementMenu : KIconToggleMenu
 {
@@ -138,7 +137,7 @@ public class ManagementMenu : KIconToggleMenu
 
 	private ManagementMenuToggleInfo skillsInfo;
 
-	private UnityAction inputChangeReceiver;
+	private ManagementMenuToggleInfo[] fullscreenUIs;
 
 	private Dictionary<ManagementMenuToggleInfo, ScreenData> ScreenInfoMatch = new Dictionary<ManagementMenuToggleInfo, ScreenData>();
 
@@ -180,11 +179,12 @@ public class ManagementMenu : KIconToggleMenu
 		Instance = this;
 		notificationDisplayer.onNotificationsChanged += OnNotificationsChanged;
 		CodexCache.CodexCacheInit();
-		ScheduledUIInstantiation component = GameScreenManager.Instance.ssOverlayCanvas.GetComponent<ScheduledUIInstantiation>();
+		ScheduledUIInstantiation component = GameScreenManager.Instance.GetComponent<ScheduledUIInstantiation>();
 		starmapScreen = component.GetInstantiatedObject<StarmapScreen>();
 		clusterMapScreen = component.GetInstantiatedObject<ClusterMapScreen>();
 		skillsScreen = component.GetInstantiatedObject<SkillsScreen>();
 		researchScreen = component.GetInstantiatedObject<ResearchScreen>();
+		fullscreenUIs = new ManagementMenuToggleInfo[4] { researchInfo, skillsInfo, starmapInfo, clusterMapInfo };
 		Subscribe(Game.Instance.gameObject, 288942073, OnUIClear);
 		consumablesInfo = new ManagementMenuToggleInfo(UI.CONSUMABLES, "OverviewUI_consumables_icon", null, Action.ManageConsumables, UI.TOOLTIPS.MANAGEMENTMENU_CONSUMABLES);
 		AddToggleTooltip(consumablesInfo);
@@ -306,8 +306,7 @@ public class ManagementMenu : KIconToggleMenu
 		PauseMenuButton.onClick += OnPauseMenuClicked;
 		PauseMenuButton.transform.SetAsLastSibling();
 		PauseMenuButton.GetComponent<ToolTip>().toolTip = GameUtil.ReplaceHotkeyString(UI.TOOLTIPS.MANAGEMENTMENU_PAUSEMENU, Action.Escape);
-		inputChangeReceiver = (UnityAction)Delegate.Combine(inputChangeReceiver, new UnityAction(OnInputChanged));
-		KInputManager.InputChange.AddListener(inputChangeReceiver);
+		KInputManager.InputChange.AddListener(OnInputChanged);
 		Components.ResearchCenters.OnAdd += CheckResearch;
 		Components.ResearchCenters.OnRemove += CheckResearch;
 		Components.RoleStations.OnAdd += CheckSkills;
@@ -341,6 +340,12 @@ public class ManagementMenu : KIconToggleMenu
 		mutuallyExclusiveScreens.Add(AllResourcesScreen.Instance);
 		mutuallyExclusiveScreens.Add(AllDiagnosticsScreen.Instance);
 		OnNotificationsChanged();
+	}
+
+	protected override void OnForcedCleanUp()
+	{
+		KInputManager.InputChange.RemoveListener(OnInputChanged);
+		base.OnForcedCleanUp();
 	}
 
 	private void OnInputChanged()
@@ -400,6 +405,23 @@ public class ManagementMenu : KIconToggleMenu
 			list.Add(new Tuple<string, TextStyleSetting>(toggleInfo.tooltip, ToolTipScreen.Instance.defaultTooltipBodyStyle));
 			return list;
 		};
+	}
+
+	public bool IsFullscreenUIActive()
+	{
+		if (activeScreen == null)
+		{
+			return false;
+		}
+		ManagementMenuToggleInfo[] array = fullscreenUIs;
+		foreach (ManagementMenuToggleInfo managementMenuToggleInfo in array)
+		{
+			if (activeScreen.toggleInfo == managementMenuToggleInfo)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private void OnPauseMenuClicked()
@@ -586,20 +608,20 @@ public class ManagementMenu : KIconToggleMenu
 						break;
 					}
 				}
-				foreach (KScreen mutuallyExclusiveScreen in mutuallyExclusiveScreens)
 				{
-					mutuallyExclusiveScreen.Show(show: false);
+					foreach (KScreen mutuallyExclusiveScreen in mutuallyExclusiveScreens)
+					{
+						mutuallyExclusiveScreen.Show(show: false);
+					}
+					return;
 				}
 			}
-			else
-			{
-				activeScreen.screen.Show(show: false);
-				KMonoBehaviour.PlaySound(GlobalAssets.GetSound("HUD_Click_Close"));
-				AudioMixer.instance.Stop(AudioMixerSnapshots.Get().MenuOpenMigrated);
-				activeScreen.toggleInfo.toggle.ActivateFlourish(state: false);
-				activeScreen = null;
-				screenData.toggleInfo.toggle.gameObject.GetComponentInChildren<ImageToggleState>().SetInactive();
-			}
+			activeScreen.screen.Show(show: false);
+			KMonoBehaviour.PlaySound(GlobalAssets.GetSound("HUD_Click_Close"));
+			AudioMixer.instance.Stop(AudioMixerSnapshots.Get().MenuOpenMigrated);
+			activeScreen.toggleInfo.toggle.ActivateFlourish(state: false);
+			activeScreen = null;
+			screenData.toggleInfo.toggle.gameObject.GetComponentInChildren<ImageToggleState>().SetInactive();
 		}
 	}
 
@@ -714,5 +736,14 @@ public class ManagementMenu : KIconToggleMenu
 		{
 			ToggleScreen(ScreenInfoMatch[Instance.skillsInfo]);
 		}
+	}
+
+	public bool IsScreenOpen(KScreen screen)
+	{
+		if (activeScreen == null)
+		{
+			return false;
+		}
+		return activeScreen.screen == screen;
 	}
 }

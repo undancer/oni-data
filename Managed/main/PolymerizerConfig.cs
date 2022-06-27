@@ -52,7 +52,7 @@ public class PolymerizerConfig : IBuildingConfig
 		Polymerizer polymerizer = go.AddOrGet<Polymerizer>();
 		polymerizer.emitMass = 30f;
 		polymerizer.emitTag = GameTagExtensions.Create(SimHashes.Polypropylene);
-		polymerizer.emitOffset = new Vector3(-1.5f, 1f, 0f);
+		polymerizer.emitOffset = new Vector3(-1.45f, 1f, 0f);
 		polymerizer.exhaustElement = SimHashes.Steam;
 		ConduitConsumer conduitConsumer = go.AddOrGet<ConduitConsumer>();
 		conduitConsumer.conduitType = ConduitType.Liquid;
@@ -73,8 +73,8 @@ public class PolymerizerConfig : IBuildingConfig
 		elementConverter.outputElements = new ElementConverter.OutputElement[3]
 		{
 			new ElementConverter.OutputElement(0.5f, SimHashes.Polypropylene, 348.15f, useEntityTemperature: false, storeOutput: true),
-			new ElementConverter.OutputElement(0.008333334f, SimHashes.Steam, 473.15f, useEntityTemperature: false, storeOutput: true),
-			new ElementConverter.OutputElement(0.008333334f, SimHashes.CarbonDioxide, 423.15f, useEntityTemperature: false, storeOutput: true)
+			new ElementConverter.OutputElement(1f / 120f, SimHashes.Steam, 473.15f, useEntityTemperature: false, storeOutput: true),
+			new ElementConverter.OutputElement(1f / 120f, SimHashes.CarbonDioxide, 423.15f, useEntityTemperature: false, storeOutput: true)
 		};
 		go.AddOrGet<DropAllWorkable>();
 		Prioritizable.AddRef(go);

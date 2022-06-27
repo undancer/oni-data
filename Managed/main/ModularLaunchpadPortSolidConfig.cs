@@ -11,7 +11,7 @@ public class ModularLaunchpadPortSolidConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		return BaseModularLaunchpadPortConfig.CreateBaseLaunchpadPort("ModularLaunchpadPortSolid", "conduit_port_solid_loader_kanim", ConduitType.Solid, isLoader: true);
+		return BaseModularLaunchpadPortConfig.CreateBaseLaunchpadPort("ModularLaunchpadPortSolid", "conduit_port_solid_loader_kanim", ConduitType.Solid, isLoader: true, 2, 2);
 	}
 
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)

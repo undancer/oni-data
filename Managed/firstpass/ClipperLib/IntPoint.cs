@@ -48,9 +48,8 @@ namespace ClipperLib
 			{
 				return false;
 			}
-			if (obj is IntPoint)
+			if (obj is IntPoint intPoint)
 			{
-				IntPoint intPoint = (IntPoint)obj;
 				if (X == intPoint.X)
 				{
 					return Y == intPoint.Y;

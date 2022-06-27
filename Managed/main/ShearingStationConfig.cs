@@ -36,14 +36,16 @@ public class ShearingStationConfig : IBuildingConfig
 	public override void DoPostConfigureComplete(GameObject go)
 	{
 		RanchStation.Def def = go.AddOrGetDef<RanchStation.Def>();
-		def.isCreatureEligibleToBeRanchedCb = (GameObject creature_go, RanchStation.Instance ranch_station_smi) => creature_go.GetSMI<ScaleGrowthMonitor.Instance>()?.IsFullyGrown() ?? false;
+		def.isCreatureEligibleToBeRanchedCb = (GameObject creature_go, RanchStation.Instance ranch_station_smi) => creature_go.GetSMI<IShearable>()?.IsFullyGrown() ?? false;
 		def.onRanchCompleteCb = delegate(GameObject creature_go)
 		{
-			creature_go.GetSMI<ScaleGrowthMonitor.Instance>().Shear();
+			creature_go.GetSMI<IShearable>().Shear();
 		};
-		def.interactLoopCount = 6;
 		def.rancherInteractAnim = "anim_interacts_shearingstation_kanim";
-		def.synchronizeBuilding = true;
+		def.worktime = 12f;
+		def.ranchedPreAnim = "shearing_pre";
+		def.ranchedLoopAnim = "shearing_loop";
+		def.ranchedPstAnim = "shearing_pst";
 		Prioritizable.AddRef(go);
 	}
 }

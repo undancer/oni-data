@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using STRINGS;
 using TUNING;
@@ -10,7 +9,7 @@ public class SwampHarvestPlantConfig : IEntityConfig
 
 	public const string SEED_ID = "SwampHarvestPlantSeed";
 
-	public const float WATER_RATE = 71f / (339f * (float)Math.PI);
+	public const float WATER_RATE = 1f / 15f;
 
 	public string[] GetDlcIds()
 	{
@@ -32,7 +31,7 @@ public class SwampHarvestPlantConfig : IEntityConfig
 			new PlantElementAbsorber.ConsumeInfo
 			{
 				tag = GameTags.DirtyWater,
-				massConsumptionRate = 71f / (339f * (float)Math.PI)
+				massConsumptionRate = 1f / 15f
 			}
 		});
 		gameObject.AddOrGet<StandardCropPlant>();

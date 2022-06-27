@@ -22,6 +22,12 @@ public class OffscreenIndicator : KMonoBehaviour
 		Instance = this;
 	}
 
+	protected override void OnForcedCleanUp()
+	{
+		Instance = null;
+		base.OnForcedCleanUp();
+	}
+
 	private void Update()
 	{
 		foreach (KeyValuePair<GameObject, GameObject> target in targets)
@@ -109,19 +115,19 @@ public class OffscreenIndicator : KMonoBehaviour
 
 	private void UpdateTargetIconPosition(GameObject goTarget, GameObject indicator)
 	{
-		Vector3 vector = goTarget.transform.position;
-		vector = Camera.main.WorldToViewportPoint(vector);
-		if (vector.z < 0f)
+		Vector3 position = goTarget.transform.position;
+		position = Camera.main.WorldToViewportPoint(position);
+		if (position.z < 0f)
 		{
-			vector.x = 1f - vector.x;
-			vector.y = 1f - vector.y;
-			vector.z = 0f;
-			vector = Vector3Maxamize(vector);
+			position.x = 1f - position.x;
+			position.y = 1f - position.y;
+			position.z = 0f;
+			position = Vector3Maxamize(position);
 		}
-		vector = Camera.main.ViewportToScreenPoint(vector);
-		vector.x = Mathf.Clamp(vector.x, edgeInset, (float)Screen.width - edgeInset);
-		vector.y = Mathf.Clamp(vector.y, edgeInset, (float)Screen.height - edgeInset);
-		indicator.transform.position = vector;
+		position = Camera.main.ViewportToScreenPoint(position);
+		position.x = Mathf.Clamp(position.x, edgeInset, (float)Screen.width - edgeInset);
+		position.y = Mathf.Clamp(position.y, edgeInset, (float)Screen.height - edgeInset);
+		indicator.transform.position = position;
 		indicator.GetComponent<HierarchyReferences>().GetReference<Image>("icon").rectTransform.up = Vector3.up;
 		indicator.GetComponent<HierarchyReferences>().GetReference<CrewPortrait>("Portrait").transform.up = Vector3.up;
 	}

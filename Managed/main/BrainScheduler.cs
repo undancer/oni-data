@@ -408,4 +408,10 @@ public class BrainScheduler : KMonoBehaviour, IRenderEveryTick, ICPULoad
 			brainGroup.RenderEveryTick(dt, isAsyncPathProbeEnabled);
 		}
 	}
+
+	protected override void OnForcedCleanUp()
+	{
+		CPUBudget.Remove(this);
+		base.OnForcedCleanUp();
+	}
 }

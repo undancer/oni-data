@@ -5,10 +5,10 @@ namespace KMod
 	[Flags]
 	public enum Content : byte
 	{
-		LayerableFiles = 0x1,
-		Strings = 0x2,
-		DLL = 0x4,
-		Translation = 0x8,
+		LayerableFiles = 1,
+		Strings = 2,
+		DLL = 4,
+		Translation = 8,
 		Animation = 0x10
 	}
 }

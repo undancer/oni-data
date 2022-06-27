@@ -8,8 +8,8 @@ namespace Satsuma
 		[Flags]
 		public enum Flags
 		{
-			None = 0x0,
-			CreateComponents = 0x1
+			None = 0,
+			CreateComponents = 1
 		}
 
 		private class ForwardDfs : Dfs

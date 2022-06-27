@@ -173,9 +173,9 @@ public class Comet : KMonoBehaviour, ISim33ms
 		Vector2 vector2 = new Vector2(vector.y, 0f - vector.x);
 		ListPool<ScenePartitionerEntry, Comet>.PooledList pooledList = ListPool<ScenePartitionerEntry, Comet>.Allocate();
 		GameScenePartitioner.Instance.GatherEntries((int)pos.x - 3, (int)pos.y - 3, 6, 6, GameScenePartitioner.Instance.pickupablesLayer, pooledList);
-		foreach (ScenePartitionerEntry item2 in pooledList)
+		foreach (ScenePartitionerEntry item in pooledList)
 		{
-			GameObject gameObject = (item2.obj as Pickupable).gameObject;
+			GameObject gameObject = (item.obj as Pickupable).gameObject;
 			if (!(gameObject.GetComponent<MinionIdentity>() != null) && gameObject.GetDef<CreatureFallMonitor.Def>() == null)
 			{
 				Vector2 normalized = ((Vector2)(gameObject.transform.GetPosition() - pos)).normalized;
@@ -245,24 +245,21 @@ public class Comet : KMonoBehaviour, ISim33ms
 				num8 *= -1;
 				num9 *= -1;
 			}
-			GameUtil.FloodFillInfo item = new GameUtil.FloodFillInfo
+			pooledQueue.Enqueue(new GameUtil.FloodFillInfo
 			{
 				cell = prev_cell,
 				depth = 0
-			};
-			pooledQueue.Enqueue(item);
-			item = new GameUtil.FloodFillInfo
+			});
+			pooledQueue.Enqueue(new GameUtil.FloodFillInfo
 			{
 				cell = Grid.OffsetCell(prev_cell, new CellOffset(num8, 0)),
 				depth = 0
-			};
-			pooledQueue.Enqueue(item);
-			item = new GameUtil.FloodFillInfo
+			});
+			pooledQueue.Enqueue(new GameUtil.FloodFillInfo
 			{
 				cell = Grid.OffsetCell(prev_cell, new CellOffset(num9, 0)),
 				depth = 0
-			};
-			pooledQueue.Enqueue(item);
+			});
 			Func<int, bool> condition = (int cell) => Grid.IsValidCellInWorld(cell, world) && !Grid.Solid[cell];
 			GameUtil.FloodFillConditional(pooledQueue, condition, pooledHashSet2, pooledHashSet, 10);
 			float mass2 = ((num7 > 0) ? (addTileMass / (float)addTiles) : 1f);
@@ -270,25 +267,25 @@ public class Comet : KMonoBehaviour, ISim33ms
 			if (element.HasTag(GameTags.Unstable))
 			{
 				UnstableGroundManager component = World.Instance.GetComponent<UnstableGroundManager>();
+				foreach (int item2 in pooledHashSet)
+				{
+					if (num7 <= 0)
+					{
+						break;
+					}
+					component.Spawn(item2, element, mass2, temperature, byte.MaxValue, 0);
+					num7--;
+				}
+			}
+			else
+			{
 				foreach (int item3 in pooledHashSet)
 				{
 					if (num7 <= 0)
 					{
 						break;
 					}
-					component.Spawn(item3, element, mass2, temperature, byte.MaxValue, 0);
-					num7--;
-				}
-			}
-			else
-			{
-				foreach (int item4 in pooledHashSet)
-				{
-					if (num7 <= 0)
-					{
-						break;
-					}
-					SimMessages.AddRemoveSubstance(item4, element.id, CellEventLogger.Instance.ElementEmitted, mass2, temperature, diseaseIdx, disease_count);
+					SimMessages.AddRemoveSubstance(item3, element.id, CellEventLogger.Instance.ElementEmitted, mass2, temperature, diseaseIdx, disease_count);
 					num7--;
 				}
 			}

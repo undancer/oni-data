@@ -41,7 +41,7 @@ public class LegacyModMain
 		LoadBuildings(list);
 		ConfigElements();
 		LoadEntities(list);
-		LoadEquipment();
+		LoadEquipment(list);
 		EntityTemplates.DestroyBaseOreTemplates();
 	}
 
@@ -157,155 +157,136 @@ public class LegacyModMain
 		BuildingConfigManager.Instance.ConfigurePost();
 	}
 
-	private static void LoadEquipment()
+	private static void LoadEquipment(List<Type> types)
 	{
 		LocString.CreateLocStringKeys(typeof(EQUIPMENT.PREFABS), "STRINGS.EQUIPMENT.");
-		GeneratedEquipment.LoadGeneratedEquipment();
+		GeneratedEquipment.LoadGeneratedEquipment(types);
 	}
 
 	private static void ConfigElements()
 	{
-		ElementInfo[] array = new ElementInfo[20];
-		ElementInfo elementInfo = new ElementInfo
+		ElementInfo[] array = new ElementInfo[20]
 		{
-			id = SimHashes.Katairite,
-			overheatMod = 200f
-		};
-		array[0] = elementInfo;
-		elementInfo = new ElementInfo
-		{
-			id = SimHashes.Cuprite,
-			decor = 0.1f
-		};
-		array[1] = elementInfo;
-		elementInfo = new ElementInfo
-		{
-			id = SimHashes.Copper,
-			decor = 0.2f,
-			overheatMod = 50f
-		};
-		array[2] = elementInfo;
-		elementInfo = new ElementInfo
-		{
-			id = SimHashes.Gold,
-			decor = 0.5f,
-			overheatMod = 50f
-		};
-		array[3] = elementInfo;
-		elementInfo = new ElementInfo
-		{
-			id = SimHashes.Lead,
-			overheatMod = -20f
-		};
-		array[4] = elementInfo;
-		elementInfo = new ElementInfo
-		{
-			id = SimHashes.Granite,
-			decor = 0.2f,
-			overheatMod = 15f
-		};
-		array[5] = elementInfo;
-		elementInfo = new ElementInfo
-		{
-			id = SimHashes.SandStone,
-			decor = 0.1f
-		};
-		array[6] = elementInfo;
-		elementInfo = new ElementInfo
-		{
-			id = SimHashes.ToxicSand,
-			overheatMod = -10f
-		};
-		array[7] = elementInfo;
-		elementInfo = new ElementInfo
-		{
-			id = SimHashes.Dirt,
-			overheatMod = -10f
-		};
-		array[8] = elementInfo;
-		elementInfo = new ElementInfo
-		{
-			id = SimHashes.IgneousRock,
-			overheatMod = 15f
-		};
-		array[9] = elementInfo;
-		elementInfo = new ElementInfo
-		{
-			id = SimHashes.Obsidian,
-			overheatMod = 15f
-		};
-		array[10] = elementInfo;
-		elementInfo = new ElementInfo
-		{
-			id = SimHashes.Ceramic,
-			overheatMod = 200f,
-			decor = 0.2f
-		};
-		array[11] = elementInfo;
-		elementInfo = new ElementInfo
-		{
-			id = SimHashes.RefinedCarbon,
-			overheatMod = 900f
-		};
-		array[12] = elementInfo;
-		elementInfo = new ElementInfo
-		{
-			id = SimHashes.Iron,
-			overheatMod = 50f
-		};
-		array[13] = elementInfo;
-		elementInfo = new ElementInfo
-		{
-			id = SimHashes.Tungsten,
-			overheatMod = 50f
-		};
-		array[14] = elementInfo;
-		elementInfo = new ElementInfo
-		{
-			id = SimHashes.Steel,
-			overheatMod = 200f
-		};
-		array[15] = elementInfo;
-		elementInfo = new ElementInfo
-		{
-			id = SimHashes.GoldAmalgam,
-			overheatMod = 50f,
-			decor = 0.1f
-		};
-		array[16] = elementInfo;
-		elementInfo = new ElementInfo
-		{
-			id = SimHashes.Diamond,
-			overheatMod = 200f,
-			decor = 1f
-		};
-		array[17] = elementInfo;
-		elementInfo = new ElementInfo
-		{
-			id = SimHashes.Niobium,
-			decor = 0.5f,
-			overheatMod = 500f
-		};
-		array[18] = elementInfo;
-		elementInfo = new ElementInfo
-		{
-			id = SimHashes.TempConductorSolid,
-			overheatMod = 900f
-		};
-		array[19] = elementInfo;
-		ElementInfo[] array2 = array;
-		for (int i = 0; i < array2.Length; i++)
-		{
-			ElementInfo elementInfo2 = array2[i];
-			Element element = ElementLoader.FindElementByHash(elementInfo2.id);
-			if (elementInfo2.decor != 0f)
+			new ElementInfo
 			{
-				AttributeModifier item = new AttributeModifier("Decor", elementInfo2.decor, element.name, is_multiplier: true);
+				id = SimHashes.Katairite,
+				overheatMod = 200f
+			},
+			new ElementInfo
+			{
+				id = SimHashes.Cuprite,
+				decor = 0.1f
+			},
+			new ElementInfo
+			{
+				id = SimHashes.Copper,
+				decor = 0.2f,
+				overheatMod = 50f
+			},
+			new ElementInfo
+			{
+				id = SimHashes.Gold,
+				decor = 0.5f,
+				overheatMod = 50f
+			},
+			new ElementInfo
+			{
+				id = SimHashes.Lead,
+				overheatMod = -20f
+			},
+			new ElementInfo
+			{
+				id = SimHashes.Granite,
+				decor = 0.2f,
+				overheatMod = 15f
+			},
+			new ElementInfo
+			{
+				id = SimHashes.SandStone,
+				decor = 0.1f
+			},
+			new ElementInfo
+			{
+				id = SimHashes.ToxicSand,
+				overheatMod = -10f
+			},
+			new ElementInfo
+			{
+				id = SimHashes.Dirt,
+				overheatMod = -10f
+			},
+			new ElementInfo
+			{
+				id = SimHashes.IgneousRock,
+				overheatMod = 15f
+			},
+			new ElementInfo
+			{
+				id = SimHashes.Obsidian,
+				overheatMod = 15f
+			},
+			new ElementInfo
+			{
+				id = SimHashes.Ceramic,
+				overheatMod = 200f,
+				decor = 0.2f
+			},
+			new ElementInfo
+			{
+				id = SimHashes.RefinedCarbon,
+				overheatMod = 900f
+			},
+			new ElementInfo
+			{
+				id = SimHashes.Iron,
+				overheatMod = 50f
+			},
+			new ElementInfo
+			{
+				id = SimHashes.Tungsten,
+				overheatMod = 50f
+			},
+			new ElementInfo
+			{
+				id = SimHashes.Steel,
+				overheatMod = 200f
+			},
+			new ElementInfo
+			{
+				id = SimHashes.GoldAmalgam,
+				overheatMod = 50f,
+				decor = 0.1f
+			},
+			new ElementInfo
+			{
+				id = SimHashes.Diamond,
+				overheatMod = 200f,
+				decor = 1f
+			},
+			new ElementInfo
+			{
+				id = SimHashes.Niobium,
+				decor = 0.5f,
+				overheatMod = 500f
+			},
+			new ElementInfo
+			{
+				id = SimHashes.TempConductorSolid,
+				overheatMod = 900f
+			}
+		};
+		for (int i = 0; i < array.Length; i++)
+		{
+			ElementInfo elementInfo = array[i];
+			Element element = ElementLoader.FindElementByHash(elementInfo.id);
+			if (elementInfo.decor != 0f)
+			{
+				AttributeModifier item = new AttributeModifier("Decor", elementInfo.decor, element.name, is_multiplier: true);
 				element.attributeModifiers.Add(item);
 			}
-			if (elementInfo2.overheatMod != 0f)
+			if (elementInfo.overheatMod != 0f)
 			{
-				AttributeModifier item2 = new AttributeModifier(Db.Get().BuildingAttributes.OverheatTemperature.Id, elementInfo2.overheatMod, element.name);
+				AttributeModifier item2 = new AttributeModifier(Db.Get().BuildingAttributes.OverheatTemperature.Id, elementInfo.overheatMod, element.name);
 				element.attributeModifiers.Add(item2);
 			}
 		}

@@ -1,5 +1,7 @@
 using System;
+using Klei.AI;
 using STRINGS;
+using TUNING;
 using UnityEngine;
 
 public class RancherChore : Chore<RancherChore.RancherChoreStates.Instance>
@@ -8,9 +10,7 @@ public class RancherChore : Chore<RancherChore.RancherChoreStates.Instance>
 	{
 		private class RanchState : State
 		{
-			public State pre;
-
-			public State loop;
+			public State working;
 
 			public State pst;
 		}
@@ -88,21 +88,14 @@ public class RancherChore : Chore<RancherChore.RancherChoreStates.Instance>
 				})
 				.Target(masterTarget)
 				.EventTransition(GameHashes.CreatureArrivedAtRanchStation, ranchcreature);
-			ranchcreature.Transition(checkformoreranchables, HasCreatureLeft, UpdateRate.SIM_1000ms).ToggleAnims(GetRancherInteractAnim).DefaultState(ranchcreature.pre)
-				.EventTransition(GameHashes.CreatureAbandonedRanchStation, checkformoreranchables)
+			ranchcreature.Transition(checkformoreranchables, HasCreatureLeft, UpdateRate.SIM_1000ms).DefaultState(ranchcreature.working).EventTransition(GameHashes.CreatureAbandonedRanchStation, checkformoreranchables)
 				.Enter(SetCreatureLayer)
 				.Exit(ClearCreatureLayer);
-			ranchcreature.pre.Enter(FaceCreature).Enter(PlayBuildingWorkingPre).QueueAnim("working_pre")
-				.OnAnimQueueComplete(ranchcreature.loop);
-			ranchcreature.loop.Enter("TellCreatureRancherIsReady", delegate(Instance smi)
+			ranchcreature.working.Enter("TellCreatureRancherIsReady", delegate(Instance smi)
 			{
 				smi.TellCreatureRancherIsReady();
-			}).Enter(PlayBuildingWorkingLoop).Enter(PlayRancherWorkingLoops)
-				.Target(rancher)
-				.OnAnimQueueComplete(ranchcreature.pst);
-			ranchcreature.pst.Enter(RanchCreature).Enter(PlayBuildingWorkingPst).QueueAnim("working_pst")
-				.QueueAnim("wipe_brow")
-				.OnAnimQueueComplete(checkformoreranchables);
+			}).ToggleWork<RancherWorkable>(masterTarget, ranchcreature.pst, checkformoreranchables, null);
+			ranchcreature.pst.ToggleAnims(GetRancherInteractAnim).QueueAnim("wipe_brow").OnAnimQueueComplete(checkformoreranchables);
 			checkformoreranchables.Enter("FindRanchable", delegate(Instance smi)
 			{
 				smi.CheckForMoreRanchables();
@@ -149,7 +142,7 @@ public class RancherChore : Chore<RancherChore.RancherChoreStates.Instance>
 			facing.Face(position);
 		}
 
-		private static void RanchCreature(Instance smi)
+		public static void RanchCreature(Instance smi)
 		{
 			Debug.Assert(smi.ranchStation != null, "smi.ranchStation was null");
 			RanchableMonitor.Instance targetRanchable = smi.ranchStation.targetRanchable;
@@ -160,42 +153,48 @@ public class RancherChore : Chore<RancherChore.RancherChoreStates.Instance>
 				smi.ranchStation.RanchCreature();
 			}
 		}
+	}
 
-		private static bool ShouldSynchronizeBuilding(Instance smi)
+	public class RancherWorkable : Workable
+	{
+		protected override void OnPrefabInit()
 		{
-			return smi.ranchStation.def.synchronizeBuilding;
+			RanchStation.Instance sMI = base.gameObject.GetSMI<RanchStation.Instance>();
+			overrideAnims = new KAnimFile[1] { Assets.GetAnim(sMI.def.rancherInteractAnim) };
+			SetWorkTime(sMI.def.worktime);
+			SetWorkerStatusItem(sMI.def.ranchingStatusItem);
+			attributeExperienceMultiplier = DUPLICANTSTATS.ATTRIBUTE_LEVELING.MOST_DAY_EXPERIENCE;
+			skillExperienceSkillGroup = Db.Get().SkillGroups.Ranching.Id;
+			skillExperienceMultiplier = SKILLS.MOST_DAY_EXPERIENCE;
+			lightEfficiencyBonus = false;
 		}
 
-		private static void PlayBuildingWorkingPre(Instance smi)
+		public override Klei.AI.Attribute GetWorkAttribute()
 		{
-			if (ShouldSynchronizeBuilding(smi))
+			return Db.Get().Attributes.Ranching;
+		}
+
+		protected override void OnStartWork(Worker worker)
+		{
+			RanchStation.Instance sMI = base.gameObject.GetSMI<RanchStation.Instance>();
+			if (sMI != null)
 			{
-				smi.ranchStation.GetComponent<KBatchedAnimController>().Queue("working_pre");
+				sMI.targetRanchable.Get<KBatchedAnimController>().Play(sMI.def.ranchedPreAnim);
+				sMI.targetRanchable.Get<KBatchedAnimController>().Queue(sMI.def.ranchedLoopAnim, KAnim.PlayMode.Loop);
 			}
 		}
 
-		private static void PlayRancherWorkingLoops(Instance smi)
+		public override void OnPendingCompleteWork(Worker work)
 		{
-			KBatchedAnimController kBatchedAnimController = smi.sm.rancher.Get<KBatchedAnimController>(smi);
-			for (int i = 0; i < smi.ranchStation.def.interactLoopCount; i++)
+			RanchStation.Instance sMI = base.gameObject.GetSMI<RanchStation.Instance>();
+			if (sMI != null)
 			{
-				kBatchedAnimController.Queue("working_loop");
-			}
-		}
-
-		private static void PlayBuildingWorkingLoop(Instance smi)
-		{
-			if (ShouldSynchronizeBuilding(smi))
-			{
-				smi.ranchStation.GetComponent<KBatchedAnimController>().Queue("working_loop", KAnim.PlayMode.Loop);
-			}
-		}
-
-		private static void PlayBuildingWorkingPst(Instance smi)
-		{
-			if (ShouldSynchronizeBuilding(smi))
-			{
-				smi.ranchStation.GetComponent<KBatchedAnimController>().Queue("working_pst");
+				sMI.targetRanchable.Get<KBatchedAnimController>().Play(sMI.def.ranchedPstAnim);
+				RancherChoreStates.Instance sMI2 = base.gameObject.GetSMI<RancherChoreStates.Instance>();
+				if (sMI2 != null)
+				{
+					RancherChoreStates.RanchCreature(sMI2);
+				}
 			}
 		}
 	}

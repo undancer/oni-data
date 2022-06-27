@@ -69,7 +69,15 @@ public class BaseNaming : KMonoBehaviour
 			inputField.text = GenerateBaseNameString();
 			newName = inputField.text;
 		}
-		if (!string.IsNullOrEmpty(newName) && CheckBaseName(newName))
+		if (string.IsNullOrEmpty(newName))
+		{
+			return;
+		}
+		if (newName.EndsWith(" "))
+		{
+			newName = newName.TrimEnd(' ');
+		}
+		if (CheckBaseName(newName))
 		{
 			inputField.text = newName;
 			SaveGame.Instance.SetBaseName(newName);

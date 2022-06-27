@@ -8,9 +8,9 @@ namespace Satsuma
 		[Flags]
 		public enum Flags
 		{
-			None = 0x0,
-			CreateRedNodes = 0x1,
-			CreateBlueNodes = 0x2
+			None = 0,
+			CreateRedNodes = 1,
+			CreateBlueNodes = 2
 		}
 
 		private class MyDfs : Dfs

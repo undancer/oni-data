@@ -1,5 +1,3 @@
-using System;
-
 public class SimplexNoise
 {
 	private static int i;
@@ -18,19 +16,19 @@ public class SimplexNoise
 
 	private static float s;
 
-	private const float onethird = 0.33333334f;
+	private const float onethird = 1f / 3f;
 
-	private const float onesixth = 355f / (678f * (float)Math.PI);
+	private const float onesixth = 1f / 6f;
 
 	private static int[] T = new int[8] { 21, 56, 50, 44, 13, 19, 7, 42 };
 
 	public static float noise(float x, float y, float z)
 	{
-		s = (x + y + z) * 0.33333334f;
+		s = (x + y + z) * (1f / 3f);
 		i = fastfloor(x + s);
 		j = fastfloor(y + s);
 		k = fastfloor(z + s);
-		s = (float)(i + j + k) * (355f / (678f * (float)Math.PI));
+		s = (float)(i + j + k) * (1f / 6f);
 		u = x - (float)i + s;
 		v = y - (float)j + s;
 		w = z - (float)k + s;
@@ -51,7 +49,7 @@ public class SimplexNoise
 
 	private static float K(int a)
 	{
-		s = (float)(A[0] + A[1] + A[2]) * (355f / (678f * (float)Math.PI));
+		s = (float)(A[0] + A[1] + A[2]) * (1f / 6f);
 		float num = u - (float)A[0] + s;
 		float num2 = v - (float)A[1] + s;
 		float num3 = w - (float)A[2] + s;

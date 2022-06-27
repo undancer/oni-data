@@ -2,7 +2,7 @@ using Klei.AI;
 
 public class CreaturePathFinderAbilities : PathFinderAbilities
 {
-	public int maxUnderwaterCost;
+	public bool canTraverseSubmered;
 
 	public CreaturePathFinderAbilities(Navigator navigator)
 		: base(navigator)
@@ -13,16 +13,16 @@ public class CreaturePathFinderAbilities : PathFinderAbilities
 	{
 		if (PathFinder.IsSubmerged(Grid.PosToCell(navigator)))
 		{
-			maxUnderwaterCost = int.MaxValue;
+			canTraverseSubmered = true;
 			return;
 		}
 		AttributeInstance attributeInstance = Db.Get().Attributes.MaxUnderwaterTravelCost.Lookup(navigator);
-		maxUnderwaterCost = ((attributeInstance != null) ? ((int)attributeInstance.GetTotalValue()) : int.MaxValue);
+		canTraverseSubmered = attributeInstance == null;
 	}
 
-	public override bool TraversePath(ref PathFinder.PotentialPath path, int from_cell, NavType from_nav_type, int cost, int transition_id, int underwater_cost)
+	public override bool TraversePath(ref PathFinder.PotentialPath path, int from_cell, NavType from_nav_type, int cost, int transition_id, bool submerged)
 	{
-		if (underwater_cost > maxUnderwaterCost)
+		if (submerged && !canTraverseSubmered)
 		{
 			return false;
 		}

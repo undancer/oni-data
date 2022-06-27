@@ -11,7 +11,7 @@ public static class EntityTemplateExtensions
 		{
 			val = Activator.CreateInstance<DefType>();
 			stateMachineController.AddDef(val);
-			val.Configure(stateMachineController.gameObject);
+			val.Configure(go);
 		}
 		return val;
 	}
@@ -22,11 +22,6 @@ public static class EntityTemplateExtensions
 		if ((UnityEngine.Object)val == (UnityEngine.Object)null)
 		{
 			val = go.AddComponent<ComponentType>();
-		}
-		KMonoBehaviour kMonoBehaviour = val as KMonoBehaviour;
-		if (kMonoBehaviour != null)
-		{
-			kMonoBehaviour.CreateDef();
 		}
 		return val;
 	}

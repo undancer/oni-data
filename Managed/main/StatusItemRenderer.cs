@@ -105,6 +105,12 @@ public class StatusItemRenderer
 
 		public Transform transform;
 
+		public Building building;
+
+		public Vector3 buildingPos;
+
+		public KSelectable selectable;
+
 		public List<StatusItem> statusItems;
 
 		public Mesh mesh;
@@ -130,107 +136,98 @@ public class StatusItemRenderer
 			material = new Material(shader);
 		}
 
-		public void Render(StatusItemRenderer renderer, Vector3 camera_bl, Vector3 camera_tr, HashedString overlay)
+		public void Render(StatusItemRenderer renderer, Vector3 camera_bl, Vector3 camera_tr, HashedString overlay, Camera camera)
 		{
-			if (DebugHandler.HideUI)
+			if (transform == null)
+			{
+				string text = "Error cleaning up status items:";
+				foreach (StatusItem statusItem2 in statusItems)
+				{
+					text += statusItem2.Id;
+				}
+				Debug.LogWarning(text);
+				return;
+			}
+			Vector3 vector = (isBuilding ? buildingPos : transform.GetPosition());
+			if (isBuilding)
+			{
+				vector.x += (float)((building.Def.WidthInCells - 1) % 2) / 2f;
+			}
+			if (vector.x < camera_bl.x || vector.x > camera_tr.x || vector.y < camera_bl.y || vector.y > camera_tr.y)
 			{
 				return;
 			}
-			Vector3 vector = Vector3.zero;
-			if (transform != null)
+			int num = Grid.PosToCell(vector);
+			if ((Grid.IsValidCell(num) && (!Grid.IsVisible(num) || Grid.WorldIdx[num] != ClusterManager.Instance.activeWorldId)) || !selectable.IsSelectable)
 			{
-				vector = transform.GetPosition();
-				if (isBuilding)
-				{
-					Building component = transform.GetComponent<Building>();
-					if (component != null)
-					{
-						vector.x += (float)((component.Def.WidthInCells - 1) % 2) / 2f;
-					}
-				}
-				if (vector.x < camera_bl.x || vector.x > camera_tr.x || vector.y < camera_bl.y || vector.y > camera_tr.y)
-				{
-					return;
-				}
-				int num = Grid.PosToCell(vector);
-				if ((Grid.IsValidCell(num) && (!Grid.IsVisible(num) || Grid.WorldIdx[num] != ClusterManager.Instance.activeWorldId)) || !transform.GetComponent<KSelectable>().IsSelectable)
-				{
-					return;
-				}
-				renderer.visibleEntries.Add(this);
-				if (dirty)
-				{
-					int num2 = 0;
-					foreach (StatusItem statusItem2 in statusItems)
-					{
-						if (statusItem2.UseConditionalCallback(overlay, transform) || !(overlay != OverlayModes.None.ID) || !(statusItem2.render_overlay != overlay))
-						{
-							num2++;
-						}
-					}
-					hasVisibleStatusItems = num2 != 0;
-					MeshBuilder meshBuilder = new MeshBuilder(num2 + 6, material);
-					float num3 = 0.25f;
-					float z = -5f;
-					Vector2 vector2 = new Vector2(0.05f, -0.05f);
-					float num4 = 0.02f;
-					Color32 color = new Color32(0, 0, 0, byte.MaxValue);
-					Color32 color2 = new Color32(0, 0, 0, 75);
-					Color32 color3 = renderer.neutralColor;
-					if (renderer.selectedHandle == handle || renderer.highlightHandle == handle)
-					{
-						color3 = renderer.selectedColor;
-					}
-					else
-					{
-						for (int i = 0; i < statusItems.Count; i++)
-						{
-							if (statusItems[i].notificationType != NotificationType.Neutral)
-							{
-								color3 = renderer.backgroundColor;
-								break;
-							}
-						}
-					}
-					meshBuilder.AddQuad(new Vector2(0f, 0.29f) + vector2, new Vector2(0.05f, 0.05f), z, renderer.arrowSprite, color2);
-					meshBuilder.AddQuad(new Vector2(0f, 0f) + vector2, new Vector2(num3 * (float)num2, num3), z, renderer.backgroundSprite, color2);
-					meshBuilder.AddQuad(new Vector2(0f, 0f), new Vector2(num3 * (float)num2 + num4, num3 + num4), z, renderer.backgroundSprite, color);
-					meshBuilder.AddQuad(new Vector2(0f, 0f), new Vector2(num3 * (float)num2, num3), z, renderer.backgroundSprite, color3);
-					int num5 = 0;
-					for (int j = 0; j < statusItems.Count; j++)
-					{
-						StatusItem statusItem = statusItems[j];
-						if (statusItem.UseConditionalCallback(overlay, transform) || !(overlay != OverlayModes.None.ID) || !(statusItem.render_overlay != overlay))
-						{
-							float x = (float)num5 * num3 * 2f - num3 * (float)(num2 - 1);
-							if (statusItems[j].sprite == null)
-							{
-								DebugUtil.DevLogError("Status Item " + statusItems[j].Id + " has null sprite for icon '" + statusItems[j].iconName + "', you need to add the sprite to the TintedSprites list in the GameAssets prefab manually.");
-								statusItems[j].iconName = "status_item_exclamation";
-								statusItems[j].sprite = Assets.GetTintedSprite("status_item_exclamation");
-							}
-							Sprite sprite = statusItems[j].sprite.sprite;
-							meshBuilder.AddQuad(new Vector2(x, 0f), new Vector2(num3, num3), z, sprite, color);
-							num5++;
-						}
-					}
-					meshBuilder.AddQuad(new Vector2(0f, 0.29f + num4), new Vector2(0.05f + num4, 0.05f + num4), z, renderer.arrowSprite, color);
-					meshBuilder.AddQuad(new Vector2(0f, 0.29f), new Vector2(0.05f, 0.05f), z, renderer.arrowSprite, color3);
-					meshBuilder.End(mesh);
-					dirty = false;
-				}
-				if (hasVisibleStatusItems && GameScreenManager.Instance != null)
-				{
-					Graphics.DrawMesh(mesh, vector + offset, Quaternion.identity, material, renderer.layer, GameScreenManager.Instance.worldSpaceCanvas.GetComponent<Canvas>().worldCamera, 0, null, castShadows: false, receiveShadows: false);
-				}
 				return;
 			}
-			string text = "Error cleaning up status items:";
-			foreach (StatusItem statusItem3 in statusItems)
+			renderer.visibleEntries.Add(this);
+			if (dirty)
 			{
-				text += statusItem3.Id;
+				int num2 = 0;
+				foreach (StatusItem statusItem3 in statusItems)
+				{
+					if (statusItem3.UseConditionalCallback(overlay, transform) || !(overlay != OverlayModes.None.ID) || !(statusItem3.render_overlay != overlay))
+					{
+						num2++;
+					}
+				}
+				hasVisibleStatusItems = num2 != 0;
+				MeshBuilder meshBuilder = new MeshBuilder(num2 + 6, material);
+				float num3 = 0.25f;
+				float z = -5f;
+				Vector2 vector2 = new Vector2(0.05f, -0.05f);
+				float num4 = 0.02f;
+				Color32 color = new Color32(0, 0, 0, byte.MaxValue);
+				Color32 color2 = new Color32(0, 0, 0, 75);
+				Color32 color3 = renderer.neutralColor;
+				if (renderer.selectedHandle == handle || renderer.highlightHandle == handle)
+				{
+					color3 = renderer.selectedColor;
+				}
+				else
+				{
+					for (int i = 0; i < statusItems.Count; i++)
+					{
+						if (statusItems[i].notificationType != NotificationType.Neutral)
+						{
+							color3 = renderer.backgroundColor;
+							break;
+						}
+					}
+				}
+				meshBuilder.AddQuad(new Vector2(0f, 0.29f) + vector2, new Vector2(0.05f, 0.05f), z, renderer.arrowSprite, color2);
+				meshBuilder.AddQuad(new Vector2(0f, 0f) + vector2, new Vector2(num3 * (float)num2, num3), z, renderer.backgroundSprite, color2);
+				meshBuilder.AddQuad(new Vector2(0f, 0f), new Vector2(num3 * (float)num2 + num4, num3 + num4), z, renderer.backgroundSprite, color);
+				meshBuilder.AddQuad(new Vector2(0f, 0f), new Vector2(num3 * (float)num2, num3), z, renderer.backgroundSprite, color3);
+				int num5 = 0;
+				for (int j = 0; j < statusItems.Count; j++)
+				{
+					StatusItem statusItem = statusItems[j];
+					if (statusItem.UseConditionalCallback(overlay, transform) || !(overlay != OverlayModes.None.ID) || !(statusItem.render_overlay != overlay))
+					{
+						float x = (float)num5 * num3 * 2f - num3 * (float)(num2 - 1);
+						if (statusItems[j].sprite == null)
+						{
+							DebugUtil.DevLogError("Status Item " + statusItems[j].Id + " has null sprite for icon '" + statusItems[j].iconName + "', you need to add the sprite to the TintedSprites list in the GameAssets prefab manually.");
+							statusItems[j].iconName = "status_item_exclamation";
+							statusItems[j].sprite = Assets.GetTintedSprite("status_item_exclamation");
+						}
+						Sprite sprite = statusItems[j].sprite.sprite;
+						meshBuilder.AddQuad(new Vector2(x, 0f), new Vector2(num3, num3), z, sprite, color);
+						num5++;
+					}
+				}
+				meshBuilder.AddQuad(new Vector2(0f, 0.29f + num4), new Vector2(0.05f + num4, 0.05f + num4), z, renderer.arrowSprite, color);
+				meshBuilder.AddQuad(new Vector2(0f, 0.29f), new Vector2(0.05f, 0.05f), z, renderer.arrowSprite, color3);
+				meshBuilder.End(mesh);
+				dirty = false;
 			}
-			Debug.LogWarning(text);
+			if (hasVisibleStatusItems && GameScreenManager.Instance != null)
+			{
+				Graphics.DrawMesh(mesh, vector + offset, Quaternion.identity, material, renderer.layer, camera, 0, null, castShadows: false, receiveShadows: false);
+			}
 		}
 
 		public void Add(StatusItem status_item)
@@ -249,6 +246,10 @@ public class StatusItemRenderer
 		{
 			handle = entry.handle;
 			transform = entry.transform;
+			building = transform.GetComponent<Building>();
+			buildingPos = transform.GetPosition();
+			isBuilding = building != null;
+			selectable = transform.GetComponent<KSelectable>();
 			offset = entry.offset;
 			dirty = true;
 			statusItems.Clear();
@@ -262,7 +263,7 @@ public class StatusItemRenderer
 				return false;
 			}
 			Bounds bounds = mesh.bounds;
-			Vector3 vector = transform.GetPosition() + offset + bounds.center;
+			Vector3 vector = buildingPos + offset + bounds.center;
 			Vector2 vector2 = new Vector2(vector.x, vector.y);
 			Vector3 size = bounds.size;
 			Vector2 vector3 = new Vector2(size.x * scale * 0.5f, size.y * scale * 0.5f);
@@ -277,11 +278,11 @@ public class StatusItemRenderer
 
 		public void GetIntersection(Vector2 pos, List<InterfaceTool.Intersection> intersections, float scale)
 		{
-			if (Intersects(pos, scale) && transform.GetComponent<KSelectable>().IsSelectable)
+			if (Intersects(pos, scale) && selectable.IsSelectable)
 			{
 				intersections.Add(new InterfaceTool.Intersection
 				{
-					component = transform.GetComponent<KSelectable>(),
+					component = selectable,
 					distance = -100f
 				});
 			}
@@ -289,13 +290,9 @@ public class StatusItemRenderer
 
 		public void GetIntersection(Vector2 pos, List<KSelectable> selectables, float scale)
 		{
-			if (Intersects(pos, scale))
+			if (Intersects(pos, scale) && selectable.IsSelectable && !selectables.Contains(selectable))
 			{
-				KSelectable component = transform.GetComponent<KSelectable>();
-				if (component.IsSelectable && !selectables.Contains(component))
-				{
-					selectables.Add(component);
-				}
+				selectables.Add(selectable);
 			}
 		}
 
@@ -384,6 +381,10 @@ public class StatusItemRenderer
 			Entry entry = entries[value];
 			entry.handle = instanceID;
 			entry.transform = transform;
+			entry.buildingPos = transform.GetPosition();
+			entry.building = transform.GetComponent<Building>();
+			entry.isBuilding = entry.building != null;
+			entry.selectable = transform.GetComponent<KSelectable>();
 			entries[value] = entry;
 		}
 		return value;
@@ -406,7 +407,6 @@ public class StatusItemRenderer
 		}
 		int idx = GetIdx(transform);
 		Entry entry = entries[idx];
-		entry.isBuilding = transform.GetComponent<Building>() != null;
 		entry.Add(status_item);
 		entries[idx] = entry;
 	}
@@ -466,14 +466,18 @@ public class StatusItemRenderer
 
 	public void RenderEveryTick()
 	{
-		scale = 1f + Mathf.Sin(Time.unscaledTime * 8f) * 0.1f;
-		Shader.SetGlobalVector("_StatusItemParameters", new Vector4(scale, 0f, 0f, 0f));
-		Vector3 camera_tr = Camera.main.ViewportToWorldPoint(new Vector3(1f, 1f, Camera.main.transform.GetPosition().z));
-		Vector3 camera_bl = Camera.main.ViewportToWorldPoint(new Vector3(0f, 0f, Camera.main.transform.GetPosition().z));
-		visibleEntries.Clear();
-		for (int i = 0; i < entryCount; i++)
+		if (!DebugHandler.HideUI)
 		{
-			entries[i].Render(this, camera_bl, camera_tr, GetMode());
+			scale = 1f + Mathf.Sin(Time.unscaledTime * 8f) * 0.1f;
+			Shader.SetGlobalVector("_StatusItemParameters", new Vector4(scale, 0f, 0f, 0f));
+			Vector3 camera_tr = Camera.main.ViewportToWorldPoint(new Vector3(1f, 1f, Camera.main.transform.GetPosition().z));
+			Vector3 camera_bl = Camera.main.ViewportToWorldPoint(new Vector3(0f, 0f, Camera.main.transform.GetPosition().z));
+			visibleEntries.Clear();
+			Camera worldCamera = GameScreenManager.Instance.worldSpaceCanvas.GetComponent<Canvas>().worldCamera;
+			for (int i = 0; i < entryCount; i++)
+			{
+				entries[i].Render(this, camera_bl, camera_tr, GetMode(), worldCamera);
+			}
 		}
 	}
 

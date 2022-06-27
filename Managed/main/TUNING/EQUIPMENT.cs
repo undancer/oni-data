@@ -157,15 +157,15 @@ namespace TUNING
 
 			public static int COOL_VEST_MASS = WARM_VEST_MASS;
 
-			public static string FUNKY_VEST_ANIM0 = "body_shirt_decor01_kanim";
-
-			public static string FUNKY_VEST_ICON0 = "shirt_decor01_kanim";
-
 			public static float FUNKY_VEST_FABTIME = WARM_VEST_FABTIME;
 
 			public static float FUNKY_VEST_DECOR = 1f;
 
 			public static int FUNKY_VEST_MASS = WARM_VEST_MASS;
+
+			public static float CUSTOM_CLOTHING_FABTIME = 180f;
+
+			public static int CUSTOM_CLOTHING_MASS = WARM_VEST_MASS + 3;
 		}
 	}
 }

@@ -306,8 +306,7 @@ public class MemorySnapshot
 		{
 			fieldsToProcess.Add(new FieldArgs(field, new Lineage(refArgs.lineage.obj, refArgs.lineage.parent3, refArgs.lineage.parent2, refArgs.lineage.parent1, refArgs.lineage.parent0, field.DeclaringType)));
 		}
-		ICollection collection = refArgs.lineage.obj as ICollection;
-		if (collection == null)
+		if (!(refArgs.lineage.obj is ICollection collection))
 		{
 			return;
 		}

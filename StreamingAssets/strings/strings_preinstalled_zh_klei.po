@@ -1167,6 +1167,18 @@ msgctxt "STRINGS.BUILDING.STATUSITEMS.EXPIRED.TOOLTIP"
 msgid "This building has no more use"
 msgstr "这个建筑已无使用价值"
 
+#. STRINGS.BUILDING.STATUSITEMS.FABRICATORACCEPTSMUTANTSEEDS.NAME
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FABRICATORACCEPTSMUTANTSEEDS.NAME"
+msgid "Fabricator accepts mutant seeds"
+msgstr "制造器会接受变异种子"
+
+#. STRINGS.BUILDING.STATUSITEMS.FABRICATORACCEPTSMUTANTSEEDS.TOOLTIP
+msgctxt "STRINGS.BUILDING.STATUSITEMS.FABRICATORACCEPTSMUTANTSEEDS.TOOLTIP"
+msgid ""
+"This fabricator is allowed to use <style=\"KKeyword\">Mutant Seeds</style> "
+"as recipe ingredients"
+msgstr "这个制造器允许使用<style=\"KKeyword\">变异种子</style>作为配方原料"
+
 #. STRINGS.BUILDING.STATUSITEMS.FABRICATOREMPTY.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.FABRICATOREMPTY.NAME"
 msgid "Waiting For Materials"
@@ -1474,15 +1486,13 @@ msgstr "这个建筑无法将周围环境加热到<b>{0}</b>以上"
 
 #. STRINGS.BUILDING.STATUSITEMS.HEATINGSTALLEDLOWMASS_GAS.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.HEATINGSTALLEDLOWMASS_GAS.NAME"
-msgid "Low Air Pressure"
-msgstr "气压过低"
+msgid "Insufficient Atmosphere"
+msgstr "大气不足"
 
 #. STRINGS.BUILDING.STATUSITEMS.HEATINGSTALLEDLOWMASS_GAS.TOOLTIP
 msgctxt "STRINGS.BUILDING.STATUSITEMS.HEATINGSTALLEDLOWMASS_GAS.TOOLTIP"
-msgid ""
-"A minimum atmospheric pressure of <b>{TargetPressure}</b> is needed for this "
-"building to heat up"
-msgstr "气压至少需要达到<b>{TargetPressure}</b>才能使这个建筑加热"
+msgid "This building cannot operate in a vacuum"
+msgstr "这个建筑无法在真空中运行"
 
 #. STRINGS.BUILDING.STATUSITEMS.HEATINGSTALLEDLOWMASS_LIQUID.NAME
 msgctxt "STRINGS.BUILDING.STATUSITEMS.HEATINGSTALLEDLOWMASS_LIQUID.NAME"
@@ -4720,7 +4730,7 @@ msgstr ""
 "\n"
 "复制人必须具有药物配制<link=\"ROLES\">技能</link>才能制作药物。\n"
 "\n"
-"除非队列中有配方，否则复制人不会制作物品。"
+"只有在队列中安排配方复制人才会进行制作。"
 
 #. STRINGS.BUILDINGS.PREFABS.ADVANCEDAPOTHECARY.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.ADVANCEDAPOTHECARY.NAME"
@@ -4912,7 +4922,7 @@ msgstr ""
 "\n"
 "复制人必须具有药物配制<link=\"ROLES\">技能</link>才能制作药物。\n"
 "\n"
-"除非队列中有配方，否则复制人不会制作物品。"
+"只有在队列中安排配方复制人才会进行制作。"
 
 #. STRINGS.BUILDINGS.PREFABS.APOTHECARY.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.APOTHECARY.NAME"
@@ -5646,6 +5656,30 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.CHECKPOINT.NAME"
 msgid "<link=\"CHECKPOINT\">Duplicant Checkpoint</link>"
 msgstr "<link=\"CHECKPOINT\">复制人检查站</link>"
 
+#. STRINGS.BUILDINGS.PREFABS.CLOTHINGALTERATIONSTATION.DESC
+msgctxt "STRINGS.BUILDINGS.PREFABS.CLOTHINGALTERATIONSTATION.DESC"
+msgid ""
+"Allows skilled Duplicants to add extra personal pizzazz to their wardrobe."
+msgstr "允许熟练的复制人为自己的衣柜加一些个性化风格。"
+
+#. STRINGS.BUILDINGS.PREFABS.CLOTHINGALTERATIONSTATION.EFFECT
+msgctxt "STRINGS.BUILDINGS.PREFABS.CLOTHINGALTERATIONSTATION.EFFECT"
+msgid ""
+"Upgrades <link=\"FUNKYVEST\">Snazzy Suits</link> into <link=\"CUSTOMCLOTHING"
+"\">Primo Garb</link>.\n"
+"\n"
+"Duplicants will not fabricate items unless recipes are queued."
+msgstr ""
+"将<link=\"FUNKYVEST\">新潮时装</link>升级为<link=\"CUSTOMCLOTHING\">精致装束"
+"</link>。\n"
+"\n"
+"只有在队列中安排配方复制人才会进行制作。"
+
+#. STRINGS.BUILDINGS.PREFABS.CLOTHINGALTERATIONSTATION.NAME
+msgctxt "STRINGS.BUILDINGS.PREFABS.CLOTHINGALTERATIONSTATION.NAME"
+msgid "<link=\"CLOTHINGALTERATIONSTATION\">Clothing Refashionator</link>"
+msgstr "<link=\"CLOTHINGALTERATIONSTATION\">时装翻新器</link>"
+
 #. STRINGS.BUILDINGS.PREFABS.CLOTHINGFABRICATOR.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.CLOTHINGFABRICATOR.DESC"
 msgid ""
@@ -5662,7 +5696,7 @@ msgid ""
 msgstr ""
 "为复制人裁剪<link=\"EQUIPMENT\">服装</link>。\n"
 "\n"
-"除非队列中有配方，否则复制人不会制作物品。"
+"只有在队列中安排配方复制人才会进行制作。"
 
 #. STRINGS.BUILDINGS.PREFABS.CLOTHINGFABRICATOR.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.CLOTHINGFABRICATOR.NAME"
@@ -5760,8 +5794,8 @@ msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.CLUSTERTELESCOPE.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.CLUSTERTELESCOPE.NAME"
-msgid "<link=\"TELESCOPE\">Telescope</link>"
-msgstr "<link=\"TELESCOPE\">望远镜</link>"
+msgid "<link=\"CLUSTERTELESCOPE\">Telescope</link>"
+msgstr "<link=\"CLUSTERTELESCOPE\">望远镜</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.CLUSTERTELESCOPE.REQUIREMENT_TOOLTIP
 msgctxt "STRINGS.BUILDINGS.PREFABS.CLUSTERTELESCOPE.REQUIREMENT_TOOLTIP"
@@ -5798,8 +5832,8 @@ msgstr ""
 
 #. STRINGS.BUILDINGS.PREFABS.CLUSTERTELESCOPEENCLOSED.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.CLUSTERTELESCOPEENCLOSED.NAME"
-msgid "<link=\"TELESCOPE\">Enclosed Telescope</link>"
-msgstr "<link=\"TELESCOPE\">隔绝式望远镜</link>"
+msgid "<link=\"CLUSTERTELESCOPEENCLOSED\">Enclosed Telescope</link>"
+msgstr "<link=\"CLUSTERTELESCOPEENCLOSED\">隔绝式望远镜</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.CLUSTERTELESCOPEENCLOSED.REQUIREMENT_TOOLTIP
 msgctxt ""
@@ -5987,7 +6021,7 @@ msgid ""
 msgstr ""
 "烹饪种类繁多的改良<link=\"FOOD\">食物</link>。\n"
 "\n"
-"除非队列中有配方，否则复制人不会制作物品。"
+"只有在队列中安排配方复制人才会进行制作。"
 
 #. STRINGS.BUILDINGS.PREFABS.COOKINGSTATION.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.COOKINGSTATION.NAME"
@@ -6063,7 +6097,7 @@ msgid ""
 msgstr ""
 "为复制人生产可供使用的物品和装备。\n"
 "\n"
-"除非队列中有配方，否则复制人不会制作物品。"
+"只有在队列中安排配方复制人才会进行制作。"
 
 #. STRINGS.BUILDINGS.PREFABS.CRAFTINGTABLE.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.CRAFTINGTABLE.NAME"
@@ -7144,7 +7178,7 @@ msgid ""
 msgstr ""
 "烹饪一系列的<link=\"FOOD\">食物</link>。\n"
 "\n"
-"除非队列中有配方，否则复制人不会制作物品。"
+"只有在队列中安排配方复制人才会进行制作。"
 
 #. STRINGS.BUILDINGS.PREFABS.GAMMARAYOVEN.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.GAMMARAYOVEN.NAME"
@@ -7882,7 +7916,7 @@ msgstr ""
 "\n"
 "输出<link=\"HEAT\">温度极高</link>的<link=\"ELEMENTSLIQUID\">液体</link>。\n"
 "\n"
-"除非队列中有配方，否则复制人不会制作物品。"
+"只有在队列中安排配方复制人才会进行制作。"
 
 #. STRINGS.BUILDINGS.PREFABS.GLASSFORGE.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.GLASSFORGE.NAME"
@@ -7934,7 +7968,7 @@ msgid ""
 msgstr ""
 "烹饪种类繁多的高品质<link=\"FOOD\">食物</link>。\n"
 "\n"
-"除非队列中有配方，否则复制人不会制作物品。"
+"只有在队列中安排配方复制人才会进行制作。"
 
 #. STRINGS.BUILDINGS.PREFABS.GOURMETCOOKINGSTATION.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.GOURMETCOOKINGSTATION.NAME"
@@ -8689,7 +8723,7 @@ msgctxt "STRINGS.BUILDINGS.PREFABS.INSULATIONTILE.DESC"
 msgid ""
 "The low thermal conductivity of insulated tiles slows any heat passing "
 "through them."
-msgstr "隔热砖的导热率更低，可以减慢热量传递。"
+msgstr "隔热砖的热导率更低，可以减慢热量传递。"
 
 #. STRINGS.BUILDINGS.PREFABS.INSULATIONTILE.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.INSULATIONTILE.EFFECT"
@@ -8924,7 +8958,7 @@ msgid ""
 msgstr ""
 "烧制<link=\"CLAY\">粘土</link>以生产<link=\"CERAMIC\">陶瓷</link>。\n"
 "\n"
-"除非队列中有配方，否则复制人不会制作物品。"
+"只有在队列中安排配方复制人才会进行制作。"
 
 #. STRINGS.BUILDINGS.PREFABS.KILN.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.KILN.NAME"
@@ -9996,8 +10030,8 @@ msgstr "计蛋数量"
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICCRITTERCOUNTSENSOR.DESC"
 msgid ""
 "Detecting critter populations can help adjust their automated feeding and "
-"care regiments."
-msgstr "检测小动物数量可以帮助调整它们的自动喂养和照料方案。"
+"care regimens."
+msgstr "检测小动物数量有助于调整它们的自动喂养和照料方案。"
 
 #. STRINGS.BUILDINGS.PREFABS.LOGICCRITTERCOUNTSENSOR.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.LOGICCRITTERCOUNTSENSOR.EFFECT"
@@ -11907,7 +11941,7 @@ msgstr ""
 "产生大量<link=\"HEAT\">热量</link>并将输入的<link=\"ELEMENTSLIQUID\">液体</"
 "link>输出。\n"
 "\n"
-"除非队列中有配方，否则复制人不会制作物品。"
+"只有在队列中安排配方复制人才会进行制作。"
 
 #. STRINGS.BUILDINGS.PREFABS.METALREFINERY.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.METALREFINERY.NAME"
@@ -12023,7 +12057,7 @@ msgid ""
 msgstr ""
 "使用常见原料生产低质量<link=\"FOOD\">食物</link>。\n"
 "\n"
-"除非队列中有配方，否则复制人不会制作物品。"
+"只有在队列中安排配方复制人才会进行制作。"
 
 #. STRINGS.BUILDINGS.PREFABS.MICROBEMUSHER.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.MICROBEMUSHER.NAME"
@@ -14154,7 +14188,7 @@ msgid ""
 msgstr ""
 "低效地从原材料中生产精炼材料。\n"
 "\n"
-"除非队列中有配方，否则复制人不会制作物品。"
+"只有在队列中安排配方复制人才会进行制作。"
 
 #. STRINGS.BUILDINGS.PREFABS.ROCKCRUSHER.LIME_FROM_LIMESTONE_RECIPE_DESCRIPTION
 msgctxt ""
@@ -14791,20 +14825,22 @@ msgstr "置物柜"
 #. STRINGS.BUILDINGS.PREFABS.SHEARINGSTATION.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.SHEARINGSTATION.DESC"
 msgid ""
-"Shearing stations allow <link=\"DRECKO\">Dreckos</link> to be safely sheared "
-"for useful raw materials."
+"Shearing stations allow <link=\"DRECKO\">Dreckos</link> and <link="
+"\"MOLEDELICACY\">Delecta Voles</link> to be safely sheared for useful raw "
+"materials."
 msgstr ""
-"剪毛站可安全地给<link=\"DRECKO\">毛鳞壁虎</link>剪毛，从而获得有用的原材料。"
+"修剪站可安全地对<link=\"DRECKO\">毛鳞壁虎</link>和<link=\"MOLEDELICACY\">珍馐"
+"田鼠</link>进行修剪，从而获得有用的原材料。"
 
 #. STRINGS.BUILDINGS.PREFABS.SHEARINGSTATION.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.SHEARINGSTATION.EFFECT"
-msgid "Allows the assigned Rancher to shear Dreckos."
-msgstr "让指派的牧场工给毛鳞壁虎剪毛。"
+msgid "Allows the assigned Rancher to shear Dreckos and Delecta Voles."
+msgstr "让指派的牧场工对毛鳞壁虎和珍馐田鼠进行修剪。"
 
 #. STRINGS.BUILDINGS.PREFABS.SHEARINGSTATION.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.SHEARINGSTATION.NAME"
 msgid "<link=\"SHEARINGSTATION\">Shearing Station</link>"
-msgstr "<link=\"SHEARINGSTATION\">剪毛站</link>"
+msgstr "<link=\"SHEARINGSTATION\">修剪站</link>"
 
 #. STRINGS.BUILDINGS.PREFABS.SHOWER.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.SHOWER.DESC"
@@ -14841,7 +14877,7 @@ msgid ""
 msgstr ""
 "将<link=\"MUD\">泥巴</link>和其他泥浆分离成其基本的元素。\n"
 "\n"
-"除非队列中有配方，否则复制人不会制作物品。"
+"只有在队列中安排配方复制人才会进行制作。"
 
 #. STRINGS.BUILDINGS.PREFABS.SLUDGEPRESS.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.SLUDGEPRESS.NAME"
@@ -15448,9 +15484,9 @@ msgstr "<link=\"SOLIDLOGICVALVE\">轨道开关</link>"
 #. STRINGS.BUILDINGS.PREFABS.SOLIDTRANSFERARM.DESC
 msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDTRANSFERARM.DESC"
 msgid ""
-"An auto-sweeper's range can be viewed at any time by clicking on the "
+"An auto-sweeper's range can be viewed at any time by  \\clicking\\ on the "
 "building."
-msgstr "自动清扫器的范围可以通过点击建筑来查看。"
+msgstr "自动清扫器的范围可以通过\\clicking\\建筑来查看。"
 
 #. STRINGS.BUILDINGS.PREFABS.SOLIDTRANSFERARM.EFFECT
 msgctxt "STRINGS.BUILDINGS.PREFABS.SOLIDTRANSFERARM.EFFECT"
@@ -15815,7 +15851,7 @@ msgid ""
 msgstr ""
 "为复制人制造可供穿戴的防护性<link=\"EXOSUIT\">太空服</link>。\n"
 "\n"
-"除非队列中有配方，否则复制人不会制作物品。"
+"只有在队列中安排配方复制人才会进行制作。"
 
 #. STRINGS.BUILDINGS.PREFABS.SUITFABRICATOR.NAME
 msgctxt "STRINGS.BUILDINGS.PREFABS.SUITFABRICATOR.NAME"
@@ -15923,7 +15959,7 @@ msgstr ""
 "\n"
 "稀有材料可以通过太空任务获得。\n"
 "\n"
-"除非队列中有配方，否则复制人不会制作物品。"
+"只有在队列中安排配方复制人才会进行制作。"
 
 #. STRINGS.BUILDINGS.PREFABS.SUPERMATERIALREFINERY.FULLERENE_RECIPE_DESCRIPTION
 msgctxt ""
@@ -16104,7 +16140,7 @@ msgstr "如果复制人只能和自己聊天，则会获得{amount}{attrib}。"
 
 #. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_CHAT
 msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_CHAT"
-msgid "{attrib}: {amount} (At least one duplicant)"
+msgid "{attrib}: {amount} (At least one Duplicant)"
 msgstr "{attrib}：{amount}（至少一名复制人）"
 
 #. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_CHAT_TOOLTIP
@@ -16116,7 +16152,7 @@ msgstr "如果复制人至少和一名其他复制人聊天，则会获得{amoun
 
 #. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_LONG_DISTANCE
 msgctxt "STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_LONG_DISTANCE"
-msgid "{attrib}: {amount} (At least one duplicant across space)"
+msgid "{attrib}: {amount} (At least one Duplicant across space)"
 msgstr "{attrib}：{amount}（至少一名隔着太空的复制人）"
 
 #. STRINGS.BUILDINGS.PREFABS.TELEPHONE.EFFECT_LONG_DISTANCE_TOOLTIP
@@ -17285,7 +17321,33 @@ msgstr "采矿枪宣传广告"
 #. STRINGS.CODEX.A0_PROPFACILITYDISPLAY3.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.A0_PROPFACILITYDISPLAY3.BODY.CONTAINER1"
 msgid ""
+"Tired of shutting down during seasonal heat waves? Looking to cut weather-"
+"related operating costs?\n"
+"\n"
+"Look no further: Gravitas's revolutionary Anti Entropy Thermo-Nullifier is "
+"the exciting, affordable new way to eliminate operational downtime.\n"
+"\n"
+"Powered by our proprietary renewable power sources, the AETN efficiently "
+"cools an entire office building without incurring any of the environmental "
+"surcharges associated with comparable systems.\n"
+"\n"
+"Initial setup includes hydrogen duct installation and discounted monthly "
+"maintenance visits from our elite team of specially trained contractors.\n"
+"\n"
+"Now available for pre-order!"
 msgstr ""
+"厌倦了由于季节性的热浪导致运营停机？希望削减与天气相关的运营成本？\n"
+"\n"
+"不要再等了：庄亚科技的革命性产品反熵热量中和器就是你想要的，不仅是消除运营停"
+"机的新方法，而且价格实惠。\n"
+"\n"
+"反熵热量中和器由我们专有的可再生能源提供能量，可以冷却一整个办公楼，而不会产"
+"生像其他降温系统一样产生环境附加费。\n"
+"\n"
+"初始安设包括氢气管道的安装，以及由我们受过专门培训的承包商组成的精英团队进行"
+"的每月打折的维护。\n"
+"\n"
+"现在已经可以预购了！"
 
 #. STRINGS.CODEX.A0_PROPFACILITYDISPLAY3.BODY.CONTAINER2
 msgctxt "STRINGS.CODEX.A0_PROPFACILITYDISPLAY3.BODY.CONTAINER2"
@@ -21863,7 +21925,7 @@ msgid ""
 "Dr. Techna's newest notes on Duplicant memories have revealed some "
 "interesting discoveries. It seems memories </i>can</i> be transferred to the "
 "cloned subject but it requires the host to be subjected to a machine that "
-"performs extremely detailed microanalysis. This in depth dissection of the "
+"performs extremely detailed microanalysis. This in-depth dissection of the "
 "subject would produce the results we need but at the expense of destroying "
 "the host.\n"
 "\n"
@@ -21936,6 +21998,28 @@ msgstr "药用性植物"
 msgctxt "STRINGS.CODEX.BALMLILY.TITLE"
 msgid "Balm Lily"
 msgstr "芳香百合"
+
+#. STRINGS.CODEX.BASIC_FABRIC.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.BASIC_FABRIC.BODY.CONTAINER1"
+msgid ""
+"A ball of raw cellulose harvested from a Thimble Reed.\n"
+"\n"
+"It is used in the production of <link=\"EQUIPMENT\">Clothing</link> and "
+"textiles."
+msgstr ""
+"一团从顶针芦苇上收获的纤维素原料。\n"
+"\n"
+"常用于生产<link=\"EQUIPMENT\">服装</link>和纺织品。"
+
+#. STRINGS.CODEX.BASIC_FABRIC.SUBTITLE
+msgctxt "STRINGS.CODEX.BASIC_FABRIC.SUBTITLE"
+msgid "Textile Ingredient"
+msgstr "纺织原料"
+
+#. STRINGS.CODEX.BASIC_FABRIC.TITLE
+msgctxt "STRINGS.CODEX.BASIC_FABRIC.TITLE"
+msgid "Reed Fiber"
+msgstr "芦苇纤维"
 
 #. STRINGS.CODEX.BEETA.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.BEETA.BODY.CONTAINER1"
@@ -22263,14 +22347,14 @@ msgstr ""
 #. STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.EMAILHEADER1
 msgctxt "STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.EMAILHEADER1"
 msgid ""
-"<smallcaps>To: <b>[REDACTED]</b>\n"
-"From: <b>Director Stern</b><size=12><alpha=#AA> <jstern@gravitas.nova></"
-"size></color></smallcaps>\n"
+"<smallcaps>To: <b>Director Stern</b><size=12><alpha=#AA> <jstern@gravitas."
+"nova></size></color></smallcaps>\n"
+"From: <b>[REDACTED]</b>\n"
 "------------------\n"
 msgstr ""
-"<smallcaps>收件人：<b>[加密]</b>\n"
-"发件人：<b>斯特恩主管</b><size=12><alpha=#AA> <jstern@gravitas.nova></size></"
-"color></smallcaps>\n"
+"<smallcaps>收件人：<b>斯特恩主管</b><size=12><alpha=#AA> <jstern@gravitas."
+"nova></size></color></smallcaps>\n"
+"发件人：<b>[加密]</b>\n"
 "------------------\n"
 
 #. STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.SIGNATURE1
@@ -22316,7 +22400,7 @@ msgid ""
 "\n"
 "Given the disastrous complications that I could foresee arising if our "
 "Duplicants were made less supplicant, I'm leaning toward a push to improve "
-"our Artificial Intellegence.\n"
+"our Artificial Intelligence.\n"
 "\n"
 "Meanwhile, we will have to send a clean-up crew to destroy all evidence of "
 "our little experiment beneath the Ceres' surface. We can't risk anyone "
@@ -22422,7 +22506,7 @@ msgstr ""
 #. STRINGS.CODEX.CLEANER.SUBTITLE
 msgctxt "STRINGS.CODEX.CLEANER.SUBTITLE"
 msgid "Critter Morph"
-msgstr "动物变种"
+msgstr "小动物变种"
 
 #. STRINGS.CODEX.CLEANER.TITLE
 msgctxt "STRINGS.CODEX.CLEANER.TITLE"
@@ -22438,6 +22522,58 @@ msgstr "舒适范围：<b>{0}</b>到<b>{1}</b>"
 msgctxt "STRINGS.CODEX.CREATURE_DESCRIPTORS.TEMPERATURE.NON_LETHAL_RANGE"
 msgid "Livable range: <b>{0}</b> to <b>{1}</b>"
 msgstr "存活范围：<b>{0}</b>到<b>{1}</b>"
+
+#. STRINGS.CODEX.CRITTERDELIVERY.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.CRITTERDELIVERY.BODY.CONTAINER1"
+msgid ""
+"<smallcaps>[Voice Recognition Initialized]\n"
+"[Subjects Identified: B482, B759, C094]</smallcaps>\n"
+"\n"
+"[LOG BEGINS]\n"
+"\n"
+"Security Guard 1: Hey hey! Welcome back.\n"
+"\n"
+"Security Guard 2: Hand on the scanner, please.\n"
+"\n"
+"Courier: Sure thing, lemme just…\n"
+"\n"
+"Courier: Whoops-- thanks, Steve. These little fellas are a two-hander for "
+"sure.\n"
+"\n"
+"(sound of furry noses snuffling on cardboard)\n"
+"\n"
+"Security Guard 2: Follow me, please.\n"
+"\n"
+"[LOG ENDS]"
+msgstr ""
+"<smallcaps>[声纹识别系统初始化完成]\n"
+"[识别编号：B482, B759, C094]</smallcaps>\n"
+"\n"
+"[录音开始]\n"
+"\n"
+"保安1：嘿！嘿！欢迎回来。\n"
+"\n"
+"保安2：请把手放在扫描仪上。\n"
+"\n"
+"专递员：当然，让我先找个地方……\n"
+"\n"
+"专递员：哦呦——谢谢你，史蒂夫。这些小家伙一只手可拎不动。\n"
+"\n"
+"（毛茸茸的鼻子在纸板上嗅的声音）\n"
+"\n"
+"保安2：请跟我来。\n"
+"\n"
+"[录音结束]"
+
+#. STRINGS.CODEX.CRITTERDELIVERY.SUBTITLE
+msgctxt "STRINGS.CODEX.CRITTERDELIVERY.SUBTITLE"
+msgid "ENCRYPTION LEVEL: TWO"
+msgstr "加密级别：二"
+
+#. STRINGS.CODEX.CRITTERDELIVERY.TITLE
+msgctxt "STRINGS.CODEX.CRITTERDELIVERY.TITLE"
+msgid "Critter Delivery"
+msgstr "小动物运送"
 
 #. STRINGS.CODEX.CRYOTANKWARNINGS.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.CRYOTANKWARNINGS.BODY.CONTAINER1"
@@ -22511,7 +22647,7 @@ msgstr "<smallcaps>图片：\"辐射\"发光虫变种</smallcaps>"
 #. STRINGS.CODEX.CRYSTAL.SUBTITLE
 msgctxt "STRINGS.CODEX.CRYSTAL.SUBTITLE"
 msgid "Critter Morph"
-msgstr "动物变种"
+msgstr "小动物变种"
 
 #. STRINGS.CODEX.CRYSTAL.TITLE
 msgctxt "STRINGS.CODEX.CRYSTAL.TITLE"
@@ -22530,8 +22666,8 @@ msgid ""
 msgstr ""
 "沙盐藤是一种独特的植物，需要大量的盐分来平衡体内的水含量。\n"
 "\n"
-"为了保持盐的供应，藤蔓的末端覆有能够与钠原子结合的微观结构，随着时间流逝会形"
-"成大晶体。"
+"为了保持盐的供应，藤蔓的末端覆有能够与钠原子结合的微观结构，会随着时间形成大"
+"晶体。"
 
 #. STRINGS.CODEX.DASHASALTVINE.SUBTITLE
 msgctxt "STRINGS.CODEX.DASHASALTVINE.SUBTITLE"
@@ -22546,7 +22682,7 @@ msgstr "沙盐藤"
 #. STRINGS.CODEX.DECOR.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.DECOR.BODY.CONTAINER1"
 msgid "<smallcaps>Pictured: \"Longhair\" Slickster variant</smallcaps>"
-msgstr "<smallcaps>图片：\"长毛\"浮油动物变种</smallcaps>"
+msgstr "<smallcaps>图片：\"长毛\"浮油小动物变种</smallcaps>"
 
 #. STRINGS.CODEX.DECOR.BODY.CONTAINER2
 msgctxt "STRINGS.CODEX.DECOR.BODY.CONTAINER2"
@@ -22562,7 +22698,7 @@ msgstr ""
 #. STRINGS.CODEX.DECOR.SUBTITLE
 msgctxt "STRINGS.CODEX.DECOR.SUBTITLE"
 msgid "Critter Morph"
-msgstr "动物变种"
+msgstr "小动物变种"
 
 #. STRINGS.CODEX.DECOR.TITLE
 msgctxt "STRINGS.CODEX.DECOR.TITLE"
@@ -22652,7 +22788,7 @@ msgstr ""
 #. STRINGS.CODEX.DENSE.SUBTITLE
 msgctxt "STRINGS.CODEX.DENSE.SUBTITLE"
 msgid "Critter Morph"
-msgstr "动物变种"
+msgstr "小动物变种"
 
 #. STRINGS.CODEX.DENSE.TITLE
 msgctxt "STRINGS.CODEX.DENSE.TITLE"
@@ -22807,25 +22943,25 @@ msgid ""
 "Building a rocket first requires constructing a <link=\"LAUNCHPAD\">Rocket "
 "Platform</link> and adding modules from the menu. All rockets will require "
 "an engine, a nosecone and a Command Module piloted by a Duplicant possessing "
-"the <link=\"ASTRONAUTTRAINEE\">Rocket Piloting</link> skill or higher. Note "
+"the <link=\"ROCKETPILOTING1\">Rocket Piloting</link> skill or higher. Note "
 "that the <link=\"HABITATMODULESMALL\">Solo Spacefarer Nosecone</link> "
 "functions as both a Command Module and a nosecone.\n"
 "\n"
 msgstr ""
 "建造火箭首先需要建造<link=\"LAUNCHPAD\">火箭平台</link>，然后从这里的菜单添加"
 "舱块。所有火箭需要一个引擎，一个前锥和一个指挥舱，由具有<link="
-"\"ASTRONAUTTRAINEE\">火箭驾驶</link>或更高级的技能的复制人驾驶。注意，<link="
+"\"ROCKETPILOTING1\">火箭驾驶</link>或更高级的技能的复制人驾驶。注意，<link="
 "\"HABITATMODULESMALL\">单太空员前锥</link>同时有指挥舱和前锥的作用。\n"
 "\n"
 
 #. STRINGS.CODEX.EXOBASES.PARAGRAPH_2
 msgctxt "STRINGS.CODEX.EXOBASES.PARAGRAPH_2"
 msgid ""
-"To scan space and see nearby intersteller destinations a <link=\"TELESCOPE"
-"\">Telescope</link> must first be built on the surface of a Planetoid. <link="
-"\"ORBITALRESEARCHCENTER\">Orbital Microlabs</link> in orbit around a "
-"Planetoid, and <link=\"SCANNERMODULE\">Cartographic Module</link> attached "
-"to a rocket can also reveal places on a Starmap.\n"
+"To scan space and see nearby intersteller destinations a <link="
+"\"CLUSTERTELESCOPE\">Telescope</link> must first be built on the surface of "
+"a Planetoid. <link=\"ORBITALRESEARCHCENTER\">Orbital Microlabs</link> in "
+"orbit around a Planetoid, and <link=\"SCANNERMODULE\">Cartographic Module</"
+"link> attached to a rocket can also reveal places on a Starmap.\n"
 "\n"
 "Always check engine fuel to determine if your rocket can reach its "
 "destination, keeping in mind rockets can only land on Plantoids with a <link="
@@ -22835,10 +22971,10 @@ msgid ""
 "a rocket in orbit.\n"
 "\n"
 msgstr ""
-"为了扫描太空并查看星际目的地，首先需要在小行星表面建造<link=\"TELESCOPE\">望"
-"远镜</link>。小行星轨道上的<link=\"ORBITALRESEARCHCENTER\">轨道微实验室</"
-"link>，以及连接在火箭上的<link=\"SCANNERMODULE\">制图舱</link>也可以揭示星图"
-"上的位置。\n"
+"为了扫描太空并查看星际目的地，首先需要在小行星表面建造<link="
+"\"CLUSTERTELESCOPE\">望远镜</link>。小行星轨道上的<link="
+"\"ORBITALRESEARCHCENTER\">轨道微实验室</link>，以及连接在火箭上的<link="
+"\"SCANNERMODULE\">制图舱</link>也可以揭示星图上的位置。\n"
 "\n"
 "始终要检查引擎燃料，这决定了你的火箭能否达到目的地，火箭只能在有<link="
 "\"LAUNCHPAD\">火箭平台</link>的小行星上着陆，这一点要铭记于心，但一些舱块，比"
@@ -23033,6 +23169,41 @@ msgctxt "STRINGS.CODEX.GENETICS.TITLE"
 msgid "<link=\"GENETICS\">Genetics</link>"
 msgstr "<link=\"GENETICS\">遗传学</link>"
 
+#. STRINGS.CODEX.GINGER.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.GINGER.BODY.CONTAINER1"
+msgid ""
+"Tonic Root is a close relative of the zingiberaceae family commonly known as "
+"ginger. Its heavily burled shoots are typically light brown in colour, and "
+"enveloped in a thin layer of protective, edible bark."
+msgstr ""
+"滋补根是姜科植物的近亲。其去节的嫩芽通常是浅褐色的，被一层浅浅的保护性可食用"
+"的外皮覆盖。"
+
+#. STRINGS.CODEX.GINGER.BODY.CONTAINER2
+msgctxt "STRINGS.CODEX.GINGER.BODY.CONTAINER2"
+msgid ""
+"In addition to its use as an aromatic culinary ingredient, it has "
+"traditionally been employed as a tonic for a variety of minor digestive "
+"ailments."
+msgstr "除了作为一种香料使用，它还作为各种轻微消化疾病的传统补品。"
+
+#. STRINGS.CODEX.GINGER.BODY.CONTAINER3
+msgctxt "STRINGS.CODEX.GINGER.BODY.CONTAINER3"
+msgid ""
+"Its stringy fibers can become irretrievably embedded between one's teeth "
+"during mastication."
+msgstr "在咀嚼过程中，其丝状纤维会难以避免地塞牙。"
+
+#. STRINGS.CODEX.GINGER.SUBTITLE
+msgctxt "STRINGS.CODEX.GINGER.SUBTITLE"
+msgid "Edible Plant"
+msgstr "食用性植物"
+
+#. STRINGS.CODEX.GINGER.TITLE
+msgctxt "STRINGS.CODEX.GINGER.TITLE"
+msgid "Tonic Root"
+msgstr "滋补根"
+
 #. STRINGS.CODEX.GLOSSY.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.GLOSSY.BODY.CONTAINER1"
 msgid "<smallcaps>Pictured: \"Glossy\" Drecko variant</smallcaps>"
@@ -23041,7 +23212,7 @@ msgstr "<smallcaps>图片：\"滑鳞\"壁虎变种</smallcaps>"
 #. STRINGS.CODEX.GLOSSY.BODY.CONTAINER2
 msgctxt "STRINGS.CODEX.GLOSSY.BODY.CONTAINER2"
 msgid ""
-"Caring for Dreckos is fulfilling endeavor thanks to their companionable "
+"Caring for Dreckos is a fulfilling endeavor thanks to their companionable "
 "personalities.\n"
 "\n"
 "Some domestic Dreckos have even been known to respond to their own names."
@@ -23053,7 +23224,7 @@ msgstr ""
 #. STRINGS.CODEX.GLOSSY.SUBTITLE
 msgctxt "STRINGS.CODEX.GLOSSY.SUBTITLE"
 msgid "Critter Morph"
-msgstr "动物变种"
+msgstr "小动物变种"
 
 #. STRINGS.CODEX.GLOSSY.TITLE
 msgctxt "STRINGS.CODEX.GLOSSY.TITLE"
@@ -23432,8 +23603,8 @@ msgid ""
 "\n"
 msgstr ""
 "热能可以在建筑、生物、世界格子和其他实体间传导。当两个不同温度的物质接触时传"
-"导就会发生。热能传导速率是平均导热率和温度差异的乘积。热能在低导热率的物质间"
-"流动缓慢（隔热体），在高导热率的物质间流动迅速（导热体）。\n"
+"导就会发生。热能传导速率是平均热导率和温度差异的乘积。热能在低热导率的物质间"
+"流动缓慢（隔热体），在高热导率的物质间流动迅速（导热体）。\n"
 "\n"
 
 #. STRINGS.CODEX.HEAT.PARAGRAPH_5
@@ -23497,6 +23668,131 @@ msgstr "植物"
 msgctxt "STRINGS.CODEX.HYDROCACTUS.TITLE"
 msgid "Hydrocactus"
 msgstr "仙水掌"
+
+#. STRINGS.CODEX.JOURNALISTREQUEST.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.JOURNALISTREQUEST.BODY.CONTAINER1"
+msgid ""
+"<indent=5%>Dear colleagues, friends and community members,\n"
+"\n"
+"After nine deeply fulfilling years as editor of The STEM Scoop, I am "
+"stepping down to spend more time with my family.\n"
+"\n"
+"Please give a warm welcome to Dorian Hearst, who will be taking over "
+"editorial management duties effective immediately.</indent>"
+msgstr ""
+"<indent=5%>亲爱的同事，朋友以及社区成员们，\n"
+"\n"
+"我已经在STEM独家新闻担任编辑九年了，是时候退休多去陪陪我的家人了。\n"
+"\n"
+"请热烈欢迎多里安·赫斯特，他将立即接管编辑层的管理职责。</indent>"
+
+#. STRINGS.CODEX.JOURNALISTREQUEST.BODY.CONTAINER2
+msgctxt "STRINGS.CODEX.JOURNALISTREQUEST.BODY.CONTAINER2"
+msgid ""
+"<indent=5%>I don’t know how you pulled it off, but Stern’s office just "
+"called the paper and granted me an exclusive…and a tour of the Gravitas "
+"Facility. I owe you a beer. No - a case of beer. Six cases of beer!\n"
+"\n"
+"Seriously, thank you. I know you're in a difficult position but you’ve done "
+"the right thing. See you on Tuesday.</indent>"
+msgstr ""
+"<indent=5%>我不知道你是怎么做到的，但斯特恩的办公室刚刚给报社打电话了，并给了"
+"我一次独家采访……以及参观庄严科技的机会。我欠你一瓶啤酒。不，一箱啤酒。六箱啤"
+"酒！\n"
+"\n"
+"说正经的，多谢你了。我知道你现在处境艰难但你做了正确的事情。我们周二见。</"
+"indent>"
+
+#. STRINGS.CODEX.JOURNALISTREQUEST.BODY.CONTAINER3
+msgctxt "STRINGS.CODEX.JOURNALISTREQUEST.BODY.CONTAINER3"
+msgid ""
+"<indent=5%>I waited at the fountain for four hours. Where were you? This "
+"story is going to be huge. Call me.</indent>"
+msgstr ""
+"<indent=5%>我在喷泉边上等了四个小时。你去哪了？这个故事一定能走红。回我个消息"
+"吧。</indent>"
+
+#. STRINGS.CODEX.JOURNALISTREQUEST.BODY.CONTAINER4
+msgctxt "STRINGS.CODEX.JOURNALISTREQUEST.BODY.CONTAINER4"
+msgid ""
+"<indent=5%>Dr. Olowe,\n"
+"\n"
+"I’m sorry - I know ambushing you at your home last night was a bad idea. But "
+"something is happening at Gravitas, and people need to know. Please call me."
+"</indent>"
+msgstr ""
+"<indent=5%>奥洛博士，\n"
+"\n"
+"非常抱歉——我知道昨晚在你家\"伏击\"你是个坏主意。但在庄严科技发生了一些事，需"
+"要让人们知道。请回我消息。</indent>"
+
+#. STRINGS.CODEX.JOURNALISTREQUEST.BODY.EMAILHEADER1
+msgctxt "STRINGS.CODEX.JOURNALISTREQUEST.BODY.EMAILHEADER1"
+msgid ""
+"<smallcaps>To: <b>Dr. Olowe</b><size=10><alpha=#AA> <aolowe@gravitas.nova></"
+"size></color>\n"
+"From: <b>Quinn Kelly</b><alpha=#AA><size=10> <editor@stemscoop.news></size></"
+"color></smallcaps>\n"
+"------------------\n"
+msgstr ""
+"<smallcaps>收件人：<b>奥洛博士</b><size=10><alpha=#AA> <aolowe@gravitas."
+"nova></size></color>\n"
+"发件人：<b>奎恩·凯利</b><alpha=#AA><size=10> <editor@stemscoop.news></size></"
+"color></smallcaps>\n"
+"------------------\n"
+
+#. STRINGS.CODEX.JOURNALISTREQUEST.BODY.EMAILHEADER2
+msgctxt "STRINGS.CODEX.JOURNALISTREQUEST.BODY.EMAILHEADER2"
+msgid ""
+"<smallcaps>To: <b>[BCC: all]</b><alpha=#AA><size=10> </size></color>\n"
+"From: <b>Quinn Kelly</b><alpha=#AA><size=10> <editor@stemscoop.news></size></"
+"color></smallcaps>\n"
+"------------------\n"
+msgstr ""
+"<smallcaps>收件人：<b>[密件抄送：所有人]</b><alpha=#AA><size=10> </size></"
+"color>\n"
+"发件人：<b>奎因·凯利</b><alpha=#AA><size=10> <editor@stemscoop.news></size></"
+"color></smallcaps>\n"
+"------------------\n"
+
+#. STRINGS.CODEX.JOURNALISTREQUEST.BODY.SIGNATURE1
+msgctxt "STRINGS.CODEX.JOURNALISTREQUEST.BODY.SIGNATURE1"
+msgid ""
+"\n"
+"-Q\n"
+"------------------\n"
+msgstr ""
+"\n"
+"-Q\n"
+"------------------\n"
+
+#. STRINGS.CODEX.JOURNALISTREQUEST.BODY.SIGNATURE2
+msgctxt "STRINGS.CODEX.JOURNALISTREQUEST.BODY.SIGNATURE2"
+msgid ""
+"\n"
+"All the best,\n"
+"Quinn Kelly\n"
+"------------------\n"
+msgstr ""
+"\n"
+"祝一切顺利，\n"
+"奎恩·凯利\n"
+"------------------\n"
+
+#. STRINGS.CODEX.JOURNALISTREQUEST.SUBTITLE
+msgctxt "STRINGS.CODEX.JOURNALISTREQUEST.SUBTITLE"
+msgid "UNENCRYPTED"
+msgstr "未加密"
+
+#. STRINGS.CODEX.JOURNALISTREQUEST.TITLE
+msgctxt "STRINGS.CODEX.JOURNALISTREQUEST.TITLE"
+msgid "Re: Call me"
+msgstr "回复：回我"
+
+#. STRINGS.CODEX.JOURNALISTREQUEST.TITLE2
+msgctxt "STRINGS.CODEX.JOURNALISTREQUEST.TITLE2"
+msgid "Call me"
+msgstr "回我"
 
 #. STRINGS.CODEX.JUMPINGJOYA.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.JUMPINGJOYA.BODY.CONTAINER1"
@@ -23597,6 +23893,25 @@ msgctxt "STRINGS.CODEX.LOCKS.NEURALVACILLATOR"
 msgid "Neural Vacillator"
 msgstr "神经振荡器"
 
+#. STRINGS.CODEX.LUMBER.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.LUMBER.BODY.CONTAINER1"
+msgid ""
+"Lumber is harvested from <link=\"FORESTTREE\">Arbor Trees</link> and <link="
+"\"CRABWOOD\">Oakshells</link>."
+msgstr ""
+"木料是从<link=\"FORESTTREE\">乔木树</link>和<link=\"CRABWOOD\">木壳蟹</link>"
+"收获来的。"
+
+#. STRINGS.CODEX.LUMBER.SUBTITLE
+msgctxt "STRINGS.CODEX.LUMBER.SUBTITLE"
+msgid "Renewable Resource"
+msgstr "可再生资源"
+
+#. STRINGS.CODEX.LUMBER.TITLE
+msgctxt "STRINGS.CODEX.LUMBER.TITLE"
+msgid "Lumber"
+msgstr "木料"
+
 #. STRINGS.CODEX.MEALWOOD.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.MEALWOOD.BODY.CONTAINER1"
 msgid ""
@@ -23680,6 +23995,200 @@ msgctxt "STRINGS.CODEX.MIRTHLEAF.TITLE"
 msgid "Mirth Leaf"
 msgstr "欢乐叶"
 
+#. STRINGS.CODEX.MISSINGNOTES.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.MISSINGNOTES.BODY.CONTAINER1"
+msgid ""
+"<indent=5%>Hello Dr. Jones,\n"
+"\n"
+"Hope you are well. Sorry to bother you- I believe that someone may have "
+"inappropriately accessed my computer.\n"
+"\n"
+"When I was logging in this morning, the \"last log-in\" pop-up indicated "
+"that my computer had been accessed at 2 a.m. My last actual log-in was 6 p."
+"m. And some of my files have gone missing.\n"
+"\n"
+"The privacy of my work is paramount. Would it be possible to have someone "
+"take a look, please?</indent>"
+msgstr ""
+"<indent=5%>你好，琼斯博士，\n"
+"\n"
+"希望你身体健康。很抱歉打扰你——但我相信有人不正当地访问了我的电脑。\n"
+"\n"
+"当我早上登陆的时候，\"上次登陆\"弹窗显示我的电脑在早上2点被访问过。我上次实际"
+"登陆是在下午6点，而且我的一些文件不见了。\n"
+"\n"
+"我的工作隐私是十分重要的。所以能请人帮忙看一下吗？</indent>"
+
+#. STRINGS.CODEX.MISSINGNOTES.BODY.CONTAINER2
+msgctxt "STRINGS.CODEX.MISSINGNOTES.BODY.CONTAINER2"
+msgid ""
+"<indent=5%>OMG Amari, you’re so dramatic!! It’s probably just a glitch from "
+"the system network upgrade. Nobody can even get into your office without "
+"going through the new hand scanners.\n"
+"\n"
+"PS: Everybody's work is super private, not just yours ;)</indent>"
+msgstr ""
+"<indent=5%>哦天，阿玛瑞，你也太夸张了！这可能只是系统网络升级出的一点小错误。"
+"没人能不通过新的手部扫描器进入你的办公室的。\n"
+"\n"
+"附言：每个人的工作都是超级隐私的，不只是你的 ;)</indent>"
+
+#. STRINGS.CODEX.MISSINGNOTES.BODY.CONTAINER3
+msgctxt "STRINGS.CODEX.MISSINGNOTES.BODY.CONTAINER3"
+msgid ""
+"<indent=5%>Dear Dr. Jones,\n"
+"I'm so sorry to bother you again...it's just that I'm absolutely certain "
+"that someone has been interfering with my files.\n"
+"\n"
+"I've noticed several discrepancies since last week's \"glitch.\" For "
+"example, responses to my recent employee survey on workplace satisfaction "
+"and safety were decrypted, and significant portions of my data and research "
+"notes have been erased. I'm even missing a few e-mails.\n"
+"\n"
+"It's all quite alarming. Could you or Dr. Summers please investigate this "
+"when you have a moment?\n"
+"\n"
+"Thank you so much,\n"
+"\n"
+"</indent>"
+msgstr ""
+"<indent=5%>亲爱的琼斯博士，\n"
+"我很抱歉再次打扰你……但我十分确定就是有人干预了我的文件。\n"
+"\n"
+"自从上周的\"小故障\"以来，我注意到好几个异样。比如最近的员工工作满意度和安全"
+"性的调查，我对此的回应被解密了，我的数据和研究记录的很大一部分都被清除了。我"
+"甚至还少了几封电子邮件。\n"
+"\n"
+"这一切都令我担忧。能请你或苏梅尔斯博士有时间调查一下吗？\n"
+"\n"
+"非常感谢。\n"
+"\n"
+"</indent>"
+
+#. STRINGS.CODEX.MISSINGNOTES.BODY.CONTAINER4
+msgctxt "STRINGS.CODEX.MISSINGNOTES.BODY.CONTAINER4"
+msgid ""
+"<indent=5%>The files in question were a security risk, and were disposed of "
+"accordingly.\n"
+"\n"
+"As for your emails: the NDA you signed was very clear about how to handle "
+"requests from members of the media.\n"
+"\n"
+"See me in my office.</indent>"
+msgstr ""
+"<indent=5%>有问题的文件存在安全风险，因此被处理了。\n"
+"\n"
+"至于你的邮件：你签署的保密协议非常清楚地写道如何处理来自媒体成员的请求。\n"
+"\n"
+"到我的办公室见我。</indent>"
+
+#. STRINGS.CODEX.MISSINGNOTES.BODY.EMAILHEADER1
+msgctxt "STRINGS.CODEX.MISSINGNOTES.BODY.EMAILHEADER1"
+msgid ""
+"<smallcaps>To: <b>Dr. Jones</b><alpha=#AA><size=12> <ejones@gravitas.nova></"
+"size></color>\n"
+"From: <b>Dr. Olowe</b><alpha=#AA><size=12> <aolowe@gravitas.nova></size></"
+"color></smallcaps>\n"
+"------------------\n"
+msgstr ""
+"<smallcaps>收件人：<b>琼斯博士</b><alpha=#AA><size=12> <ejones@gravitas."
+"nova></size></color>\n"
+"发件人：<b>奥洛博士</b><alpha=#AA><size=12> <aolowe@gravitas.nova></size></"
+"color></smallcaps>\n"
+"------------------\n"
+
+#. STRINGS.CODEX.MISSINGNOTES.BODY.EMAILHEADER2
+msgctxt "STRINGS.CODEX.MISSINGNOTES.BODY.EMAILHEADER2"
+msgid ""
+"<smallcaps>To: <b>Dr. Olowe</b><alpha=#AA><size=12> <aolowe@gravitas.nova></"
+"size></color>\n"
+"From: <b>Dr. Jones</b><alpha=#AA><size=12> <ejones@gravitas.nova></size></"
+"color></smallcaps>\n"
+"------------------\n"
+msgstr ""
+"<smallcaps>收件人：<b>奥洛博士</b><alpha=#AA><size=12> <aolowe@gravitas."
+"nova></size></color>\n"
+"发件人：<b>琼斯博士</b><alpha=#AA><size=12> <ejones@gravitas.nova></size></"
+"color></smallcaps>\n"
+"------------------\n"
+
+#. STRINGS.CODEX.MISSINGNOTES.BODY.EMAILHEADER3
+msgctxt "STRINGS.CODEX.MISSINGNOTES.BODY.EMAILHEADER3"
+msgid ""
+"<smallcaps>To: <b>Dr. Olowe</b><alpha=#AA><size=12> <aolowe@gravitas.nova></"
+"size></color>\n"
+"From: <b>Director Stern</b><alpha=#AA><size=12> <jstern@gravitas.nova></"
+"size></color></smallcaps>\n"
+"------------------\n"
+msgstr ""
+"<smallcaps>收件人：<b>奥洛博士</b><alpha=#AA><size=12> <aolowe@gravitas."
+"nova></size></color>\n"
+"发件人：<b>斯特恩主管</b><alpha=#AA><size=12> <jstern@gravitas.nova></size></"
+"color></smallcaps>\n"
+"------------------\n"
+
+#. STRINGS.CODEX.MISSINGNOTES.BODY.SIGNATURE1
+msgctxt "STRINGS.CODEX.MISSINGNOTES.BODY.SIGNATURE1"
+msgid ""
+"\n"
+"-Dr. Olowe\n"
+"<size=11>Industrial-Organizational Psychologist\n"
+"The Gravitas Facility</size>\n"
+"------------------\n"
+msgstr ""
+"\n"
+"- 奥洛博士\n"
+"<size=11>工业与组织心理学家\n"
+"庄严科技</size>\n"
+"------------------\n"
+
+#. STRINGS.CODEX.MISSINGNOTES.BODY.SIGNATURE2
+msgctxt "STRINGS.CODEX.MISSINGNOTES.BODY.SIGNATURE2"
+msgid ""
+"\n"
+"XOXO,\n"
+"Dr. Jones\n"
+"<size=11>Information and Statistics Department\n"
+"The Gravitas Facility</size>\n"
+"------------------\n"
+msgstr ""
+"\n"
+"祝好，\n"
+"琼斯博士\n"
+"<size=11>信息统计部\n"
+"庄严科技</size>\n"
+"------------------\n"
+
+#. STRINGS.CODEX.MISSINGNOTES.BODY.SIGNATURE3
+msgctxt "STRINGS.CODEX.MISSINGNOTES.BODY.SIGNATURE3"
+msgid ""
+"\n"
+"-Director Stern\n"
+"<size=11>\n"
+"The Gravitas Facility</size>\n"
+"------------------\n"
+msgstr ""
+"\n"
+"- 斯特恩主管\n"
+"<size=11>\n"
+"庄严科技</size>\n"
+"------------------\n"
+
+#. STRINGS.CODEX.MISSINGNOTES.SUBTITLE
+msgctxt "STRINGS.CODEX.MISSINGNOTES.SUBTITLE"
+msgid "ENCRYPTION LEVEL: THREE"
+msgstr "加密级别：三"
+
+#. STRINGS.CODEX.MISSINGNOTES.TITLE
+msgctxt "STRINGS.CODEX.MISSINGNOTES.TITLE"
+msgid "Re: Missing notes"
+msgstr "回复：缺失的记录"
+
+#. STRINGS.CODEX.MISSINGNOTES.TITLE2
+msgctxt "STRINGS.CODEX.MISSINGNOTES.TITLE2"
+msgid "SUBJECT: Missing notes"
+msgstr "主题：缺失的记录"
+
 #. STRINGS.CODEX.MOLE.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.MOLE.BODY.CONTAINER1"
 msgid ""
@@ -23712,7 +24221,7 @@ msgstr "锹环田鼠"
 #. STRINGS.CODEX.MOLTEN.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.MOLTEN.BODY.CONTAINER1"
 msgid "<smallcaps>Pictured: \"Molten\" Slickster variant</smallcaps>"
-msgstr "<smallcaps>图片：\"熔岩\"浮油动物变种</smallcaps>"
+msgstr "<smallcaps>图片：\"熔岩\"浮油小动物变种</smallcaps>"
 
 #. STRINGS.CODEX.MOLTEN.BODY.CONTAINER2
 msgctxt "STRINGS.CODEX.MOLTEN.BODY.CONTAINER2"
@@ -23724,7 +24233,7 @@ msgid ""
 "ideal house pets only for the oily mess they involuntarily leave behind "
 "wherever they go."
 msgstr ""
-"浮油生物是一种友善的生物，它良好的性格和笑脸在繁育者们中广为人知。\n"
+"浮油生物是一种友善的生物，它良好的性格和笑脸在繁育者中广为人知。\n"
 "\n"
 "浮油生物很少会咬人类处理人员，但通常不被认为适合当做家庭宠物喂养，这完全是因"
 "为它们常常会不声不响地把家里弄得油腻腻的。"
@@ -23732,7 +24241,7 @@ msgstr ""
 #. STRINGS.CODEX.MOLTEN.SUBTITLE
 msgctxt "STRINGS.CODEX.MOLTEN.SUBTITLE"
 msgid "Critter Morph"
-msgstr "动物变种"
+msgstr "小动物变种"
 
 #. STRINGS.CODEX.MOLTEN.TITLE
 msgctxt "STRINGS.CODEX.MOLTEN.TITLE"
@@ -23818,10 +24327,12 @@ msgctxt "STRINGS.CODEX.MORB.BODY.CONTAINER2"
 msgid ""
 "It poses a severe disease risk to humans due to the thick slime it excretes "
 "to surround its inner cartilage structures.\n"
+"\n"
 "A single teaspoon of Morb slime can contain up to a quadrillion bacteria "
 "that work to deter would-be predators and liquefy its food."
 msgstr ""
 "其用以包裹内部软骨结构的层层菌泥对人类而言具有很高的致病风险。\n"
+"\n"
 "一茶匙疫病章鱼菌泥中便含有千兆数量级的病菌，这足以威慑潜在的掠食者，并使其食"
 "物溶解。"
 
@@ -24042,7 +24553,7 @@ msgstr "周期 15"
 #. STRINGS.CODEX.MYLOG.BODY.LOG3DLC1.BODY
 msgctxt "STRINGS.CODEX.MYLOG.BODY.LOG3DLC1.BODY"
 msgid ""
-"As my Duplicants venture out into the neighbouring worlds, there is an ever "
+"As my Duplicants venture out into the neighboring worlds, there is an ever "
 "increasing chance that they will encounter hostile environments unsafe for "
 "unprotected individuals. A prudent course of action would be to start "
 "research and training for equipment that could protect my Duplicants when "
@@ -24596,7 +25107,7 @@ msgid ""
 "\n"
 "Currently it is too small to send a rocket and crew through, but further "
 "investigation reveals the presence of a strange artifact on a nearby world "
-"which could feasably increase the size of the tear if a number of Printing "
+"which could feasibly increase the size of the tear if a number of Printing "
 "Pods are erected in nearby worlds.\n"
 "\n"
 "However, I've determined that using the Temporal Bow to operate a Printing "
@@ -24681,6 +25192,70 @@ msgctxt "STRINGS.CODEX.MYLOG.TITLE"
 msgid "My Log"
 msgstr "我的日志"
 
+#. STRINGS.CODEX.MYSTERYAWARD.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.MYSTERYAWARD.BODY.CONTAINER1"
+msgid "<b>Mystery Project Wins Nanotech Award</b>"
+msgstr "<b>神秘项目赢得纳米科技奖</b>"
+
+#. STRINGS.CODEX.MYSTERYAWARD.BODY.CONTAINER2
+msgctxt "STRINGS.CODEX.MYSTERYAWARD.BODY.CONTAINER2"
+msgid ""
+"Last night’s Worldwide Nanotech Awards has sparked controversy in the "
+"scientific community after it was announced that the top prize had been "
+"awarded to a project whose details could not be publicly disclosed.\n"
+"\n"
+"The highly classified paper was presented to the jury in a closed session by "
+"lead researcher Dr. Liling Pei, recipient of the inaugural Gravitas "
+"Accelerator Scholarship at the Elion University of Science and Technology.\n"
+"\n"
+"Head judge Dr. Elias Balko acknowledges that it was unorthodox, but defends "
+"the decision. \"We’re scientists—it’s our job to push boundaries.\"\n"
+"\n"
+"Pei was awarded the coveted Halas Medal, the top prize for innovation in the "
+"field.\n"
+"\n"
+"\"I wish I could tell you more,\" says Pei. \"I’m SO grateful to the WNA for "
+"this great honor, and to Dr. Stern for the funding that made it all "
+"possible. This is going to change everything about…well, everything.\"\n"
+"\n"
+"This is the second time that Pei has made headlines. Last year, the striking "
+"young nanoscientist won the Miss Planetary Belle pageant’s talent show with "
+"a live demonstration of nanorobots weaving a ballgown out of fibers "
+"harvested from common houseplants.\n"
+"\n"
+"Pei joins the team at the Gravitas Facility early next month."
+msgstr ""
+"昨晚的全球纳米科技奖在科学界引发了争议，因为这项最高奖颁给了一个细节无法公开"
+"的项目。\n"
+"\n"
+"这篇高度机密的论文由首席研究员裴丽玲博士在非公开会议上提交给了陪审团，她是埃"
+"利昂科技大学首届引力加速器奖学金的获得者。\n"
+"\n"
+"裁判长埃利亚斯·巴尔科承认这是不正规的，但支持这一决定。\"我们是科学家——我们的"
+"工作就是打破界限。\"\n"
+"\n"
+"裴丽玲赢得了人人向往的哈拉斯奖章，这是该领域的最高创新奖项。\n"
+"\n"
+"\"我希望我能再多说一些，\"裴丽玲说，\"我非常感谢全球纳米科技奖的这一伟大荣"
+"誉，以及斯特恩博士的资助让这一切成为可能。这将改变一切关于……呃，改变一"
+"切。\"\n"
+"\n"
+"这是裴丽玲第二次登上头条。去年，这位令人瞩目的的年轻纳米科学家在\"行星小姐"
+"\"选美大赛中胜出，当场展示了纳米机器人如何用常见的室内植物收获的纤维编织舞"
+"裙。\n"
+"\n"
+"下个月裴丽玲将加入庄严科技的团队。"
+
+#. STRINGS.CODEX.MYSTERYAWARD.SUBTITLE
+msgctxt "STRINGS.CODEX.MYSTERYAWARD.SUBTITLE"
+msgid "ENCRYPTION LEVEL: THREE"
+msgstr "加密级别：三"
+
+#. STRINGS.CODEX.MYSTERYAWARD.TITLE
+msgctxt "STRINGS.CODEX.MYSTERYAWARD.TITLE"
+msgid "Nanotech Article"
+msgstr "《纳米科技》文章"
+
 #. STRINGS.CODEX.NEGA.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.NEGA.BODY.CONTAINER1"
 msgid "<smallcaps>Pictured: \"Abyss\" Shine Bug variant</smallcaps>"
@@ -24696,7 +25271,7 @@ msgstr "深渊变种的发光虫是不寻常基因突变的产物，它能够吸
 #. STRINGS.CODEX.NEGA.SUBTITLE
 msgctxt "STRINGS.CODEX.NEGA.SUBTITLE"
 msgid "Critter Morph"
-msgstr "动物变种"
+msgstr "小动物变种"
 
 #. STRINGS.CODEX.NEGA.TITLE
 msgctxt "STRINGS.CODEX.NEGA.TITLE"
@@ -24766,7 +25341,8 @@ msgid ""
 "large and unblinking eyes, yet they are remarkably bright and friendly "
 "creatures."
 msgstr ""
-"帕库鱼平时不会眨眼，因此往往被认为目光呆滞，不过这种生物还是极为聪明、友善。"
+"帕库鱼眼睛一眨不眨的，因此往往被认为目光呆滞，不过这种生物还是极为聪明、友"
+"善。"
 
 #. STRINGS.CODEX.PACU.SPECIES_SUBTITLE
 msgctxt "STRINGS.CODEX.PACU.SPECIES_SUBTITLE"
@@ -24855,8 +25431,18 @@ msgid ""
 "dexterous paws that allow it to rummage through most tight to reach spaces "
 "in search of seeds and other treasures."
 msgstr ""
-"尽管树鼠没有真正对生拇指，但它灵巧的爪子可以让它在最狭窄的地方寻找种子和其他"
-"宝物。"
+"尽管树鼠没有真正的对生拇指，但它灵巧的爪子可以让它在最狭窄的地方寻找种子和其"
+"他宝物。"
+
+#. STRINGS.CODEX.PIP.SPECIES_SUBTITLE
+msgctxt "STRINGS.CODEX.PIP.SPECIES_SUBTITLE"
+msgid "Critter Species"
+msgstr "小动物物种"
+
+#. STRINGS.CODEX.PIP.SPECIES_TITLE
+msgctxt "STRINGS.CODEX.PIP.SPECIES_TITLE"
+msgid "Pips"
+msgstr "树鼠"
 
 #. STRINGS.CODEX.PIP.SUBTITLE
 msgctxt "STRINGS.CODEX.PIP.SUBTITLE"
@@ -24876,7 +25462,7 @@ msgstr "<smallcaps>图片：\"天蓝\"发光虫变种</smallcaps>"
 #. STRINGS.CODEX.PLACID.SUBTITLE
 msgctxt "STRINGS.CODEX.PLACID.SUBTITLE"
 msgid "Critter Morph"
-msgstr "动物变种"
+msgstr "小动物变种"
 
 #. STRINGS.CODEX.PLACID.TITLE
 msgctxt "STRINGS.CODEX.PLACID.TITLE"
@@ -25127,6 +25713,16 @@ msgstr ""
 "尽管最令人激动的脱壳最早发生在抛壳蟹青年时期，但成年后它们也仍会继续生长和脱"
 "壳，直到它们最终死去。"
 
+#. STRINGS.CODEX.POKESHELL.SPECIES_SUBTITLE
+msgctxt "STRINGS.CODEX.POKESHELL.SPECIES_SUBTITLE"
+msgid "Critter Species"
+msgstr "小动物物种"
+
+#. STRINGS.CODEX.POKESHELL.SPECIES_TITLE
+msgctxt "STRINGS.CODEX.POKESHELL.SPECIES_TITLE"
+msgid "Pokeshells"
+msgstr "抛壳蟹"
+
 #. STRINGS.CODEX.POKESHELL.SUBTITLE
 msgctxt "STRINGS.CODEX.POKESHELL.SUBTITLE"
 msgid "Domesticable Critter"
@@ -25253,7 +25849,7 @@ msgstr ""
 #. STRINGS.CODEX.PRINCE.SUBTITLE
 msgctxt "STRINGS.CODEX.PRINCE.SUBTITLE"
 msgid "Critter Morph"
-msgstr "动物变种"
+msgstr "小动物变种"
 
 #. STRINGS.CODEX.PRINCE.TITLE
 msgctxt "STRINGS.CODEX.PRINCE.TITLE"
@@ -25380,60 +25976,79 @@ msgstr "核能"
 #. STRINGS.CODEX.RADIATION.PARAGRAPH_1
 msgctxt "STRINGS.CODEX.RADIATION.PARAGRAPH_1"
 msgid ""
-"When transporting radioactive materials such as Uranium, care must be taken "
-"to avoid exposing outside objects to contaminants.\n"
+"When transporting radioactive materials such as <link=\"URANIUMORE"
+"\">Uranium</link>, care must be taken to avoid exposing outside objects to "
+"<link=\"RADIATIONSICKNESS\">Radioactive Contaminants</link>.\n"
 "\n"
-"Using proper transportation vessels, such as those which are lead lined, is "
-"crucial to ensuring that Duplicants avoid Radiation Sickness."
+"Using proper transportation vessels, such as those which are lined with "
+"<link=\"LEAD\">Lead</link>, is crucial to ensuring that Duplicants avoid "
+"<link=\"RADIATIONSICKNESS\">Radiation Sickness</link>."
 msgstr ""
-"当运输铀等辐射性材料时，必须小心不要将外部的物体暴露在污染物中。\n"
+"当运输<link=\"URANIUMORE\">铀</link>等辐射性材料时，必须小心不要将外部的物体"
+"暴露在<link=\"RADIATIONSICKNESS\">放射性污染物</link>中。\n"
 "\n"
-"使用正确的运输容器，比如用铅做内衬的容器，是保证复制人不得辐射病的关键。"
+"使用正确的运输容器，比如用<link=\"LEAD\">铅</link>做内衬的容器，是保证复制人"
+"不得<link=\"RADIATIONSICKNESS\">辐射病</link>的关键。"
 
 #. STRINGS.CODEX.RADIATION.PARAGRAPH_2
 msgctxt "STRINGS.CODEX.RADIATION.PARAGRAPH_2"
 msgid ""
-"Duplicants who are exposed to Radioactive Contaminants will need to wear "
-"protection or they risk coming down with radiation sickness.\n"
+"Duplicants who are exposed to <link=\"RADIATIONSICKNESS\">Radioactive "
+"Contaminants</link> will need to wear protection or they risk coming down "
+"with <link=\"RADIATIONSICKNESS\">Radiation Sickness</link>.\n"
 "\n"
-"Some Duplicants will have more of a natural resistance to radiation but "
-"prolonged exposure to radioactive contaminants will still increase their "
-"chances of becoming sick.\n"
+"Some Duplicants will have more of a natural resistance to radiation, but "
+"prolonged exposure will still increase their chances of becoming sick.\n"
 "\n"
-"Consuming Iodine Supplements and Seafood will pro-actively increase a "
-"Duplicant's radiation resistance, but will not cure a Duplicant's Radiation "
-"Sickness once they have become infected.\n"
+"Consuming <link=\"BASICRADPILL\">Rad Pills</link> or seafood such as <link="
+"\"COOKEDFISH\">Cooked Seafood</link> or <link=\"SEALETTUCE\">Waterweed</"
+"link> increases a Duplicant's radiation resistance, but will not cure a "
+"Duplicant's <link=\"RADIATIONSICKNESS\">Radiation Sickness</link> once they "
+"have become infected.\n"
 "\n"
-"On the other hand, exposure to radiation will kill food poisoning, slimelung "
-"and zombie spores on surfaces (including Duplicants).\n"
+"On the other hand, exposure to radiation will kill <link=\"FOODPOISONING"
+"\">Food Poisoning</link>, <link=\"SLIMELUNG\">Slimelung</link> and <link="
+"\"ZOMBIESPORES\">Zombie Spores</link> on surfaces (including on "
+"Duplicants).\n"
 "\n"
 msgstr ""
-"暴露在辐射性污染物的复制人需要穿戴防护设备，否则他们就会患辐射病。\n"
+"暴露在<link=\"RADIATIONSICKNESS\">辐射性污染物</link>中的复制人需要穿戴防护设"
+"备，否则他们就会患<link=\"RADIATIONSICKNESS\">辐射病</link>。\n"
 "\n"
 "某些复制人对辐射有天生的抵抗力，但长时间暴露在放射性污染物中仍会使其生病。\n"
 "\n"
-"吃碘增补剂和海产食品可以提前增强复制人的辐射抗性，但并不会治疗已经得辐射病的"
-"复制人。\n"
+"吃<link=\"BASICRADPILL\">辐射药丸</link>和<link=\"COOKEDFISH\">烤海鲜</link>"
+"或<link=\"SEALETTUCE\">水草</link>可以提前增强复制人的辐射抗性，但并不会治疗"
+"已经得<link=\"RADIATIONSICKNESS\">辐射病</link>的复制人。\n"
 "\n"
-"另一方面，辐射可以杀死物体表面（包括复制人）上的食物中毒，粘液肺病和僵尸孢子"
-"病菌。\n"
+"另一方面，辐射可以杀死物体表面（包括复制人）上的<link=\"FOODPOISONING\">食物"
+"中毒</link>，<link=\"SLIMELUNG\">粘液肺病</link>和<link=\"ZOMBIESPORES\">僵尸"
+"孢子</link>病菌。\n"
 "\n"
 
 #. STRINGS.CODEX.RADIATION.PARAGRAPH_3
 msgctxt "STRINGS.CODEX.RADIATION.PARAGRAPH_3"
 msgid ""
-"A Research Reactor will require Enriched Uranium to run. Uranium can be "
-"enriched using a Uranium Centrifuge.\n"
+"A <link=\"NUCLEARREACTOR\">Research Reactor</link> will require <link="
+"\"ENRICHEDURANIUM\">Enriched Uranium</link> to run. Uranium can be enriched "
+"using a <link=\"URANIUMCENTRIFUGE\">Uranium Centrifuge</link>.\n"
 "\n"
-"Once supplied with Enriched Uranium a Nuclear Reactor will create an "
-"enormous amount of heat which can then be placed under a source of water to "
-"produce steam and connected to a Steam Turbine to produce a considerable "
-"source of power."
+"Once supplied with <link=\"ENRICHEDURANIUM\">Enriched Uranium</link>, a "
+"<link=\"NUCLEARREACTOR\">Research Reactors</link> will create an enormous "
+"amount of <link=\"HEAT\">Heat</link> which can then be placed under a source "
+"of <link=\"WATER\">Water</link> to produce <link=\"STEAM\">Steam</link>and "
+"connected to a  <link=\"STEAMTURBINE2\">Steam Turbine</link> to produce a "
+"considerable source of <link=\"POWER\">Power</link>."
 msgstr ""
-"研究性反应堆需要浓缩铀来运作，铀可以使用铀素离心机来浓缩。\n"
+"<link=\"NUCLEARREACTOR\">研究性反应堆</link>需要<link=\"ENRICHEDURANIUM\">浓"
+"缩铀</link>来运作，铀可以使用<link=\"URANIUMCENTRIFUGE\">铀素离心机</link>来"
+"浓缩。\n"
 "\n"
-"一旦核反应堆供给了浓缩铀就会产生大量的热，可以放置在水中来产生蒸汽，并与蒸汽"
-"涡轮机相连来产生相当多的电力。"
+"一旦<link=\"NUCLEARREACTOR\">研究性反应堆</link>供给了<link=\"ENRICHEDURANIUM"
+"\">浓缩铀</link>就会产生大量的<link=\"HEAT\">热</link>，可以放置在<link="
+"\"WATER\">水</link>中来产生<link=\"STEAM\">蒸汽</link>，并与<link="
+"\"STEAMTURBINE2\">蒸汽涡轮机</link>相连来产生相当多的<link=\"POWER\">电力</"
+"link>。"
 
 #. STRINGS.CODEX.RADIATION.TITLE
 msgctxt "STRINGS.CODEX.RADIATION.TITLE"
@@ -25652,7 +26267,7 @@ msgstr ""
 #. STRINGS.CODEX.ROYAL.SUBTITLE
 msgctxt "STRINGS.CODEX.ROYAL.SUBTITLE"
 msgid "Critter Morph"
-msgstr "动物变种"
+msgstr "小动物变种"
 
 #. STRINGS.CODEX.ROYAL.TITLE
 msgctxt "STRINGS.CODEX.ROYAL.TITLE"
@@ -25682,7 +26297,7 @@ msgstr ""
 #. STRINGS.CODEX.SAGE.SUBTITLE
 msgctxt "STRINGS.CODEX.SAGE.SUBTITLE"
 msgid "Critter Morph"
-msgstr "动物变种"
+msgstr "小动物变种"
 
 #. STRINGS.CODEX.SAGE.TITLE
 msgctxt "STRINGS.CODEX.SAGE.TITLE"
@@ -25836,15 +26451,16 @@ msgstr "冰霜小麦"
 #. STRINGS.CODEX.SLICKSTER.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.SLICKSTER.BODY.CONTAINER1"
 msgid ""
-"Slicksters are a unique creature most renown for their ability to exude "
+"Slicksters are a unique creature most renowned for their ability to exude "
 "hydrocarbon waste that is nearly identical in makeup to crude oil.\n"
 "\n"
 "The two tufts atop a Slickster's head are called rhinophores, and help guide "
 "the Slickster toward breathable carbon dioxide."
 msgstr ""
-"浮油生物是一种独特的生物，其排泄物中含有成分几乎与原油相当的烃类物质。\n"
+"浮油生物是一种独特的生物，因其排泄物中含有成分几乎与原油相当的烃类物质而出"
+"名。\n"
 "\n"
-"浮油生物的头上有两撮毛，称为嗅角，能帮助其找到可吸入的二氧化碳。"
+"浮油生物的头上有两撮毛，称为嗅角，能帮助它们找到可吸入的二氧化碳。"
 
 #. STRINGS.CODEX.SLICKSTER.SPECIES_SUBTITLE
 msgctxt "STRINGS.CODEX.SLICKSTER.SPECIES_SUBTITLE"
@@ -25884,7 +26500,7 @@ msgstr ""
 #. STRINGS.CODEX.SMOOTH.SUBTITLE
 msgctxt "STRINGS.CODEX.SMOOTH.SUBTITLE"
 msgid "Critter Morph"
-msgstr "动物变种"
+msgstr "小动物变种"
 
 #. STRINGS.CODEX.SMOOTH.TITLE
 msgctxt "STRINGS.CODEX.SMOOTH.TITLE"
@@ -25898,8 +26514,8 @@ msgstr "眼冒金星宣传片"
 
 #. STRINGS.CODEX.SO_LAUNCH_TRAILER.SUBTITLE
 msgctxt "STRINGS.CODEX.SO_LAUNCH_TRAILER.SUBTITLE"
-msgid "Spaced Out Trailer"
-msgstr "眼冒金星宣传片"
+msgid ""
+msgstr ""
 
 #. STRINGS.CODEX.SO_LAUNCH_TRAILER.TITLE
 msgctxt "STRINGS.CODEX.SO_LAUNCH_TRAILER.TITLE"
@@ -25952,7 +26568,7 @@ msgstr "孢子兰"
 #. STRINGS.CODEX.SQUEAKY.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.SQUEAKY.BODY.CONTAINER1"
 msgid "<smallcaps>Pictured: \"Squeaky\" Puft variant</smallcaps>"
-msgstr "<smallcaps>图片：\"净菌\"飞鱼变种</smallcaps>"
+msgstr "<smallcaps>图片：\"洁净\"飞鱼变种</smallcaps>"
 
 #. STRINGS.CODEX.SQUEAKY.BODY.CONTAINER2
 msgctxt "STRINGS.CODEX.SQUEAKY.BODY.CONTAINER2"
@@ -25980,12 +26596,12 @@ msgstr ""
 #. STRINGS.CODEX.SQUEAKY.SUBTITLE
 msgctxt "STRINGS.CODEX.SQUEAKY.SUBTITLE"
 msgid "Critter Morph"
-msgstr "动物变种"
+msgstr "小动物变种"
 
 #. STRINGS.CODEX.SQUEAKY.TITLE
 msgctxt "STRINGS.CODEX.SQUEAKY.TITLE"
 msgid "Squeaky Puft"
-msgstr "净菌飞鱼"
+msgstr "洁净飞鱼"
 
 #. STRINGS.CODEX.STONE.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.STONE.BODY.CONTAINER1"
@@ -26010,7 +26626,7 @@ msgstr ""
 #. STRINGS.CODEX.STONE.SUBTITLE
 msgctxt "STRINGS.CODEX.STONE.SUBTITLE"
 msgid "Critter Morph"
-msgstr "动物变种"
+msgstr "小动物变种"
 
 #. STRINGS.CODEX.STONE.TITLE
 msgctxt "STRINGS.CODEX.STONE.TITLE"
@@ -26078,7 +26694,7 @@ msgstr "发光虫寻找伙伴时错误地接近非生命光源屡见不鲜。"
 #. STRINGS.CODEX.SUNNY.SUBTITLE
 msgctxt "STRINGS.CODEX.SUNNY.SUBTITLE"
 msgid "Critter Morph"
-msgstr "动物变种"
+msgstr "小动物变种"
 
 #. STRINGS.CODEX.SUNNY.TITLE
 msgctxt "STRINGS.CODEX.SUNNY.TITLE"
@@ -26109,6 +26725,33 @@ msgstr "食用性植物"
 msgctxt "STRINGS.CODEX.SWAMPCHARD.TITLE"
 msgid "Swamp Chard"
 msgstr "沼泽甜菜"
+
+#. STRINGS.CODEX.SWAMPLILYFLOWER.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.SWAMPLILYFLOWER.BODY.CONTAINER1"
+msgid ""
+"Balm Lily Flowers bloom on <link=\"SWAMPLILY\">Balm Lily</link> plants.\n"
+"\n"
+"They have a wide range of medicinal applications, and have been shown to be "
+"a particularly effective antidote for respiratory illnesses.\n"
+"\n"
+"The intense perfume emitted by their vivid petals is best described as "
+"\"dizzying.\""
+msgstr ""
+"芳香百合花开在<link=\"SWAMPLILY\">芳香百合</link>上。\n"
+"\n"
+"这种花有着广泛的医学应用，且已被证实是呼吸道疾病的特效药。\n"
+"\n"
+"其鲜艳的花瓣会散发出强烈的香味，对此的最佳描述是\"香晕\"。"
+
+#. STRINGS.CODEX.SWAMPLILYFLOWER.SUBTITLE
+msgctxt "STRINGS.CODEX.SWAMPLILYFLOWER.SUBTITLE"
+msgid "Medicinal Herb"
+msgstr "药用性植物"
+
+#. STRINGS.CODEX.SWAMPLILYFLOWER.TITLE
+msgctxt "STRINGS.CODEX.SWAMPLILYFLOWER.TITLE"
+msgid "Balm Lily Flower"
+msgstr "芳香百合花"
 
 #. STRINGS.CODEX.SWEEPY.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.SWEEPY.BODY.CONTAINER1"
@@ -26181,13 +26824,13 @@ msgstr ""
 #. STRINGS.CODEX.TIMEOFFAPPROVED.BODY.EMAILHEADER
 msgctxt "STRINGS.CODEX.TIMEOFFAPPROVED.BODY.EMAILHEADER"
 msgid ""
-"<smallcaps>To: <b>Dr. Mason</b><size=12><alpha=#AA> <dross@gravitas.nova></"
+"<smallcaps>To: <b>Dr. Ross</b><size=12><alpha=#AA> <dross@gravitas.nova></"
 "size></color>\n"
 "From: <b>Admin</b><size=12><alpha=#AA> <admin@gravitas.nova></color></size></"
 "smallcaps>\n"
 "------------------\n"
 msgstr ""
-"<smallcaps>收件人：<b>梅森博士</b><size=12><alpha=#AA> <dross@gravitas."
+"<smallcaps>收件人：<b>罗斯博士</b><size=12><alpha=#AA> <dross@gravitas."
 "nova></size></color>\n"
 "发件人：<b>管理员</b><size=12><alpha=#AA> <admin@gravitas.nova></color></"
 "size></smallcaps>\n"
@@ -26239,8 +26882,8 @@ msgstr ""
 "尽管生活在这片严酷的放射性生态中的动植物群都具有一定的攻击性，但安宁芷却是一"
 "个例外。\n"
 "\n"
-"人们普遍认为，这种植物能带来改善士气的能力是因为其外观与人们聚会时可能会戴的"
-"一种滑稽的帽子类似有关。"
+"人们普遍认为，这种植物有改善士气的能力是因为其外观与人们聚会时可能会戴的一种"
+"滑稽的帽子类似有关。"
 
 #. STRINGS.CODEX.TRANQUILTOES.SUBTITLE
 msgctxt "STRINGS.CODEX.TRANQUILTOES.SUBTITLE"
@@ -26268,12 +26911,81 @@ msgstr "有记录显示，帕库鱼的平均智商与狗相当，它们能够记
 #. STRINGS.CODEX.TROPICAL.SUBTITLE
 msgctxt "STRINGS.CODEX.TROPICAL.SUBTITLE"
 msgid "Critter Morph"
-msgstr "动物变种"
+msgstr "小动物变种"
 
 #. STRINGS.CODEX.TROPICAL.TITLE
 msgctxt "STRINGS.CODEX.TROPICAL.TITLE"
 msgid "Tropical Pacu"
 msgstr "热带帕库鱼"
+
+#. STRINGS.CODEX.VARIANT_DELICACY.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.VARIANT_DELICACY.BODY.CONTAINER1"
+msgid "<smallcaps>Pictured: \"Delecta\" Vole variant</smallcaps>"
+msgstr "<smallcaps>图片：\"珍馐\"田鼠变种</smallcaps>"
+
+#. STRINGS.CODEX.VARIANT_DELICACY.SUBTITLE
+msgctxt "STRINGS.CODEX.VARIANT_DELICACY.SUBTITLE"
+msgid "Critter Morph"
+msgstr "小动物变种"
+
+#. STRINGS.CODEX.VARIANT_DELICACY.TITLE
+msgctxt "STRINGS.CODEX.VARIANT_DELICACY.TITLE"
+msgid "Delecta Vole"
+msgstr "珍馐田鼠"
+
+#. STRINGS.CODEX.VARIANT_FRESH_WATER.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.VARIANT_FRESH_WATER.BODY.CONTAINER1"
+msgid "<smallcaps>Pictured: \"Sanishell\" variant</smallcaps>"
+msgstr "<smallcaps>图片：\"沙泥\"蟹变种</smallcaps>"
+
+#. STRINGS.CODEX.VARIANT_FRESH_WATER.SUBTITLE
+msgctxt "STRINGS.CODEX.VARIANT_FRESH_WATER.SUBTITLE"
+msgid "Critter Morph"
+msgstr "小动物变种"
+
+#. STRINGS.CODEX.VARIANT_FRESH_WATER.TITLE
+msgctxt "STRINGS.CODEX.VARIANT_FRESH_WATER.TITLE"
+msgid "Sanishell"
+msgstr "沙泥蟹"
+
+#. STRINGS.CODEX.VARIANT_HUG.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.VARIANT_HUG.BODY.CONTAINER1"
+msgid "<smallcaps>Pictured: \"Cuddle\" Pip variant</smallcaps>"
+msgstr "<smallcaps>图片：\"绒毛\"树鼠变种</smallcaps>"
+
+#. STRINGS.CODEX.VARIANT_HUG.BODY.CONTAINER2
+msgctxt "STRINGS.CODEX.VARIANT_HUG.BODY.CONTAINER2"
+msgid ""
+"Cuddle Pips are genetically predisposed to feel deeply affectionate towards "
+"the unhatched young of all species, and can often be observed hugging eggs."
+msgstr ""
+"毛绒树鼠先天性地对所有物种中的未孵化的幼体有强烈的情感，经常可以观察到它们在"
+"拥抱蛋。"
+
+#. STRINGS.CODEX.VARIANT_HUG.SUBTITLE
+msgctxt "STRINGS.CODEX.VARIANT_HUG.SUBTITLE"
+msgid "Critter Morph"
+msgstr "小动物变种"
+
+#. STRINGS.CODEX.VARIANT_HUG.TITLE
+msgctxt "STRINGS.CODEX.VARIANT_HUG.TITLE"
+msgid "Cuddle Pip"
+msgstr "毛绒树鼠"
+
+#. STRINGS.CODEX.VARIANT_WOOD.BODY.CONTAINER1
+msgctxt "STRINGS.CODEX.VARIANT_WOOD.BODY.CONTAINER1"
+msgid "<smallcaps>Pictured: \"Oakshell\" variant</smallcaps>"
+msgstr "<smallcaps>图片：\"木壳\"蟹变种</smallcaps>"
+
+#. STRINGS.CODEX.VARIANT_WOOD.SUBTITLE
+msgctxt "STRINGS.CODEX.VARIANT_WOOD.SUBTITLE"
+msgid "Critter Morph"
+msgstr "小动物变种"
+
+#. STRINGS.CODEX.VARIANT_WOOD.TITLE
+msgctxt "STRINGS.CODEX.VARIANT_WOOD.TITLE"
+msgid "Oakshell"
+msgstr "木壳蟹"
 
 #. STRINGS.CODEX.VITAL.BODY.CONTAINER1
 msgctxt "STRINGS.CODEX.VITAL.BODY.CONTAINER1"
@@ -26290,7 +27002,7 @@ msgstr "发光虫的翅膜非常脆弱，直接触摸它的翅膜是不明智的
 #. STRINGS.CODEX.VITAL.SUBTITLE
 msgctxt "STRINGS.CODEX.VITAL.SUBTITLE"
 msgid "Critter Morph"
-msgstr "动物变种"
+msgstr "小动物变种"
 
 #. STRINGS.CODEX.VITAL.TITLE
 msgctxt "STRINGS.CODEX.VITAL.TITLE"
@@ -27065,8 +27777,8 @@ msgstr "这个周期完成太空服任务的复制人：{0} / {1}"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.EXPAND_TOOLTIP
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.EXPAND_TOOLTIP"
-msgid "<i>Click to view progress</i>"
-msgstr "<i>点击来查看进度</i>"
+msgid "<i>\\Click\\ to view progress</i>"
+msgstr "<i>\\Click\\以查看进度</i>"
 
 #. STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.FRACTIONAL_CYCLE
 msgctxt "STRINGS.COLONY_ACHIEVEMENTS.MISC_REQUIREMENTS.STATUS.FRACTIONAL_CYCLE"
@@ -27912,6 +28624,16 @@ msgctxt "STRINGS.CREATURES.FERTILITY_MODIFIERS.DIET.NAME"
 msgid "Diet"
 msgstr "饮食"
 
+#. STRINGS.CREATURES.FERTILITY_MODIFIERS.LIVING_IN_ELEMENT.DESC
+msgctxt "STRINGS.CREATURES.FERTILITY_MODIFIERS.LIVING_IN_ELEMENT.DESC"
+msgid "Dwells in {0}"
+msgstr "栖息在{0}中"
+
+#. STRINGS.CREATURES.FERTILITY_MODIFIERS.LIVING_IN_ELEMENT.NAME
+msgctxt "STRINGS.CREATURES.FERTILITY_MODIFIERS.LIVING_IN_ELEMENT.NAME"
+msgid "Habitat"
+msgstr "生活环境"
+
 #. STRINGS.CREATURES.FERTILITY_MODIFIERS.NEARBY_CREATURE.DESC
 msgctxt "STRINGS.CREATURES.FERTILITY_MODIFIERS.NEARBY_CREATURE.DESC"
 msgid "Penned with: {0}"
@@ -28057,6 +28779,27 @@ msgctxt "STRINGS.CREATURES.MODIFIERS.DOMESTICATION_INCREASING.TOOLTIP"
 msgid "This critter is very happy its needs are being met"
 msgstr "这只小动物的需求得到满足，它很快乐"
 
+#. STRINGS.CREATURES.MODIFIERS.EGGHUG.NAME
+msgctxt "STRINGS.CREATURES.MODIFIERS.EGGHUG.NAME"
+msgid "Cuddled"
+msgstr "受拥抱"
+
+#. STRINGS.CREATURES.MODIFIERS.EGGHUG.TOOLTIP
+msgctxt "STRINGS.CREATURES.MODIFIERS.EGGHUG.TOOLTIP"
+msgid ""
+"This egg was recently hugged by an affectionate critter\n"
+"\n"
+"Increased <style=\"KKeyword\">Incubation Rate</style>"
+msgstr ""
+"这枚蛋最近受到了来自一种慈爱的小动物的拥抱\n"
+"\n"
+"增加了<style=\"KKeyword\">孵化速率</style>"
+
+#. STRINGS.CREATURES.MODIFIERS.ELEMENT_GROWTH_RATE.NAME
+msgctxt "STRINGS.CREATURES.MODIFIERS.ELEMENT_GROWTH_RATE.NAME"
+msgid "Quill Regrowth Rate"
+msgstr "羽刺生长速度"
+
 #. STRINGS.CREATURES.MODIFIERS.FUTURE_OVERCROWDED.NAME
 msgctxt "STRINGS.CREATURES.MODIFIERS.FUTURE_OVERCROWDED.NAME"
 msgid "Cramped"
@@ -28086,12 +28829,29 @@ msgstr "快乐"
 msgctxt "STRINGS.CREATURES.MODIFIERS.HAPPY.TOOLTIP"
 msgid ""
 "This critter's in high spirits because all of its needs are being met\n"
-"------------------\n"
+"\n"
 "It will produce more materials as a result"
 msgstr ""
 "这只小动物兴致很高，因为它的所有需求都得到了满足\n"
-"------------------\n"
+"\n"
 "因此它产出的材料会增加"
+
+#. STRINGS.CREATURES.MODIFIERS.HUGGINGFRENZY.NAME
+msgctxt "STRINGS.CREATURES.MODIFIERS.HUGGINGFRENZY.NAME"
+msgid "Hugging Spree"
+msgstr "拥抱狂欢"
+
+#. STRINGS.CREATURES.MODIFIERS.HUGGINGFRENZY.TOOLTIP
+msgctxt "STRINGS.CREATURES.MODIFIERS.HUGGINGFRENZY.TOOLTIP"
+msgid ""
+"This critter was recently hugged by a Duplicant and is feeling extra "
+"affectionate\n"
+"\n"
+"While in this state, it hugs <style=\"KKeyword\">Eggs</style> more frequently"
+msgstr ""
+"这只小动物被复制人拥抱过，感觉特别亲切\n"
+"\n"
+"在这种状态下它会更频繁地拥抱蛋"
 
 #. STRINGS.CREATURES.MODIFIERS.INCUBATING.NAME
 msgctxt "STRINGS.CREATURES.MODIFIERS.INCUBATING.NAME"
@@ -28128,14 +28888,14 @@ msgstr "摇篮曲"
 msgctxt "STRINGS.CREATURES.MODIFIERS.INCUBATOR_SONG.TOOLTIP"
 msgid ""
 "This egg was recently sung to by a kind Duplicant\n"
-"------------------\n"
+"\n"
 "Increased <style=\"KKeyword\">Incubation Rate</style>\n"
 "\n"
 "Duplicants must possess the <style=\"KKeyword\">Critter Ranching</style> "
 "Skill to sing to eggs"
 msgstr ""
 "这枚蛋最近听到了复制人的歌声\n"
-"------------------\n"
+"\n"
 "增加了<style=\"KKeyword\">孵化速率</style>\n"
 "\n"
 "复制人必须具有<style=\"KKeyword\">小动物放牧</style>技能才能照顾小动物"
@@ -28149,6 +28909,13 @@ msgstr "饥饿"
 msgctxt "STRINGS.CREATURES.MODIFIERS.OUT_OF_CALORIES.TOOLTIP"
 msgid "Get this critter something to eat!"
 msgstr "给这只小动物吃点东西！"
+
+#. STRINGS.CREATURES.MODIFIERS.OVERCROWDED.FISHTOOLTIP
+msgctxt "STRINGS.CREATURES.MODIFIERS.OVERCROWDED.FISHTOOLTIP"
+msgid ""
+"This critter is uncomfortable with either the size of this pool, or the "
+"number of other critters sharing it"
+msgstr "这只小动物因为这片水池太小或取其共享空间的其他小动物数量太多而不舒服"
 
 #. STRINGS.CREATURES.MODIFIERS.OVERCROWDED.NAME
 msgctxt "STRINGS.CREATURES.MODIFIERS.OVERCROWDED.NAME"
@@ -28205,11 +28972,11 @@ msgstr "闷闷不乐"
 msgctxt "STRINGS.CREATURES.MODIFIERS.UNHAPPY.TOOLTIP"
 msgid ""
 "This critter's feeling down because its needs aren't being met\n"
-"------------------\n"
+"\n"
 "It will produce less materials as a result"
 msgstr ""
 "这只小动物兴致不高，因为它的需求得不到满足\n"
-"------------------\n"
+"\n"
 "因此它产出的材料会减少"
 
 #. STRINGS.CREATURES.MODIFIERS.WILD.NAME
@@ -28647,6 +29414,94 @@ msgctxt "STRINGS.CREATURES.SPECIES.CRAB.NAME"
 msgid "<link=\"CRAB\">Pokeshell</link>"
 msgstr "<link=\"CRAB\">抛壳蟹</link>"
 
+#. STRINGS.CREATURES.SPECIES.CRAB.VARIANT_FRESH_WATER.BABY.DESC
+msgctxt "STRINGS.CREATURES.SPECIES.CRAB.VARIANT_FRESH_WATER.BABY.DESC"
+msgid ""
+"A picky little Sanishell Spawn.\n"
+"\n"
+"In time it will mature into a fully grown <link=\"CRABFRESHWATER"
+"\">Sanishell</link>."
+msgstr ""
+"挑剔的沙泥蟹幼体。\n"
+"\n"
+"它会逐渐成熟，长成<link=\"CRABFRESHWATER\">沙泥蟹</link>成年体。"
+
+#. STRINGS.CREATURES.SPECIES.CRAB.VARIANT_FRESH_WATER.BABY.NAME
+msgctxt "STRINGS.CREATURES.SPECIES.CRAB.VARIANT_FRESH_WATER.BABY.NAME"
+msgid "<link=\"CRABFRESHWATER\">Sanishell Spawn</link>"
+msgstr "<link=\"CRABFRESHWATER\">沙泥蟹幼体</link>"
+
+#. STRINGS.CREATURES.SPECIES.CRAB.VARIANT_FRESH_WATER.DESC
+msgctxt "STRINGS.CREATURES.SPECIES.CRAB.VARIANT_FRESH_WATER.DESC"
+msgid ""
+"Sanishells are nonhostile critters that thrive in  <link=\"WATER\">Water</"
+"link> and eliminates <link=\"DISEASE\">Germs</link> from any liquid it "
+"inhabits.\n"
+"\n"
+"They eat <link=\"TOXICSAND\">Polluted Dirt</link>, <link=\"SLIMEMOLD"
+"\">Slime</link> and <link=\"COMPOST\">Rot Piles</link>."
+msgstr ""
+"沙泥蟹是没有敌意的小动物，生活在<link=\"WATER\">水</link>中并且能够清除其中的"
+"<link=\"DISEASE\">病菌</link>。\n"
+"\n"
+"沙泥蟹吃<link=\"TOXICSAND\">污染土</link>，<link=\"SLIMEMOLD\">菌泥</link>和"
+"<link=\"COMPOST\">腐烂物</link>。"
+
+#. STRINGS.CREATURES.SPECIES.CRAB.VARIANT_FRESH_WATER.EGG_NAME
+msgctxt "STRINGS.CREATURES.SPECIES.CRAB.VARIANT_FRESH_WATER.EGG_NAME"
+msgid "<link=\"CRABFRESHWATER\">Sani Pinch Roe</link>"
+msgstr "<link=\"CRABFRESHWATER\">沙泥蟹卵</link>"
+
+#. STRINGS.CREATURES.SPECIES.CRAB.VARIANT_FRESH_WATER.NAME
+msgctxt "STRINGS.CREATURES.SPECIES.CRAB.VARIANT_FRESH_WATER.NAME"
+msgid "<link=\"CRABFRESHWATER\">Sanishell</link>"
+msgstr "<link=\"CRABFRESHWATER\">沙泥蟹</link>"
+
+#. STRINGS.CREATURES.SPECIES.CRAB.VARIANT_WOOD.BABY.DESC
+msgctxt "STRINGS.CREATURES.SPECIES.CRAB.VARIANT_WOOD.BABY.DESC"
+msgid ""
+"A knotty little Oakshell Spawn.\n"
+"\n"
+"In time it will mature into a fully grown <link=\"CRABWOOD\">Oakshell</link>."
+msgstr ""
+"多结的木壳蟹幼体。\n"
+"\n"
+"它会逐渐成熟，长成<link=\"CRABWOOD\">木蟹</link>成年体。"
+
+#. STRINGS.CREATURES.SPECIES.CRAB.VARIANT_WOOD.BABY.NAME
+msgctxt "STRINGS.CREATURES.SPECIES.CRAB.VARIANT_WOOD.BABY.NAME"
+msgid "<link=\"CRABWOOD\">Oakshell Spawn</link>"
+msgstr "<link=\"CRABWOOD\">木壳蟹幼体</link>"
+
+#. STRINGS.CREATURES.SPECIES.CRAB.VARIANT_WOOD.DESC
+msgctxt "STRINGS.CREATURES.SPECIES.CRAB.VARIANT_WOOD.DESC"
+msgid ""
+"Oakshells are nonhostile critters that eat <link=\"TOXICSAND\">Polluted "
+"Dirt</link>, <link=\"SLIMEMOLD\">Slime</link> and <link=\"COMPOST\">Rot "
+"Piles</link>.\n"
+"\n"
+"The shells they leave behind after molting can be crushed into <link=\"WOOD"
+"\">Lumber</link>.\n"
+"\n"
+"Oakshells thrive in <link=\"ETHANOL\">Ethanol</link>."
+msgstr ""
+"木壳蟹是没有敌意的小动物，会吃<link=\"TOXICSAND\">污染土</link>，<link="
+"\"SLIMEMOLD\">菌泥</link>和<link=\"COMPOST\">腐烂物</link>。\n"
+"\n"
+"木壳蟹脱壳后留下的壳可以打碎成<link=\"LIME\">木料</link>。\n"
+"\n"
+"木壳蟹在<link=\"ETHANOL\">乙醇</link>中生活。"
+
+#. STRINGS.CREATURES.SPECIES.CRAB.VARIANT_WOOD.EGG_NAME
+msgctxt "STRINGS.CREATURES.SPECIES.CRAB.VARIANT_WOOD.EGG_NAME"
+msgid "<link=\"CRABWOOD\">Oak Pinch Roe</link>"
+msgstr "<link=\"CRABWOOD\">木壳蟹卵</link>"
+
+#. STRINGS.CREATURES.SPECIES.CRAB.VARIANT_WOOD.NAME
+msgctxt "STRINGS.CREATURES.SPECIES.CRAB.VARIANT_WOOD.NAME"
+msgid "<link=\"CRABWOOD\">Oakshelll</link>"
+msgstr "<link=\"CRABWOOD\">木壳蟹</link>"
+
 #. STRINGS.CREATURES.SPECIES.CRITTERTRAPPLANT.DESC
 msgctxt "STRINGS.CREATURES.SPECIES.CRITTERTRAPPLANT.DESC"
 msgid ""
@@ -28839,14 +29694,15 @@ msgstr "<link=\"DRECKOPLASTIC\">小滑鳞壁虎</link>"
 #. STRINGS.CREATURES.SPECIES.DRECKO.VARIANT_PLASTIC.DESC
 msgctxt "STRINGS.CREATURES.SPECIES.DRECKO.VARIANT_PLASTIC.DESC"
 msgid ""
-"Glossy Dreckos are nonhostile critters that graze only on live <link="
-"\"BASICSINGLEHARVESTPLANT\">Mealwood Plants</link>.\n"
+"Glossy Dreckos are nonhostile critters that graze on live <link="
+"\"BASICSINGLEHARVESTPLANT\">Mealwood Plants</link> and <link=\"PRICKLEFLOWER"
+"\">Bristle Blossoms</link>.\n"
 "\n"
 "Their backsides are covered in bioplastic scales that only grow in <link="
 "\"HYDROGEN\">Hydrogen</link> climates."
 msgstr ""
 "滑鳞壁虎是没有敌意的小动物，只吃活的<link=\"BASICSINGLEHARVESTPLANT\">米虱木"
-"</link>。\n"
+"</link>和<link=\"PRICKLEFLOWER\">毛刺花</link>。\n"
 "\n"
 "其背部覆盖有生物塑料鳞片，只有在<link=\"HYDROGEN\">氢气</link>环境中才能生"
 "长。"
@@ -29848,6 +30704,48 @@ msgctxt "STRINGS.CREATURES.SPECIES.MOLE.NAME"
 msgid "<link=\"MOLE\">Shove Vole</link>"
 msgstr "<link=\"MOLE\">锹环田鼠</link>"
 
+#. STRINGS.CREATURES.SPECIES.MOLE.VARIANT_DELICACY.BABY.DESC
+msgctxt "STRINGS.CREATURES.SPECIES.MOLE.VARIANT_DELICACY.BABY.DESC"
+msgid ""
+"A tender little Delecta Vole pup.\n"
+"\n"
+"One day it will grow into an adult Shove Vole morph, the <link=\"MOLEDELICACY"
+"\">Delecta Vole</link>."
+msgstr ""
+"和善的小珍馐田鼠。\n"
+"\n"
+"总有一天它会长成成年锹环田鼠变种，变成<link=\"MOLEDELICACY\">珍馐田鼠</"
+"link>。"
+
+#. STRINGS.CREATURES.SPECIES.MOLE.VARIANT_DELICACY.BABY.NAME
+msgctxt "STRINGS.CREATURES.SPECIES.MOLE.VARIANT_DELICACY.BABY.NAME"
+msgid "<link=\"MOLEDELICACY\">Delecta Vole Pup</link>"
+msgstr "<link=\"MOLEDELICACY\">珍馐田鼠幼体</link>"
+
+#. STRINGS.CREATURES.SPECIES.MOLE.VARIANT_DELICACY.DESC
+msgctxt "STRINGS.CREATURES.SPECIES.MOLE.VARIANT_DELICACY.DESC"
+msgid ""
+"Delecta Voles are burrowing critters whose bodies sprout shearable <link="
+"\"GINGER\">Tonic Root</link> when <link=\"REGOLITH\">Regolith</link> is "
+"ingested at preferred temperatures.\n"
+"\n"
+"They cannot burrow through <link=\"REFINEDMETAL\">Refined Metals</link>."
+msgstr ""
+"珍馐田鼠是一种穴居动物，当食用喜好温度的<link=\"REGOLITH\">浮土</link>时身体"
+"表面会长出可剪下来的<link=\"GINGER\">滋补根</link>。\n"
+"\n"
+"它们无法挖掘<link=\"REFINEDMETAL\">精炼金属</link>。"
+
+#. STRINGS.CREATURES.SPECIES.MOLE.VARIANT_DELICACY.EGG_NAME
+msgctxt "STRINGS.CREATURES.SPECIES.MOLE.VARIANT_DELICACY.EGG_NAME"
+msgid "<link=\"MOLEDELICACY\">Delecta Vole Egg</link>"
+msgstr "<link=\"MOLEDELICACY\">珍馐田鼠蛋</link>"
+
+#. STRINGS.CREATURES.SPECIES.MOLE.VARIANT_DELICACY.NAME
+msgctxt "STRINGS.CREATURES.SPECIES.MOLE.VARIANT_DELICACY.NAME"
+msgid "<link=\"MOLEDELICACY\">Delecta Vole</link>"
+msgstr "<link=\"MOLEDELICACY\">珍馐田鼠</link>"
+
 #. STRINGS.CREATURES.SPECIES.MOO.DESC
 msgctxt "STRINGS.CREATURES.SPECIES.MOO.DESC"
 msgid ""
@@ -30073,13 +30971,13 @@ msgstr "<link=\"PACU\">帕库幼鱼</link>"
 #. STRINGS.CREATURES.SPECIES.PACU.DESC
 msgctxt "STRINGS.CREATURES.SPECIES.PACU.DESC"
 msgid ""
-"Pacus are aquatic creatures that cannot live outside of <link=\"WATER"
-"\">Water</link> or <link=\"DIRTYWATER\">Contaminated Water</link>.\n"
+"Pacus are aquatic creatures that can live in any liquid, such as <link="
+"\"WATER\">Water</link> or <link=\"DIRTYWATER\">Contaminated Water</link>.\n"
 "\n"
 "Every organism in the known universe finds the Pacu extremely delicious."
 msgstr ""
-"帕库鱼是水生生物，不能离开<link=\"WATER\">水</link>或<link=\"DIRTYWATER\">污"
-"染水</link>生存。\n"
+"帕库鱼是水生生物，可以在任何液体中生活，比如<link=\"WATER\">水</link>或<link="
+"\"DIRTYWATER\">污染水</link>。\n"
 "\n"
 "全宇宙都知道帕库鱼超好吃。"
 
@@ -30314,15 +31212,15 @@ msgid ""
 "One day it will grow into an adult Puft morph, the <link=\"PUFTBLEACHSTONE"
 "\">Squeaky Puft</link>."
 msgstr ""
-"疲惫不堪的小净菌飞鱼。\n"
+"疲惫不堪的小洁净飞鱼。\n"
 "\n"
-"总有一天它会长成成年喷浮飞鱼变种，变成<link=\"PUFTBLEACHSTONE\">净菌飞鱼</"
+"总有一天它会长成成年喷浮飞鱼变种，变成<link=\"PUFTBLEACHSTONE\">洁净飞鱼</"
 "link>。"
 
 #. STRINGS.CREATURES.SPECIES.PUFT.VARIANT_BLEACHSTONE.BABY.NAME
 msgctxt "STRINGS.CREATURES.SPECIES.PUFT.VARIANT_BLEACHSTONE.BABY.NAME"
 msgid "<link=\"PUFTBLEACHSTONE\">Squeaky Puftlet</link>"
-msgstr "<link=\"PUFTBLEACHSTONE\">小净菌飞鱼</link>"
+msgstr "<link=\"PUFTBLEACHSTONE\">小洁净飞鱼</link>"
 
 #. STRINGS.CREATURES.SPECIES.PUFT.VARIANT_BLEACHSTONE.DESC
 msgctxt "STRINGS.CREATURES.SPECIES.PUFT.VARIANT_BLEACHSTONE.DESC"
@@ -30330,18 +31228,18 @@ msgid ""
 "Squeaky Pufts are non-aggressive critters that excrete lumps of <link="
 "\"BLEACHSTONE\">Bleachstone</link> with each breath."
 msgstr ""
-"净菌飞鱼是没有侵略性的小动物，它每一次呼吸都会排出<link=\"BLEACHSTONE\">漂白"
+"洁净飞鱼是没有侵略性的小动物，它每一次呼吸都会排出<link=\"BLEACHSTONE\">漂白"
 "石</link>。"
 
 #. STRINGS.CREATURES.SPECIES.PUFT.VARIANT_BLEACHSTONE.EGG_NAME
 msgctxt "STRINGS.CREATURES.SPECIES.PUFT.VARIANT_BLEACHSTONE.EGG_NAME"
 msgid "<link=\"PUFTBLEACHSTONE\">Squeaky Puftlet Egg</link>"
-msgstr "<link=\"PUFTBLEACHSTONE\">净菌飞鱼蛋</link>"
+msgstr "<link=\"PUFTBLEACHSTONE\">洁净飞鱼蛋</link>"
 
 #. STRINGS.CREATURES.SPECIES.PUFT.VARIANT_BLEACHSTONE.NAME
 msgctxt "STRINGS.CREATURES.SPECIES.PUFT.VARIANT_BLEACHSTONE.NAME"
 msgid "<link=\"PUFTBLEACHSTONE\">Squeaky Puft</link>"
-msgstr "<link=\"PUFTBLEACHSTONE\">净菌飞鱼</link>"
+msgstr "<link=\"PUFTBLEACHSTONE\">洁净飞鱼</link>"
 
 #. STRINGS.CREATURES.SPECIES.PUFT.VARIANT_OXYLITE.BABY.DESC
 msgctxt "STRINGS.CREATURES.SPECIES.PUFT.VARIANT_OXYLITE.BABY.DESC"
@@ -30782,7 +31680,7 @@ msgid ""
 "\n"
 "Digging up Buried Objects may uncover a Pincha Pepper Seed."
 msgstr ""
-"<link=\"SPICEVINE\">火椒</link>的<link=\"PLANTS\">种子</link>。\n"
+"<link=\"SPICEVINE\">火椒藤</link>的<link=\"PLANTS\">种子</link>。\n"
 "\n"
 "挖掘掩埋物可能会发现火椒种子。"
 
@@ -30910,13 +31808,13 @@ msgid ""
 "Pincha Pepperplants produce flavorful <link=\"SPICENUT\">Pincha Peppernut</"
 "link> for spicing <link=\"FOOD\">Food</link>."
 msgstr ""
-"火椒产出有香味的<link=\"SPICENUT\">火椒</link>果实，可用作<link=\"FOOD\">食物"
+"火椒藤产出有香味的<link=\"SPICENUT\">火椒粒</link>，可用作<link=\"FOOD\">食物"
 "</link>香料。"
 
 #. STRINGS.CREATURES.SPECIES.SPICE_VINE.DOMESTICATEDDESC
 msgctxt "STRINGS.CREATURES.SPECIES.SPICE_VINE.DOMESTICATEDDESC"
 msgid "This plant produces <link=\"SPICENUT\">Pincha Peppernut</link> spices."
-msgstr "这种植物可产出<link=\"SPICENUT\">火椒</link>香料。"
+msgstr "这种植物可产出<link=\"SPICENUT\">火椒粒</link>香料。"
 
 #. STRINGS.CREATURES.SPECIES.SPICE_VINE.NAME
 msgctxt "STRINGS.CREATURES.SPECIES.SPICE_VINE.NAME"
@@ -30942,14 +31840,15 @@ msgstr "<link=\"SQUIRREL\">小树鼠</link>"
 #. STRINGS.CREATURES.SPECIES.SQUIRREL.DESC
 msgctxt "STRINGS.CREATURES.SPECIES.SQUIRREL.DESC"
 msgid ""
-"Pips are pesky, nonhostile critters that subsist on the branches of <link="
-"\"FORESTTREE\">Arbor Trees</link>.\n"
+"Pips are pesky, nonhostile critters that subsist on <link=\"BASICFABRICPLANT"
+"\">Thimble Reeds</link> and <link=\"FORESTTREE\">Arbor Tree</link> "
+"branches.\n"
 "\n"
 "They are known to bury <link=\"PLANTS\">Seeds</link> in the ground whenever "
 "they can find a suitable area with enough space."
 msgstr ""
-"树鼠是令人讨厌但没有敌意的生物，以<link=\"FORESTTREE\">乔木树</link>的枝杈为"
-"生。\n"
+"树鼠是令人讨厌但没有敌意的生物，以<link=\"BASICFABRICPLANT\">顶针芦苇</link>"
+"和<link=\"FORESTTREE\">乔木树</link>的枝杈为食。\n"
 "\n"
 "众所周知，它们一旦找到足够大的合适区域，就会把<link=\"PLANTS\">种子</link>种"
 "到地上。"
@@ -30963,6 +31862,46 @@ msgstr "<link=\"SQUIRREL\">树鼠蛋</link>"
 msgctxt "STRINGS.CREATURES.SPECIES.SQUIRREL.NAME"
 msgid "<link=\"SQUIRREL\">Pip</link>"
 msgstr "<link=\"SQUIRREL\">树鼠</link>"
+
+#. STRINGS.CREATURES.SPECIES.SQUIRREL.VARIANT_HUG.BABY.DESC
+msgctxt "STRINGS.CREATURES.SPECIES.SQUIRREL.VARIANT_HUG.BABY.DESC"
+msgid ""
+"A fuzzy little Cuddle Pipsqueak.\n"
+"\n"
+"In time it will mature into a fully grown <link=\"SQUIRREL\">Cuddle Pip</"
+"link>."
+msgstr ""
+"毛茸茸的绒毛小树鼠。\n"
+"\n"
+"它会逐渐成熟，长成<link=\"SQUIRREL\">毛绒树鼠</link>成年体。"
+
+#. STRINGS.CREATURES.SPECIES.SQUIRREL.VARIANT_HUG.BABY.NAME
+msgctxt "STRINGS.CREATURES.SPECIES.SQUIRREL.VARIANT_HUG.BABY.NAME"
+msgid "<link=\"SQUIRREL\">Cuddle Pipsqueak</link>"
+msgstr "<link=\"SQUIRREL\">绒毛小树鼠</link>"
+
+#. STRINGS.CREATURES.SPECIES.SQUIRREL.VARIANT_HUG.DESC
+msgctxt "STRINGS.CREATURES.SPECIES.SQUIRREL.VARIANT_HUG.DESC"
+msgid ""
+"Cuddle Pips are fluffy, affectionate critters who exhibit a strong snuggling "
+"instinct towards all types of eggs.\n"
+"\n"
+"This is temporarily amplified when they are hugged by a passing Duplicant."
+msgstr ""
+"毛绒树鼠是毛茸茸的，充满关爱的小动物，对于所有种类的蛋都会展现强烈的拥抱本"
+"能。\n"
+"\n"
+"当被经过的复制人拥抱时，它会暂时增强情感。"
+
+#. STRINGS.CREATURES.SPECIES.SQUIRREL.VARIANT_HUG.EGG_NAME
+msgctxt "STRINGS.CREATURES.SPECIES.SQUIRREL.VARIANT_HUG.EGG_NAME"
+msgid "<link=\"SQUIRREL\">Cuddle Pip Egg</link>"
+msgstr "<link=\"SQUIRREL\">毛绒树鼠蛋</link>"
+
+#. STRINGS.CREATURES.SPECIES.SQUIRREL.VARIANT_HUG.NAME
+msgctxt "STRINGS.CREATURES.SPECIES.SQUIRREL.VARIANT_HUG.NAME"
+msgid "<link=\"SQUIRREL\">Cuddle Pip</link>"
+msgstr "<link=\"SQUIRREL\">毛绒树鼠</link>"
 
 #. STRINGS.CREATURES.SPECIES.STATERPILLAR.BABY.DESC
 msgctxt "STRINGS.CREATURES.SPECIES.STATERPILLAR.BABY.DESC"
@@ -31072,14 +32011,18 @@ msgstr "<link=\"SWAMPHARVESTPLANT\">沼浆笼</link>"
 #. STRINGS.CREATURES.SPECIES.SWAMPLILY.DESC
 msgctxt "STRINGS.CREATURES.SPECIES.SWAMPLILY.DESC"
 msgid ""
-"Balm Lilies produce Balm Lily Flower, a lovely bloom with medicinal "
-"properties."
-msgstr "芳香百合产出芳香百合花，一种具有药用性质的可爱花朵。"
+"Balm Lilies produce <link=\"SWAMPLILYFLOWER\">Balm Lily Flower</link>, a "
+"lovely bloom with medicinal properties."
+msgstr ""
+"芳香百合产出<link=\"SWAMPLILYFLOWER\">芳香百合花</link>，一种具有药用性质的美"
+"丽花朵。"
 
 #. STRINGS.CREATURES.SPECIES.SWAMPLILY.DOMESTICATEDDESC
 msgctxt "STRINGS.CREATURES.SPECIES.SWAMPLILY.DOMESTICATEDDESC"
-msgid "This plant produces medicinal Balm Lily Flower."
-msgstr "这种植物可产出芳香百合花。"
+msgid ""
+"This plant produces medicinal <link=\"SWAMPLILYFLOWER\">Balm Lily Flower</"
+"link>."
+msgstr "这种植物可产出药用的<link=\"SWAMPFRUIT\">芳香百合花</link>。"
 
 #. STRINGS.CREATURES.SPECIES.SWAMPLILY.NAME
 msgctxt "STRINGS.CREATURES.SPECIES.SWAMPLILY.NAME"
@@ -31239,6 +32182,18 @@ msgstr ""
 "甚至可能在精神方面为我的殖民地带来好处\n"
 "\n"
 "这只小动物已驯化<b>{0}</b>"
+
+#. STRINGS.CREATURES.STATS.ELEMENTGROWTH.NAME
+msgctxt "STRINGS.CREATURES.STATS.ELEMENTGROWTH.NAME"
+msgid "Quill Growth"
+msgstr "羽刺生长"
+
+#. STRINGS.CREATURES.STATS.ELEMENTGROWTH.TOOLTIP
+msgctxt "STRINGS.CREATURES.STATS.ELEMENTGROWTH.TOOLTIP"
+msgid ""
+"The amount of time required for this critter to regrow its <style=\"KKeyword"
+"\">Tonic Root</style>"
+msgstr "这只小动物重新长出<style=\"KKeyword\">滋补根</style>所需的时间"
 
 #. STRINGS.CREATURES.STATS.FERTILITY.NAME
 msgctxt "STRINGS.CREATURES.STATS.FERTILITY.NAME"
@@ -31510,6 +32465,16 @@ msgctxt "STRINGS.CREATURES.STATUSITEMS.ATTACK_APPROACH.TOOLTIP"
 msgid "This critter is hostile and readying to pounce!"
 msgstr "这只小动物充满敌意，正准备发起突袭！"
 
+#. STRINGS.CREATURES.STATUSITEMS.ATTACKINGENTITY.NAME
+msgctxt "STRINGS.CREATURES.STATUSITEMS.ATTACKINGENTITY.NAME"
+msgid "Attacking"
+msgstr "攻击"
+
+#. STRINGS.CREATURES.STATUSITEMS.ATTACKINGENTITY.TOOLTIP
+msgctxt "STRINGS.CREATURES.STATUSITEMS.ATTACKINGENTITY.TOOLTIP"
+msgid "This critter is violently defending their young"
+msgstr "这只小动物正在凶狠地保护其幼崽"
+
 #. STRINGS.CREATURES.STATUSITEMS.BAGGED.NAME
 msgctxt "STRINGS.CREATURES.STATUSITEMS.BAGGED.NAME"
 msgid "Trussed"
@@ -31601,6 +32566,16 @@ msgstr ""
 "这种农地无法<style=\"KKeyword\">灌溉</style>\n"
 "\n"
 "将所选植物移到可灌溉的农地上，以达到最佳生长状态"
+
+#. STRINGS.CREATURES.STATUSITEMS.CLEANING.NAME
+msgctxt "STRINGS.CREATURES.STATUSITEMS.CLEANING.NAME"
+msgid "Cleaning"
+msgstr "清理"
+
+#. STRINGS.CREATURES.STATUSITEMS.CLEANING.TOOLTIP
+msgctxt "STRINGS.CREATURES.STATUSITEMS.CLEANING.TOOLTIP"
+msgid "This critter is de-germ-ifying its liquid surroundings"
+msgstr "这只小动物正在将其周围液体去病菌化"
 
 #. STRINGS.CREATURES.STATUSITEMS.COLD.NAME
 msgctxt "STRINGS.CREATURES.STATUSITEMS.COLD.NAME"
@@ -31852,6 +32827,89 @@ msgctxt "STRINGS.CREATURES.STATUSITEMS.EATING.TOOLTIP"
 msgid "This critter found something tasty"
 msgstr "这只小动物发现了一些美味的食物"
 
+#. STRINGS.CREATURES.STATUSITEMS.ELEMENT_GROWTH_COMPLETE.NAME
+msgctxt "STRINGS.CREATURES.STATUSITEMS.ELEMENT_GROWTH_COMPLETE.NAME"
+msgid "Picky Eater: All Done"
+msgstr "挑剔进食：成熟"
+
+#. STRINGS.CREATURES.STATUSITEMS.ELEMENT_GROWTH_COMPLETE.TOOLTIP
+msgctxt "STRINGS.CREATURES.STATUSITEMS.ELEMENT_GROWTH_COMPLETE.TOOLTIP"
+msgid ""
+"This critter's <style=\"KKeyword\">Tonic Root</style> quills are fully "
+"grown\n"
+"\n"
+"Preferred food temperature range: {templo}-{temphi}"
+msgstr ""
+"这只小动物的<style=\"KKeyword\">滋补根</style>羽刺已长成熟\n"
+"\n"
+"喜好的食物温度范围：{templo}-{temphi}"
+
+#. STRINGS.CREATURES.STATUSITEMS.ELEMENT_GROWTH_GROWING.NAME
+msgctxt "STRINGS.CREATURES.STATUSITEMS.ELEMENT_GROWTH_GROWING.NAME"
+msgid "Picky Eater: Just Right"
+msgstr "挑剔进食：刚好"
+
+#. STRINGS.CREATURES.STATUSITEMS.ELEMENT_GROWTH_GROWING.PREFERRED_TEMP
+msgctxt "STRINGS.CREATURES.STATUSITEMS.ELEMENT_GROWTH_GROWING.PREFERRED_TEMP"
+msgid "Last eaten: {element} at {temperature}"
+msgstr "最近所吃：{temperature}的{element}"
+
+#. STRINGS.CREATURES.STATUSITEMS.ELEMENT_GROWTH_GROWING.TOOLTIP
+msgctxt "STRINGS.CREATURES.STATUSITEMS.ELEMENT_GROWTH_GROWING.TOOLTIP"
+msgid ""
+"This critter's <style=\"KKeyword\">Quill Growth</style> rate is optimal\n"
+"\n"
+"Preferred food temperature range: {templo}-{temphi}"
+msgstr ""
+"这只小动物的<style=\"KKeyword\">羽刺生长</style>速率是最佳的\n"
+"\n"
+"喜好的食物温度范围：{templo}-{temphi}"
+
+#. STRINGS.CREATURES.STATUSITEMS.ELEMENT_GROWTH_HALTED.NAME
+msgctxt "STRINGS.CREATURES.STATUSITEMS.ELEMENT_GROWTH_HALTED.NAME"
+msgid "Picky Eater: Hungry"
+msgstr "挑剔进食：饥饿"
+
+#. STRINGS.CREATURES.STATUSITEMS.ELEMENT_GROWTH_HALTED.TOOLTIP
+msgctxt "STRINGS.CREATURES.STATUSITEMS.ELEMENT_GROWTH_HALTED.TOOLTIP"
+msgid ""
+"This critter's <style=\"KKeyword\">Quill Growth</style> is halted because "
+"they are hungry\n"
+"\n"
+"Preferred food temperature range: {templo}-{temphi}"
+msgstr ""
+"由于饥饿，这只小动物的<style=\"KKeyword\">羽刺生长</style>停止了\n"
+"\n"
+"喜好的食物温度范围：{templo}-{temphi}"
+
+#. STRINGS.CREATURES.STATUSITEMS.ELEMENT_GROWTH_STUNTED.NAME
+msgctxt "STRINGS.CREATURES.STATUSITEMS.ELEMENT_GROWTH_STUNTED.NAME"
+msgid "Picky Eater: {reason}"
+msgstr "挑剔进食：{reason}"
+
+#. STRINGS.CREATURES.STATUSITEMS.ELEMENT_GROWTH_STUNTED.TOO_COLD
+msgctxt "STRINGS.CREATURES.STATUSITEMS.ELEMENT_GROWTH_STUNTED.TOO_COLD"
+msgid "Too Cold"
+msgstr "过冷"
+
+#. STRINGS.CREATURES.STATUSITEMS.ELEMENT_GROWTH_STUNTED.TOO_HOT
+msgctxt "STRINGS.CREATURES.STATUSITEMS.ELEMENT_GROWTH_STUNTED.TOO_HOT"
+msgid "Too Hot"
+msgstr "过热"
+
+#. STRINGS.CREATURES.STATUSITEMS.ELEMENT_GROWTH_STUNTED.TOOLTIP
+msgctxt "STRINGS.CREATURES.STATUSITEMS.ELEMENT_GROWTH_STUNTED.TOOLTIP"
+msgid ""
+"This critter's <style=\"KKeyword\">Quill Growth</style> rate has slowed "
+"because they ate food outside their preferred temperature range\n"
+"\n"
+"Preferred food temperature range: {templo}-{temphi}"
+msgstr ""
+"由于所吃的食物温度不在喜好的温度范围内，这只小动物的<style=\"KKeyword\">羽刺"
+"生长</style>速率减慢了\n"
+"\n"
+"喜好的食物温度范围：{templo}-{temphi}"
+
 #. STRINGS.CREATURES.STATUSITEMS.EMERGING.NAME
 msgctxt "STRINGS.CREATURES.STATUSITEMS.EMERGING.NAME"
 msgid "Emerging"
@@ -31956,7 +33014,7 @@ msgstr "排出废物"
 
 #. STRINGS.CREATURES.STATUSITEMS.EXPELLING_LIQUID.TOOLTIP
 msgctxt "STRINGS.CREATURES.STATUSITEMS.EXPELLING_LIQUID.TOOLTIP"
-msgid "This critter doing their \"business\""
+msgid "This critter is doing their \"business\""
 msgstr "这只小动物正在\"方便\""
 
 #. STRINGS.CREATURES.STATUSITEMS.EXPELLING_SOLID.NAME
@@ -32176,6 +33234,42 @@ msgid ""
 msgstr ""
 "当环境<style=\"KKeyword\">温度</style>介于<b>{low_temperature}</b>到"
 "<b>{high_temperature}</b>之间时，会恢复生长"
+
+#. STRINGS.CREATURES.STATUSITEMS.HUGEGG.NAME
+msgctxt "STRINGS.CREATURES.STATUSITEMS.HUGEGG.NAME"
+msgid "Hugging Eggs"
+msgstr "拥抱蛋"
+
+#. STRINGS.CREATURES.STATUSITEMS.HUGEGG.TOOLTIP
+msgctxt "STRINGS.CREATURES.STATUSITEMS.HUGEGG.TOOLTIP"
+msgid "This critter is snuggling up to an <style=\"KKeyword\">Egg</style> "
+msgstr "这只小动物正依偎在一枚<style=\"KKeyword\">蛋</style>上"
+
+#. STRINGS.CREATURES.STATUSITEMS.HUGMINION.NAME
+msgctxt "STRINGS.CREATURES.STATUSITEMS.HUGMINION.NAME"
+msgid "Hugging"
+msgstr "拥抱"
+
+#. STRINGS.CREATURES.STATUSITEMS.HUGMINION.TOOLTIP
+msgctxt "STRINGS.CREATURES.STATUSITEMS.HUGMINION.TOOLTIP"
+msgid "This critter is happily hugging a Duplicant"
+msgstr "这只小动物正开心地拥抱复制人"
+
+#. STRINGS.CREATURES.STATUSITEMS.HUGMINIONWAITING.NAME
+msgctxt "STRINGS.CREATURES.STATUSITEMS.HUGMINIONWAITING.NAME"
+msgid "Hoping for hugs"
+msgstr "希望得到拥抱"
+
+#. STRINGS.CREATURES.STATUSITEMS.HUGMINIONWAITING.TOOLTIP
+msgctxt "STRINGS.CREATURES.STATUSITEMS.HUGMINIONWAITING.TOOLTIP"
+msgid ""
+"This critter is hoping for a Duplicant to pass by and give it a hug\n"
+"\n"
+"A hug from a Duplicant will prompt it to cuddle more eggs"
+msgstr ""
+"这只小动物希望引起经过的复制人的注意并给他一个拥抱\n"
+"\n"
+"来自复制人的拥抱可以促使它拥抱更多的蛋"
 
 #. STRINGS.CREATURES.STATUSITEMS.HUNGRY.NAME
 msgctxt "STRINGS.CREATURES.STATUSITEMS.HUNGRY.NAME"
@@ -33118,8 +34212,8 @@ msgid ""
 "Maintaining high <style=\"KKeyword\">Morale</style> will allow Duplicants to "
 "learn more <style=\"KKeyword\">Skills</style>."
 msgstr ""
-"装饰士气加成可让复制人从较低的<style=\"KKeyword\">装饰度</style>中获得<style="
-"\"KKeyword\">士气</style>提升。\n"
+"较高的装饰感观加成可让复制人从更低的<style=\"KKeyword\">装饰度</style>中获得"
+"<style=\"KKeyword\">士气</style>提升。\n"
 "\n"
 "保持旺盛的<style=\"KKeyword\">士气</style>就可以让复制人学习更多<style="
 "\"KKeyword\">技能</style>。"
@@ -33127,7 +34221,7 @@ msgstr ""
 #. STRINGS.DUPLICANTS.ATTRIBUTES.DECOREXPECTATION.NAME
 msgctxt "STRINGS.DUPLICANTS.ATTRIBUTES.DECOREXPECTATION.NAME"
 msgid "Decor Morale Bonus"
-msgstr "装饰士气加成"
+msgstr "装饰感观加成"
 
 #. STRINGS.DUPLICANTS.ATTRIBUTES.DECORRADIUS.DESC
 msgctxt "STRINGS.DUPLICANTS.ATTRIBUTES.DECORRADIUS.DESC"
@@ -33226,16 +34320,16 @@ msgid ""
 "Maintaining high <style=\"KKeyword\">Morale</style> will allow Duplicants to "
 "learn more <style=\"KKeyword\">Skills</style>."
 msgstr ""
-"食物士气加成可让复制人从较低品质的<style=\"KKeyword\">食物</style>中获得"
-"<style=\"KKeyword\">士气</style>提升。\n"
+"较高的食物感观加成可让复制人从更低品质的<style=\"KKeyword\">食物</style>中获"
+"得<style=\"KKeyword\">士气</style>提升。\n"
 "\n"
-"旺盛的<style=\"KKeyword\">士气</style>有可以让复制人学习更多<style=\"KKeyword"
-"\">技能</style>。"
+"保持旺盛的<style=\"KKeyword\">士气</style>就可以让复制人学习更多<style="
+"\"KKeyword\">技能</style>。"
 
 #. STRINGS.DUPLICANTS.ATTRIBUTES.FOODEXPECTATION.NAME
 msgctxt "STRINGS.DUPLICANTS.ATTRIBUTES.FOODEXPECTATION.NAME"
 msgid "Food Morale Bonus"
-msgstr "食物士气加成"
+msgstr "食物感观加成"
 
 #. STRINGS.DUPLICANTS.ATTRIBUTES.FUELRANGEPERKILOGRAM.NAME
 msgctxt "STRINGS.DUPLICANTS.ATTRIBUTES.FUELRANGEPERKILOGRAM.NAME"
@@ -33308,16 +34402,6 @@ msgstr "{0}（少量增强）"
 msgctxt "STRINGS.DUPLICANTS.ATTRIBUTES.GERMRESISTANCE.NAME"
 msgid "Germ Resistance"
 msgstr "病菌抗性"
-
-#. STRINGS.DUPLICANTS.ATTRIBUTES.HAPPINESS.DESC
-msgctxt "STRINGS.DUPLICANTS.ATTRIBUTES.HAPPINESS.DESC"
-msgid ""
-msgstr ""
-
-#. STRINGS.DUPLICANTS.ATTRIBUTES.HAPPINESS.NAME
-msgctxt "STRINGS.DUPLICANTS.ATTRIBUTES.HAPPINESS.NAME"
-msgid "Happiness"
-msgstr "幸福度"
 
 #. STRINGS.DUPLICANTS.ATTRIBUTES.HAPPINESSDELTA.DESC
 msgctxt "STRINGS.DUPLICANTS.ATTRIBUTES.HAPPINESSDELTA.DESC"
@@ -33688,6 +34772,11 @@ msgctxt "STRINGS.DUPLICANTS.ATTRIBUTES.RADIATIONRESISTANCE.NAME"
 msgid "Radiation Resistance"
 msgstr "辐射抗性"
 
+#. STRINGS.DUPLICANTS.ATTRIBUTES.RANCHING.CAPTURABLESPEED
+msgctxt "STRINGS.DUPLICANTS.ATTRIBUTES.RANCHING.CAPTURABLESPEED"
+msgid "{0} Wrangling Speed"
+msgstr "捕捉速度{0}"
+
 #. STRINGS.DUPLICANTS.ATTRIBUTES.RANCHING.DESC
 msgctxt "STRINGS.DUPLICANTS.ATTRIBUTES.RANCHING.DESC"
 msgid ""
@@ -33703,7 +34792,7 @@ msgstr "照料效果持续时间{0}"
 #. STRINGS.DUPLICANTS.ATTRIBUTES.RANCHING.NAME
 msgctxt "STRINGS.DUPLICANTS.ATTRIBUTES.RANCHING.NAME"
 msgid "Husbandry"
-msgstr "畜牧"
+msgstr "畜牧 "
 
 #. STRINGS.DUPLICANTS.ATTRIBUTES.ROCKETBURDEN.NAME
 msgctxt "STRINGS.DUPLICANTS.ATTRIBUTES.ROCKETBURDEN.NAME"
@@ -34222,6 +35311,38 @@ msgctxt "STRINGS.DUPLICANTS.CHOREGROUPS.TOGGLE.NAME"
 msgid "Toggling"
 msgstr "切换"
 
+#. STRINGS.DUPLICANTS.CHORES.ANALYZEARTIFACT.NAME
+msgctxt "STRINGS.DUPLICANTS.CHORES.ANALYZEARTIFACT.NAME"
+msgid "Artifact Analysis"
+msgstr "工艺品分析"
+
+#. STRINGS.DUPLICANTS.CHORES.ANALYZEARTIFACT.STATUS
+msgctxt "STRINGS.DUPLICANTS.CHORES.ANALYZEARTIFACT.STATUS"
+msgid "Going to analyze artifacts"
+msgstr "正在前去分析工艺品"
+
+#. STRINGS.DUPLICANTS.CHORES.ANALYZEARTIFACT.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.CHORES.ANALYZEARTIFACT.TOOLTIP"
+msgid "This Duplicant is analyzing <style=\"KKeyword\">Artifacts</style>"
+msgstr "这名复制人正在分析<style=\"KKeyword\">工艺品</style>"
+
+#. STRINGS.DUPLICANTS.CHORES.ANALYZESEED.NAME
+msgctxt "STRINGS.DUPLICANTS.CHORES.ANALYZESEED.NAME"
+msgid "Seed Analysis"
+msgstr "种子分析"
+
+#. STRINGS.DUPLICANTS.CHORES.ANALYZESEED.STATUS
+msgctxt "STRINGS.DUPLICANTS.CHORES.ANALYZESEED.STATUS"
+msgid "Going to analyze seeds"
+msgstr "正在前去分析种子"
+
+#. STRINGS.DUPLICANTS.CHORES.ANALYZESEED.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.CHORES.ANALYZESEED.TOOLTIP"
+msgid ""
+"This Duplicant is analyzing <style=\"KKeyword\">Seeds</style> to find "
+"mutations"
+msgstr "这名复制人正在分析<style=\"KKeyword\">种子</style>以寻找变异"
+
 #. STRINGS.DUPLICANTS.CHORES.ART.NAME
 msgctxt "STRINGS.DUPLICANTS.CHORES.ART.NAME"
 msgid "Decorate"
@@ -34266,6 +35387,23 @@ msgstr "正在攻击"
 msgctxt "STRINGS.DUPLICANTS.CHORES.ATTACK.TOOLTIP"
 msgid "Chaaaarge!"
 msgstr "进攻！"
+
+#. STRINGS.DUPLICANTS.CHORES.BANSHEE_WAIL.NAME
+msgctxt "STRINGS.DUPLICANTS.CHORES.BANSHEE_WAIL.NAME"
+msgid "Banshee Wail"
+msgstr "鬼嚎"
+
+#. STRINGS.DUPLICANTS.CHORES.BANSHEE_WAIL.STATUS
+msgctxt "STRINGS.DUPLICANTS.CHORES.BANSHEE_WAIL.STATUS"
+msgid "Wailing"
+msgstr "正在嚎叫"
+
+#. STRINGS.DUPLICANTS.CHORES.BANSHEE_WAIL.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.CHORES.BANSHEE_WAIL.TOOLTIP"
+msgid ""
+"This Duplicant is emitting ear-piercing shrieks to relieve pent-up <style="
+"\"KKeyword\">Stress</style>"
+msgstr "这名复制人正在发出震耳欲聋的尖叫来缓解<style=\"KKeyword\">压力</style>"
 
 #. STRINGS.DUPLICANTS.CHORES.BEINCAPACITATED.NAME
 msgctxt "STRINGS.DUPLICANTS.CHORES.BEINCAPACITATED.NAME"
@@ -35113,6 +36251,21 @@ msgstr "正在康复"
 msgctxt "STRINGS.DUPLICANTS.CHORES.HEAL.TOOLTIP"
 msgid "This Duplicant is taking some time to recover from their wounds"
 msgstr "这名复制人需要花一些时间来使伤口痊愈"
+
+#. STRINGS.DUPLICANTS.CHORES.HUG.NAME
+msgctxt "STRINGS.DUPLICANTS.CHORES.HUG.NAME"
+msgid "Hug"
+msgstr "拥抱"
+
+#. STRINGS.DUPLICANTS.CHORES.HUG.STATUS
+msgctxt "STRINGS.DUPLICANTS.CHORES.HUG.STATUS"
+msgid "Hugging"
+msgstr "正在拥抱"
+
+#. STRINGS.DUPLICANTS.CHORES.HUG.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.CHORES.HUG.TOOLTIP"
+msgid "This Duplicant is enjoying a big warm hug"
+msgstr "这名复制人正享受一次温暖的拥抱"
 
 #. STRINGS.DUPLICANTS.CHORES.ICECOOLEDFAN.NAME
 msgctxt "STRINGS.DUPLICANTS.CHORES.ICECOOLEDFAN.NAME"
@@ -36306,8 +37459,9 @@ msgstr "正在嚎啕大哭"
 #. STRINGS.DUPLICANTS.CHORES.UGLY_CRY.TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.CHORES.UGLY_CRY.TOOLTIP"
 msgid ""
-"This Duplicant is having a healthy cry to alleviate their negative emotions"
-msgstr "这名复制人正在哭泣，这是健康的表现，可以缓解负面情绪"
+"This Duplicant is having a healthy cry to alleviate their <style=\"KKeyword"
+"\">Stress</style>"
+msgstr "这名复制人正在用健康的大喊缓解<style=\"KKeyword\">压力</style>"
 
 #. STRINGS.DUPLICANTS.CHORES.UNEQUIP.NAME
 msgctxt "STRINGS.DUPLICANTS.CHORES.UNEQUIP.NAME"
@@ -36911,6 +38065,15 @@ msgstr ""
 "------------------\n"
 "<b>{2}</b>到<b>{3}</b>的温度范围有利于它们的繁殖"
 
+#. STRINGS.DUPLICANTS.DISEASES.FOODPOISONING.DESC
+msgctxt "STRINGS.DUPLICANTS.DISEASES.FOODPOISONING.DESC"
+msgid ""
+"Food and drinks tainted with Food Poisoning germs are unsafe to consume, as "
+"they cause vomiting and other...bodily unpleasantness."
+msgstr ""
+"被食物中毒病菌污染的食物和饮品是不安全的，因为它们会导致呕吐和其他……身体不"
+"适。"
+
 #. STRINGS.DUPLICANTS.DISEASES.FOODPOISONING.LEGEND_HOVERTEXT
 msgctxt "STRINGS.DUPLICANTS.DISEASES.FOODPOISONING.LEGEND_HOVERTEXT"
 msgid "Food Poisoning Germs present\n"
@@ -37193,6 +38356,13 @@ msgctxt "STRINGS.DUPLICANTS.DISEASES.NOTIFICATION_TOOLTIP"
 msgid "{0} contracted {1} from: {2}"
 msgstr "因以下原因，{0}染上了{1}：{2}"
 
+#. STRINGS.DUPLICANTS.DISEASES.POLLENGERMS.DESC
+msgctxt "STRINGS.DUPLICANTS.DISEASES.POLLENGERMS.DESC"
+msgid ""
+"Floral Scent allergens trigger excessive sneezing fits in Duplicants who "
+"possess the Allergies trait."
+msgstr "花香过敏原会引发具有过敏症特质的复制人打喷嚏。"
+
 #. STRINGS.DUPLICANTS.DISEASES.POLLENGERMS.LEGEND_HOVERTEXT
 msgctxt "STRINGS.DUPLICANTS.DISEASES.POLLENGERMS.LEGEND_HOVERTEXT"
 msgid "Floral Scent allergens present\n"
@@ -37227,6 +38397,18 @@ msgctxt "STRINGS.DUPLICANTS.DISEASES.PUTRIDODOUR.NAME"
 msgid "<link=\"PUTRIDODOUR\">Trench Stench</link>"
 msgstr "<link=\"PUTRIDODOUR\">恶臭</link>"
 
+#. STRINGS.DUPLICANTS.DISEASES.RADIATIONPOISONING.DESC
+msgctxt "STRINGS.DUPLICANTS.DISEASES.RADIATIONPOISONING.DESC"
+msgid ""
+"Items tainted with Radioactive Contaminants emit low levels of <link="
+"\"RADIATION\">Radiation</link> that can cause <link=\"RADIATIONSICKNESS"
+"\">Radiation Sickness</link>. They are unaffected by pressure or "
+"temperature, but do degrade over time."
+msgstr ""
+"被放射性污染物污染的物品会释放低等级的<link=\"RADIATION\">辐射</link>，可能会"
+"引发<link=\"RADIATIONSICKNESS\">辐射病</link>。它们不受压力或温度的影响，但会"
+"随时间减少。"
+
 #. STRINGS.DUPLICANTS.DISEASES.RADIATIONPOISONING.LEGEND_HOVERTEXT
 msgctxt "STRINGS.DUPLICANTS.DISEASES.RADIATIONPOISONING.LEGEND_HOVERTEXT"
 msgid "Radioactive contamination present\n"
@@ -37236,6 +38418,18 @@ msgstr "有放射性污染物存在\n"
 msgctxt "STRINGS.DUPLICANTS.DISEASES.RADIATIONPOISONING.NAME"
 msgid "<link=\"RADIATIONPOISONING\">Radioactive Contamination</link>"
 msgstr "<link=\"RADIATIONPOISONING\">放射性污染</link>"
+
+#. STRINGS.DUPLICANTS.DISEASES.RADIATIONSICKNESS.DESC
+msgctxt "STRINGS.DUPLICANTS.DISEASES.RADIATIONSICKNESS.DESC"
+msgid ""
+"Items tainted with Radioactive Contaminants emit low levels of <link="
+"\"RADIATION\">Radiation</link> that can cause <link=\"RADIATIONSICKNESS"
+"\">Radiation Sickness</link>. They are unaffected by pressure or "
+"temperature, but do degrade over time."
+msgstr ""
+"被放射性污染物污染的物品会释放低等级的<link=\"RADIATION\">辐射</link>，可能会"
+"引发<link=\"RADIATIONSICKNESS\">辐射病</link>。它们不受压力或温度的影响，但会"
+"随时间减少。"
 
 #. STRINGS.DUPLICANTS.DISEASES.RADIATIONSICKNESS.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.DISEASES.RADIATIONSICKNESS.DESCRIPTION"
@@ -37288,6 +38482,16 @@ msgstr "严重"
 msgctxt "STRINGS.DUPLICANTS.DISEASES.SEVERITY.MINOR"
 msgid "Minor"
 msgstr "轻微"
+
+#. STRINGS.DUPLICANTS.DISEASES.SLIMELUNG.DESC
+msgctxt "STRINGS.DUPLICANTS.DISEASES.SLIMELUNG.DESC"
+msgid ""
+"Slimelung germs are found in <link=\"SLIMEMOLD\">Slime</link> and <link="
+"\"CONTAMINATEDOXYGEN\">Polluted Oxygen</link>. Inhaling these germs can "
+"cause Duplicants to cough and struggle to breathe."
+msgstr ""
+"粘液肺病病菌常见于<link=\"SLIMEMOLD\">菌泥</link>和<link=\"CONTAMINATEDOXYGEN"
+"\">污染氧</link>中。吸入这些病菌会导致复制人咳嗽，并呼吸困难。"
 
 #. STRINGS.DUPLICANTS.DISEASES.SLIMELUNG.LEGEND_HOVERTEXT
 msgctxt "STRINGS.DUPLICANTS.DISEASES.SLIMELUNG.LEGEND_HOVERTEXT"
@@ -37492,6 +38696,16 @@ msgctxt "STRINGS.DUPLICANTS.DISEASES.ZOMBIESICKNESS.NAME"
 msgid "<link=\"ZOMBIESICKNESS\">Zombie Spores</link>"
 msgstr "<link=\"ZOMBIESICKNESS\">僵尸孢子</link>"
 
+#. STRINGS.DUPLICANTS.DISEASES.ZOMBIESPORES.DESC
+msgctxt "STRINGS.DUPLICANTS.DISEASES.ZOMBIESPORES.DESC"
+msgid ""
+"Zombie Spores are a parasitic brain fungus released by <link=\"EVILFLOWER"
+"\">Sporechids</link>. Duplicants who touch or inhale the spores risk "
+"becoming infected and temporarily losing motor control."
+msgstr ""
+"僵尸孢子是由<link=\"EVILFLOWER\">孢子兰</link>释放的一种寄生性脑真菌。接触或"
+"吸入孢子的复制人有感染的风险，并会暂时失去行动控制力。"
+
 #. STRINGS.DUPLICANTS.DISEASES.ZOMBIESPORES.LEGEND_HOVERTEXT
 msgctxt "STRINGS.DUPLICANTS.DISEASES.ZOMBIESPORES.LEGEND_HOVERTEXT"
 msgid "Zombie Spores present\n"
@@ -37613,6 +38827,40 @@ msgstr "没休息好：晃动"
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.BADSLEEPMOVEMENT.TOOLTIP"
 msgid "This Duplicant was woken up when a friend climbed on their ladder bed"
 msgstr "这名复制人因有人爬过他的梯床而被吵醒了"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.BANSHEE_WAILING.NAME
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.BANSHEE_WAILING.NAME"
+msgid "Deafening Shriek"
+msgstr "震耳欲聋的尖叫声"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.BANSHEE_WAILING.NOTIFICATION_NAME
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.BANSHEE_WAILING.NOTIFICATION_NAME"
+msgid "Banshee Wailing"
+msgstr "鬼嚎"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.BANSHEE_WAILING.NOTIFICATION_TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.BANSHEE_WAILING.NOTIFICATION_TOOLTIP"
+msgid ""
+"These Duplicants became so <link=\"STRESS\">Stressed</link> they began "
+"wailing:"
+msgstr "这些复制人<link=\"STRESS\">压力</link>太大了，并且开始嚎叫："
+
+#. STRINGS.DUPLICANTS.MODIFIERS.BANSHEE_WAILING.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.BANSHEE_WAILING.TOOLTIP"
+msgid ""
+"This Duplicant is wailing at the top of their lungs as a result of <style="
+"\"KKeyword\">Stress</style>"
+msgstr "这名复制人<style=\"KKeyword\">压力</style>太大，大声嚎叫到气尽"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.BANSHEE_WAILING_RECOVERY.NAME
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.BANSHEE_WAILING_RECOVERY.NAME"
+msgid "Guzzling Air"
+msgstr "猛吸空气"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.BANSHEE_WAILING_RECOVERY.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.BANSHEE_WAILING_RECOVERY.TOOLTIP"
+msgid "This Duplicant needs a little extra oxygen to catch their breath"
+msgstr "这名复制人需要一些额外的氧气才能喘得过气"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.BARRACKSSTAMINA.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.BARRACKSSTAMINA.NAME"
@@ -38716,6 +39964,22 @@ msgstr ""
 "\n"
 "这名复制人感到超级有动力！"
 
+#. STRINGS.DUPLICANTS.MODIFIERS.HEARDJOYSINGER.NAME
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.HEARDJOYSINGER.NAME"
+msgid "Serenaded"
+msgstr "听到轻曲"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.HEARDJOYSINGER.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.HEARDJOYSINGER.TOOLTIP"
+msgid ""
+"A Yodeler's singing thrilled this Duplicant\n"
+"\n"
+"This Duplicant works at a higher tempo now!"
+msgstr ""
+"一名哼唱者的歌声让这名复制人非常愉快\n"
+"\n"
+"这名复制人现在的工作节奏更快了！"
+
 #. STRINGS.DUPLICANTS.MODIFIERS.HISTAMINESUPPRESSION.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.HISTAMINESUPPRESSION.NAME"
 msgid "Antihistamines"
@@ -38745,6 +40009,29 @@ msgstr "炎热"
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.HOT.TOOLTIP"
 msgid "This Duplicant is uncomfortably warm"
 msgstr "这名复制人热得难受"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.HOTSTUFF.CAUSE
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.HOTSTUFF.CAUSE"
+msgid "Obtained by eating a very spicy meal"
+msgstr "因吃了非常辛辣的一餐而获得"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.HOTSTUFF.DESCRIPTION
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.HOTSTUFF.DESCRIPTION"
+msgid "Duplicants find this spicy meal quite invigorating"
+msgstr "复制人觉得这种辛辣的菜肴很提神"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.HOTSTUFF.NAME
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.HOTSTUFF.NAME"
+msgid "Hot Stuff"
+msgstr "热辣菜肴"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.HOTSTUFF.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.HOTSTUFF.TOOLTIP"
+msgid ""
+"This Duplicant had an extremely spicy meal and is both exhilarated and a "
+"little <style=\"KKeyword\">Stressed</style>"
+msgstr ""
+"这名复制人吃了超辣的一餐，既兴奋，又有一点<style=\"KKeyword\">压力</style>"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.HOTTUB.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.HOTTUB.NAME"
@@ -38777,6 +40064,22 @@ msgstr ""
 "这名复制人正在热水浴缸中放松\n"
 "\n"
 "看起来真的很放松"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.HUGGED.NAME
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.HUGGED.NAME"
+msgid "Hugged"
+msgstr "被拥抱"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.HUGGED.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.HUGGED.TOOLTIP"
+msgid ""
+"This Duplicant recently received a hug from a friendly critter\n"
+"\n"
+"It was so fluffy!"
+msgstr ""
+"这名复制人最近被一只友善的小动物拥抱了\n"
+"\n"
+"太毛茸茸了！"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.HUNGRY.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.HUNGRY.NAME"
@@ -38814,6 +40117,16 @@ msgstr "这名复制人萌发了一个独特的想法！"
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.INTRAVENOUS_NUTRITION.NAME"
 msgid "Intravenous Feeding"
 msgstr "静脉注射"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.ISJOYSINGER.NAME
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ISJOYSINGER.NAME"
+msgid "Yodeling"
+msgstr "哼曲"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.ISJOYSINGER.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ISJOYSINGER.TOOLTIP"
+msgid "This Duplicant is currently Yodeling!"
+msgstr "这名复制人目前正在哼曲！"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.ISSPARKLESTREAKER.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.ISSPARKLESTREAKER.NAME"
@@ -39249,8 +40562,24 @@ msgstr "玩电子游戏"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.PLAYEDARCADE.TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.PLAYEDARCADE.TOOLTIP"
-msgid "This Duplicant recently got to play some fun video games!"
-msgstr "这名复制人最近玩了一些好玩的视频游戏！"
+msgid "This Duplicant recently played video games and is feeling like a champ"
+msgstr "这名复制人最近玩了电子游戏，感觉像冠军一样"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.PLAYEDSINGLEPLAYERARCADE.NAME
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.PLAYEDSINGLEPLAYERARCADE.NAME"
+msgid "Played Single-Player Video Games"
+msgstr "玩单人电子游戏"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.PLAYEDSINGLEPLAYERARCADE.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.PLAYEDSINGLEPLAYERARCADE.TOOLTIP"
+msgid ""
+"This Duplicant recently played fun single-player video games\n"
+"\n"
+"Score!"
+msgstr ""
+"这名复制人最近玩了一些好玩的单人电子游戏\n"
+"\n"
+"高分！"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.POPPEDEARDRUMS.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.POPPEDEARDRUMS.NAME"
@@ -39635,7 +40964,7 @@ msgstr "侦察者正在<link=\"SCOUTMODULE\">侦察者舱</link>中充能"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.SEAFOODRADIATIONRESISTANCE.CAUSE
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.SEAFOODRADIATIONRESISTANCE.CAUSE"
-msgid "Obtained by eating seafoods like fish or lettuce"
+msgid "Obtained by eating sea-grown foods like fish or lettuce"
 msgstr "通过吃海产食品，比如鱼或者海生菜，而获得"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.SEAFOODRADIATIONRESISTANCE.DESCRIPTION
@@ -39645,14 +40974,14 @@ msgstr "吃这种食物能提高<style=\"KKeyword\">辐射</style>抗性"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.SEAFOODRADIATIONRESISTANCE.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.SEAFOODRADIATIONRESISTANCE.NAME"
-msgid "Radiation Resistant: Seafood"
+msgid "Radiation Resistant: Aquatic Diet"
 msgstr "辐射抗性：海产食品"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.SEAFOODRADIATIONRESISTANCE.TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.SEAFOODRADIATIONRESISTANCE.TOOLTIP"
 msgid ""
-"This Duplicant ate seafood and is now more <style=\"KKeyword\">Radiation</"
-"style> resistant"
+"This Duplicant ate sea-grown foods, which boost <style=\"KKeyword"
+"\">Radiation</style> resistance"
 msgstr ""
 "这名复制人吃了海产食品，现在有更高的<style=\"KKeyword\">辐射</style>抗性"
 
@@ -39677,6 +41006,22 @@ msgstr "洗浴"
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.SHOWERED.TOOLTIP"
 msgid "This Duplicant recently had a shower and feels squeaky clean!"
 msgstr "这名复制人最近洗了个澡，感觉很干净！"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.SINGLEPLAYERARCADEPLAYING.NAME
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.SINGLEPLAYERARCADEPLAYING.NAME"
+msgid "Gaming"
+msgstr "游戏"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.SINGLEPLAYERARCADEPLAYING.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.SINGLEPLAYERARCADEPLAYING.TOOLTIP"
+msgid ""
+"This Duplicant is playing a video game\n"
+"\n"
+"It looks like fun!"
+msgstr ""
+"这名复制人正在玩电子游戏\n"
+"\n"
+"看起来很好玩！"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.SKILLLEVEL.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.SKILLLEVEL.NAME"
@@ -40054,9 +41399,9 @@ msgstr "受迫"
 #. STRINGS.DUPLICANTS.MODIFIERS.THRIVER.TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.THRIVER.TOOLTIP"
 msgid ""
-"This Duplicant is <style=\"KKeyword\">Stressed<style=\"KKeyword\"> and has "
-"kicked into hyperdrive"
-msgstr "这些复制人<style=\"KKeyword\">压力</style>很大，已进入\"超效率\"状态"
+"This Duplicant is <style=\"KKeyword\">Stressed</style> and has kicked into "
+"hyperdrive"
+msgstr "这名复制人<style=\"KKeyword\">压力</style>很大，已进入\"超效率\"状态"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.TIME_REMAINING
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.TIME_REMAINING"
@@ -40225,6 +41570,18 @@ msgctxt "STRINGS.DUPLICANTS.MODIFIERS.VOMITING.TOOLTIP"
 msgid "Better out than in, as they say"
 msgstr "就像他们说的那样，吐了就好了"
 
+#. STRINGS.DUPLICANTS.MODIFIERS.WAILEDAT.NAME
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.WAILEDAT.NAME"
+msgid "Disturbed by Wailing"
+msgstr "被嚎叫打扰"
+
+#. STRINGS.DUPLICANTS.MODIFIERS.WAILEDAT.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.MODIFIERS.WAILEDAT.TOOLTIP"
+msgid ""
+"This Duplicant is feeling <style=\"KKeyword\">Stressed</style> by someone's "
+"Banshee Wail"
+msgstr "这名复制人因为某人的嚎叫而感到<style=\"KKeyword\">压力</style>"
+
 #. STRINGS.DUPLICANTS.MODIFIERS.WARMAIR.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.WARMAIR.NAME"
 msgid "Warm Air"
@@ -40243,7 +41600,7 @@ msgstr "这名复制人正试着让身体暖和一点"
 #. STRINGS.DUPLICANTS.MODIFIERS.WASATTACKED.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.WASATTACKED.NAME"
 msgid "Recently assailed"
-msgstr "受到攻击"
+msgstr "最近遭到袭击"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.WASATTACKED.TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.WASATTACKED.TOOLTIP"
@@ -40278,7 +41635,7 @@ msgstr "这名复制人最近踩到<style=\"KKeyword\">液体</style>了"
 #. STRINGS.DUPLICANTS.MODIFIERS.WORKENCOURAGED.NAME
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.WORKENCOURAGED.NAME"
 msgid "Appreciated"
-msgstr "受到赞赏"
+msgstr "被赞赏"
 
 #. STRINGS.DUPLICANTS.MODIFIERS.WORKENCOURAGED.TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.MODIFIERS.WORKENCOURAGED.TOOLTIP"
@@ -40545,6 +41902,16 @@ msgstr "{0}喜欢在空闲时间写一些忧郁哀怨的诗。"
 msgctxt "STRINGS.DUPLICANTS.PERSONALITIES.ADA.NAME"
 msgid "Ada"
 msgstr "艾达"
+
+#. STRINGS.DUPLICANTS.PERSONALITIES.AMARI.DESC
+msgctxt "STRINGS.DUPLICANTS.PERSONALITIES.AMARI.DESC"
+msgid "{0}s likes to keep the peace. Ironically, they're a riot at parties."
+msgstr "{0}喜欢保持宁静。讽刺的是，他在派对中十分放荡。"
+
+#. STRINGS.DUPLICANTS.PERSONALITIES.AMARI.NAME
+msgctxt "STRINGS.DUPLICANTS.PERSONALITIES.AMARI.NAME"
+msgid "Amari"
+msgstr "阿玛瑞"
 
 #. STRINGS.DUPLICANTS.PERSONALITIES.ARI.DESC
 msgctxt "STRINGS.DUPLICANTS.PERSONALITIES.ARI.DESC"
@@ -40857,6 +42224,28 @@ msgctxt "STRINGS.DUPLICANTS.PERSONALITIES.OTTO.NAME"
 msgid "Otto"
 msgstr "奥托"
 
+#. STRINGS.DUPLICANTS.PERSONALITIES.PEI.DESC
+msgctxt "STRINGS.DUPLICANTS.PERSONALITIES.PEI.DESC"
+msgid ""
+"Every {0} spends at least half the day pretending that they remember what "
+"they came into this room for."
+msgstr "{0}总是要花上半天时间假装记得到这个房间是来做什么的。"
+
+#. STRINGS.DUPLICANTS.PERSONALITIES.PEI.NAME
+msgctxt "STRINGS.DUPLICANTS.PERSONALITIES.PEI.NAME"
+msgid "Pei"
+msgstr "裴"
+
+#. STRINGS.DUPLICANTS.PERSONALITIES.QUINN.DESC
+msgctxt "STRINGS.DUPLICANTS.PERSONALITIES.QUINN.DESC"
+msgid "This {0}'s favorite genre of music is \"festive power ballad\"."
+msgstr "{0}最喜欢的音乐体裁是\"节日强力谣曲\"。"
+
+#. STRINGS.DUPLICANTS.PERSONALITIES.QUINN.NAME
+msgctxt "STRINGS.DUPLICANTS.PERSONALITIES.QUINN.NAME"
+msgid "Quinn"
+msgstr "奎因"
+
 #. STRINGS.DUPLICANTS.PERSONALITIES.REN.DESC
 msgctxt "STRINGS.DUPLICANTS.PERSONALITIES.REN.DESC"
 msgid ""
@@ -40892,6 +42281,18 @@ msgstr "{0}喜欢问一些刁钻问题，比如：\"在太空中，哪里可以�
 msgctxt "STRINGS.DUPLICANTS.PERSONALITIES.RUBY.NAME"
 msgid "Ruby"
 msgstr "鲁比"
+
+#. STRINGS.DUPLICANTS.PERSONALITIES.STEVE.DESC
+msgctxt "STRINGS.DUPLICANTS.PERSONALITIES.STEVE.DESC"
+msgid ""
+"This {0} is convinced that he has psychic powers. And he knows exactly what "
+"his friends think about that."
+msgstr "{0}确信他有灵力。他知道他的朋友具体在想什么。"
+
+#. STRINGS.DUPLICANTS.PERSONALITIES.STEVE.NAME
+msgctxt "STRINGS.DUPLICANTS.PERSONALITIES.STEVE.NAME"
+msgid "Steve"
+msgstr "史蒂夫"
 
 #. STRINGS.DUPLICANTS.PERSONALITIES.STINKY.DESC
 msgctxt "STRINGS.DUPLICANTS.PERSONALITIES.STINKY.DESC"
@@ -41370,9 +42771,10 @@ msgstr "<link=\"RANCHING2\">小动物放牧 II</link>"
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_RESEARCHER.DESCRIPTION
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_RESEARCHER.DESCRIPTION"
 msgid ""
-"Enables Duplicants to study outer space using the <link=\"TELESCOPE"
+"Enables Duplicants to study outer space using the <link=\"CLUSTERTELESCOPE"
 "\">Telescope</link>"
-msgstr "使复制人能够使用<link=\"TELESCOPE\">望远镜</link>来进一步研究外太空"
+msgstr ""
+"使复制人能够使用<link=\"CLUSTERTELESCOPE\">望远镜</link>来进一步研究外太空"
 
 #. STRINGS.DUPLICANTS.ROLES.SENIOR_RESEARCHER.NAME
 msgctxt "STRINGS.DUPLICANTS.ROLES.SENIOR_RESEARCHER.NAME"
@@ -41700,15 +43102,45 @@ msgctxt "STRINGS.DUPLICANTS.STATS.SUBJECTS.CREATURE"
 msgid "critter"
 msgstr "小动物"
 
+#. STRINGS.DUPLICANTS.STATS.SUBJECTS.CREATURE_PLURAL
+msgctxt "STRINGS.DUPLICANTS.STATS.SUBJECTS.CREATURE_PLURAL"
+msgid "critters"
+msgstr "小动物"
+
+#. STRINGS.DUPLICANTS.STATS.SUBJECTS.CREATURE_POSSESSIVE
+msgctxt "STRINGS.DUPLICANTS.STATS.SUBJECTS.CREATURE_POSSESSIVE"
+msgid "critter's"
+msgstr "小动物的"
+
 #. STRINGS.DUPLICANTS.STATS.SUBJECTS.DUPLICANT
 msgctxt "STRINGS.DUPLICANTS.STATS.SUBJECTS.DUPLICANT"
 msgid "Duplicant"
 msgstr "复制人"
 
+#. STRINGS.DUPLICANTS.STATS.SUBJECTS.DUPLICANT_PLURAL
+msgctxt "STRINGS.DUPLICANTS.STATS.SUBJECTS.DUPLICANT_PLURAL"
+msgid "Duplicants"
+msgstr "复制人"
+
+#. STRINGS.DUPLICANTS.STATS.SUBJECTS.DUPLICANT_POSSESSIVE
+msgctxt "STRINGS.DUPLICANTS.STATS.SUBJECTS.DUPLICANT_POSSESSIVE"
+msgid "Duplicant's"
+msgstr "复制人的"
+
 #. STRINGS.DUPLICANTS.STATS.SUBJECTS.PLANT
 msgctxt "STRINGS.DUPLICANTS.STATS.SUBJECTS.PLANT"
 msgid "plant"
 msgstr "植物"
+
+#. STRINGS.DUPLICANTS.STATS.SUBJECTS.PLANT_PLURAL
+msgctxt "STRINGS.DUPLICANTS.STATS.SUBJECTS.PLANT_PLURAL"
+msgid "plants"
+msgstr "植物"
+
+#. STRINGS.DUPLICANTS.STATS.SUBJECTS.PLANT_POSESSIVE
+msgctxt "STRINGS.DUPLICANTS.STATS.SUBJECTS.PLANT_POSESSIVE"
+msgid "plant's"
+msgstr "植物的"
 
 #. STRINGS.DUPLICANTS.STATS.TEMPERATURE.NAME
 msgctxt "STRINGS.DUPLICANTS.STATS.TEMPERATURE.NAME"
@@ -41745,7 +43177,7 @@ msgstr "分析工艺品"
 
 #. STRINGS.DUPLICANTS.STATUSITEMS.ANALYZINGARTIFACT.TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.ANALYZINGARTIFACT.TOOLTIP"
-msgid "This duplicant is studying an artifact"
+msgid "This Duplicant is studying an artifact"
 msgstr "这名复制人正在研究一件工艺品"
 
 #. STRINGS.DUPLICANTS.STATUSITEMS.ANALYZINGGENES.NAME
@@ -41755,7 +43187,7 @@ msgstr "分析植物基因"
 
 #. STRINGS.DUPLICANTS.STATUSITEMS.ANALYZINGGENES.TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.ANALYZINGGENES.TOOLTIP"
-msgid "This duplicant is peering deep into the genetic code of an odd seed"
+msgid "This Duplicant is peering deep into the genetic code of an odd seed"
 msgstr "这名复制人正在深入观察一个奇怪的种子的遗传密码"
 
 #. STRINGS.DUPLICANTS.STATUSITEMS.ARTING.NAME
@@ -41980,11 +43412,11 @@ msgid ""
 "This Duplicant has encountered {Sickness} Germs and is at risk of dangerous "
 "exposure if contact continues\n"
 "\n"
-"<i>Click to jump to last contact location</i>"
+"<i>\\Click\\ to jump to last contact location</i>"
 msgstr ""
 "这名复制人最近接触到了{Sickness}病菌，如果持续接触将有遭受侵染的风险\n"
 "\n"
-"<i>点击来跳到后一次遭受侵染的位置</i>"
+"<i>\\Click\\以跳到后一次遭受侵染的位置</i>"
 
 #. STRINGS.DUPLICANTS.STATUSITEMS.COOKDELIVERSTATUS.NAME
 msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.COOKDELIVERSTATUS.NAME"
@@ -42276,7 +43708,7 @@ msgid ""
 "    • Germ Resistance: {Dupe}\n"
 "    • {Severity} Exposure: {ExposureLevelBonus}\n"
 "\n"
-"<i>Click to jump to last exposure location</i>"
+"<i>\\Click\\ to jump to last exposure location</i>"
 msgstr ""
 "这名复制人已遭受一定浓度的{Sickness}病菌侵染，并且在下次睡觉醒来的时候有生病"
 "的风险。\n"
@@ -42290,7 +43722,7 @@ msgstr ""
 "    • 病菌抗性：{Dupe}\n"
 "    • 遭受{Severity}侵染：{ExposureLevelBonus}\n"
 "\n"
-"<i>点击来跳到后一次遭受侵染的位置</i>"
+"<i>\\Click\\以跳到后一次遭受侵染的位置</i>"
 
 #. STRINGS.DUPLICANTS.STATUSITEMS.FABRICATEDELIVERSTATUS.NAME
 msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.FABRICATEDELIVERSTATUS.NAME"
@@ -42346,13 +43778,13 @@ msgstr "逃跑！"
 
 #. STRINGS.DUPLICANTS.STATUSITEMS.FLEEING.NOTIFICATION_TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.FLEEING.NOTIFICATION_TOOLTIP"
-msgid "These Duplicants are trying to escape combat:"
-msgstr "这些复制人正在试图逃离战斗："
+msgid "These Duplicants are trying to escape:"
+msgstr "这些复制人正在试图逃离："
 
 #. STRINGS.DUPLICANTS.STATUSITEMS.FLEEING.TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.FLEEING.TOOLTIP"
-msgid "This Duplicant is trying to escape combat!"
-msgstr "这名复制人正在试图逃离战斗！"
+msgid "This Duplicant is trying to escape something scary!"
+msgstr "这名复制人正在试图逃离某些可怕的东西！"
 
 #. STRINGS.DUPLICANTS.STATUSITEMS.FULLBLADDER.NAME
 msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.FULLBLADDER.NAME"
@@ -43060,7 +44492,7 @@ msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.RADIATIONVOMITING.NOTIFICATION_TOOLTIP"
 msgid ""
 "The <b>Mop Tool</b> {Hotkey/Mop} can clean up Duplicant-related \"spills\"\n"
 "------------------\n"
-"Radiation sickness caused these Duplicants to throw up:"
+" Radiation Sickness caused these Duplicants to throw up:"
 msgstr ""
 "可以使用<b>擦拭工具</b> {Hotkey/Mop} 清理复制人造成的\"溢出物\"\n"
 "------------------\n"
@@ -43079,6 +44511,18 @@ msgstr ""
 "------------------\n"
 "复制人造成的\"溢出物\"可以使用<style=\"KKeyword\">擦拭工具</style> {Hotkey/"
 "Mop} 清理"
+
+#. STRINGS.DUPLICANTS.STATUSITEMS.RANCHING.NAME
+msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.RANCHING.NAME"
+msgid "Ranching"
+msgstr "放牧"
+
+#. STRINGS.DUPLICANTS.STATUSITEMS.RANCHING.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.RANCHING.TOOLTIP"
+msgid ""
+"This Duplicant is tending to a <style=\"KKeyword\">Critter</style>'s well-"
+"being"
+msgstr "这名复制人正在照料<style=\"KKeyword\">小动物</style>"
 
 #. STRINGS.DUPLICANTS.STATUSITEMS.RATIONSNOTPERMITTED.NAME
 msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.RATIONSNOTPERMITTED.NAME"
@@ -43522,6 +44966,24 @@ msgstr ""
 "提高这名复制人的<style=\"KKeyword\">士气</style>，否则他们会通过破坏东西来发"
 "泄情绪"
 
+#. STRINGS.DUPLICANTS.STATUSITEMS.STRESS_SIGNAL_BANSHEE.NAME
+msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.STRESS_SIGNAL_BANSHEE.NAME"
+msgid "Suppressed Screams"
+msgstr "被压抑的尖叫"
+
+#. STRINGS.DUPLICANTS.STATUSITEMS.STRESS_SIGNAL_BANSHEE.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.STRESS_SIGNAL_BANSHEE.TOOLTIP"
+msgid ""
+"This Duplicant is fighting the urge to scream\n"
+"------------------\n"
+"Improve this Duplicant's <style=\"KKeyword\">Morale</style> before they "
+"start wailing uncontrollably"
+msgstr ""
+"这名复制人在克服尖叫的冲动\n"
+"------------------\n"
+"提高这名复制人的<style=\"KKeyword\">士气</style>，否则他们会开始无法控制地嚎"
+"叫"
+
 #. STRINGS.DUPLICANTS.STATUSITEMS.STRESS_SIGNAL_BINGE_EAT.NAME
 msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.STRESS_SIGNAL_BINGE_EAT.NAME"
 msgid "Stress Cravings"
@@ -43865,6 +45327,11 @@ msgctxt "STRINGS.DUPLICANTS.THOUGHTS.BREAKBLADDER.TOOLTIP"
 msgid "Washroom Break"
 msgstr "如厕时间"
 
+#. STRINGS.DUPLICANTS.THOUGHTS.CATCHYTUNE.TOOLTIP
+msgctxt "STRINGS.DUPLICANTS.THOUGHTS.CATCHYTUNE.TOOLTIP"
+msgid "WHISTLING"
+msgstr "吹口哨"
+
 #. STRINGS.DUPLICANTS.THOUGHTS.CHATTY.TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.THOUGHTS.CHATTY.TOOLTIP"
 msgid "Greeting"
@@ -44074,6 +45541,17 @@ msgstr "这名复制人在<style=\"KKeyword\">喜悦</style>的时候会分发�
 msgctxt "STRINGS.DUPLICANTS.TRAITS.BALLOONARTIST.NAME"
 msgid "Balloon Artist"
 msgstr "气球艺术家"
+
+#. STRINGS.DUPLICANTS.TRAITS.BANSHEE.DESC
+msgctxt "STRINGS.DUPLICANTS.TRAITS.BANSHEE.DESC"
+msgid ""
+"This Duplicant wails uncontrollably when <style=\"KKeyword\">Stressed</style>"
+msgstr "这名复制人在<style=\"KKeyword\">压力</style>过大时会不受控制地大声嚎叫"
+
+#. STRINGS.DUPLICANTS.TRAITS.BANSHEE.NAME
+msgctxt "STRINGS.DUPLICANTS.TRAITS.BANSHEE.NAME"
+msgid "Banshee"
+msgstr "鬼嚎"
 
 #. STRINGS.DUPLICANTS.TRAITS.BEDSIDEMANNER.DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.BEDSIDEMANNER.DESC"
@@ -45141,9 +46619,10 @@ msgstr ""
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING3.DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING3.DESC"
 msgid ""
-"Enables Duplicants to study outer space using the <link=\"TELESCOPE"
+"Enables Duplicants to study outer space using the <link=\"CLUSTERTELESCOPE"
 "\">Telescope</link>"
-msgstr "使复制人能够使用<link=\"TELESCOPE\">望远镜</link>来进一步研究外太空"
+msgstr ""
+"使复制人能够使用<link=\"CLUSTERTELESCOPE\">望远镜</link>来进一步研究外太空"
 
 #. STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING3.NAME
 msgctxt "STRINGS.DUPLICANTS.TRAITS.GRANTSKILL_RESEARCHING3.NAME"
@@ -45289,6 +46768,18 @@ msgctxt "STRINGS.DUPLICANTS.TRAITS.GREENTHUMB.NAME"
 msgid "Green Thumb"
 msgstr "园艺能手"
 
+#. STRINGS.DUPLICANTS.TRAITS.HAPPYSINGER.DESC
+msgctxt "STRINGS.DUPLICANTS.TRAITS.HAPPYSINGER.DESC"
+msgid ""
+"This Duplicant belts out catchy tunes when they are <style=\"KKeyword"
+"\">Overjoyed</style>"
+msgstr "这名复制人在<style=\"KKeyword\">喜悦</style>的时候会唱出朗朗上口的曲调"
+
+#. STRINGS.DUPLICANTS.TRAITS.HAPPYSINGER.NAME
+msgctxt "STRINGS.DUPLICANTS.TRAITS.HAPPYSINGER.NAME"
+msgid "Yodeler"
+msgstr "轻曲哼唱者"
+
 #. STRINGS.DUPLICANTS.TRAITS.HEMOPHOBIA.DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.HEMOPHOBIA.DESC"
 msgid "This Duplicant is of delicate disposition and cannot tend to the sick"
@@ -45371,9 +46862,10 @@ msgstr "独自时会有属性加成"
 #. STRINGS.DUPLICANTS.TRAITS.LONER.SHORT_DESC_TOOLTIP
 msgctxt "STRINGS.DUPLICANTS.TRAITS.LONER.SHORT_DESC_TOOLTIP"
 msgid ""
-"Only duplicant on a world: <b>+4</b> bonus to all <style=\"KKeyword"
+"Only Duplicant on a world: <b>+4</b> bonus to all <style=\"KKeyword"
 "\">Attributes</style>"
-msgstr "仅该复制人在一个星球上：所有<style=\"KKeyword\">属性</style><b>+4</b>"
+msgstr ""
+"在一个星球上仅有该复制人：所有<style=\"KKeyword\">属性</style><b>+4</b>"
 
 #. STRINGS.DUPLICANTS.TRAITS.MACHINERYDOWN.DESC
 msgctxt "STRINGS.DUPLICANTS.TRAITS.MACHINERYDOWN.DESC"
@@ -45929,7 +47421,7 @@ msgid ""
 msgstr ""
 "(Al) 铝是一种低密度<link=\"REFINEDMETAL\">金属</link>。\n"
 "\n"
-"它有着高导热率，适用于建造<link=\"POWER\">电力</link>系统。"
+"它有着高热导率，适用于建造<link=\"POWER\">电力</link>系统。"
 
 #. STRINGS.ELEMENTS.ALUMINUM.NAME
 msgctxt "STRINGS.ELEMENTS.ALUMINUM.NAME"
@@ -46588,10 +48080,10 @@ msgstr "<link=\"ETHANOLGAS\">气态乙醇</link>"
 msgctxt "STRINGS.ELEMENTS.FALLOUT.DESC"
 msgid ""
 "Nuclear Fallout is a highly toxic gas full of <link=\"RADIATION"
-"\">Radioactive Contaminants</link>. Formed in a <link=\"NUCLEARREACTOR"
-"\">Reactor meltdown</link>."
+"\">Radioactive Contaminants</link>. Condenses into <link=\"NUCLEARWASTE"
+"\">Nuclear Waste</link>."
 msgstr ""
-"充满<link=\"RADIATION\">放射性污染物</link>的剧毒气体。在<link="
+"核尘埃是一种充满<link=\"RADIATION\">放射性污染物</link>的剧毒气体。在<link="
 "\"NUCLEARREACTOR\">反应堆熔毁</link>时形成。"
 
 #. STRINGS.ELEMENTS.FALLOUT.NAME
@@ -46668,7 +48160,7 @@ msgctxt "STRINGS.ELEMENTS.GLASS.DESC"
 msgid ""
 "Glass is a brittle, transparent substance formed from <link=\"SAND\">Sand</"
 "link> fired at high temperatures."
-msgstr "玻璃是一种易碎的透明物质，由<link=\"SAND\">沙子</link>经高温烧制而成。"
+msgstr "玻璃是一种脆性透明物质，由<link=\"SAND\">沙子</link>经高温烧制而成。"
 
 #. STRINGS.ELEMENTS.GLASS.NAME
 msgctxt "STRINGS.ELEMENTS.GLASS.NAME"
@@ -46747,7 +48239,7 @@ msgid ""
 msgstr ""
 "(C) 石墨是碳最稳定的形式。\n"
 "\n"
-"它是一种有用的<b>建筑材料</b>，有着高导热率。"
+"它是一种有用的<b>建筑材料</b>，有着高热导率。"
 
 #. STRINGS.ELEMENTS.GRAPHITE.NAME
 msgctxt "STRINGS.ELEMENTS.GRAPHITE.NAME"
@@ -47260,13 +48752,13 @@ msgid ""
 "\n"
 "Thermal Conductivity: {1} W per degree K difference (Oxygen: 0.024 W)"
 msgstr ""
-"<style=\"KKeyword\">热量</style>在<style=\"KKeyword\">导热率</style>高的材料"
+"<style=\"KKeyword\">热量</style>在<style=\"KKeyword\">热导率</style>高的材料"
 "中传递快速，因此这种材料会散发热量\n"
 "\n"
 "在两个物体之间，传导<style=\"KKeyword\">热量</style>的速率由<style=\"KKeyword"
-"\">导热率</style><i>最低</i>的物体决定\n"
+"\">热导率</style><i>最低</i>的物体决定\n"
 "\n"
-"导热率：每相差1K，热量传递速率相差{1}瓦（氧气：0.024瓦）"
+"热导率：每相差1K，热量传递速率相差{1}瓦（氧气：0.024瓦）"
 
 #. STRINGS.ELEMENTS.MATERIAL_MODIFIERS.TOOLTIP.LOW_SPECIFIC_HEAT_CAPACITY
 msgctxt ""
@@ -47296,13 +48788,13 @@ msgid ""
 "\n"
 "Thermal Conductivity: {1} W per degree K difference (Oxygen: 0.024 W)"
 msgstr ""
-"<style=\"KKeyword\">热量</style>在<style=\"KKeyword\">导热率</style>低的材料"
+"<style=\"KKeyword\">热量</style>在<style=\"KKeyword\">热导率</style>低的材料"
 "中传递缓慢，因此这种材料会保留热量\n"
 "\n"
 "在两个物体之间，传导<style=\"KKeyword\">热量</style>的速率由<style=\"KKeyword"
-"\">导热率</style><i>最低</i>的物体决定\n"
+"\">热导率</style><i>最低</i>的物体决定\n"
 "\n"
-"导热率：每相差1K，热量传递速率相差{1}瓦（氧气：0.024瓦）"
+"热导率：每相差1K，热量传递速率相差{1}瓦（氧气：0.024瓦）"
 
 #. STRINGS.ELEMENTS.MATERIAL_MODIFIERS.TOOLTIP.OVERHEATTEMPERATURE
 msgctxt "STRINGS.ELEMENTS.MATERIAL_MODIFIERS.TOOLTIP.OVERHEATTEMPERATURE"
@@ -47639,10 +49131,12 @@ msgstr "<link=\"NIOBIUMGAS\">气态铌</link>"
 msgctxt "STRINGS.ELEMENTS.NUCLEARWASTE.DESC"
 msgid ""
 "Highly toxic liquid full of <link=\"RADIATION\">Radioactive Contaminants</"
-"link>. Formed in a <link=\"NUCLEARREACTOR\">Reactor meltdown</link>."
+"link> which emit <link=\"RADIATION\">Radiation</link> that can be absorbed "
+"by <link=\"HIGHENERGYPARTICLESPAWNER\">Radbolt Generators</link>."
 msgstr ""
-"充满<link=\"RADIATION\">放射性污染物</link>的剧毒液体。在<link="
-"\"NUCLEARREACTOR\">反应堆熔毁</link>时形成。"
+"充满<link=\"RADIATION\">放射性污染物</link>的剧毒液体，释放的<link="
+"\"RADIATION\">辐射</link>可以被<link=\"HIGHENERGYPARTICLESPAWNER\">辐射粒子发"
+"生器</link>收集。"
 
 #. STRINGS.ELEMENTS.NUCLEARWASTE.NAME
 msgctxt "STRINGS.ELEMENTS.NUCLEARWASTE.NAME"
@@ -47653,7 +49147,7 @@ msgstr "<link=\"NUCLEARWASTE\">核废料</link>"
 msgctxt "STRINGS.ELEMENTS.OBSIDIAN.DESC"
 msgid ""
 "Obsidian is a brittle composite of volcanic <link=\"GLASS\">Glass</link>."
-msgstr "黑曜石是一种易碎的火山<link=\"GLASS\">玻璃</link>复合物。"
+msgstr "黑曜石是一种脆性火山<link=\"GLASS\">玻璃</link>复合物。"
 
 #. STRINGS.ELEMENTS.OBSIDIAN.NAME
 msgctxt "STRINGS.ELEMENTS.OBSIDIAN.NAME"
@@ -48194,11 +49688,9 @@ msgstr "<link=\"SOLIDNAPHTHA\">固态石脑油</link>"
 #. STRINGS.ELEMENTS.SOLIDNUCLEARWASTE.DESC
 msgctxt "STRINGS.ELEMENTS.SOLIDNUCLEARWASTE.DESC"
 msgid ""
-"Highly toxic liquid full of <link=\"RADIATION\">Radioactive Contaminants</"
-"link>. Formed in a <link=\"NUCLEARREACTOR\">Reactor meltdown</link>."
-msgstr ""
-"充满<link=\"RADIATION\">放射性污染物</link>的剧毒液体。在<link="
-"\"NUCLEARREACTOR\">反应堆熔毁</link>时形成。"
+"Highly toxic solid full of <link=\"RADIATION\">Radioactive Contaminants</"
+"link>."
+msgstr "充满<link=\"RADIATION\">放射性污染物</link>的剧毒固体。"
 
 #. STRINGS.ELEMENTS.SOLIDNUCLEARWASTE.NAME
 msgctxt "STRINGS.ELEMENTS.SOLIDNUCLEARWASTE.NAME"
@@ -48535,7 +50027,7 @@ msgid ""
 msgstr ""
 "\n"
 "比热容：{SPECIFIC_HEAT_CAPACITY}\n"
-"导热率：{THERMAL_CONDUCTIVITY}"
+"热导率：{THERMAL_CONDUCTIVITY}"
 
 #. STRINGS.ELEMENTS.TOXICMUD.DESC
 msgctxt "STRINGS.ELEMENTS.TOXICMUD.DESC"
@@ -48884,8 +50376,118 @@ msgstr "<link=\"COOLVEST\">凉爽背心</link>"
 msgctxt "STRINGS.EQUIPMENT.PREFABS.COOL_VEST.RECIPE_DESC"
 msgid ""
 "Protects the wearer from <style=\"heat\">Heat</style> by decreasing "
-"insulation."
-msgstr "通过降低隔热值，使穿戴者免受<style=\"heat\">高温</style>伤害。"
+"insulation"
+msgstr "通过降低隔热值，使穿戴者免受<style=\"heat\">高温</style>伤害"
+
+#. STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.DESC
+msgctxt "STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.DESC"
+msgid "This transforms my Duplicant into a colony-inspiring fashion icon."
+msgstr "这能将我的复制人变成鼓舞殖民地的时尚达人。"
+
+#. STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.EFFECT
+msgctxt "STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.EFFECT"
+msgid "Increases Decor in a small area effect around the wearer."
+msgstr "提高穿戴者身边小范围内的装饰度。"
+
+#. STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.CLUBSHIRT
+msgctxt "STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.CLUBSHIRT"
+msgid "<link=\"CUSTOMCLOTHING\">Purple Polyester</link>"
+msgstr "<link=\"CUSTOMCLOTHING\">紫色涤纶</link>"
+
+#. STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.CUMMERBUND
+msgctxt "STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.CUMMERBUND"
+msgid "<link=\"CUSTOMCLOTHING\">Classic Cummerbund</link>"
+msgstr "<link=\"CUSTOMCLOTHING\">经典腰封礼服</link>"
+
+#. STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.DECOR_02
+msgctxt "STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.DECOR_02"
+msgid "<link=\"CUSTOMCLOTHING\">Snazzier Red Suit</link>"
+msgstr "<link=\"CUSTOMCLOTHING\">新潮红衣</link>"
+
+#. STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.DECOR_03
+msgctxt "STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.DECOR_03"
+msgid "<link=\"CUSTOMCLOTHING\">Snazzier Blue Suit</link>"
+msgstr "<link=\"CUSTOMCLOTHING\">新潮蓝衣</link>"
+
+#. STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.DECOR_04
+msgctxt "STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.DECOR_04"
+msgid "<link=\"CUSTOMCLOTHING\">Snazzier Green Suit</link>"
+msgstr "<link=\"CUSTOMCLOTHING\">新潮绿衣</link>"
+
+#. STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.DECOR_05
+msgctxt "STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.DECOR_05"
+msgid "<link=\"CUSTOMCLOTHING\">Snazzier Violet Suit</link>"
+msgstr "<link=\"CUSTOMCLOTHING\">新潮紫衣</link>"
+
+#. STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.GAUDYSWEATER
+msgctxt "STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.GAUDYSWEATER"
+msgid "<link=\"CUSTOMCLOTHING\">Pompom Knit</link>"
+msgstr "<link=\"CUSTOMCLOTHING\">绒球织衫</link>"
+
+#. STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.LIMONE
+msgctxt "STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.LIMONE"
+msgid "<link=\"CUSTOMCLOTHING\">Citrus Spandex</link>"
+msgstr "<link=\"CUSTOMCLOTHING\">柑橘氨纶</link>"
+
+#. STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.MONDRIAN
+msgctxt "STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.MONDRIAN"
+msgid "<link=\"CUSTOMCLOTHING\">Cubist Knit</link>"
+msgstr "<link=\"CUSTOMCLOTHING\">立体主义织衫</link>"
+
+#. STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.OVERALLS
+msgctxt "STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.OVERALLS"
+msgid "<link=\"CUSTOMCLOTHING\">Spiffy Overalls</link>"
+msgstr "<link=\"CUSTOMCLOTHING\">时尚工装服</link>"
+
+#. STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.PINSTRIPEWAISTCOAT
+msgctxt "STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.PINSTRIPEWAISTCOAT"
+msgid "<link=\"CUSTOMCLOTHING\">Pinstripe Waistcoat</link>"
+msgstr "<link=\"CUSTOMCLOTHING\">细纹背心</link>"
+
+#. STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.SMOKINGJACKET
+msgctxt "STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.SMOKINGJACKET"
+msgid "<link=\"CUSTOMCLOTHING\">Smoking Jacket</link>"
+msgstr "<link=\"CUSTOMCLOTHING\">吸烟夹克</link>"
+
+#. STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.TRIANGLES
+msgctxt "STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.TRIANGLES"
+msgid "<link=\"CUSTOMCLOTHING\">Confetti Suit</link>"
+msgstr "<link=\"CUSTOMCLOTHING\">碎花衬衣</link>"
+
+#. STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.VELOUR01
+msgctxt "STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.VELOUR01"
+msgid "<link=\"CUSTOMCLOTHING\">Midnight Velour</link>"
+msgstr "<link=\"CUSTOMCLOTHING\">午夜绒衣</link>"
+
+#. STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.VELOUR02
+msgctxt "STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.VELOUR02"
+msgid "<link=\"CUSTOMCLOTHING\">Blue Velour</link>"
+msgstr "<link=\"CUSTOMCLOTHING\">蓝色绒衣</link>"
+
+#. STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.VELOUR03
+msgctxt "STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.VELOUR03"
+msgid "<link=\"CUSTOMCLOTHING\">Bubblegum Velour</link>"
+msgstr "<link=\"CUSTOMCLOTHING\">淡粉绒衣</link>"
+
+#. STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.WORKOUT
+msgctxt "STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.FACADES.WORKOUT"
+msgid "<link=\"CUSTOMCLOTHING\">Pink Unitard</link>"
+msgstr "<link=\"CUSTOMCLOTHING\">粉色紧身衣</link>"
+
+#. STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.GENERICNAME
+msgctxt "STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.GENERICNAME"
+msgid "Clothing"
+msgstr "服装"
+
+#. STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.NAME
+msgctxt "STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.NAME"
+msgid "<link=\"CUSTOMCLOTHING\">Primo Garb</link>"
+msgstr "<link=\"CUSTOMCLOTHING\">精致装束</link>"
+
+#. STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.RECIPE_DESC
+msgctxt "STRINGS.EQUIPMENT.PREFABS.CUSTOMCLOTHING.RECIPE_DESC"
+msgid "Increases Decor in a small area effect around the wearer"
+msgstr "提高穿戴者身边小范围内的装饰度"
 
 #. STRINGS.EQUIPMENT.PREFABS.EQUIPPABLEBALLOON.DESC
 msgctxt "STRINGS.EQUIPMENT.PREFABS.EQUIPPABLEBALLOON.DESC"
@@ -48921,11 +50523,11 @@ msgid ""
 "Gives Duplicants a boost in brain function.\n"
 "\n"
 "Supplied by Duplicants with the Balloon Artist <link=\"MORALE\">Overjoyed</"
-"link> response."
+"link> response"
 msgstr ""
-"给予复制人大脑运转的一个加成。\n"
+"给予复制人大脑运转的一个加成\n"
 "\n"
-"由具有气球艺术家<link=\"MORALE\">喜悦</link>反应的复制人提供。"
+"由具有气球艺术家<link=\"MORALE\">喜悦</link>反应的复制人提供"
 
 #. STRINGS.EQUIPMENT.PREFABS.FUNKY_VEST.DESC
 msgctxt "STRINGS.EQUIPMENT.PREFABS.FUNKY_VEST.DESC"
@@ -48934,8 +50536,13 @@ msgstr "这能让我的复制人绽放时尚光彩。"
 
 #. STRINGS.EQUIPMENT.PREFABS.FUNKY_VEST.EFFECT
 msgctxt "STRINGS.EQUIPMENT.PREFABS.FUNKY_VEST.EFFECT"
-msgid "Increases Decor in a small area effect around the wearer."
-msgstr "提高穿戴者身边小范围内的装饰度。"
+msgid ""
+"Increases Decor in a small area effect around the wearer. Can be upgraded to "
+"<link=\"CUSTOMCLOTHING\">Primo Garb</link> at the <link="
+"\"CLOTHINGALTERATIONSTATION\">Clothing Refashionator</link>."
+msgstr ""
+"提高穿戴者身边小范围内的装饰度。可以在<link=\"CLOTHINGALTERATIONSTATION\">时"
+"装翻新器</link>处升级为<link=\"CUSTOMCLOTHING\">精致装束</link>。"
 
 #. STRINGS.EQUIPMENT.PREFABS.FUNKY_VEST.GENERICNAME
 msgctxt "STRINGS.EQUIPMENT.PREFABS.FUNKY_VEST.GENERICNAME"
@@ -48949,8 +50556,13 @@ msgstr "<link=\"FUNKYVEST\">新潮时装</link>"
 
 #. STRINGS.EQUIPMENT.PREFABS.FUNKY_VEST.RECIPE_DESC
 msgctxt "STRINGS.EQUIPMENT.PREFABS.FUNKY_VEST.RECIPE_DESC"
-msgid "Increases Decor in a small area effect around the wearer."
-msgstr "提高穿戴者身边小范围内的装饰度。"
+msgid ""
+"Increases Decor in a small area effect around the wearer. Can be upgraded to "
+"<link=\"CUSTOMCLOTHING\">Primo Garb</link> at the <link="
+"\"CLOTHINGALTERATIONSTATION\">Clothing Refashionator</link>"
+msgstr ""
+"提高穿戴者身边小范围内的装饰度。可以在<link=\"CLOTHINGALTERATIONSTATION\">时"
+"装翻新器</link>处升级为<link=\"CUSTOMCLOTHING\">精致装束</link>"
 
 #. STRINGS.EQUIPMENT.PREFABS.JET_SUIT.DESC
 msgctxt "STRINGS.EQUIPMENT.PREFABS.JET_SUIT.DESC"
@@ -49165,11 +50777,11 @@ msgctxt "STRINGS.EQUIPMENT.PREFABS.OXYGEN_TANK.RECIPE_DESC"
 msgid ""
 "Allows Duplicants to breathe in hazardous environments.\n"
 "\n"
-"Does not work when submerged in <style=\"liquid\">Liquid</style>."
+"Does not work when submerged in <style=\"liquid\">Liquid</style>"
 msgstr ""
-"使复制人能够在危险环境中呼吸。\n"
+"使复制人能够在危险环境中呼吸\n"
 "\n"
-"浸没在<style=\"liquid\">液体</style>中时无法使用。"
+"浸没在<style=\"liquid\">液体</style>中时无法使用"
 
 #. STRINGS.EQUIPMENT.PREFABS.OXYGEN_TANK_UNDERWATER.DESC
 msgctxt "STRINGS.EQUIPMENT.PREFABS.OXYGEN_TANK_UNDERWATER.DESC"
@@ -49204,11 +50816,11 @@ msgid ""
 "Allows Duplicants to breathe while submerged in <style=\"liquid\">Liquid</"
 "style>.\n"
 "\n"
-"Does not work outside of liquid."
+"Does not work outside of liquid"
 msgstr ""
-"使复制人能够在浸没在<style=\"liquid\">液体</style>中时呼吸。\n"
+"使复制人能够在浸没在<style=\"liquid\">液体</style>中时呼吸\n"
 "\n"
-"只能在液体中使用。"
+"只能在液体中使用"
 
 #. STRINGS.EQUIPMENT.PREFABS.TEMPERATURE_SUIT.DESC
 msgctxt "STRINGS.EQUIPMENT.PREFABS.TEMPERATURE_SUIT.DESC"
@@ -49281,8 +50893,8 @@ msgstr "<link=\"WARMVEST\">保暖毛衣</link>"
 msgctxt "STRINGS.EQUIPMENT.PREFABS.WARM_VEST.RECIPE_DESC"
 msgid ""
 "Protects the wearer from <style=\"heat\">Cold</style> by increasing "
-"insulation."
-msgstr "增加保暖效果，让穿戴者在<style=\"heat\">寒冷</style>环境中保持温暖。"
+"insulation"
+msgstr "增加保暖效果，让穿戴者在<style=\"heat\">寒冷</style>环境中保持温暖"
 
 #. STRINGS.GAMEPLAY_EVENTS.BONUS.BONUSALGAE.DESCRIPTION
 msgctxt "STRINGS.GAMEPLAY_EVENTS.BONUS.BONUSALGAE.DESCRIPTION"
@@ -51272,29 +52884,23 @@ msgstr "煎熟的蓬松的蛋黄和蛋清卷在一起。"
 #. STRINGS.ITEMS.FOOD.COOKEDFISH.DESC
 msgctxt "STRINGS.ITEMS.FOOD.COOKEDFISH.DESC"
 msgid ""
-"The cooked <link=\"FISHMEAT\">Fillet</link> of a freshly caught <link=\"PACU"
-"\">Pacu</link>.\n"
+"A cooked piece of freshly caught aquatic critter.\n"
 "\n"
 "Unsurprisingly, it tastes a bit fishy."
 msgstr ""
-"由新鲜捕获的<link=\"PACU\">帕库鱼</link>制成的熟<link=\"FISHMEAT\">鱼片</"
-"link>。\n"
+"由新鲜捕获的水生小动物制成的的熟肉块。\n"
 "\n"
 "不出所料，尝起来有一股鱼腥味。"
 
 #. STRINGS.ITEMS.FOOD.COOKEDFISH.NAME
 msgctxt "STRINGS.ITEMS.FOOD.COOKEDFISH.NAME"
-msgid "<link=\"COOKEDFISH\">Cooked Fish</link>"
-msgstr "<link=\"COOKEDFISH\">烤鱼排</link>"
+msgid "<link=\"COOKEDFISH\">Cooked Seafood</link>"
+msgstr "<link=\"COOKEDFISH\">烤海鲜</link>"
 
 #. STRINGS.ITEMS.FOOD.COOKEDFISH.RECIPEDESC
 msgctxt "STRINGS.ITEMS.FOOD.COOKEDFISH.RECIPEDESC"
-msgid ""
-"The cooked <link=\"FISHMEAT\">Fillet</link> of a freshly caught <link=\"PACU"
-"\">Pacu</link>."
-msgstr ""
-"由新鲜捕获的<link=\"PACU\">帕库鱼</link>制成的熟<link=\"FISHMEAT\">鱼片</"
-"link>。"
+msgid "A cooked piece of freshly caught aquatic critter."
+msgstr "由新鲜捕获的水生小动物制成的的熟肉块。"
 
 #. STRINGS.ITEMS.FOOD.COOKEDMEAT.DESC
 msgctxt "STRINGS.ITEMS.FOOD.COOKEDMEAT.DESC"
@@ -51316,6 +52922,33 @@ msgstr "<link=\"COOKEDMEAT\">烤肉串</link>"
 msgctxt "STRINGS.ITEMS.FOOD.COOKEDMEAT.RECIPEDESC"
 msgid "The cooked meat of a defeated critter."
 msgstr "由被击败的小动物的肉烹饪而成。"
+
+#. STRINGS.ITEMS.FOOD.CURRY.DESC
+msgctxt "STRINGS.ITEMS.FOOD.CURRY.DESC"
+msgid ""
+"Chewy <link=\"BEANPLANTSEED\">Nosh Beans</link> simmered with chunks of "
+"<link=\"GINGER\">Tonic Root</link>.\n"
+"\n"
+"It's so spicy!"
+msgstr ""
+"用数块<link=\"GINGER\">滋补根</link>文火慢炖的<link=\"BEANPLANTSEED\">小吃豆"
+"</link>，很有嚼劲。\n"
+"\n"
+"真是太辣了！"
+
+#. STRINGS.ITEMS.FOOD.CURRY.NAME
+msgctxt "STRINGS.ITEMS.FOOD.CURRY.NAME"
+msgid "<link=\"CURRY\">Curried Beans</link>"
+msgstr "<link=\"CURRY\">咖喱豆</link>"
+
+#. STRINGS.ITEMS.FOOD.CURRY.RECIPEDESC
+msgctxt "STRINGS.ITEMS.FOOD.CURRY.RECIPEDESC"
+msgid ""
+"Chewy <link=\"BEANPLANTSEED\">Nosh Beans</link> simmered with chunks of "
+"<link=\"GINGER\">Tonic Root</link>."
+msgstr ""
+"用数块<link=\"GINGER\">滋补根</link>文火慢炖的<link=\"BEANPLANTSEED\">小吃豆"
+"</link>，很有嚼劲。"
 
 #. STRINGS.ITEMS.FOOD.DRECKOEGG.DESC
 msgctxt "STRINGS.ITEMS.FOOD.DRECKOEGG.DESC"
@@ -51725,7 +53358,7 @@ msgstr "<link=\"POPCORN\">爆麦花</link>"
 
 #. STRINGS.ITEMS.FOOD.POPCORN.RECIPEDESC
 msgctxt "STRINGS.ITEMS.FOOD.POPCORN.RECIPEDESC"
-msgid "Gamma radiated <link=\"COLDWHEATSEED\">Sleet Wheat Grain</link>."
+msgid "Gamma-radiated <link=\"COLDWHEATSEED\">Sleet Wheat Grain</link>."
 msgstr "伽马射线辐射过的<link=\"COLDWHEATSEED\">冰霜麦粒</link>。"
 
 #. STRINGS.ITEMS.FOOD.PRICKLEFRUIT.DESC
@@ -51824,6 +53457,19 @@ msgstr ""
 "烘焙的<link=\"PRICKLEFRUIT\">毛刺浆果</link>，里面塞满了美味的香料，味道十分"
 "丰富。"
 
+#. STRINGS.ITEMS.FOOD.SHELLFISHMEAT.DESC
+msgctxt "STRINGS.ITEMS.FOOD.SHELLFISHMEAT.DESC"
+msgid ""
+"An uncooked chunk of very dead <link=\"CRABFRESHWATER\">Sanishell</link>. "
+"Yum!"
+msgstr ""
+"从死去的<link=\"CRABFRESHWATER\">沙泥蟹</link>身上弄来的未烹饪的肉块，好吃！"
+
+#. STRINGS.ITEMS.FOOD.SHELLFISHMEAT.NAME
+msgctxt "STRINGS.ITEMS.FOOD.SHELLFISHMEAT.NAME"
+msgid "<link=\"SHELLFISHMEAT\">Raw Shellfish</link>"
+msgstr "<link=\"SHELLFISHMEAT\">生蟹肉</link>"
+
 #. STRINGS.ITEMS.FOOD.SPICEBREAD.DESC
 msgctxt "STRINGS.ITEMS.FOOD.SPICEBREAD.DESC"
 msgid ""
@@ -51832,7 +53478,7 @@ msgid ""
 "\n"
 "There's a simple joy to be had in pulling it apart in one's fingers."
 msgstr ""
-"一块面包，加入了少许<link=\"SPICENUT\">火椒</link>增强口感，适合口味清淡的"
+"一块面包，加入了少许<link=\"SPICENUT\">火椒粒</link>增强口感，适合口味清淡的"
 "人。\n"
 "\n"
 "用手指把它轻轻撕开时，会有一种简单的快乐感觉。"
@@ -51848,7 +53494,7 @@ msgid ""
 "A loaf of bread, lightly spiced with <link=\"SPICENUT\">Pincha Peppernut</"
 "link> for a mild bite."
 msgstr ""
-"一块面包，加入了少许<link=\"SPICENUT\">火椒</link>增强口感，适合口味清淡的"
+"一块面包，加入了少许<link=\"SPICENUT\">火椒粒</link>增强口感，适合口味清淡的"
 "人。"
 
 #. STRINGS.ITEMS.FOOD.SPICENUT.DESC
@@ -51860,7 +53506,7 @@ msgid ""
 msgstr ""
 "一种有香味的<link=\"SPICEVINE\">火椒藤</link>的果实。\n"
 "\n"
-"苦涩外皮下隐藏着饱满、辛辣的核，在烹饪中很有用。"
+"苦涩外皮下隐藏着饱满、辛辣的核，常用于烹饪。"
 
 #. STRINGS.ITEMS.FOOD.SPICENUT.NAME
 msgctxt "STRINGS.ITEMS.FOOD.SPICENUT.NAME"
@@ -51871,7 +53517,7 @@ msgstr "<link=\"SPICENUT\">火椒粒</link>"
 msgctxt "STRINGS.ITEMS.FOOD.SPICYTOFU.DESC"
 msgid ""
 "<link=\"TOFU\">Tofu</link> marinated in a flavorful <link=\"SPICENUT"
-"\">Pincha Pepperplant</link> sauce.\n"
+"\">Pincha Peppernut</link> sauce.\n"
 "\n"
 "It packs a delightful punch."
 msgstr ""
@@ -51895,13 +53541,13 @@ msgstr ""
 #. STRINGS.ITEMS.FOOD.SURFANDTURF.DESC
 msgctxt "STRINGS.ITEMS.FOOD.SURFANDTURF.DESC"
 msgid ""
-"A bit of <link=\"MEAT\">Meat</link> from the land and <link=\"FISHMEAT"
-"\">Fish</link> from the sea.\n"
+"A bit of <link=\"MEAT\">Meat</link> from the land and <link=\"COOKEDFISH"
+"\">Cooked Seafood</link> from the sea.\n"
 "\n"
-"It hearty and satisfying."
+"It's hearty and satisfying."
 msgstr ""
-"地上的<link=\"MEAT\">肉</link>和海里的<link=\"FISHMEAT\">鱼</link>拼在一"
-"起。\n"
+"地上的<link=\"MEAT\">肉</link>和海里的<link=\"COOKEDFISH\">烤海鲜</link>拼在"
+"一起。\n"
 "\n"
 "丰盛又满意。"
 
@@ -51913,10 +53559,11 @@ msgstr "<link=\"SURFANDTURF\">海陆双拼</link>"
 #. STRINGS.ITEMS.FOOD.SURFANDTURF.RECIPEDESC
 msgctxt "STRINGS.ITEMS.FOOD.SURFANDTURF.RECIPEDESC"
 msgid ""
-"A bit of <link=\"MEAT\">Meat</link> from the land and <link=\"FISHMEAT"
-"\">Fish</link> from the sea."
+"A bit of <link=\"MEAT\">Meat</link> from the land and <link=\"COOKEDFISH"
+"\">Cooked Seafood</link> from the sea."
 msgstr ""
-"地上的<link=\"MEAT\">肉</link>和海里的<link=\"FISHMEAT\">鱼</link>拼在一起。"
+"地上的<link=\"MEAT\">肉</link>和海里的<link=\"COOKEDFISH\">烤海鲜</link>拼在"
+"一起。"
 
 #. STRINGS.ITEMS.FOOD.SUSHI.DESC
 msgctxt "STRINGS.ITEMS.FOOD.SUSHI.DESC"
@@ -52100,6 +53747,16 @@ msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.BABY_CRAB_SHELL.NAME"
 msgid "Small Pokeshell Molt"
 msgstr "小蟹壳"
 
+#. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.BABY_CRAB_SHELL.VARIANT_WOOD.DESC
+msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.BABY_CRAB_SHELL.VARIANT_WOOD.DESC"
+msgid "Can be crushed to produce <link=\"WOOD\">Lumber</link>."
+msgstr "可压碎以产生<link=\"WOOD\">木料</link>。"
+
+#. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.BABY_CRAB_SHELL.VARIANT_WOOD.NAME
+msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.BABY_CRAB_SHELL.VARIANT_WOOD.NAME"
+msgid "Small Oakshell Molt"
+msgstr "小木蟹壳"
+
 #. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.BASIC_FABRIC.DESC
 msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.BASIC_FABRIC.DESC"
 msgid ""
@@ -52121,6 +53778,16 @@ msgstr "可压碎以产生<link=\"LIME\">石灰</link>。"
 msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.CRAB_SHELL.NAME"
 msgid "Pokeshell Molt"
 msgstr "蟹壳"
+
+#. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.CRAB_SHELL.VARIANT_WOOD.DESC
+msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.CRAB_SHELL.VARIANT_WOOD.DESC"
+msgid "Can be crushed to produce <link=\"WOOD\">Lumber</link>."
+msgstr "可压碎以产生<link=\"WOOD\">木料</link>。"
+
+#. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.CRAB_SHELL.VARIANT_WOOD.NAME
+msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.CRAB_SHELL.VARIANT_WOOD.NAME"
+msgid "Oakshell Molt"
+msgstr "木蟹壳"
 
 #. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.EGG_SHELL.DESC
 msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.EGG_SHELL.DESC"
@@ -52374,13 +54041,33 @@ msgstr "陷阱组件"
 
 #. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.WOOD.DESC
 msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.WOOD.DESC"
-msgid "Wood harvested from an <link=\"FORESTTREE\">Arbor Tree</link>."
-msgstr "木料是从<link=\"FORESTTREE\">乔木树</link>上收获来的。"
+msgid ""
+"Wood harvested from an <link=\"FORESTTREE\">Arbor Tree</link> or an <link="
+"\"CRABWOOD\">Oakshell</link>."
+msgstr ""
+"木料是从<link=\"FORESTTREE\">乔木树</link>或<link=\"CRABWOOD\">木壳蟹</link>"
+"收获来的。"
 
 #. STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.WOOD.NAME
 msgctxt "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.WOOD.NAME"
 msgid "Lumber"
 msgstr "木料"
+
+#. STRINGS.ITEMS.INGREDIENTS.GINGER.DESC
+msgctxt "STRINGS.ITEMS.INGREDIENTS.GINGER.DESC"
+msgid ""
+"A chewy, fibrous rhizome with a fiery aftertaste.\n"
+"\n"
+"It relieves gassiness."
+msgstr ""
+"一种耐嚼的纤维根茎，回味稍辣。\n"
+"\n"
+"它可以缓解胀气。"
+
+#. STRINGS.ITEMS.INGREDIENTS.GINGER.NAME
+msgctxt "STRINGS.ITEMS.INGREDIENTS.GINGER.NAME"
+msgid "<link=\"GINGER\">Tonic Root</link>"
+msgstr "<link=\"GINGER\">滋补根</link>"
 
 #. STRINGS.ITEMS.INGREDIENTS.SWAMPLILYFLOWER.DESC
 msgctxt "STRINGS.ITEMS.INGREDIENTS.SWAMPLILYFLOWER.DESC"
@@ -52395,8 +54082,8 @@ msgstr ""
 
 #. STRINGS.ITEMS.INGREDIENTS.SWAMPLILYFLOWER.NAME
 msgctxt "STRINGS.ITEMS.INGREDIENTS.SWAMPLILYFLOWER.NAME"
-msgid "Balm Lily Flower"
-msgstr "芳香百合"
+msgid "<link=\"SWAMPLILYFLOWER\">Balm Lily Flower</link>"
+msgstr "<link=\"SWAMPLILYFLOWER\">芳香百合花</link>"
 
 #. STRINGS.ITEMS.PILLS.ADVANCEDCURE.DESC
 msgctxt "STRINGS.ITEMS.PILLS.ADVANCEDCURE.DESC"
@@ -52889,31 +54576,53 @@ msgstr ""
 #. STRINGS.MISC.NOTIFICATIONS.BASICCONTROLS.MESSAGEBODY
 msgctxt "STRINGS.MISC.NOTIFICATIONS.BASICCONTROLS.MESSAGEBODY"
 msgid ""
-"• I can use {Hotkey/CinemaPanLeft} and {Hotkey/CinemaPanRight}to pan my view "
-"left and right, and {Hotkey/CinemaPanUp}and {Hotkey/CinemaPanDown}to pan up "
-"and down.\n"
+"• I can use {Hotkey/PanLeft} and {Hotkey/PanRight} to pan my view left and "
+"right, and {Hotkey/PanUp} and {Hotkey/PanDown} to pan up and down.\n"
 "\n"
-"• {Hotkey/CinemaZoomIn} lets me zoom in, and {Hotkey/CinemaZoomOut}zooms "
-"out.\n"
+"• {Hotkey/ZoomIn} lets me zoom in, and {Hotkey/ZoomOut} zooms out.\n"
 "\n"
 "• {Hotkey/CameraHome} returns my view to the Printing Pod.\n"
 "\n"
 "• I can speed or slow my perception of time using the top left corner "
-"buttons, or by pressing {Hotkey/SpeedUp}or {Hotkey/SlowDown}. Pressing "
+"buttons, or by pressing {Hotkey/SpeedUp} or {Hotkey/SlowDown}. Pressing "
 "{Hotkey/TogglePause} will pause the flow of time entirely.\n"
 "\n"
-"• I'll keep records of everything I discover in my personal DATABASE {Hotkey/"
-"ManageDatabase} to refer back to if I forget anything important."
+"•  I'll keep records of everything I discover in my personal DATABASE "
+"{Hotkey/ManageDatabase} to refer back to if I forget anything important."
 msgstr ""
-"• 我可以使用 {Hotkey/CinemaPanLeft} 和 {Hotkey/CinemaPanRight} 来左右移动我的"
-"视角，{Hotkey/CinemaPanUp} 和 {Hotkey/CinemaPanDown} 上下移动。\n"
+"• 我可以使用 {Hotkey/PanLeft} 和 {Hotkey/PanRight} 来左右移动我的视角，"
+"{Hotkey/PanUp} 和 {Hotkey/PanDown} 上下移动。\n"
 "\n"
-"• 使用 {Hotkey/CinemaZoomIn} 来放大画面，{Hotkey/CinemaZoomOut} 缩小。\n"
+"• 使用 {Hotkey/ZoomIn} 来放大画面，{Hotkey/ZoomOut} 缩小。\n"
 "\n"
 "• {Hotkey/CameraHome} 会将我的视角返回到打印舱。\n"
 "\n"
 "• 我可以使用左上角的按钮，或按 {Hotkey/SpeedUp}/{Hotkey/SlowDown} 来加快或减"
 "慢我所感知的时间流逝。按 {Hotkey/TogglePause} 会完全暂停时间流逝。\n"
+"\n"
+"• 我会在我的个人数据库 {Hotkey/ManageDatabase} 中记录发现的所有东西，以便在忘"
+"记了重要的东西时有东西可以参考。"
+
+#. STRINGS.MISC.NOTIFICATIONS.BASICCONTROLS.MESSAGEBODYALT
+msgctxt "STRINGS.MISC.NOTIFICATIONS.BASICCONTROLS.MESSAGEBODYALT"
+msgid ""
+"• I can use {Hotkey/AnalogCamera} to pan my view.\n"
+"\n"
+"• {Hotkey/ZoomIn} lets me zoom in, and {Hotkey/ZoomOut} zooms out.\n"
+"\n"
+"• I can speed or slow my perception of time using the top left corner "
+"buttons, or by pressing {Hotkey/CycleSpeed}. Pressing {Hotkey/TogglePause} "
+"will pause the flow of time entirely.\n"
+"\n"
+"•  I'll keep records of everything I discover in my personal DATABASE "
+"{Hotkey/ManageDatabase} to refer back to if I forget anything important."
+msgstr ""
+"• 我可以使用 {Hotkey/AnalogCamera} 来左右移动我的视角。\n"
+"\n"
+"• 使用 {Hotkey/ZoomIn} 来放大画面，{Hotkey/ZoomOut} 缩小。\n"
+"\n"
+"• 我可以使用左上角的按钮，或按 {Hotkey/CycleSpeed} 来加快或减慢我所感知的时间"
+"流逝。按 {Hotkey/TogglePause} 会完全暂停时间流逝。\n"
 "\n"
 "• 我会在我的个人数据库 {Hotkey/ManageDatabase} 中记录发现的所有东西，以便在忘"
 "记了重要的东西时有东西可以参考。"
@@ -53244,7 +54953,7 @@ msgid ""
 "<link=\"WASHBASIN\">Wash Basin</link> or <link=\"SHOWER\">Shower</link> will "
 "prevent the cooks from infecting the food by handling it.\n"
 "\n"
-"Dangerously contaminated food can be sent to compost by clicking the "
+"Dangerously contaminated food can be sent to compost by \\clicking\\ the "
 "<b>Compost</b> button on the selected item."
 msgstr ""
 "我的复制人所烹饪<link=\"FOOD\">食物</link>的干净程度与用来制作食物的原料有直"
@@ -53253,7 +54962,7 @@ msgstr ""
 "\">洗手盆</link>或<link=\"SHOWER\">淋浴间</link>）可防止厨师在处理食物的过程"
 "中污染食物。\n"
 "\n"
-"点击选定项目上的<b>堆肥</b>按钮，可将被污染且有危险的食物送去堆肥。"
+"\\clicking\\选定项目上的<b>堆肥</b>按钮，可将被污染且有危险的食物送去堆肥。"
 
 #. STRINGS.MISC.NOTIFICATIONS.DISEASE_COOKING.NAME
 msgctxt "STRINGS.MISC.NOTIFICATIONS.DISEASE_COOKING.NAME"
@@ -53658,13 +55367,13 @@ msgid ""
 "gaps wider than one tile. I should keep this in mind while placing errands.\n"
 "\n"
 "To check if an errand I've placed is accessible, I can select a Duplicant "
-"and click <b>Show Navigation</b> to view all areas within their reach."
+"and \\click\\ <b>Show Navigation</b> to view all areas within their reach."
 msgstr ""
 "当设定任务时，我应该时刻记住，复制人只能爬两块砖块高并且他们自己也是两块砖块"
 "高的。\n"
 "\n"
-"为了查看我放置的任务是否是可通过的，我可以选择一名复制人并点击<b>显示可行路径"
-"</b>来查看他们能到达的所有区域。"
+"为了查看我放置的任务是否是可通过的，我可以选择一名复制人并\\click\\<b>显示可"
+"行路径</b>来查看他们能到达的所有区域。"
 
 #. STRINGS.MISC.NOTIFICATIONS.LOCOMOTIONMESSAGE.NAME
 msgctxt "STRINGS.MISC.NOTIFICATIONS.LOCOMOTIONMESSAGE.NAME"
@@ -53738,14 +55447,14 @@ msgid ""
 "of <link=\"DISEASE\">Disease</link>.\n"
 "\n"
 "Duplicants will also be <link=\"STRESS\">Stressed</link> by walking through "
-"Polluted Water, so I should have my Duplicants clean up spills by clicking "
-"and dragging the <b>Mop Tool</b> {Hotkey/Mop}"
+"Polluted Water, so I should have my Duplicants clean up spills by \\clicking"
+"\\ and dragging the <b>Mop Tool</b> {Hotkey/Mop}"
 msgstr ""
 "<link=\"DIRTYWATER\">污染水</link>会慢慢释放<link=\"CONTAMINATEDOXYGEN\">污染"
 "氧</link>，这会加速<link=\"DISEASE\">疾病</link>的传播。\n"
 "\n"
-"走过污染水还会使复制人产生<link=\"STRESS\">压力</link>，所以我应该点击和拖动"
-"<b>擦拭工具</b> {Hotkey/Mop}，让我的复制人将溢出物清理干净"
+"走过污染水还会使复制人产生<link=\"STRESS\">压力</link>，所以我应该\\clicking"
+"\\并拖动<b>擦拭工具</b> {Hotkey/Mop}，让我的复制人将溢出物清理干净"
 
 #. STRINGS.MISC.NOTIFICATIONS.MOPPINGMESSAGE.NAME
 msgctxt "STRINGS.MISC.NOTIFICATIONS.MOPPINGMESSAGE.NAME"
@@ -53979,22 +55688,28 @@ msgstr "这些系统由于<style=\"KKeyword\">管道</style>堵塞而停止运�
 #. STRINGS.MISC.NOTIFICATIONS.PLUMBING.MESSAGEBODY
 msgctxt "STRINGS.MISC.NOTIFICATIONS.PLUMBING.MESSAGEBODY"
 msgid ""
-"When connecting pipes it is useful to have the Plumbing Overlay {Hotkey/"
-"Overlay6} selected. Each building which requires plumbing must have their "
-"Building Intake connected to the Output Pipe from a source such as a Liquid "
-"Pump. Liquid Pumps must be submerged in liquid and attached to a power "
-"source to function.\n"
+"When connecting pipes for plumbing, it is useful to have the Plumbing "
+"Overlay {Hotkey/Overlay6} selected. Each building which requires plumbing "
+"must have their Building Intake connected to the Output Pipe from a source "
+"such as a Liquid Pump. Liquid Pumps must be submerged in liquid and attached "
+"to a power source to function.\n"
 "\n"
 "Buildings often output contaminated water which must flow out of the "
 "building through piping from the Output Pipe. The water can then be expelled "
-"through a Liquid Vent, or filtered through a Liquid Filter for reuse."
+"through a Liquid Vent, or filtered through a Liquid Filter for reuse.\n"
+"\n"
+"Ventilation applies the same principles to gases. Select the Ventilation "
+"Overlay {Hotkey/Overlay7} to see how gases are being moved around the colony."
 msgstr ""
 "连接管道的时候最好选中水管概览 {Hotkey/Overlay6}。每个需要接入管道的建筑都必"
 "须将它们的输入口连接到一条输出管道上，后者应当从一个液体源（比如液泵）上引"
 "出。液泵必须要浸没在液体中并通电才能发挥作用。\n"
 "\n"
-"使用过的水会被污染，且必须通过输出管道口流出。输出的水可以通过排液口排出，或"
-"者通过液体过滤器过滤以供再利用。"
+"建筑经常会输出污染水，必须通过管道流出建筑物。然后这些水可以通过排液口排出，"
+"或者通过液体过滤器再次使用。\n"
+"\n"
+"通风系统与其原理类似。选择通风概览 {Hotkey/Overlay7} 以查看气体是如何在殖民地"
+"中被移动的。"
 
 #. STRINGS.MISC.NOTIFICATIONS.PLUMBING.NAME
 msgctxt "STRINGS.MISC.NOTIFICATIONS.PLUMBING.NAME"
@@ -54012,8 +55727,8 @@ msgid ""
 "Generators are considered \"Producers\" of Power, while the various "
 "buildings and machines in the colony are considered \"Consumers\". Each "
 "Consumer will pull a certain wattage from the power circuit it is connected "
-"to, which can be checked at any time by clicking the building and going to "
-"the Energy Tab.\n"
+"to, which can be checked at any time by \\clicking\\ the building and going "
+"to the Energy Tab.\n"
 "\n"
 "I can use the Power Overlay {Hotkey/Overlay2} to quickly check the status of "
 "all my circuits. If the Consumers are taking more wattage than the "
@@ -54026,7 +55741,8 @@ msgid ""
 "circuits."
 msgstr ""
 "发电机可以产生电力，而殖民地中的各种建筑和机器会消耗电力，称作用电器。每个用"
-"电器会从连入的电路中获取一定瓦数的电力，可以在每个建筑的能量选项卡中查看\n"
+"电器会从连入的电路中获取一定瓦数的电力，可以通过\\clicking\\建筑然后进入能量"
+"选项卡查看\n"
 "\n"
 "我可以使用电力概览 {Hotkey/Overlay2} 来检查我的电路状态。如果用电器消耗的电力"
 "比发电机产生的要多，电池就会流失电力直至电力不足。\n"
@@ -54250,14 +55966,15 @@ msgid ""
 "Rocket Checklist will need to be complete before being capable of "
 "launching.\n"
 "\n"
-"A <link=\"TELESCOPE\">Telescope</link> needs to be built on the surface of a "
-"Planetoid in order to use the <style=\"KKeyword\">Starmap Screen</style> "
-"{Hotkey/ManageStarmap} to see and set course for new destinations."
+"A <link=\"CLUSTERTELESCOPE\">Telescope</link> needs to be built on the "
+"surface of a Planetoid in order to use the <style=\"KKeyword\">Starmap "
+"Screen</style> {Hotkey/ManageStarmap} to see and set course for new "
+"destinations."
 msgstr ""
 "建造火箭首先需要建造<link=\"LAUNCHPLATFORM\">火箭平台</link>，然后从这里的菜"
 "单添加舱块。火箭能够发射前火箭检查表的所有组成都需要完成。\n"
 "\n"
-"需要在小行星表面建造<link=\"TELESCOPE\">望远镜</link>才能使用<style="
+"需要在小行星表面建造<link=\"CLUSTERTELESCOPE\">望远镜</link>才能使用<style="
 "\"KKeyword\">星图界面</style> {Hotkey/ManageStarmap}，在此查看并设定新的目的"
 "地路线。"
 
@@ -54627,11 +56344,11 @@ msgctxt "STRINGS.MISC.STATUSITEMS.BURIEDITEM.NOTIFICATION_TOOLTIP"
 msgid ""
 "My Duplicants have uncovered a {Uncoverable}!\n"
 "\n"
-"Click to jump to its location."
+"\\Click\\ to jump to its location."
 msgstr ""
 "我的复制人发现了{Uncoverable}！\n"
 "\n"
-"点击前往发现位置。"
+"\\Click\\前往发现位置。"
 
 #. STRINGS.MISC.STATUSITEMS.BURIEDITEM.TOOLTIP
 msgctxt "STRINGS.MISC.STATUSITEMS.BURIEDITEM.TOOLTIP"
@@ -55376,8 +57093,7 @@ msgid ""
 "Compostables are biological materials which can be put into a <link=\"COMPOST"
 "\">Compost</link> to generate clean <link=\"DIRT\">Dirt</link>.\n"
 "\n"
-"The act of composting also generates a small amount of <link=\"HEAT\">Heat</"
-"link>.\n"
+"Composting also generates a small amount of <link=\"HEAT\">Heat</link>.\n"
 "\n"
 "Once it starts to rot, consumable food should be composted to prevent <link="
 "\"FOODSICKNESS\">Food Poisoning</link>."
@@ -61880,7 +63596,7 @@ msgid ""
 "issues in a colony.\n"
 "\n"
 "The edges of this biome are filled with <link=\"OBSIDIAN\">Obsidian</link> "
-"so a Duplicant with the <link=\"SENIORMINER\">Super-Duperhard Digging</link> "
+"so a Duplicant with the <link=\"MINING3\">Super-Duperhard Digging</link> "
 "skill will be required before my colony can explore here."
 msgstr ""
 "<link=\"NIOBIUM\">铌</link>本身不是特别有用的资源，但通过<link="
@@ -61889,7 +63605,7 @@ msgstr ""
 "助。\n"
 "\n"
 "这片生态的边缘充满着<link=\"OBSIDIAN\">黑曜石</link>，需要具有<link="
-"\"SENIORMINER\">极坚硬材料挖掘</link>技能的复制人才能探索到这里。"
+"\"MINING3\">极坚硬材料挖掘</link>技能的复制人才能探索到这里。"
 
 #. STRINGS.SUBWORLDS.OCEAN.DESC
 msgctxt "STRINGS.SUBWORLDS.OCEAN.DESC"
@@ -61957,8 +63673,8 @@ msgid ""
 "renewable source of oil.\n"
 "\n"
 "<link=\"DIAMOND\">Diamond</link> deposits can occasionally be found in the "
-"Oily biome, which will require a Duplicant with the <link=\"SENIORMINER"
-"\">Super-Duperhard Digging</link> skill to explore properly.\n"
+"Oily biome, which will require a Duplicant with the <link=\"MINING3\">Super-"
+"Duperhard Digging</link> skill to explore properly.\n"
 "\n"
 "<link=\"EVILFLOWER\">Sporechids</link> are beautiful, but should only be "
 "approached if a Duplicant is properly <link=\"EQUIPMENT\">equipped</link>.\n"
@@ -61972,7 +63688,7 @@ msgstr ""
 "来产生可再生的原油。\n"
 "\n"
 "<link=\"DIAMOND\">钻石</link>偶尔也可以在原油生态中找到，复制人需要<link="
-"\"SENIORMINER\">极坚硬材料挖掘</link>技能才能开采。\n"
+"\"MINING3\">极坚硬材料挖掘</link>技能才能开采。\n"
 "\n"
 "<link=\"EVILFLOWER\">孢子兰</link>很漂亮，但只有复制人<link=\"EQUIPMENT\">装"
 "备良好</link>才能靠近。\n"
@@ -62090,7 +63806,7 @@ msgid ""
 msgstr ""
 "铁锈可以通过铁锈脱氧机产生许多殖民地基本需求。\n"
 "\n"
-"<link=\"PUFTBLEACHSTONE\">净菌飞鱼</link>，铁锈生态的常住生物，是<link="
+"<link=\"PUFTBLEACHSTONE\">洁净飞鱼</link>，铁锈生态的常住生物，是<link="
 "\"BLEACHSTONE\">漂白石</link>的可再生来源，可以将其驯化来生产。\n"
 "\n"
 "<link=\"DRECKOS\">毛鳞壁虎</link>也可以在这些生态中找到，是磷矿和<link="
@@ -62314,7 +64030,7 @@ msgstr "资源"
 #. STRINGS.UI.ALLRESOURCESSCREEN.PIN_TOOLTIP
 msgctxt "STRINGS.UI.ALLRESOURCESSCREEN.PIN_TOOLTIP"
 msgid "Check to pin resource to side panel"
-msgstr "点击来将资源固定在侧面板"
+msgstr "点击以将资源固定在侧面板"
 
 #. STRINGS.UI.ALLRESOURCESSCREEN.RESERVED
 msgctxt "STRINGS.UI.ALLRESOURCESSCREEN.RESERVED"
@@ -63059,6 +64775,11 @@ msgctxt "STRINGS.UI.BUILDINGEFFECTS.SCALE_GROWTH_ATMO"
 msgid "Shearable {Item}: {Amount} per {Time} ({Atmosphere})"
 msgstr "可修剪{Item}：每{Time}{Amount}（{Atmosphere}环境）"
 
+#. STRINGS.UI.BUILDINGEFFECTS.SCALE_GROWTH_TEMP
+msgctxt "STRINGS.UI.BUILDINGEFFECTS.SCALE_GROWTH_TEMP"
+msgid "Shearable {Item}: {Amount} per {Time} ({TempMin}-{TempMax})"
+msgstr "可修剪{Item}：每{Time}{Amount}（{TempMin}-{TempMax}）"
+
 #. STRINGS.UI.BUILDINGEFFECTS.STORAGECAPACITY
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.STORAGECAPACITY"
 msgid "Storage capacity: {0}"
@@ -63464,7 +65185,7 @@ msgstr ""
 "    • 比热容\n"
 "    • 表面积\n"
 "    • 隔热厚度\n"
-"    • 导热率"
+"    • 热导率"
 
 #. STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.HEATER_TARGETTEMPERATURE
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.HEATER_TARGETTEMPERATURE"
@@ -63493,7 +65214,7 @@ msgstr ""
 "    • 比热容\n"
 "    • 表面积\n"
 "    • 隔热厚度\n"
-"    • 导热率"
+"    • 热导率"
 
 #. STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.HEATGENERATED_AIRCONDITIONER
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.HEATGENERATED_AIRCONDITIONER"
@@ -63874,7 +65595,7 @@ msgid ""
 "This critter can be sheared every <b>{Time}</b> to produce <b>{Amount}</b> "
 "of <style=\"KKeyword\">{Item}</style>"
 msgstr ""
-"每<b>{Time}</b>可给这只小动物剪毛以产生<b>{Amount}</b><style=\"KKeyword"
+"每<b>{Time}</b>可给这只小动物修剪以产生<b>{Amount}</b><style=\"KKeyword"
 "\">{Item}</style>"
 
 #. STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.SCALE_GROWTH_ATMO
@@ -63886,11 +65607,26 @@ msgid ""
 "It must be kept in <style=\"KKeyword\">{Atmosphere}</style>-rich "
 "environments to regrow sheared <style=\"KKeyword\">{Item}</style>"
 msgstr ""
-"每<b>{Time}</b>可给这只小动物剪毛以产生<style=\"produced\">{Amount}</"
+"每<b>{Time}</b>可给这只小动物修剪以产生<style=\"produced\">{Amount}</"
 "style><style=\"KKeyword\">{Item}</style>\n"
 "------------------\n"
 "它必须处于富含<style=\"KKeyword\">{Atmosphere}</style>的环境中才能重新生成剪"
 "掉的<style=\"KKeyword\">{Item}</style>"
+
+#. STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.SCALE_GROWTH_TEMP
+msgctxt "STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.SCALE_GROWTH_TEMP"
+msgid ""
+"This critter can be sheared every <b>{Time}</b> to produce <style=\"produced"
+"\">{Amount}</style> of <style=\"KKeyword\">{Item}</style>\n"
+"------------------\n"
+"It must eat food between {TempMin}-{TempMax} to regrow sheared <style="
+"\"KKeyword\">{Item}</style>"
+msgstr ""
+"每<b>{Time}</b>可给这只小动物修剪以产生<style=\"produced\">{Amount}</"
+"style><style=\"KKeyword\">{Item}</style>\n"
+"------------------\n"
+"它必须吃处于{TempMin}-{TempMax}的食物才能重新生成剪掉的<style=\"KKeyword"
+"\">{Item}</style>"
 
 #. STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.STORAGECAPACITY
 msgctxt "STRINGS.UI.BUILDINGEFFECTS.TOOLTIPS.STORAGECAPACITY"
@@ -64077,8 +65813,8 @@ msgstr "宇宙辐射"
 
 #. STRINGS.UI.CLUSTERMAP.CHANGE_DESTINATION
 msgctxt "STRINGS.UI.CLUSTERMAP.CHANGE_DESTINATION"
-msgid "Click to change destination"
-msgstr "点击来更改目的地"
+msgid "\\Click\\ to change destination"
+msgstr "\\Click\\以更改目的地"
 
 #. STRINGS.UI.CLUSTERMAP.DESTINATION
 msgctxt "STRINGS.UI.CLUSTERMAP.DESTINATION"
@@ -64361,13 +66097,13 @@ msgctxt "STRINGS.UI.CLUSTERMAP.TOOLTIP_INVALID_DESTINATION_FOG_OF_WAR"
 msgid ""
 "Rockets cannot travel to this hex until it has been analyzed\n"
 "\n"
-"Space can be analyzed with a <link=\"TELESCOPE\">Telescope</link> or <link="
-"\"SCANNERMODULE\">Cartographic Module</link>"
+"Space can be analyzed with a <link=\"CLUSTERTELESCOPE\">Telescope</link> or "
+"<link=\"SCANNERMODULE\">Cartographic Module</link>"
 msgstr ""
 "在这个六边格被分析前，火箭不能前往此处\n"
 "\n"
-"可以使用<link=\"TELESCOPE\">望远镜</link>或者<link=\"SCANNERMODULE\">制图舱</"
-"link>分析太空"
+"可以使用<link=\"CLUSTERTELESCOPE\">望远镜</link>或者<link=\"SCANNERMODULE\">"
+"制图舱</link>分析太空"
 
 #. STRINGS.UI.CLUSTERMAP.TOOLTIP_INVALID_DESTINATION_NO_LAUNCH_PAD
 msgctxt "STRINGS.UI.CLUSTERMAP.TOOLTIP_INVALID_DESTINATION_NO_LAUNCH_PAD"
@@ -64389,13 +66125,13 @@ msgctxt "STRINGS.UI.CLUSTERMAP.TOOLTIP_INVALID_DESTINATION_NO_PATH"
 msgid ""
 "There is no navigable rocket path to this Planetoid\n"
 "\n"
-"Space can be analyzed with a <link=\"TELESCOPE\">Telescope</link> or <link="
-"\"SCANNERMODULE\">Cartographic Module</link> to clear the way"
+"Space can be analyzed with a <link=\"CLUSTERTELESCOPE\">Telescope</link> or "
+"<link=\"SCANNERMODULE\">Cartographic Module</link> to clear the way"
 msgstr ""
 "火箭没有可用的到这个小行星的导航路径\n"
 "\n"
-"可以使用<link=\"TELESCOPE\">望远镜</link>或者<link=\"SCANNERMODULE\">制图舱</"
-"link>分析太空，从而可以排查路线"
+"可以使用<link=\"CLUSTERTELESCOPE\">望远镜</link>或者<link=\"SCANNERMODULE\">"
+"制图舱</link>分析太空，从而可以排查路线"
 
 #. STRINGS.UI.CLUSTERMAP.TOOLTIP_INVALID_DESTINATION_OUT_OF_RANGE
 msgctxt "STRINGS.UI.CLUSTERMAP.TOOLTIP_INVALID_DESTINATION_OUT_OF_RANGE"
@@ -64436,19 +66172,19 @@ msgstr "返回（{0}）"
 #. STRINGS.UI.CODEX.BACK_BUTTON_NO_HISTORY_TOOLTIP
 msgctxt "STRINGS.UI.CODEX.BACK_BUTTON_NO_HISTORY_TOOLTIP"
 msgid ""
-"Click to go back:\n"
+"\\Click\\ to go back:\n"
 "N/A"
 msgstr ""
-"点击来返回：\n"
+"\\Click\\以返回：\n"
 "不适用"
 
 #. STRINGS.UI.CODEX.BACK_BUTTON_TOOLTIP
 msgctxt "STRINGS.UI.CODEX.BACK_BUTTON_TOOLTIP"
 msgid ""
-"Click to go back:\n"
+"\\Click\\ to go back:\n"
 "{0}"
 msgstr ""
-"点击来返回：\n"
+"\\Click\\以返回：\n"
 "{0}"
 
 #. STRINGS.UI.CODEX.CATEGORYNAMES.BIOMES
@@ -64520,6 +66256,11 @@ msgstr "<link=\"FOOD\">食物</link>"
 msgctxt "STRINGS.UI.CODEX.CATEGORYNAMES.GEYSERS"
 msgid "<link=\"GEYSERS\">Geysers</link>"
 msgstr "<link=\"GEYSERS\">间歇泉</link>"
+
+#. STRINGS.UI.CODEX.CATEGORYNAMES.INDUSTRIALINGREDIENTS
+msgctxt "STRINGS.UI.CODEX.CATEGORYNAMES.INDUSTRIALINGREDIENTS"
+msgid "<link=\"INDUSTRIALINGREDIENTS\">Industrial Ingredients</link>"
+msgstr "<link=\"INDUSTRIALINGREDIENTS\">工业原料</link>"
 
 #. STRINGS.UI.CODEX.CATEGORYNAMES.INVESTIGATIONS
 msgctxt "STRINGS.UI.CODEX.CATEGORYNAMES.INVESTIGATIONS"
@@ -64650,19 +66391,19 @@ msgstr ""
 #. STRINGS.UI.CODEX.FORWARD_BUTTON_NO_HISTORY_TOOLTIP
 msgctxt "STRINGS.UI.CODEX.FORWARD_BUTTON_NO_HISTORY_TOOLTIP"
 msgid ""
-"Click to go forward:\n"
+"\\Click\\ to go forward:\n"
 "N/A"
 msgstr ""
-"点击来向前：\n"
+"\\Click\\以向前：\n"
 "不适用"
 
 #. STRINGS.UI.CODEX.FORWARD_BUTTON_TOOLTIP
 msgctxt "STRINGS.UI.CODEX.FORWARD_BUTTON_TOOLTIP"
 msgid ""
-"Click to go forward:\n"
+"\\Click\\ to go forward:\n"
 "{0}"
 msgstr ""
-"点击来向前：\n"
+"\\Click\\以向前：\n"
 "{0}"
 
 #. STRINGS.UI.CODEX.GAME_SYSTEMS
@@ -65708,6 +67449,156 @@ msgctxt "STRINGS.UI.CONSUMABLESSCREEN.TOOLTIP_TOGGLE_ROW"
 msgid "Toggle <b>all consumable permissions</b> for <b>{0}</b>"
 msgstr "切换<b>{0}</b>的<b>所有食物权限</b>"
 
+#. STRINGS.UI.CONTROLS.CLICK
+msgctxt "STRINGS.UI.CONTROLS.CLICK"
+msgid "Click"
+msgstr "点击"
+
+#. STRINGS.UI.CONTROLS.CLICKABLE
+msgctxt "STRINGS.UI.CONTROLS.CLICKABLE"
+msgid "Clickable"
+msgstr "点击"
+
+#. STRINGS.UI.CONTROLS.CLICKABLELOWER
+msgctxt "STRINGS.UI.CONTROLS.CLICKABLELOWER"
+msgid "clickable"
+msgstr "点击"
+
+#. STRINGS.UI.CONTROLS.CLICKABLEUPPER
+msgctxt "STRINGS.UI.CONTROLS.CLICKABLEUPPER"
+msgid "CLICKABLE"
+msgstr "点击"
+
+#. STRINGS.UI.CONTROLS.CLICKED
+msgctxt "STRINGS.UI.CONTROLS.CLICKED"
+msgid "Clicked"
+msgstr "点击"
+
+#. STRINGS.UI.CONTROLS.CLICKEDLOWER
+msgctxt "STRINGS.UI.CONTROLS.CLICKEDLOWER"
+msgid "clicked"
+msgstr "点击"
+
+#. STRINGS.UI.CONTROLS.CLICKEDUPPER
+msgctxt "STRINGS.UI.CONTROLS.CLICKEDUPPER"
+msgid "CLICKED"
+msgstr "点击"
+
+#. STRINGS.UI.CONTROLS.CLICKING
+msgctxt "STRINGS.UI.CONTROLS.CLICKING"
+msgid "Clicking"
+msgstr "点击"
+
+#. STRINGS.UI.CONTROLS.CLICKINGLOWER
+msgctxt "STRINGS.UI.CONTROLS.CLICKINGLOWER"
+msgid "clicking"
+msgstr "点击"
+
+#. STRINGS.UI.CONTROLS.CLICKINGUPPER
+msgctxt "STRINGS.UI.CONTROLS.CLICKINGUPPER"
+msgid "CLICKING"
+msgstr "点击"
+
+#. STRINGS.UI.CONTROLS.CLICKLOWER
+msgctxt "STRINGS.UI.CONTROLS.CLICKLOWER"
+msgid "click"
+msgstr "点击"
+
+#. STRINGS.UI.CONTROLS.CLICKS
+msgctxt "STRINGS.UI.CONTROLS.CLICKS"
+msgid "Clicks"
+msgstr "点击"
+
+#. STRINGS.UI.CONTROLS.CLICKSLOWER
+msgctxt "STRINGS.UI.CONTROLS.CLICKSLOWER"
+msgid "clicks"
+msgstr "点击"
+
+#. STRINGS.UI.CONTROLS.CLICKSUPPER
+msgctxt "STRINGS.UI.CONTROLS.CLICKSUPPER"
+msgid "CLICKS"
+msgstr "点击"
+
+#. STRINGS.UI.CONTROLS.CLICKUPPER
+msgctxt "STRINGS.UI.CONTROLS.CLICKUPPER"
+msgid "CLICK"
+msgstr "点击"
+
+#. STRINGS.UI.CONTROLS.PRESS
+msgctxt "STRINGS.UI.CONTROLS.PRESS"
+msgid "Press"
+msgstr "按下"
+
+#. STRINGS.UI.CONTROLS.PRESSABLE
+msgctxt "STRINGS.UI.CONTROLS.PRESSABLE"
+msgid "Pressable"
+msgstr "按下"
+
+#. STRINGS.UI.CONTROLS.PRESSABLELOWER
+msgctxt "STRINGS.UI.CONTROLS.PRESSABLELOWER"
+msgid "pressable"
+msgstr "按下"
+
+#. STRINGS.UI.CONTROLS.PRESSABLEUPPER
+msgctxt "STRINGS.UI.CONTROLS.PRESSABLEUPPER"
+msgid "PRESSABLE"
+msgstr "按下"
+
+#. STRINGS.UI.CONTROLS.PRESSED
+msgctxt "STRINGS.UI.CONTROLS.PRESSED"
+msgid "Pressed"
+msgstr "按下"
+
+#. STRINGS.UI.CONTROLS.PRESSEDLOWER
+msgctxt "STRINGS.UI.CONTROLS.PRESSEDLOWER"
+msgid "pressed"
+msgstr "按下"
+
+#. STRINGS.UI.CONTROLS.PRESSEDUPPER
+msgctxt "STRINGS.UI.CONTROLS.PRESSEDUPPER"
+msgid "PRESSED"
+msgstr "按下"
+
+#. STRINGS.UI.CONTROLS.PRESSES
+msgctxt "STRINGS.UI.CONTROLS.PRESSES"
+msgid "Presses"
+msgstr "按下"
+
+#. STRINGS.UI.CONTROLS.PRESSESLOWER
+msgctxt "STRINGS.UI.CONTROLS.PRESSESLOWER"
+msgid "presses"
+msgstr "按下"
+
+#. STRINGS.UI.CONTROLS.PRESSESUPPER
+msgctxt "STRINGS.UI.CONTROLS.PRESSESUPPER"
+msgid "PRESSES"
+msgstr "按下"
+
+#. STRINGS.UI.CONTROLS.PRESSING
+msgctxt "STRINGS.UI.CONTROLS.PRESSING"
+msgid "Pressing"
+msgstr "按下"
+
+#. STRINGS.UI.CONTROLS.PRESSINGLOWER
+msgctxt "STRINGS.UI.CONTROLS.PRESSINGLOWER"
+msgid "pressing"
+msgstr "按下"
+
+#. STRINGS.UI.CONTROLS.PRESSINGUPPER
+msgctxt "STRINGS.UI.CONTROLS.PRESSINGUPPER"
+msgid "PRESSING"
+msgstr "按下"
+
+#. STRINGS.UI.CONTROLS.PRESSLOWER
+msgctxt "STRINGS.UI.CONTROLS.PRESSLOWER"
+msgid "press"
+msgstr "按下"
+
+#. STRINGS.UI.CONTROLS.PRESSUPPER
+msgctxt "STRINGS.UI.CONTROLS.PRESSUPPER"
+msgid "PRESS"
+msgstr "按下"
+
 #. STRINGS.UI.COPIED_SETTINGS
 msgctxt "STRINGS.UI.COPIED_SETTINGS"
 msgid "Settings Applied"
@@ -65721,9 +67612,9 @@ msgstr "复制"
 #. STRINGS.UI.COPY_BUILDING_TOOLTIP
 msgctxt "STRINGS.UI.COPY_BUILDING_TOOLTIP"
 msgid ""
-"Create new build orders using the current building selection as a template. "
-"{Hotkey}"
-msgstr "使用当前选择的建筑作为模板创建新的建造命令。{Hotkey}"
+"Create new build orders using the most recent building selection as a "
+"template. {Hotkey}"
+msgstr "使用最近选择的建筑作为模板创建新的建造命令。{Hotkey}"
 
 #. STRINGS.UI.CRAFT
 msgctxt "STRINGS.UI.CRAFT"
@@ -67133,11 +69024,6 @@ msgstr ""
 "\n"
 "- 科雷"
 
-#. STRINGS.UI.DEVELOPMENTBUILDS.ALPHA.LOADING.CONTINUEBUTTON
-msgctxt "STRINGS.UI.DEVELOPMENTBUILDS.ALPHA.LOADING.CONTINUEBUTTON"
-msgid "Okay, thanks for the heads up!"
-msgstr "好的，谢谢提醒！"
-
 #. STRINGS.UI.DEVELOPMENTBUILDS.ALPHA.LOADING.FORUMBUTTON
 msgctxt "STRINGS.UI.DEVELOPMENTBUILDS.ALPHA.LOADING.FORUMBUTTON"
 msgid "Visit Forums"
@@ -67172,6 +69058,49 @@ msgstr "补丁说明"
 msgctxt "STRINGS.UI.DEVELOPMENTBUILDS.FULL_PATCH_NOTES"
 msgid "Full Patch Notes"
 msgstr "完整补丁说明"
+
+#. STRINGS.UI.DEVELOPMENTBUILDS.PREVIOUS_UPDATE.BODY
+msgctxt "STRINGS.UI.DEVELOPMENTBUILDS.PREVIOUS_UPDATE.BODY"
+msgid ""
+"Whoops!\n"
+"\n"
+"You’re about to opt in to the <b>Previous Update branch</b>. That means "
+"opting out of all new features, fixes and content from the live branch.\n"
+"\n"
+"This branch is temporary. It will be replaced when the next update is "
+"released. It’s also completely unsupported—please don’t report bugs or "
+"issues you find here.\n"
+"\n"
+"Are you sure you want to opt in?"
+msgstr ""
+"哎哟！\n"
+"\n"
+"你将选择进入<b>上个版本分支</b>。这意味着选择弃掉所有主分支的新内容和修复。\n"
+"\n"
+"这一分支是临时的，下次更新发布后就会被替换，且完全不受支持——请不要报告任何在"
+"这里找到的漏洞或问题。\n"
+"\n"
+"你确定要选择进入吗？"
+
+#. STRINGS.UI.DEVELOPMENTBUILDS.PREVIOUS_UPDATE.CONTINUEBUTTON
+msgctxt "STRINGS.UI.DEVELOPMENTBUILDS.PREVIOUS_UPDATE.CONTINUEBUTTON"
+msgid "Play Old Version"
+msgstr "游玩旧版本"
+
+#. STRINGS.UI.DEVELOPMENTBUILDS.PREVIOUS_UPDATE.FORUMBUTTON
+msgctxt "STRINGS.UI.DEVELOPMENTBUILDS.PREVIOUS_UPDATE.FORUMBUTTON"
+msgid "More Information"
+msgstr "更多信息"
+
+#. STRINGS.UI.DEVELOPMENTBUILDS.PREVIOUS_UPDATE.QUITBUTTON
+msgctxt "STRINGS.UI.DEVELOPMENTBUILDS.PREVIOUS_UPDATE.QUITBUTTON"
+msgid "Quit"
+msgstr "退出"
+
+#. STRINGS.UI.DEVELOPMENTBUILDS.PREVIOUS_UPDATE.TITLE
+msgctxt "STRINGS.UI.DEVELOPMENTBUILDS.PREVIOUS_UPDATE.TITLE"
+msgid "<b>Welcome to Oxygen Not Included!</b>"
+msgstr "<b>欢迎来到《缺氧》！</b>"
 
 #. STRINGS.UI.DEVELOPMENTBUILDS.PREVIOUS_VERSION
 msgctxt "STRINGS.UI.DEVELOPMENTBUILDS.PREVIOUS_VERSION"
@@ -67209,11 +69138,11 @@ msgctxt "STRINGS.UI.DEVELOPMENTBUILDS.TESTING_TOOLTIP"
 msgid ""
 "This game is currently running a Test version.\n"
 "\n"
-"Click for more info."
+"\\Click\\ for more info."
 msgstr ""
 "当前运行的游戏是测试版。\n"
 "\n"
-"点击来查看更多信息。"
+"\\Click\\以查看更多信息。"
 
 #. STRINGS.UI.DEVELOPMENTBUILDS.TESTING_WATERMARK
 msgctxt "STRINGS.UI.DEVELOPMENTBUILDS.TESTING_WATERMARK"
@@ -67253,29 +69182,30 @@ msgstr "正式版：{0}"
 #. STRINGS.UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.ALERT_ONLY
 msgctxt "STRINGS.UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.ALERT_ONLY"
 msgid ""
-"Click to subscribe to this diagnostic - Current State:  <b>Never "
+"\\Click\\ to subscribe to this diagnostic - Current State:  <b>Never "
 "Visible      </b>"
-msgstr "点击来在侧栏中订阅这项诊断 - 当前状态：<b>永不可见</b>"
+msgstr "\\Click\\以在侧栏中订阅这项诊断 - 当前状态：<b>永不可见</b>"
 
 #. STRINGS.UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.ALWAYS
 msgctxt "STRINGS.UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.ALWAYS"
 msgid ""
-"Click to pin this diagnostic to the sidebar - Current State: <b>Visible On "
-"Alert Only</b>"
-msgstr "点击来固定这项诊断 - 当前状态：<b>仅在警报时可见</b>"
+"\\Click\\ to pin this diagnostic to the sidebar - Current State: <b>Visible "
+"On Alert Only</b>"
+msgstr "\\Click\\以固定这项诊断 - 当前状态：<b>仅在警报时可见</b>"
 
 #. STRINGS.UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.NEVER
 msgctxt "STRINGS.UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.NEVER"
 msgid ""
-"Click to mute this diagnostic on the sidebar -  Current State: <b>Always "
+"\\Click\\ to mute this diagnostic on the sidebar -  Current State: <b>Always "
 "Visible</b>"
-msgstr "点击来隐藏这项诊断 - 当前状态：<b>一直可见</b>"
+msgstr "\\Click\\以隐藏这项诊断 - 当前状态：<b>一直可见</b>"
 
 #. STRINGS.UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.TUTORIAL_DISABLED
 msgctxt "STRINGS.UI.DIAGNOSTICS_SCREEN.CLICK_TOGGLE_MESSAGE.TUTORIAL_DISABLED"
 msgid ""
-"Click to enable this diagnostic -  Current State: <b>Temporarily disabled</b>"
-msgstr "点击来启用这项诊断 - 当前状态：<b>暂时性禁用</b>"
+"\\Click\\ to enable this diagnostic -  Current State: <b>Temporarily "
+"disabled</b>"
+msgstr "\\Click\\以启用这项诊断 - 当前状态：<b>暂时性禁用</b>"
 
 #. STRINGS.UI.DIAGNOSTICS_SCREEN.CRITERIA_ENABLED_COUNT
 msgctxt "STRINGS.UI.DIAGNOSTICS_SCREEN.CRITERIA_ENABLED_COUNT"
@@ -67376,7 +69306,7 @@ msgstr "隔热厚度：{0}"
 #. STRINGS.UI.ELEMENTAL.CONDUCTIVITYBARRIER.TOOLTIP
 msgctxt "STRINGS.UI.ELEMENTAL.CONDUCTIVITYBARRIER.TOOLTIP"
 msgid "Thick insulation reduces an object's Thermal Conductivity"
-msgstr "较厚的隔热可以降低物体的导热率"
+msgstr "较厚的隔热可以降低物体的热导率"
 
 #. STRINGS.UI.ELEMENTAL.DEWPOINT.NAME
 msgctxt "STRINGS.UI.ELEMENTAL.DEWPOINT.NAME"
@@ -67513,7 +69443,7 @@ msgstr "高绝热性"
 #. STRINGS.UI.ELEMENTAL.THERMALCONDUCTIVITY.NAME
 msgctxt "STRINGS.UI.ELEMENTAL.THERMALCONDUCTIVITY.NAME"
 msgid "Thermal Conductivity: {0}"
-msgstr "导热率：{0}"
+msgstr "热导率：{0}"
 
 #. STRINGS.UI.ELEMENTAL.THERMALCONDUCTIVITY.TOOLTIP
 msgctxt "STRINGS.UI.ELEMENTAL.THERMALCONDUCTIVITY.TOOLTIP"
@@ -67527,7 +69457,7 @@ msgstr ""
 "选中的物体可以以一定速率传导热量，每相差1{TEMPERATURE_UNIT}，热量传递速率就增"
 "加{THERMAL_CONDUCTIVITY}瓦\n"
 "\n"
-"在两种物体之间，热量传递速率由较低的导热率材料决定"
+"在两种物体之间，热量传递速率由较低的热导率材料决定"
 
 #. STRINGS.UI.ELEMENTAL.UNITS.NAME
 msgctxt "STRINGS.UI.ELEMENTAL.UNITS.NAME"
@@ -69409,10 +71339,59 @@ msgctxt "STRINGS.UI.FRONTEND.DEMO_OVER_SCREEN.TITLE"
 msgid "Thanks for playing!"
 msgstr "感谢游玩！"
 
+#. STRINGS.UI.FRONTEND.DEVTOOLS.BUTTON
+msgctxt "STRINGS.UI.FRONTEND.DEVTOOLS.BUTTON"
+msgid "Show Dev Tools"
+msgstr "显示开发者工具"
+
+#. STRINGS.UI.FRONTEND.DEVTOOLS.DONTSHOW
+msgctxt "STRINGS.UI.FRONTEND.DEVTOOLS.DONTSHOW"
+msgid "Do not show this message again"
+msgstr "不要再显示这条消息了"
+
+#. STRINGS.UI.FRONTEND.DEVTOOLS.TITLE
+msgctxt "STRINGS.UI.FRONTEND.DEVTOOLS.TITLE"
+msgid "About Dev Tools"
+msgstr "关于开发者工具"
+
+#. STRINGS.UI.FRONTEND.DEVTOOLS.WARNING
+msgctxt "STRINGS.UI.FRONTEND.DEVTOOLS.WARNING"
+msgid ""
+"DANGER!!\n"
+"\n"
+"Dev Tools are intended for developer use only. Using them may result in your "
+"save becoming unplayable, unstable, or severely damaged.\n"
+"\n"
+"These tools are completely unsupported and may contain bugs. Are you sure "
+"you want to continue?"
+msgstr ""
+"危险！！\n"
+"\n"
+"开发者工具仅适用于开发者使用。使用这些工具可能会导致你的存档玩不下去，不稳"
+"定，或遭受严重损坏。\n"
+"\n"
+"这些工具已经完全不受支持了，并可能含有漏洞。你确定要继续吗？"
+
 #. STRINGS.UI.FRONTEND.DONE_BUTTON
 msgctxt "STRINGS.UI.FRONTEND.DONE_BUTTON"
 msgid "DONE"
 msgstr "完成"
+
+#. STRINGS.UI.FRONTEND.FEEDBACK_SCREEN.ALT_DESCRIPTION
+msgctxt "STRINGS.UI.FRONTEND.FEEDBACK_SCREEN.ALT_DESCRIPTION"
+msgid ""
+"Let us know if you encounter any problems or how we can improve your Oxygen "
+"Not Included experience.\n"
+"\n"
+"When reporting a bug, please include your log and colony save file.\n"
+"\n"
+"Thank you for being part of the Oxygen Not Included community!"
+msgstr ""
+"如果你遇到任何问题或有任何我们能提高你的《缺氧》体验的想法，请让我们知道。\n"
+"\n"
+"当报告一个漏洞时，请加入你的日志文件和殖民地存档文件。\n"
+"\n"
+"感谢你作为贡献《缺氧》社区的一员！"
 
 #. STRINGS.UI.FRONTEND.FEEDBACK_SCREEN.BUG_FORUMS_BUTTON
 msgctxt "STRINGS.UI.FRONTEND.FEEDBACK_SCREEN.BUG_FORUMS_BUTTON"
@@ -70000,10 +71979,11 @@ msgstr "查看论坛"
 msgctxt "STRINGS.UI.FRONTEND.LOADSCREEN.MIGRATE_INFO"
 msgid ""
 "We've changed how save files are organized!\n"
-"Please click the button below to automatically update your save file storage."
+"Please \\click\\ the button below to automatically update your save file "
+"storage."
 msgstr ""
 "我们改变了存档文件结构！\n"
-"请点击下方按钮自动更新你的存档文件存储。"
+"请 \\click\\下方按钮自动更新你的存档文件存储。"
 
 #. STRINGS.UI.FRONTEND.LOADSCREEN.MIGRATE_RESULT
 msgctxt "STRINGS.UI.FRONTEND.LOADSCREEN.MIGRATE_RESULT"
@@ -71064,8 +73044,8 @@ msgstr "Steam创意工坊"
 
 #. STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER
 msgctxt "STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER"
-msgid "BLAST OFF!"
-msgstr "起程！"
+msgid "FAST FRIENDS"
+msgstr "密友速递"
 
 #. STRINGS.UI.FRONTEND.MOTD.NEWS_BODY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.NEWS_BODY"
@@ -71083,22 +73063,23 @@ msgstr "加入讨论"
 #. STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY
 msgctxt "STRINGS.UI.FRONTEND.MOTD.PATCH_NOTES_SUMMARY"
 msgid ""
-"This minor update includes:\n"
+"This update includes:\n"
 "\n"
-"•<indent=20px>Better controller support for Steam users.</indent>\n"
-"•<indent=20px>Steam Deck compatibility.</indent>\n"
-"•<indent=20px>Minor UI changes to accommodate smaller displays and "
-"resolutions.</indent>\n"
+"•<indent=20px>Significant performance improvements.</indent>\n"
+"•<indent=20px>New Duplicants.</indent>\n"
+"•<indent=20px>New Overjoyed and Stressed traits.</indent>\n"
+"•<indent=20px>New Critter morphs.</indent>\n"
 "•<indent=20px>Numerous crash and bug fixes.</indent>\n"
 "\n"
 "   Check out the full patch notes for more details!"
 msgstr ""
-"这次小型更新包括：\n"
+"这次更新包括：\n"
 "\n"
-"•<indent=20px>对Steam用户的更好的手柄支持。</indent>\n"
-"•<indent=20px>Steam Deck兼容。</indent>\n"
-"•<indent=20px>少量界面变更，以适应更小分辨率。</indent>\n"
-"•<indent=20px>众多崩溃和漏洞修复</indent>\n"
+"•<indent=20px>显著的性能改善。</indent>\n"
+"•<indent=20px>新的复制人。</indent>\n"
+"•<indent=20px>新的喜悦反应和压力反应特质。</indent>\n"
+"•<indent=20px>新的小动物变种。</indent>\n"
+"•<indent=20px>众多崩溃和漏洞修复。</indent>\n"
 "\n"
 "   请查看完整的更新日志了解详情！"
 
@@ -71260,6 +73241,11 @@ msgstr "创世钥匙"
 msgctxt "STRINGS.UI.FRONTEND.PATCHNOTESSCREEN.FULLPATCHNOTES_TOOLTIP"
 msgid "View the full patch notes online"
 msgstr "在线查看完整更新日志"
+
+#. STRINGS.UI.FRONTEND.PATCHNOTESSCREEN.HEADER
+msgctxt "STRINGS.UI.FRONTEND.PATCHNOTESSCREEN.HEADER"
+msgid "IMPORTANT UPDATE NOTES"
+msgstr "主要的更新日志"
 
 #. STRINGS.UI.FRONTEND.PATCHNOTESSCREEN.OK_BUTTON
 msgctxt "STRINGS.UI.FRONTEND.PATCHNOTESSCREEN.OK_BUTTON"
@@ -71758,13 +73744,14 @@ msgid ""
 "A problem occurred while accessing certain game files that will prevent "
 "starting new games.\n"
 "\n"
-"Please ensure you can modify these files and re-launch the game:\n"
+"Please ensure that the directory and files are readable as well as writable "
+"and re-launch the game:\n"
 "\n"
 "{0}"
 msgstr ""
-"访问特定游戏文件时发生错误，无法开始新游戏。\n"
+"访问某些游戏文件时发生错误，无法开始新游戏。\n"
 "\n"
-"请确保你能修改这些文件，并重启游戏：\n"
+"请确保这些目录和文件是可读可写的，并重启游戏：\n"
 "\n"
 "{0}"
 
@@ -72148,7 +74135,7 @@ msgstr "隔热"
 #. STRINGS.UI.GAMEOBJECTEFFECTS.INSULATED.TOOLTIP
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.INSULATED.TOOLTIP"
 msgid "Proper insulation drastically reduces thermal conductivity"
-msgstr "适当的隔热性可以降低导热率"
+msgstr "适当的隔热性可以降低热导率"
 
 #. STRINGS.UI.GAMEOBJECTEFFECTS.LIFECYCLETITLE
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.LIFECYCLETITLE"
@@ -72384,6 +74371,17 @@ msgstr "这株植物在收获后，需要<b>{0}</b>才会再次成熟"
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.REQUIRES_ATMOSPHERE"
 msgid "This plant must be submerged in one of the following gases: {0}"
 msgstr "这株植物必须在以下其中一种气体中生长：{0}"
+
+#. STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.REQUIRES_ATMOSPHERE_LIQUID
+msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.REQUIRES_ATMOSPHERE_LIQUID"
+msgid "This plant must be submerged in one of the following liquids: {0}"
+msgstr "这株植物必须在以下其中一种液体中生长：{0}"
+
+#. STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.REQUIRES_ATMOSPHERE_MIXED
+msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.REQUIRES_ATMOSPHERE_MIXED"
+msgid ""
+"This plant must be submerged in one of the following gases or liquids: {0}"
+msgstr "这株植物必须在以下其中一种气体或液体中生长：{0}"
 
 #. STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.REQUIRES_DARKNESS
 msgctxt "STRINGS.UI.GAMEOBJECTEFFECTS.TOOLTIPS.REQUIRES_DARKNESS"
@@ -75627,13 +77625,13 @@ msgstr ""
 #. STRINGS.UI.PRIORITYSCREEN.OPEN_JOBS_SCREEN
 msgctxt "STRINGS.UI.PRIORITYSCREEN.OPEN_JOBS_SCREEN"
 msgid ""
-"Click to open the Priorities Screen\n"
+"\\Click\\ to open the Priorities Screen\n"
 "------------------\n"
 "Duplicants will first decide what to work on based on their <style=\"KKeyword"
 "\">Duplicant Priorities</style>, and then decide where to work based on "
 "<style=\"KKeyword\">Building Priorities</style>"
 msgstr ""
-"点击以打开优先级界面\n"
+"\\Click\\以打开优先级界面\n"
 "------------------\n"
 "复制人将首先根据<style=\"KKeyword\">复制人优先级</style>选择做什么，然后再根"
 "据<style=\"KKeyword\">任务优先度</style>选择到哪里做"
@@ -75844,11 +77842,11 @@ msgctxt "STRINGS.UI.RESOURCESCREEN.CATEGORY_TOOLTIP"
 msgid ""
 "Counts all unallocated resources within reach\n"
 "------------------\n"
-"Click to expand"
+"\\Click\\ to expand"
 msgstr ""
 "计算可达范围内所有未分配的资源\n"
 "------------------\n"
-"点击展开"
+"\\Click\\以展开"
 
 #. STRINGS.UI.RESOURCESCREEN.CLEAR_ALL
 msgctxt "STRINGS.UI.RESOURCESCREEN.CLEAR_ALL"
@@ -76647,6 +78645,11 @@ msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_ART_UGLY.DESCRIPTION"
 msgid "<style=\"KKeyword\">Crude</style> artwork quality"
 msgstr "<style=\"KKeyword\">简略</style>艺术质量"
 
+#. STRINGS.UI.ROLES_SCREEN.PERKS.CAN_CLOTHING_ALTERATION.DESCRIPTION
+msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_CLOTHING_ALTERATION.DESCRIPTION"
+msgid "<link=\"CLOTHINGALTERATIONSTATION\">Clothing Refashionator</link> Usage"
+msgstr "<link=\"CLOTHINGALTERATIONSTATION\">时装翻新器</link>的使用"
+
 #. STRINGS.UI.ROLES_SCREEN.PERKS.CAN_COMPOUND.DESCRIPTION
 msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_COMPOUND.DESCRIPTION"
 msgid "<link=\"APOTHECARY\">Apothecary</link> Usage"
@@ -76674,6 +78677,11 @@ msgid ""
 "<link=\"DIAMOND\">Diamond</link> and <link=\"OBSIDIAN\">Obsidian</link> "
 "Mining"
 msgstr "<link=\"DIAMOND\">钻石</link>和<link=\"OBSIDIAN\">黑曜石</link>的开采"
+
+#. STRINGS.UI.ROLES_SCREEN.PERKS.CAN_DIG_UNOBTANIUM.DESCRIPTION
+msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_DIG_UNOBTANIUM.DESCRIPTION"
+msgid "<link=\"UNOBTANIUM\">Neutronium</link> Mining"
+msgstr "<link=\"UNOBTANIUM\">中子物质</link>的开采"
 
 #. STRINGS.UI.ROLES_SCREEN.PERKS.CAN_DIG_VERY_FIRM.DESCRIPTION
 msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_DIG_VERY_FIRM.DESCRIPTION"
@@ -76737,8 +78745,8 @@ msgstr "地理分析"
 
 #. STRINGS.UI.ROLES_SCREEN.PERKS.CAN_USE_CLUSTER_TELESCOPE.DESCRIPTION
 msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_USE_CLUSTER_TELESCOPE.DESCRIPTION"
-msgid "<link=\"TELESCOPE\">Telescope</link> Usage"
-msgstr "<link=\"TELESCOPE\">望远镜</link>的使用"
+msgid "<link=\"CLUSTERTELESCOPE\">Telescope</link> Usage"
+msgstr "<link=\"CLUSTERTELESCOPE\">望远镜</link>的使用"
 
 #. STRINGS.UI.ROLES_SCREEN.PERKS.CAN_USE_RANCH_STATION.DESCRIPTION
 msgctxt "STRINGS.UI.ROLES_SCREEN.PERKS.CAN_USE_RANCH_STATION.DESCRIPTION"
@@ -76892,8 +78900,8 @@ msgstr "空缺职位"
 
 #. STRINGS.UI.ROLES_SCREEN.SLOTS.UNASSIGNED_TOOLTIP
 msgctxt "STRINGS.UI.ROLES_SCREEN.SLOTS.UNASSIGNED_TOOLTIP"
-msgid "Click to assign a Duplicant to this job opening"
-msgstr "点击将这个职位空缺分配给一名复制人"
+msgid "\\Click\\ to assign a Duplicant to this job opening"
+msgstr "\\Click\\将这个职位空缺分配给一名复制人"
 
 #. STRINGS.UI.ROLES_SCREEN.TIER_NAMES.EIGHT
 msgctxt "STRINGS.UI.ROLES_SCREEN.TIER_NAMES.EIGHT"
@@ -77559,14 +79567,14 @@ msgid ""
 "No sounds or notifications will play for this schedule.\n"
 "\n"
 "DISABLED\n"
-"Click to enable"
+"\\Click\\ to enable"
 msgstr ""
 "切换通知\n"
 "------------------\n"
 "不为这个日程表播放音效或显示通知。\n"
 "\n"
 "已禁用\n"
-"点击来启用"
+"\\Click\\以启用"
 
 #. STRINGS.UI.SCHEDULESCREEN.ALARM_BUTTON_ON_TOOLTIP
 msgctxt "STRINGS.UI.SCHEDULESCREEN.ALARM_BUTTON_ON_TOOLTIP"
@@ -77576,14 +79584,14 @@ msgid ""
 "Sounds and notifications will play when shifts change for this schedule.\n"
 "\n"
 "ENABLED\n"
-"Click to disable"
+"\\Click\\ to disable"
 msgstr ""
 "切换通知\n"
 "------------------\n"
 "为这个日程表播放音效或显示通知。\n"
 "\n"
 "已启用\n"
-"点击来禁用"
+"\\Click\\以禁用"
 
 #. STRINGS.UI.SCHEDULESCREEN.ALARM_TITLE_DISABLED
 msgctxt "STRINGS.UI.SCHEDULESCREEN.ALARM_TITLE_DISABLED"
@@ -78359,7 +80367,7 @@ msgstr "无用的机器"
 #. STRINGS.UI.SPACEARTIFACTS.PACUPERCOLATOR.ARTIFACT
 msgctxt "STRINGS.UI.SPACEARTIFACTS.PACUPERCOLATOR.ARTIFACT"
 msgid ""
-"A coffee percolator with the reminants of a blend of coffee that was a "
+"A coffee percolator with the remnants of a blend of coffee that was a "
 "personal favorite of Dr. Hassan Aydem.\n"
 "\n"
 "He would specifically reserve the consumption of this particular blend for "
@@ -78386,7 +80394,7 @@ msgid ""
 "Sciences Department'.\n"
 "\n"
 "It's worth noting that the Gravitas Atmospheric Sciences Department once "
-"simulated an experiment testing the feasability of survival in an "
+"simulated an experiment testing the feasibility of survival in an "
 "environment filled with noble gasses, similar to the ones contained within "
 "this device."
 msgstr ""
@@ -79816,11 +81824,11 @@ msgstr "???"
 msgctxt "STRINGS.UI.STARMAP.COMPOSITION_UNDISCOVERED_TOOLTIP"
 msgid ""
 "Further research required to identify resource\n"
-"------------------\n"
+"\n"
 "Send a Research Module to this destination for more information"
 msgstr ""
 "需要开展进一步研究才能确定资源\n"
-"------------------\n"
+"\n"
 "向此目的地发送研究舱以获取更多信息"
 
 #. STRINGS.UI.STARMAP.CONTAINER_REQUIRED
@@ -80165,12 +82173,12 @@ msgstr "清空发射路径"
 msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.FLIGHT_PATH_CLEAR.TOOLTIP.FAILURE"
 msgid ""
 "This rocket does not have a clear line of sight to space, preventing launch\n"
-"------------------\n"
+"\n"
 "The rocket's launch path can be cleared by excavating undug tiles and "
 "deconstructing any buildings above the rocket"
 msgstr ""
 "这艘火箭上方没有清晰的视野，无法发射\n"
-"------------------\n"
+"\n"
 "通过挖除未挖的格子，拆除建筑，将火箭上方清空"
 
 #. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.FLIGHT_PATH_CLEAR.TOOLTIP.READY
@@ -80202,11 +82210,11 @@ msgstr "控制站"
 msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.HAS_CONTROLSTATION.TOOLTIP.FAILURE"
 msgid ""
 "No Control Station\n"
-"------------------\n"
+"\n"
 "A new Rocket Control Station must be installed inside the rocket"
 msgstr ""
 "无控制站\n"
-"------------------\n"
+"\n"
 "必须在火箭里安装一个新的火箭控制站"
 
 #. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.HAS_CONTROLSTATION.TOOLTIP.READY
@@ -80238,11 +82246,11 @@ msgstr "引擎"
 msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.HAS_ENGINE.TOOLTIP.FAILURE"
 msgid ""
 "No engine installed\n"
-"------------------\n"
+"\n"
 "This rocket cannot launch without a completed engine"
 msgstr ""
 "未安装引擎\n"
-"------------------\n"
+"\n"
 "这艘火箭没有完整的引擎就不能发射"
 
 #. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.HAS_ENGINE.TOOLTIP.READY
@@ -80274,11 +82282,11 @@ msgstr "燃料舱"
 msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.HAS_FUEL_TANK.TOOLTIP.FAILURE"
 msgid ""
 "No fuel tank installed\n"
-"------------------\n"
+"\n"
 "This rocket cannot launch without a completed fuel tank"
 msgstr ""
 "未安装燃料舱\n"
-"------------------\n"
+"\n"
 "这艘火箭没有完整的燃料舱就不能发射"
 
 #. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.HAS_FUEL_TANK.TOOLTIP.READY
@@ -80310,11 +82318,11 @@ msgstr "前锥"
 msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.HAS_NOSECONE.TOOLTIP.FAILURE"
 msgid ""
 "No nosecone installed\n"
-"------------------\n"
+"\n"
 "This rocket cannot launch without a completed nosecone"
 msgstr ""
 "未安装前锥\n"
-"------------------\n"
+"\n"
 "这艘火箭没有安装的前锥就不能发射"
 
 #. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.HAS_NOSECONE.TOOLTIP.READY
@@ -80473,11 +82481,11 @@ msgstr "高度限制"
 msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.MAX_HEIGHT.TOOLTIP.FAILURE"
 msgid ""
 "The height of the rocket exceeds the engine's limit\n"
-"------------------\n"
+"\n"
 "Excess modules must be removed"
 msgstr ""
 "火箭的高度超出了引擎的限制\n"
-"------------------\n"
+"\n"
 "多出的舱块必须移除"
 
 #. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.MAX_HEIGHT.TOOLTIP.READY
@@ -80509,11 +82517,11 @@ msgstr "舱块限制"
 msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.MAX_MODULES.TOOLTIP.FAILURE"
 msgid ""
 "The number of installed modules exceeds the engine's module limit\n"
-"------------------\n"
+"\n"
 "Excess modules must be removed"
 msgstr ""
 "安装的舱块超出了引擎的舱块限制\n"
-"------------------\n"
+"\n"
 "多出的舱块必须移除"
 
 #. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.MAX_MODULES.TOOLTIP.READY
@@ -80535,11 +82543,11 @@ msgstr "可用资源{0}"
 msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.MISSING_TOOLTIP"
 msgid ""
 "No {0} installed\n"
-"------------------\n"
+"\n"
 "This rocket cannot launch without a completed {0}"
 msgstr ""
 "未安装{0}\n"
-"------------------\n"
+"\n"
 "这艘火箭没有安装完整的{0}就不能发射"
 
 #. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.NO_DESTINATION
@@ -80624,13 +82632,13 @@ msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.PILOT_BOARDED.TOOLTIP.FAILURE"
 msgid ""
 "At least one crew member aboard the rocket must possess the <link="
 "\"ROCKETPILOTING1\">Rocket Piloting</link> skill to launch\n"
-"------------------\n"
+"\n"
 "Qualified Duplicants must be assigned to the rocket crew, and have access to "
 "the module's hatch"
 msgstr ""
 "火箭上至少有一名成员具有<link=\"ROCKETPILOTING1\">火箭驾驶</link>技能才能发"
 "射\n"
-"------------------\n"
+"\n"
 "这艘火箭的成员中必须分配了合格的复制人，并且他能够进入火箭的舱门"
 
 #. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.PILOT_BOARDED.TOOLTIP.READY
@@ -80669,11 +82677,11 @@ msgstr "已加燃料"
 msgctxt "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.PROPERLY_FUELED.TOOLTIP.FAILURE"
 msgid ""
 "This rocket does not have enough fuel to reach its destination\n"
-"------------------\n"
+"\n"
 "If the tanks are full, a different Fuel Tank Module may be required"
 msgstr ""
 "这艘火箭到达目的地所需的燃料不足\n"
-"------------------\n"
+"\n"
 "如果燃料舱已满，可能需要另一个不同的燃料舱块"
 
 #. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.PROPERLY_FUELED.TOOLTIP.READY
@@ -80737,12 +82745,12 @@ msgctxt ""
 "STRINGS.UI.STARMAP.LAUNCHCHECKLIST.SUFFICIENT_OXIDIZER.TOOLTIP.FAILURE"
 msgid ""
 "This rocket does not have enough oxidizer to reach its destination\n"
-"------------------\n"
+"\n"
 "If the oxidizer tanks are full, a different Oxidizer Tank Module may be "
 "required"
 msgstr ""
 "这艘火箭到达目的地所需的燃料不足\n"
-"------------------\n"
+"\n"
 "如果燃料舱已满，可能需要另一个不同的燃料舱块"
 
 #. STRINGS.UI.STARMAP.LAUNCHCHECKLIST.SUFFICIENT_OXIDIZER.TOOLTIP.READY
@@ -81219,8 +83227,8 @@ msgstr "<b>{0}</b>"
 
 #. STRINGS.UI.TABLESCREENS.GOTO_DUPLICANT_BUTTON
 msgctxt "STRINGS.UI.TABLESCREENS.GOTO_DUPLICANT_BUTTON"
-msgid "Double-click to go to <b>{0}</b>"
-msgstr "双击来转至<b>{0}</b>"
+msgid "Double-\\click\\ to go to <b>{0}</b>"
+msgstr "\\Click\\两次以转至<b>{0}</b>"
 
 #. STRINGS.UI.TABLESCREENS.INFORMATION_NOT_AVAILABLE_TOOLTIP
 msgctxt "STRINGS.UI.TABLESCREENS.INFORMATION_NOT_AVAILABLE_TOOLTIP"
@@ -81239,8 +83247,8 @@ msgstr "这里没有人……"
 
 #. STRINGS.UI.TABLESCREENS.SELECT_DUPLICANT_BUTTON
 msgctxt "STRINGS.UI.TABLESCREENS.SELECT_DUPLICANT_BUTTON"
-msgid "Click to select <b>{0}</b>"
-msgstr "点击来选择<b>{0}</b>"
+msgid "\\Click\\ to select <b>{0}</b>"
+msgstr "\\Click\\以选择<b>{0}</b>"
 
 #. STRINGS.UI.TOOLS.ATTACK.NAME
 msgctxt "STRINGS.UI.TOOLS.ATTACK.NAME"
@@ -81264,8 +83272,8 @@ msgstr "建造{0}"
 
 #. STRINGS.UI.TOOLS.BUILD.TOOLACTION
 msgctxt "STRINGS.UI.TOOLS.BUILD.TOOLACTION"
-msgid "CLICK TO BUILD"
-msgstr "点击来建造"
+msgid "\\CLICK\\ TO BUILD"
+msgstr "\\CLICK\\以建造"
 
 #. STRINGS.UI.TOOLS.BUILD.TOOLACTION_DRAG
 msgctxt "STRINGS.UI.TOOLS.BUILD.TOOLACTION_DRAG"
@@ -81679,8 +83687,8 @@ msgstr "移动"
 
 #. STRINGS.UI.TOOLS.MOVETOLOCATION.TOOLACTION
 msgctxt "STRINGS.UI.TOOLS.MOVETOLOCATION.TOOLACTION"
-msgid "CLICK"
-msgstr "点击"
+msgid "\\CLICK\\"
+msgstr "\\CLICK\\"
 
 #. STRINGS.UI.TOOLS.MOVETOLOCATION.TOOLNAME
 msgctxt "STRINGS.UI.TOOLS.MOVETOLOCATION.TOOLNAME"
@@ -81719,8 +83727,8 @@ msgstr "必须对太空有清空的路径"
 
 #. STRINGS.UI.TOOLS.PLACE.TOOLACTION
 msgctxt "STRINGS.UI.TOOLS.PLACE.TOOLACTION"
-msgid "CLICK TO PLACE"
-msgstr "点击来放置"
+msgid "\\CLICK\\  TO PLACE"
+msgstr "\\CLICK\\以放置"
 
 #. STRINGS.UI.TOOLS.PLACE.TOOLNAME
 msgctxt "STRINGS.UI.TOOLS.PLACE.TOOLNAME"
@@ -82242,13 +84250,13 @@ msgstr "查看每个周期的殖民地报告 {Hotkey}"
 msgctxt "STRINGS.UI.TOOLTIPS.MANAGEMENTMENU_JOBS"
 msgid ""
 "Manage my Duplicant Priorities {Hotkey}\n"
-"------------------\n"
-"<style=\"KKeyword\">Duplicant Priorities</style> are calculated <i>before</"
-"i> the <style=\"KKeyword\">Building Priorities</style> set by the "
-"<b>Priority Tool</b> {Hotkey/Prioritize}"
+"\n"
+"Duplicant Priorities</style> are calculated <i>before</i> the <style="
+"\"KKeyword\">Building Priorities</style> set by the <b>Priority Tool</b> "
+"{Hotkey/Prioritize}"
 msgstr ""
 "管理我的复制人优先级 {Hotkey}\n"
-"------------------\n"
+"\n"
 "<style=\"KKeyword\">复制人优先级</style><i>先于</i>用<b>优先度工具</b> "
 "{Hotkey/Prioritize} 设定的<style=\"KKeyword\">任务优先度</style>考虑"
 
@@ -82261,12 +84269,12 @@ msgstr "打开游戏菜单 {Hotkey}"
 msgctxt "STRINGS.UI.TOOLTIPS.MANAGEMENTMENU_REQUIRES_RESEARCH"
 msgid ""
 "Build a Research Station to unlock this menu\n"
-"------------------\n"
+"\n"
 "The <link=\"RESEARCHCENTER\">Research Station</link> can be found in the "
 "<b>Stations Tab</b> {Hotkey/Plan10} of the Build Menu"
 msgstr ""
 "建造研究站来解锁这个菜单\n"
-"------------------\n"
+"\n"
 "<link=\"RESEARCHCENTER\">研究站</link>可在建造菜单的<b>站台栏</b> {Hotkey/"
 "Plan10} 中找到"
 
@@ -82274,12 +84282,12 @@ msgstr ""
 msgctxt "STRINGS.UI.TOOLTIPS.MANAGEMENTMENU_REQUIRES_SKILL_STATION"
 msgid ""
 "Build a Printing Pod to unlock this menu\n"
-"------------------\n"
+"\n"
 "The <link=\"HEADQUARTERS\">Printing Pod</link> can be found in the <b>Base "
 "Tab</b> {Hotkey/Plan1} of the Build Menu"
 msgstr ""
 "建造打印舱来解锁这个菜单\n"
-"------------------\n"
+"\n"
 "<link=\"HEADQUARTERS\">打印舱</link>可在建造菜单的<b>基地栏</b> {Hotkey/"
 "Plan1} 中找到"
 
@@ -82287,12 +84295,12 @@ msgstr ""
 msgctxt "STRINGS.UI.TOOLTIPS.MANAGEMENTMENU_REQUIRES_TELESCOPE"
 msgid ""
 "Build a Telescope to unlock this menu\n"
-"------------------\n"
+"\n"
 "The <link=\"TELESCOPE\">Telescope</link> can be found in the <b>Stations "
 "Tab</b> {Hotkey/Plan10} of the Build Menu"
 msgstr ""
 "建造望远镜来解锁这个菜单\n"
-"------------------\n"
+"\n"
 "<link=\"TELESCOPE\">望远镜</link>可在建造菜单的<b>站台栏</b> {Hotkey/Plan10} "
 "中找到"
 
@@ -82300,12 +84308,12 @@ msgstr ""
 msgctxt "STRINGS.UI.TOOLTIPS.MANAGEMENTMENU_REQUIRES_TELESCOPE_CLUSTER"
 msgid ""
 "Build a Telescope to unlock this menu\n"
-"------------------\n"
+"\n"
 "The <link=\"TELESCOPE\">Telescope</link> can be found in the <b>Rocketry "
 "Tab</b> {Hotkey/Plan14} of the Build Menu"
 msgstr ""
 "建造望远镜来解锁这个菜单\n"
-"------------------\n"
+"\n"
 "<link=\"TELESCOPE\">望远镜</link>可在建造菜单的<b>站台栏</b> {Hotkey/Plan14} "
 "中找到"
 
@@ -82448,13 +84456,13 @@ msgstr "显示工作优先度值 {Hotkey}"
 msgctxt "STRINGS.UI.TOOLTIPS.PRIORITIZEBUTTON"
 msgid ""
 "Set Building Priority {Hotkey}\n"
-"------------------\n"
-"<style=\"KKeyword\">Duplicant Priorities</style> {Hotkey/ManagePriorities} "
-"are calculated <i>before</i> the <style=\"KKeyword\">Building Priorities</"
-"style> set by this tool"
+"\n"
+"Duplicant Priorities</style> {Hotkey/ManagePriorities} are calculated "
+"<i>before</i> the <style=\"KKeyword\">Building Priorities</style> set by "
+"this tool"
 msgstr ""
 "设置任务优先度 {Hotkey}\n"
-"------------------\n"
+"\n"
 "<style=\"KKeyword\">复制人优先级</style> {Hotkey/ManagePriorities} <i>先于</"
 "I>用这个工具设置的<style=\"KKeyword\">任务优先度</style>考虑"
 
@@ -82521,8 +84529,8 @@ msgstr "现有材料不足以建造这个建筑"
 
 #. STRINGS.UI.TOOLTIPS.SORTCOLUMN
 msgctxt "STRINGS.UI.TOOLTIPS.SORTCOLUMN"
-msgid "Click to sort"
-msgstr "点击来分类"
+msgid "\\Click\\ to sort"
+msgstr "\\Click\\以分类"
 
 #. STRINGS.UI.TOOLTIPS.SPEEDBUTTON_FAST
 msgctxt "STRINGS.UI.TOOLTIPS.SPEEDBUTTON_FAST"
@@ -82562,9 +84570,9 @@ msgstr ""
 #. STRINGS.UI.TOOLTIPS.STRESSPANEL
 msgctxt "STRINGS.UI.TOOLTIPS.STRESSPANEL"
 msgid ""
-"The Stress Panel offers a detailed look at what is psychology affecting "
-"Duplicant psychologically"
-msgstr "压力面板详细显示了影响复制人心理状态的因素"
+"The Stress Panel offers a detailed look at what is affecting my Duplicant "
+"psychologically"
+msgstr "压力面板详细显示了影响我的复制人心理状态的因素"
 
 #. STRINGS.UI.TOOLTIPS.SUITOVERLAYSTRING
 msgctxt "STRINGS.UI.TOOLTIPS.SUITOVERLAYSTRING"
@@ -82712,88 +84720,88 @@ msgctxt "STRINGS.UI.UISIDESCREENS.ACCESS_CONTROL_SIDE_SCREEN.GO_DOWN_DISABLED"
 msgid ""
 "Passing Down through this door is not permitted\n"
 "\n"
-"Click to grant permission"
+"\\Click\\ to grant permission"
 msgstr ""
 "向下侧通过这扇门是不允许的\n"
 "\n"
-"点击来授予权限"
+"\\Click\\以授予权限"
 
 #. STRINGS.UI.UISIDESCREENS.ACCESS_CONTROL_SIDE_SCREEN.GO_DOWN_ENABLED
 msgctxt "STRINGS.UI.UISIDESCREENS.ACCESS_CONTROL_SIDE_SCREEN.GO_DOWN_ENABLED"
 msgid ""
 "Passing Down through this door is permitted\n"
 "\n"
-"Click to revoke permission"
+"\\Click\\ to revoke permission"
 msgstr ""
 "向下侧通过这扇门是允许的\n"
 "\n"
-"点击来撤销权限"
+"\\Click\\以撤销权限"
 
 #. STRINGS.UI.UISIDESCREENS.ACCESS_CONTROL_SIDE_SCREEN.GO_LEFT_DISABLED
 msgctxt "STRINGS.UI.UISIDESCREENS.ACCESS_CONTROL_SIDE_SCREEN.GO_LEFT_DISABLED"
 msgid ""
 "Passing Left through this door is not permitted\n"
 "\n"
-"Click to grant permission"
+"\\Click\\ to grant permission"
 msgstr ""
 "向左侧通过这扇门是不允许的\n"
 "\n"
-"点击来授予权限"
+"\\Click\\以授予权限"
 
 #. STRINGS.UI.UISIDESCREENS.ACCESS_CONTROL_SIDE_SCREEN.GO_LEFT_ENABLED
 msgctxt "STRINGS.UI.UISIDESCREENS.ACCESS_CONTROL_SIDE_SCREEN.GO_LEFT_ENABLED"
 msgid ""
 "Passing Left through this door is permitted\n"
 "\n"
-"Click to revoke permission"
+"\\Click\\ to revoke permission"
 msgstr ""
 "向左侧通过这扇门是允许的\n"
 "\n"
-"点击来撤销权限"
+"\\Click\\以撤销权限"
 
 #. STRINGS.UI.UISIDESCREENS.ACCESS_CONTROL_SIDE_SCREEN.GO_RIGHT_DISABLED
 msgctxt "STRINGS.UI.UISIDESCREENS.ACCESS_CONTROL_SIDE_SCREEN.GO_RIGHT_DISABLED"
 msgid ""
 "Passing Right through this door is not permitted\n"
 "\n"
-"Click to grant permission"
+"\\Click\\ to grant permission"
 msgstr ""
 "向右侧通过这扇门是不允许的\n"
 "\n"
-"点击来授予权限"
+"\\Click\\以授予权限"
 
 #. STRINGS.UI.UISIDESCREENS.ACCESS_CONTROL_SIDE_SCREEN.GO_RIGHT_ENABLED
 msgctxt "STRINGS.UI.UISIDESCREENS.ACCESS_CONTROL_SIDE_SCREEN.GO_RIGHT_ENABLED"
 msgid ""
 "Passing Right through this door is permitted\n"
 "\n"
-"Click to revoke permission"
+"\\Click\\ to revoke permission"
 msgstr ""
 "向右侧通过这扇门是允许的\n"
 "\n"
-"点击来撤销权限"
+"\\Click\\以撤销权限"
 
 #. STRINGS.UI.UISIDESCREENS.ACCESS_CONTROL_SIDE_SCREEN.GO_UP_DISABLED
 msgctxt "STRINGS.UI.UISIDESCREENS.ACCESS_CONTROL_SIDE_SCREEN.GO_UP_DISABLED"
 msgid ""
 "Passing Up through this door is not permitted\n"
 "\n"
-"Click to grant permission"
+"\\Click\\ to grant permission"
 msgstr ""
 "向上侧通过这扇门是不允许的\n"
 "\n"
-"点击来授予权限"
+"\\Click\\以授予权限"
 
 #. STRINGS.UI.UISIDESCREENS.ACCESS_CONTROL_SIDE_SCREEN.GO_UP_ENABLED
 msgctxt "STRINGS.UI.UISIDESCREENS.ACCESS_CONTROL_SIDE_SCREEN.GO_UP_ENABLED"
 msgid ""
 "Passing Up through this door is permitted\n"
 "\n"
-"Click to revoke permission"
+"\\Click\\ to revoke permission"
 msgstr ""
 "向上侧通过这扇门是允许的\n"
 "\n"
-"点击来撤销权限"
+"\\Click\\以撤销权限"
 
 #. STRINGS.UI.UISIDESCREENS.ACCESS_CONTROL_SIDE_SCREEN.MINION_ACCESS
 msgctxt "STRINGS.UI.UISIDESCREENS.ACCESS_CONTROL_SIDE_SCREEN.MINION_ACCESS"
@@ -82802,13 +84810,13 @@ msgstr "复制人通行权限"
 
 #. STRINGS.UI.UISIDESCREENS.ACCESS_CONTROL_SIDE_SCREEN.SET_TO_CUSTOM
 msgctxt "STRINGS.UI.UISIDESCREENS.ACCESS_CONTROL_SIDE_SCREEN.SET_TO_CUSTOM"
-msgid "Click to assign custom permissions"
-msgstr "点击来设置自定义权限"
+msgid "\\Click\\ to assign custom permissions"
+msgstr "\\Click\\以设置自定义权限"
 
 #. STRINGS.UI.UISIDESCREENS.ACCESS_CONTROL_SIDE_SCREEN.SET_TO_DEFAULT
 msgctxt "STRINGS.UI.UISIDESCREENS.ACCESS_CONTROL_SIDE_SCREEN.SET_TO_DEFAULT"
-msgid "Click to clear custom permissions"
-msgstr "点击来清除自定义权限"
+msgid "\\Click\\ to clear custom permissions"
+msgstr "\\Click\\以清除自定义权限"
 
 #. STRINGS.UI.UISIDESCREENS.ACCESS_CONTROL_SIDE_SCREEN.TITLE
 msgctxt "STRINGS.UI.UISIDESCREENS.ACCESS_CONTROL_SIDE_SCREEN.TITLE"
@@ -82949,6 +84957,11 @@ msgstr "允许复制人手动管理这些存储材料"
 msgctxt "STRINGS.UI.UISIDESCREENS.AUTOMATABLE_SIDE_SCREEN.TITLE"
 msgid "Automatable Storage"
 msgstr "自动化存储"
+
+#. STRINGS.UI.UISIDESCREENS.AUTOPLUMBERSIDESCREEN.BUTTONS.FACADE.TOOLTIP
+msgctxt "STRINGS.UI.UISIDESCREENS.AUTOPLUMBERSIDESCREEN.BUTTONS.FACADE.TOOLTIP"
+msgid "Toggle the building facade"
+msgstr "切换建筑外观"
 
 #. STRINGS.UI.UISIDESCREENS.AUTOPLUMBERSIDESCREEN.BUTTONS.MINION.TOOLTIP
 msgctxt "STRINGS.UI.UISIDESCREENS.AUTOPLUMBERSIDESCREEN.BUTTONS.MINION.TOOLTIP"
@@ -84178,11 +86191,11 @@ msgctxt ""
 msgid ""
 "This rocket will take off as soon as a Duplicant takes the controls\n"
 "------------------\n"
-"<b>Click to cancel launch</b>"
+"<b>\\Click\\ to cancel launch</b>"
 msgstr ""
 "只要复制人来控制一下，这艘火箭就将起飞\n"
 "------------------\n"
-"<i>点击来取消发射。</i>"
+"<i>\\Click\\以取消发射</i>"
 
 #. STRINGS.UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.LAUNCH_WARNINGS_BUTTON
 msgctxt "STRINGS.UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.LAUNCH_WARNINGS_BUTTON"
@@ -84195,11 +86208,11 @@ msgctxt ""
 msgid ""
 "Some items in the Launch Checklist require attention\n"
 "------------------\n"
-"<b>Click to ignore warnings and proceed with launch</b>"
+"<b>\\Click\\ to ignore warnings and proceed with launch</b>"
 msgstr ""
 "在发射检查表中的一些条目需要注意\n"
 "------------------\n"
-"<b>点击来忽略警告并继续发射</b>"
+"<b>\\Click\\以忽略警告并继续发射</b>"
 
 #. STRINGS.UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.NEW_ROCKET_BUTTON
 msgctxt "STRINGS.UI.UISIDESCREENS.LAUNCHPADSIDESCREEN.NEW_ROCKET_BUTTON"
@@ -84835,8 +86848,8 @@ msgstr "可部署物"
 
 #. STRINGS.UI.UISIDESCREENS.MONUMENTSIDESCREEN.FLIP_FACING_BUTTON
 msgctxt "STRINGS.UI.UISIDESCREENS.MONUMENTSIDESCREEN.FLIP_FACING_BUTTON"
-msgid "CLICK TO ROTATE"
-msgstr "点击来翻转"
+msgid "\\CLICK\\ TO ROTATE"
+msgstr "\\CLICK\\以翻转"
 
 #. STRINGS.UI.UISIDESCREENS.MONUMENTSIDESCREEN.TITLE
 msgctxt "STRINGS.UI.UISIDESCREENS.MONUMENTSIDESCREEN.TITLE"
@@ -85011,6 +87024,11 @@ msgstr "信息"
 msgctxt "STRINGS.UI.UISIDESCREENS.PLANTERSIDESCREEN.LIFECYCLE"
 msgid "<b>Life Cycle</b>:"
 msgstr "<b>生长周期</b>："
+
+#. STRINGS.UI.UISIDESCREENS.PLANTERSIDESCREEN.MUTATIONS_HEADER
+msgctxt "STRINGS.UI.UISIDESCREENS.PLANTERSIDESCREEN.MUTATIONS_HEADER"
+msgid "Mutations"
+msgstr "变异"
 
 #. STRINGS.UI.UISIDESCREENS.PLANTERSIDESCREEN.NO_SPECIES_SELECTED
 msgctxt "STRINGS.UI.UISIDESCREENS.PLANTERSIDESCREEN.NO_SPECIES_SELECTED"
@@ -86844,6 +88862,23 @@ msgstr "单位"
 msgctxt "STRINGS.UI.UNITSUFFIXES.UNITS"
 msgid " units"
 msgstr "单位"
+
+#. STRINGS.UI.USERMENUACTIONS.ACCEPT_MUTANT_SEEDS.ACCEPT
+msgctxt "STRINGS.UI.USERMENUACTIONS.ACCEPT_MUTANT_SEEDS.ACCEPT"
+msgid "Allow Mutants"
+msgstr "允许变异体"
+
+#. STRINGS.UI.USERMENUACTIONS.ACCEPT_MUTANT_SEEDS.REJECT
+msgctxt "STRINGS.UI.USERMENUACTIONS.ACCEPT_MUTANT_SEEDS.REJECT"
+msgid "Forbid Mutants"
+msgstr "禁止变异体"
+
+#. STRINGS.UI.USERMENUACTIONS.ACCEPT_MUTANT_SEEDS.TOOLTIP
+msgctxt "STRINGS.UI.USERMENUACTIONS.ACCEPT_MUTANT_SEEDS.TOOLTIP"
+msgid ""
+"Toggle whether or not this building will accept <style=\"KKeyword\">Mutant "
+"Seeds</style> for recipes that could use them"
+msgstr "控制建筑的配方是否能接收<style=\"KKeyword\">变异种子</style>以供使用"
 
 #. STRINGS.UI.USERMENUACTIONS.ACTIVATEBUILDING.ACTIVATE
 msgctxt "STRINGS.UI.USERMENUACTIONS.ACTIVATEBUILDING.ACTIVATE"
@@ -89729,7 +91764,7 @@ msgctxt "STRINGS.WORLDS.REGOLITHMOONLET.DESCRIPTION"
 msgid ""
 "A small, cold world with plenty of craters.\n"
 "\n"
-"<smallcaps>Regolith Asteroids have frequent meteor showers and are chalk "
+"<smallcaps>Regolith Asteroids have frequent meteor showers and are chock-"
 "full of Regolith, an incredibly useful filtration material. </smallcaps>"
 msgstr ""
 "一个满是尘土，有许多陨石坑的小型星球。\n"
@@ -90297,11 +92332,188 @@ msgctxt "STRINGS.WORLDS.WATERMOONLET.NAME"
 msgid "Water Asteroid"
 msgstr "水域小行星"
 
+#~ msgctxt "STRINGS.CODEX.VARIANT_FRESH_WATER.BODY.CONTAINER1"
+#~ msgid "<smallcaps>Pictured: \"Filter\" Pokeshell variant</smallcaps>"
+#~ msgstr "<smallcaps>图片：\"过滤\"抛壳蟹变种</smallcaps>"
+
+#~ msgctxt "STRINGS.CREATURES.STATUSITEMS.ELEMENT_GROWTH_HALTED.NAME"
+#~ msgid "Picky Eater: Stopped"
+#~ msgstr "挑剔进食：停止"
+
+#~ msgctxt "STRINGS.DUPLICANTS.CHORES.ANALYZEARTIFACT.TOOLTIP"
+#~ msgid ""
+#~ "This Duplicant is working on analyzing <style=\"KKeyword\">Artifacts</"
+#~ "style> to discover the past"
+#~ msgstr "这名复制人正在努力分析<style=\"KKeyword\">工艺品</style>以揭开过去"
+
+#~ msgctxt "STRINGS.UI.DEVELOPMENTBUILDS.ALPHA.LOADING.CONTINUEBUTTON"
+#~ msgid "Okay, thanks for the heads up!"
+#~ msgstr "好的，谢谢提醒！"
+
+#~ msgctxt "STRINGS.BUILDING.STATUSITEMS.HEATINGSTALLEDLOWMASS_GAS.NAME"
+#~ msgid "Low Air Pressure"
+#~ msgstr "气压过低"
+
+#~ msgctxt "STRINGS.BUILDING.STATUSITEMS.HEATINGSTALLEDLOWMASS_GAS.TOOLTIP"
+#~ msgid ""
+#~ "A minimum atmospheric pressure of <b>{TargetPressure}</b> is needed for "
+#~ "this building to heat up"
+#~ msgstr "气压至少需要达到<b>{TargetPressure}</b>才能使这个建筑加热"
+
+#~ msgctxt "STRINGS.DUPLICANTS.MODIFIERS.SEAFOODRADIATIONRESISTANCE.NAME"
+#~ msgid "Radiation Resistant: Seafood"
+#~ msgstr "辐射抗性：海产食品"
+
+#~ msgctxt "STRINGS.ITEMS.FOOD.CURRY.DESC"
+#~ msgid ""
+#~ "<link=\"GINGER\">Tonic Root</link> combined with <link=\"BEANPLANTSEED"
+#~ "\">Nosh Beans</link>.\n"
+#~ "\n"
+#~ "A belly-warming, nose-tingling entree."
+#~ msgstr ""
+#~ "<link=\"GINGER\">滋补根</link>与<link=\"BEANPLANTSEED\">小吃豆</link>的结"
+#~ "合。\n"
+#~ "\n"
+#~ "一道暖胃而刺鼻的小菜。"
+
+#~ msgctxt "STRINGS.ITEMS.FOOD.CURRY.RECIPEDESC"
+#~ msgid ""
+#~ "<link=\"GINGER\">Tonic Root</link> combined with <link=\"BEANPLANTSEED"
+#~ "\">Nosh Beans</link>."
+#~ msgstr ""
+#~ "<link=\"GINGER\">滋补根</link>与<link=\"BEANPLANTSEED\">小吃豆</link>的结"
+#~ "合。"
+
+#~ msgctxt "STRINGS.UI.FRONTEND.MOTD.IMAGE_HEADER"
+#~ msgid "BLAST OFF!"
+#~ msgstr "起程！"
+
+#~ msgctxt "STRINGS.CREATURES.MODIFIERS.EGGHUG.NAME"
+#~ msgid "Hugged"
+#~ msgstr "受拥抱"
+
+#~ msgctxt "STRINGS.CODEX.GINGER.BODY.CONTAINER1"
+#~ msgid ""
+#~ "A chewy, fibrous rhizome with a fiery aftertaste.\n"
+#~ "\n"
+#~ "It relieves gassiness."
+#~ msgstr ""
+#~ "一种耐嚼的纤维根茎，回味稍辣。\n"
+#~ "\n"
+#~ "它可以缓解胀气。"
+
+#~ msgctxt "STRINGS.CREATURES.MODIFIERS.ELEMENT_GROWTH_RATE.NAME"
+#~ msgid "Tonic Root Regrowth Rate"
+#~ msgstr "滋补根再生速率"
+
+#~ msgctxt "STRINGS.DUPLICANTS.MODIFIERS.HOTSTUFF.TOOLTIP"
+#~ msgid ""
+#~ "This Duplicant had an extremely spicy meal and is feeling full of energy "
+#~ "but a bit stressed"
+#~ msgstr "这名复制人吃了超辣的一餐感觉充满了能量，但也感到有一点压力"
+
+#~ msgctxt "STRINGS.EQUIPMENT.PREFABS.FUNKY_VEST.EFFECT"
+#~ msgid "Increases Decor in a small area effect around the wearer."
+#~ msgstr "提高穿戴者身边小范围内的装饰度。"
+
+#~ msgctxt "STRINGS.EQUIPMENT.PREFABS.FUNKY_VEST.RECIPE_DESC"
+#~ msgid "Increases Decor in a small area effect around the wearer."
+#~ msgstr "提高穿戴者身边小范围内的装饰度。"
+
+#~ msgctxt "STRINGS.ITEMS.FOOD.CURRY.DESC"
+#~ msgid ""
+#~ "<link=\"GINGER\">Tonic Root</link> combined with <link=\"BEANPLANTSEED"
+#~ "\">Nosh Beans</link> and a dash of <link=\"SPICENUT\">Pincha Peppernut</"
+#~ "link>.\n"
+#~ "\n"
+#~ "It packs a spicy punch that makes your nose itch."
+#~ msgstr ""
+#~ "<link=\"GINGER\">滋补根</link>与<link=\"BEANPLANTSEED\">小吃豆</link>的结"
+#~ "合，再来上一点<link=\"SPICENUT\">火椒粒</link>。\n"
+#~ "\n"
+#~ "来上一口就能辣得你鼻子发痒。"
+
 #~ msgctxt ""
-#~ "STRINGS.UI.UISIDESCREENS.FABRICATORSIDESCREEN."
-#~ "ALLOW_MUTANT_SEED_INGREDIENTS"
-#~ msgid "Allow Mutant Seeds"
-#~ msgstr "允许变异种子"
+#~ "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.BABY_CRAB_SHELL.VARIANT_FRESH_WATER.DESC"
+#~ msgid "Can be crushed to produce <link=\"LIME\">Lime</link>."
+#~ msgstr "可压碎以产生<link=\"LIME\">石灰</link>。"
+
+#~ msgctxt ""
+#~ "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.BABY_CRAB_SHELL.VARIANT_FRESH_WATER.NAME"
+#~ msgid "Small Sanishell Molt"
+#~ msgstr "小沙泥蟹壳"
+
+#~ msgctxt ""
+#~ "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.CRAB_SHELL.VARIANT_FRESH_WATER.DESC"
+#~ msgid "Can be crushed to produce <link=\"LIME\">Lime</link>."
+#~ msgstr "可压碎以产生<link=\"LIME\">石灰</link>。"
+
+#~ msgctxt ""
+#~ "STRINGS.ITEMS.INDUSTRIAL_PRODUCTS.CRAB_SHELL.VARIANT_FRESH_WATER.NAME"
+#~ msgid "Sanishell Molt"
+#~ msgstr "沙泥蟹壳"
+
+#~ msgctxt "STRINGS.CREATURES.STATUSITEMS.HALTED_SCALE_GROWTH.NAME"
+#~ msgid "Halted Scales"
+#~ msgstr "停止生长的鳞片"
+
+#~ msgctxt "STRINGS.CODEX.C5_ENGINEERINGCANDIDATE.BODY.EMAILHEADER1"
+#~ msgid ""
+#~ "<smallcaps>To: <b>[REDACTED]</b>\n"
+#~ "From: <b>Director Stern</b><size=12><alpha=#AA> <jstern@gravitas.nova></"
+#~ "size></color></smallcaps>\n"
+#~ "------------------\n"
+#~ msgstr ""
+#~ "<smallcaps>收件人：<b>[加密]</b>\n"
+#~ "发件人：<b>斯特恩主管</b><size=12><alpha=#AA> <jstern@gravitas.nova></"
+#~ "size></color></smallcaps>\n"
+#~ "------------------\n"
+
+#~ msgctxt "STRINGS.CODEX.SO_LAUNCH_TRAILER.SUBTITLE"
+#~ msgid "Spaced Out Trailer"
+#~ msgstr "眼冒金星宣传片"
+
+#~ msgctxt "STRINGS.CREATURES.SPECIES.SWAMPLILY.DOMESTICATEDDESC"
+#~ msgid "This plant produces medicinal Balm Lily Flower."
+#~ msgstr "这种植物可产出芳香百合花。"
+
+#~ msgctxt "STRINGS.CREATURES.STATUSITEMS.EXPELLING_LIQUID.TOOLTIP"
+#~ msgid "This critter doing their \"business\""
+#~ msgstr "这只小动物正在\"方便\""
+
+#~ msgctxt "STRINGS.DUPLICANTS.ATTRIBUTES.HAPPINESS.NAME"
+#~ msgid "Happiness"
+#~ msgstr "幸福度"
+
+#~ msgctxt "STRINGS.DUPLICANTS.CHORES.UGLY_CRY.TOOLTIP"
+#~ msgid ""
+#~ "This Duplicant is having a healthy cry to alleviate their negative "
+#~ "emotions"
+#~ msgstr "这名复制人正在哭泣，这是健康的表现，可以缓解负面情绪"
+
+#~ msgctxt "STRINGS.ELEMENTS.NUCLEARWASTE.DESC"
+#~ msgid ""
+#~ "Highly toxic liquid full of <link=\"RADIATION\">Radioactive Contaminants</"
+#~ "link>. Formed in a <link=\"NUCLEARREACTOR\">Reactor meltdown</link>."
+#~ msgstr ""
+#~ "充满<link=\"RADIATION\">放射性污染物</link>的剧毒液体。在<link="
+#~ "\"NUCLEARREACTOR\">反应堆熔毁</link>时形成。"
+
+#~ msgctxt "STRINGS.ELEMENTS.SOLIDNUCLEARWASTE.DESC"
+#~ msgid ""
+#~ "Highly toxic liquid full of <link=\"RADIATION\">Radioactive Contaminants</"
+#~ "link>. Formed in a <link=\"NUCLEARREACTOR\">Reactor meltdown</link>."
+#~ msgstr ""
+#~ "充满<link=\"RADIATION\">放射性污染物</link>的剧毒液体。在<link="
+#~ "\"NUCLEARREACTOR\">反应堆熔毁</link>时形成。"
+
+#~ msgctxt "STRINGS.ITEMS.FOOD.COOKEDFISH.RECIPEDESC"
+#~ msgid ""
+#~ "The cooked <link=\"FISHMEAT\">Fillet</link> of a freshly caught <link="
+#~ "\"PACU\">Pacu</link>."
+#~ msgstr ""
+#~ "由新鲜捕获的<link=\"PACU\">帕库鱼</link>制成的熟<link=\"FISHMEAT\">鱼片</"
+#~ "link>。"
 
 #~ msgctxt ""
 #~ "STRINGS.BUILDING.STATUSITEMS.NORESEARCHSELECTED.NOTIFICATION_TOOLTIP"
@@ -90944,12 +93156,6 @@ msgstr "水域小行星"
 #~ "载游戏了。</indent>\n"
 #~ "\n"
 #~ "请查看完整的更新日志了解详情！"
-
-#~ msgctxt ""
-#~ "STRINGS.UI.UISIDESCREENS.ARTIFACTANALYSISSIDESCREEN."
-#~ "NO_ARTIFACTS_DISCOVERED_TOOLTIP"
-#~ msgid "A skilled artist can analyze artifacts"
-#~ msgstr "一名熟练的艺术家能够分析工艺品"
 
 #~ msgctxt ""
 #~ "STRINGS.UI.UISIDESCREENS.ROCKETRESTRICTIONSIDESCREEN."
@@ -91902,10 +94108,6 @@ msgstr "水域小行星"
 #~ msgctxt "STRINGS.CREATURES.PLANT_MUTATIONS.BASIC_MUTATION_D.DESCRIPTION"
 #~ msgid "A plant with this mutation requires more irrigation"
 #~ msgstr "有这种变异的植物需要更多的灌溉"
-
-#~ msgctxt "STRINGS.CREATURES.PLANT_MUTATIONS.BASIC_MUTATION_D.NAME"
-#~ msgid "Guzzling"
-#~ msgstr "耗液"
 
 #~ msgctxt "STRINGS.CREATURES.PLANT_MUTATIONS.BASIC_MUTATION_E.DESCRIPTION"
 #~ msgid ""
@@ -93026,13 +95228,6 @@ msgstr "水域小行星"
 #~ "The Teleportal is not ready to use yet. Current estimates predict it "
 #~ "should be ready in {cycles} cycles."
 #~ msgstr "传送器尚未准备就绪。当前预计在{cycles}周期后准备就绪。"
-
-#~ msgctxt "STRINGS.BUILDINGS.PREFABS.BEEHIVE.EFFECT"
-#~ msgid ""
-#~ "<link=\"BEEHIVE\">Beetafineries</link> are the homes of <link=\"BEE"
-#~ "\">Beetas</link>."
-#~ msgstr ""
-#~ "<link=\"BEEHIVE\">辐射蜂巢</link>是<link=\"BEE\">辐射蜂</link>的家。"
 
 #~ msgctxt "STRINGS.BUILDINGS.PREFABS.LAUNCHPAD.EFFECT"
 #~ msgid ""
@@ -94509,10 +96704,6 @@ msgstr "水域小行星"
 #~ "\n"
 #~ "请查看完整补丁说明来获得进一步的信息！"
 
-#~ msgctxt "STRINGS.BUILDING.STATUSITEMS.HOTTUBTOOHOT.NAME"
-#~ msgid "Too Hot"
-#~ msgstr "过热"
-
 #~ msgctxt "STRINGS.BUILDING.STATUSITEMS.HOTTUBWATERTOOCOLD.NAME"
 #~ msgid "Too Cold"
 #~ msgstr "过冷"
@@ -95591,20 +97782,6 @@ msgstr "水域小行星"
 #~ msgctxt "STRINGS.BUILDINGS.PREFABS.ROCKCRUSHER.DESC"
 #~ msgid "Sand is used in an array of liquid and air filtering processes."
 #~ msgstr "沙子用于多项液体和气体过滤工艺中。"
-
-#~ msgctxt "STRINGS.CODEX.A4_ATOMICONRECRUITMENT.BODY.SIGNATURE1"
-#~ msgid ""
-#~ "\n"
-#~ "Dr. Jonesn\n"
-#~ "<size=11>Information and Statistics Department\n"
-#~ "The Gravitas Facility</size>\n"
-#~ "------------------\n"
-#~ msgstr ""
-#~ "\n"
-#~ "琼斯博士\n"
-#~ "<size=11>信息数据部\n"
-#~ "庄严科技</size>\n"
-#~ "------------------\n"
 
 #~ msgctxt "STRINGS.CODEX.AUTOMATION.TITLE"
 #~ msgid "Automation"
@@ -98079,10 +100256,6 @@ msgstr "水域小行星"
 #~ msgid "Something"
 #~ msgstr "有点事"
 
-#~ msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.SLEEPINGINTERRUPTEDLIGHT.NAME"
-#~ msgid "Disturbed"
-#~ msgstr "被打扰"
-
 #~ msgctxt "STRINGS.DUPLICANTS.STATUSITEMS.SLEEPINGINTERRUPTEDLIGHT.TOOLTIP"
 #~ msgid "This Duplicant's sleep is being disturbed by noise from {Disturber}"
 #~ msgstr "复制人被{Disturber}的噪音打扰"
@@ -99950,10 +102123,6 @@ msgstr "水域小行星"
 #~ msgstr ""
 #~ "这项工作提供深渊晶石元素挖掘\n"
 #~ "方面的培训。"
-
-#~ msgctxt "STRINGS.DUPLICANTS.ROLES.MINER.NAME"
-#~ msgid "<link=\"MINER\">Miner</link>"
-#~ msgstr "<link=\"MINER\">矿工</link>"
 
 #~ msgctxt "STRINGS.DUPLICANTS.ROLES.OIL_TECHNICIAN.DESCRIPTION"
 #~ msgid "Oil Technicians can extract and refine crude oil"

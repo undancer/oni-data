@@ -35,6 +35,12 @@ public class TrackerTool : KMonoBehaviour
 		ClusterManager.Instance.Subscribe(-1078710002, RemoveWorld);
 	}
 
+	protected override void OnForcedCleanUp()
+	{
+		Instance = null;
+		base.OnForcedCleanUp();
+	}
+
 	private void AddMinionTrackers(MinionIdentity identity)
 	{
 		minionTrackers.Add(identity, new List<MinionTracker>());

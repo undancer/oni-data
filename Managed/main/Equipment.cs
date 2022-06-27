@@ -94,9 +94,9 @@ public class Equipment : Assignables
 				component4.AttachSnapOnByName(equippable.def.SnapOn1);
 			}
 		}
-		if (component != null && equippable.def.BuildOverride != null)
+		if (component != null && equippable.GetBuildOverride() != null)
 		{
-			component.GetComponent<SymbolOverrideController>().AddBuildOverride(equippable.def.BuildOverride.GetData(), equippable.def.BuildOverridePriority);
+			component.GetComponent<SymbolOverrideController>().AddBuildOverride(equippable.GetBuildOverride().GetData(), equippable.def.BuildOverridePriority);
 		}
 		if ((bool)equippable.transform.parent)
 		{
@@ -150,9 +150,9 @@ public class Equipment : Assignables
 		KBatchedAnimController component2 = targetGameObject.GetComponent<KBatchedAnimController>();
 		if (!destroyed)
 		{
-			if (equippable.def.BuildOverride != null && component2 != null)
+			if (equippable.GetBuildOverride() != null && component2 != null)
 			{
-				component2.GetComponent<SymbolOverrideController>().TryRemoveBuildOverride(equippable.def.BuildOverride.GetData(), equippable.def.BuildOverridePriority);
+				component2.GetComponent<SymbolOverrideController>().TryRemoveBuildOverride(equippable.GetBuildOverride().GetData(), equippable.def.BuildOverridePriority);
 			}
 			Attributes attributes = targetGameObject.GetAttributes();
 			if (attributes != null)

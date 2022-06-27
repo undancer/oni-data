@@ -185,7 +185,7 @@ public class IceCooledFan : StateMachineComponent<IceCooledFan.StatesInstance>
 		{
 			if (!component.HasStatusItem(Db.Get().BuildingStatusItems.CannotCoolFurther))
 			{
-				component.AddStatusItem(Db.Get().BuildingStatusItems.CannotCoolFurther);
+				component.AddStatusItem(Db.Get().BuildingStatusItems.CannotCoolFurther, minCooledTemperature);
 			}
 		}
 		else if (component.HasStatusItem(Db.Get().BuildingStatusItems.CannotCoolFurther))
@@ -196,7 +196,7 @@ public class IceCooledFan : StateMachineComponent<IceCooledFan.StatesInstance>
 		{
 			if (!component.HasStatusItem(Db.Get().BuildingStatusItems.UnderPressure))
 			{
-				component.AddStatusItem(Db.Get().BuildingStatusItems.UnderPressure);
+				component.AddStatusItem(Db.Get().BuildingStatusItems.UnderPressure, minEnvironmentMass);
 			}
 		}
 		else if (component.HasStatusItem(Db.Get().BuildingStatusItems.UnderPressure))

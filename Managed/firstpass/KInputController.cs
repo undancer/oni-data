@@ -44,7 +44,7 @@ public class KInputController : IInputHandler
 		{
 			mKeyCode = key_code;
 			mModifier = modifier;
-			mActionFlags = new bool[273];
+			mActionFlags = new bool[275];
 		}
 	}
 
@@ -106,7 +106,7 @@ public class KInputController : IInputHandler
 		IsGamepad = is_gamepad;
 		mAxis = new float[4];
 		mActiveModifiers = Modifier.None;
-		mActionState = new bool[273];
+		mActionState = new bool[275];
 		mScrollState = new bool[2];
 		inputHandler = new KInputHandler(this, this);
 	}
@@ -283,14 +283,7 @@ public class KInputController : IInputHandler
 			}
 			return;
 		}
-		UpdateScrollStates();
-		UpdateAxis();
-		UpdateModifiers();
-		if (!KInputManager.currentControllerIsGamepad)
-		{
-			KInputManager.steamInputInterpreter.GetSteamCursorMovement();
-		}
-		for (int j = 0; j < 273; j++)
+		for (int j = 0; j < 275; j++)
 		{
 			Action action = (Action)j;
 			bool steamInputActionIsDown = KInputManager.steamInputInterpreter.GetSteamInputActionIsDown(action);
@@ -329,10 +322,14 @@ public class KInputController : IInputHandler
 
 	public void HandleCancelInput()
 	{
+		if (IsGamepad)
+		{
+			return;
+		}
 		KeyDef[] array = mKeyDefs;
 		foreach (KeyDef keyDef in array)
 		{
-			if (IsGamepad || (keyDef.mIsDown && keyDef.mKeyCode < KKeyCode.KleiKeys && !Input.GetKey((KeyCode)keyDef.mKeyCode)))
+			if (keyDef.mIsDown && keyDef.mKeyCode < KKeyCode.KleiKeys && !Input.GetKey((KeyCode)keyDef.mKeyCode))
 			{
 				QueueButtonEvent(keyDef, is_down: false);
 			}

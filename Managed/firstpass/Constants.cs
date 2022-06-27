@@ -38,11 +38,11 @@ public static class Constants
 
 	public const string TABBULLETSTRING = "    • ";
 
-	public static readonly Color POSITIVE_COLOR = new Color(82f / 255f, 64f / 85f, 121f / 255f);
+	public static readonly Color POSITIVE_COLOR = new Color(0.32156864f, 64f / 85f, 0.4745098f);
 
 	public static readonly string POSITIVE_COLOR_STR = "#" + POSITIVE_COLOR.ToHexString();
 
-	public static readonly Color NEGATIVE_COLOR = new Color(244f / 255f, 74f / 255f, 71f / 255f);
+	public static readonly Color NEGATIVE_COLOR = new Color(0.95686275f, 0.2901961f, 0.2784314f);
 
 	public static readonly string NEGATIVE_COLOR_STR = "#" + NEGATIVE_COLOR.ToHexString();
 

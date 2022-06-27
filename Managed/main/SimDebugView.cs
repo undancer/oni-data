@@ -387,6 +387,10 @@ public class SimDebugView : KMonoBehaviour
 		{
 			OverlayModes.Joules,
 			GetJoulesColour
+		},
+		{
+			OverlayModes.ScenePartitioner,
+			GetScenePartitionerColour
 		}
 	};
 
@@ -400,8 +404,8 @@ public class SimDebugView : KMonoBehaviour
 		new Color(4f / 51f, 1f, 0f, 0.7f),
 		new Color(1f, 46f / 51f, 0.7058824f, 0.9f),
 		new Color(1f, 0.8235294f, 0f, 0.9f),
-		new Color(1f, 61f / 85f, 77f / 255f, 0.9f),
-		new Color(1f, 106f / 255f, 0f, 0.9f),
+		new Color(1f, 61f / 85f, 0.3019608f, 0.9f),
+		new Color(1f, 0.41568628f, 0f, 0.9f),
 		new Color(1f, 0.7058824f, 0.7058824f, 1f),
 		new Color(1f, 0f, 0f, 1f),
 		new Color(1f, 0f, 0f, 1f)
@@ -1163,5 +1167,14 @@ public class SimDebugView : KMonoBehaviour
 			}
 		}
 		return result;
+	}
+
+	public static Color GetScenePartitionerColour(SimDebugView instance, int cell)
+	{
+		if (!GameScenePartitioner.Instance.DoDebugLayersContainItemsOnCell(cell))
+		{
+			return Color.black;
+		}
+		return Color.white;
 	}
 }

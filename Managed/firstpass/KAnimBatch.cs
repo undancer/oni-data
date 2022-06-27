@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
 public class KAnimBatch
@@ -22,6 +23,8 @@ public class KAnimBatch
 		private List<Texture2D> atlases = new List<Texture2D>();
 
 		private int startIdx;
+
+		private static bool reported_overflow;
 
 		public int Count => atlases.Count;
 
@@ -58,16 +61,19 @@ public class KAnimBatch
 					material_property_block.SetTexture(KAnimBatchManager.instance.atlasNames[num], atlases[i]);
 				}
 			}
-			if (!flag)
+			if (!flag || reported_overflow)
 			{
 				return;
 			}
-			string text = "Atlas overflow: + \n";
+			string text = "Atlas overflow: (startIndex=" + startIdx + ")\n";
+			int num2 = 0;
 			foreach (Texture2D atlase in atlases)
 			{
-				text = text + atlase.name + "\n";
+				text = text + (startIdx + num2) + ": " + atlase.name + "\n";
+				num2++;
 			}
-			Debug.LogError(text);
+			Debug.LogWarning(text);
+			reported_overflow = true;
 		}
 
 		public void Clear(int start_idx)
@@ -153,6 +159,8 @@ public class KAnimBatch
 
 	public KAnimBatchGroup.KAnimBatchTextureCache.Entry symbolOverrideInfoTex { get; private set; }
 
+	public bool isSetup { get; private set; }
+
 	public KAnimBatch(KAnimBatchGroup group, int layer, float z, KAnimBatchGroup.MaterialType material_type)
 	{
 		id = nextBatchId++;
@@ -165,6 +173,7 @@ public class KAnimBatch
 		position = new Vector3(0f, 0f, z);
 		symbolInstanceSlots = new SymbolInstanceSlot[group.maxGroupSize];
 		symbolOverrideInfoSlots = new SymbolOverrideInfoSlot[group.maxGroupSize];
+		isSetup = false;
 	}
 
 	public void DestroyTex()
@@ -201,13 +210,15 @@ public class KAnimBatch
 			Debug.LogWarning("Empty group [" + group.batchID.ToString() + "] " + batchset.idx.ToString() + " (probably just anims)");
 			return;
 		}
+		NativeArray<float> floatDataPointer = dataTex.GetFloatDataPointer();
 		for (int i = 0; i < width * width; i++)
 		{
-			dataTex.floats[i * 4] = -1f;
-			dataTex.floats[i * 4 + 1] = 0f;
-			dataTex.floats[i * 4 + 2] = 0f;
-			dataTex.floats[i * 4 + 3] = 0f;
+			floatDataPointer[i * 4] = -1f;
+			floatDataPointer[i * 4 + 1] = 0f;
+			floatDataPointer[i * 4 + 2] = 0f;
+			floatDataPointer[i * 4 + 3] = 0f;
 		}
+		isSetup = true;
 		if (matProperties == null)
 		{
 			matProperties = new MaterialPropertyBlock();
@@ -245,7 +256,7 @@ public class KAnimBatch
 
 	public bool Register(KAnimConverter.IAnimConverter controller)
 	{
-		if (dataTex == null || dataTex.floats.Length == 0)
+		if (dataTex == null || !isSetup)
 		{
 			Init();
 		}
@@ -286,10 +297,12 @@ public class KAnimBatch
 			controller.SetBatch(null);
 			currentOffset -= 28;
 			currentOffset = Mathf.Max(0, currentOffset);
+			NativeArray<float> floatDataPointer = dataTex.GetFloatDataPointer();
 			for (int i = 0; i < 28; i++)
 			{
-				dataTex.floats[currentOffset + i] = -1f;
+				floatDataPointer[currentOffset + i] = -1f;
 			}
+			dataTex.Apply();
 			currentOffset = 28 * controllers.Count;
 			ClearDirty();
 			controllersToIdx.Clear();
@@ -312,6 +325,7 @@ public class KAnimBatch
 
 	private void ClearDirty()
 	{
+		needsWrite = false;
 		dirtySet.Clear();
 	}
 
@@ -337,27 +351,28 @@ public class KAnimBatch
 
 	public void SetDirty(KAnimConverter.IAnimConverter controller)
 	{
-		if (!controllersToIdx.ContainsKey(controller))
+		if (!controllersToIdx.TryGetValue(controller, out var value))
 		{
 			Debug.LogError("Setting controller [" + controller.GetName() + "] to dirty but its not in this batch");
-			return;
 		}
-		int dirtyIdx = controllersToIdx[controller];
-		AddToDirty(dirtyIdx);
+		else
+		{
+			AddToDirty(value);
+		}
 	}
 
-	private void WriteBatchedAnimInstanceData(int index, KAnimConverter.IAnimConverter controller)
+	private void WriteBatchedAnimInstanceData(int index, KAnimConverter.IAnimConverter controller, NativeArray<byte> data)
 	{
-		controller.GetBatchInstanceData().WriteToTexture(dataTex.bytes, index * 112, index);
+		controller.GetBatchInstanceData().WriteToTexture(data, index * 112, index);
 	}
 
-	private bool WriteSymbolInstanceData(int index, KAnimConverter.IAnimConverter controller)
+	private bool WriteSymbolInstanceData(int index, KAnimConverter.IAnimConverter controller, NativeArray<byte> data)
 	{
 		bool result = false;
 		SymbolInstanceSlot symbolInstanceSlot = symbolInstanceSlots[index];
 		if (symbolInstanceSlot.symbolInstanceData != controller.symbolInstanceGpuData || symbolInstanceSlot.dataVersion != controller.symbolInstanceGpuData.version)
 		{
-			controller.symbolInstanceGpuData.WriteToTexture(symbolInstanceTex.bytes, index * 8 * group.data.maxSymbolsPerBuild * 4, index);
+			controller.symbolInstanceGpuData.WriteToTexture(data, index * 8 * group.data.maxSymbolsPerBuild * 4, index);
 			symbolInstanceSlot.symbolInstanceData = controller.symbolInstanceGpuData;
 			symbolInstanceSlot.dataVersion = controller.symbolInstanceGpuData.version;
 			symbolInstanceSlots[index] = symbolInstanceSlot;
@@ -366,13 +381,13 @@ public class KAnimBatch
 		return result;
 	}
 
-	private bool WriteSymbolOverrideInfoTex(int index, KAnimConverter.IAnimConverter controller)
+	private bool WriteSymbolOverrideInfoTex(int index, KAnimConverter.IAnimConverter controller, NativeArray<byte> data)
 	{
 		bool result = false;
 		SymbolOverrideInfoSlot symbolOverrideInfoSlot = symbolOverrideInfoSlots[index];
 		if (symbolOverrideInfoSlot.symbolOverrideInfo != controller.symbolOverrideInfoGpuData || symbolOverrideInfoSlot.dataVersion != controller.symbolOverrideInfoGpuData.version)
 		{
-			controller.symbolOverrideInfoGpuData.WriteToTexture(symbolOverrideInfoTex.bytes, index * 12 * group.data.maxSymbolFrameInstancesPerbuild * 4, index);
+			controller.symbolOverrideInfoGpuData.WriteToTexture(data, index * 12 * group.data.maxSymbolFrameInstancesPerbuild * 4, index);
 			symbolOverrideInfoSlot.symbolOverrideInfo = controller.symbolOverrideInfoGpuData;
 			symbolOverrideInfoSlot.dataVersion = controller.symbolOverrideInfoGpuData.version;
 			symbolOverrideInfoSlots[index] = symbolOverrideInfoSlot;
@@ -387,13 +402,15 @@ public class KAnimBatch
 		{
 			return 0;
 		}
-		if (dataTex == null || dataTex.floats.Length == 0)
+		if (dataTex == null || !isSetup)
 		{
 			Init();
 		}
 		writtenLastFrame = 0;
 		bool flag = false;
 		bool flag2 = false;
+		NativeArray<byte> dataPointer = dataTex.GetDataPointer();
+		NativeArray<byte> dataPointer2 = symbolInstanceTex.GetDataPointer();
 		if (dirtySet.Count > 0)
 		{
 			foreach (int item in dirtySet)
@@ -403,8 +420,8 @@ public class KAnimBatch
 				{
 					continue;
 				}
-				WriteBatchedAnimInstanceData(item, animConverter);
-				bool flag3 = WriteSymbolInstanceData(item, animConverter);
+				WriteBatchedAnimInstanceData(item, animConverter, dataPointer);
+				bool flag3 = WriteSymbolInstanceData(item, animConverter, dataPointer2);
 				flag = flag || flag3;
 				if (animConverter.ApplySymbolOverrides())
 				{
@@ -415,7 +432,8 @@ public class KAnimBatch
 						symbolOverrideInfoTex.SetTextureAndSize(matProperties);
 						matProperties.SetFloat(ShaderProperty_SUPPORTS_SYMBOL_OVERRIDING, 1f);
 					}
-					bool flag4 = WriteSymbolOverrideInfoTex(item, animConverter);
+					NativeArray<byte> dataPointer3 = symbolOverrideInfoTex.GetDataPointer();
+					bool flag4 = WriteSymbolOverrideInfoTex(item, animConverter, dataPointer3);
 					flag2 = flag2 || flag4;
 				}
 				writtenLastFrame++;
@@ -429,16 +447,13 @@ public class KAnimBatch
 				Debug.LogError("dirtySet not written");
 			}
 		}
-		dataTex.LoadRawTextureData();
 		dataTex.Apply();
 		if (flag)
 		{
-			symbolInstanceTex.LoadRawTextureData();
 			symbolInstanceTex.Apply();
 		}
 		if (flag2)
 		{
-			symbolOverrideInfoTex.LoadRawTextureData();
 			symbolOverrideInfoTex.Apply();
 		}
 		return writtenLastFrame;

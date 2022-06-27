@@ -17,10 +17,10 @@ namespace ProcGen
 		[Flags]
 		public enum DebugFlags
 		{
-			LocalGraph = 0x1,
-			OverworldGraph = 0x2,
-			VoronoiTree = 0x4,
-			PowerDiagram = 0x8
+			LocalGraph = 1,
+			OverworldGraph = 2,
+			VoronoiTree = 4,
+			PowerDiagram = 8
 		}
 
 		[SerializationConfig(MemberSerialization.OptOut)]

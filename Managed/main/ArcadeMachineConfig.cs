@@ -5,6 +5,10 @@ public class ArcadeMachineConfig : IBuildingConfig
 {
 	public const string ID = "ArcadeMachine";
 
+	public const string SPECIFIC_EFFECT = "PlayedArcade";
+
+	public const string TRACKING_EFFECT = "RecentlyPlayedArcade";
+
 	public override BuildingDef CreateBuildingDef()
 	{
 		BuildingDef obj = BuildingTemplates.CreateBuildingDef("ArcadeMachine", 3, 3, "arcade_cabinet_kanim", 30, 10f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.REFINED_METALS, 1600f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.BONUS.TIER1);
@@ -14,7 +18,7 @@ public class ArcadeMachineConfig : IBuildingConfig
 		obj.Overheatable = true;
 		obj.RequiresPowerInput = true;
 		obj.EnergyConsumptionWhenActive = 1200f;
-		obj.SelfHeatKilowattsWhenActive = 4f;
+		obj.SelfHeatKilowattsWhenActive = 2f;
 		return obj;
 	}
 

@@ -8,6 +8,9 @@ public class EggIncubator : SingleEntityReceptacle, ISaveLoadable, ISim1000ms
 	[MyCmpAdd]
 	private EggIncubatorWorkable workable;
 
+	[MyCmpAdd]
+	private CopyBuildingSettings copySettings;
+
 	private Chore chore;
 
 	private EggIncubatorStates.Instance smi;
@@ -31,10 +34,16 @@ public class EggIncubator : SingleEntityReceptacle, ISaveLoadable, ISim1000ms
 		component.OnStorageChange(data);
 	});
 
+	private static readonly EventSystem.IntraObjectHandler<EggIncubator> OnCopySettingsDelegate = new EventSystem.IntraObjectHandler<EggIncubator>(delegate(EggIncubator component, object data)
+	{
+		component.OnCopySettings(data);
+	});
+
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
 		autoReplaceEntity = true;
+		choreType = Db.Get().ChoreTypes.RanchingFetch;
 		statusItemNeed = Db.Get().BuildingStatusItems.NeedEgg;
 		statusItemNoneAvailable = Db.Get().BuildingStatusItems.NoAvailableEgg;
 		statusItemAwaitingDelivery = Db.Get().BuildingStatusItems.AwaitingEggDelivery;
@@ -43,6 +52,7 @@ public class EggIncubator : SingleEntityReceptacle, ISaveLoadable, ISim1000ms
 		synchronizeAnims = false;
 		GetComponent<KBatchedAnimController>().SetSymbolVisiblity("egg_target", is_visible: false);
 		meter = new MeterController(this, Meter.Offset.Infront, Grid.SceneLayer.NoLayer);
+		Subscribe(-905833192, OnCopySettingsDelegate);
 	}
 
 	protected override void OnSpawn()
@@ -62,6 +72,41 @@ public class EggIncubator : SingleEntityReceptacle, ISaveLoadable, ISim1000ms
 		Subscribe(-1697596308, OnStorageChangeDelegate);
 		smi = new EggIncubatorStates.Instance(this);
 		smi.StartSM();
+	}
+
+	private void OnCopySettings(object data)
+	{
+		EggIncubator component = ((GameObject)data).GetComponent<EggIncubator>();
+		if (!(component != null))
+		{
+			return;
+		}
+		autoReplaceEntity = component.autoReplaceEntity;
+		if (base.occupyingObject == null)
+		{
+			if (!(requestedEntityTag == component.requestedEntityTag) || !(requestedEntityAdditionalFilterTag == component.requestedEntityAdditionalFilterTag))
+			{
+				CancelActiveRequest();
+			}
+			if (fetchChore == null)
+			{
+				Tag entityTag = component.requestedEntityTag;
+				CreateOrder(entityTag, component.requestedEntityAdditionalFilterTag);
+			}
+		}
+		if (!(base.occupyingObject != null))
+		{
+			return;
+		}
+		Prioritizable component2 = GetComponent<Prioritizable>();
+		if (component2 != null)
+		{
+			Prioritizable component3 = base.occupyingObject.GetComponent<Prioritizable>();
+			if (component3 != null)
+			{
+				component3.SetMasterPriority(component2.GetMasterPriority());
+			}
+		}
 	}
 
 	protected override void OnCleanUp()

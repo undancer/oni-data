@@ -50,6 +50,8 @@ public class MaterialSelector : KScreen
 
 	private float activeMass;
 
+	private List<Tag> elementsToSort = new List<Tag>();
+
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
@@ -118,6 +120,7 @@ public class MaterialSelector : KScreen
 				obj.gameObject.GetComponent<ToolTip>().toolTip = item2.ProperName();
 			}
 		}
+		ConfigureMaterialTooltips();
 		RefreshToggleContents();
 	}
 
@@ -193,6 +196,15 @@ public class MaterialSelector : KScreen
 			KToggle value = elementToggle.Value;
 			Tag elem = elementToggle.Key;
 			GameObject gameObject = value.gameObject;
+			bool flag = DiscoveredResources.Instance.IsDiscovered(elem) || DebugHandler.InstantBuildMode || Game.Instance.SandboxModeActive;
+			if (gameObject.activeSelf != flag)
+			{
+				gameObject.SetActive(flag);
+			}
+			if (!flag)
+			{
+				continue;
+			}
 			LocText[] componentsInChildren = gameObject.GetComponentsInChildren<LocText>();
 			LocText locText = componentsInChildren[0];
 			LocText obj = componentsInChildren[1];
@@ -205,7 +217,6 @@ public class MaterialSelector : KScreen
 				KBatchedAnimController component = gameObject2.GetComponent<KBatchedAnimController>();
 				image.sprite = Def.GetUISpriteFromMultiObjectAnim(component.AnimFiles[0]);
 			}
-			gameObject.SetActive(DiscoveredResources.Instance.IsDiscovered(elem) || DebugHandler.InstantBuildMode || Game.Instance.SandboxModeActive);
 			SetToggleBGImage(elementToggle.Value, elementToggle.Key);
 			value.soundPlayer.AcceptClickCondition = () => IsEnoughMass(elem);
 			value.ClearOnClick();
@@ -218,7 +229,6 @@ public class MaterialSelector : KScreen
 			}
 		}
 		SortElementToggles();
-		UpdateMaterialTooltips();
 		UpdateHeader();
 	}
 
@@ -279,20 +289,38 @@ public class MaterialSelector : KScreen
 
 	private void SortElementToggles()
 	{
-		List<Tag> list = new List<Tag>();
+		bool flag = false;
+		int num = -1;
+		elementsToSort.Clear();
 		foreach (KeyValuePair<Tag, KToggle> elementToggle in ElementToggles)
 		{
-			list.Add(elementToggle.Key);
+			if (elementToggle.Value.gameObject.activeSelf)
+			{
+				elementsToSort.Add(elementToggle.Key);
+			}
 		}
-		list.Sort(ElementSorter);
-		foreach (Tag item in list)
+		elementsToSort.Sort(ElementSorter);
+		for (int i = 0; i < elementsToSort.Count; i++)
 		{
-			ElementToggles[item].transform.SetAsLastSibling();
+			int siblingIndex = ElementToggles[elementsToSort[i]].transform.GetSiblingIndex();
+			if (siblingIndex <= num)
+			{
+				flag = true;
+				break;
+			}
+			num = siblingIndex;
+		}
+		if (flag)
+		{
+			foreach (Tag item in elementsToSort)
+			{
+				ElementToggles[item].transform.SetAsLastSibling();
+			}
 		}
 		UpdateScrollBar();
 	}
 
-	private void UpdateMaterialTooltips()
+	private void ConfigureMaterialTooltips()
 	{
 		foreach (KeyValuePair<Tag, KToggle> elementToggle in ElementToggles)
 		{
@@ -314,7 +342,10 @@ public class MaterialSelector : KScreen
 				num++;
 			}
 		}
-		Scrollbar.SetActive(num > 5);
+		if (Scrollbar.activeSelf != num > 5)
+		{
+			Scrollbar.SetActive(num > 5);
+		}
 	}
 
 	private void UpdateHeader()

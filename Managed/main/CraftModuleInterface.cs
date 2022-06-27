@@ -357,20 +357,20 @@ public class CraftModuleInterface : KMonoBehaviour, ISim4000ms
 		{
 			bottomModule = clusterModules[0];
 			Vector3 vector = bottomModule.Get().transform.position;
-			foreach (Ref<RocketModuleCluster> clusterModule in clusterModules)
 			{
-				Vector3 position = clusterModule.Get().transform.position;
-				if (position.y < vector.y)
+				foreach (Ref<RocketModuleCluster> clusterModule in clusterModules)
 				{
-					bottomModule = clusterModule;
-					vector = position;
+					Vector3 position = clusterModule.Get().transform.position;
+					if (position.y < vector.y)
+					{
+						bottomModule = clusterModule;
+						vector = position;
+					}
 				}
+				return;
 			}
 		}
-		else
-		{
-			bottomModule = null;
-		}
+		bottomModule = null;
 	}
 
 	public int GetHeightOfModuleTop(GameObject module)

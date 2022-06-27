@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using ProcGen;
 using ProcGenGame;
+using Steamworks;
 using STRINGS;
 using UnityEngine;
 using UnityEngine.UI;
@@ -186,6 +187,10 @@ public class LoadScreen : KModalScreen
 				cloudTutorialBouncer.gameObject.SetActive(value: false);
 			}
 		}
+		if (DistributionPlatform.Initialized && SteamUtils.IsSteamRunningOnSteamDeck())
+		{
+			colonyInfoButton.gameObject.SetActive(value: false);
+		}
 	}
 
 	private Dictionary<string, List<SaveGameFileDetails>> GetColoniesDetails(List<SaveLoader.SaveFileEntry> files)
@@ -347,17 +352,18 @@ public class LoadScreen : KModalScreen
 
 	private void RemoveEmptyFolder(string path)
 	{
-		if (Directory.Exists(path) && File.GetAttributes(path).HasFlag(FileAttributes.Directory) && !Directory.EnumerateFileSystemEntries(path).Any())
+		if (!Directory.Exists(path) || !File.GetAttributes(path).HasFlag(FileAttributes.Directory) || Directory.EnumerateFileSystemEntries(path).Any())
 		{
-			try
-			{
-				Directory.Delete(path);
-			}
-			catch (Exception ex)
-			{
-				Debug.LogWarning("Failed to remove empty directory `" + path + "`...");
-				Debug.LogWarning(ex);
-			}
+			return;
+		}
+		try
+		{
+			Directory.Delete(path);
+		}
+		catch (Exception ex)
+		{
+			Debug.LogWarning("Failed to remove empty directory `" + path + "`...");
+			Debug.LogWarning(ex);
 		}
 	}
 
@@ -486,14 +492,14 @@ public class LoadScreen : KModalScreen
 		saveError = null;
 		Tuple<SaveGame.Header, SaveGame.GameInfo> fileInfo = SaveGame.GetFileInfo(file);
 		_ = fileInfo.first;
-		string baseName = fileInfo.second.baseName;
+		string path = fileInfo.second.baseName.TrimEnd(' ');
 		string fileName = System.IO.Path.GetFileName(file);
-		string text = System.IO.Path.Combine(dest_root, baseName);
+		string text = System.IO.Path.Combine(dest_root, path);
 		if (!Directory.Exists(text))
 		{
-			Directory.CreateDirectory(text);
+			text = Directory.CreateDirectory(text).FullName;
 		}
-		string path = text;
+		string path2 = text;
 		if (is_auto_save)
 		{
 			string text2 = System.IO.Path.Combine(text, "auto_save");
@@ -501,9 +507,9 @@ public class LoadScreen : KModalScreen
 			{
 				Directory.CreateDirectory(text2);
 			}
-			path = text2;
+			path2 = text2;
 		}
-		string text3 = System.IO.Path.Combine(path, fileName);
+		string text3 = System.IO.Path.Combine(path2, fileName);
 		string source = System.IO.Path.ChangeExtension(file, "png");
 		string dest = System.IO.Path.ChangeExtension(text3, "png");
 		try
@@ -666,22 +672,40 @@ public class LoadScreen : KModalScreen
 		moreInfoButton.ClearOnClick();
 		moreInfoButton.onClick += delegate
 		{
-			Util.KInstantiateUI<InfoDialogScreen>(ScreenPrefabs.Instance.InfoDialogScreen.gameObject, base.gameObject).SetHeader(UI.FRONTEND.LOADSCREEN.MIGRATE_RESULT_FAILURES_MORE_INFO_TITLE).AddPlainText(UI.FRONTEND.LOADSCREEN.MIGRATE_RESULT_FAILURES_MORE_INFO_PRE)
-				.AddLineItem(UI.FRONTEND.LOADSCREEN.MIGRATE_RESULT_FAILURES_MORE_INFO_ITEM1, "")
-				.AddLineItem(UI.FRONTEND.LOADSCREEN.MIGRATE_RESULT_FAILURES_MORE_INFO_ITEM2, "")
-				.AddLineItem(UI.FRONTEND.LOADSCREEN.MIGRATE_RESULT_FAILURES_MORE_INFO_ITEM3, "")
-				.AddPlainText(UI.FRONTEND.LOADSCREEN.MIGRATE_RESULT_FAILURES_MORE_INFO_POST)
-				.AddOption(UI.FRONTEND.LOADSCREEN.MIGRATE_FAILURES_FORUM_BUTTON, delegate
-				{
-					App.OpenWebURL("https://forums.kleientertainment.com/klei-bug-tracker/oni/");
-				})
-				.AddOption(UI.CONFIRMDIALOG.OK, delegate(InfoDialogScreen d)
-				{
-					migrationPanelRefs.gameObject.SetActive(value: false);
-					cloudTutorialBouncer.Bounce();
-					d.Deactivate();
-				}, rightSide: true)
-				.Activate();
+			if (DistributionPlatform.Initialized && SteamUtils.IsSteamRunningOnSteamDeck())
+			{
+				Util.KInstantiateUI<InfoDialogScreen>(ScreenPrefabs.Instance.InfoDialogScreen.gameObject, base.gameObject).SetHeader(UI.FRONTEND.LOADSCREEN.MIGRATE_RESULT_FAILURES_MORE_INFO_TITLE).AddPlainText(UI.FRONTEND.LOADSCREEN.MIGRATE_RESULT_FAILURES_MORE_INFO_PRE)
+					.AddLineItem(UI.FRONTEND.LOADSCREEN.MIGRATE_RESULT_FAILURES_MORE_INFO_ITEM1, "")
+					.AddLineItem(UI.FRONTEND.LOADSCREEN.MIGRATE_RESULT_FAILURES_MORE_INFO_ITEM2, "")
+					.AddLineItem(UI.FRONTEND.LOADSCREEN.MIGRATE_RESULT_FAILURES_MORE_INFO_ITEM3, "")
+					.AddPlainText(UI.FRONTEND.LOADSCREEN.MIGRATE_RESULT_FAILURES_MORE_INFO_POST)
+					.AddOption(UI.CONFIRMDIALOG.OK, delegate(InfoDialogScreen d)
+					{
+						migrationPanelRefs.gameObject.SetActive(value: false);
+						cloudTutorialBouncer.Bounce();
+						d.Deactivate();
+					}, rightSide: true)
+					.Activate();
+			}
+			else
+			{
+				Util.KInstantiateUI<InfoDialogScreen>(ScreenPrefabs.Instance.InfoDialogScreen.gameObject, base.gameObject).SetHeader(UI.FRONTEND.LOADSCREEN.MIGRATE_RESULT_FAILURES_MORE_INFO_TITLE).AddPlainText(UI.FRONTEND.LOADSCREEN.MIGRATE_RESULT_FAILURES_MORE_INFO_PRE)
+					.AddLineItem(UI.FRONTEND.LOADSCREEN.MIGRATE_RESULT_FAILURES_MORE_INFO_ITEM1, "")
+					.AddLineItem(UI.FRONTEND.LOADSCREEN.MIGRATE_RESULT_FAILURES_MORE_INFO_ITEM2, "")
+					.AddLineItem(UI.FRONTEND.LOADSCREEN.MIGRATE_RESULT_FAILURES_MORE_INFO_ITEM3, "")
+					.AddPlainText(UI.FRONTEND.LOADSCREEN.MIGRATE_RESULT_FAILURES_MORE_INFO_POST)
+					.AddOption(UI.FRONTEND.LOADSCREEN.MIGRATE_FAILURES_FORUM_BUTTON, delegate
+					{
+						App.OpenWebURL("https://forums.kleientertainment.com/klei-bug-tracker/oni/");
+					})
+					.AddOption(UI.CONFIRMDIALOG.OK, delegate(InfoDialogScreen d)
+					{
+						migrationPanelRefs.gameObject.SetActive(value: false);
+						cloudTutorialBouncer.Bounce();
+						d.Deactivate();
+					}, rightSide: true)
+					.Activate();
+			}
 		};
 	}
 
@@ -865,7 +889,7 @@ public class LoadScreen : KModalScreen
 		{
 			if (display != null)
 			{
-				display.text = string.Format(UI.FRONTEND.LOADSCREEN.SAVE_TOO_NEW, save.FileName, save.FileHeader.buildVersion, save.FileInfo.saveMinorVersion, 497575u, 28);
+				display.text = string.Format(UI.FRONTEND.LOADSCREEN.SAVE_TOO_NEW, save.FileName, save.FileHeader.buildVersion, save.FileInfo.saveMinorVersion, 512719u, 28);
 			}
 			return false;
 		}
@@ -1144,7 +1168,7 @@ public class LoadScreen : KModalScreen
 		{
 			return true;
 		}
-		return header.buildVersion > 497575;
+		return header.buildVersion > 512719;
 	}
 
 	private static bool IsSaveFromCurrentDLC(SaveGame.GameInfo gameInfo, out string saveDlcName)
@@ -1224,10 +1248,10 @@ public class LoadScreen : KModalScreen
 		SaveGame.GameInfo gameInfo = SaveLoader.LoadHeader(filename, out header);
 		string arg = null;
 		string arg2 = null;
-		if (header.buildVersion > 497575)
+		if (header.buildVersion > 512719)
 		{
 			arg = header.buildVersion.ToString();
-			arg2 = 497575u.ToString();
+			arg2 = 512719u.ToString();
 		}
 		else if (gameInfo.saveMajorVersion < 7)
 		{
@@ -1303,17 +1327,26 @@ public class LoadScreen : KModalScreen
 
 	private void ShowConvertError(string message)
 	{
-		if (errorInfoScreen == null)
+		if (!(errorInfoScreen == null))
+		{
+			return;
+		}
+		if (DistributionPlatform.Initialized && SteamUtils.IsSteamRunningOnSteamDeck())
 		{
 			errorInfoScreen = Util.KInstantiateUI<InfoDialogScreen>(ScreenPrefabs.Instance.InfoDialogScreen.gameObject, base.gameObject).SetHeader(UI.FRONTEND.LOADSCREEN.CONVERT_ERROR_TITLE).AddSprite(errorSprite)
 				.AddPlainText(message)
-				.AddOption(UI.FRONTEND.LOADSCREEN.MIGRATE_FAILURES_FORUM_BUTTON, delegate
-				{
-					App.OpenWebURL("https://forums.kleientertainment.com/klei-bug-tracker/oni/");
-				})
 				.AddDefaultOK();
 			errorInfoScreen.Activate();
+			return;
 		}
+		errorInfoScreen = Util.KInstantiateUI<InfoDialogScreen>(ScreenPrefabs.Instance.InfoDialogScreen.gameObject, base.gameObject).SetHeader(UI.FRONTEND.LOADSCREEN.CONVERT_ERROR_TITLE).AddSprite(errorSprite)
+			.AddPlainText(message)
+			.AddOption(UI.FRONTEND.LOADSCREEN.MIGRATE_FAILURES_FORUM_BUTTON, delegate
+			{
+				App.OpenWebURL("https://forums.kleientertainment.com/klei-bug-tracker/oni/");
+			})
+			.AddDefaultOK();
+		errorInfoScreen.Activate();
 	}
 
 	private void ConfirmDoAction(string message, System.Action action)

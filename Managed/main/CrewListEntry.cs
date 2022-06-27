@@ -28,7 +28,7 @@ public class CrewListEntry : KMonoBehaviour, IPointerEnterHandler, IEventSystemH
 	{
 		mouseOver = true;
 		BGImage.enabled = true;
-		BorderHighlight.color = new Color(56f / 85f, 74f / 255f, 121f / 255f);
+		BorderHighlight.color = new Color(56f / 85f, 0.2901961f, 0.4745098f);
 	}
 
 	public void OnPointerExit(PointerEventData eventData)

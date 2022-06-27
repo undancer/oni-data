@@ -119,14 +119,14 @@ public class StateMachineUpdater : Singleton<StateMachineUpdater>
 		simBucketGroups = new List<BucketGroup>();
 		renderBucketGroups = new List<BucketGroup>();
 		renderEveryTickBucketGroups = new List<BucketGroup>();
-		CreateBucketGroup(1, 0.016666668f, UpdateRate.RENDER_EVERY_TICK, renderEveryTickBucketGroups);
-		CreateBucketGroup(12, 0.016666668f, UpdateRate.RENDER_200ms, renderBucketGroups);
-		CreateBucketGroup(60, 0.016666668f, UpdateRate.RENDER_1000ms, renderBucketGroups);
-		CreateBucketGroup(1, 0.016666668f, UpdateRate.SIM_EVERY_TICK, simBucketGroups);
-		CreateBucketGroup(2, 0.016666668f, UpdateRate.SIM_33ms, simBucketGroups);
-		CreateBucketGroup(12, 0.016666668f, UpdateRate.SIM_200ms, simBucketGroups);
-		CreateBucketGroup(60, 0.016666668f, UpdateRate.SIM_1000ms, simBucketGroups);
-		CreateBucketGroup(240, 0.016666668f, UpdateRate.SIM_4000ms, simBucketGroups);
+		CreateBucketGroup(1, 1f / 60f, UpdateRate.RENDER_EVERY_TICK, renderEveryTickBucketGroups);
+		CreateBucketGroup(12, 1f / 60f, UpdateRate.RENDER_200ms, renderBucketGroups);
+		CreateBucketGroup(60, 1f / 60f, UpdateRate.RENDER_1000ms, renderBucketGroups);
+		CreateBucketGroup(1, 1f / 60f, UpdateRate.SIM_EVERY_TICK, simBucketGroups);
+		CreateBucketGroup(2, 1f / 60f, UpdateRate.SIM_33ms, simBucketGroups);
+		CreateBucketGroup(12, 1f / 60f, UpdateRate.SIM_200ms, simBucketGroups);
+		CreateBucketGroup(60, 1f / 60f, UpdateRate.SIM_1000ms, simBucketGroups);
+		CreateBucketGroup(240, 1f / 60f, UpdateRate.SIM_4000ms, simBucketGroups);
 	}
 
 	private void CreateBucketGroup(int sub_tick_count, float seconds_per_sub_tick, UpdateRate update_rate, List<BucketGroup> sub_group)

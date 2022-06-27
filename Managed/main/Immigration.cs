@@ -34,6 +34,8 @@ public class Immigration : KMonoBehaviour, ISaveLoadable, ISim200ms, IPersonalPr
 
 	private const int CYCLE_THRESHOLD_D = 48;
 
+	public const string FACADE_SELECT_RANDOM = "SELECTRANDOM";
+
 	public bool ImmigrantsAvailable => bImmigrantAvailable;
 
 	public static void DestroyInstance()
@@ -65,7 +67,7 @@ public class Immigration : KMonoBehaviour, ISaveLoadable, ISim200ms, IPersonalPr
 
 	private void ConfigureBaseGameCarePackages()
 	{
-		carePackages = new CarePackageInfo[58]
+		carePackages = new CarePackageInfo[59]
 		{
 			new CarePackageInfo(ElementLoader.FindElementByHash(SimHashes.SandStone).tag.ToString(), 1000f, null),
 			new CarePackageInfo(ElementLoader.FindElementByHash(SimHashes.Dirt).tag.ToString(), 500f, null),
@@ -124,13 +126,14 @@ public class Immigration : KMonoBehaviour, ISaveLoadable, ISim200ms, IPersonalPr
 			new CarePackageInfo("DreckoEgg", 3f, () => CycleCondition(24)),
 			new CarePackageInfo("SquirrelEgg", 2f, null),
 			new CarePackageInfo("BasicCure", 3f, null),
+			new CarePackageInfo("CustomClothing", 1f, null, "SELECTRANDOM"),
 			new CarePackageInfo("Funky_Vest", 1f, null)
 		};
 	}
 
 	private void ConfigureMultiWorldCarePackages()
 	{
-		carePackages = new CarePackageInfo[65]
+		carePackages = new CarePackageInfo[66]
 		{
 			new CarePackageInfo(ElementLoader.FindElementByHash(SimHashes.SandStone).tag.ToString(), 1000f, null),
 			new CarePackageInfo(ElementLoader.FindElementByHash(SimHashes.Dirt).tag.ToString(), 500f, null),
@@ -196,6 +199,7 @@ public class Immigration : KMonoBehaviour, ISaveLoadable, ISim200ms, IPersonalPr
 			new CarePackageInfo("DivergentBeetleEgg", 2f, () => CycleCondition(48) && DiscoveredCondition("DivergentBeetleEgg")),
 			new CarePackageInfo("StaterpillarEgg", 2f, () => CycleCondition(48) && DiscoveredCondition("StaterpillarEgg")),
 			new CarePackageInfo("BasicCure", 3f, null),
+			new CarePackageInfo("CustomClothing", 1f, null, "SELECTRANDOM"),
 			new CarePackageInfo("Funky_Vest", 1f, null)
 		};
 	}

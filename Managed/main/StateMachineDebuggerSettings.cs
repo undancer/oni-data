@@ -22,14 +22,6 @@ public class StateMachineDebuggerSettings : ScriptableObject
 			typeName = type.FullName;
 			this.type = type;
 		}
-
-		public static void ShowHeader()
-		{
-		}
-
-		public void ShowEditor()
-		{
-		}
 	}
 
 	public List<Entry> entries = new List<Entry>();

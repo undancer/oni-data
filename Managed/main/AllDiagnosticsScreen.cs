@@ -42,6 +42,12 @@ public class AllDiagnosticsScreen : KScreen, ISim4000ms, ISim1000ms
 		ConfigureDebugToggle();
 	}
 
+	protected override void OnForcedCleanUp()
+	{
+		Instance = null;
+		base.OnForcedCleanUp();
+	}
+
 	private void ConfigureDebugToggle()
 	{
 		Game.Instance.Subscribe(1557339983, DebugToggleRefresh);

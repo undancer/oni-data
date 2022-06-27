@@ -1,0 +1,50 @@
+defID: CustomClothing
+equippables:
+- 
+ name: decor_02
+ buildoverride: body_shirt_decor02_kanim 
+ animfile: shirt_decor02_kanim
+- 
+ name: decor_03
+ buildoverride: body_shirt_decor03_kanim 
+ animfile: shirt_decor03_kanim
+- 
+ name: decor_04
+ buildoverride: body_shirt_decor04_kanim 
+ animfile: shirt_decor04_kanim
+- 
+ name: decor_05
+ buildoverride: body_shirt_decor05_kanim 
+ animfile: shirt_decor05_kanim
+- 
+ name: cummerbund
+ buildoverride: body_shirt_cummerbund_kanim 
+ animfile: shirt_cummerbund_kanim
+- 
+ name: triangles
+ buildoverride: body_shirt_triangles_kanim 
+ animfile: shirt_triangles_kanim
+- 
+ name: overalls
+ buildoverride: body_suit_overalls_kanim 
+ animfile: suit_overalls_kanim
+- 
+ name: limone
+ buildoverride: body_suit_limone_kanim 
+ animfile: suit_limone_kanim
+- 
+ name: clubshirt
+ buildoverride: body_shirt_clubshirt_kanim 
+ animfile: shirt_clubshirt_kanim
+- 
+ name: gaudysweater
+ buildoverride: body_shirt_gaudysweater_kanim 
+ animfile: shirt_gaudysweater_kanim
+- 
+ name: mondrian
+ buildoverride: body_shirt_mondrian_kanim 
+ animfile: shirt_mondrian_kanim
+- 
+ name: workout
+ buildoverride: body_suit_workout_kanim 
+ animfile: suit_workout_kanim

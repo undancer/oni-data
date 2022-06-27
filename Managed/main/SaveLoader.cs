@@ -417,12 +417,12 @@ public class SaveLoader : KMonoBehaviour
 
 	public static string GetSavePrefix()
 	{
-		return System.IO.Path.Combine(Util.RootFolder(), "save_files/");
+		return System.IO.Path.Combine(Util.RootFolder(), string.Format("{0}{1}", "save_files", System.IO.Path.DirectorySeparatorChar));
 	}
 
 	public static string GetCloudSavePrefix()
 	{
-		string path = System.IO.Path.Combine(Util.RootFolder(), "cloud_save_files/");
+		string path = System.IO.Path.Combine(Util.RootFolder(), string.Format("{0}{1}", "cloud_save_files", System.IO.Path.DirectorySeparatorChar));
 		string userID = GetUserID();
 		if (string.IsNullOrEmpty(userID))
 		{
@@ -493,7 +493,7 @@ public class SaveLoader : KMonoBehaviour
 
 	public static string GetAutoSavePrefix()
 	{
-		string text = System.IO.Path.Combine(GetSavePrefixAndCreateFolder(), "auto_save/");
+		string text = System.IO.Path.Combine(GetSavePrefixAndCreateFolder(), string.Format("{0}{1}", "auto_save", System.IO.Path.DirectorySeparatorChar));
 		if (!System.IO.Directory.Exists(text))
 		{
 			System.IO.Directory.CreateDirectory(text);
@@ -836,7 +836,10 @@ public class SaveLoader : KMonoBehaviour
 
 	public static SaveGame.GameInfo LoadHeader(string filename, out SaveGame.Header header)
 	{
-		return SaveGame.GetHeader(new FastReader(File.ReadAllBytes(filename)), out header, filename);
+		byte[] array = new byte[512];
+		using FileStream fileStream = File.OpenRead(filename);
+		fileStream.Read(array, 0, 512);
+		return SaveGame.GetHeader(new FastReader(array), out header, filename);
 	}
 
 	public bool Load(string filename)
@@ -1154,18 +1157,16 @@ public class SaveLoader : KMonoBehaviour
 		if (Global.Instance != null)
 		{
 			PerformanceMonitor component = Global.Instance.GetComponent<PerformanceMonitor>();
-			PerformanceMeasurement item = new PerformanceMeasurement
+			list.Add(new PerformanceMeasurement
 			{
 				name = "FramesAbove30",
 				value = component.NumFramesAbove30
-			};
-			list.Add(item);
-			item = new PerformanceMeasurement
+			});
+			list.Add(new PerformanceMeasurement
 			{
 				name = "FramesBelow30",
 				value = component.NumFramesBelow30
-			};
-			list.Add(item);
+			});
 			component.Reset();
 		}
 		return list;

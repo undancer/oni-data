@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TableScreen : KScreen
+public class TableScreen : ShowOptimizedKScreen
 {
 	public enum ResultValues
 	{
@@ -83,6 +83,10 @@ public class TableScreen : KScreen
 
 	private float targetScrollerPosition;
 
+	private Dictionary<IAssignableIdentity, bool> obsoleteMinionRowStatus = new Dictionary<IAssignableIdentity, bool>();
+
+	private Dictionary<int, bool> obsoleteWorldDividerStatus = new Dictionary<int, bool>();
+
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();
@@ -129,7 +133,10 @@ public class TableScreen : KScreen
 		}
 		ZeroScrollers();
 		base.OnShow(show);
-		rows_dirty = true;
+		if (show)
+		{
+			MarkRowsDirty();
+		}
 	}
 
 	private void ZeroScrollers()
@@ -193,6 +200,10 @@ public class TableScreen : KScreen
 
 	public override void ScreenUpdate(bool topLevel)
 	{
+		if (isHiddenButActive)
+		{
+			return;
+		}
 		base.ScreenUpdate(topLevel);
 		if (incubating)
 		{
@@ -229,7 +240,7 @@ public class TableScreen : KScreen
 
 	protected virtual void RefreshRows()
 	{
-		ClearRows();
+		ObsoleteRows();
 		AddRow(null);
 		if (has_default_duplicant_row)
 		{
@@ -242,28 +253,36 @@ public class TableScreen : KScreen
 				AddRow(Components.LiveMinionIdentities[i]);
 			}
 		}
-		foreach (MinionStorage item in Components.MinionStorages.Items)
+		foreach (MinionStorage item2 in Components.MinionStorages.Items)
 		{
-			foreach (MinionStorage.Info item2 in item.GetStoredMinionInfo())
+			foreach (MinionStorage.Info item3 in item2.GetStoredMinionInfo())
 			{
-				if (item2.serializedMinion != null)
+				if (item3.serializedMinion != null)
 				{
-					StoredMinionIdentity minion = item2.serializedMinion.Get<StoredMinionIdentity>();
+					StoredMinionIdentity minion = item3.serializedMinion.Get<StoredMinionIdentity>();
 					AddRow(minion);
 				}
 			}
 		}
-		foreach (int item3 in ClusterManager.Instance.GetWorldIDsSorted())
+		foreach (int item4 in ClusterManager.Instance.GetWorldIDsSorted())
 		{
-			AddWorldDivider(item3);
+			AddWorldDivider(item4);
 		}
+		foreach (KeyValuePair<int, bool> item5 in obsoleteWorldDividerStatus)
+		{
+			if (item5.Value)
+			{
+				RemoveWorldDivider(item5.Key);
+			}
+		}
+		obsoleteWorldDividerStatus.Clear();
 		foreach (KeyValuePair<int, GameObject> worldDivider in worldDividers)
 		{
 			Component reference = worldDivider.Value.GetComponent<HierarchyReferences>().GetReference("NobodyRow");
 			reference.gameObject.SetActive(value: true);
-			foreach (MinionAssignablesProxy item4 in Components.MinionAssignablesProxy)
+			foreach (MinionAssignablesProxy item6 in Components.MinionAssignablesProxy)
 			{
-				if (item4 != null && item4.GetTargetGameObject() != null && item4.GetTargetGameObject().GetMyWorld().id == worldDivider.Key)
+				if (item6 != null && item6.GetTargetGameObject() != null && item6.GetTargetGameObject().GetMyWorld().id == worldDivider.Key)
 				{
 					reference.gameObject.SetActive(value: false);
 					break;
@@ -271,6 +290,18 @@ public class TableScreen : KScreen
 			}
 			worldDivider.Value.SetActive(ClusterManager.Instance.GetWorld(worldDivider.Key).IsDiscovered && DlcManager.FeatureClusterSpaceEnabled());
 		}
+		foreach (KeyValuePair<IAssignableIdentity, bool> kvp in obsoleteMinionRowStatus)
+		{
+			if (kvp.Value)
+			{
+				int index = rows.FindIndex((TableRow match) => match.GetIdentity() == kvp.Key);
+				TableRow item = rows[index];
+				rows[index].Clear();
+				rows.RemoveAt(index);
+				all_sortable_rows.Remove(item);
+			}
+		}
+		obsoleteMinionRowStatus.Clear();
 		SortRows();
 		rows_dirty = false;
 	}
@@ -408,29 +439,36 @@ public class TableScreen : KScreen
 		return 0;
 	}
 
-	protected void ClearRows()
+	protected void ObsoleteRows()
 	{
 		for (int num = rows.Count - 1; num >= 0; num--)
 		{
-			rows[num].Clear();
+			IAssignableIdentity identity = rows[num].GetIdentity();
+			if (identity != null)
+			{
+				obsoleteMinionRowStatus.Add(identity, value: true);
+			}
 		}
-		rows.Clear();
-		all_sortable_rows.Clear();
-		List<int> list = new List<int>();
 		foreach (KeyValuePair<int, GameObject> worldDivider in worldDividers)
 		{
-			list.Add(worldDivider.Key);
+			obsoleteWorldDividerStatus.Add(worldDivider.Key, value: true);
 		}
-		for (int num2 = list.Count - 1; num2 >= 0; num2--)
-		{
-			RemoveWorldDivider(list[num2]);
-		}
-		worldDividers.Clear();
 	}
 
 	protected void AddRow(IAssignableIdentity minion)
 	{
 		bool flag = minion == null;
+		if (!flag && obsoleteMinionRowStatus.ContainsKey(minion))
+		{
+			obsoleteMinionRowStatus[minion] = false;
+			rows.Find((TableRow match) => match.GetIdentity() == minion).RefreshColumns(columns);
+			return;
+		}
+		if (flag && header_row != null)
+		{
+			header_row.GetComponent<TableRow>().RefreshColumns(columns);
+			return;
+		}
 		GameObject gameObject = Util.KInstantiateUI(flag ? prefab_row_header : prefab_row_empty, (minion == null) ? header_content_transform.gameObject : scroll_content_transform.gameObject, force_active: true);
 		TableRow component = gameObject.GetComponent<TableRow>();
 		component.rowType = ((!flag) ? ((minion as MinionIdentity != null) ? TableRow.RowType.Minion : TableRow.RowType.StoredMinon) : TableRow.RowType.Header);
@@ -448,6 +486,11 @@ public class TableScreen : KScreen
 
 	protected void AddDefaultRow()
 	{
+		if (default_row != null)
+		{
+			default_row.GetComponent<TableRow>().RefreshColumns(columns);
+			return;
+		}
 		TableRow component = (default_row = Util.KInstantiateUI(prefab_row_empty, scroll_content_transform.gameObject, force_active: true)).GetComponent<TableRow>();
 		component.rowType = TableRow.RowType.Default;
 		component.isDefault = true;
@@ -457,20 +500,22 @@ public class TableScreen : KScreen
 
 	protected void AddWorldDivider(int worldId)
 	{
-		if (!worldDividers.ContainsKey(worldId))
+		if (obsoleteWorldDividerStatus.ContainsKey(worldId) && obsoleteWorldDividerStatus[worldId])
 		{
-			GameObject gameObject = Util.KInstantiateUI(prefab_world_divider, scroll_content_transform.gameObject, force_active: true);
-			gameObject.GetComponentInChildren<Image>().color = ClusterManager.worldColors[worldId % ClusterManager.worldColors.Length];
-			RectTransform component = gameObject.GetComponentInChildren<LocText>().GetComponent<RectTransform>();
-			component.sizeDelta = new Vector2(150f, component.sizeDelta.y);
-			ClusterGridEntity component2 = ClusterManager.Instance.GetWorld(worldId).GetComponent<ClusterGridEntity>();
-			string text = ((component2 is Clustercraft) ? NAMEGEN.WORLD.SPACECRAFT_PREFIX : NAMEGEN.WORLD.PLANETOID_PREFIX);
-			gameObject.GetComponentInChildren<LocText>().SetText(text + component2.Name);
-			gameObject.GetComponentInChildren<ToolTip>().SetSimpleTooltip(string.Format(NAMEGEN.WORLD.WORLDDIVIDER_TOOLTIP, component2.Name));
-			gameObject.GetComponent<HierarchyReferences>().GetReference<Image>("Icon").sprite = component2.GetUISprite();
-			worldDividers.Add(worldId, gameObject);
-			gameObject.GetComponent<TableRow>().ConfigureAsWorldDivider(columns, this);
+			obsoleteWorldDividerStatus[worldId] = false;
+			return;
 		}
+		GameObject gameObject = Util.KInstantiateUI(prefab_world_divider, scroll_content_transform.gameObject, force_active: true);
+		gameObject.GetComponentInChildren<Image>().color = ClusterManager.worldColors[worldId % ClusterManager.worldColors.Length];
+		RectTransform component = gameObject.GetComponentInChildren<LocText>().GetComponent<RectTransform>();
+		component.sizeDelta = new Vector2(150f, component.sizeDelta.y);
+		ClusterGridEntity component2 = ClusterManager.Instance.GetWorld(worldId).GetComponent<ClusterGridEntity>();
+		string text = ((component2 is Clustercraft) ? NAMEGEN.WORLD.SPACECRAFT_PREFIX : NAMEGEN.WORLD.PLANETOID_PREFIX);
+		gameObject.GetComponentInChildren<LocText>().SetText(text + component2.Name);
+		gameObject.GetComponentInChildren<ToolTip>().SetSimpleTooltip(string.Format(NAMEGEN.WORLD.WORLDDIVIDER_TOOLTIP, component2.Name));
+		gameObject.GetComponent<HierarchyReferences>().GetReference<Image>("Icon").sprite = component2.GetUISprite();
+		worldDividers.Add(worldId, gameObject);
+		gameObject.GetComponent<TableRow>().ConfigureAsWorldDivider(columns, this);
 	}
 
 	protected void RemoveWorldDivider(object worldId)
@@ -620,6 +665,7 @@ public class TableScreen : KScreen
 		if (minion != null)
 		{
 			component.SetIdentityObject(minion, jobEnabled: false);
+			component.ForceRefresh();
 		}
 		else
 		{
@@ -800,7 +846,7 @@ public class TableScreen : KScreen
 					flag = true;
 					break;
 				case ResultValues.True:
-					flag = ((state != ResultValues.True) ? true : false);
+					flag = state != ResultValues.True;
 					break;
 				}
 				if (flag)
@@ -840,7 +886,7 @@ public class TableScreen : KScreen
 					flag = true;
 					break;
 				case ResultValues.True:
-					flag = ((state != ResultValues.True) ? true : false);
+					flag = state != ResultValues.True;
 					break;
 				}
 				if (flag)

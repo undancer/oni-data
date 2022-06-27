@@ -289,7 +289,7 @@ public class PressureVulnerable : StateMachineComponent<PressureVulnerable.State
 		float averageRate = Game.Instance.accumulators.GetAverageRate(base.smi.master.pressureAccumulator);
 		displayPressureAmount.value = averageRate;
 		Game.Instance.accumulators.Accumulate(base.smi.master.elementAccumulator, testAreaElementSafe ? 1f : 0f);
-		bool value = ((Game.Instance.accumulators.GetAverageRate(base.smi.master.elementAccumulator) > 0f) ? true : false);
+		bool value = Game.Instance.accumulators.GetAverageRate(base.smi.master.elementAccumulator) > 0f;
 		base.smi.sm.safe_element.Set(value, base.smi);
 		base.smi.sm.pressure.Set(averageRate, base.smi);
 	}
@@ -326,11 +326,26 @@ public class PressureVulnerable : StateMachineComponent<PressureVulnerable.State
 		if (safe_atmospheres != null && safe_atmospheres.Count > 0)
 		{
 			string text = "";
+			bool flag = false;
+			bool flag2 = false;
 			foreach (Element safe_atmosphere in safe_atmospheres)
 			{
+				flag |= safe_atmosphere.IsGas;
+				flag2 |= safe_atmosphere.IsLiquid;
 				text = text + "\n        • " + safe_atmosphere.name;
 			}
-			list.Add(new Descriptor(string.Format(UI.GAMEOBJECTEFFECTS.REQUIRES_ATMOSPHERE, text), string.Format(UI.GAMEOBJECTEFFECTS.TOOLTIPS.REQUIRES_ATMOSPHERE, text), Descriptor.DescriptorType.Requirement));
+			if (flag && flag2)
+			{
+				list.Add(new Descriptor(string.Format(UI.GAMEOBJECTEFFECTS.REQUIRES_ATMOSPHERE, text), string.Format(UI.GAMEOBJECTEFFECTS.TOOLTIPS.REQUIRES_ATMOSPHERE_MIXED, text), Descriptor.DescriptorType.Requirement));
+			}
+			if (flag)
+			{
+				list.Add(new Descriptor(string.Format(UI.GAMEOBJECTEFFECTS.REQUIRES_ATMOSPHERE, text), string.Format(UI.GAMEOBJECTEFFECTS.TOOLTIPS.REQUIRES_ATMOSPHERE, text), Descriptor.DescriptorType.Requirement));
+			}
+			else
+			{
+				list.Add(new Descriptor(string.Format(UI.GAMEOBJECTEFFECTS.REQUIRES_ATMOSPHERE, text), string.Format(UI.GAMEOBJECTEFFECTS.TOOLTIPS.REQUIRES_ATMOSPHERE_LIQUID, text), Descriptor.DescriptorType.Requirement));
+			}
 		}
 		return list;
 	}

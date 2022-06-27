@@ -526,7 +526,7 @@ public class Reactor : StateMachineComponent<Reactor.StatesInstance>, IGameObjec
 		{
 			float num = GameUtil.EnergyToTemperatureDelta(-100f * dt * activeFuel.Mass, activeFuel);
 			activeFuel.Temperature += num;
-			spentFuel += dt * 0.016666668f;
+			spentFuel += dt * (1f / 60f);
 		}
 	}
 

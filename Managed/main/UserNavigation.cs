@@ -57,22 +57,20 @@ public class UserNavigation : KMonoBehaviour
 				Vector3 position = new Vector3(x, y, CameraController.Instance.transform.position.z);
 				CameraController.Instance.SetPosition(position);
 			}
-			NavPoint value = (worldCameraPositions[second] = new NavPoint
+			worldCameraPositions[second] = new NavPoint
 			{
 				pos = CameraController.Instance.transform.position,
 				orthoSize = CameraController.Instance.targetOrthographicSize
-			});
+			};
 			if (!worldCameraPositions.ContainsKey(first))
 			{
 				WorldContainer world2 = ClusterManager.Instance.GetWorld(first);
 				Vector2I vector2I = world2.WorldOffset + new Vector2I(world2.Width / 2, world2.Height / 2);
-				Dictionary<int, NavPoint> dictionary = worldCameraPositions;
-				value = new NavPoint
+				worldCameraPositions.Add(first, new NavPoint
 				{
 					pos = new Vector3(vector2I.x, vector2I.y),
 					orthoSize = CameraController.Instance.targetOrthographicSize
-				};
-				dictionary.Add(first, value);
+				});
 			}
 			CameraController.Instance.SetTargetPosForWorldChange(worldCameraPositions[first].pos, worldCameraPositions[first].orthoSize, playSound: false);
 		});
@@ -80,26 +78,21 @@ public class UserNavigation : KMonoBehaviour
 
 	public void SetWorldCameraStartPosition(int world_id, Vector3 start_pos)
 	{
-		NavPoint value;
 		if (!worldCameraPositions.ContainsKey(world_id))
 		{
-			Dictionary<int, NavPoint> dictionary = worldCameraPositions;
-			value = new NavPoint
+			worldCameraPositions.Add(world_id, new NavPoint
 			{
 				pos = new Vector3(start_pos.x, start_pos.y),
 				orthoSize = CameraController.Instance.targetOrthographicSize
-			};
-			dictionary.Add(world_id, value);
+			});
 		}
 		else
 		{
-			Dictionary<int, NavPoint> dictionary2 = worldCameraPositions;
-			value = new NavPoint
+			worldCameraPositions[world_id] = new NavPoint
 			{
 				pos = new Vector3(start_pos.x, start_pos.y),
 				orthoSize = CameraController.Instance.targetOrthographicSize
 			};
-			dictionary2[world_id] = value;
 		}
 	}
 

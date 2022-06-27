@@ -1,5 +1,5 @@
-using System;
 using System.Runtime.InteropServices;
+using Unity.Collections;
 using UnityEngine;
 
 public class SymbolInstanceGpuData
@@ -107,8 +107,8 @@ public class SymbolInstanceGpuData
 		}
 	}
 
-	public void WriteToTexture(byte[] data, int data_idx, int instance_idx)
+	public void WriteToTexture(NativeArray<byte> data, int data_idx, int instance_idx)
 	{
-		Buffer.BlockCopy(symbolInstancesConverter.bytes, 0, data, data_idx, symbolCount * 8 * 4);
+		NativeArray<byte>.Copy(symbolInstancesConverter.bytes, 0, data, data_idx, symbolCount * 8 * 4);
 	}
 }

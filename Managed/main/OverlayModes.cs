@@ -263,9 +263,9 @@ public abstract class OverlayModes
 					FindConnectedNetworks(Grid.CellBelow(cell), mgr, networks, visited);
 				}
 				object endpoint = mgr.GetEndpoint(cell);
-				if (endpoint != null)
+				if (endpoint != null && endpoint is FlowUtilityNetwork.NetworkItem networkItem)
 				{
-					(endpoint as FlowUtilityNetwork.NetworkItem)?.GameObject.GetComponent<IBridgedNetworkItem>()?.AddNetworks(networks);
+					networkItem.GameObject.GetComponent<IBridgedNetworkItem>()?.AddNetworks(networks);
 				}
 			}
 		}
@@ -1352,23 +1352,22 @@ public abstract class OverlayModes
 			Mode.RemoveOffscreenTargets(ioTargets, workingIOTargets, min, max, FreeUI);
 			using (new KProfiler.Region("UpdateLogicOverlay"))
 			{
-				foreach (SaveLoadRoot item2 in gameObjPartition.GetAllIntersecting(new Vector2(min.x, min.y), new Vector2(max.x, max.y)))
+				foreach (SaveLoadRoot item in gameObjPartition.GetAllIntersecting(new Vector2(min.x, min.y), new Vector2(max.x, max.y)))
 				{
-					if (!(item2 != null))
+					if (!(item != null))
 					{
 						continue;
 					}
-					KPrefabID component = item2.GetComponent<KPrefabID>();
+					KPrefabID component = item.GetComponent<KPrefabID>();
 					if (component.PrefabTag == wire_id || component.PrefabTag == bridge_id || component.PrefabTag == ribbon_id || component.PrefabTag == ribbon_bridge_id)
 					{
-						AddTargetIfVisible(item2, min, max, gameObjTargets, conduitTargetLayer, delegate(SaveLoadRoot root)
+						AddTargetIfVisible(item, min, max, gameObjTargets, conduitTargetLayer, delegate(SaveLoadRoot root)
 						{
 							if (!(root == null))
 							{
 								KPrefabID component9 = root.GetComponent<KPrefabID>();
 								if (HighlightItemIDs.Contains(component9.PrefabTag))
 								{
-									BridgeInfo item;
 									if (component9.PrefabTag == wire_id)
 									{
 										wireControllers.Add(root.GetComponent<KBatchedAnimController>());
@@ -1381,32 +1380,28 @@ public abstract class OverlayModes
 									{
 										KBatchedAnimController component10 = root.GetComponent<KBatchedAnimController>();
 										int networkCell2 = root.GetComponent<LogicUtilityNetworkLink>().GetNetworkCell();
-										HashSet<BridgeInfo> hashSet = bridgeControllers;
-										item = new BridgeInfo
+										bridgeControllers.Add(new BridgeInfo
 										{
 											cell = networkCell2,
 											controller = component10
-										};
-										hashSet.Add(item);
+										});
 									}
 									else if (component9.PrefabTag == ribbon_bridge_id)
 									{
 										KBatchedAnimController component11 = root.GetComponent<KBatchedAnimController>();
 										int networkCell3 = root.GetComponent<LogicUtilityNetworkLink>().GetNetworkCell();
-										HashSet<BridgeInfo> hashSet2 = ribbonBridgeControllers;
-										item = new BridgeInfo
+										ribbonBridgeControllers.Add(new BridgeInfo
 										{
 											cell = networkCell3,
 											controller = component11
-										};
-										hashSet2.Add(item);
+										});
 									}
 								}
 							}
 						});
 						continue;
 					}
-					AddTargetIfVisible(item2, min, max, gameObjTargets, objectTargetLayer, delegate(SaveLoadRoot root)
+					AddTargetIfVisible(item, min, max, gameObjTargets, objectTargetLayer, delegate(SaveLoadRoot root)
 					{
 						Vector3 position = root.transform.GetPosition();
 						float z = position.z;
@@ -1429,11 +1424,11 @@ public abstract class OverlayModes
 						component8.enabled = true;
 					});
 				}
-				foreach (ILogicUIElement item3 in ioPartition.GetAllIntersecting(new Vector2(min.x, min.y), new Vector2(max.x, max.y)))
+				foreach (ILogicUIElement item2 in ioPartition.GetAllIntersecting(new Vector2(min.x, min.y), new Vector2(max.x, max.y)))
 				{
-					if (item3 != null)
+					if (item2 != null)
 					{
-						AddTargetIfVisible(item3, min, max, ioTargets, objectTargetLayer, AddUI, (KMonoBehaviour kcmp) => kcmp != null && HighlightItemIDs.Contains(kcmp.GetComponent<KPrefabID>().PrefabTag));
+						AddTargetIfVisible(item2, min, max, ioTargets, objectTargetLayer, AddUI, (KMonoBehaviour kcmp) => kcmp != null && HighlightItemIDs.Contains(kcmp.GetComponent<KPrefabID>().PrefabTag));
 					}
 				}
 				connectedNetworks.Clear();
@@ -2967,12 +2962,7 @@ public abstract class OverlayModes
 				FindConnectedNetworks(Grid.CellBelow(cell), mgr, networks, visited);
 			}
 			object endpoint = mgr.GetEndpoint(cell);
-			if (endpoint == null)
-			{
-				return;
-			}
-			FlowUtilityNetwork.NetworkItem networkItem = endpoint as FlowUtilityNetwork.NetworkItem;
-			if (networkItem != null)
+			if (endpoint != null && endpoint is FlowUtilityNetwork.NetworkItem networkItem)
 			{
 				GameObject gameObject = networkItem.GameObject;
 				if (gameObject != null)
@@ -3263,40 +3253,40 @@ public abstract class OverlayModes
 
 		public List<LegendEntry> temperatureLegend = new List<LegendEntry>
 		{
-			new LegendEntry(UI.OVERLAYS.TEMPERATURE.MAXHOT, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(227f / 255f, 7f / 51f, 11f / 85f)),
-			new LegendEntry(UI.OVERLAYS.TEMPERATURE.EXTREMEHOT, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(251f / 255f, 83f / 255f, 16f / 51f)),
-			new LegendEntry(UI.OVERLAYS.TEMPERATURE.VERYHOT, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(1f, 169f / 255f, 12f / 85f)),
-			new LegendEntry(UI.OVERLAYS.TEMPERATURE.HOT, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(239f / 255f, 1f, 0f)),
-			new LegendEntry(UI.OVERLAYS.TEMPERATURE.TEMPERATE, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(59f / 255f, 254f / 255f, 74f / 255f)),
-			new LegendEntry(UI.OVERLAYS.TEMPERATURE.COLD, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(31f / 255f, 161f / 255f, 1f)),
-			new LegendEntry(UI.OVERLAYS.TEMPERATURE.VERYCOLD, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(43f / 255f, 203f / 255f, 1f)),
-			new LegendEntry(UI.OVERLAYS.TEMPERATURE.EXTREMECOLD, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(128f / 255f, 254f / 255f, 0.9411765f))
+			new LegendEntry(UI.OVERLAYS.TEMPERATURE.MAXHOT, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(0.8901961f, 7f / 51f, 11f / 85f)),
+			new LegendEntry(UI.OVERLAYS.TEMPERATURE.EXTREMEHOT, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(0.9843137f, 0.3254902f, 16f / 51f)),
+			new LegendEntry(UI.OVERLAYS.TEMPERATURE.VERYHOT, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(1f, 0.6627451f, 12f / 85f)),
+			new LegendEntry(UI.OVERLAYS.TEMPERATURE.HOT, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(0.9372549f, 1f, 0f)),
+			new LegendEntry(UI.OVERLAYS.TEMPERATURE.TEMPERATE, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(0.23137255f, 0.99607843f, 0.2901961f)),
+			new LegendEntry(UI.OVERLAYS.TEMPERATURE.COLD, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(0.12156863f, 0.6313726f, 1f)),
+			new LegendEntry(UI.OVERLAYS.TEMPERATURE.VERYCOLD, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(0.16862746f, 0.79607844f, 1f)),
+			new LegendEntry(UI.OVERLAYS.TEMPERATURE.EXTREMECOLD, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(0.5019608f, 0.99607843f, 0.9411765f))
 		};
 
 		public List<LegendEntry> heatFlowLegend = new List<LegendEntry>
 		{
-			new LegendEntry(UI.OVERLAYS.HEATFLOW.HEATING, UI.OVERLAYS.HEATFLOW.TOOLTIPS.HEATING, new Color(232f / 255f, 22f / 85f, 38f / 255f)),
-			new LegendEntry(UI.OVERLAYS.HEATFLOW.NEUTRAL, UI.OVERLAYS.HEATFLOW.TOOLTIPS.NEUTRAL, new Color(79f / 255f, 79f / 255f, 79f / 255f)),
-			new LegendEntry(UI.OVERLAYS.HEATFLOW.COOLING, UI.OVERLAYS.HEATFLOW.TOOLTIPS.COOLING, new Color(64f / 255f, 161f / 255f, 77f / 85f))
+			new LegendEntry(UI.OVERLAYS.HEATFLOW.HEATING, UI.OVERLAYS.HEATFLOW.TOOLTIPS.HEATING, new Color(0.9098039f, 22f / 85f, 0.14901961f)),
+			new LegendEntry(UI.OVERLAYS.HEATFLOW.NEUTRAL, UI.OVERLAYS.HEATFLOW.TOOLTIPS.NEUTRAL, new Color(0.30980393f, 0.30980393f, 0.30980393f)),
+			new LegendEntry(UI.OVERLAYS.HEATFLOW.COOLING, UI.OVERLAYS.HEATFLOW.TOOLTIPS.COOLING, new Color(0.2509804f, 0.6313726f, 77f / 85f))
 		};
 
 		public List<LegendEntry> expandedTemperatureLegend = new List<LegendEntry>
 		{
-			new LegendEntry(UI.OVERLAYS.TEMPERATURE.MAXHOT, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(227f / 255f, 7f / 51f, 11f / 85f)),
-			new LegendEntry(UI.OVERLAYS.TEMPERATURE.EXTREMEHOT, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(251f / 255f, 83f / 255f, 16f / 51f)),
-			new LegendEntry(UI.OVERLAYS.TEMPERATURE.VERYHOT, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(1f, 169f / 255f, 12f / 85f)),
-			new LegendEntry(UI.OVERLAYS.TEMPERATURE.HOT, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(239f / 255f, 1f, 0f)),
-			new LegendEntry(UI.OVERLAYS.TEMPERATURE.TEMPERATE, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(59f / 255f, 254f / 255f, 74f / 255f)),
-			new LegendEntry(UI.OVERLAYS.TEMPERATURE.COLD, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(31f / 255f, 161f / 255f, 1f)),
-			new LegendEntry(UI.OVERLAYS.TEMPERATURE.VERYCOLD, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(43f / 255f, 203f / 255f, 1f)),
-			new LegendEntry(UI.OVERLAYS.TEMPERATURE.EXTREMECOLD, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(128f / 255f, 254f / 255f, 0.9411765f))
+			new LegendEntry(UI.OVERLAYS.TEMPERATURE.MAXHOT, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(0.8901961f, 7f / 51f, 11f / 85f)),
+			new LegendEntry(UI.OVERLAYS.TEMPERATURE.EXTREMEHOT, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(0.9843137f, 0.3254902f, 16f / 51f)),
+			new LegendEntry(UI.OVERLAYS.TEMPERATURE.VERYHOT, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(1f, 0.6627451f, 12f / 85f)),
+			new LegendEntry(UI.OVERLAYS.TEMPERATURE.HOT, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(0.9372549f, 1f, 0f)),
+			new LegendEntry(UI.OVERLAYS.TEMPERATURE.TEMPERATE, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(0.23137255f, 0.99607843f, 0.2901961f)),
+			new LegendEntry(UI.OVERLAYS.TEMPERATURE.COLD, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(0.12156863f, 0.6313726f, 1f)),
+			new LegendEntry(UI.OVERLAYS.TEMPERATURE.VERYCOLD, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(0.16862746f, 0.79607844f, 1f)),
+			new LegendEntry(UI.OVERLAYS.TEMPERATURE.EXTREMECOLD, UI.OVERLAYS.TEMPERATURE.TOOLTIPS.TEMPERATURE, new Color(0.5019608f, 0.99607843f, 0.9411765f))
 		};
 
 		public List<LegendEntry> stateChangeLegend = new List<LegendEntry>
 		{
-			new LegendEntry(UI.OVERLAYS.STATECHANGE.HIGHPOINT, UI.OVERLAYS.STATECHANGE.TOOLTIPS.HIGHPOINT, new Color(227f / 255f, 7f / 51f, 11f / 85f)),
-			new LegendEntry(UI.OVERLAYS.STATECHANGE.STABLE, UI.OVERLAYS.STATECHANGE.TOOLTIPS.STABLE, new Color(59f / 255f, 254f / 255f, 74f / 255f)),
-			new LegendEntry(UI.OVERLAYS.STATECHANGE.LOWPOINT, UI.OVERLAYS.STATECHANGE.TOOLTIPS.LOWPOINT, new Color(128f / 255f, 254f / 255f, 0.9411765f))
+			new LegendEntry(UI.OVERLAYS.STATECHANGE.HIGHPOINT, UI.OVERLAYS.STATECHANGE.TOOLTIPS.HIGHPOINT, new Color(0.8901961f, 7f / 51f, 11f / 85f)),
+			new LegendEntry(UI.OVERLAYS.STATECHANGE.STABLE, UI.OVERLAYS.STATECHANGE.TOOLTIPS.STABLE, new Color(0.23137255f, 0.99607843f, 0.2901961f)),
+			new LegendEntry(UI.OVERLAYS.STATECHANGE.LOWPOINT, UI.OVERLAYS.STATECHANGE.TOOLTIPS.LOWPOINT, new Color(0.5019608f, 0.99607843f, 0.9411765f))
 		};
 
 		public override HashedString ViewMode()

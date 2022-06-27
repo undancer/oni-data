@@ -5,6 +5,12 @@ public class SeedPlantingStates : GameStateMachine<SeedPlantingStates, SeedPlant
 {
 	public class Def : BaseDef
 	{
+		public string prefix;
+
+		public Def(string prefix)
+		{
+			this.prefix = prefix;
+		}
 	}
 
 	public new class Instance : GameInstance
@@ -120,16 +126,16 @@ public class SeedPlantingStates : GameStateMachine<SeedPlantingStates, SeedPlant
 	private static void AddMouthOverride(Instance smi)
 	{
 		SymbolOverrideController component = smi.GetComponent<SymbolOverrideController>();
-		KAnim.Build.Symbol symbol = smi.GetComponent<KBatchedAnimController>().AnimFiles[0].GetData().build.GetSymbol("sq_mouth_cheeks");
+		KAnim.Build.Symbol symbol = smi.GetComponent<KBatchedAnimController>().AnimFiles[0].GetData().build.GetSymbol(smi.def.prefix + "sq_mouth_cheeks");
 		if (symbol != null)
 		{
-			component.AddSymbolOverride("sq_mouth", symbol);
+			component.AddSymbolOverride("sq_mouth", symbol, 1);
 		}
 	}
 
 	private static void RemoveMouthOverride(Instance smi)
 	{
-		smi.GetComponent<SymbolOverrideController>().TryRemoveSymbolOverride("sq_mouth");
+		smi.GetComponent<SymbolOverrideController>().TryRemoveSymbolOverride("sq_mouth", 1);
 	}
 
 	private static void PickupComplete(Instance smi)

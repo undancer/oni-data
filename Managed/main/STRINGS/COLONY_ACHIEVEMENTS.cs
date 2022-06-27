@@ -15,7 +15,7 @@ namespace STRINGS
 
 				public static LocString PLATFORM_UNLOCKING_ENABLED = "Platform achievements can be unlocked.";
 
-				public static LocString EXPAND_TOOLTIP = "<i>Click to view progress</i>";
+				public static LocString EXPAND_TOOLTIP = "<i>" + UI.CLICK(UI.ClickType.Click) + " to view progress</i>";
 
 				public static LocString CYCLE_NUMBER = "Cycle: {0} / {1}";
 

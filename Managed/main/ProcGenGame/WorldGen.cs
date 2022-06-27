@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Database;
 using Delaunay.Geo;
 using Klei;
@@ -111,6 +112,8 @@ namespace ProcGenGame
 		public bool isStartingWorld;
 
 		public bool isModuleInterior;
+
+		private static Task loadSettingsTask;
 
 		public static string WORLDGEN_SAVE_FILENAME => System.IO.Path.Combine(Util.RootFolder(), "WorldGenDataSave.dat");
 
@@ -232,7 +235,26 @@ namespace ProcGenGame
 			wasLoaded = false;
 		}
 
-		public static void LoadSettings()
+		public static void LoadSettings(bool in_async_thread = false)
+		{
+			bool is_playing = Application.isPlaying;
+			if (in_async_thread)
+			{
+				loadSettingsTask = Task.Run(delegate
+				{
+					LoadSettings_Internal(is_playing);
+				});
+				return;
+			}
+			if (loadSettingsTask != null)
+			{
+				loadSettingsTask.Wait();
+				loadSettingsTask = null;
+			}
+			LoadSettings_Internal(is_playing);
+		}
+
+		private static void LoadSettings_Internal(bool is_playing)
 		{
 			ListPool<YamlIO.Error, WorldGen>.PooledList pooledList = ListPool<YamlIO.Error, WorldGen>.Allocate();
 			if (SettingsCache.LoadFiles(pooledList))
@@ -240,7 +262,7 @@ namespace ProcGenGame
 				TemplateCache.Init();
 			}
 			_ = CustomGameSettings.Instance != null;
-			if (Application.isPlaying)
+			if (is_playing)
 			{
 				Global.Instance.modManager.HandleErrors(pooledList);
 			}
@@ -417,7 +439,7 @@ namespace ProcGenGame
 			successCallbackFn(UI.WORLDGEN.PLACINGCREATURES.key, 1f, WorldGenProgressStages.Stages.PlacingCreatures);
 		}
 
-		private void ReportWorldGenError(Exception e)
+		public void ReportWorldGenError(Exception e)
 		{
 			bool flag = FileSystem.IsModdedFile(SettingsCache.RewriteWorldgenPathYaml(Settings.world.filePath));
 			string settingsCoordinate = CustomGameSettings.Instance.GetSettingsCoordinate();

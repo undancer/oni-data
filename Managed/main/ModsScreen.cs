@@ -109,7 +109,7 @@ public class ModsScreen : KModalScreen
 			if (mod.IsEnabledForActiveDlc())
 			{
 				mod_footprint.Add(mod.label);
-				if ((mod.loaded_content & (Content.Strings | Content.DLL | Content.Translation | Content.Animation)) == (mod.available_content & (Content.Strings | Content.DLL | Content.Translation | Content.Animation)))
+				if ((mod.loaded_content & (Content.LayerableFiles | Content.Strings | Content.DLL | Content.Translation | Content.Animation)) == (mod.available_content & (Content.LayerableFiles | Content.Strings | Content.DLL | Content.Translation | Content.Animation)))
 				{
 					mod.Uncrash();
 				}
@@ -130,7 +130,7 @@ public class ModsScreen : KModalScreen
 	private void Exit()
 	{
 		Global.Instance.modManager.Save();
-		if (!Global.Instance.modManager.MatchFootprint(mod_footprint, Content.Strings | Content.DLL | Content.Translation | Content.Animation))
+		if (!Global.Instance.modManager.MatchFootprint(mod_footprint, Content.LayerableFiles | Content.Strings | Content.DLL | Content.Translation | Content.Animation))
 		{
 			Global.Instance.modManager.RestartDialog(UI.FRONTEND.MOD_DIALOGS.MODS_SCREEN_CHANGES.TITLE, UI.FRONTEND.MOD_DIALOGS.MODS_SCREEN_CHANGES.MESSAGE, Deactivate, with_details: true, base.gameObject);
 		}

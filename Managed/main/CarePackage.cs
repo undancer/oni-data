@@ -16,6 +16,8 @@ public class CarePackage : StateMachineComponent<CarePackage.SMInstance>
 
 	public class States : GameStateMachine<States, SMInstance, CarePackage>
 	{
+		public BoolParameter spawnedContents;
+
 		public State spawn;
 
 		public State open;
@@ -27,10 +29,12 @@ public class CarePackage : StateMachineComponent<CarePackage.SMInstance>
 		public override void InitializeStates(out BaseState default_state)
 		{
 			default_state = spawn;
-			spawn.PlayAnim("portalbirth").OnAnimQueueComplete(open);
+			base.serializable = SerializeType.ParamsOnly;
+			spawn.PlayAnim("portalbirth").OnAnimQueueComplete(open).ParamTransition(spawnedContents, pst, GameStateMachine<States, SMInstance, CarePackage, object>.IsTrue);
 			open.PlayAnim("portalbirth_pst").QueueAnim("object_idle_loop").Exit(delegate(SMInstance smi)
 			{
 				smi.master.SpawnContents();
+				spawnedContents.Set(value: true, smi);
 			})
 				.ScheduleGoTo(1f, pst);
 			pst.PlayAnim("object_idle_pst").ScheduleGoTo(5f, destroy);
@@ -43,6 +47,8 @@ public class CarePackage : StateMachineComponent<CarePackage.SMInstance>
 
 	[Serialize]
 	public CarePackageInfo info;
+
+	private string facadeID;
 
 	private Reactable reactable;
 
@@ -83,6 +89,12 @@ public class CarePackage : StateMachineComponent<CarePackage.SMInstance>
 		SetAnimToInfo();
 	}
 
+	public void SetFacade(string facadeID)
+	{
+		this.facadeID = facadeID;
+		SetAnimToInfo();
+	}
+
 	private void SetAnimToInfo()
 	{
 		GameObject gameObject = Util.KInstantiate(Assets.GetPrefab("Meter".ToTag()), base.gameObject);
@@ -108,6 +120,11 @@ public class CarePackage : StateMachineComponent<CarePackage.SMInstance>
 		}
 		component4.initialAnim = component2.initialAnim;
 		component4.initialMode = KAnim.PlayMode.Loop;
+		if (!string.IsNullOrEmpty(facadeID))
+		{
+			component4.SwapAnims(new KAnimFile[1] { Db.Get().EquippableFacades.Get(facadeID).AnimFile });
+			GetComponentsInChildren<KBatchedAnimController>()[1].SetSymbolVisiblity("object", is_visible: false);
+		}
 		KBatchedAnimTracker component5 = gameObject.GetComponent<KBatchedAnimTracker>();
 		component5.controller = component;
 		component5.symbol = new HashedString("snapTO_object");
@@ -136,6 +153,10 @@ public class CarePackage : StateMachineComponent<CarePackage.SMInstance>
 				gameObject = Util.KInstantiate(prefab, position);
 				if (gameObject != null)
 				{
+					if (!facadeID.IsNullOrWhiteSpace())
+					{
+						EquippableFacade.AddFacadeToEquippable(gameObject.GetComponent<Equippable>(), facadeID);
+					}
 					gameObject.SetActive(value: true);
 				}
 			}

@@ -328,7 +328,7 @@ public class LogicGate : LogicGateBase, ILogicEventSender, ILogicNetworkConnecti
 
 	private static KAnimHashedString[] demultiplexerOutputGreenSymbols = new KAnimHashedString[4] { OUTPUT1_SYMBOL_BLM_GRN, OUTPUT2_SYMBOL_BLM_GRN, OUTPUT3_SYMBOL_BLM_GRN, OUTPUT4_SYMBOL_BLM_GRN };
 
-	private Color activeTintColor = new Color(46f / 85f, 84f / 85f, 76f / 255f);
+	private Color activeTintColor = new Color(46f / 85f, 84f / 85f, 0.29803923f);
 
 	private Color inactiveTintColor = Color.red;
 

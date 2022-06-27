@@ -25,4 +25,21 @@ public static class PathFinderQueries
 	public static FloorCellQuery floorCellQuery = new FloorCellQuery();
 
 	public static BuildingPlacementQuery buildingPlacementQuery = new BuildingPlacementQuery();
+
+	public static void Reset()
+	{
+		cellQuery = new CellQuery();
+		cellCostQuery = new CellCostQuery();
+		cellArrayQuery = new CellArrayQuery();
+		cellOffsetQuery = new CellOffsetQuery();
+		safeCellQuery = new SafeCellQuery();
+		idleCellQuery = new IdleCellQuery();
+		breathableCellQuery = new BreathableCellQuery();
+		drawNavGridQuery = new DrawNavGridQuery();
+		plantableCellQuery = new PlantableCellQuery();
+		mineableCellQuery = new MineableCellQuery();
+		staterpillarCellQuery = new StaterpillarCellQuery();
+		floorCellQuery = new FloorCellQuery();
+		buildingPlacementQuery = new BuildingPlacementQuery();
+	}
 }

@@ -25,7 +25,7 @@ public class NuclearReactorConfig : IBuildingConfig
 
 	public const float MELT_DOWN_RADIATOR_INTENSITY = 4800f;
 
-	public const float FUEL_CONSUMPTION_SPEED = 0.016666668f;
+	public const float FUEL_CONSUMPTION_SPEED = 1f / 60f;
 
 	public const float BEGIN_REACTION_MASS = 0.5f;
 

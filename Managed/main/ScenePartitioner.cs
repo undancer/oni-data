@@ -31,6 +31,8 @@ public class ScenePartitioner : ISim1000ms
 
 	private static readonly Predicate<ScenePartitionerEntry> removeCallback = (ScenePartitionerEntry entry) => entry == null || entry.obj == null;
 
+	public HashSet<ScenePartitionerLayer> toggledLayers = new HashSet<ScenePartitionerLayer>();
+
 	public ScenePartitioner(int node_size, int layer_count, int scene_width, int scene_height)
 	{
 		nodeSize = node_size;
@@ -73,6 +75,7 @@ public class ScenePartitioner : ISim1000ms
 		nodes = null;
 	}
 
+	[Obsolete]
 	public ScenePartitionerLayer CreateMask(HashedString name)
 	{
 		foreach (ScenePartitionerLayer layer in layers)
@@ -82,6 +85,22 @@ public class ScenePartitioner : ISim1000ms
 				return layer;
 			}
 		}
+		ScenePartitionerLayer scenePartitionerLayer = new ScenePartitionerLayer(name, layers.Count);
+		layers.Add(scenePartitionerLayer);
+		DebugUtil.Assert(layers.Count <= nodes.GetLength(0));
+		return scenePartitionerLayer;
+	}
+
+	public ScenePartitionerLayer CreateMask(string name)
+	{
+		foreach (ScenePartitionerLayer layer in layers)
+		{
+			if (layer.name == name)
+			{
+				return layer;
+			}
+		}
+		HashCache.Get().Add(name);
 		ScenePartitionerLayer scenePartitionerLayer = new ScenePartitionerLayer(name, layers.Count);
 		layers.Add(scenePartitionerLayer);
 		DebugUtil.Assert(layers.Count <= nodes.GetLength(0));
@@ -381,5 +400,23 @@ public class ScenePartitioner : ISim1000ms
 	public void Cleanup()
 	{
 		SimAndRenderScheduler.instance.Remove(this);
+	}
+
+	public bool DoDebugLayersContainItemsOnCell(int cell)
+	{
+		int x = 0;
+		int y = 0;
+		Grid.CellToXY(cell, out x, out y);
+		List<ScenePartitionerEntry> list = new List<ScenePartitionerEntry>();
+		foreach (ScenePartitionerLayer toggledLayer in toggledLayers)
+		{
+			list.Clear();
+			GameScenePartitioner.Instance.GatherEntries(x, y, 1, 1, toggledLayer, list);
+			if (list.Count > 0)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 }

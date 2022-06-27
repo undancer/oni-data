@@ -17,7 +17,7 @@ public class Element : IComparable<Element>
 		Solid = 3,
 		Unbreakable = 4,
 		Unstable = 8,
-		TemperatureInsulated = 0x10
+		TemperatureInsulated = 16
 	}
 
 	public const int INVALID_ID = 0;

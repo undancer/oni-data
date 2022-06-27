@@ -8,10 +8,10 @@ public class SituationalAnim : KMonoBehaviour
 	[Flags]
 	public enum Situation
 	{
-		Left = 0x1,
-		Right = 0x2,
-		Top = 0x4,
-		Bottom = 0x8
+		Left = 1,
+		Right = 2,
+		Top = 4,
+		Bottom = 8
 	}
 
 	public enum MustSatisfy

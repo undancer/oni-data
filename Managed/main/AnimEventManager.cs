@@ -160,12 +160,12 @@ public class AnimEventManager
 		{
 			IndirectionData data = indirectionData.GetData(handle);
 			KCompactedVector<AnimData> kCompactedVector = (data.isUIData ? uiAnimData : animData);
-			KCompactedVector<EventPlayerData> kCompactedVector2 = (data.isUIData ? uiEventData : eventData);
-			EventPlayerData data2 = kCompactedVector2.GetData(data.eventDataHandle);
+			KCompactedVector<EventPlayerData> obj = (data.isUIData ? uiEventData : eventData);
+			EventPlayerData data2 = obj.GetData(data.eventDataHandle);
 			StopEvents(data2);
-			data.animDataHandle = kCompactedVector.Free(data.animDataHandle);
-			data.eventDataHandle = kCompactedVector2.Free(data.eventDataHandle);
-			indirectionData.SetData(handle, data);
+			kCompactedVector.Free(data.animDataHandle);
+			obj.Free(data.eventDataHandle);
+			indirectionData.Free(handle);
 		}
 	}
 

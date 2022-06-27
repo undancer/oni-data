@@ -611,11 +611,11 @@ public class ConduitFlow : IConduitFlow
 	[Flags]
 	public enum FlowDirections : byte
 	{
-		None = 0x0,
-		Down = 0x1,
-		Left = 0x2,
-		Right = 0x4,
-		Up = 0x8,
+		None = 0,
+		Down = 1,
+		Left = 2,
+		Right = 4,
+		Up = 8,
 		All = 0xF
 	}
 
@@ -940,20 +940,19 @@ public class ConduitFlow : IConduitFlow
 				public Edge Invert()
 				{
 					Edge result = default(Edge);
-					Vertex[] array = new Vertex[2];
-					Vertex vertex = new Vertex
+					result.vertices = new Vertex[2]
 					{
-						cell = vertices[1].cell,
-						direction = Opposite(vertices[1].direction)
+						new Vertex
+						{
+							cell = vertices[1].cell,
+							direction = Opposite(vertices[1].direction)
+						},
+						new Vertex
+						{
+							cell = vertices[0].cell,
+							direction = Opposite(vertices[0].direction)
+						}
 					};
-					array[0] = vertex;
-					vertex = new Vertex
-					{
-						cell = vertices[0].cell,
-						direction = Opposite(vertices[0].direction)
-					};
-					array[1] = vertex;
-					result.vertices = array;
 					return result;
 				}
 
@@ -1053,16 +1052,13 @@ public class ConduitFlow : IConduitFlow
 				}
 				Debug.Assert(bfs_traversal.Count == 0);
 				visited.Clear();
-				Vertex vertex;
 				foreach (int source in this.sources)
 				{
-					QueuePool<Vertex, ConduitFlow>.PooledQueue pooledQueue = bfs_traversal;
-					vertex = new Vertex
+					bfs_traversal.Enqueue(new Vertex
 					{
 						cell = source,
 						direction = FlowDirections.None
-					};
-					pooledQueue.Enqueue(vertex);
+					});
 					visited.Add(source);
 				}
 				pseudo_sources.Clear();
@@ -1089,15 +1085,15 @@ public class ConduitFlow : IConduitFlow
 							continue;
 						}
 						Edge edge2 = default(Edge);
-						Vertex[] array = new Vertex[2];
-						vertex = new Vertex
+						edge2.vertices = new Vertex[2]
 						{
-							cell = node.cell,
-							direction = flowDirections
+							new Vertex
+							{
+								cell = node.cell,
+								direction = flowDirections
+							},
+							new_node
 						};
-						array[0] = vertex;
-						array[1] = new_node;
-						edge2.vertices = array;
 						Edge item = edge2;
 						if (new_node.cell == node.cell)
 						{
@@ -1175,17 +1171,17 @@ public class ConduitFlow : IConduitFlow
 					return Vertex.INVALID;
 				}
 				int cell;
-				Vertex vertex;
 				bool flag;
+				Vertex result;
 				do
 				{
 					cell = conduit_flow.soaInfo.GetCell(conduit);
 					if (IsEndpoint(cell) || IsJunction(cell))
 					{
-						vertex = default(Vertex);
-						vertex.cell = cell;
-						vertex.direction = direction;
-						return vertex;
+						result = default(Vertex);
+						result.cell = cell;
+						result.direction = direction;
+						return result;
 					}
 					direction = Opposite(direction);
 					flag = true;
@@ -1204,20 +1200,18 @@ public class ConduitFlow : IConduitFlow
 				while (!flag);
 				if (are_dead_ends_pseudo_sources)
 				{
-					ListPool<Vertex, ConduitFlow>.PooledList pooledList = pseudo_sources;
-					vertex = new Vertex
+					pseudo_sources.Add(new Vertex
 					{
 						cell = cell,
 						direction = ComputeNextFlowDirection(direction)
-					};
-					pooledList.Add(vertex);
+					});
 					dead_ends.Add(cell);
 					return Vertex.INVALID;
 				}
-				vertex = default(Vertex);
-				vertex.cell = cell;
-				vertex.direction = (direction = Opposite(ComputeNextFlowDirection(direction)));
-				return vertex;
+				result = default(Vertex);
+				result.cell = cell;
+				result.direction = (direction = Opposite(ComputeNextFlowDirection(direction)));
+				return result;
 			}
 
 			public void Merge(Graph inverted_graph)
@@ -1431,26 +1425,21 @@ public class ConduitFlow : IConduitFlow
 
 		private void ComputeOrder(ConduitFlow outer)
 		{
-			DistanceNode item;
 			foreach (int source in from_sources_graph.sources)
 			{
-				QueuePool<DistanceNode, ConduitFlow>.PooledQueue pooledQueue = distance_nodes;
-				item = new DistanceNode
+				distance_nodes.Enqueue(new DistanceNode
 				{
 					cell = source,
 					distance = 0
-				};
-				pooledQueue.Enqueue(item);
+				});
 			}
 			foreach (int dead_end in from_sources_graph.dead_ends)
 			{
-				QueuePool<DistanceNode, ConduitFlow>.PooledQueue pooledQueue2 = distance_nodes;
-				item = new DistanceNode
+				distance_nodes.Enqueue(new DistanceNode
 				{
 					cell = dead_end,
 					distance = 0
-				};
-				pooledQueue2.Enqueue(item);
+				});
 			}
 			while (distance_nodes.Count != 0)
 			{
@@ -1463,43 +1452,35 @@ public class ConduitFlow : IConduitFlow
 					FlowDirections permittedFlowDirections = outer.soaInfo.GetPermittedFlowDirections(conduitIdx);
 					if ((permittedFlowDirections & FlowDirections.Up) != 0)
 					{
-						QueuePool<DistanceNode, ConduitFlow>.PooledQueue pooledQueue3 = distance_nodes;
-						item = new DistanceNode
+						distance_nodes.Enqueue(new DistanceNode
 						{
 							cell = outer.soaInfo.GetCell(conduitConnections.up),
 							distance = distanceNode.distance + 1
-						};
-						pooledQueue3.Enqueue(item);
+						});
 					}
 					if ((permittedFlowDirections & FlowDirections.Down) != 0)
 					{
-						QueuePool<DistanceNode, ConduitFlow>.PooledQueue pooledQueue4 = distance_nodes;
-						item = new DistanceNode
+						distance_nodes.Enqueue(new DistanceNode
 						{
 							cell = outer.soaInfo.GetCell(conduitConnections.down),
 							distance = distanceNode.distance + 1
-						};
-						pooledQueue4.Enqueue(item);
+						});
 					}
 					if ((permittedFlowDirections & FlowDirections.Left) != 0)
 					{
-						QueuePool<DistanceNode, ConduitFlow>.PooledQueue pooledQueue5 = distance_nodes;
-						item = new DistanceNode
+						distance_nodes.Enqueue(new DistanceNode
 						{
 							cell = outer.soaInfo.GetCell(conduitConnections.left),
 							distance = distanceNode.distance + 1
-						};
-						pooledQueue5.Enqueue(item);
+						});
 					}
 					if ((permittedFlowDirections & FlowDirections.Right) != 0)
 					{
-						QueuePool<DistanceNode, ConduitFlow>.PooledQueue pooledQueue6 = distance_nodes;
-						item = new DistanceNode
+						distance_nodes.Enqueue(new DistanceNode
 						{
 							cell = outer.soaInfo.GetCell(conduitConnections.right),
 							distance = distanceNode.distance + 1
-						};
-						pooledQueue6.Enqueue(item);
+						});
 					}
 				}
 			}
@@ -1508,23 +1489,19 @@ public class ConduitFlow : IConduitFlow
 			distance_nodes.Clear();
 			foreach (int source2 in from_sinks_graph.sources)
 			{
-				QueuePool<DistanceNode, ConduitFlow>.PooledQueue pooledQueue7 = distance_nodes;
-				item = new DistanceNode
+				distance_nodes.Enqueue(new DistanceNode
 				{
 					cell = source2,
 					distance = 0
-				};
-				pooledQueue7.Enqueue(item);
+				});
 			}
 			foreach (int dead_end2 in from_sinks_graph.dead_ends)
 			{
-				QueuePool<DistanceNode, ConduitFlow>.PooledQueue pooledQueue8 = distance_nodes;
-				item = new DistanceNode
+				distance_nodes.Enqueue(new DistanceNode
 				{
 					cell = dead_end2,
 					distance = 0
-				};
-				pooledQueue8.Enqueue(item);
+				});
 			}
 			while (distance_nodes.Count != 0)
 			{
@@ -1539,43 +1516,35 @@ public class ConduitFlow : IConduitFlow
 					ConduitConnections conduitConnections2 = outer.soaInfo.GetConduitConnections(conduitIdx2);
 					if (conduitConnections2.up != -1 && (outer.soaInfo.GetPermittedFlowDirections(conduitConnections2.up) & FlowDirections.Down) != 0)
 					{
-						QueuePool<DistanceNode, ConduitFlow>.PooledQueue pooledQueue9 = distance_nodes;
-						item = new DistanceNode
+						distance_nodes.Enqueue(new DistanceNode
 						{
 							cell = outer.soaInfo.GetCell(conduitConnections2.up),
 							distance = distanceNode2.distance + 1
-						};
-						pooledQueue9.Enqueue(item);
+						});
 					}
 					if (conduitConnections2.down != -1 && (outer.soaInfo.GetPermittedFlowDirections(conduitConnections2.down) & FlowDirections.Up) != 0)
 					{
-						QueuePool<DistanceNode, ConduitFlow>.PooledQueue pooledQueue10 = distance_nodes;
-						item = new DistanceNode
+						distance_nodes.Enqueue(new DistanceNode
 						{
 							cell = outer.soaInfo.GetCell(conduitConnections2.down),
 							distance = distanceNode2.distance + 1
-						};
-						pooledQueue10.Enqueue(item);
+						});
 					}
 					if (conduitConnections2.left != -1 && (outer.soaInfo.GetPermittedFlowDirections(conduitConnections2.left) & FlowDirections.Right) != 0)
 					{
-						QueuePool<DistanceNode, ConduitFlow>.PooledQueue pooledQueue11 = distance_nodes;
-						item = new DistanceNode
+						distance_nodes.Enqueue(new DistanceNode
 						{
 							cell = outer.soaInfo.GetCell(conduitConnections2.left),
 							distance = distanceNode2.distance + 1
-						};
-						pooledQueue11.Enqueue(item);
+						});
 					}
 					if (conduitConnections2.right != -1 && (outer.soaInfo.GetPermittedFlowDirections(conduitConnections2.right) & FlowDirections.Left) != 0)
 					{
-						QueuePool<DistanceNode, ConduitFlow>.PooledQueue pooledQueue12 = distance_nodes;
-						item = new DistanceNode
+						distance_nodes.Enqueue(new DistanceNode
 						{
 							cell = outer.soaInfo.GetCell(conduitConnections2.right),
 							distance = distanceNode2.distance + 1
-						};
-						pooledQueue12.Enqueue(item);
+						});
 					}
 				}
 			}
@@ -1897,34 +1866,28 @@ public class ConduitFlow : IConduitFlow
 		Debug.Assert(this.networks.Count <= networks.Count);
 		for (int i = 0; i != networks.Count; i++)
 		{
-			Network network;
 			if (i < this.networks.Count)
 			{
-				List<Network> list = this.networks;
-				int index = i;
-				network = new Network
+				this.networks[i] = new Network
 				{
 					network = (FlowUtilityNetwork)networks[i],
 					cells = this.networks[i].cells
 				};
-				list[index] = network;
 				this.networks[i].cells.Clear();
 			}
 			else
 			{
-				List<Network> list2 = this.networks;
-				network = new Network
+				this.networks.Add(new Network
 				{
 					network = (FlowUtilityNetwork)networks[i],
 					cells = new List<int>()
-				};
-				list2.Add(network);
+				});
 			}
 		}
 		build_network_job.Reset(this);
-		foreach (Network network2 in this.networks)
+		foreach (Network network in this.networks)
 		{
-			build_network_job.Add(new BuildNetworkTask(network2, soaInfo.NumEntries));
+			build_network_job.Add(new BuildNetworkTask(network, soaInfo.NumEntries));
 		}
 		GlobalJobManager.Run(build_network_job);
 		for (int j = 0; j != build_network_job.Count; j++)

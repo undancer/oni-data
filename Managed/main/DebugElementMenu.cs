@@ -13,6 +13,12 @@ public class DebugElementMenu : KButtonMenu
 		base.ConsumeMouseScroll = true;
 	}
 
+	protected override void OnForcedCleanUp()
+	{
+		Instance = null;
+		base.OnForcedCleanUp();
+	}
+
 	public void Turnoff()
 	{
 		root.gameObject.SetActive(value: false);

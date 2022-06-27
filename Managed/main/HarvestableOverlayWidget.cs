@@ -18,7 +18,7 @@ public class HarvestableOverlayWidget : KMonoBehaviour
 
 	private const float bar_fill_offset = 3f;
 
-	private static Color growing_color = new Color(251f / 255f, 176f / 255f, 59f / 255f, 1f);
+	private static Color growing_color = new Color(0.9843137f, 0.6901961f, 0.23137255f, 1f);
 
 	private static Color wilting_color = new Color(48f / 85f, 48f / 85f, 48f / 85f, 1f);
 

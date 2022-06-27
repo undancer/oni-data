@@ -406,7 +406,7 @@ namespace STRINGS
 		{
 			public static LocString NAME = UI.FormatAsLink("Nuclear Fallout", "FALLOUT");
 
-			public static LocString DESC = "Nuclear Fallout is a highly toxic gas full of " + UI.FormatAsLink("Radioactive Contaminants", "RADIATION") + ". Formed in a " + UI.FormatAsLink("Reactor meltdown", "NUCLEARREACTOR") + ".";
+			public static LocString DESC = "Nuclear Fallout is a highly toxic gas full of " + UI.FormatAsLink("Radioactive Contaminants", "RADIATION") + ". Condenses into " + UI.FormatAsLink("Nuclear Waste", "NUCLEARWASTE") + ".";
 		}
 
 		public class FOOLSGOLD
@@ -469,7 +469,7 @@ namespace STRINGS
 		{
 			public static LocString NAME = UI.FormatAsLink("Solid Nuclear Waste", "SOLIDNUCLEARWASTE");
 
-			public static LocString DESC = "Highly toxic liquid full of " + UI.FormatAsLink("Radioactive Contaminants", "RADIATION") + ". Formed in a " + UI.FormatAsLink("Reactor meltdown", "NUCLEARREACTOR") + ".";
+			public static LocString DESC = "Highly toxic solid full of " + UI.FormatAsLink("Radioactive Contaminants", "RADIATION") + ".";
 		}
 
 		public class HELIUM
@@ -798,7 +798,7 @@ namespace STRINGS
 		{
 			public static LocString NAME = UI.FormatAsLink("Nuclear Waste", "NUCLEARWASTE");
 
-			public static LocString DESC = "Highly toxic liquid full of " + UI.FormatAsLink("Radioactive Contaminants", "RADIATION") + ". Formed in a " + UI.FormatAsLink("Reactor meltdown", "NUCLEARREACTOR") + ".";
+			public static LocString DESC = "Highly toxic liquid full of " + UI.FormatAsLink("Radioactive Contaminants", "RADIATION") + " which emit " + UI.FormatAsLink("Radiation", "RADIATION") + " that can be absorbed by " + UI.FormatAsLink("Radbolt Generators", "HIGHENERGYPARTICLESPAWNER") + ".";
 		}
 
 		public class OBSIDIAN

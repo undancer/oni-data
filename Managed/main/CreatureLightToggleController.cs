@@ -91,6 +91,7 @@ public class CreatureLightToggleController : GameStateMachine<CreatureLightToggl
 			{
 				modify_brightness_job.GetWorkItem(j).Finish();
 			}
+			modify_brightness_job.Reset(null);
 		}
 
 		public bool IsOff()

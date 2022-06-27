@@ -81,6 +81,7 @@ public class GridSettings : KMonoBehaviour
 		Grid.GravitasFacility = null;
 		Grid.ObjectLayers = null;
 		Grid.WorldIdx = null;
+		Grid.OnReveal = null;
 		Grid.ResetNavMasksAndDetails();
 	}
 }

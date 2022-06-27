@@ -126,17 +126,17 @@ public class TileScreen : KScreen
 				return;
 			}
 			List<Element> elements = ElementLoader.elements;
-			foreach (KeyValuePair<int, float> item in info)
 			{
-				Element element2 = elements[item.Key];
-				Text text = nameLabel;
-				text.text = text.text + "\n" + element2.name + $" {item.Value:0.00} kg";
+				foreach (KeyValuePair<int, float> item in info)
+				{
+					Element element2 = elements[item.Key];
+					Text text = nameLabel;
+					text.text = text.text + "\n" + element2.name + $" {item.Value:0.00} kg";
+				}
+				return;
 			}
 		}
-		else
-		{
-			nameLabel.text = "Unknown";
-		}
+		nameLabel.text = "Unknown";
 	}
 
 	private void DisplayConduitFlowInfo()

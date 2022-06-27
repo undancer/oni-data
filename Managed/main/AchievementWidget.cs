@@ -12,13 +12,13 @@ using UnityEngine.UI;
 [AddComponentMenu("KMonoBehaviour/scripts/AchievementWidget")]
 public class AchievementWidget : KMonoBehaviour
 {
-	private Color color_dark_red = new Color(24f / 85f, 41f / 255f, 38f / 255f);
+	private Color color_dark_red = new Color(24f / 85f, 0.16078432f, 0.14901961f);
 
-	private Color color_gold = new Color(1f, 54f / 85f, 73f / 255f);
+	private Color color_gold = new Color(1f, 54f / 85f, 0.28627452f);
 
 	private Color color_dark_grey = new Color(11f / 51f, 11f / 51f, 11f / 51f);
 
-	private Color color_grey = new Color(176f / 255f, 176f / 255f, 176f / 255f);
+	private Color color_grey = new Color(0.6901961f, 0.6901961f, 0.6901961f);
 
 	[SerializeField]
 	private RectTransform sheenTransform;
@@ -75,15 +75,19 @@ public class AchievementWidget : KMonoBehaviour
 	private IEnumerator Flourish(float startDelay)
 	{
 		SetNeverAchieved();
-		if (GetComponent<Canvas>() == null)
+		Canvas canvas = GetComponent<Canvas>();
+		if (canvas == null)
 		{
-			base.gameObject.AddComponent<Canvas>().sortingOrder = 1;
+			canvas = base.gameObject.AddComponent<Canvas>();
 		}
-		GetComponent<Canvas>().overrideSorting = true;
 		yield return new WaitForSecondsRealtime(startDelay);
 		KScrollRect component = base.transform.parent.parent.GetComponent<KScrollRect>();
-		float smoothAutoScrollTarget = 1f + base.transform.localPosition.y / component.content.rect.height;
+		float num = 1.1f;
+		float smoothAutoScrollTarget = 1f + base.transform.localPosition.y * num / component.content.rect.height;
 		component.SetSmoothAutoScrollTarget(smoothAutoScrollTarget);
+		yield return new WaitForSecondsRealtime(0.5f);
+		canvas.overrideSorting = true;
+		canvas.sortingOrder = 30;
 		GameObject icon = GetComponent<HierarchyReferences>().GetReference<Image>("icon").transform.parent.gameObject;
 		KBatchedAnimController[] array = sparks;
 		foreach (KBatchedAnimController kBatchedAnimController in array)
@@ -102,8 +106,8 @@ public class AchievementWidget : KMonoBehaviour
 		component2.GetReference<Image>("icon").color = color_gold;
 		bool colorChanged = false;
 		EventInstance instance = KFMOD.BeginOneShot(GlobalAssets.GetSound("AchievementUnlocked"), Vector3.zero);
-		int num = Mathf.RoundToInt(MathUtil.Clamp(1f, 7f, startDelay - startDelay % 1f / 1f)) - 1;
-		instance.setParameterByName("num_achievements", num);
+		int num2 = Mathf.RoundToInt(MathUtil.Clamp(1f, 7f, startDelay - startDelay % 1f / 1f)) - 1;
+		instance.setParameterByName("num_achievements", num2);
 		KFMOD.EndOneShot(instance);
 		for (float j = 0f; j < 1.2f; j += Time.unscaledDeltaTime)
 		{
@@ -122,11 +126,11 @@ public class AchievementWidget : KMonoBehaviour
 			yield return 0;
 		}
 		icon.transform.localScale = Vector3.one;
-		for (float j = 0f; j < 0.3f; j += Time.unscaledDeltaTime)
+		canvas.overrideSorting = false;
+		for (float j = 0f; j < 0.6f; j += Time.unscaledDeltaTime)
 		{
 			yield return 0;
 		}
-		GetComponent<Canvas>().overrideSorting = false;
 		base.transform.localScale = Vector3.one;
 	}
 
@@ -341,8 +345,7 @@ public class AchievementWidget : KMonoBehaviour
 
 	private void ShowArmsOutPeformingDupesRequirement(bool succeed, ColonyAchievementRequirement req)
 	{
-		DupesVsSolidTransferArmFetch dupesVsSolidTransferArmFetch = req as DupesVsSolidTransferArmFetch;
-		if (dupesVsSolidTransferArmFetch == null)
+		if (!(req is DupesVsSolidTransferArmFetch dupesVsSolidTransferArmFetch))
 		{
 			return;
 		}
@@ -375,8 +378,7 @@ public class AchievementWidget : KMonoBehaviour
 
 	private void ShowDupesInExoSuitsRequirement(bool succeed, ColonyAchievementRequirement req)
 	{
-		DupesCompleteChoreInExoSuitForCycles dupesCompleteChoreInExoSuitForCycles = req as DupesCompleteChoreInExoSuitForCycles;
-		if (dupesCompleteChoreInExoSuitForCycles == null)
+		if (!(req is DupesCompleteChoreInExoSuitForCycles dupesCompleteChoreInExoSuitForCycles))
 		{
 			return;
 		}
@@ -439,8 +441,7 @@ public class AchievementWidget : KMonoBehaviour
 
 	private void ShowMinimumMoraleRequirement(bool success, ColonyAchievementRequirement req)
 	{
-		MinimumMorale minimumMorale = req as MinimumMorale;
-		if (minimumMorale == null)
+		if (!(req is MinimumMorale minimumMorale))
 		{
 			return;
 		}
@@ -475,8 +476,7 @@ public class AchievementWidget : KMonoBehaviour
 
 	private void ShowRocketMoraleRequirement(bool success, ColonyAchievementRequirement req)
 	{
-		SurviveARocketWithMinimumMorale surviveARocketWithMinimumMorale = req as SurviveARocketWithMinimumMorale;
-		if (surviveARocketWithMinimumMorale == null)
+		if (!(req is SurviveARocketWithMinimumMorale surviveARocketWithMinimumMorale))
 		{
 			return;
 		}

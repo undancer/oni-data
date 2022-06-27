@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Klei.AI;
 using STRINGS;
 using UnityEngine;
@@ -131,6 +132,14 @@ namespace Database
 
 		public StatusItem Crop_Too_Radiated;
 
+		public StatusItem ElementGrowthGrowing;
+
+		public StatusItem ElementGrowthStunted;
+
+		public StatusItem ElementGrowthHalted;
+
+		public StatusItem ElementGrowthComplete;
+
 		public CreatureStatusItems(ResourceSet parent)
 			: base("CreatureStatusItems", parent)
 		{
@@ -224,15 +233,15 @@ namespace Database
 			CropSleeping = new StatusItem("Crop_Sleeping", "CREATURES", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID, showWorldIcon: true, 1026);
 			CropSleeping.resolveStringCallback = delegate(string str, object data)
 			{
-				CropSleepingMonitor.Instance instance7 = (CropSleepingMonitor.Instance)data;
-				return str.Replace("{REASON}", instance7.def.prefersDarkness ? CREATURES.STATUSITEMS.CROP_SLEEPING.REASON_TOO_BRIGHT : CREATURES.STATUSITEMS.CROP_SLEEPING.REASON_TOO_DARK);
+				CropSleepingMonitor.Instance instance9 = (CropSleepingMonitor.Instance)data;
+				return str.Replace("{REASON}", instance9.def.prefersDarkness ? CREATURES.STATUSITEMS.CROP_SLEEPING.REASON_TOO_BRIGHT : CREATURES.STATUSITEMS.CROP_SLEEPING.REASON_TOO_DARK);
 			};
 			CropSleeping.resolveTooltipCallback = delegate(string str, object data)
 			{
-				CropSleepingMonitor.Instance instance6 = (CropSleepingMonitor.Instance)data;
-				AttributeInstance attributeInstance = Db.Get().PlantAttributes.MinLightLux.Lookup(instance6.gameObject);
-				string newValue5 = string.Format(CREATURES.STATUSITEMS.CROP_SLEEPING.REQUIREMENT_LUMINANCE, attributeInstance.GetTotalValue());
-				return str.Replace("{REQUIREMENTS}", newValue5);
+				CropSleepingMonitor.Instance instance8 = (CropSleepingMonitor.Instance)data;
+				AttributeInstance attributeInstance = Db.Get().PlantAttributes.MinLightLux.Lookup(instance8.gameObject);
+				string newValue6 = string.Format(CREATURES.STATUSITEMS.CROP_SLEEPING.REQUIREMENT_LUMINANCE, attributeInstance.GetTotalValue());
+				return str.Replace("{REQUIREMENTS}", newValue6);
 			};
 			EnvironmentTooWarm = new StatusItem("EnvironmentTooWarm", "CREATURES", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			EnvironmentTooWarm.resolveStringCallback = delegate(string str, object data)
@@ -327,56 +336,56 @@ namespace Database
 			HealthStatus = new StatusItem("HealthStatus", "CREATURES", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			HealthStatus.resolveStringCallback = delegate(string str, object data)
 			{
-				string newValue4 = "";
+				string newValue5 = "";
 				switch ((Health.HealthState)data)
 				{
 				case Health.HealthState.Perfect:
-					newValue4 = MISC.STATUSITEMS.HEALTHSTATUS.PERFECT.NAME;
+					newValue5 = MISC.STATUSITEMS.HEALTHSTATUS.PERFECT.NAME;
 					break;
 				case Health.HealthState.Scuffed:
-					newValue4 = MISC.STATUSITEMS.HEALTHSTATUS.SCUFFED.NAME;
+					newValue5 = MISC.STATUSITEMS.HEALTHSTATUS.SCUFFED.NAME;
 					break;
 				case Health.HealthState.Injured:
-					newValue4 = MISC.STATUSITEMS.HEALTHSTATUS.INJURED.NAME;
+					newValue5 = MISC.STATUSITEMS.HEALTHSTATUS.INJURED.NAME;
 					break;
 				case Health.HealthState.Critical:
-					newValue4 = MISC.STATUSITEMS.HEALTHSTATUS.CRITICAL.NAME;
+					newValue5 = MISC.STATUSITEMS.HEALTHSTATUS.CRITICAL.NAME;
 					break;
 				case Health.HealthState.Incapacitated:
-					newValue4 = MISC.STATUSITEMS.HEALTHSTATUS.INCAPACITATED.NAME;
+					newValue5 = MISC.STATUSITEMS.HEALTHSTATUS.INCAPACITATED.NAME;
 					break;
 				case Health.HealthState.Dead:
-					newValue4 = MISC.STATUSITEMS.HEALTHSTATUS.DEAD.NAME;
+					newValue5 = MISC.STATUSITEMS.HEALTHSTATUS.DEAD.NAME;
 					break;
 				}
-				str = str.Replace("{healthState}", newValue4);
+				str = str.Replace("{healthState}", newValue5);
 				return str;
 			};
 			HealthStatus.resolveTooltipCallback = delegate(string str, object data)
 			{
-				string newValue3 = "";
+				string newValue4 = "";
 				switch ((Health.HealthState)data)
 				{
 				case Health.HealthState.Perfect:
-					newValue3 = MISC.STATUSITEMS.HEALTHSTATUS.PERFECT.TOOLTIP;
+					newValue4 = MISC.STATUSITEMS.HEALTHSTATUS.PERFECT.TOOLTIP;
 					break;
 				case Health.HealthState.Scuffed:
-					newValue3 = MISC.STATUSITEMS.HEALTHSTATUS.SCUFFED.TOOLTIP;
+					newValue4 = MISC.STATUSITEMS.HEALTHSTATUS.SCUFFED.TOOLTIP;
 					break;
 				case Health.HealthState.Injured:
-					newValue3 = MISC.STATUSITEMS.HEALTHSTATUS.INJURED.TOOLTIP;
+					newValue4 = MISC.STATUSITEMS.HEALTHSTATUS.INJURED.TOOLTIP;
 					break;
 				case Health.HealthState.Critical:
-					newValue3 = MISC.STATUSITEMS.HEALTHSTATUS.CRITICAL.TOOLTIP;
+					newValue4 = MISC.STATUSITEMS.HEALTHSTATUS.CRITICAL.TOOLTIP;
 					break;
 				case Health.HealthState.Incapacitated:
-					newValue3 = MISC.STATUSITEMS.HEALTHSTATUS.INCAPACITATED.TOOLTIP;
+					newValue4 = MISC.STATUSITEMS.HEALTHSTATUS.INCAPACITATED.TOOLTIP;
 					break;
 				case Health.HealthState.Dead:
-					newValue3 = MISC.STATUSITEMS.HEALTHSTATUS.DEAD.TOOLTIP;
+					newValue4 = MISC.STATUSITEMS.HEALTHSTATUS.DEAD.TOOLTIP;
 					break;
 				}
-				str = str.Replace("{healthState}", newValue3);
+				str = str.Replace("{healthState}", newValue4);
 				return str;
 			};
 			Barren = new StatusItem("Barren", "CREATURES", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
@@ -402,24 +411,24 @@ namespace Database
 			Fresh = new StatusItem("Fresh", "CREATURES", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			Fresh.resolveStringCallback = delegate(string str, object data)
 			{
-				Rottable.Instance instance5 = (Rottable.Instance)data;
-				return str.Replace("{RotPercentage}", "(" + Util.FormatWholeNumber(instance5.RotConstitutionPercentage * 100f) + "%)");
+				Rottable.Instance instance7 = (Rottable.Instance)data;
+				return str.Replace("{RotPercentage}", "(" + Util.FormatWholeNumber(instance7.RotConstitutionPercentage * 100f) + "%)");
 			};
 			Fresh.resolveTooltipCallback = delegate(string str, object data)
 			{
-				Rottable.Instance instance4 = (Rottable.Instance)data;
-				return str.Replace("{RotTooltip}", instance4.GetToolTip());
+				Rottable.Instance instance6 = (Rottable.Instance)data;
+				return str.Replace("{RotTooltip}", instance6.GetToolTip());
 			};
 			Stale = new StatusItem("Stale", "CREATURES", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			Stale.resolveStringCallback = delegate(string str, object data)
 			{
-				Rottable.Instance instance3 = (Rottable.Instance)data;
-				return str.Replace("{RotPercentage}", "(" + Util.FormatWholeNumber(instance3.RotConstitutionPercentage * 100f) + "%)");
+				Rottable.Instance instance5 = (Rottable.Instance)data;
+				return str.Replace("{RotPercentage}", "(" + Util.FormatWholeNumber(instance5.RotConstitutionPercentage * 100f) + "%)");
 			};
 			Stale.resolveTooltipCallback = delegate(string str, object data)
 			{
-				Rottable.Instance instance2 = (Rottable.Instance)data;
-				return str.Replace("{RotTooltip}", instance2.GetToolTip());
+				Rottable.Instance instance4 = (Rottable.Instance)data;
+				return str.Replace("{RotTooltip}", instance4.GetToolTip());
 			};
 			Spoiled = new StatusItem("Spoiled", "CREATURES", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			Func<string, object, string> resolveStringCallback5 = delegate(string str, object data)
@@ -438,8 +447,8 @@ namespace Database
 			Old = new StatusItem("Old", "CREATURES", "", StatusItem.IconType.Info, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID);
 			Old.resolveTooltipCallback = delegate(string str, object data)
 			{
-				AgeMonitor.Instance instance = (AgeMonitor.Instance)data;
-				return str.Replace("{TimeUntilDeath}", GameUtil.GetFormattedCycles(instance.CyclesUntilDeath * 600f));
+				AgeMonitor.Instance instance3 = (AgeMonitor.Instance)data;
+				return str.Replace("{TimeUntilDeath}", GameUtil.GetFormattedCycles(instance3.CyclesUntilDeath * 600f));
 			};
 			ExchangingElementConsume = new StatusItem("ExchangingElementConsume", "CREATURES", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
 			ExchangingElementConsume.resolveStringCallback = delegate(string str, object data)
@@ -488,8 +497,8 @@ namespace Database
 							"..."
 						};
 					}
-					string newValue2 = string.Join(", ", array2);
-					return str + "\n" + UI.BUILDINGEFFECTS.DIET_CONSUMED.text.Replace("{Foodlist}", newValue2);
+					string newValue3 = string.Join(", ", array2);
+					return str + "\n" + UI.BUILDINGEFFECTS.DIET_CONSUMED.text.Replace("{Foodlist}", newValue3);
 				}
 				return str;
 			};
@@ -510,8 +519,8 @@ namespace Database
 							"..."
 						};
 					}
-					string newValue = string.Join(", ", array);
-					return str + "\n" + UI.BUILDINGEFFECTS.DIET_STORED.text.Replace("{Foodlist}", newValue);
+					string newValue2 = string.Join(", ", array);
+					return str + "\n" + UI.BUILDINGEFFECTS.DIET_STORED.text.Replace("{Foodlist}", newValue2);
 				}
 				return str;
 			};
@@ -532,6 +541,35 @@ namespace Database
 			};
 			Crop_Too_NonRadiated = new StatusItem("Crop_Too_NonRadiated", "CREATURES", "status_item_plant_light", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID, showWorldIcon: false);
 			Crop_Too_Radiated = new StatusItem("Crop_Too_Radiated", "CREATURES", "status_item_plant_light", StatusItem.IconType.Custom, NotificationType.BadMinor, allow_multiples: false, OverlayModes.None.ID, showWorldIcon: false);
+			ElementGrowthGrowing = new StatusItem("Element_Growth_Growing", "CREATURES", "", StatusItem.IconType.Info, NotificationType.Neutral, allow_multiples: false, OverlayModes.None.ID);
+			ElementGrowthGrowing.resolveTooltipCallback = delegate(string str, object data)
+			{
+				ElementGrowthMonitor.Instance instance2 = (ElementGrowthMonitor.Instance)data;
+				StringBuilder stringBuilder = new StringBuilder(str, str.Length * 2);
+				stringBuilder.Replace("{templo}", GameUtil.GetFormattedTemperature(instance2.def.minTemperature));
+				stringBuilder.Replace("{temphi}", GameUtil.GetFormattedTemperature(instance2.def.maxTemperature));
+				if (instance2.lastConsumedTemperature > 0f)
+				{
+					stringBuilder.Append("\n\n");
+					stringBuilder.Append(CREATURES.STATUSITEMS.ELEMENT_GROWTH_GROWING.PREFERRED_TEMP);
+					stringBuilder.Replace("{element}", ElementLoader.FindElementByHash(instance2.lastConsumedElement).name);
+					stringBuilder.Replace("{temperature}", GameUtil.GetFormattedTemperature(instance2.lastConsumedTemperature));
+				}
+				return stringBuilder.ToString();
+			};
+			ElementGrowthStunted = new StatusItem("Element_Growth_Stunted", "CREATURES", "", StatusItem.IconType.Info, NotificationType.Bad, allow_multiples: false, OverlayModes.None.ID);
+			ElementGrowthStunted.resolveTooltipCallback = ElementGrowthGrowing.resolveTooltipCallback;
+			ElementGrowthStunted.resolveStringCallback = delegate(string str, object data)
+			{
+				ElementGrowthMonitor.Instance instance = (ElementGrowthMonitor.Instance)data;
+				string newValue = ((instance.lastConsumedTemperature < instance.def.minTemperature) ? CREATURES.STATUSITEMS.ELEMENT_GROWTH_STUNTED.TOO_COLD : CREATURES.STATUSITEMS.ELEMENT_GROWTH_STUNTED.TOO_HOT);
+				str = str.Replace("{reason}", newValue);
+				return str;
+			};
+			ElementGrowthHalted = new StatusItem("Element_Growth_Halted", "CREATURES", "", StatusItem.IconType.Info, NotificationType.Bad, allow_multiples: false, OverlayModes.None.ID);
+			ElementGrowthHalted.resolveTooltipCallback = ElementGrowthGrowing.resolveTooltipCallback;
+			ElementGrowthComplete = new StatusItem("Element_Growth_Complete", "CREATURES", "", StatusItem.IconType.Info, NotificationType.Bad, allow_multiples: false, OverlayModes.None.ID);
+			ElementGrowthComplete.resolveTooltipCallback = ElementGrowthGrowing.resolveTooltipCallback;
 		}
 	}
 }

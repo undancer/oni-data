@@ -210,17 +210,15 @@ public class DebugPaintElementScreen : KScreen
 			filter = filter.ToLower();
 		}
 		List<ElemDisplayInfo> list = new List<ElemDisplayInfo>();
-		ElemDisplayInfo item;
 		foreach (Element element2 in ElementLoader.elements)
 		{
 			if (element2.name != "Element Not Loaded" && element2.substance != null && element2.substance.showInEditor && (string.IsNullOrEmpty(filter) || element2.name.ToLower().Contains(filter)))
 			{
-				item = new ElemDisplayInfo
+				list.Add(new ElemDisplayInfo
 				{
 					id = element2.id,
 					displayStr = element2.name + " (" + element2.GetStateString() + ")"
-				};
-				list.Add(item);
+				});
 			}
 		}
 		list.Sort((ElemDisplayInfo a, ElemDisplayInfo b) => a.displayStr.CompareTo(b.displayStr));
@@ -238,20 +236,19 @@ public class DebugPaintElementScreen : KScreen
 			for (int i = 0; i < array.Length; i++)
 			{
 				Element element = ElementLoader.FindElementByHash(array[i]);
-				item = new ElemDisplayInfo
+				list.Insert(0, new ElemDisplayInfo
 				{
 					id = element.id,
 					displayStr = element.name + " (" + element.GetStateString() + ")"
-				};
-				list.Insert(0, item);
+				});
 			}
 		}
 		options_list = new List<string>();
 		List<string> list2 = new List<string>();
-		foreach (ElemDisplayInfo item2 in list)
+		foreach (ElemDisplayInfo item in list)
 		{
-			list2.Add(item2.displayStr);
-			options_list.Add(item2.id.ToString());
+			list2.Add(item.displayStr);
+			options_list.Add(item.id.ToString());
 		}
 		elementPopup.SetOptions(list2);
 		for (int j = 0; j < list.Count; j++)

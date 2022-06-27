@@ -23,6 +23,8 @@ public class Building : KMonoBehaviour, IGameObjectEffectDescriptor, IUniformGri
 
 	private static StatusItem deprecatedBuildingStatusItem;
 
+	private string description;
+
 	private HandleVector<int>.Handle scenePartitionerEntry;
 
 	public Orientation Orientation
@@ -46,6 +48,18 @@ public class Building : KMonoBehaviour, IGameObjectEffectDescriptor, IUniformGri
 				RefreshCells();
 			}
 			return placementCells;
+		}
+	}
+
+	public string Desc
+	{
+		get
+		{
+			if (Def.AvailableFacades.Count > 0 && !description.IsNullOrWhiteSpace())
+			{
+				return description;
+			}
+			return Def.Desc;
 		}
 	}
 
@@ -125,6 +139,11 @@ public class Building : KMonoBehaviour, IGameObjectEffectDescriptor, IUniformGri
 				component.Temperature = component.Element.defaultValues.temperature;
 			}
 		}
+	}
+
+	public void SetDescription(string desc)
+	{
+		description = desc;
 	}
 
 	protected override void OnSpawn()

@@ -227,10 +227,9 @@ public class KInputHandler
 		Component[] components = child.GetComponents<Component>();
 		for (int i = 0; i < components.Length; i++)
 		{
-			IInputHandler inputHandler = components[i] as IInputHandler;
-			if (inputHandler != null)
+			if (components[i] is IInputHandler child2)
 			{
-				Add(parent, inputHandler);
+				Add(parent, child2);
 			}
 		}
 	}

@@ -93,8 +93,9 @@ public class FlopStates : GameStateMachine<FlopStates, FlopStates.Instance, ISta
 
 	public static void FlopForward(Instance smi, float dt)
 	{
-		int currentFrame = smi.GetComponent<KBatchedAnimController>().currentFrame;
-		if (currentFrame >= 23 && currentFrame <= 36)
+		KBatchedAnimController component = smi.GetComponent<KBatchedAnimController>();
+		int currentFrame = component.currentFrame;
+		if (!component.IsVisible() || (currentFrame >= 23 && currentFrame <= 36))
 		{
 			Vector3 position = smi.transform.GetPosition();
 			Vector3 vector = position;

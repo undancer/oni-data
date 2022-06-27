@@ -67,9 +67,13 @@ public class SpeechMonitor : GameStateMachine<SpeechMonitor, SpeechMonitor.Insta
 
 	public static string PREFIX_HAPPY = "happy";
 
+	public static string PREFIX_SINGER = "sing";
+
 	public TargetParameter mouth;
 
 	private static HashedString HASH_SNAPTO_MOUTH = "snapto_mouth";
+
+	private static KAnimHashedString ANIM_HASH_HEAD_ANIM = "head_anim";
 
 	public override void InitializeStates(out BaseState default_state)
 	{
@@ -108,16 +112,43 @@ public class SpeechMonitor : GameStateMachine<SpeechMonitor, SpeechMonitor.Insta
 		{
 			return false;
 		}
-		if (go.GetComponent<Navigator>().IsMoving())
-		{
-			return true;
-		}
-		KAnim.Anim currentAnim = go.GetComponent<KBatchedAnimController>().GetCurrentAnim();
+		KBatchedAnimController component = go.GetComponent<KBatchedAnimController>();
+		KAnim.Anim currentAnim = component.GetCurrentAnim();
 		if (currentAnim == null)
 		{
 			return true;
 		}
-		return GameAudioSheets.Get().IsAnimAllowedToPlaySpeech(currentAnim);
+		if (GameAudioSheets.Get().IsAnimAllowedToPlaySpeech(currentAnim))
+		{
+			return CanOverrideHead(component);
+		}
+		return false;
+	}
+
+	private static bool CanOverrideHead(KBatchedAnimController kbac)
+	{
+		bool result = true;
+		KAnim.Anim currentAnim = kbac.GetCurrentAnim();
+		if (currentAnim == null)
+		{
+			return false;
+		}
+		int currentFrameIndex = kbac.GetCurrentFrameIndex();
+		if (currentFrameIndex <= 0)
+		{
+			return false;
+		}
+		KBatchGroupData batchGroupData = KAnimBatchManager.Instance().GetBatchGroupData(currentAnim.animFile.animBatchTag);
+		KAnim.Anim.Frame frame = batchGroupData.GetFrame(currentFrameIndex);
+		for (int i = 0; i < frame.numElements; i++)
+		{
+			if (batchGroupData.GetFrameElement(frame.firstElementIdx + i).folder == ANIM_HASH_HEAD_ANIM)
+			{
+				result = false;
+				break;
+			}
+		}
+		return result;
 	}
 
 	public static void BeginTalking(Instance smi)
@@ -167,11 +198,10 @@ public class SpeechMonitor : GameStateMachine<SpeechMonitor, SpeechMonitor.Insta
 			int num = frame.firstElementIdx + i;
 			if (num < batch.group.data.frameElements.Count)
 			{
-				KAnim.Anim.FrameElement frameElement = batch.group.data.frameElements[num];
-				if (!(frameElement.symbol == HashedString.Invalid))
+				KAnim.Anim.FrameElement result2 = batch.group.data.frameElements[num];
+				if (!(result2.symbol == HashedString.Invalid))
 				{
-					result = frameElement;
-					return result;
+					return result2;
 				}
 			}
 		}
@@ -183,7 +213,7 @@ public class SpeechMonitor : GameStateMachine<SpeechMonitor, SpeechMonitor.Insta
 		if (smi.ev.isValid())
 		{
 			smi.ev.getPlaybackState(out var state);
-			if (state != 0 && state != PLAYBACK_STATE.STARTING)
+			if (state == PLAYBACK_STATE.STOPPING || state == PLAYBACK_STATE.STOPPED)
 			{
 				smi.GoTo(smi.sm.satisfied);
 				smi.ev.clearHandle();

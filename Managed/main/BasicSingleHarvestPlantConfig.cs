@@ -9,7 +9,7 @@ public class BasicSingleHarvestPlantConfig : IEntityConfig
 
 	public const string SEED_ID = "BasicSingleHarvestPlantSeed";
 
-	public const float DIRT_RATE = 0.016666668f;
+	public const float DIRT_RATE = 1f / 60f;
 
 	public string[] GetDlcIds()
 	{
@@ -33,7 +33,7 @@ public class BasicSingleHarvestPlantConfig : IEntityConfig
 			new PlantElementAbsorber.ConsumeInfo
 			{
 				tag = GameTags.Dirt,
-				massConsumptionRate = 0.016666668f
+				massConsumptionRate = 1f / 60f
 			}
 		});
 		EntityTemplates.CreateAndRegisterPreviewForPlant(seed, "BasicSingleHarvestPlant_preview", Assets.GetAnim("meallice_kanim"), "place", 1, 2);

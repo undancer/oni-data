@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +13,7 @@ public class PerformanceMonitor : MonoBehaviour
 
 	private static readonly int frameRateWindowSize = 150;
 
-	private const float GOOD_FRAME_TIME = 71f / (678f * (float)Math.PI);
+	private const float GOOD_FRAME_TIME = 1f / 30f;
 
 	public ulong NumFramesAbove30 => numFramesAbove30;
 
@@ -37,7 +36,7 @@ public class PerformanceMonitor : MonoBehaviour
 		if (Time.timeScale != 0f)
 		{
 			float unscaledDeltaTime = Time.unscaledDeltaTime;
-			if (unscaledDeltaTime <= 71f / (678f * (float)Math.PI))
+			if (unscaledDeltaTime <= 1f / 30f)
 			{
 				numFramesAbove30++;
 			}

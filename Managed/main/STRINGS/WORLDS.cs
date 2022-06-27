@@ -339,7 +339,7 @@ namespace STRINGS
 		{
 			public static LocString NAME = "Regolith Asteroid";
 
-			public static LocString DESCRIPTION = "A small, cold world with plenty of craters.\n\n<smallcaps>Regolith Asteroids have frequent meteor showers and are chalk full of Regolith, an incredibly useful filtration material. </smallcaps>";
+			public static LocString DESCRIPTION = "A small, cold world with plenty of craters.\n\n<smallcaps>Regolith Asteroids have frequent meteor showers and are chock-full of Regolith, an incredibly useful filtration material. </smallcaps>";
 		}
 
 		public class MINIMETALLICSWAMPY

@@ -247,7 +247,8 @@ namespace Database
 			{
 				LuxuryBedConfig.ID,
 				"LadderFast",
-				"PlasticTile"
+				"PlasticTile",
+				"ClothingAlterationStation"
 			}, this);
 			new Tech("RefractiveDecor", new List<string> { "CanvasWide", "MetalSculpture" }, this);
 			new Tech("GlassFurnishings", new List<string> { "GlassTile", "FlowerVaseHangingFancy", "SunLamp" }, this);

@@ -90,11 +90,17 @@ public class ColonyAchievementTracker : KMonoBehaviour, ISaveLoadableDetails, IR
 	{
 		foreach (ColonyAchievementRequirement item in Db.Get().ColonyAchievements.TameAllBasicCritters.requirementChecklist)
 		{
-			(item as CritterTypesWithTraits)?.UpdateSavedState();
+			if (item is CritterTypesWithTraits critterTypesWithTraits)
+			{
+				critterTypesWithTraits.UpdateSavedState();
+			}
 		}
 		foreach (ColonyAchievementRequirement item2 in Db.Get().ColonyAchievements.TameAGassyMoo.requirementChecklist)
 		{
-			(item2 as CritterTypesWithTraits)?.UpdateSavedState();
+			if (item2 is CritterTypesWithTraits critterTypesWithTraits2)
+			{
+				critterTypesWithTraits2.UpdateSavedState();
+			}
 		}
 	}
 
@@ -403,12 +409,7 @@ public class ColonyAchievementTracker : KMonoBehaviour, ISaveLoadableDetails, IR
 				}
 			}
 		}
-		if (!DlcManager.IsExpansion1Active())
-		{
-			return;
-		}
-		SurviveARocketWithMinimumMorale surviveARocketWithMinimumMorale = Db.Get().ColonyAchievements.SurviveInARocket.requirementChecklist[0] as SurviveARocketWithMinimumMorale;
-		if (surviveARocketWithMinimumMorale == null)
+		if (!DlcManager.IsExpansion1Active() || !(Db.Get().ColonyAchievements.SurviveInARocket.requirementChecklist[0] is SurviveARocketWithMinimumMorale surviveARocketWithMinimumMorale))
 		{
 			return;
 		}

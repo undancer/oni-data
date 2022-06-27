@@ -8,9 +8,9 @@ namespace Satsuma
 		[Flags]
 		public enum Flags
 		{
-			None = 0x0,
-			CreateComponents = 0x1,
-			CreateCutvertices = 0x2
+			None = 0,
+			CreateComponents = 1,
+			CreateCutvertices = 2
 		}
 
 		private class BlockDfs : LowpointDfs

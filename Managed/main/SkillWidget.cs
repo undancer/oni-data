@@ -208,7 +208,7 @@ public class SkillWidget : KMonoBehaviour, IPointerEnterHandler, IEventSystemHan
 			gameObject.transform.SetLocalPosition(Vector3.zero);
 			gameObject.rectTransform().sizeDelta = Vector2.zero;
 			lines[num3] = gameObject.AddComponent<UILineRenderer>();
-			lines[num3].color = new Color(166f / 255f, 166f / 255f, 166f / 255f, 1f);
+			lines[num3].color = new Color(0.6509804f, 0.6509804f, 0.6509804f, 1f);
 			lines[num3].Points = new Vector2[2]
 			{
 				linePoints[j],

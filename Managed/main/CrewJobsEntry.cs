@@ -156,9 +156,9 @@ public class CrewJobsEntry : CrewListEntry
 				float num = 0f;
 				num = Mathf.Min(attributes.Get(priorityButton.choreGroup.attribute).GetTotalValue() / 10f, 1f);
 				Color baseBorderColor = priorityButton.baseBorderColor;
-				baseBorderColor.r = Mathf.Lerp(priorityButton.baseBorderColor.r, 184f / 255f, num);
-				baseBorderColor.g = Mathf.Lerp(priorityButton.baseBorderColor.g, 113f / 255f, num);
-				baseBorderColor.b = Mathf.Lerp(priorityButton.baseBorderColor.b, 148f / 255f, num);
+				baseBorderColor.r = Mathf.Lerp(priorityButton.baseBorderColor.r, 0.72156864f, num);
+				baseBorderColor.g = Mathf.Lerp(priorityButton.baseBorderColor.g, 0.44313726f, num);
+				baseBorderColor.b = Mathf.Lerp(priorityButton.baseBorderColor.b, 0.5803922f, num);
 				if (priorityButton.border.color != baseBorderColor)
 				{
 					priorityButton.border.color = baseBorderColor;

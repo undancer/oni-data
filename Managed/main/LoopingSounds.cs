@@ -233,10 +233,9 @@ public class LoopingSounds : KMonoBehaviour
 			return;
 		}
 		Vector2 vector = base.transform.GetPosition();
-		for (int i = 0; i < events.Count; i++)
+		for (int i = 0; i < events.Count && events[i] is SoundEvent soundEvent; i++)
 		{
-			SoundEvent soundEvent = events[i] as SoundEvent;
-			if (soundEvent == null || soundEvent.sound == null)
+			if (soundEvent.sound == null)
 			{
 				break;
 			}

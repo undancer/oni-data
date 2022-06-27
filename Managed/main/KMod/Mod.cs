@@ -331,7 +331,7 @@ namespace KMod
 			list2 = list2.Where((ArchivedVersion v) => DoesModSupportCurrentContent(v.info)).ToList();
 			list2 = list2.Where((ArchivedVersion v) => v.info.APIVersion == 2 || v.info.APIVersion == 0).ToList();
 			ArchivedVersion archivedVersion2 = (from v in list2
-				where (long)v.info.minimumSupportedBuild <= 497575L
+				where (long)v.info.minimumSupportedBuild <= 512719L
 				orderby v.info.minimumSupportedBuild descending
 				select v).FirstOrDefault();
 			if (archivedVersion2 == null)
@@ -469,6 +469,9 @@ namespace KMod
 				break;
 			case "worldgen":
 				content |= Content.LayerableFiles;
+				break;
+			case "buildingfacades":
+				content |= Content.Animation;
 				break;
 			case "anim":
 				content |= Content.Animation;

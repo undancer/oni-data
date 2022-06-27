@@ -15,10 +15,10 @@ public class BreakdownListRow : KMonoBehaviour
 
 	private static Color[] statusColour = new Color[4]
 	{
-		new Color(29f / 85f, 94f / 255f, 39f / 85f, 1f),
-		new Color(184f / 255f, 98f / 255f, 0f, 1f),
-		new Color(98f / 255f, 184f / 255f, 0f, 1f),
-		new Color(184f / 255f, 184f / 255f, 0f, 1f)
+		new Color(29f / 85f, 0.36862746f, 39f / 85f, 1f),
+		new Color(0.72156864f, 0.38431373f, 0f, 1f),
+		new Color(0.38431373f, 0.72156864f, 0f, 1f),
+		new Color(0.72156864f, 0.72156864f, 0f, 1f)
 	};
 
 	public Image dotOutlineImage;

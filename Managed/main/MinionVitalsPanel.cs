@@ -127,6 +127,7 @@ public class MinionVitalsPanel : KMonoBehaviour
 		AddAmountLine(Db.Get().Amounts.Stamina);
 		AddAmountLine(Db.Get().Amounts.Calories);
 		AddAmountLine(Db.Get().Amounts.ScaleGrowth);
+		AddAmountLine(Db.Get().Amounts.ElementGrowth);
 		AddAmountLine(Db.Get().Amounts.Temperature);
 		AddAmountLine(Db.Get().Amounts.Decor);
 		AddAmountLine(Db.Get().Amounts.InternalBattery);
@@ -323,7 +324,7 @@ public class MinionVitalsPanel : KMonoBehaviour
 					}
 					else
 					{
-						Color color = new Color(253f / 255f, 0f, 26f / 255f);
+						Color color = new Color(0.99215686f, 0f, 0.101960786f);
 						checkboxLine.locText.color = color;
 						gameObject.transform.parent.GetComponent<Image>().color = color;
 					}

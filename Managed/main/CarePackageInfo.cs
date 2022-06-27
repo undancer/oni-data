@@ -9,11 +9,21 @@ public class CarePackageInfo : ITelepadDeliverable
 
 	public readonly Func<bool> requirement;
 
+	public readonly string facadeID;
+
 	public CarePackageInfo(string ID, float amount, Func<bool> requirement)
 	{
 		id = ID;
 		quantity = amount;
 		this.requirement = requirement;
+	}
+
+	public CarePackageInfo(string ID, float amount, Func<bool> requirement, string facadeID)
+	{
+		id = ID;
+		quantity = amount;
+		this.requirement = requirement;
+		this.facadeID = facadeID;
 	}
 
 	public GameObject Deliver(Vector3 location)

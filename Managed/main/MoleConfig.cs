@@ -40,6 +40,11 @@ public class MoleConfig : IEntityConfig
 		gameObject.AddOrGetDef<SolidConsumerMonitor.Def>().diet = diet;
 		gameObject.AddOrGetDef<OvercrowdingMonitor.Def>().spaceRequiredPerCreature = 0;
 		gameObject.AddOrGet<LoopingSounds>();
+		HashedString[] gINGER_SYMBOL_NAMES = MoleTuning.GINGER_SYMBOL_NAMES;
+		foreach (HashedString hashedString in gINGER_SYMBOL_NAMES)
+		{
+			gameObject.GetComponent<KAnimControllerBase>().SetSymbolVisiblity(hashedString, is_visible: false);
+		}
 		return gameObject;
 	}
 

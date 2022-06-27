@@ -10,10 +10,10 @@ public class Grid
 	[Flags]
 	public enum BuildFlags : byte
 	{
-		Solid = 0x1,
-		Foundation = 0x2,
-		Door = 0x4,
-		DupePassable = 0x8,
+		Solid = 1,
+		Foundation = 2,
+		Door = 4,
+		DupePassable = 8,
 		DupeImpassable = 0x10,
 		CritterImpassable = 0x20,
 		FakeFloor = 0xC0
@@ -130,10 +130,10 @@ public class Grid
 	[Flags]
 	public enum VisFlags : byte
 	{
-		Revealed = 0x1,
-		PreventFogOfWarReveal = 0x2,
-		RenderedByWorld = 0x4,
-		AllowPathfinding = 0x8
+		Revealed = 1,
+		PreventFogOfWarReveal = 2,
+		RenderedByWorld = 4,
+		AllowPathfinding = 8
 	}
 
 	[StructLayout(LayoutKind.Sequential, Size = 1)]
@@ -203,10 +203,10 @@ public class Grid
 	[Flags]
 	public enum NavValidatorFlags : byte
 	{
-		Ladder = 0x1,
-		Pole = 0x2,
-		Tube = 0x4,
-		NavTeleporter = 0x8,
+		Ladder = 1,
+		Pole = 2,
+		Tube = 4,
+		NavTeleporter = 8,
 		UnderConstruction = 0x10
 	}
 
@@ -293,10 +293,10 @@ public class Grid
 	[Flags]
 	public enum NavFlags : byte
 	{
-		AccessDoor = 0x1,
-		TubeEntrance = 0x2,
-		PreventIdleTraversal = 0x4,
-		Reserved = 0x8,
+		AccessDoor = 1,
+		TubeEntrance = 2,
+		PreventIdleTraversal = 4,
+		Reserved = 8,
 		SuitMarker = 0x10
 	}
 
@@ -385,9 +385,9 @@ public class Grid
 		[Flags]
 		public enum Directions : byte
 		{
-			Left = 0x1,
-			Right = 0x2,
-			Teleport = 0x4
+			Left = 1,
+			Right = 2,
+			Teleport = 4
 		}
 
 		public enum Orientation : byte
@@ -418,9 +418,9 @@ public class Grid
 		[Flags]
 		public enum Flags : byte
 		{
-			OnlyTraverseIfUnequipAvailable = 0x1,
-			Operational = 0x2,
-			Rotated = 0x4
+			OnlyTraverseIfUnequipAvailable = 1,
+			Operational = 2,
+			Rotated = 4
 		}
 
 		public int suitCount;
@@ -581,8 +581,8 @@ public class Grid
 		WireBridgesFront = 12,
 		LogicWires = 13,
 		LogicGates = 14,
-		LogicGatesFront = 0xF,
-		InteriorWall = 0x10,
+		LogicGatesFront = 15,
+		InteriorWall = 16,
 		GasFront = 17,
 		BuildingBack = 18,
 		Building = 19,
@@ -597,8 +597,8 @@ public class Grid
 		Liquid = 28,
 		Ground = 29,
 		TileMain = 30,
-		TileFront = 0x1F,
-		FXFront = 0x20,
+		TileFront = 31,
+		FXFront = 32,
 		FXFront2 = 33,
 		SceneMAX = 34
 	}

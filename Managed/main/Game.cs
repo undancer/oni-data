@@ -383,6 +383,8 @@ public class Game : KMonoBehaviour
 
 	public GameObject cameraControllerPrefab;
 
+	private Camera m_CachedCamera;
+
 	public GameObject tempIntroScreenPrefab;
 
 	public static int BlockSelectionLayerMask;
@@ -597,6 +599,18 @@ public class Game : KMonoBehaviour
 
 	public static Game Instance { get; private set; }
 
+	public Camera MainCamera
+	{
+		get
+		{
+			if (m_CachedCamera == null)
+			{
+				m_CachedCamera = Camera.main;
+			}
+			return m_CachedCamera;
+		}
+	}
+
 	public bool SaveToCloudActive
 	{
 		get
@@ -731,7 +745,7 @@ public class Game : KMonoBehaviour
 		Singleton<CellChangeMonitor>.Instance.SetGridSize(Grid.WidthInCells, Grid.HeightInCells);
 		unlocks = GetComponent<Unlocks>();
 		changelistsPlayedOn = new List<uint>();
-		changelistsPlayedOn.Add(497575u);
+		changelistsPlayedOn.Add(512719u);
 		dateGenerated = System.DateTime.UtcNow.ToString("U", CultureInfo.InvariantCulture);
 	}
 
@@ -1249,7 +1263,7 @@ public class Game : KMonoBehaviour
 	{
 		dt = Mathf.Min(dt, 0.2f);
 		simDt += dt;
-		if (simDt >= 0.016666668f)
+		if (simDt >= 1f / 60f)
 		{
 			do
 			{
@@ -1264,9 +1278,9 @@ public class Game : KMonoBehaviour
 				{
 					Singleton<StateMachineUpdater>.Instance.AdvanceOneSimSubTick();
 				}
-				simDt -= 0.016666668f;
+				simDt -= 1f / 60f;
 			}
-			while (simDt >= 0.016666668f);
+			while (simDt >= 1f / 60f);
 		}
 		else
 		{
@@ -1466,7 +1480,7 @@ public class Game : KMonoBehaviour
 		{
 			return;
 		}
-		uint num = 497575u;
+		uint num = 512719u;
 		string text = System.DateTime.Now.ToShortDateString();
 		string text2 = System.DateTime.Now.ToShortTimeString();
 		string fileName = Path.GetFileName(GenericGameSettings.instance.performanceCapture.saveGame);
@@ -1607,12 +1621,12 @@ public class Game : KMonoBehaviour
 						}
 						}
 						pos += spawnPoolData.spawnOffset;
-						Vector2 vector = UnityEngine.Random.insideUnitCircle;
-						vector.x *= spawnPoolData.spawnRandomOffset.x;
-						vector.y *= spawnPoolData.spawnRandomOffset.y;
-						vector = quaternion * vector;
-						pos.x += vector.x;
-						pos.y += vector.y;
+						Vector2 insideUnitCircle = UnityEngine.Random.insideUnitCircle;
+						insideUnitCircle.x *= spawnPoolData.spawnRandomOffset.x;
+						insideUnitCircle.y *= spawnPoolData.spawnRandomOffset.y;
+						insideUnitCircle = quaternion * insideUnitCircle;
+						pos.x += insideUnitCircle.x;
+						pos.y += insideUnitCircle.y;
 						instance.transform.SetPosition(pos);
 						instance.transform.rotation = quaternion;
 						KBatchedAnimController component = instance.GetComponent<KBatchedAnimController>();
@@ -1668,9 +1682,9 @@ public class Game : KMonoBehaviour
 		gameSaveData.savedInfo = savedInfo;
 		Debug.Assert(gameSaveData.worldDetail != null, "World detail null");
 		gameSaveData.dateGenerated = dateGenerated;
-		if (!changelistsPlayedOn.Contains(497575u))
+		if (!changelistsPlayedOn.Contains(512719u))
 		{
-			changelistsPlayedOn.Add(497575u);
+			changelistsPlayedOn.Add(512719u);
 		}
 		gameSaveData.changelistsPlayedOn = changelistsPlayedOn;
 		if (OnSave != null)
@@ -1992,14 +2006,14 @@ public class Game : KMonoBehaviour
 		Infrared.DestroyInstance();
 		KPrefabIDTracker.DestroyInstance();
 		ManagementMenu.DestroyInstance();
+		ClusterMapScreen.DestroyInstance();
 		Messenger.DestroyInstance();
 		LoopingSoundManager.DestroyInstance();
 		MeterScreen.DestroyInstance();
 		MinionGroupProber.DestroyInstance();
 		NavPathDrawer.DestroyInstance();
 		MinionIdentity.DestroyStatics();
-		PathFinder.PathGrid.OnCleanUp();
-		PathFinder.PathGrid = null;
+		PathFinder.DestroyStatics();
 		Pathfinding.DestroyInstance();
 		PrebuildTool.DestroyInstance();
 		PrioritizeTool.DestroyInstance();
@@ -2093,9 +2107,16 @@ public class Game : KMonoBehaviour
 		UpdateObjectCountParameter.Clear();
 		MaterialSelectionPanel.ClearStatics();
 		StarmapScreen.DestroyInstance();
-		SpacecraftManager.DestroyInstance();
+		ClusterNameDisplayScreen.DestroyInstance();
 		ClusterManager.DestroyInstance();
 		ClusterGrid.DestroyInstance();
+		PathFinderQueries.Reset();
+		Singleton<KBatchedAnimUpdater>.Instance?.InitializeGrid();
+		GlobalChoreProvider.DestroyInstance();
+		WorldSelector.DestroyInstance();
+		ColonyDiagnosticUtility.DestroyInstance();
+		DiscoveredResources.DestroyInstance();
+		ClusterMapSelectTool.DestroyInstance();
 		Instance = null;
 		Grid.OnReveal = null;
 		VisualTunerElement = null;

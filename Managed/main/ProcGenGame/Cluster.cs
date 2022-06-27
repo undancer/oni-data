@@ -163,7 +163,11 @@ namespace ProcGenGame
 				}
 				num++;
 			}
-			AssignClusterLocations();
+			if (!AssignClusterLocations())
+			{
+				thread = null;
+				return;
+			}
 			Save();
 			thread = null;
 			IsGenerationComplete = true;
@@ -174,12 +178,12 @@ namespace ProcGenGame
 			return location.IsWithinRadius(AxialI.ZERO, numRings - 1);
 		}
 
-		public void AssignClusterLocations()
+		public bool AssignClusterLocations()
 		{
 			myRandom = new SeededRandom(seed);
-			ClusterLayout obj = SettingsCache.clusterLayouts.clusterCache[Id];
-			List<WorldPlacement> worldPlacements = obj.worldPlacements;
-			List<SpaceMapPOIPlacement> list = obj.poiPlacements;
+			ClusterLayout clusterLayout = SettingsCache.clusterLayouts.clusterCache[Id];
+			List<WorldPlacement> list = new List<WorldPlacement>(clusterLayout.worldPlacements);
+			List<SpaceMapPOIPlacement> list2 = ((clusterLayout.poiPlacements == null) ? new List<SpaceMapPOIPlacement>() : new List<SpaceMapPOIPlacement>(clusterLayout.poiPlacements));
 			currentWorld.SetClusterLocation(AxialI.ZERO);
 			HashSet<AxialI> assignedLocations = new HashSet<AxialI>();
 			HashSet<AxialI> worldForbiddenLocations = new HashSet<AxialI>();
@@ -189,19 +193,19 @@ namespace ProcGenGame
 			for (int i = 0; i < worlds.Count; i++)
 			{
 				WorldGen worldGen = worlds[i];
-				WorldPlacement worldPlacement = worldPlacements[i];
+				WorldPlacement worldPlacement = list[i];
 				DebugUtil.Assert(worldPlacement != null, "Somehow we're trying to generate a cluster with a world that isn't the cluster .yaml's world list!", worldGen.Settings.world.filePath);
 				HashSet<AxialI> antiBuffer = new HashSet<AxialI>();
 				foreach (AxialI item in assignedLocations)
 				{
 					antiBuffer.UnionWith(AxialUtil.GetRings(item, 1, worldPlacement.buffer));
 				}
-				List<AxialI> list2 = (from location in AxialUtil.GetRings(AxialI.ZERO, worldPlacement.allowedRings.min, Mathf.Min(worldPlacement.allowedRings.max, numRings - 1))
+				List<AxialI> list3 = (from location in AxialUtil.GetRings(AxialI.ZERO, worldPlacement.allowedRings.min, Mathf.Min(worldPlacement.allowedRings.max, numRings - 1))
 					where !assignedLocations.Contains(location) && !worldForbiddenLocations.Contains(location) && !antiBuffer.Contains(location)
 					select location).ToList();
-				if (list2.Count > 0)
+				if (list3.Count > 0)
 				{
-					AxialI axialI = list2[myRandom.RandomRange(0, list2.Count)];
+					AxialI axialI = list3[myRandom.RandomRange(0, list3.Count)];
 					worldGen.SetClusterLocation(axialI);
 					assignedLocations.Add(axialI);
 					worldForbiddenLocations.UnionWith(AxialUtil.GetRings(axialI, 1, worldPlacement.buffer));
@@ -214,66 +218,76 @@ namespace ProcGenGame
 				{
 					minBuffers.UnionWith(AxialUtil.GetRings(item2, 1, 2));
 				}
-				list2 = (from location in AxialUtil.GetRings(AxialI.ZERO, worldPlacement.allowedRings.min, Mathf.Min(worldPlacement.allowedRings.max, numRings - 1))
+				list3 = (from location in AxialUtil.GetRings(AxialI.ZERO, worldPlacement.allowedRings.min, Mathf.Min(worldPlacement.allowedRings.max, numRings - 1))
 					where !assignedLocations.Contains(location) && !minBuffers.Contains(location)
 					select location).ToList();
-				DebugUtil.Assert(list2.Count > 0, "Could not find a spot in the cluster for " + worldGen.Settings.world.filePath + " EVEN AFTER REDUCING BUFFERS. Check the placement settings in " + Id + ".yaml to ensure there are no conflicts.");
-				AxialI axialI2 = list2[myRandom.RandomRange(0, list2.Count)];
-				worldGen.SetClusterLocation(axialI2);
-				assignedLocations.Add(axialI2);
-				worldForbiddenLocations.UnionWith(AxialUtil.GetRings(axialI2, 1, worldPlacement.buffer));
-				poiWorldAvoidance.UnionWith(AxialUtil.GetRings(axialI2, 1, maxRadius));
-			}
-			if (!DlcManager.FeatureClusterSpaceEnabled() || list == null)
-			{
-				return;
-			}
-			HashSet<AxialI> poiClumpLocations = new HashSet<AxialI>();
-			HashSet<AxialI> poiForbiddenLocations = new HashSet<AxialI>();
-			float num = 0.5f;
-			int num2 = 3;
-			int num3 = 0;
-			foreach (SpaceMapPOIPlacement item3 in list)
-			{
-				List<string> pois = item3.pois;
-				for (int j = 0; j < item3.numToSpawn; j++)
+				if (list3.Count > 0)
 				{
-					bool num4 = myRandom.RandomRange(0f, 1f) <= num;
-					List<AxialI> list3 = null;
-					if (num4 && num3 < num2 && !item3.avoidClumping)
+					AxialI axialI2 = list3[myRandom.RandomRange(0, list3.Count)];
+					worldGen.SetClusterLocation(axialI2);
+					assignedLocations.Add(axialI2);
+					worldForbiddenLocations.UnionWith(AxialUtil.GetRings(axialI2, 1, worldPlacement.buffer));
+					poiWorldAvoidance.UnionWith(AxialUtil.GetRings(axialI2, 1, maxRadius));
+					continue;
+				}
+				string text = "Could not find a spot in the cluster for " + worldGen.Settings.world.filePath + " EVEN AFTER REDUCING BUFFERS. Check the placement settings in " + Id + ".yaml to ensure there are no conflicts.";
+				DebugUtil.LogErrorArgs(text);
+				if (!worldGen.isRunningDebugGen)
+				{
+					currentWorld.ReportWorldGenError(new Exception(text));
+				}
+				return false;
+			}
+			if (DlcManager.FeatureClusterSpaceEnabled() && list2 != null)
+			{
+				HashSet<AxialI> poiClumpLocations = new HashSet<AxialI>();
+				HashSet<AxialI> poiForbiddenLocations = new HashSet<AxialI>();
+				float num = 0.5f;
+				int num2 = 3;
+				int num3 = 0;
+				foreach (SpaceMapPOIPlacement item3 in list2)
+				{
+					List<string> list4 = new List<string>(item3.pois);
+					for (int j = 0; j < item3.numToSpawn; j++)
 					{
-						num3++;
-						list3 = (from location in AxialUtil.GetRings(AxialI.ZERO, item3.allowedRings.min, Mathf.Min(item3.allowedRings.max, numRings - 1))
-							where !assignedLocations.Contains(location) && poiClumpLocations.Contains(location) && !poiWorldAvoidance.Contains(location)
-							select location).ToList();
-					}
-					if (list3 == null || list3.Count <= 0)
-					{
-						num3 = 0;
-						poiClumpLocations.Clear();
-						list3 = (from location in AxialUtil.GetRings(AxialI.ZERO, item3.allowedRings.min, Mathf.Min(item3.allowedRings.max, numRings - 1))
-							where !assignedLocations.Contains(location) && !poiWorldAvoidance.Contains(location) && !poiForbiddenLocations.Contains(location)
-							select location).ToList();
-					}
-					if (list3 != null && list3.Count > 0)
-					{
-						AxialI axialI3 = list3[myRandom.RandomRange(0, list3.Count)];
-						string text = pois[myRandom.RandomRange(0, pois.Count)];
-						if (!item3.canSpawnDuplicates)
+						bool num4 = myRandom.RandomRange(0f, 1f) <= num;
+						List<AxialI> list5 = null;
+						if (num4 && num3 < num2 && !item3.avoidClumping)
 						{
-							pois.Remove(text);
+							num3++;
+							list5 = (from location in AxialUtil.GetRings(AxialI.ZERO, item3.allowedRings.min, Mathf.Min(item3.allowedRings.max, numRings - 1))
+								where !assignedLocations.Contains(location) && poiClumpLocations.Contains(location) && !poiWorldAvoidance.Contains(location)
+								select location).ToList();
 						}
-						poiPlacements[axialI3] = text;
-						poiForbiddenLocations.UnionWith(AxialUtil.GetRings(axialI3, 1, 3));
-						poiClumpLocations.UnionWith(AxialUtil.GetRings(axialI3, 1, 1));
-						assignedLocations.Add(axialI3);
-					}
-					else
-					{
-						Debug.LogWarning($"There is no room for a Space POI in ring range [{item3.allowedRings.min}, {item3.allowedRings.max}]");
+						if (list5 == null || list5.Count <= 0)
+						{
+							num3 = 0;
+							poiClumpLocations.Clear();
+							list5 = (from location in AxialUtil.GetRings(AxialI.ZERO, item3.allowedRings.min, Mathf.Min(item3.allowedRings.max, numRings - 1))
+								where !assignedLocations.Contains(location) && !poiWorldAvoidance.Contains(location) && !poiForbiddenLocations.Contains(location)
+								select location).ToList();
+						}
+						if (list5 != null && list5.Count > 0)
+						{
+							AxialI axialI3 = list5[myRandom.RandomRange(0, list5.Count)];
+							string text2 = list4[myRandom.RandomRange(0, list4.Count)];
+							if (!item3.canSpawnDuplicates)
+							{
+								list4.Remove(text2);
+							}
+							poiPlacements[axialI3] = text2;
+							poiForbiddenLocations.UnionWith(AxialUtil.GetRings(axialI3, 1, 3));
+							poiClumpLocations.UnionWith(AxialUtil.GetRings(axialI3, 1, 1));
+							assignedLocations.Add(axialI3);
+						}
+						else
+						{
+							Debug.LogWarning($"There is no room for a Space POI in ring range [{item3.allowedRings.min}, {item3.allowedRings.max}]");
+						}
 					}
 				}
 			}
+			return true;
 		}
 
 		public void AbortGeneration()
@@ -411,7 +425,7 @@ namespace ProcGenGame
 					if (!GenericGameSettings.instance.devAutoWorldGenActive)
 					{
 						DebugUtil.LogErrorArgs("LoadSim Error!\n", ex.Message, ex.StackTrace);
-						return;
+						break;
 					}
 				}
 				if (simSaveFileStructure.worldDetail == null)

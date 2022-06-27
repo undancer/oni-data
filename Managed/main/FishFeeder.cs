@@ -140,27 +140,25 @@ public class FishFeeder : GameStateMachine<FishFeeder, FishFeeder.Instance, ISta
 				return;
 			}
 			refreshingStorage = true;
-			float num = 0f;
 			foreach (GameObject item in botStorage.items)
 			{
 				if (!(item == null))
 				{
-					num += item.GetComponent<PrimaryElement>().Mass;
 					int cell = Grid.CellBelow(Grid.CellBelow(Grid.PosToCell(smi.transform.GetPosition())));
 					item.transform.SetPosition(Grid.CellToPosCBC(cell, Grid.SceneLayer.BuildingBack));
 				}
 			}
-			if (num == 0f)
+			if (botStorage.IsEmpty())
 			{
-				float num2 = 0f;
+				float num = 0f;
 				foreach (GameObject item2 in topStorage.items)
 				{
 					if (!(item2 == null))
 					{
-						num2 += item2.GetComponent<PrimaryElement>().Mass;
+						num += item2.GetComponent<PrimaryElement>().Mass;
 					}
 				}
-				if (num2 > 0f)
+				if (num > 0f)
 				{
 					anim.SetSymbolVisiblity(HASH_FEEDBALL, is_visible: true);
 					anim.Play("ball");

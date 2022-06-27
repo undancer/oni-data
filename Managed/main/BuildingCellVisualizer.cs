@@ -12,10 +12,10 @@ public class BuildingCellVisualizer : KMonoBehaviour
 	[Flags]
 	private enum Ports
 	{
-		PowerIn = 0x1,
-		PowerOut = 0x2,
-		GasIn = 0x4,
-		GasOut = 0x8,
+		PowerIn = 1,
+		PowerOut = 2,
+		GasIn = 4,
+		GasOut = 8,
 		LiquidIn = 0x10,
 		LiquidOut = 0x20,
 		SolidIn = 0x40,
@@ -29,10 +29,10 @@ public class BuildingCellVisualizer : KMonoBehaviour
 	private Building building;
 
 	[SerializeField]
-	public static Color32 secondOutputColour = new Color(251f / 255f, 176f / 255f, 59f / 255f);
+	public static Color32 secondOutputColour = new Color(0.9843137f, 0.6901961f, 0.23137255f);
 
 	[SerializeField]
-	public static Color32 secondInputColour = new Color(251f / 255f, 176f / 255f, 59f / 255f);
+	public static Color32 secondInputColour = new Color(0.9843137f, 0.6901961f, 0.23137255f);
 
 	private const Ports POWER_PORTS = Ports.PowerIn | Ports.PowerOut;
 

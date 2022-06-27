@@ -11,10 +11,12 @@ public class DevPumpLiquidConfig : IBuildingConfig
 
 	public override BuildingDef CreateBuildingDef()
 	{
-		BuildingDef obj = BuildingTemplates.CreateBuildingDef("DevPumpLiquid", 2, 2, "dev_pump_liquid_kanim", 100, 60f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 1600f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER1);
+		BuildingDef obj = BuildingTemplates.CreateBuildingDef("DevPumpLiquid", 2, 2, "dev_pump_liquid_kanim", 100, 60f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.ALL_METALS, 9999f, BuildLocationRule.Anywhere, noise: NOISE_POLLUTION.NONE, decor: BUILDINGS.DECOR.PENALTY.TIER1);
 		obj.RequiresPowerInput = false;
 		obj.OutputConduitType = ConduitType.Liquid;
 		obj.Floodable = false;
+		obj.Invincible = true;
+		obj.Entombable = false;
 		obj.ViewMode = OverlayModes.LiquidConduits.ID;
 		obj.AudioCategory = "Metal";
 		obj.UtilityOutputOffset = primaryPort.offset;

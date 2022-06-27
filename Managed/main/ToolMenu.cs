@@ -186,6 +186,12 @@ public class ToolMenu : KScreen
 		priorityScreen.InstantiateButtons(OnPriorityClicked, playSelectionSound: false);
 	}
 
+	protected override void OnForcedCleanUp()
+	{
+		KInputManager.InputChange.RemoveListener(OnInputChange);
+		base.OnForcedCleanUp();
+	}
+
 	protected override void OnCleanUp()
 	{
 		base.OnCleanUp();
@@ -226,8 +232,7 @@ public class ToolMenu : KScreen
 		ChooseCollection(null);
 		priorityScreen.gameObject.SetActive(value: false);
 		ToggleSandboxUI();
-		inputChangeReceiver = (UnityAction)Delegate.Combine(inputChangeReceiver, new UnityAction(OnInputChange));
-		KInputManager.InputChange.AddListener(inputChangeReceiver);
+		KInputManager.InputChange.AddListener(OnInputChange);
 		Game.Instance.Subscribe(-1948169901, ToggleSandboxUI);
 		ResetToolDisplayPlane();
 		refreshScaleHandle = Game.Instance.Subscribe(-442024484, RefreshScale);

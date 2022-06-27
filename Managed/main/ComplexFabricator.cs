@@ -1085,6 +1085,14 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 				gameObject2.SetActive(value: true);
 				float num4 = recipeElement3.amount / recipe.TotalResultUnits();
 				component2.AddDisease(diseaseInfo.idx, Mathf.RoundToInt((float)diseaseInfo.count * num4), "ComplexFabricator.CompleteOrder");
+				if (!recipeElement3.facadeID.IsNullOrWhiteSpace())
+				{
+					Equippable component3 = gameObject2.GetComponent<Equippable>();
+					if (component3 != null)
+					{
+						EquippableFacade.AddFacadeToEquippable(component3, recipeElement3.facadeID);
+					}
+				}
 				gameObject2.GetComponent<KMonoBehaviour>().Trigger(748399584);
 				list.Add(gameObject2);
 				if (storeProduced || recipeElement3.storeElement)
@@ -1105,19 +1113,19 @@ public class ComplexFabricator : KMonoBehaviour, ISim200ms, ISim1000ms
 			{
 				continue;
 			}
-			SymbolOverrideController component3 = GetComponent<SymbolOverrideController>();
-			if (component3 != null)
+			SymbolOverrideController component4 = GetComponent<SymbolOverrideController>();
+			if (component4 != null)
 			{
 				KAnim.Build build = list[0].GetComponent<KBatchedAnimController>().AnimFiles[0].GetData().build;
 				KAnim.Build.Symbol symbol = build.GetSymbol(build.name);
 				if (symbol != null)
 				{
-					component3.TryRemoveSymbolOverride("output_tracker");
-					component3.AddSymbolOverride("output_tracker", symbol);
+					component4.TryRemoveSymbolOverride("output_tracker");
+					component4.AddSymbolOverride("output_tracker", symbol);
 				}
 				else
 				{
-					Debug.LogWarning(component3.name + " is missing symbol " + build.name);
+					Debug.LogWarning(component4.name + " is missing symbol " + build.name);
 				}
 			}
 		}

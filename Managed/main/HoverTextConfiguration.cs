@@ -73,10 +73,24 @@ public class HoverTextConfiguration : KMonoBehaviour
 	{
 		TextStyleSetting standard = Styles_Instruction.Standard;
 		drawer.NewLine();
-		drawer.DrawIcon(screen.GetSprite("icon_mouse_left"), 20);
+		if (KInputManager.currentControllerIsGamepad)
+		{
+			drawer.DrawIcon(KInputManager.steamInputInterpreter.GetActionSprite(Action.MouseLeft), 20);
+		}
+		else
+		{
+			drawer.DrawIcon(screen.GetSprite("icon_mouse_left"), 20);
+		}
 		drawer.DrawText(ActionName, standard);
 		drawer.AddIndent(8);
-		drawer.DrawIcon(screen.GetSprite("icon_mouse_right"), 20);
+		if (KInputManager.currentControllerIsGamepad)
+		{
+			drawer.DrawIcon(KInputManager.steamInputInterpreter.GetActionSprite(Action.MouseRight), 20);
+		}
+		else
+		{
+			drawer.DrawIcon(screen.GetSprite("icon_mouse_right"), 20);
+		}
 		drawer.DrawText(backStr, standard);
 	}
 

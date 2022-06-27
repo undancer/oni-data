@@ -6,9 +6,9 @@ public class BaseModularLaunchpadPortConfig
 {
 	public static Tag LinkTag = new Tag("ModularLaunchpadPort");
 
-	public static BuildingDef CreateBaseLaunchpadPort(string id, string anim, ConduitType conduitType, bool isLoader)
+	public static BuildingDef CreateBaseLaunchpadPort(string id, string anim, ConduitType conduitType, bool isLoader, int width = 2, int height = 3)
 	{
-		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(id, 2, 3, anim, 1000, 60f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.REFINED_METALS, 9999f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(id, width, height, anim, 1000, 60f, BUILDINGS.CONSTRUCTION_MASS_KG.TIER4, MATERIALS.REFINED_METALS, 9999f, BuildLocationRule.OnFloor, noise: NOISE_POLLUTION.NOISY.TIER2, decor: BUILDINGS.DECOR.NONE);
 		buildingDef.SceneLayer = Grid.SceneLayer.BuildingBack;
 		buildingDef.OverheatTemperature = 2273.15f;
 		buildingDef.Floodable = false;

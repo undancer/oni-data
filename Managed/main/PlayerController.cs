@@ -204,7 +204,7 @@ public class PlayerController : KMonoBehaviour, IInputHandler
 		{
 			dragging = true;
 		}
-		if (dragging)
+		if ((!DistributionPlatform.Initialized || !KInputManager.currentControllerIsGamepad || !dragging) && dragging)
 		{
 			dragDelta = mousePos - startDragPos;
 			worldDragDelta = Camera.main.ScreenToWorldPoint(mousePos) - Camera.main.ScreenToWorldPoint(startDragPos);
@@ -217,6 +217,10 @@ public class PlayerController : KMonoBehaviour, IInputHandler
 		if (dragAction == action)
 		{
 			queueStopDrag = true;
+			if (KInputManager.currentControllerIsGamepad)
+			{
+				dragging = false;
+			}
 		}
 	}
 

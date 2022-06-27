@@ -150,7 +150,7 @@ public class TreeFilterableSideScreenRow : KMonoBehaviour
 
 	private void ArrowToggleClicked()
 	{
-		SetArrowToggleState((arrowToggle.CurrentState != 1) ? true : false);
+		SetArrowToggleState(arrowToggle.CurrentState != 1);
 		UpdateArrowToggleState();
 	}
 

@@ -39,5 +39,8 @@ public class CanvasConfig : IBuildingConfig
 		painting.stages.Add(new Artable.Stage("Good", STRINGS.BUILDINGS.PREFABS.CANVAS.EXCELLENTQUALITYNAME, "art_c", 15, cheer_on_complete: true, Artable.Status.Great));
 		painting.stages.Add(new Artable.Stage("Good2", STRINGS.BUILDINGS.PREFABS.CANVAS.EXCELLENTQUALITYNAME, "art_d", 15, cheer_on_complete: true, Artable.Status.Great));
 		painting.stages.Add(new Artable.Stage("Good3", STRINGS.BUILDINGS.PREFABS.CANVAS.EXCELLENTQUALITYNAME, "art_e", 15, cheer_on_complete: true, Artable.Status.Great));
+		painting.stages.Add(new Artable.Stage("Good4", STRINGS.BUILDINGS.PREFABS.CANVAS.EXCELLENTQUALITYNAME, "art_f", 15, cheer_on_complete: true, Artable.Status.Great));
+		painting.stages.Add(new Artable.Stage("Good5", STRINGS.BUILDINGS.PREFABS.CANVAS.EXCELLENTQUALITYNAME, "art_g", 15, cheer_on_complete: true, Artable.Status.Great));
+		painting.stages.Add(new Artable.Stage("Good6", STRINGS.BUILDINGS.PREFABS.CANVAS.EXCELLENTQUALITYNAME, "art_h", 15, cheer_on_complete: true, Artable.Status.Great));
 	}
 }

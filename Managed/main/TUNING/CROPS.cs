@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace TUNING
@@ -23,7 +22,7 @@ namespace TUNING
 
 		public const float FERTILIZATION_GAIN_RATE = 1.6666666f;
 
-		public const float FERTILIZATION_LOSS_RATE = -355f / (678f * (float)Math.PI);
+		public const float FERTILIZATION_LOSS_RATE = -1f / 6f;
 
 		public static List<Crop.CropVal> CROP_TYPES = new List<Crop.CropVal>
 		{

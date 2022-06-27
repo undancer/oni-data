@@ -18,10 +18,10 @@ public class LoopingSoundManager : KMonoBehaviour, IRenderEveryTick
 		[Flags]
 		public enum Flags
 		{
-			PLAYING = 0x1,
-			PAUSE_ON_GAME_PAUSED = 0x2,
-			ENABLE_CULLING = 0x4,
-			ENABLE_CAMERA_SCALED_POSITION = 0x8
+			PLAYING = 1,
+			PAUSE_ON_GAME_PAUSED = 2,
+			ENABLE_CULLING = 4,
+			ENABLE_CAMERA_SCALED_POSITION = 8
 		}
 
 		public EventInstance ev;
@@ -215,7 +215,6 @@ public class LoopingSoundManager : KMonoBehaviour, IRenderEveryTick
 				pooledList3.Add(i);
 			}
 		}
-		LoopingSoundParameterUpdater.Sound sound2;
 		foreach (int item in pooledList2)
 		{
 			Sound value = dataList[item];
@@ -244,7 +243,7 @@ public class LoopingSoundManager : KMonoBehaviour, IRenderEveryTick
 			{
 				value.ev.setParameterByID(soundDescription.GetParameterId(value.secondParameter), value.secondParameterValue);
 			}
-			sound2 = default(LoopingSoundParameterUpdater.Sound);
+			LoopingSoundParameterUpdater.Sound sound2 = default(LoopingSoundParameterUpdater.Sound);
 			sound2.ev = value.ev;
 			sound2.path = value.path;
 			sound2.description = soundDescription;
@@ -268,7 +267,7 @@ public class LoopingSoundManager : KMonoBehaviour, IRenderEveryTick
 		{
 			Sound value3 = dataList[item2];
 			SoundDescription soundDescription2 = GetSoundDescription(value3.path);
-			sound2 = default(LoopingSoundParameterUpdater.Sound);
+			LoopingSoundParameterUpdater.Sound sound2 = default(LoopingSoundParameterUpdater.Sound);
 			sound2.ev = value3.ev;
 			sound2.path = value3.path;
 			sound2.description = soundDescription2;

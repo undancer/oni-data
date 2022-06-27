@@ -1,4 +1,3 @@
-using System;
 using TUNING;
 using UnityEngine;
 
@@ -10,7 +9,7 @@ public class OilWellCapConfig : IBuildingConfig
 
 	private const float LIQUID_STORAGE = 10f;
 
-	private const float GAS_RATE = 71f / (678f * (float)Math.PI);
+	private const float GAS_RATE = 1f / 30f;
 
 	private const float OVERPRESSURE_TIME = 2400f;
 
@@ -64,7 +63,7 @@ public class OilWellCapConfig : IBuildingConfig
 		OilWellCap oilWellCap = go.AddOrGet<OilWellCap>();
 		oilWellCap.gasElement = SimHashes.Methane;
 		oilWellCap.gasTemperature = 573.15f;
-		oilWellCap.addGasRate = 71f / (678f * (float)Math.PI);
+		oilWellCap.addGasRate = 1f / 30f;
 		oilWellCap.maxGasPressure = 80.00001f;
 		oilWellCap.releaseGasRate = 0.44444448f;
 	}

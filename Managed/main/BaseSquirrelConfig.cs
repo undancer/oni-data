@@ -6,7 +6,7 @@ using UnityEngine;
 
 public static class BaseSquirrelConfig
 {
-	public static GameObject BaseSquirrel(string id, string name, string desc, string anim_file, string traitId, bool is_baby, string symbolOverridePrefix = null)
+	public static GameObject BaseSquirrel(string id, string name, string desc, string anim_file, string traitId, bool is_baby, string symbolOverridePrefix = null, bool isHuggable = false)
 	{
 		GameObject gameObject = EntityTemplates.CreatePlacedEntity(id, name, desc, 100f, decor: DECOR.BONUS.TIER0, anim: Assets.GetAnim(anim_file), initialAnim: "idle_loop", sceneLayer: Grid.SceneLayer.Creatures, width: 1, height: 1);
 		string navGridName = "SquirrelNavGrid";
@@ -60,21 +60,24 @@ public static class BaseSquirrelConfig
 			.Add(new FixedCaptureStates.Def())
 			.Add(new RanchedStates.Def())
 			.Add(new LayEggStates.Def())
+			.Add(new HugEggStates.Def(GameTags.Creatures.WantsToTendEgg), isHuggable)
+			.Add(new HugMinionStates.Def(), isHuggable)
 			.Add(new TreeClimbStates.Def())
 			.Add(new EatStates.Def())
 			.Add(new PlayAnimsStates.Def(GameTags.Creatures.Poop, loop: false, "poop", STRINGS.CREATURES.STATUSITEMS.EXPELLING_SOLID.NAME, STRINGS.CREATURES.STATUSITEMS.EXPELLING_SOLID.TOOLTIP))
 			.Add(new CallAdultStates.Def())
-			.Add(new SeedPlantingStates.Def())
+			.Add(new SeedPlantingStates.Def(symbolOverridePrefix))
 			.PopInterruptGroup()
 			.Add(new IdleStates.Def());
 		EntityTemplates.AddCreatureBrain(gameObject, chore_table, GameTags.Creatures.Species.SquirrelSpecies, symbolOverridePrefix);
 		return gameObject;
 	}
 
-	public static Diet.Info[] BasicWoodDiet(Tag poopTag, float caloriesPerKg, float producedConversionRate, string diseaseId, float diseasePerKgProduced)
+	public static Diet.Info[] BasicDiet(Tag poopTag, float caloriesPerKg, float producedConversionRate, string diseaseId, float diseasePerKgProduced)
 	{
 		HashSet<Tag> hashSet = new HashSet<Tag>();
 		hashSet.Add("ForestTree");
+		hashSet.Add(BasicFabricMaterialPlantConfig.ID);
 		return new Diet.Info[1]
 		{
 			new Diet.Info(hashSet, poopTag, caloriesPerKg, producedConversionRate, diseaseId, diseasePerKgProduced, produce_solid_tile: false, eats_plants_directly: true)

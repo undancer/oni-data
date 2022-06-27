@@ -54,6 +54,10 @@ public class FetchableMonitor : GameStateMachine<FetchableMonitor, FetchableMoni
 			{
 				return false;
 			}
+			if (pickupable.HasTag(GameTags.Creatures.ReservedByCreature))
+			{
+				return false;
+			}
 			return true;
 		}
 	}

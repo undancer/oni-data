@@ -72,8 +72,7 @@ namespace NodeEditorFramework
 					where T.IsClass && !T.IsAbstract && T.GetInterfaces().Contains(typeof(IConnectionTypeDeclaration))
 					select T)
 				{
-					IConnectionTypeDeclaration connectionTypeDeclaration = item.CreateInstance(item2.FullName) as IConnectionTypeDeclaration;
-					if (connectionTypeDeclaration == null)
+					if (!(item.CreateInstance(item2.FullName) is IConnectionTypeDeclaration connectionTypeDeclaration))
 					{
 						throw new UnityException("Error with Type Declaration " + item2.FullName);
 					}

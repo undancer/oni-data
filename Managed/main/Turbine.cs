@@ -354,12 +354,11 @@ public class Turbine : KMonoBehaviour
 				diseaseInfo.idx = diseaseIdx;
 				diseaseInfo.count = diseaseCount;
 				SimUtil.DiseaseInfo a = diseaseInfo;
-				diseaseInfo = new SimUtil.DiseaseInfo
+				SimUtil.DiseaseInfo b = new SimUtil.DiseaseInfo
 				{
 					idx = info.diseaseIdx,
 					count = info.diseaseCount
 				};
-				SimUtil.DiseaseInfo b = diseaseInfo;
 				SimUtil.DiseaseInfo diseaseInfo2 = SimUtil.CalculateFinalDiseaseInfo(a, b);
 				diseaseIdx = diseaseInfo2.idx;
 				diseaseCount = diseaseInfo2.count;

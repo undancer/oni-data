@@ -32,12 +32,7 @@ public class MiningSounds : KMonoBehaviour
 
 	private void OnStartMiningSound(object data)
 	{
-		if (!(miningSound == null))
-		{
-			return;
-		}
-		Element element = data as Element;
-		if (element == null)
+		if (!(miningSound == null) || !(data is Element element))
 		{
 			return;
 		}

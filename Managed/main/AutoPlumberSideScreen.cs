@@ -12,6 +12,8 @@ public class AutoPlumberSideScreen : SideScreenContent
 
 	public KButton minionButton;
 
+	public KButton applyTestFacade;
+
 	private Building building;
 
 	protected override void OnSpawn()
@@ -75,5 +77,7 @@ public class AutoPlumberSideScreen : SideScreenContent
 
 	private void Refresh()
 	{
+		bool active = building != null && building.Def.AvailableFacades.Count > 0;
+		applyTestFacade.gameObject.SetActive(active);
 	}
 }

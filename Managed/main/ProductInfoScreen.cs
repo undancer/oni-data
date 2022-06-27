@@ -335,11 +335,27 @@ public class ProductInfoScreen : KScreen
 	private void ActivateAppropriateTool(BuildingDef def)
 	{
 		Debug.Assert(def != null, "def was null");
-		if (((PlanScreen.Instance != null) ? PlanScreen.Instance.IsDefBuildable(def) : (BuildMenu.Instance != null && BuildMenu.Instance.BuildableState(def) == PlanScreen.RequirementsState.Complete)) && materialSelectionPanel.AllSelectorsSelected())
+		bool num;
+		if (!(PlanScreen.Instance != null))
+		{
+			if (!(BuildMenu.Instance != null))
+			{
+				goto IL_0064;
+			}
+			num = BuildMenu.Instance.BuildableState(def) == PlanScreen.RequirementsState.Complete;
+		}
+		else
+		{
+			num = PlanScreen.Instance.IsDefBuildable(def);
+		}
+		if (num && materialSelectionPanel.AllSelectorsSelected())
 		{
 			onElementsFullySelected.Signal();
+			return;
 		}
-		else if (!MaterialSelector.AllowInsufficientMaterialBuild() && !DebugHandler.InstantBuildMode)
+		goto IL_0064;
+		IL_0064:
+		if (!MaterialSelector.AllowInsufficientMaterialBuild() && !DebugHandler.InstantBuildMode)
 		{
 			if (PlayerController.Instance.ActiveTool == BuildTool.Instance)
 			{

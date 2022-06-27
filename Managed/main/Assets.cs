@@ -219,7 +219,7 @@ public class Assets : KMonoBehaviour, ISerializationCallbackReceiver
 	{
 		Db.Get();
 		LegacyModMain.Load();
-		Db.Get().Techs.PostProcess();
+		Db.Get().PostProcess();
 	}
 
 	protected override void OnSpawn()
@@ -286,6 +286,10 @@ public class Assets : KMonoBehaviour, ISerializationCallbackReceiver
 		}
 		Debug.Assert(AnimTable.Count > 0, "Anim Assets not yet loaded");
 		KAnimGroupFile.LoadAll();
+		foreach (KAnimFile anim2 in Anims)
+		{
+			anim2.FinalizeLoading();
+		}
 		KAnimBatchManager.Instance().CompleteInit();
 	}
 

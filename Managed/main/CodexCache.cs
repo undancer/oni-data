@@ -125,11 +125,11 @@ public static class CodexCache
 		}
 		CodexEntryGenerator.PopulateCategoryEntries(list, delegate(CodexEntry a, CodexEntry b)
 		{
-			if (a.name == (string)UI.CODEX.CATEGORYNAMES.TIPS)
+			if (a.name == UI.CODEX.CATEGORYNAMES.TIPS)
 			{
 				return -1;
 			}
-			return (b.name == (string)UI.CODEX.CATEGORYNAMES.TIPS) ? 1 : UI.StripLinkFormatting(a.name).CompareTo(UI.StripLinkFormatting(b.name));
+			return (b.name == UI.CODEX.CATEGORYNAMES.TIPS) ? 1 : UI.StripLinkFormatting(a.name).CompareTo(UI.StripLinkFormatting(b.name));
 		});
 	}
 

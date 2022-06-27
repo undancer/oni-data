@@ -59,6 +59,12 @@ public class FrontEndManager : KMonoBehaviour
 		}
 	}
 
+	protected override void OnForcedCleanUp()
+	{
+		Instance = null;
+		base.OnForcedCleanUp();
+	}
+
 	private void LateUpdate()
 	{
 		if (Debug.developerConsoleVisible)

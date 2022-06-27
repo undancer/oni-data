@@ -17,7 +17,7 @@ public class TreeFilterable : KMonoBehaviour, ISaveLoadable
 
 	public static readonly Color32 FILTER_TINT = Color.white;
 
-	public static readonly Color32 NO_FILTER_TINT = new Color(128f / 255f, 128f / 255f, 128f / 255f, 1f);
+	public static readonly Color32 NO_FILTER_TINT = new Color(0.5019608f, 0.5019608f, 0.5019608f, 1f);
 
 	public Color32 filterTint = FILTER_TINT;
 

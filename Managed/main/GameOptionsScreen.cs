@@ -1,4 +1,5 @@
 using System.IO;
+using Steamworks;
 using STRINGS;
 using UnityEngine;
 
@@ -71,7 +72,14 @@ public class GameOptionsScreen : KModalButtonMenu
 			UpdateExpansion1ContentToggle();
 		}
 		resetTutorialButton.onClick += OnTutorialReset;
-		controlsButton.onClick += OnKeyBindings;
+		if (DistributionPlatform.Initialized && SteamUtils.IsSteamRunningOnSteamDeck())
+		{
+			controlsButton.gameObject.SetActive(value: false);
+		}
+		else
+		{
+			controlsButton.onClick += OnKeyBindings;
+		}
 		sandboxButton.onClick += OnUnlockSandboxMode;
 		doneButton.onClick += Deactivate;
 		closeButton.onClick += Deactivate;

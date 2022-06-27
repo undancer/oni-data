@@ -20,6 +20,7 @@ public class GravitasPedestalConfig : IBuildingConfig
 		obj.ViewMode = OverlayModes.Decor.ID;
 		obj.AudioCategory = "Glass";
 		obj.AudioSize = "small";
+		obj.ShowInBuildMenu = false;
 		return obj;
 	}
 

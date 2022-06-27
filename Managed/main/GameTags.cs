@@ -115,6 +115,8 @@ public class GameTags
 
 		public static readonly Tag WantsToTendEgg = TagManager.Create("WantsToTendEgg");
 
+		public static readonly Tag WantsAHug = TagManager.Create("WantsAHug");
+
 		public static readonly Tag WantsToProducePower = TagManager.Create("WantsToProducePower");
 
 		public static readonly Tag WantsToGoHome = TagManager.Create("WantsToGoHome");
@@ -186,6 +188,10 @@ public class GameTags
 		public static readonly Tag CantReachEgg = TagManager.Create("CantReachEgg");
 
 		public static readonly Tag HasNoFoundation = TagManager.Create("HasNoFoundation");
+
+		public static readonly Tag Cleaning = TagManager.Create("Cleaning");
+
+		public static readonly Tag Unhappy = TagManager.Create("Unhappy");
 	}
 
 	public static class Robots
@@ -345,6 +351,8 @@ public class GameTags
 
 	public static readonly Tag Amphibious = TagManager.Create("Amphibious");
 
+	public static readonly Tag MoltShell = TagManager.Create("MoltShell");
+
 	public static readonly Tag Alloy = TagManager.Create("Alloy");
 
 	public static readonly Tag Metal = TagManager.Create("Metal");
@@ -360,6 +368,8 @@ public class GameTags
 	public static readonly Tag Liquid = TagManager.Create("Liquid");
 
 	public static readonly Tag LiquidSource = TagManager.Create("LiquidSource");
+
+	public static readonly Tag GasSource = TagManager.Create("GasSource");
 
 	public static readonly Tag Water = TagManager.Create("Water");
 
@@ -495,8 +505,6 @@ public class GameTags
 
 	public static readonly Tag LeadSuit = TagManager.Create("Lead_Suit");
 
-	public static readonly Tag AquaSuit = TagManager.Create("Aqua_Suit");
-
 	public static readonly Tag JetSuit = TagManager.Create("Jet_Suit");
 
 	public static readonly Tag JetSuitOutOfFuel = TagManager.Create("JetSuitOutOfFuel");
@@ -505,11 +513,9 @@ public class GameTags
 
 	public static readonly Tag SuitBatteryOut = TagManager.Create("SuitBatteryOut");
 
-	public static readonly Tag TemperatureSuit = TagManager.Create("Temperature_Suit");
+	public static readonly List<Tag> AllSuitTags = new List<Tag> { Suit, AtmoSuit, JetSuit, LeadSuit };
 
-	public static readonly List<Tag> AllSuitTags = new List<Tag> { Suit, AquaSuit, AtmoSuit, JetSuit, TemperatureSuit, LeadSuit };
-
-	public static readonly List<Tag> OxygenSuitTags = new List<Tag> { AtmoSuit, AquaSuit, JetSuit, LeadSuit };
+	public static readonly List<Tag> OxygenSuitTags = new List<Tag> { AtmoSuit, JetSuit, LeadSuit };
 
 	public static readonly Tag EquippableBalloon = TagManager.Create("EquippableBalloon");
 
@@ -606,6 +612,8 @@ public class GameTags
 	public static readonly Tag TelephoneRinging = TagManager.Create("TelephoneRinging");
 
 	public static readonly Tag LongDistanceCall = TagManager.Create("LongDistanceCall");
+
+	public static readonly Tag Telepad = TagManager.Create("Telepad");
 
 	public static readonly Tag Rocket = TagManager.Create("Rocket");
 

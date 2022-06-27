@@ -44,9 +44,27 @@ public class TakeMedicineChore : Chore<TakeMedicineChore.StatesInstance>
 
 	private MedicinalPillWorkable medicine;
 
-	public static readonly Precondition CanCure;
+	public static readonly Precondition CanCure = new Precondition
+	{
+		id = "CanCure",
+		description = DUPLICANTS.CHORES.PRECONDITIONS.CAN_CURE,
+		fn = delegate(ref Precondition.Context context, object data)
+		{
+			return ((TakeMedicineChore)data).medicine.CanBeTakenBy(context.consumerState.gameObject);
+		}
+	};
 
-	public static readonly Precondition IsConsumptionPermitted;
+	public static readonly Precondition IsConsumptionPermitted = new Precondition
+	{
+		id = "IsConsumptionPermitted",
+		description = DUPLICANTS.CHORES.PRECONDITIONS.IS_CONSUMPTION_PERMITTED,
+		fn = delegate(ref Precondition.Context context, object data)
+		{
+			TakeMedicineChore takeMedicineChore = (TakeMedicineChore)data;
+			ConsumableConsumer consumableConsumer = context.consumerState.consumableConsumer;
+			return consumableConsumer == null || consumableConsumer.IsPermitted(takeMedicineChore.medicine.PrefabID().Name);
+		}
+	};
 
 	public TakeMedicineChore(MedicinalPillWorkable master)
 		: base(Db.Get().ChoreTypes.TakeMedicine, (IStateMachineTarget)master, (ChoreProvider)null, run_until_complete: false, (Action<Chore>)null, (Action<Chore>)null, (Action<Chore>)null, PriorityScreen.PriorityClass.personalNeeds, 5, is_preemptable: false, allow_in_context_menu: true, 0, add_to_daily_report: false, ReportManager.ReportType.WorkTime)
@@ -67,31 +85,5 @@ public class TakeMedicineChore : Chore<TakeMedicineChore.StatesInstance>
 		base.smi.sm.eater.Set(context.consumerState.gameObject, base.smi);
 		base.Begin(context);
 		new TakeMedicineChore(medicine);
-	}
-
-	static TakeMedicineChore()
-	{
-		Precondition precondition = new Precondition
-		{
-			id = "CanCure",
-			description = DUPLICANTS.CHORES.PRECONDITIONS.CAN_CURE,
-			fn = delegate(ref Precondition.Context context, object data)
-			{
-				return ((TakeMedicineChore)data).medicine.CanBeTakenBy(context.consumerState.gameObject);
-			}
-		};
-		CanCure = precondition;
-		precondition = new Precondition
-		{
-			id = "IsConsumptionPermitted",
-			description = DUPLICANTS.CHORES.PRECONDITIONS.IS_CONSUMPTION_PERMITTED,
-			fn = delegate(ref Precondition.Context context, object data)
-			{
-				TakeMedicineChore takeMedicineChore = (TakeMedicineChore)data;
-				ConsumableConsumer consumableConsumer = context.consumerState.consumableConsumer;
-				return consumableConsumer == null || consumableConsumer.IsPermitted(takeMedicineChore.medicine.PrefabID().Name);
-			}
-		};
-		IsConsumptionPermitted = precondition;
 	}
 }

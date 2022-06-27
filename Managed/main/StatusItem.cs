@@ -15,9 +15,9 @@ public class StatusItem : Resource
 	[Flags]
 	public enum StatusItemOverlays
 	{
-		None = 0x2,
-		PowerMap = 0x4,
-		Temperature = 0x8,
+		None = 2,
+		PowerMap = 4,
+		Temperature = 8,
 		ThermalComfort = 0x10,
 		Light = 0x20,
 		LiquidPlumbing = 0x40,

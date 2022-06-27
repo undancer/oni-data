@@ -18,26 +18,19 @@ public class AsteroidGridEntity : ClusterGridEntity
 
 	public override EntityLayer Layer => EntityLayer.Asteroid;
 
-	public override List<AnimConfig> AnimConfigs
+	public override List<AnimConfig> AnimConfigs => new List<AnimConfig>
 	{
-		get
+		new AnimConfig
 		{
-			List<AnimConfig> list = new List<AnimConfig>();
-			AnimConfig item = new AnimConfig
-			{
-				animFile = Assets.GetAnim(m_asteroidAnim.IsNullOrWhiteSpace() ? DEFAULT_ASTEROID_ICON_ANIM : m_asteroidAnim),
-				initialAnim = "idle_loop"
-			};
-			list.Add(item);
-			item = new AnimConfig
-			{
-				animFile = Assets.GetAnim("orbit_kanim"),
-				initialAnim = "orbit"
-			};
-			list.Add(item);
-			return list;
+			animFile = Assets.GetAnim(m_asteroidAnim.IsNullOrWhiteSpace() ? DEFAULT_ASTEROID_ICON_ANIM : m_asteroidAnim),
+			initialAnim = "idle_loop"
+		},
+		new AnimConfig
+		{
+			animFile = Assets.GetAnim("orbit_kanim"),
+			initialAnim = "orbit"
 		}
-	}
+	};
 
 	public override bool IsVisible => true;
 

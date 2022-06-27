@@ -6,7 +6,7 @@ public class PathGrid
 	{
 		public int cost;
 
-		public int queryId;
+		public short queryId;
 	}
 
 	private PathFinder.Cell[] Cells;
@@ -29,9 +29,9 @@ public class PathGrid
 
 	private int rootY;
 
-	private int serialNo;
+	private short serialNo;
 
-	private int previousSerialNo;
+	private short previousSerialNo;
 
 	private bool isUpdating;
 
@@ -67,6 +67,7 @@ public class PathGrid
 				}
 			}
 		}
+		DebugUtil.DevAssert(test: true, "Cell packs nav type into 4 bits!");
 		Cells = new PathFinder.Cell[width_in_cells * height_in_cells * ValidNavTypes.Length];
 		ProberCells = new ProberCell[width_in_cells * height_in_cells];
 		serialNo = 0;
@@ -124,7 +125,7 @@ public class PathGrid
 		}
 	}
 
-	private bool IsValidSerialNo(int serialNo)
+	private bool IsValidSerialNo(short serialNo)
 	{
 		if (serialNo != this.serialNo)
 		{

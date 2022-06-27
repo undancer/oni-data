@@ -46,7 +46,7 @@ public class ScaleGrowthMonitor : GameStateMachine<ScaleGrowthMonitor, ScaleGrow
 		public State stunted;
 	}
 
-	public new class Instance : GameInstance
+	public new class Instance : GameInstance, IShearable
 	{
 		public AmountInstance scaleGrowth;
 

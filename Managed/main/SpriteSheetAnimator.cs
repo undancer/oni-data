@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -41,32 +40,27 @@ public class SpriteSheetAnimator
 
 	public void Play(Vector3 pos, Quaternion rotation, Vector2 size, Color colour)
 	{
-		AnimInfo item;
 		if (rotation == Quaternion.identity)
 		{
-			List<AnimInfo> list = anims;
-			item = new AnimInfo
+			anims.Add(new AnimInfo
 			{
 				elapsedTime = 0f,
 				pos = pos,
 				rotation = rotation,
 				size = size,
 				colour = colour
-			};
-			list.Add(item);
+			});
 		}
 		else
 		{
-			List<AnimInfo> list2 = rotatedAnims;
-			item = new AnimInfo
+			rotatedAnims.Add(new AnimInfo
 			{
 				elapsedTime = 0f,
 				pos = pos,
 				rotation = rotation,
 				size = size,
 				colour = colour
-			};
-			list2.Add(item);
+			});
 		}
 	}
 
@@ -86,12 +80,12 @@ public class SpriteSheetAnimator
 
 	public int GetFrameFromElapsedTime(float elapsed_time)
 	{
-		return Mathf.Min(sheet.numFrames, (int)(elapsed_time / (71f / (678f * (float)Math.PI))));
+		return Mathf.Min(sheet.numFrames, (int)(elapsed_time / (1f / 30f)));
 	}
 
 	public int GetFrameFromElapsedTimeLooping(float elapsed_time)
 	{
-		int num = (int)(elapsed_time / (71f / (678f * (float)Math.PI)));
+		int num = (int)(elapsed_time / (1f / 30f));
 		if (num > sheet.numFrames)
 		{
 			num %= sheet.numFrames;
@@ -113,7 +107,7 @@ public class SpriteSheetAnimator
 		{
 			AnimInfo value = anims[num2];
 			value.elapsedTime += dt;
-			value.frame = Mathf.Min(sheet.numFrames, (int)(value.elapsedTime / (71f / (678f * (float)Math.PI))));
+			value.frame = Mathf.Min(sheet.numFrames, (int)(value.elapsedTime / (1f / 30f)));
 			if (value.frame >= sheet.numFrames)
 			{
 				num--;

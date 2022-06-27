@@ -316,7 +316,7 @@ public class EconomyDetails
 		transformation.AddDelta(new Transformation.Delta(GetResource(GameTags.CarbonDioxide), 0.1f * Assets.GetPrefab(MinionConfig.ID).GetComponent<OxygenBreather>().O2toCO2conversion));
 		transformation.AddDelta(new Transformation.Delta(duplicantTimeResource, 0.875f));
 		transformation.AddDelta(new Transformation.Delta(caloriesResource, -1.6666667f));
-		transformation.AddDelta(new Transformation.Delta(CreateResource(new Tag(Db.Get().Amounts.Bladder.deltaAttribute.Id), amountResourceType), 355f / (678f * (float)Math.PI)));
+		transformation.AddDelta(new Transformation.Delta(CreateResource(new Tag(Db.Get().Amounts.Bladder.deltaAttribute.Id), amountResourceType), 1f / 6f));
 		transformations.Add(transformation);
 		Transformation transformation2 = new Transformation(TagManager.Create("Electrolysis"), referenceTransformationType, 1f);
 		transformation2.AddDelta(new Transformation.Delta(GetResource(GameTags.Oxygen), 1.7777778f));
@@ -788,13 +788,13 @@ public class EconomyDetails
 			}
 			if (component14 != null)
 			{
-				transformation.AddDelta(new Transformation.Delta(CreateResource(new Tag(Db.Get().Amounts.Bladder.deltaAttribute.Id), amountResourceType), -355f / (678f * (float)Math.PI)));
+				transformation.AddDelta(new Transformation.Delta(CreateResource(new Tag(Db.Get().Amounts.Bladder.deltaAttribute.Id), amountResourceType), -1f / 6f));
 				transformation.AddDelta(new Transformation.Delta(GetResource(SimHashes.Dirt), 0f - component14.solidWastePerUse.mass));
 				transformation.AddDelta(new Transformation.Delta(GetResource(component14.solidWastePerUse.elementID), component14.solidWastePerUse.mass));
 			}
 			if (component15 != null)
 			{
-				transformation.AddDelta(new Transformation.Delta(CreateResource(new Tag(Db.Get().Amounts.Bladder.deltaAttribute.Id), amountResourceType), -355f / (678f * (float)Math.PI)));
+				transformation.AddDelta(new Transformation.Delta(CreateResource(new Tag(Db.Get().Amounts.Bladder.deltaAttribute.Id), amountResourceType), -1f / 6f));
 				transformation.AddDelta(new Transformation.Delta(GetResource(SimHashes.Water), 0f - component15.massConsumedPerUse));
 				transformation.AddDelta(new Transformation.Delta(GetResource(SimHashes.DirtyWater), component15.massEmittedPerUse));
 			}

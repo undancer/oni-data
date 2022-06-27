@@ -24,6 +24,11 @@ public class WorldSelector : KScreen, ISim4000ms
 
 	private Dictionary<int, List<GameObject>> worldStatusIcons = new Dictionary<int, List<GameObject>>();
 
+	public static void DestroyInstance()
+	{
+		Instance = null;
+	}
+
 	protected override void OnPrefabInit()
 	{
 		base.OnPrefabInit();

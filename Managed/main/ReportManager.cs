@@ -331,16 +331,14 @@ public class ReportManager : KMonoBehaviour
 				NoteEntryKey noteEntryKey = default(NoteEntryKey);
 				noteEntryKey.noteHash = note_id;
 				noteEntryKey.isPositive = value > 0f;
-				NoteEntryKey noteEntryKey2 = noteEntryKey;
-				if (value2.ContainsKey(noteEntryKey2))
+				NoteEntryKey key = noteEntryKey;
+				if (value2.ContainsKey(key))
 				{
-					Dictionary<NoteEntryKey, float> dictionary = value2;
-					noteEntryKey = noteEntryKey2;
-					dictionary[noteEntryKey] += value;
+					value2[key] += value;
 				}
 				else
 				{
-					value2[noteEntryKey2] = value;
+					value2[key] = value;
 				}
 			}
 
@@ -366,15 +364,17 @@ public class ReportManager : KMonoBehaviour
 				{
 					OldNoteEntriesV5 oldNoteEntriesV = new OldNoteEntriesV5();
 					oldNoteEntriesV.Deserialize(reader);
-					foreach (OldNoteEntriesV5.NoteStorageBlock storageBlock in oldNoteEntriesV.storageBlocks)
 					{
-						for (int i = 0; i < storageBlock.entryCount; i++)
+						foreach (OldNoteEntriesV5.NoteStorageBlock storageBlock in oldNoteEntriesV.storageBlocks)
 						{
-							OldNoteEntriesV5.NoteEntry noteEntry = storageBlock.entries.structs[i];
-							Add(noteEntry.reportEntryId, noteEntry.value, noteEntry.noteHash);
+							for (int i = 0; i < storageBlock.entryCount; i++)
+							{
+								OldNoteEntriesV5.NoteEntry noteEntry = storageBlock.entries.structs[i];
+								Add(noteEntry.reportEntryId, noteEntry.value, noteEntry.noteHash);
+							}
 						}
+						return;
 					}
-					return;
 				}
 				int num = reader.ReadInt32();
 				entries = new Dictionary<int, Dictionary<NoteEntryKey, float>>(num);

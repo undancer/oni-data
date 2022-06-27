@@ -350,21 +350,29 @@ namespace Delaunay
 		public void ClipVertices(Polygon bounds)
 		{
 			LineSegment lineSegment = new LineSegment(null, null);
-			bool num = (double)a == 1.0 && (double)b >= 0.0;
-			if (num)
+			int num;
+			if ((double)a == 1.0)
 			{
-				lineSegment.p0 = _rightVertex.Coord;
-				lineSegment.p1 = _leftVertex.Coord;
+				num = (((double)b >= 0.0) ? 1 : 0);
+				if (num != 0)
+				{
+					lineSegment.p0 = _rightVertex.Coord;
+					lineSegment.p1 = _leftVertex.Coord;
+					goto IL_009f;
+				}
 			}
 			else
 			{
-				lineSegment.p0 = _leftVertex.Coord;
-				lineSegment.p1 = _rightVertex.Coord;
+				num = 0;
 			}
+			lineSegment.p0 = _leftVertex.Coord;
+			lineSegment.p1 = _rightVertex.Coord;
+			goto IL_009f;
+			IL_009f:
 			LineSegment intersectingSegment = new LineSegment(null, null);
 			bounds.ClipSegment(lineSegment, ref intersectingSegment);
 			_clippedVertices = new Dictionary<Side, Vector2?>();
-			if (!num)
+			if (num == 0)
 			{
 				_clippedVertices[Side.LEFT] = intersectingSegment.p0;
 				_clippedVertices[Side.RIGHT] = intersectingSegment.p1;

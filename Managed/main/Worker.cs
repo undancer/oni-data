@@ -202,6 +202,7 @@ public class Worker : KMonoBehaviour
 			{
 				successFullyCompleted = true;
 				StartPlayingPostAnim();
+				workable.OnPendingCompleteWork(this);
 			}
 		}
 		return WorkResult.InProgress;

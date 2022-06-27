@@ -115,7 +115,6 @@ public class DetailsScreen : KTabMenu
 		base.ConsumeMouseScroll = true;
 		Debug.Assert(Instance == null);
 		Instance = this;
-		UIRegistry.detailsScreen = this;
 		DeactivateSideContent();
 		Show(show: false);
 		Subscribe(Game.Instance.gameObject, -1503271301, OnSelectObject);
@@ -313,7 +312,7 @@ public class DetailsScreen : KTabMenu
 		{
 			ActivateTab(0);
 		}
-		tabHeaderContainer.gameObject.SetActive((CountTabs() > 1) ? true : false);
+		tabHeaderContainer.gameObject.SetActive(CountTabs() > 1);
 		if (sideScreens != null && sideScreens.Count > 0)
 		{
 			sideScreens.ForEach(delegate(SideScreenRef scn)
@@ -499,7 +498,14 @@ public class DetailsScreen : KTabMenu
 
 	public void DeselectAndClose()
 	{
-		KMonoBehaviour.PlaySound(GlobalAssets.GetSound("Back"));
+		if (base.gameObject.activeInHierarchy)
+		{
+			KMonoBehaviour.PlaySound(GlobalAssets.GetSound("Back"));
+		}
+		if (GetActiveTab() != null)
+		{
+			GetActiveTab().SetTarget(null);
+		}
 		SelectTool.Instance.Select(null);
 		ClusterMapSelectTool.Instance.Select(null);
 		if (!(target == null))

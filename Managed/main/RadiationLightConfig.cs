@@ -17,7 +17,7 @@ public class RadiationLightConfig : IBuildingConfig
 
 	private const float FUEL_STORAGE_AMOUNT = 50f;
 
-	private const float FUEL_CONSUMPTION_RATE = 0.016666668f;
+	private const float FUEL_CONSUMPTION_RATE = 1f / 60f;
 
 	private const short RAD_LIGHT_SIZE_X = 16;
 
@@ -65,18 +65,18 @@ public class RadiationLightConfig : IBuildingConfig
 		ElementConverter elementConverter = go.AddOrGet<ElementConverter>();
 		elementConverter.consumedElements = new ElementConverter.ConsumedElement[1]
 		{
-			new ElementConverter.ConsumedElement(FUEL_ELEMENT, 0.016666668f)
+			new ElementConverter.ConsumedElement(FUEL_ELEMENT, 1f / 60f)
 		};
 		elementConverter.outputElements = new ElementConverter.OutputElement[1]
 		{
-			new ElementConverter.OutputElement(0.008333334f, WASTE_ELEMENT, 0f, useEntityTemperature: false, storeOutput: true, 0f, 0.5f, 0.5f)
+			new ElementConverter.OutputElement(1f / 120f, WASTE_ELEMENT, 0f, useEntityTemperature: false, storeOutput: true, 0f, 0.5f, 0.5f)
 		};
 		ElementDropper elementDropper = go.AddOrGet<ElementDropper>();
 		elementDropper.emitTag = WASTE_ELEMENT.CreateTag();
 		elementDropper.emitMass = 5f;
 		RadiationLight radiationLight = go.AddComponent<RadiationLight>();
 		radiationLight.elementToConsume = FUEL_ELEMENT;
-		radiationLight.consumptionRate = 0.016666668f;
+		radiationLight.consumptionRate = 1f / 60f;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)

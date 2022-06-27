@@ -101,6 +101,8 @@ public class RoomProber : ISim1000ms
 
 	private CavityFloodFiller floodFiller;
 
+	private List<KPrefabID> releasedCritters = new List<KPrefabID>();
+
 	public RoomProber()
 	{
 		CellCavityID = new HandleVector<int>.Handle[Grid.CellCount];
@@ -208,6 +210,7 @@ public class RoomProber : ISim1000ms
 		foreach (HandleVector<int>.Handle releasedID in releasedIDs)
 		{
 			CavityInfo data = cavityInfos.GetData(releasedID);
+			releasedCritters.AddRange(data.creatures);
 			if (data.room != null)
 			{
 				ClearRoom(data.room);
@@ -328,6 +331,14 @@ public class RoomProber : ISim1000ms
 			}
 			data.dirty = false;
 		}
+		foreach (KPrefabID releasedCritter in releasedCritters)
+		{
+			if (releasedCritter != null)
+			{
+				releasedCritter.GetSMI<OvercrowdingMonitor.Instance>()?.RoomRefreshUpdateCavity();
+			}
+		}
+		releasedCritters.Clear();
 		dirty = false;
 	}
 

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace TUNING
@@ -132,7 +131,7 @@ namespace TUNING
 
 		public class FUEL_COST_PER_DISTANCE
 		{
-			public static float VERY_LOW = 71f / (678f * (float)Math.PI);
+			public static float VERY_LOW = 1f / 30f;
 
 			public static float LOW = 0.0375f;
 
@@ -144,11 +143,11 @@ namespace TUNING
 
 			public static float GAS_VERY_LOW = 0.025f;
 
-			public static float GAS_LOW = 0.027777778f;
+			public static float GAS_LOW = 1f / 36f;
 
-			public static float GAS_HIGH = 0.041666668f;
+			public static float GAS_HIGH = 1f / 24f;
 
-			public static float PARTICLES = 0.33333334f;
+			public static float PARTICLES = 1f / 3f;
 		}
 
 		public static float MISSION_DURATION_SCALE = 1800f;

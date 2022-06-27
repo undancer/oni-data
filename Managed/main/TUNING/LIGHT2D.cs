@@ -110,15 +110,15 @@ namespace TUNING
 
 		public static readonly Color LIGHTBUG_OVERLAYCOLOR = LIGHT_OVERLAY;
 
-		public static readonly Color LIGHTBUG_COLOR_ORANGE = new Color(29f / 51f, 41f / 85f, 112f / 255f, 1f);
+		public static readonly Color LIGHTBUG_COLOR_ORANGE = new Color(29f / 51f, 41f / 85f, 0.4392157f, 1f);
 
-		public static readonly Color LIGHTBUG_COLOR_PURPLE = new Color(25f / 51f, 112f / 255f, 29f / 51f, 1f);
+		public static readonly Color LIGHTBUG_COLOR_PURPLE = new Color(25f / 51f, 0.4392157f, 29f / 51f, 1f);
 
-		public static readonly Color LIGHTBUG_COLOR_PINK = new Color(29f / 51f, 112f / 255f, 29f / 51f, 1f);
+		public static readonly Color LIGHTBUG_COLOR_PINK = new Color(29f / 51f, 0.4392157f, 29f / 51f, 1f);
 
-		public static readonly Color LIGHTBUG_COLOR_BLUE = new Color(112f / 255f, 124f / 255f, 29f / 51f, 1f);
+		public static readonly Color LIGHTBUG_COLOR_BLUE = new Color(0.4392157f, 0.4862745f, 29f / 51f, 1f);
 
-		public static readonly Color LIGHTBUG_COLOR_CRYSTAL = new Color(131f / 255f, 2f / 3f, 2f / 3f, 1f);
+		public static readonly Color LIGHTBUG_COLOR_CRYSTAL = new Color(0.5137255f, 2f / 3f, 2f / 3f, 1f);
 
 		public static readonly Color LIGHTBUG_COLOR_GREEN = new Color(22f / 51f, 1f, 8f / 15f, 1f);
 

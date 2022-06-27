@@ -7,9 +7,9 @@ public class CritterTrapPlantConfig : IEntityConfig
 {
 	public const string ID = "CritterTrapPlant";
 
-	public const float WATER_RATE = 0.016666668f;
+	public const float WATER_RATE = 1f / 60f;
 
-	public const float GAS_RATE = 0.041666668f;
+	public const float GAS_RATE = 1f / 24f;
 
 	public const float GAS_VENT_THRESHOLD = 33.25f;
 
@@ -32,7 +32,7 @@ public class CritterTrapPlantConfig : IEntityConfig
 		trapTrigger.trappedOffset = new Vector2(0.5f, 0f);
 		trapTrigger.enabled = false;
 		CritterTrapPlant critterTrapPlant = gameObject.AddOrGet<CritterTrapPlant>();
-		critterTrapPlant.gasOutputRate = 0.041666668f;
+		critterTrapPlant.gasOutputRate = 1f / 24f;
 		critterTrapPlant.outputElement = SimHashes.Hydrogen;
 		critterTrapPlant.gasVentThreshold = 33.25f;
 		gameObject.AddOrGet<LoopingSounds>();
@@ -43,7 +43,7 @@ public class CritterTrapPlantConfig : IEntityConfig
 			new PlantElementAbsorber.ConsumeInfo
 			{
 				tag = tag,
-				massConsumptionRate = 0.016666668f
+				massConsumptionRate = 1f / 60f
 			}
 		});
 		EntityTemplates.CreateAndRegisterPreviewForPlant(EntityTemplates.CreateAndRegisterSeedForPlant(gameObject, SeedProducer.ProductionType.Hidden, "CritterTrapPlantSeed", STRINGS.CREATURES.SPECIES.SEEDS.CRITTERTRAPPLANT.NAME, STRINGS.CREATURES.SPECIES.SEEDS.CRITTERTRAPPLANT.DESC, Assets.GetAnim("seed_critter_trap_kanim"), "object", 1, new List<Tag> { GameTags.CropSeed }, SingleEntityReceptacle.ReceptacleDirection.Top, default(Tag), 21, STRINGS.CREATURES.SPECIES.CRITTERTRAPPLANT.DOMESTICATEDDESC, EntityTemplates.CollisionShape.CIRCLE, 0.3f, 0.3f), "CritterTrapPlant_preview", Assets.GetAnim("venus_critter_trap_kanim"), "place", 1, 2);

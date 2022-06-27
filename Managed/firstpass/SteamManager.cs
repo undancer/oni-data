@@ -81,10 +81,17 @@ public class SteamManager : MonoBehaviour
 		{
 			s_instance = this;
 		}
-		if (m_bInitialized && m_SteamAPIWarningMessageHook == null)
+		if (m_bInitialized)
 		{
-			m_SteamAPIWarningMessageHook = SteamAPIDebugTextHook;
-			SteamClient.SetWarningMessageHook(m_SteamAPIWarningMessageHook);
+			if (m_SteamAPIWarningMessageHook == null)
+			{
+				m_SteamAPIWarningMessageHook = SteamAPIDebugTextHook;
+				SteamClient.SetWarningMessageHook(m_SteamAPIWarningMessageHook);
+			}
+			if (SteamUtils.IsSteamChinaLauncher())
+			{
+				SteamUtils.InitFilterText();
+			}
 		}
 	}
 

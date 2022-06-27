@@ -57,6 +57,9 @@ public class ConduitConsumer : KMonoBehaviour, IConduitConsumer
 	[MyCmpGet]
 	public Storage storage;
 
+	[MyCmpGet]
+	private BuildingComplete m_buildingComplete;
+
 	private int utilityCell = -1;
 
 	public float consumptionRate = float.PositiveInfinity;
@@ -77,10 +80,9 @@ public class ConduitConsumer : KMonoBehaviour, IConduitConsumer
 	{
 		get
 		{
-			GameObject gameObject = Grid.Objects[utilityCell, (conduitType == ConduitType.Gas) ? 12 : 16];
-			if (gameObject != null)
+			if (Grid.Objects[utilityCell, (conduitType == ConduitType.Gas) ? 12 : 16] != null)
 			{
-				return gameObject.GetComponent<BuildingComplete>() != null;
+				return m_buildingComplete != null;
 			}
 			return false;
 		}

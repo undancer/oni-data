@@ -176,7 +176,7 @@ namespace HUSL
 			{
 				return Y / RefY * Kappa;
 			}
-			return 116.0 * Math.Pow(Y / RefY, 0.3333333333333333) - 16.0;
+			return 116.0 * Math.Pow(Y / RefY, 1.0 / 3.0) - 16.0;
 		}
 
 		protected static double LToY(double L)

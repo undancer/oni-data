@@ -8,9 +8,9 @@ namespace Satsuma
 		[Flags]
 		public enum Flags
 		{
-			None = 0x0,
-			CreateComponents = 0x1,
-			CreateBridges = 0x2
+			None = 0,
+			CreateComponents = 1,
+			CreateBridges = 2
 		}
 
 		public IGraph Graph { get; private set; }

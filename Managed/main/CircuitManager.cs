@@ -749,6 +749,10 @@ public class CircuitManager
 		{
 			return 0f;
 		}
-		return (Game.Instance.electricalConduitSystem.GetNetworkByID(circuitID) as ElectricalUtilityNetwork)?.GetMaxSafeWattage() ?? 0f;
+		if (!(Game.Instance.electricalConduitSystem.GetNetworkByID(circuitID) is ElectricalUtilityNetwork electricalUtilityNetwork))
+		{
+			return 0f;
+		}
+		return electricalUtilityNetwork.GetMaxSafeWattage();
 	}
 }

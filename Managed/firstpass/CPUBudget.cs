@@ -131,4 +131,13 @@ public static class CPUBudget
 			children[i] = value;
 		}
 	}
+
+	public static void Remove(ICPULoad cpuLoad)
+	{
+		foreach (Node child in nodes[cpuLoad].children)
+		{
+			Remove(child.load);
+		}
+		nodes.Remove(cpuLoad);
+	}
 }

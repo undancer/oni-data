@@ -242,6 +242,8 @@ public class BuildingDef : Def
 
 	public int BaseNoisePollutionRadius;
 
+	public List<string> AvailableFacades = new List<string>();
+
 	private static Dictionary<CellOffset, CellOffset[]> placementOffsetsCache = new Dictionary<CellOffset, CellOffset[]>();
 
 	public override string Name => Strings.Get("STRINGS.BUILDINGS.PREFABS." + PrefabID.ToUpper() + ".NAME");
@@ -1680,5 +1682,17 @@ public class BuildingDef : Def
 	public bool CheckRequiresHighEnergyParticleOutput()
 	{
 		return UseHighEnergyParticleOutputPort;
+	}
+
+	public void AddFacade(string db_facade_id)
+	{
+		if (AvailableFacades == null)
+		{
+			AvailableFacades = new List<string>();
+		}
+		if (!AvailableFacades.Contains(db_facade_id))
+		{
+			AvailableFacades.Add(db_facade_id);
+		}
 	}
 }

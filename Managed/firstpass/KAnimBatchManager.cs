@@ -151,28 +151,23 @@ public class KAnimBatchManager
 		{
 			value = new BatchSet(GetBatchGroup(new BatchGroupKey(batchKey.groupID)), batchKey, vector2I);
 			batchSets[batchKey] = value;
-			BatchSetInfo item;
 			if (value.key.materialType == KAnimBatchGroup.MaterialType.UI)
 			{
-				List<BatchSetInfo> list = uiBatchSets;
-				item = new BatchSetInfo
+				uiBatchSets.Add(new BatchSetInfo
 				{
 					batchSet = value,
 					isActive = false,
 					spatialIdx = vector2I
-				};
-				list.Add(item);
+				});
 			}
 			else
 			{
-				List<BatchSetInfo> list2 = culledBatchSetInfos;
-				item = new BatchSetInfo
+				culledBatchSetInfos.Add(new BatchSetInfo
 				{
 					batchSet = value,
 					isActive = false,
 					spatialIdx = vector2I
-				};
-				list2.Add(item);
+				});
 			}
 		}
 		value.Add(controller);

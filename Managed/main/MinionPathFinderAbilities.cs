@@ -45,7 +45,7 @@ public class MinionPathFinderAbilities : PathFinderAbilities
 		return 0;
 	}
 
-	public override bool TraversePath(ref PathFinder.PotentialPath path, int from_cell, NavType from_nav_type, int cost, int transition_id, int underwater_cost)
+	public override bool TraversePath(ref PathFinder.PotentialPath path, int from_cell, NavType from_nav_type, int cost, int transition_id, bool submerged)
 	{
 		if (!IsAccessPermitted(proxyID, path.cell, from_cell, from_nav_type))
 		{

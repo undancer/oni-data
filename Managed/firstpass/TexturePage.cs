@@ -12,8 +12,6 @@ public class TexturePage
 
 	public Texture2D texture;
 
-	public byte[] bytes;
-
 	public TexturePage(string name, int width, int height, TextureFormat format)
 	{
 		this.width = width;
@@ -23,7 +21,6 @@ public class TexturePage
 		texture.name = name;
 		texture.filterMode = FilterMode.Point;
 		texture.wrapMode = TextureWrapMode.Clamp;
-		bytes = new byte[width * height * TextureUtil.GetBytesPerPixel(format)];
 		SetName(name);
 	}
 

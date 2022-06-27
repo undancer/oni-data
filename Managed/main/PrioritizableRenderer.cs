@@ -94,18 +94,18 @@ public class PrioritizableRenderer
 			for (int i = 0; i < prioritizables.Count; i++)
 			{
 				Prioritizable prioritizable2 = prioritizables[i];
-				Vector3 vector = Vector3.zero;
+				Vector3 zero = Vector3.zero;
 				KAnimControllerBase component = prioritizable2.GetComponent<KAnimControllerBase>();
-				vector = ((!(component != null)) ? prioritizable2.transform.GetPosition() : component.GetWorldPivot());
-				vector.x += prioritizable2.iconOffset.x;
-				vector.y += prioritizable2.iconOffset.y;
-				Vector2 vector2 = new Vector2(0.2f, 0.3f) * prioritizable2.iconScale;
+				zero = ((!(component != null)) ? prioritizable2.transform.GetPosition() : component.GetWorldPivot());
+				zero.x += prioritizable2.iconOffset.x;
+				zero.y += prioritizable2.iconOffset.y;
+				Vector2 vector = new Vector2(0.2f, 0.3f) * prioritizable2.iconScale;
 				float z = -5f;
 				int num = 4 * i;
-				vertices[num] = new Vector3(vector.x - vector2.x, vector.y - vector2.y, z);
-				vertices[1 + num] = new Vector3(vector.x - vector2.x, vector.y + vector2.y, z);
-				vertices[2 + num] = new Vector3(vector.x + vector2.x, vector.y - vector2.y, z);
-				vertices[3 + num] = new Vector3(vector.x + vector2.x, vector.y + vector2.y, z);
+				vertices[num] = new Vector3(zero.x - vector.x, zero.y - vector.y, z);
+				vertices[1 + num] = new Vector3(zero.x - vector.x, zero.y + vector.y, z);
+				vertices[2 + num] = new Vector3(zero.x + vector.x, zero.y - vector.y, z);
+				vertices[3 + num] = new Vector3(zero.x + vector.x, zero.y + vector.y, z);
 				PrioritySetting masterPriority = prioritizable2.GetMasterPriority();
 				float num2 = -1f;
 				if (masterPriority.priority_class >= PriorityScreen.PriorityClass.high)

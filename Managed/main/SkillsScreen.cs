@@ -50,14 +50,7 @@ public class SkillsScreen : KModalScreen
 
 	[Header("Duplicant Animation")]
 	[SerializeField]
-	private GameObject duplicantAnimAnchor;
-
-	[SerializeField]
-	private KBatchedAnimController animController;
-
-	public float baseCharacterScale = 0.38f;
-
-	private KAnimFile idle_anim;
+	private FullBodyUIMinionWidget minionAnimWidget;
 
 	[Header("Progress Bars")]
 	[SerializeField]
@@ -108,6 +101,9 @@ public class SkillsScreen : KModalScreen
 
 	[SerializeField]
 	private KScrollRect scrollRect;
+
+	[SerializeField]
+	private float scrollSpeed = 7f;
 
 	[SerializeField]
 	private DropDown hatDropDown;
@@ -305,7 +301,7 @@ public class SkillsScreen : KModalScreen
 
 	private void RefreshSelectedMinion()
 	{
-		SetPortraitAnimator(currentlySelectedMinion);
+		minionAnimWidget.SetPortraitAnimator(currentlySelectedMinion);
 		RefreshProgressBars();
 		RefreshHat();
 	}
@@ -585,7 +581,7 @@ public class SkillsScreen : KModalScreen
 		}
 		if (KInputManager.currentControllerIsGamepad)
 		{
-			scrollRect.AnalogUpdate(KInputManager.steamInputInterpreter.GetSteamCameraMovement());
+			scrollRect.AnalogUpdate(KInputManager.steamInputInterpreter.GetSteamCameraMovement() * scrollSpeed);
 		}
 	}
 
@@ -874,16 +870,9 @@ public class SkillsScreen : KModalScreen
 			num2 += list.Count;
 			for (int i = 0; i < list.Count; i++)
 			{
-				try
-				{
-					IAssignableIdentity key = list[i];
-					SkillMinionWidget item = dictionary[key];
-					sortableRows.Add(item);
-				}
-				catch
-				{
-					Debug.Log("!");
-				}
+				IAssignableIdentity key = list[i];
+				SkillMinionWidget item = dictionary[key];
+				sortableRows.Add(item);
 			}
 		}
 		for (int j = 0; j < sortableRows.Count; j++)
@@ -894,63 +883,5 @@ public class SkillsScreen : KModalScreen
 		{
 			worldDividers[item4.Key].transform.SetSiblingIndex(item4.Value);
 		}
-	}
-
-	private void SetPortraitAnimator(IAssignableIdentity assignableIdentity)
-	{
-		if (assignableIdentity == null || assignableIdentity.IsNull())
-		{
-			return;
-		}
-		if (animController == null)
-		{
-			animController = Util.KInstantiateUI(Assets.GetPrefab(new Tag("FullMinionUIPortrait")), duplicantAnimAnchor.gameObject).GetComponent<KBatchedAnimController>();
-			animController.gameObject.SetActive(value: true);
-			animController.animScale = baseCharacterScale;
-		}
-		string value = "";
-		Accessorizer component = animController.GetComponent<Accessorizer>();
-		for (int num = component.GetAccessories().Count - 1; num >= 0; num--)
-		{
-			component.RemoveAccessory(component.GetAccessories()[num].Get());
-		}
-		GetMinionIdentity(assignableIdentity, out var minionIdentity, out var storedMinionIdentity);
-		Accessorizer accessorizer = null;
-		if (minionIdentity != null)
-		{
-			accessorizer = minionIdentity.GetComponent<Accessorizer>();
-			foreach (ResourceRef<Accessory> accessory in accessorizer.GetAccessories())
-			{
-				component.AddAccessory(accessory.Get());
-			}
-			value = minionIdentity.GetComponent<MinionResume>().CurrentHat;
-		}
-		else if (storedMinionIdentity != null)
-		{
-			foreach (ResourceRef<Accessory> accessory2 in storedMinionIdentity.accessories)
-			{
-				component.AddAccessory(accessory2.Get());
-			}
-			value = storedMinionIdentity.currentHat;
-		}
-		animController.Queue("idle_default", KAnim.PlayMode.Loop);
-		AccessorySlot hat = Db.Get().AccessorySlots.Hat;
-		animController.SetSymbolVisiblity(hat.targetSymbolId, (!string.IsNullOrEmpty(value)) ? true : false);
-		animController.SetSymbolVisiblity(Db.Get().AccessorySlots.Hair.targetSymbolId, string.IsNullOrEmpty(value) ? true : false);
-		animController.SetSymbolVisiblity(Db.Get().AccessorySlots.HatHair.targetSymbolId, (!string.IsNullOrEmpty(value)) ? true : false);
-		KAnim.Build.Symbol source_symbol = null;
-		KAnim.Build.Symbol source_symbol2 = null;
-		if ((bool)accessorizer)
-		{
-			source_symbol = accessorizer.GetAccessory(Db.Get().AccessorySlots.Hair).symbol;
-			source_symbol2 = Db.Get().AccessorySlots.HatHair.Lookup("hat_" + HashCache.Get().Get(accessorizer.GetAccessory(Db.Get().AccessorySlots.Hair).symbol.hash)).symbol;
-		}
-		else if (storedMinionIdentity != null)
-		{
-			source_symbol = storedMinionIdentity.GetAccessory(Db.Get().AccessorySlots.Hair).symbol;
-			source_symbol2 = Db.Get().AccessorySlots.HatHair.Lookup("hat_" + HashCache.Get().Get(storedMinionIdentity.GetAccessory(Db.Get().AccessorySlots.Hair).symbol.hash)).symbol;
-		}
-		animController.GetComponent<SymbolOverrideController>().AddSymbolOverride(Db.Get().AccessorySlots.HairAlways.targetSymbolId, source_symbol, 1);
-		animController.GetComponent<SymbolOverrideController>().AddSymbolOverride(Db.Get().AccessorySlots.HatHair.targetSymbolId, source_symbol2, 1);
 	}
 }

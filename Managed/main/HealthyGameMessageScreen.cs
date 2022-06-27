@@ -66,7 +66,7 @@ public class HealthyGameMessageScreen : KMonoBehaviour
 			spawnTime = Time.unscaledTime;
 			return;
 		}
-		float num = Mathf.Min(Time.unscaledDeltaTime, 71f / (678f * (float)Math.PI));
+		float num = Mathf.Min(Time.unscaledDeltaTime, 1f / 30f);
 		float num2 = Time.unscaledTime - spawnTime;
 		if (num2 < totalTime - fadeTime)
 		{

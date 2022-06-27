@@ -29,7 +29,9 @@ public class ExobaseHeadquartersConfig : IBuildingConfig
 	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 	{
 		go.AddOrGet<LoreBearer>();
-		go.AddOrGet<Telepad>().startingSkillPoints = 1f;
+		Telepad telepad = go.AddOrGet<Telepad>();
+		go.GetComponent<KPrefabID>().AddTag(GameTags.Telepad);
+		telepad.startingSkillPoints = 1f;
 		SocialGatheringPoint socialGatheringPoint = go.AddOrGet<SocialGatheringPoint>();
 		socialGatheringPoint.choreOffsets = new CellOffset[6]
 		{

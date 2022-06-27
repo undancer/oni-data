@@ -24,7 +24,6 @@ public class SubmergedMonitor : GameStateMachine<SubmergedMonitor, SubmergedMoni
 	public override void InitializeStates(out BaseState default_state)
 	{
 		default_state = satisfied;
-		root.ToggleBehaviour(GameTags.Creatures.Submerged, (Instance smi) => smi.IsSubmerged());
 		satisfied.Enter("SetNavType", delegate(Instance smi)
 		{
 			smi.GetComponent<Navigator>().SetCurrentNavType(NavType.Hover);
@@ -38,6 +37,7 @@ public class SubmergedMonitor : GameStateMachine<SubmergedMonitor, SubmergedMoni
 		}).Update("SetNavType", delegate(Instance smi, float dt)
 		{
 			smi.GetComponent<Navigator>().SetCurrentNavType(NavType.Swim);
-		}, UpdateRate.SIM_1000ms).Transition(satisfied, (Instance smi) => !smi.IsSubmerged(), UpdateRate.SIM_1000ms);
+		}, UpdateRate.SIM_1000ms).Transition(satisfied, (Instance smi) => !smi.IsSubmerged(), UpdateRate.SIM_1000ms)
+			.ToggleTag(GameTags.Creatures.Submerged);
 	}
 }

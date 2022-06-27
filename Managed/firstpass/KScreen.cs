@@ -37,7 +37,11 @@ public class KScreen : KMonoBehaviour, IInputHandler, IPointerEnterHandler, IEve
 
 	public PointerExitActions pointerExitActions;
 
+	private KScrollRect[] child_scroll_rects;
+
 	private bool hasFocus;
+
+	public bool isHiddenButActive;
 
 	public string handlerName => base.gameObject.name;
 
@@ -144,13 +148,17 @@ public class KScreen : KMonoBehaviour, IInputHandler, IPointerEnterHandler, IEve
 		{
 			e.Consumed = true;
 		}
-		KScrollRect[] componentsInChildren;
+		if (!e.Consumed)
+		{
+			child_scroll_rects = GetComponentsInChildren<KScrollRect>();
+		}
+		KScrollRect[] array;
 		if (mouseOver && ConsumeMouseScroll)
 		{
 			if (KInputManager.currentControllerIsGamepad && !e.Consumed)
 			{
-				componentsInChildren = GetComponentsInChildren<KScrollRect>();
-				foreach (KScrollRect kScrollRect in componentsInChildren)
+				array = child_scroll_rects;
+				foreach (KScrollRect kScrollRect in array)
 				{
 					Vector2 point = kScrollRect.rectTransform().InverseTransformPoint(KInputManager.GetMousePos());
 					if (kScrollRect.rectTransform().rect.Contains(point))
@@ -177,8 +185,8 @@ public class KScreen : KMonoBehaviour, IInputHandler, IPointerEnterHandler, IEve
 		{
 			return;
 		}
-		componentsInChildren = GetComponentsInChildren<KScrollRect>();
-		foreach (KScrollRect kScrollRect2 in componentsInChildren)
+		array = child_scroll_rects;
+		foreach (KScrollRect kScrollRect2 in array)
 		{
 			Vector2 point2 = kScrollRect2.rectTransform().InverseTransformPoint(KInputManager.GetMousePos());
 			if (kScrollRect2.rectTransform().rect.Contains(point2))
@@ -286,6 +294,7 @@ public class KScreen : KMonoBehaviour, IInputHandler, IPointerEnterHandler, IEve
 
 	protected virtual void OnShow(bool show)
 	{
+		child_scroll_rects = GetComponentsInChildren<KScrollRect>();
 		if (show && fadeIn)
 		{
 			base.gameObject.FindOrAddUnityComponent<WidgetTransition>().StartTransition();

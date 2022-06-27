@@ -81,11 +81,15 @@ public class PeeChore : Chore<PeeChore.StatesInstance>
 					{
 						smi.master.gameObject.GetComponent<KSelectable>().RemoveStatusItem(Db.Get().DuplicantStatusItems.ExpellingRads);
 						AmountInstance amountInstance = smi.master.gameObject.GetAmounts().Get(Db.Get().Amounts.RadiationBalance.Id);
-						float num = Math.Min(val2: 100f * smi.master.gameObject.GetSMI<RadiationMonitor.Instance>().difficultySettingMod, val1: amountInstance.value);
-						smi.master.gameObject.GetAmounts().Get(Db.Get().Amounts.RadiationBalance.Id).ApplyDelta(0f - num);
-						if (num >= 1f)
+						RadiationMonitor.Instance sMI = smi.master.gameObject.GetSMI<RadiationMonitor.Instance>();
+						if (sMI != null)
 						{
-							PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Negative, Mathf.FloorToInt(num).ToString() + UI.UNITSUFFIXES.RADIATION.RADS, smi.master.transform);
+							float num = Math.Min(amountInstance.value, 100f * sMI.difficultySettingMod);
+							smi.master.gameObject.GetAmounts().Get(Db.Get().Amounts.RadiationBalance.Id).ApplyDelta(0f - num);
+							if (num >= 1f)
+							{
+								PopFXManager.Instance.SpawnFX(PopFXManager.Instance.sprite_Negative, Mathf.FloorToInt(num).ToString() + UI.UNITSUFFIXES.RADIATION.RADS, smi.master.transform);
+							}
 						}
 					}
 				});

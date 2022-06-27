@@ -41,6 +41,11 @@ public class Pathfinding : KMonoBehaviour
 		return null;
 	}
 
+	public List<NavGrid> GetNavGrids()
+	{
+		return NavGrids;
+	}
+
 	public void ResetNavGrids()
 	{
 		foreach (NavGrid navGrid in NavGrids)

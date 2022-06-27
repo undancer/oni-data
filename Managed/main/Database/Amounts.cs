@@ -56,6 +56,8 @@ namespace Database
 
 		public Amount ScaleGrowth;
 
+		public Amount ElementGrowth;
+
 		public Amount InternalBattery;
 
 		public Amount InternalChemicalBattery;
@@ -78,14 +80,14 @@ namespace Database
 			Toxicity.SetDisplayer(new StandardAmountDisplayer(GameUtil.UnitClass.Percent, GameUtil.TimeSlice.PerCycle));
 			Bladder = CreateAmount("Bladder", 0f, 100f, show_max: false, Units.Flat, 0.5f, show_in_ui: true, "STRINGS.DUPLICANTS", "ui_icon_bladder", null, "mod_bladder");
 			Bladder.SetDisplayer(new StandardAmountDisplayer(GameUtil.UnitClass.Percent, GameUtil.TimeSlice.PerCycle));
-			Decor = CreateAmount("Decor", -1000f, 1000f, show_max: false, Units.Flat, 0.016666668f, show_in_ui: true, "STRINGS.DUPLICANTS", "ui_icon_decor", null, "mod_decor");
+			Decor = CreateAmount("Decor", -1000f, 1000f, show_max: false, Units.Flat, 1f / 60f, show_in_ui: true, "STRINGS.DUPLICANTS", "ui_icon_decor", null, "mod_decor");
 			Decor.SetDisplayer(new DecorDisplayer());
 			RadiationBalance = CreateAmount("RadiationBalance", 0f, 10000f, show_max: false, Units.Flat, 0.5f, show_in_ui: true, "STRINGS.DUPLICANTS", "ui_icon_radiation", null, "mod_health");
 			RadiationBalance.SetDisplayer(new RadiationBalanceDisplayer());
 			Temperature = CreateAmount("Temperature", 0f, 10000f, show_max: false, Units.Kelvin, 0.5f, show_in_ui: true, "STRINGS.DUPLICANTS", "ui_icon_temperature");
 			Temperature.SetDisplayer(new DuplicantTemperatureDeltaAsEnergyAmountDisplayer(GameUtil.UnitClass.Temperature, GameUtil.TimeSlice.PerSecond));
 			HitPoints = CreateAmount("HitPoints", 0f, 0f, show_max: true, Units.Flat, 0.1675f, show_in_ui: true, "STRINGS.DUPLICANTS", "ui_icon_hitpoints", "attribute_hitpoints", "mod_health");
-			HitPoints.SetDisplayer(new StandardAmountDisplayer(GameUtil.UnitClass.SimpleInteger, GameUtil.TimeSlice.PerCycle));
+			HitPoints.SetDisplayer(new StandardAmountDisplayer(GameUtil.UnitClass.SimpleInteger, GameUtil.TimeSlice.PerCycle, null, GameUtil.IdentityDescriptorTense.Possessive));
 			AirPressure = CreateAmount("AirPressure", 0f, 1E+09f, show_max: false, Units.Flat, 0f, show_in_ui: true, "STRINGS.CREATURES");
 			AirPressure.SetDisplayer(new StandardAmountDisplayer(GameUtil.UnitClass.Mass, GameUtil.TimeSlice.PerSecond));
 			Maturity = CreateAmount("Maturity", 0f, 0f, show_max: true, Units.Flat, 0.0009166667f, show_in_ui: true, "STRINGS.CREATURES", "ui_icon_maturity");
@@ -99,7 +101,7 @@ namespace Database
 			Wildness.SetDisplayer(new AsPercentAmountDisplayer(GameUtil.TimeSlice.PerCycle));
 			Incubation = CreateAmount("Incubation", 0f, 100f, show_max: true, Units.Flat, 0.01675f, show_in_ui: true, "STRINGS.CREATURES", "ui_icon_incubation");
 			Incubation.SetDisplayer(new AsPercentAmountDisplayer(GameUtil.TimeSlice.PerCycle));
-			Viability = CreateAmount("Viability", 0f, 100f, show_max: true, Units.Flat, 0.1675f, show_in_ui: true, "STRINGS.CREATURES");
+			Viability = CreateAmount("Viability", 0f, 100f, show_max: true, Units.Flat, 0.1675f, show_in_ui: true, "STRINGS.CREATURES", "ui_icon_viability");
 			Viability.SetDisplayer(new AsPercentAmountDisplayer(GameUtil.TimeSlice.PerCycle));
 			PowerCharge = CreateAmount("PowerCharge", 0f, 100f, show_max: true, Units.Flat, 0.1675f, show_in_ui: true, "STRINGS.CREATURES");
 			PowerCharge.SetDisplayer(new AsPercentAmountDisplayer(GameUtil.TimeSlice.PerCycle));
@@ -115,6 +117,8 @@ namespace Database
 			Illumination.SetDisplayer(new StandardAmountDisplayer(GameUtil.UnitClass.SimpleFloat, GameUtil.TimeSlice.None));
 			ScaleGrowth = CreateAmount("ScaleGrowth", 0f, 100f, show_max: true, Units.Flat, 0.1675f, show_in_ui: true, "STRINGS.CREATURES", "ui_icon_scale_growth");
 			ScaleGrowth.SetDisplayer(new AsPercentAmountDisplayer(GameUtil.TimeSlice.PerCycle));
+			ElementGrowth = CreateAmount("ElementGrowth", 0f, 100f, show_max: true, Units.Flat, 0.1675f, show_in_ui: true, "STRINGS.CREATURES", "ui_icon_scale_growth");
+			ElementGrowth.SetDisplayer(new AsPercentAmountDisplayer(GameUtil.TimeSlice.PerCycle));
 			InternalBattery = CreateAmount("InternalBattery", 0f, 0f, show_max: true, Units.Flat, 4000f, show_in_ui: true, "STRINGS.ROBOTS", "ui_icon_battery");
 			InternalBattery.SetDisplayer(new StandardAmountDisplayer(GameUtil.UnitClass.Energy, GameUtil.TimeSlice.PerSecond));
 			InternalChemicalBattery = CreateAmount("InternalChemicalBattery", 0f, 0f, show_max: true, Units.Flat, 4000f, show_in_ui: true, "STRINGS.ROBOTS", "ui_icon_battery");
